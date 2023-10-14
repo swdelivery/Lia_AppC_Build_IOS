@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "785409828152",
+    "project_id": "liaproject-28d76",
+    "storage_bucket": "liaproject-28d76.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:785409828152:android:59ef382695bac939490dcd",
+        "android_client_info": {
+          "package_name": "com.liaappc"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJUgycDOYUeB6NzID3DqECrxwsjsSEhKE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

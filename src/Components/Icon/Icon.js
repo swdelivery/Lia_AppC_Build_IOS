@@ -1,0 +1,333 @@
+import { Text, View } from "react-native"
+import SVGSetting from '../../SGV/setting.svg'
+import SVGPhoneWhite from '../../SGV/phone.svg'
+import SVGRightWhite from '../../SGV/rightWhite.svg'
+import SVGBackWhite from '../../SGV/backWhite.svg'
+import SVGBxh from '../../SGV/bxh.svg'
+import SVGWallet from '../../SGV/wallet.svg'
+import SVGHelp from '../../SGV/help.svg'
+import SVGPolicy from '../../SGV/policy.svg'
+import SVGRightArrow from '../../SGV/rightArrow.svg'
+import SVGPartnerShip from '../../SGV/partnerShip.svg'
+import SVGTeamConnect from '../../SGV/teamConnect.svg'
+import SVGCheckOrder from '../../SGV/checkOrder.svg'
+import SVGCustomer from '../../SGV/customer.svg'
+import SVGDoubleRightArrow from '../../SGV/doubleRightArrow.svg'
+import SVGIsChecked from '../../SGV/ischecked.svg'
+import SVGNotChecked from '../../SGV/notchecked.svg'
+import SVGEyeBase from '../../SGV/eyeBase.svg'
+import SVGCashIn from '../../SGV/cashIn.svg'
+import SVGCashOut from '../../SGV/cashOut.svg'
+import SVGCommision from '../../SGV/commision.svg'
+import SVGCrown from '../../SGV/crown.svg'
+import SVGBackBase from '../../SGV/backBase.svg'
+import SVGBook from '../../SGV/book.svg'
+import SVGBrone from '../../SGV/brone.svg'
+import SVGSilver from '../../SGV/silver.svg'
+import SVGGold from '../../SGV/gold.svg'
+import SVGDiamond from '../../SGV/diamond.svg'
+import SVGCopy from '../../SGV/copy.svg'
+import SVGShare from '../../SGV/share.svg'
+import SVGCancelWhite from '../../SGV/cancelWhite.svg'
+import SVGDollars from '../../SGV/dollars.svg'
+import { _moderateScale } from "../../Constant/Scale"
+
+
+export const IconSetting = (props) => {
+    return (
+        <SVGSetting
+            width={props?.width}
+            height={props?.height}
+        />
+    )
+}
+
+export const IconPhoneWhite = (props) => {
+    return (
+        <SVGPhoneWhite
+            width={props?.width}
+            height={props?.height}
+        />
+    )
+}
+
+export const IconRightWhite = (props) => {
+    return (
+        <SVGRightWhite
+            width={props?.style?.width}
+            height={props?.style?.height}
+        />
+    )
+}
+
+export const IconBackWhite = (props) => {
+    return (
+        <SVGBackWhite
+            width={props?.style?.width ? props?.style?.width : _moderateScale(8*4)}
+            height={props?.style?.height ? props?.style?.height : _moderateScale(8*4)}
+        />
+    )
+}
+
+export const IconBXH = (props) => {
+    return (
+        <SVGBxh
+            width={props?.style?.width ? props?.style?.width : _moderateScale(8*4)}
+            height={props?.style?.height ? props?.style?.height : _moderateScale(8*4)}
+        />
+    )
+}
+
+export const IconWallet = (props) => {
+    return (
+        <SVGWallet
+            width={props?.style?.width ? props?.style?.width : _moderateScale(8*4)}
+            height={props?.style?.height ? props?.style?.height : _moderateScale(8*4)}
+        />
+    )
+}
+
+export const IconHelp = (props) => {
+
+    
+    return (
+        <SVGHelp
+            width={props?.style?.width ? props?.style?.width : _moderateScale(8*4)}
+            height={props?.style?.height ? props?.style?.height : _moderateScale(8*4)}
+        />
+    )
+}
+
+export const IconPolicy = (props) => {
+
+    
+    return (
+        <SVGPolicy
+            width={props?.style?.width ? props?.style?.width : _moderateScale(8*4)}
+            height={props?.style?.height ? props?.style?.height : _moderateScale(8*4)}
+        />
+    )
+}
+
+export const IconRightArrow = (props) => {
+
+    
+    return (
+        <SVGRightArrow
+            width={props?.style?.width ? props?.style?.width : _moderateScale(8*4)}
+            height={props?.style?.height ? props?.style?.height : _moderateScale(8*4)}
+        />
+    )
+}
+
+export const IconPartnerShip = (props) => {
+
+    
+    return (
+        <SVGPartnerShip
+            width={props?.style?.width ? props?.style?.width : _moderateScale(8*4)}
+            height={props?.style?.height ? props?.style?.height : _moderateScale(8*4)}
+        />
+    )
+}
+
+export const IconTeamConnect = (props) => {
+
+    
+    return (
+        <SVGTeamConnect
+            width={props?.style?.width ? props?.style?.width : _moderateScale(8*4)}
+            height={props?.style?.height ? props?.style?.height : _moderateScale(8*4)}
+        />
+    )
+}
+
+export const IconCheckOrder = (props) => {
+
+    
+    return (
+        <SVGCheckOrder
+            width={props?.style?.width ? props?.style?.width : _moderateScale(8*4)}
+            height={props?.style?.height ? props?.style?.height : _moderateScale(8*4)}
+        />
+    )
+}
+
+export const IconCustomer = (props) => {
+
+    
+    return (
+        <SVGCustomer
+            width={props?.style?.width ? props?.style?.width : _moderateScale(8*4)}
+            height={props?.style?.height ? props?.style?.height : _moderateScale(8*4)}
+        />
+    )
+}
+
+export const IconDoubleRightArrow = (props) => {
+
+    
+    return (
+        <SVGDoubleRightArrow
+            width={props?.style?.width ? props?.style?.width : _moderateScale(8*4)}
+            height={props?.style?.height ? props?.style?.height : _moderateScale(8*4)}
+        />
+    )
+}
+
+export const IconIsChecked = (props) => {
+
+    
+    return (
+        <SVGIsChecked
+            width={props?.style?.width ? props?.style?.width : _moderateScale(8*4)}
+            height={props?.style?.height ? props?.style?.height : _moderateScale(8*4)}
+        />
+    )
+}
+
+export const IconNotChecked = (props) => {
+
+    
+    return (
+        <SVGNotChecked
+            width={props?.style?.width ? props?.style?.width : _moderateScale(8*4)}
+            height={props?.style?.height ? props?.style?.height : _moderateScale(8*4)}
+        />
+    )
+}
+
+export const IconEyeBase = (props) => {
+
+    
+    return (
+        <SVGEyeBase
+            width={props?.style?.width ? props?.style?.width : _moderateScale(8*4)}
+            height={props?.style?.height ? props?.style?.height : _moderateScale(8*4)}
+        />
+    )
+}
+
+export const IconCashIn = (props) => {
+
+    
+    return (
+        <SVGCashIn
+            width={props?.style?.width ? props?.style?.width : _moderateScale(8*4)}
+            height={props?.style?.height ? props?.style?.height : _moderateScale(8*4)}
+        />
+    )
+}
+
+export const IconCashOut = (props) => {
+
+    return (
+        <SVGCashOut
+            width={props?.style?.width ? props?.style?.width : _moderateScale(8*4)}
+            height={props?.style?.height ? props?.style?.height : _moderateScale(8*4)}
+        />
+    )
+}
+
+export const IconCommision = (props) => {
+
+    
+    return (
+        <SVGCommision
+            width={props?.style?.width ? props?.style?.width : _moderateScale(8*4)}
+            height={props?.style?.height ? props?.style?.height : _moderateScale(8*4)}
+        />
+    )
+}
+
+export const IconCrown = (props) => {
+    return (
+        <SVGCrown
+            width={props?.style?.width ? props?.style?.width : _moderateScale(8*4)}
+            height={props?.style?.height ? props?.style?.height : _moderateScale(8*4)}
+        />
+    )
+}
+
+export const IconBackBase = (props) => {
+    return (
+        <SVGBackBase
+            width={props?.style?.width ? props?.style?.width : _moderateScale(8*4)}
+            height={props?.style?.height ? props?.style?.height : _moderateScale(8*4)}
+        />
+    )
+}
+export const IconBook = (props) => {
+    return (
+        <SVGBook
+            width={props?.style?.width ? props?.style?.width : _moderateScale(8*4)}
+            height={props?.style?.height ? props?.style?.height : _moderateScale(8*4)}
+        />
+    )
+}
+
+export const IconBrone = (props) => {
+    return (
+        <SVGBrone
+            width={props?.style?.width ? props?.style?.width : _moderateScale(8*4)}
+            height={props?.style?.height ? props?.style?.height : _moderateScale(8*4)}
+        />
+    )
+}
+export const IconSilver = (props) => {
+    return (
+        <SVGSilver
+            width={props?.style?.width ? props?.style?.width : _moderateScale(8*4)}
+            height={props?.style?.height ? props?.style?.height : _moderateScale(8*4)}
+        />
+    )
+}
+export const IconGold = (props) => {
+    return (
+        <SVGGold
+            width={props?.style?.width ? props?.style?.width : _moderateScale(8*4)}
+            height={props?.style?.height ? props?.style?.height : _moderateScale(8*4)}
+        />
+    )
+}
+export const IconDiamond = (props) => {
+    return (
+        <SVGDiamond
+            width={props?.style?.width ? props?.style?.width : _moderateScale(8*4)}
+            height={props?.style?.height ? props?.style?.height : _moderateScale(8*4)}
+        />
+    )
+}
+export const IconCopy = (props) => {
+    return (
+        <SVGCopy
+            width={props?.style?.width ? props?.style?.width : _moderateScale(8*4)}
+            height={props?.style?.height ? props?.style?.height : _moderateScale(8*4)}
+        />
+    )
+}
+export const IconShare = (props) => {
+    return (
+        <SVGShare
+            width={props?.style?.width ? props?.style?.width : _moderateScale(8*4)}
+            height={props?.style?.height ? props?.style?.height : _moderateScale(8*4)}
+        />
+    )
+}
+export const IconCancelWhite = (props) => {
+    return (
+        <SVGCancelWhite
+            width={props?.style?.width ? props?.style?.width : _moderateScale(8*4)}
+            height={props?.style?.height ? props?.style?.height : _moderateScale(8*4)}
+        />
+    )
+}
+export const IconDollars = (props) => {
+    return (
+        <SVGDollars
+            width={props?.style?.width ? props?.style?.width : _moderateScale(8*4)}
+            height={props?.style?.height ? props?.style?.height : _moderateScale(8*4)}
+        />
+    )
+}
+
