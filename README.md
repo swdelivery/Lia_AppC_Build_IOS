@@ -84,3 +84,17 @@ https://stackoverflow.com/a/73092078
 
 <!-- status bar height -->
 https://github.com/ovr/react-native-status-bar-height/issues/47#issuecomment-1296584007
+
+<!-- ScrollAble Tabview -->
+this.titleInterpolateArgs = {
+      height: {
+        inputRange: [0, 240],
+        outputRange: [0, 100],
+        extrapolate: 'clamp'
+      },
+      opacity: {
+        inputRange: [160, 320],
+        outputRange: [0.2, 1],
+        extrapolate: 'clamp'
+      }
+    };

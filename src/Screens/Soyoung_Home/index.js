@@ -1,20 +1,35 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { View, Text, StyleSheet, ScrollView, StatusBar } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, StatusBar, TouchableOpacity, Alert } from 'react-native';
 import Banner from './Components/Banner';
 import Search from './Components/Search';
 import { getStatusBarHeight } from 'react-native-status-bar-height';
-import { _moderateScale, _width } from '../../Constant/Scale';
+import { _height, _heightScale, _moderateScale, _width, _widthScale } from '../../Constant/Scale';
 import ScrollableTabView from "@itenl/react-native-scrollable-tabview";
 import { useState } from 'react';
 import SoYoung_Service from '../SoYoung_Service/index';
 import SoYoung_Branch from '../SoYoung_Branch/index';
 import So_Young_Doctor from '../SoYoung_Doctor/index';
 import { useRef } from 'react';
+import { WHITE } from '../../Constant/Color';
+import Collapsible from 'react-native-collapsible';
+import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
+import { getAllServiceGroup } from '../../Redux/Action/ServiceGroup';
+import { useDispatch, useSelector } from 'react-redux';
+import { stylesFont } from '../../Constant/Font';
+import ModalPickSingleNotSearch from '../../Components/ModalPickSingleNotSearch/ModalPickSingleNotSearch';
 
 const index = () => {
     const scrollableTabViewRef = useRef()
     const [rootTime, setRootTime] = useState(Date.now())
+
+    const listServiceGroupRedux = useSelector(state => state.serviceGroupReducer?.listServiceGroup)
+    const dispatch = useDispatch()
+
+
+    const heightExpandServiceGr = useSharedValue(0)
+
+    const [expandServiceGr, setExpandServiceGr] = useState(true)
 
     const [stacks, setStacks] = useState([
         {
@@ -40,26 +55,62 @@ const index = () => {
     ])
 
 
-    const _renderHeader=()=>{
-        return(
+    useEffect(() => {
+        _getDataServiceGr()
+    }, [])
+
+    const _getDataServiceGr = () => {
+        var condition = {
+            condition: {
+                parentCode: {
+                    equal: null
+                }
+            },
+            "sort": {
+                "orderNumber": -1
+            },
+            "limit": 100,
+            "page": 1
+        }
+        dispatch(getAllServiceGroup(condition))
+    }
+
+    const _renderHeader = () => {
+        return (
             <Banner />
-           
+
         )
     }
 
+    useEffect(() => {
+        if (expandServiceGr) {
+            heightExpandServiceGr.value = withTiming(200, { duration: 300 })
+        } else {
+            heightExpandServiceGr.value = withTiming(0, { duration: 0 })
+        }
+    }, [expandServiceGr])
+
+    const animHeightExpandServiceGr = useAnimatedStyle(() => {
+        return {
+            height: heightExpandServiceGr.value
+        }
+    })
+
     return (
         <View style={styles.container}>
+
+
             <View style={{
                 position: 'absolute',
-                top: _moderateScale(getStatusBarHeight()+ 8),
+                top: _moderateScale(getStatusBarHeight() + 8),
                 zIndex: 1,
                 alignItems: 'center',
                 width: _width
             }}>
-                <Search />
+                <Search press={() => { setExpandServiceGr(old => !old) }} />
             </View>
 
-           
+
             <ScrollableTabView
                 titleArgs={{
                 }}
@@ -68,7 +119,7 @@ const index = () => {
                     </View>
                 }
                 onTabviewChanged={(index, tabLabel) => {
-                    
+
                 }}
                 mappingProps={{
                     rootTime: rootTime,
@@ -94,13 +145,13 @@ const index = () => {
                 }}
                 textStyle={{
                     color: 'black',
-                    fontWeight:'500',
-                    fontSize:14
+                    fontWeight: '500',
+                    fontSize: 14
                 }}
                 ref={(it) => (scrollableTabViewRef.current = it)}
                 textActiveStyle={{
                     color: '#4BA888',
-                    fontWeight:'bold',
+                    fontWeight: 'bold',
                 }}
                 header={
                     _renderHeader

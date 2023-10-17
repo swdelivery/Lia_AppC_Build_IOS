@@ -3,7 +3,8 @@ import { createStackNavigator, TransitionPresets } from '@react-navigation/stack
 import React from 'react';
 // import Home from '../../../Screens/Home/index copy';
 import Home from '../../../Screens/Soyoung_Home/index'
-import SearchingHome from '../../../Screens/SearchingHome'
+// import SearchingHome from '../../../Screens/SearchingHome'
+import SearchingHome from '../../../Screens/NewSearchHome/index'
 import ScreenKey from '../../../Navigation/ScreenKey';
 import ListBranch from '../../../Screens/ListBranch';
 import ListDoctorIOS from '../../../Screens/ListDoctor/index copy'
@@ -22,7 +23,7 @@ const rootStack = createStackNavigator();
 
 const HomeTab = () => {
     return (
-        <Stack.Navigator screenOptions={{ headerShown: false, ...TransitionPresets.SlideFromRightIOS, gestureResponseDistance: { vertical: 800 } }}>
+        <Stack.Navigator screenOptions={{  headerShown: false, ...TransitionPresets.SlideFromRightIOS, gestureResponseDistance: { vertical: 800 } }}>
             <Stack.Screen name="Home" component={Home} />
             <rootStack.Screen options={{ ...TransitionPresets.SlideFromRightIOS }} name={ScreenKey.LIST_BRANCH} component={ListBranch} />
             <rootStack.Screen options={{ ...TransitionPresets.SlideFromRightIOS }} name={ScreenKey.SEARCHING_HOME} component={SearchingHome} />

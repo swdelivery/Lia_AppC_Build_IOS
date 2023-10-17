@@ -1,48 +1,103 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
-import React, { memo } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 import IconRight from '../../../SGV/right.svg'
 import IconFind from '../../../SGV/find_grey.svg'
-import { _moderateScale, _widthScale } from '../../../Constant/Scale'
+import { _heightScale, _moderateScale, _widthScale } from '../../../Constant/Scale'
 import { navigation } from '../../../../rootNavigation'
 import ScreenKey from '../../../Navigation/ScreenKey'
+import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
+import { WHITE } from '../../../Constant/Color'
+import { stylesFont } from '../../../Constant/Font'
+import { useSelector } from 'react-redux'
+import ModalPickSingleNotSearch from '../../../Components/ModalPickSingleNotSearch/ModalPickSingleNotSearch'
+import { IconArrowDown } from '../../../Components/Icon/Icon'
+import { sizeIcon } from '../../../Constant/Icon'
 
-const Search = memo(() => {
+const Search = memo((props) => {
+
+    const listServiceGroupRedux = useSelector(state => state.serviceGroupReducer?.listServiceGroup)
+
+
+    const heightExpandServiceGr = useSharedValue(0)
+
+    const [expandServiceGr, setExpandServiceGr] = useState(false)
+
+    useEffect(() => {
+        if (expandServiceGr) {
+            heightExpandServiceGr.value = withTiming(_heightScale(300), { duration: 300 })
+        } else {
+            heightExpandServiceGr.value = withTiming(0, { duration: 300 })
+        }
+    }, [expandServiceGr])
+
+    const animHeightExpandServiceGr = useAnimatedStyle(() => {
+        return {
+            height: heightExpandServiceGr.value
+        }
+    })
+
     return (
-        <View style={[styles.search,shadow]}>
+        <View style={[styles.search, shadow]}>
+
+            <ModalPickSingleNotSearch
+                hide={() => {
+                    setExpandServiceGr(false)
+                }}
+                onSelect={(item) => {
+                    // _handleChoiceItemFilter(item)
+                    // navigation.navigate(ScreenKey.SEARCHING_HOME)
+                    navigation.navigate(ScreenKey.SEARCHING_HOME, { keySearch: item?.name, })
+                }}
+                data={(listServiceGroupRedux?.length > 0) ? listServiceGroupRedux : []} show={expandServiceGr} />
+
+
             <View style={{ width: 8 }} />
-            <View style={styles.search__option}>
-                <Text style={{ fontWeight: '500' }}>
-                    Mắt
-                </Text>
-            </View>
-            <TouchableOpacity style={[styles.search_down_icon, {
-                transform: [
-                    {
-                        rotate: '90deg'
-                    }
-                ]
-            }]}>
-                <IconRight
+            <TouchableOpacity
+                onPress={() => {
+                    setExpandServiceGr(old => !old)
+                }}
+            >
+                <View style={styles.search__option}>
+                    <Text style={[stylesFont.fontNolan500, { fontSize: _moderateScale(12) }]}>
+                        Mắt
+                    </Text>
+                </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+                onPress={() => {
+                    setExpandServiceGr(old => !old)
+                }}
+                // onPress={props?.press}
+                style={[styles.search_down_icon, {
+                    // transform: [
+                    //     {
+                    //         rotate: '90deg'
+                    //     }
+                    // ]
+                }]}>
+
+                <IconArrowDown style={sizeIcon.sm} />
+
+                {/* <IconRight
                     width={8 * 1.7}
-                    height={8 * 1.7} />
+                    height={8 * 1.7} /> */}
             </TouchableOpacity>
             <View style={{ width: 8 }} />
 
             <TouchableOpacity
-            onPress={()=>{
-                navigation.navigate("FACE_AI")
-                // navigation.navigate(ScreenKey.RESULT_AI_SCAN_EYES)
-            }}
-            style={styles.search__input}>
+                onPress={() => {
+                    navigation.navigate(ScreenKey.SEARCHING_HOME)
+                }}
+                style={styles.search__input}>
                 <IconFind
                     width={8 * 2}
                     height={8 * 2} />
                 <View style={{ width: 8 }} />
                 <Text style={{
-                    fontSize:13,
-                    color:'#454444'
+                    fontSize: 13,
+                    color: '#454444'
                 }}>
-                    Mắt một mí phải làm thế nào?
+                    Nhập thông tin tìm kiếm
                 </Text>
             </TouchableOpacity>
 

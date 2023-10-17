@@ -9,7 +9,7 @@ import LinearGradient from 'react-native-linear-gradient';
 const StatusBarCustom = memo((props) => {
     return (
         <>
-            <StatusBar backgroundColor={props?.bgColor || BASE_COLOR} translucent={false} barStyle={props?.barStyle || 'light-content'} />
+            <StatusBar backgroundColor={props?.bgColor || BASE_COLOR} translucent={props?.translucent ? true :false} barStyle={props?.barStyle || 'light-content'} />
             {
                 !props?.rmStatusBarHeight && Platform.OS == 'ios' &&
                 <View style={{

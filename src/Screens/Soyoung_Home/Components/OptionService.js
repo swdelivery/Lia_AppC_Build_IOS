@@ -1,8 +1,41 @@
-import React, { memo } from 'react'
-import { Image, StyleSheet, Text, View } from 'react-native'
-import { _heightScale, _widthScale } from '../../../Constant/Scale'
+import React, { memo, useEffect } from 'react'
+import { Alert, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { _heightScale, _moderateScale, _widthScale } from '../../../Constant/Scale'
+import { useDispatch, useSelector } from 'react-redux'
+import { URL_ORIGINAL } from '../../../Constant/Url'
+import { dispatch, navigation } from '../../../../rootNavigation'
+import { getAllServiceGroup } from '../../../Redux/Action/ServiceGroup'
+import { stylesFont } from '../../../Constant/Font'
+import ScreenKey from '../../../Navigation/ScreenKey'
 
 const OptionService = memo(() => {
+
+    const listServiceGroupRedux = useSelector(state => state.serviceGroupReducer?.listServiceGroup)
+    const dispatch = useDispatch()
+
+    console.log({ listServiceGroupRedux });
+
+    useEffect(() => {
+        _getData()
+    }, [])
+
+    const _getData = () => {
+        var condition = {
+            condition: {
+                parentCode: {
+                    equal: null
+                }
+            },
+            "sort": {
+                "orderNumber": -1
+            },
+            "limit": 100,
+            "page": 1
+        }
+
+        dispatch(getAllServiceGroup(condition))
+    }
+
     return (
         <View style={{
             width: _widthScale(350),
@@ -16,24 +49,34 @@ const OptionService = memo(() => {
                 flexDirection: 'row',
                 flexWrap: 'wrap',
                 alignItems: 'center',
-                justifyContent: 'center'
+                justifyContent: 'space-between'
             }}>
 
                 {
-                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]?.map((item, index) => {
+                    [...listServiceGroupRedux,'1']?.map((item, index) => {
                         return (
-                            <View style={{
+                            <TouchableOpacity
+                            onPress={() => {
+                                navigation.navigate(ScreenKey.LIST_SERVICE, { currServiceGr: item })
+                            }}
+                            style={{
                                 alignItems: 'center',
-                                width: _widthScale(65)
+                                width: _widthScale(65),
+                                marginTop:_moderateScale(4),
                             }}>
                                 <View style={styles.item__option} >
                                     <Image style={{
                                         width: '100%',
                                         height: '100%'
-                                    }} source={require('../../../Image/iconOption.png')} />
+                                    }}
+                                        source={{ uri: `${URL_ORIGINAL}${item?.fileAvatar?.link}` }}
+                                    />
+
                                 </View>
-                                <Text>Item</Text>
-                            </View>
+                                <Text style={[stylesFont.fontNolan500,{
+                                    fontSize:_moderateScale(12)
+                                }]}>{item.name}</Text>
+                            </TouchableOpacity>
                         )
                     })
                 }

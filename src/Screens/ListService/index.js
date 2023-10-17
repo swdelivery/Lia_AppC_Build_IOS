@@ -300,7 +300,7 @@ const ListServiceScreen = (props) => {
     return (
 
         <View style={styles.container}>
-            <StatusBarCustom gradient />
+            <StatusBarCustom bgColor={Color.BASE_COLOR}  />
             <ModalIframeYoutube
                 playList={playingYoutube?.playList}
                 hide={() => {
@@ -346,11 +346,10 @@ const ListServiceScreen = (props) => {
                     <LinearGradient
                         start={{ x: 0, y: 1 }}
                         end={{ x: 1, y: 1 }}
-                        locations={[0, 0.6, 1]}
+                        // locations={[0, 0.6, 1]}
                         colors={[
                             Color.BASE_COLOR,
-                            '#8c104e',
-                            '#db0505',
+                            Color.BASE_COLOR,
                         ]}
                         style={{
                             width: '100%',

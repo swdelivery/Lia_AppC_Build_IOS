@@ -460,7 +460,7 @@ const AppWrapper = (props) => {
         // gestureResponseDistance: {
         //     vertical: 800
         // }
-        gestureEnabled: true,
+        gestureEnabled: false,
         cardOverlayEnabled: true
     }
 

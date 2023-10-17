@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { FlatList, Platform, StyleSheet, View } from 'react-native'
+import { FlatList, Platform, StyleSheet, TouchableOpacity, View } from 'react-native'
 import ImageColors from 'react-native-image-colors'
 import LinearGradient from 'react-native-linear-gradient'
 import Animated, { interpolateColor, runOnJS, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
@@ -9,6 +9,11 @@ import ListDoctor from './ListDoctor'
 import OptionService from './OptionService'
 import Voucher from './Voucher'
 import { _moderateScale } from '../../../Constant/Scale'
+import { BASE_COLOR } from '../../../Constant/Color'
+import { getAllNewsv2 } from '../../../Redux/Action/News'
+import { URL_ORIGINAL } from '../../../Constant/Url'
+import { navigation } from '../../../../rootNavigation'
+import ScreenKey from '../../../Navigation/ScreenKey'
 
 const Banner = () => {
     const FlatListRef = useRef(null)
@@ -28,27 +33,51 @@ const Banner = () => {
 
 
     useEffect(() => {
-        setListImage([
-            {
-                _id: '1',
-                url: `https://img2.soyoung.com/upload/20210924/2/9a0441f5159d66125f5252bd886c3946.jpg`
-            },
-            {
-                _id: '2',
-                url: `https://img2.soyoung.com/upload/20210924/6/642739b17effba4d31b163757e4d0114.jpg`
-            },
-            {
-                _id: '3',
-                url: `https://img2.soyoung.com/upload/20210924/4/b61733f1b5fafde858db04c7bcb04869.jpg`
-            },
-            {
-                _id: '4',
-                url: `https://img2.soyoung.com/upload/20210924/9/e4b63471060c8d9cfd934752fb3dafe8.jpg`
-            }
-        ])
+        // setListImage([
+        //     {
+        //         _id: '1',
+        //         url: `https://img2.soyoung.com/upload/20210924/2/9a0441f5159d66125f5252bd886c3946.jpg`
+        //     },
+        //     {
+        //         _id: '2',
+        //         url: `https://img2.soyoung.com/upload/20210924/6/642739b17effba4d31b163757e4d0114.jpg`
+        //     },
+        //     {
+        //         _id: '3',
+        //         url: `https://img2.soyoung.com/upload/20210924/4/b61733f1b5fafde858db04c7bcb04869.jpg`
+        //     },
+        //     {
+        //         _id: '4',
+        //         url: `https://img2.soyoung.com/upload/20210924/9/e4b63471060c8d9cfd934752fb3dafe8.jpg`
+        //     }
+        // ])
         // startInterval()
 
+        _getAllNews()
+
     }, [])
+
+    const _getAllNews = async () => {
+        let result = await getAllNewsv2({
+            condition: {
+                isPin: { equal: true }
+            },
+            "sort": {
+                "orderNumber": -1
+            },
+            limit: 5
+        })
+        if (result?.isAxiosError) return
+
+        let listImages = result?.data?.data?.map((item, index) => {
+            return {
+                _id: item?._id,
+                url: `${URL_ORIGINAL}${item?.representationFileArr[0]?.link}`
+            }
+        })
+
+        setListImage(listImages)
+    }
 
     const startInterval = () => {
         const timer = window.setInterval(() => {
@@ -141,7 +170,11 @@ const Banner = () => {
 
     const _renderImage = ({ item, index }) => {
         return (
-            <EachImage currIndexBanner={currIndexBanner} data={item} indexItem={index} />
+            <EachImage
+                handlePress={() => {
+                    navigation.navigate(ScreenKey.DETAIL_NEWS, { idNews: item?._id })
+                }}
+                currIndexBanner={currIndexBanner} data={item} indexItem={index} />
         )
     }
 

@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react'
-import { View } from 'react-native'
+import React, { memo, useEffect } from 'react'
+import { TouchableOpacity, View } from 'react-native'
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 import { _height, _heightScale, _moderateScale, _width, _widthScale } from '../../../Constant/Scale'
 
-const EachImage = (props) => {
+const EachImage = memo((props) => {
 
     const widthImg = useSharedValue(380)
     const heightImg = useSharedValue(140)
@@ -35,30 +35,36 @@ const EachImage = (props) => {
     }, [props?.currIndexBanner])
 
     return (
-        <View style={{
-            width: _width,
-            alignItems: 'center',
-        }}>
+        <TouchableOpacity 
+
+        onPress={props?.handlePress}
+        activeOpacity={.9}
+        >
             <View style={{
-                borderRadius: 16,
-                overflow: 'hidden',
-                width: _widthScale(350),
-                height: _heightScale(140),
-                alignItems: 'center'
+                width: _width,
+                alignItems: 'center',
             }}>
-                <Animated.Image
-                    style={[
-                        {
-                            width: _widthScale(350),
-                            height: _heightScale(140),
-                        },
-                        animSizeImg
-                    ]}
-                    source={{ uri: `${props?.data?.url}` }}
-                />
+                <View style={{
+                    borderRadius: 16,
+                    overflow: 'hidden',
+                    width: _widthScale(350),
+                    height: _heightScale(140),
+                    alignItems: 'center'
+                }}>
+                    <Animated.Image
+                        style={[
+                            {
+                                width: _widthScale(350),
+                                height: _heightScale(140),
+                            },
+                            animSizeImg
+                        ]}
+                        source={{ uri: `${props?.data?.url}` }}
+                    />
+                </View>
             </View>
-        </View>
+        </TouchableOpacity>
     )
-}
+})
 
 export default EachImage
