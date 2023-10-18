@@ -121,7 +121,7 @@ export const updateProfilePartner = (data) => {
 
     return Axios.put(`${URL_FOR_PARTNER}/partners`, data)
         .then(res => {
-            console.log(useLogStyle + '----FETCHING SUCCESS: ', setLogStyle('green'), { updateProfilePartner: res.data.data });
+            console.log(useLogStyle + '----FETCHING SUCCESS: ', setLogStyle('green'), { updateProfilePartner: res });
             _checkSuccess(res)
             dispatch({ type: ActionType.SAVE_INFO_USER, payload: { data: res.data.data } })
             // return res.data.data

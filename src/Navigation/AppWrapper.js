@@ -191,6 +191,7 @@ import ListOrderBookingAll from '../Screens/NewAffiliate/ListOrderBookingAll';
 import QANewAffiliate from '../Screens/NewAffiliate/QAAffiliate';
 import InfoWalletNewAffiliate from '../Screens/NewAffiliate/InfoWalletNewAffiliate';
 import ListRanked from '../Screens/NewAffiliate/ListRanked';
+import LiAVoucher from '../Screens/LiAVoucher';
 
 const Tab = createMaterialTopTabNavigator();
 const Stack = createStackNavigator();
@@ -460,7 +461,7 @@ const AppWrapper = (props) => {
         // gestureResponseDistance: {
         //     vertical: 800
         // }
-        gestureEnabled: false,
+        gestureEnabled: true,
         cardOverlayEnabled: true
     }
 
@@ -681,6 +682,9 @@ const AppWrapper = (props) => {
                                     <rootStack.Screen options={{ ...TransitionPresets.SlideFromRightIOS }} name={ScreenKey.QA_NEW_AFFILIATE} component={QANewAffiliate} />
                                     <rootStack.Screen options={{ ...TransitionPresets.SlideFromRightIOS }} name={ScreenKey.INFO_WALLET_NEW_AFFILIATE} component={InfoWalletNewAffiliate} />
                                     <rootStack.Screen options={{ ...TransitionPresets.SlideFromRightIOS }} name={ScreenKey.LIST_RANKED} component={ListRanked} />
+
+                                    {/* LiA Voucher */}
+                                    <rootStack.Screen options={{ ...TransitionPresets.SlideFromRightIOS }} name={ScreenKey.LIA_VOUCHER} component={LiAVoucher} />
 
 
                                     <rootStack.Screen

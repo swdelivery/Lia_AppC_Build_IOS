@@ -46,11 +46,11 @@ const index = () => {
         },
         {
             screen: SoYoung_Service,
-            tabLabel: "Sản phẩm",
+            tabLabel: "Chuyên viên",
         },
         {
             screen: SoYoung_Service,
-            tabLabel: "Bách khoa",
+            tabLabel: "Vật liệu",
         },
     ])
 

@@ -10,7 +10,7 @@ import { WHITE } from '../../../Constant/Color'
 import { stylesFont } from '../../../Constant/Font'
 import { useSelector } from 'react-redux'
 import ModalPickSingleNotSearch from '../../../Components/ModalPickSingleNotSearch/ModalPickSingleNotSearch'
-import { IconArrowDown } from '../../../Components/Icon/Icon'
+import { IconArrowDown, IconQRScaner } from '../../../Components/Icon/Icon'
 import { sizeIcon } from '../../../Constant/Icon'
 
 const Search = memo((props) => {
@@ -37,70 +37,87 @@ const Search = memo((props) => {
     })
 
     return (
-        <View style={[styles.search, shadow]}>
+        <View style={{
+            flexDirection:'row'
+        }}>
+            <View style={[styles.search, shadow]}>
 
-            <ModalPickSingleNotSearch
-                hide={() => {
-                    setExpandServiceGr(false)
-                }}
-                onSelect={(item) => {
-                    // _handleChoiceItemFilter(item)
-                    // navigation.navigate(ScreenKey.SEARCHING_HOME)
-                    navigation.navigate(ScreenKey.SEARCHING_HOME, { keySearch: item?.name, })
-                }}
-                data={(listServiceGroupRedux?.length > 0) ? listServiceGroupRedux : []} show={expandServiceGr} />
+                <ModalPickSingleNotSearch
+                    hide={() => {
+                        setExpandServiceGr(false)
+                    }}
+                    onSelect={(item) => {
+                        // _handleChoiceItemFilter(item)
+                        // navigation.navigate(ScreenKey.SEARCHING_HOME)
+                        navigation.navigate(ScreenKey.SEARCHING_HOME, { keySearch: item?.name, })
+                    }}
+                    data={(listServiceGroupRedux?.length > 0) ? listServiceGroupRedux : []} show={expandServiceGr} />
 
 
-            <View style={{ width: 8 }} />
-            <TouchableOpacity
-                onPress={() => {
-                    setExpandServiceGr(old => !old)
-                }}
-            >
-                <View style={styles.search__option}>
-                    <Text style={[stylesFont.fontNolan500, { fontSize: _moderateScale(12) }]}>
-                        Mắt
-                    </Text>
-                </View>
-            </TouchableOpacity>
-            <TouchableOpacity
-                onPress={() => {
-                    setExpandServiceGr(old => !old)
-                }}
-                // onPress={props?.press}
-                style={[styles.search_down_icon, {
-                    // transform: [
-                    //     {
-                    //         rotate: '90deg'
-                    //     }
-                    // ]
-                }]}>
+                <View style={{ width: 8 }} />
+                <TouchableOpacity
+                    onPress={() => {
+                        setExpandServiceGr(old => !old)
+                    }}
+                >
+                    <View style={styles.search__option}>
+                        <Text style={[stylesFont.fontNolan500, { fontSize: _moderateScale(12) }]}>
+                            Mắt
+                        </Text>
+                    </View>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => {
+                        setExpandServiceGr(old => !old)
+                    }}
+                    // onPress={props?.press}
+                    style={[styles.search_down_icon, {
+                        // transform: [
+                        //     {
+                        //         rotate: '90deg'
+                        //     }
+                        // ]
+                    }]}>
 
-                <IconArrowDown style={sizeIcon.sm} />
+                    <IconArrowDown style={sizeIcon.sm} />
 
-                {/* <IconRight
+                    {/* <IconRight
                     width={8 * 1.7}
                     height={8 * 1.7} /> */}
-            </TouchableOpacity>
-            <View style={{ width: 8 }} />
-
-            <TouchableOpacity
-                onPress={() => {
-                    navigation.navigate(ScreenKey.SEARCHING_HOME)
-                }}
-                style={styles.search__input}>
-                <IconFind
-                    width={8 * 2}
-                    height={8 * 2} />
+                </TouchableOpacity>
                 <View style={{ width: 8 }} />
-                <Text style={{
-                    fontSize: 13,
-                    color: '#454444'
-                }}>
-                    Nhập thông tin tìm kiếm
-                </Text>
-            </TouchableOpacity>
 
+                <TouchableOpacity
+                    onPress={() => {
+                        navigation.navigate(ScreenKey.SEARCHING_HOME)
+                    }}
+                    style={styles.search__input}>
+                    <IconFind
+                        width={8 * 2}
+                        height={8 * 2} />
+                    <View style={{ width: 8 }} />
+                    <Text style={{
+                        fontSize: 13,
+                        color: '#454444'
+                    }}>
+                        Nhập thông tin tìm kiếm
+                    </Text>
+                </TouchableOpacity>
+
+            </View>
+
+            <View style={{width:_moderateScale(8)}}/>
+
+            <TouchableOpacity style={[{
+                height: _moderateScale(8 * 4.5),
+                width: _moderateScale(8 * 4.5),
+                justifyContent:'center',
+                alignItems:'center',
+                backgroundColor:WHITE,
+                borderRadius:_moderateScale(8)
+            },shadow]}>
+                <IconQRScaner style={sizeIcon.lg}/>
+            </TouchableOpacity>
         </View>
     )
 })
@@ -128,12 +145,12 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     search: {
-        width: _widthScale(350),
+        width: _widthScale(310),
         height: _moderateScale(8 * 4.5),
         borderRadius: 8,
         backgroundColor: 'white',
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
     }
 })
 

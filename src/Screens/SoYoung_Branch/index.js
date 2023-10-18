@@ -1,13 +1,32 @@
-import React, { memo } from 'react'
-import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import React, { memo, useEffect, useState } from 'react'
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { _width } from '../../Constant/Scale'
 import { navigation } from '../../../rootNavigation'
 import ScreenKey from '../../Navigation/ScreenKey'
+import { getListBranchV2 } from '../../Redux/Action/BranchAction'
+import { URL_ORIGINAL } from '../../Constant/Url'
+import { ScrollView } from 'react-native-gesture-handler'
  
 const index = memo(() => {
 
+    const [listBranch, setListBranch] = useState([])
 
 
+    useEffect(() => {
+        _getListBranch()
+        // _startAnimation()
+    }, [])
+    const _getListBranch = async () => {
+        let result = await getListBranchV2({
+            sort: {
+                orderNumber: -1
+            },
+            "limit": 8,
+            "page": 1
+        })
+        if (result?.isAxiosError) return
+        setListBranch(result?.data?.data)
+    }
 
     const _renderItem = () => {
         return (
@@ -31,16 +50,9 @@ const index = memo(() => {
                 alignItems: 'center'
             }}>
                 {
-                    [1,2,3,4,5]?.map((item, index) => {
+                    listBranch?.map((item, index) => {
                         return (
                             <View style={[styles.card, shadow]}>
-                                {/* <LinearGradient
-                                    style={[StyleSheet.absoluteFill, { zIndex: -1 }]}
-                                    start={{ x: 0, y: 0 }}
-                                    end={{ x: 0, y: 1 }}
-                                    locations={[0, 0.8]}
-                                    colors={['#EE79B8', 'white',]}
-                                /> */}
                                 <TouchableOpacity 
                                 activeOpacity={.6}
                                 onPress={()=>{
@@ -55,7 +67,7 @@ const index = memo(() => {
                                                 borderRadius: 8 * 6 / 2,
                                                 borderWidth: 0.5
                                             }}
-                                            source={{ uri: `https://img2.soyoung.com/product/20230502/2/d295215cb6b7bbfcf6b56e040512ea36_400_300.png?imageView2/0/format/webp` }}
+                                            source={{ uri: `${URL_ORIGINAL}${item?.representationFileArr[0]?.link}` }}
                                         />
                                     </View>
                                     <View style={{ width: 8 }} />
@@ -67,7 +79,7 @@ const index = memo(() => {
                                             <Text
                                                 numberOfLines={1}
                                                 style={styles.title}>
-                                                Trang Beauty Center Ba Tháng Hai
+                                                 {item?.name}
                                             </Text>
 
                                             <TouchableOpacity
@@ -80,13 +92,6 @@ const index = memo(() => {
                                                     borderRadius: 8 * 2
                                                 }}
                                             >
-                                                {/* <Image 
-                                                style={{
-                                                    width:8*2,
-                                                    height:8*2,
-                                                    resizeMode:'contain'
-                                                }}
-                                                source={require('../../Image/chatBase2.png')}/> */}
                                                 <Text
                                                     style={{
                                                         fontSize: 12,
@@ -101,7 +106,6 @@ const index = memo(() => {
                                         </View>
 
                                         <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 2 }}>
-                                            {/* <Image style={styles.start} source={require('../../../Image/locationRed.png')}/> */}
                                             <Image style={styles.start} source={require('../../Image/a_star2.png')} />
                                             <Image style={styles.start} source={require('../../Image/a_star2.png')} />
                                             <Image style={styles.start} source={require('../../Image/a_star2.png')} />
@@ -111,7 +115,7 @@ const index = memo(() => {
                                                 fontSize: 10,
                                                 marginLeft: 4
                                             }}>
-                                                (320)
+                                                ({item?.reviewCount})
                                             </Text>
                                             <View style={{ width: 8 }} />
                                             <Text>|</Text>
@@ -122,12 +126,12 @@ const index = memo(() => {
                                                     fontSize: 10,
                                                     marginLeft: 4
                                                 }}>
-                                                    (157)
+                                                    ({item?.countPartner})
                                                 </Text>
                                             </View>
                                         </View>
 
-                                        <View style={{ flexDirection: 'row', marginTop: 0 }}>
+                                        <View style={{ flexDirection: 'row', marginTop: 4 }}>
                                             <Image style={{
                                                 width: 8 * 2,
                                                 height: 8 * 2,
@@ -137,7 +141,7 @@ const index = memo(() => {
                                                 fontSize: 12,
                                                 color: 'grey'
                                             }}>
-                                                294 Đường 3/2 Phường 12 Quận 10 TPHCM
+                                                {item?.address}
                                             </Text>
                                         </View>
 

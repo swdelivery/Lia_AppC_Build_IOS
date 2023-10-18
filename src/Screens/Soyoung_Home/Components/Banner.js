@@ -118,7 +118,7 @@ const Banner = () => {
         })
         console.log({ result });
         if (Platform.OS == 'ios') {
-            setPrimaryColor(result?.background)
+            setPrimaryColor(result?.secondary)
 
         } else {
             setPrimaryColor(result?.dominant)
@@ -242,8 +242,8 @@ const Banner = () => {
             <OptionService />
             <View style={{ height: 8 }} />
             <Voucher />
-            <View style={{ height: 8 }} />
-            <FlashSale />
+            {/* <View style={{ height: 8 }} />
+            <FlashSale /> */}
             <View style={{ height: 8 }} />
             <ListDoctor />
 

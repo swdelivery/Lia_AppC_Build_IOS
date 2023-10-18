@@ -1,13 +1,32 @@
-import React, { memo } from 'react'
-import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import React, { memo, useEffect, useState } from 'react'
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { _width } from '../../Constant/Scale'
 import { navigation } from '../../../rootNavigation'
 import ScreenKey from '../../Navigation/ScreenKey'
+import { getAllDoctorv2 } from '../../Redux/Action/DoctorAction'
+import { URL_ORIGINAL } from '../../Constant/Url'
+import { ScrollView } from 'react-native-gesture-handler'
 
 const index = memo(() => {
 
+    const [listDoctor, setListDoctor] = useState([])
 
 
+    useEffect(() => {
+        _getListDoctor()
+        // _startAnimation()
+    }, [])
+    const _getListDoctor = async () => {
+        let result = await getAllDoctorv2({
+            sort: {
+                orderNumber: -1
+            },
+            "limit": 8,
+            "page": 1
+        })
+        if (result?.isAxiosError) return
+        setListDoctor(result?.data?.data)
+    }
 
     const _renderItem = () => {
         return (
@@ -31,13 +50,13 @@ const index = memo(() => {
                 alignItems: 'center'
             }}>
                 {
-                    [1,2,3,4,5,6]?.map((item, index) => {
+                    listDoctor?.map((item, index) => {
                         return (
-                            <TouchableOpacity
-                            activeOpacity={.7}
-                            onPress={()=>{
-                                navigation.navigate(ScreenKey.DETAIL_DOCTOR)
-                            }}
+                            <View
+                            // activeOpacity={.7}
+                            // onPress={()=>{
+                            //     navigation.navigate(ScreenKey.DETAIL_DOCTOR)
+                            // }}
                             style={[styles.card, shadow]}>
                                 {/* <LinearGradient
                                     style={[StyleSheet.absoluteFill, { zInpdex: -1 }]}
@@ -46,7 +65,12 @@ const index = memo(() => {
                                     locations={[0, 0.8]}
                                     colors={['#EE79B8', 'white',]}
                                 /> */}
-                                <View style={{ flexDirection: 'row' }}>
+                                <TouchableOpacity
+                                activeOpacity={.7}
+                            onPress={()=>{
+                                navigation.navigate(ScreenKey.DETAIL_DOCTOR)
+                            }}
+                                style={{ flexDirection: 'row' }}>
                                     <View>
                                         <Image
                                             style={{
@@ -55,7 +79,7 @@ const index = memo(() => {
                                                 borderRadius: 8 * 6 / 2,
                                                 borderWidth: 0.5
                                             }}
-                                            source={{ uri: `https://img2.soyoung.com/tieba/android/shortpost/20220917/6/0815271a9df9b46916123420ac8afcfb.jpg` }}
+                                            source={{ uri: `${URL_ORIGINAL}${item?.avatar?.link}` }}
                                         />
                                     </View>
                                     <View style={{ width: 8 }} />
@@ -67,7 +91,7 @@ const index = memo(() => {
                                             <Text
                                                 numberOfLines={1}
                                                 style={styles.title}>
-                                                BS.Pham Thi A
+                                                {item?.name}
                                             </Text>
 
                                             <TouchableOpacity
@@ -111,7 +135,7 @@ const index = memo(() => {
                                                 fontSize: 10,
                                                 marginLeft: 4
                                             }}>
-                                                (320)
+                                                ({item?.reviewCount})
                                             </Text>
                                             <View style={{ width: 8 }} />
                                             <Text>|</Text>
@@ -122,12 +146,12 @@ const index = memo(() => {
                                                     fontSize: 10,
                                                     marginLeft: 4
                                                 }}>
-                                                    (157)
+                                                    ({item?.countPartner})
                                                 </Text>
                                             </View>
                                         </View>
 
-                                        <View style={{ flexDirection: 'row', marginTop: 0 }}>
+                                        <View style={{ flexDirection: 'row', marginTop: 4 }}>
                                             <Image style={{
                                                 width: 8 * 2,
                                                 height: 8 * 2,
@@ -137,7 +161,7 @@ const index = memo(() => {
                                                 fontSize: 12,
                                                 color: 'grey'
                                             }}>
-                                                Trang Beauty Center 3/2
+                                                 {item?.branch?.name}
                                             </Text>
                                         </View>
 
@@ -201,7 +225,7 @@ const index = memo(() => {
                                     </View>
 
 
-                                </View>
+                                </TouchableOpacity>
 
                                 <View style={{ marginTop: 8 * 2 }}>
                                     <ScrollView horizontal showsHorizontalScrollIndicator={false}>
@@ -293,7 +317,7 @@ const index = memo(() => {
                                     </ScrollView>
                                 </View>
 
-                            </TouchableOpacity>
+                            </View>
                         )
                     })
                 }

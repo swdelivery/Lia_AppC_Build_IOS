@@ -1,13 +1,33 @@
-import React, { memo } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 import { Alert, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { _width } from '../../Constant/Scale'
 import { navigation } from '../../../rootNavigation'
 import ScreenKey from '../../Navigation/ScreenKey'
+import { getServicev2 } from '../../Redux/Action/Service'
+import { URL_ORIGINAL } from '../../Constant/Url'
+import { formatMonney } from '../../Constant/Utils'
 
 const index = memo((props) => {
 
+    const [listService, setListService] = useState([])
 
 
+    useEffect(() => {
+        _getListService()
+        // _startAnimation()    
+
+    }, [])
+    const _getListService = async () => {
+        let result = await getServicev2({
+            sort: {
+                orderNumber: -1
+            },
+            "limit": 8,
+            "page": 1
+        })
+        if (result?.isAxiosError) return
+        setListService(result?.data?.data)
+    }
 
     const _renderItem = () => {
         return (
@@ -15,7 +35,7 @@ const index = memo((props) => {
 
             </View>
         )
-    } 
+    }
 
     return (
         <View style={styles.container}>
@@ -32,13 +52,13 @@ const index = memo((props) => {
                 flexWrap: 'wrap'
             }}>
                 {
-                    [1, 2, 3, 4, 5, 6, 7, 8, 9]?.map((item, index) => {
+                    listService?.map((item, index) => {
                         return (
                             <View style={styles.card}>
                                 <TouchableOpacity
                                     activeOpacity={.8}
                                     onPress={() => {
-                                      navigation.navigate(ScreenKey.DETAIL_SERVICE)
+                                        navigation.navigate(ScreenKey.DETAIL_SERVICE)
                                     }}
                                     style={{
                                         width: '90%',
@@ -55,7 +75,7 @@ const index = memo((props) => {
                                                 borderTopLeftRadius: 8,
                                                 borderTopRightRadius: 8
                                             }}
-                                            source={{ uri: `https://img2.soyoung.com/product/20230204/6/4c37c3bc52acc601968d58619dbb4336_400_300.jpg` }} />
+                                            source={{ uri: `${URL_ORIGINAL}${item?.representationFileArr[0]?.link}` }} />
                                     </View>
                                     <View style={{
                                         padding: 4
@@ -63,7 +83,7 @@ const index = memo((props) => {
                                         <Text style={{
                                             fontSize: 12,
                                             fontWeight: 'bold'
-                                        }}>Loại bỏ bọng mắt Pinhole</Text>
+                                        }}>{item?.name}</Text>
 
                                         <View>
                                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -77,7 +97,7 @@ const index = memo((props) => {
                                                     fontSize: 10,
                                                     marginLeft: 4
                                                 }}>
-                                                    (320)
+                                                    ({item?.reviewCount})
                                                 </Text>
                                             </View>
                                         </View>
@@ -100,7 +120,7 @@ const index = memo((props) => {
                                                     fontWeight: 'bold',
                                                     color: 'red'
                                                 }}>
-                                                    12.000.000
+                                                    {formatMonney(item?.price)}
                                                 </Text>
                                             </View>
 
@@ -110,7 +130,7 @@ const index = memo((props) => {
                                                     fontSize: 10,
                                                     marginLeft: 4
                                                 }}>
-                                                    (157)
+                                                    ({item?.countPartner})
                                                 </Text>
                                             </View>
                                         </View>

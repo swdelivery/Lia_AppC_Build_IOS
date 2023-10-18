@@ -5,6 +5,22 @@ import * as ActionType from '../Constants/ActionType';
 import { setLogStyle, useLogStyle } from './LogConfig';
 import { Alert } from 'react-native';
 
+
+export const checkStepUnlockAffiliate = (id) => {
+    return Axios.get(`${URL_FOR_PARTNER}/partners/${id}/gratitude-validate`, {
+
+    })
+        .then(res => { 
+            console.log(useLogStyle + '----FETCHING SUCCESS: ', setLogStyle('green'), { checkStepUnlockAffiliate: res });
+            return res
+        })
+        .catch(error => {
+            console.log(useLogStyle + '----FETCHING FAIL: ', setLogStyle('red'), { checkStepUnlockAffiliate: error });
+            _checkError(error)
+            return error
+        })
+}
+
 export const getWallet = () => {
     return async dispatch => {
         // dispatch({

@@ -9,16 +9,28 @@ import Collapsible from 'react-native-collapsible'
 import { sizeIcon } from '../../../Constant/Icon'
 import { navigation } from '../../../../rootNavigation'
 import ScreenKey from '../../../Navigation/ScreenKey'
+import { checkStepUnlockAffiliate } from '../../../Redux/Action/Affiilate'
+import { useSelector } from 'react-redux'
 
 
 const Content = (props) => {
+
+    const infoUserRedux = useSelector(state => state.infoUserReducer?.infoUser)
+
     const refView = useAnimatedRef()
     const heightValueBox = useSharedValue(0);
     const [heightContent, setHeightContent] = useState(0);
 
 
     useEffect(() => {
+
+        _checkStep(infoUserRedux)
+
     }, [])
+
+    const _checkStep = async (infoUserRedux) => {
+        let result = await checkStepUnlockAffiliate(infoUserRedux?._id)
+    }
 
 
 
@@ -29,13 +41,13 @@ const Content = (props) => {
         // exiting={FadeOut.duration(100).springify().mass(0.3)}
         >
             <TouchableOpacity
-            onPress={()=>{
-                navigation.navigate(ScreenKey.VERIFICATION_CTV)
-            }}
-            style={{
-                flexDirection: 'row',
-                alignItems: 'center'
-            }}>
+                onPress={() => {
+                    navigation.navigate(ScreenKey.VERIFICATION_CTV)
+                }}
+                style={{
+                    flexDirection: 'row',
+                    alignItems: 'center'
+                }}>
                 <Text style={{ flex: 1, color: BASE_COLOR, textDecorationLine: 'underline', ...stylesFont.fontNolan500, fontSize: _moderateScale(14) }}>
                     Bước 1: Đăng kí để trở thành cộng tác viên
                 </Text>
@@ -114,16 +126,16 @@ const TutMakeMoney = memo(() => {
                 //     setIsExpanded(old => !old)
                 // }}
                 style={[styles.options__btn, shadow, isExpanded && { borderColor: BASE_COLOR, borderWidth: 1 }]}>
-                <TouchableOpacity 
-                activeOpacity={.8}
-                onPress={() => {
-                    setIsExpanded(old => !old)
-                }}
-                style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    height: _moderateScale(8 * 5),
-                }}>
+                <TouchableOpacity
+                    activeOpacity={.8}
+                    onPress={() => {
+                        setIsExpanded(old => !old)
+                    }}
+                    style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        height: _moderateScale(8 * 5),
+                    }}>
                     <IconPartnerShip style={{ width: _moderateScale(8 * 3), height: _moderateScale(8 * 3) }} />
 
                     <View style={{ width: _moderateScale(8) }} />
