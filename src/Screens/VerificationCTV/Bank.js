@@ -143,7 +143,7 @@ const Bank = memo((props) => {
             <View style={{ paddingHorizontal: _moderateScale(8 * 3), marginTop:_moderateScale(8) }}>
                 <Text style={[stylesFont.fontNolan, { fontSize: _moderateScale(16), marginTop: _moderateScale(8 * 2), color: BLACK_OPACITY_8 }]}>
                     Tên ngân hàng {
-                        <Text style={{ color: GREY, fontSize: _moderateScale(14) }}>( Không bắt buộc )</Text>
+                        // <Text style={{ color: GREY, fontSize: _moderateScale(14) }}>( Bắt buộc )</Text>
                     }
                 </Text>
                 {
@@ -191,7 +191,7 @@ const Bank = memo((props) => {
             <View style={{ paddingHorizontal: _moderateScale(8 * 3) }}>
                 <Text style={[stylesFont.fontNolan, { fontSize: _moderateScale(16), marginTop: _moderateScale(8 * 2), color: BLACK_OPACITY_8 }]}>
                     Số tài khoản {
-                        <Text style={{ color: GREY, fontSize: _moderateScale(14) }}>( Không bắt buộc )</Text>
+                        // <Text style={{ color: GREY, fontSize: _moderateScale(14) }}>( Không bắt buộc )</Text>
                     }
                 </Text>
                 {
@@ -223,7 +223,7 @@ const Bank = memo((props) => {
             <View style={{ paddingHorizontal: _moderateScale(8 * 3) }}>
                 <Text style={[stylesFont.fontNolan, { fontSize: _moderateScale(16), marginTop: _moderateScale(8 * 2), color: BLACK_OPACITY_8 }]}>
                     Tên chủ thẻ {
-                        <Text style={{ color: GREY, fontSize: _moderateScale(14) }}>( Không bắt buộc )</Text>
+                        // <Text style={{ color: GREY, fontSize: _moderateScale(14) }}>( Không bắt buộc )</Text>
                     }
                 </Text>
                 {

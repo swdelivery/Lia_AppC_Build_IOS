@@ -76,7 +76,7 @@ const InfoWalletNewAffiliate = memo(() => {
         <View style={{ flex: 1, backgroundColor: WHITE }}>
             <View style={styles.header}>
                 <View style={{
-                    height: Platform.OS == 'ios' ? getStatusBarHeight() : 0
+                    height: getStatusBarHeight()
                 }} />
                 <View style={styles.header__box}>
                     <View style={{ flex: 1 }}>

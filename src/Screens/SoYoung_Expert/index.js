@@ -3,21 +3,21 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { _width } from '../../Constant/Scale'
 import { navigation } from '../../../rootNavigation'
 import ScreenKey from '../../Navigation/ScreenKey'
-import { getListBranchV2 } from '../../Redux/Action/BranchAction'
+import { getAllDoctorv2 } from '../../Redux/Action/DoctorAction'
 import { URL_ORIGINAL } from '../../Constant/Url'
 import { ScrollView } from 'react-native-gesture-handler'
- 
+
 const index = memo(() => {
 
-    const [listBranch, setListBranch] = useState([])
+    const [listDoctor, setListDoctor] = useState([])
 
 
     useEffect(() => {
-        _getListBranch()
+        _getListDoctor()
         // _startAnimation()
     }, [])
-    const _getListBranch = async () => {
-        let result = await getListBranchV2({
+    const _getListDoctor = async () => {
+        let result = await getAllDoctorv2({
             sort: {
                 orderNumber: -1
             },
@@ -25,14 +25,14 @@ const index = memo(() => {
             "page": 1
         })
         if (result?.isAxiosError) return
-        setListBranch(result?.data?.data)
+        setListDoctor(result?.data?.data)
     }
 
     const _renderItem = () => {
         return (
             <View style={styles.card}>
 
-            </View>
+            </View> 
         )
     }
 
@@ -50,14 +50,26 @@ const index = memo(() => {
                 alignItems: 'center'
             }}>
                 {
-                    listBranch?.map((item, index) => {
+                    listDoctor?.map((item, index) => {
                         return (
-                            <View style={[styles.card, shadow]}>
-                                <TouchableOpacity 
-                                activeOpacity={.6}
-                                onPress={()=>{
-                                    navigation.navigate(ScreenKey.DETAIL_BRAND)
-                                }}
+                            <View
+                            // activeOpacity={.7}
+                            // onPress={()=>{
+                            //     navigation.navigate(ScreenKey.DETAIL_DOCTOR)
+                            // }}
+                            style={[styles.card, shadow]}>
+                                {/* <LinearGradient
+                                    style={[StyleSheet.absoluteFill, { zInpdex: -1 }]}
+                                    start={{ x: 0, y: 0 }}
+                                    end={{ x: 0, y: 1 }}
+                                    locations={[0, 0.8]}
+                                    colors={['#EE79B8', 'white',]}
+                                /> */}
+                                <TouchableOpacity
+                                activeOpacity={.7}
+                            onPress={()=>{
+                                navigation.navigate(ScreenKey.DETAIL_DOCTOR)
+                            }}
                                 style={{ flexDirection: 'row' }}>
                                     <View>
                                         <Image
@@ -79,7 +91,7 @@ const index = memo(() => {
                                             <Text
                                                 numberOfLines={1}
                                                 style={styles.title}>
-                                                 {item?.name}
+                                                {item?.name}
                                             </Text>
 
                                             <TouchableOpacity
@@ -92,6 +104,13 @@ const index = memo(() => {
                                                     borderRadius: 8 * 2
                                                 }}
                                             >
+                                                {/* <Image 
+                                                style={{
+                                                    width:8*2,
+                                                    height:8*2,
+                                                    resizeMode:'contain'
+                                                }}
+                                                source={require('../../Image/chatBase2.png')}/> */}
                                                 <Text
                                                     style={{
                                                         fontSize: 12,
@@ -106,6 +125,7 @@ const index = memo(() => {
                                         </View>
 
                                         <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 2 }}>
+                                            {/* <Image style={styles.start} source={require('../../../Image/locationRed.png')}/> */}
                                             <Image style={styles.start} source={require('../../Image/a_star2.png')} />
                                             <Image style={styles.start} source={require('../../Image/a_star2.png')} />
                                             <Image style={styles.start} source={require('../../Image/a_star2.png')} />
@@ -141,7 +161,7 @@ const index = memo(() => {
                                                 fontSize: 12,
                                                 color: 'grey'
                                             }}>
-                                                {item?.address}
+                                                 {item?.branch?.name}
                                             </Text>
                                         </View>
 
@@ -170,7 +190,7 @@ const index = memo(() => {
                                                     fontWeight: 'bold',
                                                     fontSize: 10
                                                 }}>
-                                                    Phòng khám
+                                                    Da liễu
                                                 </Text>
                                             </TouchableOpacity>
                                             <View style={{ width: 4 }} />
@@ -195,7 +215,7 @@ const index = memo(() => {
                                                     fontWeight: 'bold',
                                                     fontSize: 10
                                                 }}>
-                                                    Giấy phép
+                                                    Chứng chỉ
                                                 </Text>
                                             </TouchableOpacity>
                                         </View>

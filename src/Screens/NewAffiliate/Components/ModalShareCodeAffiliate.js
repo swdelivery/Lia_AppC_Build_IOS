@@ -19,8 +19,14 @@ import ScreenKey from '../../../Navigation/ScreenKey'
 import Clipboard from '@react-native-community/clipboard'
 import ModalFlashMsg from '../../../Components/ModalFlashMsg/ModalFlashMsg'
 import Share from 'react-native-share';
+import { useSelector } from 'react-redux'
+import { getConfigData } from '../../../Redux/Action/OrtherAction'
 
 const ModalShareCodeAffiliate = memo((props) => {
+
+    const infoUserRedux = useSelector(state => state.infoUserReducer?.infoUser)
+
+    const [linkInviteCode, setLinkInviteCode] = useState('')
 
     const opacityBackDrop = useSharedValue(0);
     const opacityContainer = useSharedValue(0);
@@ -29,6 +35,17 @@ const ModalShareCodeAffiliate = memo((props) => {
 
     const [showModalFlashMsg, setShowModalFlashMsg] = useState(false)
 
+    useEffect(() => {
+        _getConfigDataLinkInvite()
+    }, [])
+
+    const _getConfigDataLinkInvite = async() => {
+        let result =await getConfigData('LINK_INVITE_CODE');
+        if (result?.isAxiosError) return;
+        setLinkInviteCode(result)
+
+
+    }
 
     useEffect(() => {
 
@@ -103,7 +120,7 @@ const ModalShareCodeAffiliate = memo((props) => {
                             height: _height,
                         }, {
                             backgroundColor: 'rgba(0,0,0,.7)'
-                        },animOpacityBackDrop]}>
+                        }, animOpacityBackDrop]}>
                             <TouchableOpacity onPress={() => _handleHideModal()} style={[StyleSheet.absoluteFillObject]} />
                         </Animated.View>
 
@@ -111,6 +128,8 @@ const ModalShareCodeAffiliate = memo((props) => {
                             width: _width,
                             backgroundColor: WHITE,
                             borderRadius: _moderateScale(8 * 2),
+                            borderBottomLeftRadius:0,
+                            borderBottomRightRadius:0,
                             paddingBottom: _moderateScale(8 * 2),
                             position: 'absolute',
                             bottom: -400,
@@ -180,13 +199,15 @@ const ModalShareCodeAffiliate = memo((props) => {
                                         paddingHorizontal: _moderateScale(8)
                                     }}>
                                         <Text selectable={true} style={[stylesFont.fontNolanBold, { fontSize: _moderateScale(14), color: Color.BLUE_FB }]}>
-                                            LIA0475837
+                                            {
+                                                infoUserRedux?.collaboratorCode
+                                            }
                                         </Text>
                                     </View>
                                     <View style={{ width: _widthScale(8) }} />
                                     <TouchableOpacity
                                         onPress={() => {
-                                            Clipboard.setString('LIA0475837')
+                                            Clipboard.setString(`${infoUserRedux?.collaboratorCode}`)
                                             setShowModalFlashMsg(true)
                                             setTimeout(() => {
                                                 setShowModalFlashMsg(false)
@@ -213,13 +234,15 @@ const ModalShareCodeAffiliate = memo((props) => {
                                         paddingHorizontal: _moderateScale(8)
                                     }}>
                                         <Text selectable={true} style={[stylesFont.fontNolanBold, { fontSize: _moderateScale(14), color: Color.BLUE_FB }]}>
-                                            https://liabeauty.vn/
+                                            {
+                                                `${linkInviteCode?.value}${infoUserRedux?.collaboratorCode}`
+                                            }
                                         </Text>
                                     </View>
                                     <View style={{ width: _widthScale(8) }} />
                                     <TouchableOpacity
                                         onPress={() => {
-                                            Clipboard.setString('https://liabeauty.vn/')
+                                            Clipboard.setString(`${linkInviteCode?.value}${infoUserRedux?.collaboratorCode}`)
                                             setShowModalFlashMsg(true)
                                             setTimeout(() => {
                                                 setShowModalFlashMsg(false)
@@ -233,7 +256,7 @@ const ModalShareCodeAffiliate = memo((props) => {
                                 <TouchableOpacity
                                     onPress={() => {
                                         Share.open({
-                                            message: `https://liabeauty.vn`
+                                            message: `${linkInviteCode?.value}${infoUserRedux?.collaboratorCode}`
                                         })
                                             .then((res) => {
                                                 Alert.alert('Chia sẻ thành công!')

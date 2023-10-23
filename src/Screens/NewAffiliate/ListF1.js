@@ -1,5 +1,5 @@
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { BASE_COLOR, WHITE } from '../../Constant/Color'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 import { _moderateScale } from '../../Constant/Scale'
@@ -8,35 +8,48 @@ import { stylesFont } from '../../Constant/Font'
 import { sizeIcon } from '../../Constant/Icon'
 import { navigation } from '../../../rootNavigation'
 import ScreenKey from '../../Navigation/ScreenKey'
+import { getListInvitee } from '../../Redux/Action/Affiilate'
 
 
 const ItemF1 = (data) => {
     return (
-        <TouchableOpacity 
-        onPress={()=>{
-            navigation.navigate(ScreenKey.INFO_F1)
-        }}
-        style={{
-            padding:_moderateScale(8*2),
-            borderBottomWidth:.5,
-            borderColor:'rgba(0,0,0,.2)',
-            flexDirection:'row',
-            alignItems:'center'
-        }}>
-            <Text style={[stylesFont.fontNolanBold,{flex:1}]}>
-                {data?.indexX + 1}. Nguyễn Văn Anh
+        <TouchableOpacity
+            onPress={() => {
+                navigation.navigate(ScreenKey.INFO_F1, { infoF1: data?.data })
+            }}
+            style={{
+                padding: _moderateScale(8 * 2),
+                borderBottomWidth: .5,
+                borderColor: 'rgba(0,0,0,.2)',
+                flexDirection: 'row',
+                alignItems: 'center'
+            }}>
+            <Text style={[stylesFont.fontNolanBold, { flex: 1 }]}>
+                {data?.indexX + 1}. {data?.data?.name}
             </Text>
-            <IconEyeBase style={sizeIcon.sm}/>
+            <IconEyeBase style={sizeIcon.sm} />
         </TouchableOpacity>
     )
 }
 
 const ListF1 = () => {
 
+    const [listInvitee, setListInvitee] = useState([])
+
+    useEffect(() => {
+        _getListF1()
+    }, [])
+
+    const _getListF1 = async () => {
+        let result = await getListInvitee({});
+        if (result?.isAxiosError) return
+        setListInvitee(result?.data?.data);
+    }
+
 
     const _renderItem = ({ item, index }) => {
         return (
-            <ItemF1 indexX={index} />
+            <ItemF1 data={item} indexX={index} />
         )
     }
 
@@ -48,10 +61,10 @@ const ListF1 = () => {
                 }} />
                 <View style={styles.header__box}>
                     <View style={{ flex: 1 }}>
-                        <TouchableOpacity 
-                        onPress={()=>{
-                            navigation.goBack()
-                        }}
+                        <TouchableOpacity
+                            onPress={() => {
+                                navigation.goBack()
+                            }}
                         >
                             <IconBackWhite />
                         </TouchableOpacity>
@@ -68,15 +81,14 @@ const ListF1 = () => {
             </View>
             <FlatList
                 renderItem={_renderItem}
-                data={[1, 2, 3, 4, 5, 6, 7, 8, 9]}
+                data={listInvitee}
                 keyExtractor={(item, index) => index}
-                ListFooterComponent={()=>{
-                    return(
-                        <View style={{height:100}}/>
+                ListFooterComponent={() => {
+                    return (
+                        <View style={{ height: 100 }} />
                     )
                 }}
             />
-            <Text>ListF1</Text>
         </View>
     )
 }

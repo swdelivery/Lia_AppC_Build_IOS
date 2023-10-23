@@ -10,26 +10,28 @@ import { TabBar, TabView } from 'react-native-tab-view'
 import * as Color from '../../../Constant/Color'
 import LinearGradient from 'react-native-linear-gradient'
 
-const TabSilver = memo(() => {
+const TabSilver = memo((props) => {
     return (
         <View style={{}}>
             <View style={{ alignItems: 'center', marginTop: _moderateScale(8 * 2) }}>
                 <IconSilver style={styles.iconSizeRanked} />
                 <Text style={styles.textRanked}>
-                    Hạng Bạc
+                    {
+                        props?.data?.name
+                    }
                 </Text>
             </View>
             <View style={{ height: _moderateScale(8 * 3) }} />
 
             <View style={styles.lineText}>
                 <View style={{ flex: 1 }}>
-                    <Text>1.000</Text>
+                    <Text>{props?.data?.startPoint}</Text>
                 </View>
                 <View style={{ flex: 1, alignItems: 'center' }}>
-                    <Text style={{ ...stylesFont.fontNolanBold, fontSize: _moderateScale(16) }}>1.000 Điểm</Text>
+                    <Text style={{ ...stylesFont.fontNolanBold, fontSize: _moderateScale(16) }}>{props?.data?.startPoint} Điểm</Text>
                 </View>
                 <View style={{ flex: 1, alignItems: 'flex-end' }}>
-                    <Text>5.000</Text>
+                    <Text>{props?.data?.endPoint}</Text>
                 </View>
             </View>
             <View style={styles.line}>
@@ -37,7 +39,7 @@ const TabSilver = memo(() => {
                     style={[StyleSheet.absoluteFill, { borderRadius: _moderateScale(8) }]}
                     start={{ x: 0, y: 0 }}
                     end={{ x: 1, y: 0 }}
-                    colors={[ "#A4B5BE",'#F8C904']}
+                    colors={["#A4B5BE", '#F8C904']}
                 />
             </View>
             <View style={{ height: _moderateScale(8 * 3) }} />
@@ -50,7 +52,7 @@ const TabSilver = memo(() => {
             }}>
                 <View style={[styles.boxDetail, { backgroundColor: '#B1BFC7' }]}>
                     <Text style={styles.boxDetail__textPercent}>
-                        5%
+                        {props?.data?.promotion?.discountRetailService}%
                     </Text>
                     <Text style={styles.boxDetail__text}>
                         Sử dụng dịch vụ
@@ -59,7 +61,7 @@ const TabSilver = memo(() => {
                 <View style={{ width: _moderateScale(4) }} />
                 <View style={[styles.boxDetail, { backgroundColor: '#9FA9B3' }]}>
                     <Text style={styles.boxDetail__textPercent}>
-                        5%
+                        {props?.data?.promotion?.discountFriend}%
                     </Text>
                     <Text style={styles.boxDetail__text}>
                         Giảm cho bạn bè
@@ -68,7 +70,7 @@ const TabSilver = memo(() => {
                 <View style={{ width: _moderateScale(4) }} />
                 <View style={[styles.boxDetail, { backgroundColor: '#848484' }]}>
                     <Text style={styles.boxDetail__textPercent}>
-                        8%
+                        {props?.data?.promotion?.commissionRate}%
                     </Text>
                     <Text style={styles.boxDetail__text}>
                         Hoa hồng trực tiếp
@@ -82,17 +84,17 @@ const TabSilver = memo(() => {
                 marginTop: _moderateScale(8 * 2)
             }}>
                 <Text style={styles.titleDetail}>
-                    Hạng điểm từ 0 - 1000 điểm
+                    Hạng điểm từ {props?.data?.startPoint} - {props?.data?.endPoint} điểm
                 </Text>
                 <View style={{ height: _moderateScale(8) }} />
                 <Text style={{ fontSize: _moderateScale(14) }}>
-                    1. Giảm thêm 5% tổng đơn khi sử dụng dịch vụ.
+                    1. Giảm thêm {props?.data?.promotion?.discountRetailService}% tổng đơn khi sử dụng dịch vụ.
                 </Text>
                 <Text style={{ fontSize: _moderateScale(14) }}>
-                    2. Giảm 5% cho bạn bè
+                    2. Giảm {props?.data?.promotion?.discountFriend}% cho bạn bè
                 </Text>
                 <Text style={{ fontSize: _moderateScale(14) }}>
-                    3. Nhận được 8% hoa hồng khi giới thiệu bạn bè
+                    3. Nhận được {props?.data?.promotion?.commissionRate}% hoa hồng khi giới thiệu bạn bè
                 </Text>
             </View>
 

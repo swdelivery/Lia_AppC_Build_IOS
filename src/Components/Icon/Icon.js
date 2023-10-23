@@ -39,6 +39,8 @@ import SVGHand from '../../SGV/hand.svg'
 import SVGTrash from '../../SGV/trash.svg'
 import SVGArrowDown from '../../SGV/arrowDown.svg'
 import SVGQRScaner from '../../SGV/qrScaner.svg'
+import SVGTick from '../../SGV/tick.svg'
+import SVGVoucher from '../../SGV/voucher.svg'
 import { _moderateScale } from "../../Constant/Scale"
 
 
@@ -406,6 +408,22 @@ export const IconArrowDown = (props) => {
 export const IconQRScaner = (props) => {
     return (
         <SVGQRScaner
+            width={props?.style?.width ? props?.style?.width : _moderateScale(8*4)}
+            height={props?.style?.height ? props?.style?.height : _moderateScale(8*4)}
+        />
+    )
+}
+export const IconTick = (props) => {
+    return (
+        <SVGTick
+            width={props?.style?.width ? props?.style?.width : _moderateScale(8*4)}
+            height={props?.style?.height ? props?.style?.height : _moderateScale(8*4)}
+        />
+    )
+}
+export const IconVoucher = (props) => {
+    return (
+        <SVGVoucher
             width={props?.style?.width ? props?.style?.width : _moderateScale(8*4)}
             height={props?.style?.height ? props?.style?.height : _moderateScale(8*4)}
         />

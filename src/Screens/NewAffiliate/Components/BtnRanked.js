@@ -26,13 +26,13 @@ const Content = (props) => {
     // exiting={FadeOut.duration(100).springify().mass(0.3)}
     >
       <Text>
-        - Giảm 10% khi sử dụng dịch vụ
+        - Giảm {props?.data?.promotion?.discountRetailService}% khi sử dụng dịch vụ
       </Text>
       <Text>
-        - Giảm 10% cho người được giới thiệu
+        - Giảm {props?.data?.promotion?.discountFriend}% cho bạn bè
       </Text>
       <Text>
-        - Nhận được 10% hoa hồng
+        - Nhận được {props?.data?.promotion?.commissionRate}% hoa hồng khi giới thiệu bạn bè
       </Text>
       <View style={{
         height: _moderateScale(8 * 2)
@@ -41,7 +41,7 @@ const Content = (props) => {
   )
 }
 
-const BtnRanked = memo(() => {
+const BtnRanked = memo((props) => {
 
   const [isExpanded, setIsExpanded] = useState(false)
 
@@ -94,7 +94,7 @@ const BtnRanked = memo(() => {
 
 
         <Collapsible collapsed={!isExpanded}>
-          <Content isExpanded={isExpanded} />
+          <Content data={props?.data} isExpanded={isExpanded} />
         </Collapsible>
 
 

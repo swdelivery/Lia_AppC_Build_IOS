@@ -6,11 +6,89 @@ import { setLogStyle, useLogStyle } from './LogConfig';
 import { Alert } from 'react-native';
 
 
+export const getListAllBookingInvitee = (data) => {
+    return Axios.post(`${URL_FOR_PARTNER}/gratitue/invitee-bookings`, data)
+        .then(res => {
+            console.log(useLogStyle + '----FETCHING SUCCESS: ', setLogStyle('green'), { getListAllBookingInvitee: res });
+            return res
+        })
+        .catch(error => {
+            console.log(useLogStyle + '----FETCHING FAIL: ', setLogStyle('red'), { getListAllBookingInvitee: error });
+            _checkError(error)
+            return error
+        })
+}
+
+export const getListAllOrderServiceInvitee = (data) => {
+    return Axios.post(`${URL_FOR_PARTNER}/gratitue/invitee-services`, data)
+        .then(res => {
+            console.log(useLogStyle + '----FETCHING SUCCESS: ', setLogStyle('green'), { getListAllOrderServiceInvitee: res });
+            return res
+        })
+        .catch(error => {
+            console.log(useLogStyle + '----FETCHING FAIL: ', setLogStyle('red'), { getListAllOrderServiceInvitee: error });
+            _checkError(error)
+            return error
+        })
+}
+
+export const getListBookingInvitee = (data) => {
+    return Axios.post(`${URL_FOR_PARTNER}/gratitue/invitee/list-booking`, data)
+        .then(res => {
+            console.log(useLogStyle + '----FETCHING SUCCESS: ', setLogStyle('green'), { getListBookingInvitee: res });
+            return res
+        })
+        .catch(error => {
+            console.log(useLogStyle + '----FETCHING FAIL: ', setLogStyle('red'), { getListBookingInvitee: error });
+            _checkError(error)
+            return error
+        })
+}
+
+export const getListOrderServiceInvitee = (data) => {
+    return Axios.post(`${URL_FOR_PARTNER}/gratitue/invitee/list-service`, data)
+        .then(res => {
+            console.log(useLogStyle + '----FETCHING SUCCESS: ', setLogStyle('green'), { getListOrderServiceInvitee: res });
+            return res
+        })
+        .catch(error => {
+            console.log(useLogStyle + '----FETCHING FAIL: ', setLogStyle('red'), { getListOrderServiceInvitee: error });
+            _checkError(error)
+            return error
+        })
+}
+
+export const getListInvitee = (data) => {
+    return Axios.post(`${URL_FOR_PARTNER}/gratitue/list-invitee`, data)
+        .then(res => {
+            console.log(useLogStyle + '----FETCHING SUCCESS: ', setLogStyle('green'), { getListInvitee: res });
+            return res
+        })
+        .catch(error => {
+            console.log(useLogStyle + '----FETCHING FAIL: ', setLogStyle('red'), { getListInvitee: error });
+            _checkError(error)
+            return error
+        })
+}
+
+export const getListRankedAffiliate = (data) => {
+    return Axios.post(`${URL_FOR_PARTNER}/gratitue/point-ranking`, data)
+        .then(res => {
+            console.log(useLogStyle + '----FETCHING SUCCESS: ', setLogStyle('green'), { getListRankedAffiliate: res });
+            return res
+        })
+        .catch(error => {
+            console.log(useLogStyle + '----FETCHING FAIL: ', setLogStyle('red'), { getListRankedAffiliate: error });
+            _checkError(error)
+            return error
+        })
+}
+
 export const checkStepUnlockAffiliate = (id) => {
     return Axios.get(`${URL_FOR_PARTNER}/partners/${id}/gratitude-validate`, {
 
     })
-        .then(res => { 
+        .then(res => {
             console.log(useLogStyle + '----FETCHING SUCCESS: ', setLogStyle('green'), { checkStepUnlockAffiliate: res });
             return res
         })
@@ -32,7 +110,7 @@ export const getWallet = () => {
 
         Axios.get(`${URL_FOR_PARTNER}/partner/`)
             .then(res => {
-                console.log(useLogStyle + '----FETCHING SUCCESS: ', setLogStyle('green'), { getWallet: res});
+                console.log(useLogStyle + '----FETCHING SUCCESS: ', setLogStyle('green'), { getWallet: res });
 
                 dispatch({
                     type: ActionType.SET_SERVICE,
@@ -186,7 +264,7 @@ export const createCollaboratorRequest = (data) => {
 export const getPaymentForPartner = (params) => {
 
     return Axios.get(`${URL_FOR_PARTNER}/payment`, {
-        params:params
+        params: params
     })
         .then(res => {
             console.log(useLogStyle + '----FETCHING SUCCESS: ', setLogStyle('green'), { getPaymentForPartner: res });
@@ -232,12 +310,12 @@ export const getServiceById = (id) => {
 
     return Axios.get(`${URL_FOR_PARTNER}/service/${id}`)
         .then(res => {
-            console.log(useLogStyle + '----FETCHING SUCCESS: ', setLogStyle('green'), { getServiceById: res});
+            console.log(useLogStyle + '----FETCHING SUCCESS: ', setLogStyle('green'), { getServiceById: res });
             return res.data.data
         })
         .catch(error => {
             // _checkError(err)
-            console.log(useLogStyle + '----FETCHING FAIL: ', setLogStyle('red'), { getServiceById: error});
+            console.log(useLogStyle + '----FETCHING FAIL: ', setLogStyle('red'), { getServiceById: error });
             return error
         })
 }
@@ -246,12 +324,12 @@ export const getGuideCollaborator = (id) => {
 
     return Axios.get(`${URL_FOR_PARTNER}/partners/guide-collaborator`)
         .then(res => {
-            console.log(useLogStyle + '----FETCHING SUCCESS: ', setLogStyle('green'), { getGuideCollaborator: res});
+            console.log(useLogStyle + '----FETCHING SUCCESS: ', setLogStyle('green'), { getGuideCollaborator: res });
             return res.data.data
         })
         .catch(error => {
             // _checkError(err)
-            console.log(useLogStyle + '----FETCHING FAIL: ', setLogStyle('red'), { getGuideCollaborator: error});
+            console.log(useLogStyle + '----FETCHING FAIL: ', setLogStyle('red'), { getGuideCollaborator: error });
             return error
         })
 }

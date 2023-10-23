@@ -24,6 +24,7 @@ import loseWeightReducer from './LoseWeightReducer'
 import newsReducer from './NewsReducer'
 import partnerDiaryReducer from './PartnerDiaryReducer'
 import walletReducer from './WalletReducer'
+import affiliateReducer from './AffiliateReducer'
 
 const rootReducer = combineReducers({
     newsReducer,
@@ -49,7 +50,8 @@ const rootReducer = combineReducers({
     diaryReducer,
     loseWeightReducer,
     partnerDiaryReducer,
-    walletReducer
+    walletReducer,
+    affiliateReducer
 });
 
 // const rootReducer = (state, action) => {

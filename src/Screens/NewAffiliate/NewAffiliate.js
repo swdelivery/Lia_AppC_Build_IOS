@@ -17,6 +17,11 @@ import ModalShowInfoRanked from './Components/ModalShowInfoRanked'
 import ModalRequireBecomeCTV from './Components/ModalRequireBecomeCTV'
 // import { ScrollView } from 'react-native-gesture-handler'
 import ModalShareCodeAffiliate from './Components/ModalShareCodeAffiliate'
+import { getPartnerLevel } from '../../Redux/Action/InfoAction'
+import { useSelector } from 'react-redux'
+import store from '../../Redux/Store'
+import * as ActionType from '../../Redux/Constants/ActionType';
+import { checkStepUnlockAffiliate } from '../../Redux/Action/Affiilate'
 // import ModalDemo from './Components/ModalDemo'
 
 const NewAffiliate = memo(() => {
@@ -26,9 +31,53 @@ const NewAffiliate = memo(() => {
     const [showModalShareCodeAffiliate, setShowModalShareCodeAffiliate] = useState(false)
     const [showModalDemo, setShowModalDemo] = useState(false)
 
+    const [currPartnerLevel, setCurrPartnerLevel] = useState({})
+
+    const [stepUnlockAffiliate, setStepUnlockAffiliate] = useState({})
+
+    const infoUserRedux = useSelector(state => state.infoUserReducer?.infoUser)
+    // const [infoUserRedux, setInfoUserRedux] = useState({
+    //     levelCode: "BRONZE",
+    //     liaPoint: 0,
+    //     fileAvatar: {
+    //         link: "/public/partner/1697701063424aqQW.jpeg"
+    //     }
+    // })
+
     useEffect(() => {
-        // Alert.alert('awdawd')
-    }, [showModalDemo])
+
+
+    }, [])
+
+
+
+    useEffect(() => {
+        _getPartnerLevel()
+        _checkStep(infoUserRedux?._id)
+
+    }, [])
+
+    const _checkStep = async (id) => {
+        let result = await checkStepUnlockAffiliate(id)
+        if (result?.isAxiosError) return
+
+        setStepUnlockAffiliate(result?.data?.data);
+    }
+
+    const _getPartnerLevel = async () => {
+
+        let result = await getPartnerLevel();
+        if (result?.isAxiosError) return
+
+        store.dispatch({
+            type: ActionType.SAVE_LIST_PARTNER_LEVEL,
+            payload: result?.data?.data
+        })
+
+        let findCurrPartnerLevel = result?.data?.data?.find(item => item?.code == infoUserRedux?.levelCode)
+        setCurrPartnerLevel(findCurrPartnerLevel)
+
+    }
 
     return (
         <View style={styles.container}>
@@ -52,36 +101,39 @@ const NewAffiliate = memo(() => {
                 <Banner setShowModalInfoRanked={setShowModalInfoRanked} />
 
                 {/* <Animated.View entering={FadeInRight.delay(200)}> */}
-                    <BtnRanked />
+                <BtnRanked data={currPartnerLevel} />
                 {/* </Animated.View> */}
                 <View style={{ height: _moderateScale(8) }} />
 
                 {/* <Animated.View entering={FadeInRight.delay(200)}> */}
-                    <TutMakeMoney />
+                <TutMakeMoney />
                 {/* </Animated.View> */}
                 <View style={{ height: _moderateScale(8) }} />
 
                 {/* <Animated.View entering={FadeInRight.delay(200)}> */}
-                    <ListF1Btn />
-                {/* </Animated.View> */}
-
-                <View style={{ height: _moderateScale(8) }} />
-
-                {/* <Animated.View entering={FadeInRight.delay(200)}> */}
-                    <CheckOrderBtn />
+                <ListF1Btn />
                 {/* </Animated.View> */}
 
                 <View style={{ height: _moderateScale(8) }} />
 
                 {/* <Animated.View entering={FadeInRight.delay(200)}> */}
-                    <QA />
+                <CheckOrderBtn />
+                {/* </Animated.View> */}
+
+                <View style={{ height: _moderateScale(8) }} />
+
+                {/* <Animated.View entering={FadeInRight.delay(200)}> */}
+                <QA />
                 {/* </Animated.View> */}
 
 
                 <TouchableOpacity
                     onPress={() => {
-                        setShowModalShareCodeAffiliate(old => !old)
-                        // setShowModalRequireBecomeCTV(old => !old)
+                        if (stepUnlockAffiliate?.isCollaburator) {
+                            setShowModalShareCodeAffiliate(old => !old)
+                        } else {
+                            setShowModalRequireBecomeCTV(old=> !old)
+                        }
                     }}
                     style={styles.btnInvite}>
                     <Text style={[stylesFont.fontNolanBold, { fontSize: _moderateScale(16), color: WHITE }]}>

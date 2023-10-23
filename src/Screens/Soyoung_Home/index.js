@@ -10,6 +10,7 @@ import { useState } from 'react';
 import SoYoung_Service from '../SoYoung_Service/index';
 import SoYoung_Branch from '../SoYoung_Branch/index';
 import So_Young_Doctor from '../SoYoung_Doctor/index';
+import So_Young_Expert from '../SoYoung_Expert'
 import { useRef } from 'react';
 import { WHITE } from '../../Constant/Color';
 import Collapsible from 'react-native-collapsible';
@@ -45,7 +46,7 @@ const index = () => {
             tabLabel: "Bác sĩ",
         },
         {
-            screen: SoYoung_Service,
+            screen: So_Young_Expert,
             tabLabel: "Chuyên viên",
         },
         {

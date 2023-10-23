@@ -18,7 +18,7 @@ const Header = memo((props) => {
     return (
         <View style={styles.header}>
             <View style={{
-                height: Platform.OS == 'ios' ? getStatusBarHeight() + _moderateScale(8) : _moderateScale(8)
+                height:getStatusBarHeight() + _moderateScale(8)
             }} />
             <View style={styles.header__box}>
                 <View style={{}}>

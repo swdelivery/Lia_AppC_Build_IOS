@@ -242,8 +242,8 @@ const Banner = () => {
             <OptionService />
             <View style={{ height: 8 }} />
             <Voucher />
-            {/* <View style={{ height: 8 }} />
-            <FlashSale /> */}
+            <View style={{ height: 8 }} />
+            <FlashSale />
             <View style={{ height: 8 }} />
             <ListDoctor />
 

@@ -21,6 +21,8 @@ const Content = (props) => {
     const heightValueBox = useSharedValue(0);
     const [heightContent, setHeightContent] = useState(0);
 
+    const [stepUnlockAffiliate, setStepUnlockAffiliate] = useState({})
+
 
     useEffect(() => {
 
@@ -30,6 +32,8 @@ const Content = (props) => {
 
     const _checkStep = async (infoUserRedux) => {
         let result = await checkStepUnlockAffiliate(infoUserRedux?._id)
+        if (result?.isAxiosError) return
+        setStepUnlockAffiliate(result?.data?.data);
     }
 
 
@@ -42,16 +46,91 @@ const Content = (props) => {
         >
             <TouchableOpacity
                 onPress={() => {
-                    navigation.navigate(ScreenKey.VERIFICATION_CTV)
+                    if (stepUnlockAffiliate?.isCollaburator) {
+                        return
+                    } else {
+                        navigation.navigate(ScreenKey.VERIFICATION_CTV)
+                    }
                 }}
                 style={{
                     flexDirection: 'row',
                     alignItems: 'center'
                 }}>
-                <Text style={{ flex: 1, color: BASE_COLOR, textDecorationLine: 'underline', ...stylesFont.fontNolan500, fontSize: _moderateScale(14) }}>
-                    Bước 1: Đăng kí để trở thành cộng tác viên
-                </Text>
-                <IconIsChecked style={sizeIcon.sm} />
+                {
+                    stepUnlockAffiliate?.isCollaburator ?
+                        <>
+                            <Text style={{ flex: 1, color: BASE_COLOR, textDecorationLine: 'underline', ...stylesFont.fontNolan500, fontSize: _moderateScale(14) }}>
+                                Bước 1: Đăng kí để trở thành cộng tác viên
+                            </Text>
+                            <IconIsChecked style={sizeIcon.sm} />
+                        </>
+                        :
+                        <>
+                            <Text style={{ flex: 1, color: GREY, textDecorationLine: 'underline', ...stylesFont.fontNolan500, fontSize: _moderateScale(14) }}>
+                                Bước 1: Đăng kí để trở thành cộng tác viên
+                            </Text>
+                            <IconNotChecked style={sizeIcon.sm} />
+                        </>
+                }
+
+            </TouchableOpacity>
+
+            <TouchableOpacity
+                onPress={() => {
+                    navigation.navigate(ScreenKey.CREATE_BOOKING)
+                }}
+                style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginTop: _moderateScale(8 * 2)
+                }}>
+
+                {
+                    stepUnlockAffiliate?.serviceUsed ?
+                        <>
+                            <Text style={{ flex: 1, color: BASE_COLOR, textDecorationLine: 'underline', ...stylesFont.fontNolan500, fontSize: _moderateScale(14) }}>
+                                Bước 2: Đặt lịch sử dụng dịch vụ bất kì
+                            </Text>
+                            <IconIsChecked style={sizeIcon.sm} />
+                        </>
+                        :
+                        <>
+                            <Text style={{ flex: 1, color: GREY, textDecorationLine: 'underline', ...stylesFont.fontNolan500, fontSize: _moderateScale(14) }}>
+                                Bước 2: Đặt lịch sử dụng dịch vụ bất kì
+                            </Text>
+                            <IconNotChecked style={sizeIcon.sm} />
+                        </>
+                }
+
+
+            </TouchableOpacity>
+
+            <TouchableOpacity
+                onPress={() => {
+                    navigation.navigate(ScreenKey.LIST_PARTNER_DIARY)
+                }}
+                style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginTop: _moderateScale(8 * 2)
+                }}>
+                {
+                    stepUnlockAffiliate?.diaryFinished ?
+                        <>
+                            <Text style={{ flex: 1, color: BASE_COLOR, textDecorationLine: 'underline', ...stylesFont.fontNolan500, fontSize: _moderateScale(14) }}>
+                                Bước 3: Hoàn thành nhật kí làm đẹp
+                            </Text>
+                            <IconIsChecked style={sizeIcon.sm} />
+                        </>
+                        :
+                        <>
+                            <Text style={{ flex: 1, color: GREY, textDecorationLine: 'underline', ...stylesFont.fontNolan500, fontSize: _moderateScale(14) }}>
+                                Bước 3: Hoàn thành nhật kí làm đẹp
+                            </Text>
+                            <IconNotChecked style={sizeIcon.sm} />
+                        </>
+                }
+
             </TouchableOpacity>
 
             <View style={{
@@ -59,32 +138,23 @@ const Content = (props) => {
                 alignItems: 'center',
                 marginTop: _moderateScale(8 * 2)
             }}>
-                <Text style={{ flex: 1, color: BASE_COLOR, textDecorationLine: 'underline', ...stylesFont.fontNolan500, fontSize: _moderateScale(14) }}>
-                    Bước 2: Đặt lịch sử dụng dịch vụ bất kì
-                </Text>
-                <IconIsChecked style={sizeIcon.sm} />
-            </View>
+                {
+                    stepUnlockAffiliate?.sharedDiary ?
+                        <>
+                            <Text style={{ flex: 1, color: BASE_COLOR, textDecorationLine: 'underline', ...stylesFont.fontNolan500, fontSize: _moderateScale(14) }}>
+                                Bước 4: Chia sẻ nhật ký kèm mã giới thiệu
+                            </Text>
+                            <IconIsChecked style={sizeIcon.sm} />
+                        </>
+                        :
+                        <>
+                            <Text style={{ flex: 1, color: GREY, textDecorationLine: 'underline', ...stylesFont.fontNolan500, fontSize: _moderateScale(14) }}>
+                                Bước 4: Chia sẻ nhật ký kèm mã giới thiệu
+                            </Text>
+                            <IconNotChecked style={sizeIcon.sm} />
+                        </>
+                }
 
-            <View style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginTop: _moderateScale(8 * 2)
-            }}>
-                <Text style={{ flex: 1, color: GREY, textDecorationLine: 'underline', ...stylesFont.fontNolan500, fontSize: _moderateScale(14) }}>
-                    Bước 3: Hoàn thành nhật kí làm đẹp
-                </Text>
-                <IconNotChecked style={sizeIcon.sm} />
-            </View>
-
-            <View style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginTop: _moderateScale(8 * 2)
-            }}>
-                <Text style={{ flex: 1, color: GREY, textDecorationLine: 'underline', ...stylesFont.fontNolan500, fontSize: _moderateScale(14) }}>
-                    Bước 4: Chia sẻ nhật ký kèm mã giới thiệu
-                </Text>
-                <IconNotChecked style={sizeIcon.sm} />
             </View>
 
             <View style={{

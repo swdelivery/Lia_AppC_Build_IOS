@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import * as Color from '../../Constant/Color';
 import { stylesFont } from '../../Constant/Font';
 import { _heightScale, _moderateScale, _widthScale } from '../../Constant/Scale';
-import { login, register } from '../../Redux/Action/AuthAction';
+import { forceVerifyAccount, login, loginInApp, register } from '../../Redux/Action/AuthAction';
 import Button from '../../Components/Button/Button';
 import { navigation } from '../../../rootNavigation';
 import ScreenKey from '../../Navigation/ScreenKey';
@@ -15,12 +15,17 @@ import { alertCustomNotAction } from '../../Constant/Utils';
 import { partnerAccountRegister } from '../../Redux/Action/AuthAction'
 import { styleElement } from '../../Constant/StyleElement';
 import LinearGradient from 'react-native-linear-gradient';
+import { getPartnerByCollaboratorCode } from '../../Redux/Action/ProfileAction';
+import Collapsible from 'react-native-collapsible';
+import { IconTick } from '../../Components/Icon/Icon';
 
 const RegisterInApp = props => {
 
     const [showModal, setShowModal] = useState(false)
     const [phoneNumber, setphoneNumber] = useState('')
     const [name, setName] = useState('')
+    const [codeAffiliate, setCodeAffiliate] = useState('')
+    const [currPartnerCollab, setCurrPartnerCollab] = useState({})
 
     const [password, setPassword] = useState('')
     const [password2, setPassword2] = useState('')
@@ -33,6 +38,20 @@ const RegisterInApp = props => {
         if (!phoneNumber || !password) {
             return alert('Nhập đầy đủ thông tin')
         }
+    }
+
+    useEffect(() => {
+        if (codeAffiliate?.length > 0) {
+            _getPartnerInviter(codeAffiliate)
+        }
+    }, [codeAffiliate])
+
+    const _getPartnerInviter = async (codeAffiliate) => {
+        let result = await getPartnerByCollaboratorCode({
+            collaboratorCode: codeAffiliate?.trim()
+        })
+        if (result?.isAxiosError) return setCurrPartnerCollab({})
+        setCurrPartnerCollab(result?.data?.data)
     }
 
     const _handleRegister = async () => {
@@ -59,14 +78,21 @@ const RegisterInApp = props => {
             return alertCustomNotAction(`Lỗi`, `Mật khẩu xác nhận không đúng`)
         }
 
-        let resultPartnerAccountRegister = await partnerAccountRegister({
+        let dataPost = {
             "name": name,
             "phone": {
                 "phoneNumber": phoneNumber,
                 "nationCode": "+84"
             },
-            "password": password
-        })
+            "password": password,
+        }
+
+
+        if (codeAffiliate?.length > 0) {
+            dataPost.inviterCode = codeAffiliate.trim()
+        }
+
+        let resultPartnerAccountRegister = await partnerAccountRegister(dataPost)
         if (resultPartnerAccountRegister?.isAxiosError) return
 
         let newFormatPhone = phoneNumber;
@@ -77,9 +103,25 @@ const RegisterInApp = props => {
             newFormatPhone = `+84${newFormatPhone}`
         }
 
-        return navigation.navigate(ScreenKey.ACTIVATION_IN_APP, { phoneNumber: newFormatPhone, fullPhone: phoneNumber, password: password, routeName: props?.route?.params?.routeName })
+        // return navigation.navigate(ScreenKey.ACTIVATION_IN_APP, { phoneNumber: newFormatPhone, fullPhone: phoneNumber, password: password, routeName: props?.route?.params?.routeName , codeAffiliate: codeAffiliate.trim()})
 
-        // navigation.navigate(ScreenKey.ACTIVATION, { phoneNumber: phoneNumber })
+        let result = await forceVerifyAccount({
+            "phone": {
+                "phoneNumber": phoneNumber,
+                "nationCode": "+84"
+            }
+        })
+        if (result?.isAxiosError) return
+
+        dispatch(loginInApp({
+            phone: {
+                phoneNumber: phoneNumber,
+                nationCode: "+84"
+            },
+            password: password,
+            appName: "CS_APP"
+        }, props?.route?.params?.routeName))
+
     }
 
     return (
@@ -118,6 +160,40 @@ const RegisterInApp = props => {
                             backgroundColor: Color.BG_GREY_OPACITY_2,
                             paddingVertical: _moderateScale(8 * 2),
                             borderRadius: _moderateScale(8)
+                        }]}>
+                            <View style={[styleElement.rowAliCenter]}>
+                                <Image style={[sizeIcon.md, { marginHorizontal: _moderateScale(8 * 2), opacity: 0.7 }]} source={require('../../NewIcon/peopleBlack.png')} />
+                                <TextInput
+                                    value={codeAffiliate}
+                                    onChangeText={(content) => {
+                                        setCodeAffiliate(content.toUpperCase())
+                                    }}
+                                    // style={styles.input}
+                                    placeholder={'Mã giới thiệu'}
+                                    style={{
+                                        ...stylesFont.fontNolan500,
+                                        fontSize: _moderateScale(14),
+                                        paddingVertical: 0,
+                                        flex: 1
+                                    }} />
+                            </View>
+
+                            <Collapsible collapsed={currPartnerCollab?._id ? false : true}>
+                                <View style={{ padding: _moderateScale(8 * 2), paddingBottom: 0, ...styleElement.rowAliCenter }}>
+                                    <Text style={{ marginRight: _moderateScale(8) }}>
+                                        Tìm thấy người giới thiệu: <Text style={{ fontWeight: 'bold' }}>{currPartnerCollab?.name}</Text>
+                                    </Text>
+                                    <IconTick style={sizeIcon.sm} />
+                                </View>
+                            </Collapsible>
+                        </View>
+                        <View style={{ height: _moderateScale(8 * 2) }} />
+
+                        <View style={[{
+                            width: '100%',
+                            backgroundColor: Color.BG_GREY_OPACITY_2,
+                            paddingVertical: _moderateScale(8 * 2),
+                            borderRadius: _moderateScale(8)
                         }, styleElement.rowAliCenter]}>
                             <Image style={[sizeIcon.md, { marginHorizontal: _moderateScale(8 * 2), opacity: 0.7 }]} source={require('../../NewIcon/peopleBlack.png')} />
                             <TextInput
@@ -125,7 +201,7 @@ const RegisterInApp = props => {
                                 onChangeText={(content) => {
                                     setName(content)
                                 }}
-                                style={styles.input}
+                                // style={styles.input}
                                 placeholder={'Tên của bạn'}
                                 style={{
                                     ...stylesFont.fontNolan500,
@@ -149,7 +225,7 @@ const RegisterInApp = props => {
                                 onChangeText={(content) => {
                                     setphoneNumber(content)
                                 }}
-                                style={styles.input}
+                                // style={styles.input}
                                 style={{
                                     ...stylesFont.fontNolan500,
                                     fontSize: _moderateScale(14),
@@ -172,7 +248,7 @@ const RegisterInApp = props => {
                                 onChangeText={(content) => {
                                     setPassword(content)
                                 }}
-                                style={styles.input}
+                                // style={styles.input}
                                 style={{
                                     ...stylesFont.fontNolan500,
                                     fontSize: _moderateScale(14),
@@ -195,7 +271,7 @@ const RegisterInApp = props => {
                                 onChangeText={(content) => {
                                     setPassword2(content)
                                 }}
-                                style={styles.input}
+                                // style={styles.input}
                                 style={{
                                     ...stylesFont.fontNolan500,
                                     fontSize: _moderateScale(14),

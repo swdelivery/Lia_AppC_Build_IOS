@@ -2,7 +2,9 @@ import { get, identity, pickBy, trim } from "lodash";
 import React from "react";
 import { handleError } from '../Services/utils';
 import moment from 'moment'
-import { Alert } from "react-native";
+import { Alert, Text } from "react-native";
+import { stylesFont } from "./Font";
+import { GREEN_SUCCESS, RED } from "./Color";
 
 
 // export const _generateLink = async (param, value, param2, value2, param3, value3, param4, value4) => {
@@ -309,4 +311,73 @@ export const alertCustomNotAction = (title, body) => {
             { text: "OK", onPress: () => console.log("OK Pressed") }
         ]
     )
+}
+
+
+export const renderStatusBookingByCode = (code) => {
+    switch (code) {
+        case "WAIT":
+            return (
+                <Text style={[stylesFont.fontNolan500, { color: "#969696" }]}>
+                    Chưa CheckIn
+                </Text>
+            )
+        case "WAS_CHECK_IN":
+            return (
+                <Text style={[stylesFont.fontNolan500, { color: "#ff7c22" }]}>
+                    Đã CheckIn
+                </Text>
+            )
+        case "WAIT_CONSULTATION":
+            return (
+                <Text style={[stylesFont.fontNolan500, { color: "#5d02ec" }]}>
+                    Chờ tư vấn
+                </Text>
+            )
+        case "IS_CONSULTING":
+            return (
+                <Text style={[stylesFont.fontNolan500, { color: "#0b7ad2" }]}>
+                    Đang tư vấn
+                </Text>
+            )
+        case "WAS_CONSULTED":
+            return (
+                <Text style={[stylesFont.fontNolan500, { color: "#30CCFF" }]}>
+                    Đã tư vấn
+                </Text>
+            )
+        case "WAIT_PROGRESS":
+            return (
+                <Text style={[stylesFont.fontNolan500, { color: "#5d02ec" }]}>
+                    Chờ điều trị
+                </Text>
+            )
+        case "IN_PROGRESS":
+            return (
+                <Text style={[stylesFont.fontNolan500, { color: "#0b7ad2" }]}>
+                    Đang điều trị
+                </Text>
+            )
+        case "COMPLETE_PROGRESS":
+            return (
+                <Text style={[stylesFont.fontNolan500, { color: "#019801" }]}>
+                    Đã điều trị
+                </Text>
+            )
+        case "WAS_CHECK_OUT":
+            return (
+                <Text style={[stylesFont.fontNolan500, { color: GREEN_SUCCESS }]}>
+                    Đã CheckOut
+                </Text>
+            )
+        case "CANCEL":
+            return (
+                <Text style={[stylesFont.fontNolan500, { color: RED }]}>
+                    Đã Huỷ
+                </Text>
+            )
+
+        default:
+            break;
+    }
 }

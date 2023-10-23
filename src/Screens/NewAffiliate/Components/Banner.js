@@ -1,17 +1,58 @@
 import { Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { memo } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 import LinearGradient from 'react-native-linear-gradient'
-import { BASE_COLOR, BG_GREY_OPACITY_5, GREY, GREY_FOR_TITLE, WHITE } from '../../../Constant/Color'
-import { _moderateScale, _width, _widthScale } from '../../../Constant/Scale'
+import { BASE_COLOR, BG_GREY_OPACITY_5, GREEN_SUCCESS, GREY, GREY_FOR_TITLE, WHITE } from '../../../Constant/Color'
+import { _heightScale, _moderateScale, _width, _widthScale } from '../../../Constant/Scale'
 import { stylesFont } from '../../../Constant/Font'
-import { IconGold, IconHelp } from '../../../Components/Icon/Icon'
+import { IconBrone, IconDiamond, IconGold, IconHelp, IconSilver } from '../../../Components/Icon/Icon'
 import Animated, { FadeInRight } from 'react-native-reanimated'
+import { useSelector } from 'react-redux'
+import { URL_ORIGINAL } from '../../../Constant/Url'
+import { getPartnerLevel } from '../../../Redux/Action/InfoAction'
 
-const WIDTH_PROCESS_BAR = _width - _widthScale(8 * 8)
+const WIDTH_PROCESS_BAR = _width - _widthScale(8 * 10)
 
 const Banner = memo((props) => {
+
+    const [currPartnerLevel, setCurrPartnerLevel] = useState({})
+    const [nextPartnerLevel, setNextPartnerLevel] = useState({})
+
+    const infoUserRedux = useSelector(state => state.infoUserReducer?.infoUser)
+    // const [infoUserRedux, setInfoUserRedux] = useState({
+    //     levelCode: "GOLD",
+    //     liaPoint: 120000,
+    //     fileAvatar: {
+    //         link: "/public/partner/1697701063424aqQW.jpeg"
+    //     }
+    // })
+
+    useEffect(() => {
+        _getPartnerLevel()
+    }, [])
+
+    const _getPartnerLevel = async () => {
+
+
+        let result = await getPartnerLevel();
+        if (result?.isAxiosError) return
+        let findCurrPartnerLevel = result?.data?.data?.find(item => item?.code == infoUserRedux?.levelCode)
+        console.log({ findCurrPartnerLevel });
+        setCurrPartnerLevel(findCurrPartnerLevel)
+
+        if (infoUserRedux?.levelCode == "BRONZE") {
+            setNextPartnerLevel(result?.data?.data?.find(item => item?.code == "SILVER"))
+        }
+        if (infoUserRedux?.levelCode == "SILVER") {
+            setNextPartnerLevel(result?.data?.data?.find(item => item?.code == "GOLD"))
+        }
+        if (infoUserRedux?.levelCode == "GOLD") {
+            setNextPartnerLevel(result?.data?.data?.find(item => item?.code == "PLATINUM"))
+        }
+
+    }
+
     return (
-        <View style={{ height: 320, justifyContent: 'flex-end', paddingBottom: _moderateScale(8 * 2) }}>
+        <View style={{ height: _heightScale(300), justifyContent: 'flex-end', paddingBottom: _moderateScale(8 * 2) }}>
             <LinearGradient
                 style={[StyleSheet.absoluteFill]}
                 start={{ x: 0, y: 0 }}
@@ -37,105 +78,176 @@ const Banner = memo((props) => {
                         }}
                         style={{ position: 'absolute', right: _moderateScale(8 * 2), top: -_moderateScale(8), zIndex: 10 }}>
                         <IconHelp style={{ width: _moderateScale(8 * 4), height: _moderateScale(8 * 4) }} />
-                    </TouchableOpacity> 
+                    </TouchableOpacity>
                 </View>
 
                 <View style={{ alignItems: 'center', marginTop: _moderateScale(0) }}>
                     <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                         <Image
-                            style={[styles.avatarBG__image, { position: 'absolute', top: _moderateScale(8 * 3), zIndex: -1 }]}
+                            style={[styles.avatarBG__image, { position: 'absolute', zIndex: -1 }]}
                             source={{
-                                uri: `https://scontent.fhan3-4.fna.fbcdn.net/v/t39.30808-6/372761206_3003041226494415_947301934724816680_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=a2f6c7&_nc_ohc=dLzwvbyV4OkAX_RK3oT&_nc_ht=scontent.fhan3-4.fna&oh=00_AfB84FrIGzLQEzKaSS4Shm_uaMgKmp4qPoRQsX1TiNrHug&oe=652AC6D2`
+                                uri: `${URL_ORIGINAL}${infoUserRedux?.fileAvatar?.link}`
                             }} />
-                        <IconGold style={{
-                            width: _moderateScale(8 * 13),
-                            height: _moderateScale(8 * 13),
-                        }} />
+                        {
+                            currPartnerLevel?.code == 'BRONZE' ?
+                                <View style={{
+                                }}>
+                                    <IconBrone style={{
+                                        width: _moderateScale(8 * 13),
+                                        height: _moderateScale(8 * 13),
+                                    }} />
+                                </View>
+                                :
+                                <>
+                                </>
+                        }
+                        {
+                            currPartnerLevel?.code == 'SILVER' ?
+                                <View style={{
+                                }}>
+                                    <IconSilver style={{
+                                        width: _moderateScale(8 * 13),
+                                        height: _moderateScale(8 * 13),
+                                    }} />
+                                </View>
+                                :
+                                <>
+                                </>
+                        }
+                        {
+                            currPartnerLevel?.code == 'GOLD' ?
+                                <View style={{
+                                }}>
+                                    <IconGold style={{
+                                        width: _moderateScale(8 * 13),
+                                        height: _moderateScale(8 * 13),
+                                    }} />
+                                </View>
+                                :
+                                <>
+                                </>
+                        }
+                        {
+                            currPartnerLevel?.code == 'PLATINUM' ?
+                                <View style={{
+                                }}>
+                                    <IconDiamond style={{
+                                        width: _moderateScale(8 * 13),
+                                        height: _moderateScale(8 * 13),
+                                    }} />
+                                </View>
+                                :
+                                <>
+                                </>
+                        }
+
                     </View>
-                    {/* <ImageBackground
-                        style={styles.avatarBG}
-                        source={require('../../../Image/affiliate/dong.png')}>
-                        <Image
-                            style={styles.avatarBG__image}
-                            source={{
-                                uri: `https://scontent.fhan3-4.fna.fbcdn.net/v/t39.30808-6/372761206_3003041226494415_947301934724816680_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=a2f6c7&_nc_ohc=dLzwvbyV4OkAX_RK3oT&_nc_ht=scontent.fhan3-4.fna&oh=00_AfB84FrIGzLQEzKaSS4Shm_uaMgKmp4qPoRQsX1TiNrHug&oe=652AC6D2`
-                            }} />
-                    </ImageBackground> */}
 
                     <Text style={{ color: GREY_FOR_TITLE, ...stylesFont.fontNolanBold, fontSize: _moderateScale(14), top: -_moderateScale(8) }}>
-                        Hạng Vàng
+                        {
+                            currPartnerLevel?.name
+                        }
                     </Text>
                 </View>
-                <View style={{ alignItems: 'center', marginTop: _moderateScale(8 * 3) }}>
 
-                    <View style={styles.processbar}>
-                        <View style={{ width: _moderateScale(8 * 7), alignItems: 'flex-start' }}>
-                            <View style={{
-                                position: 'absolute',
-                                top: -_moderateScale(8 * 3.5),
-                                zIndex: 10
+                {
+                    currPartnerLevel?.code == "PLATINUM" ?
+                        <View style={{alignItems:'center'}}>
+                            <Text style={{
+                                marginTop:_moderateScale(8*2),
+                                ...stylesFont.fontNolanBold,
+                                color:GREEN_SUCCESS,
+                                fontSize:_moderateScale(18)
                             }}>
-                                <Text style={{
-                                    ...stylesFont.fontNolanBold,
-                                    fontSize: _moderateScale(12)
-                                }}>
-                                    15.000
-                                </Text>
-                            </View>
+                                {
+                                    infoUserRedux?.liaPoint
+                                } Điểm
+                            </Text>
+                            <Text style={{
+                                marginTop:_moderateScale(8*2),
+                                ...stylesFont.fontNolanBold,
+                                color:GREY_FOR_TITLE,
+                                fontSize:_moderateScale(18)
+                            }}>
+                                Bạn đã đạt hạng cao nhất!
+                            </Text>
                         </View>
+                        :
+                        <View style={{ alignItems: 'center', marginTop: _moderateScale(8 * 3) }}>
 
-                        <View style={styles.processbar__fill}>
-                            <View style={styles.processbar__fill__dot}>
-                                <View style={{ width: _moderateScale(8 * 7), alignItems: 'center' }}>
-                                    <View style={{
-                                        position: 'absolute',
-                                        top: -_moderateScale(8 * 3),
-                                        zIndex:10
-                                    }}>
-                                        <Text style={{
-                                            ...stylesFont.fontNolanBold,
-                                            fontSize: _moderateScale(14)
-                                            // color: ''
-                                        }}>
-                                            28.000
-                                        </Text>
+                            <View style={styles.processbar}>
+                                <View style={[styles.processbar__fill, {
+                                    width: (infoUserRedux?.liaPoint && currPartnerLevel?._id) ? ((infoUserRedux?.liaPoint - currPartnerLevel?.startPoint) / (currPartnerLevel?.endPoint - currPartnerLevel?.startPoint)) * WIDTH_PROCESS_BAR : 0
+                                }]}>
+                                    <View style={styles.processbar__fill__dot}>
+                                        <View style={{ width: _moderateScale(8 * 7), alignItems: 'center' }}>
+                                            <View style={{
+                                                position: 'absolute',
+                                                top: -_moderateScale(8 * 3),
+                                                zIndex: 10
+                                            }}>
+                                                <Text style={{
+                                                    ...stylesFont.fontNolanBold,
+                                                    fontSize: _moderateScale(14)
+                                                    // color: ''
+                                                }}>
+                                                    {
+                                                        infoUserRedux?.liaPoint
+                                                    }
+                                                </Text>
+                                            </View>
+                                        </View>
                                     </View>
                                 </View>
                             </View>
+
+                            <View style={styles.processbarBottom}>
+                                <View>
+                                    <Text style={{
+                                        ...stylesFont.fontNolanBold,
+                                        fontSize: _moderateScale(12)
+                                    }}>
+                                        {
+                                            currPartnerLevel?.startPoint
+                                        }
+                                    </Text>
+                                    <Text style={[stylesFont.fontNolan500, { fontSize: _moderateScale(14) }]}>
+                                        {
+                                            currPartnerLevel?.name
+                                        }
+                                    </Text>
+                                </View>
+
+                                <View style={{ alignItems: 'flex-end' }}>
+                                    <Text style={{
+                                        ...stylesFont.fontNolanBold,
+                                        fontSize: _moderateScale(12),
+                                    }}>
+                                        {
+                                            currPartnerLevel?.endPoint
+                                        }
+                                    </Text>
+                                    <Text style={[stylesFont.fontNolan500, { fontSize: _moderateScale(14) }]}>
+                                        {
+                                            nextPartnerLevel?.name
+                                        }
+                                    </Text>
+                                </View>
+                            </View>
+                            <View style={styles.processbarBottom}>
+
+                            </View>
+
+                            <View style={{ marginTop: _moderateScale(8) }}>
+                                <Text style={{ ...stylesFont.fontNolan, fontSize: _moderateScale(14) }}>
+                                    Bạn còn <Text style={stylesFont.fontNolanBold}>{currPartnerLevel?.endPoint - infoUserRedux?.liaPoint}</Text> điểm nữa để thăng hạng {nextPartnerLevel?.name}
+                                </Text>
+                            </View>
+
                         </View>
+                }
 
-                        <View style={{ width: _moderateScale(8 * 7), right: 0, position: 'absolute', alignItems: 'flex-end', zIndex:10 }}>
-                            <Text style={{
-                                position: 'absolute',
-                                top: -_moderateScale(8 * 3.5),
-                                ...stylesFont.fontNolanBold,
-                                fontSize: _moderateScale(12)
-                                // color: '#831700',
-                            }}>
-                                30.000
-                            </Text>
-                        </View>
-                    </View>
 
-                    <View style={styles.processbarBottom}>
-                        <Text style={[stylesFont.fontNolan500, { fontSize: _moderateScale(14) }]}>
-                            Vàng
-                        </Text>
-                        <Text style={[stylesFont.fontNolan500, { fontSize: _moderateScale(14) }]}>
-                            Kim Cương
-                        </Text>
-                    </View>
-                    <View style={styles.processbarBottom}>
-
-                    </View>
-
-                    <View>
-                        <Text style={{ ...stylesFont.fontNolan, fontSize: _moderateScale(14) }}>
-                            Bạn còn <Text style={stylesFont.fontNolanBold}>2.000</Text> điểm nữa để thăng hạng Kim Cương
-                        </Text>
-                    </View>
-
-                </View>
             </TouchableOpacity>
             {/* </Animated.View> */}
         </View>
@@ -155,13 +267,14 @@ const styles = StyleSheet.create({
         width: _moderateScale(8 * 1.5),
         height: _moderateScale(8 * 1.5),
         borderRadius: _moderateScale(8 * 1.5 / 2),
-        backgroundColor: '#F8C904',
-        alignItems: 'center'
+        backgroundColor: GREEN_SUCCESS,
+        alignItems: 'center',
+        left: _moderateScale(8 * 1.5) / 2
     },
     processbar__fill: {
-        width: _widthScale(8 * 26),
+        // width: _widthScale(8 * 26),
         height: _moderateScale(8 * .5),
-        backgroundColor: '#F8C904',
+        backgroundColor: GREEN_SUCCESS,
         borderRadius: _moderateScale(8),
         justifyContent: 'center',
         alignItems: 'flex-end'
@@ -173,8 +286,8 @@ const styles = StyleSheet.create({
         borderRadius: _moderateScale(8)
     },
     avatarBG__image: {
-        width: _moderateScale(8 * 8),
-        height: _moderateScale(8 * 8),
+        width: _moderateScale(8 * 7.5),
+        height: _moderateScale(8 * 7.5),
         borderRadius: _moderateScale(8 * 8 / 2),
         zIndex: -1
     },
@@ -190,7 +303,7 @@ const styles = StyleSheet.create({
     },
     banner__box: {
         width: _width - _widthScale(8 * 4),
-        height: _moderateScale(8 * 33),
+        height: _moderateScale(8 * 35),
         marginHorizontal: 30,
         alignSelf: 'center',
         backgroundColor: WHITE,

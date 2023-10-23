@@ -13,14 +13,23 @@ import TabBrone from './TabBrone'
 import TabSilver from './TabSilver'
 import TabGold from './TabGold'
 import TabDiamond from './TabDiamond'
+import { getPartnerLevel } from '../../../Redux/Action/InfoAction'
+import { getConfigData } from '../../../Redux/Action/OrtherAction'
 
 const ModalShowInfoRanked = memo((props) => {
+
+    const [listPartnerLevel, setListPartnerLevel] = useState([])
 
     const opacityBackDrop = useSharedValue(0);
     const opacityContainer = useSharedValue(0);
     const scaleContainer = useSharedValue(0);
 
+    const [showChinhsach, setShowChinhsach] = useState(false)
+    const [configChinhSach, setConfigChinhSach] = useState({})
+
     const tranXModal = useSharedValue(0)
+
+
 
     const [routes] = useState([
         { key: 'first', title: 'Đồng' },
@@ -30,6 +39,25 @@ const ModalShowInfoRanked = memo((props) => {
     ]);
     const [index, setIndex] = useState(0);
 
+
+    useEffect(() => {
+        _getPartnerLevel()
+        _getConfigChinhSach()
+    }, [])
+
+    const _getPartnerLevel = async () => {
+
+        let result = await getPartnerLevel();
+        if (result?.isAxiosError) return
+        setListPartnerLevel(result?.data?.data)
+
+    }
+
+    const _getConfigChinhSach = async () => {
+        let result = await getConfigData("LEVEL_POLICY")
+        if (result?.isAxiosError) return
+        setConfigChinhSach(result)
+    }
 
     useEffect(() => {
 
@@ -63,13 +91,13 @@ const ModalShowInfoRanked = memo((props) => {
     const renderScene = ({ route }) => {
         switch (route.key) {
             case 'first':
-                return <TabBrone />
+                return <TabBrone data={listPartnerLevel?.find(item => item?.code == "BRONZE")} />
             case 'second':
-                return <TabSilver />
+                return <TabSilver data={listPartnerLevel?.find(item => item?.code == "SILVER")} />
             case 'third':
-                return <TabGold />
+                return <TabGold data={listPartnerLevel?.find(item => item?.code == "GOLD")} />
             case 'fouth':
-                return <TabDiamond />
+                return <TabDiamond data={listPartnerLevel?.find(item => item?.code == "PLATINUM")} />
 
             default:
                 return null;
@@ -126,7 +154,7 @@ const ModalShowInfoRanked = memo((props) => {
                             height: _height,
                         }, {
                             backgroundColor: 'rgba(0,0,0,.7)'
-                        },animOpacityBackDrop]}>
+                        }, animOpacityBackDrop]}>
                             <TouchableOpacity onPress={() => _handleHideModal()} style={[StyleSheet.absoluteFillObject]} />
                         </Animated.View>
 
@@ -145,35 +173,81 @@ const ModalShowInfoRanked = memo((props) => {
                                     backgroundColor: WHITE,
                                     borderRadius: _moderateScale(8),
                                 }}>
-                                <View style={styles.header}>
-                                    <View style={{ flex: 1 }}>
-                                        <TouchableOpacity
-                                            onPress={_handleHideModal}
-                                            style={{}}>
-                                            <IconBackBase style={sizeIcon.lg} />
-                                        </TouchableOpacity>
-                                    </View>
-                                    <View style={{ flex: 4, alignItems: 'center' }}>
-                                        <Text style={[stylesFont.fontNolanBold, { fontSize: _moderateScale(14), color: GREY_FOR_TITLE }]}>
-                                            Danh sách hạng thành viên
-                                        </Text>
-                                    </View>
-                                    <View style={{ flex: 1, alignItems: 'flex-end' }}>
-                                        <TouchableOpacity style={{}}>
-                                            <IconBook style={sizeIcon.lllg} />
-                                        </TouchableOpacity>
-                                    </View>
-                                </View>
-                                <View style={{ height: _moderateScale(8 * 3) }} />
 
-                                <TabView
-                                    renderTabBar={renderTabBar}
-                                    swipeEnabled={true}
-                                    navigationState={{ index, routes }}
-                                    renderScene={renderScene}
-                                    onIndexChange={setIndex}
-                                    lazy
-                                />
+                                {
+                                    showChinhsach ?
+                                        <>
+                                            <View style={styles.header}>
+                                                <View style={{ flex: 1 }}>
+                                                    <TouchableOpacity
+                                                        onPress={() => {
+                                                            setShowChinhsach(old => !old)
+                                                        }}
+                                                        style={{}}>
+                                                        <IconBackBase style={sizeIcon.lg} />
+                                                    </TouchableOpacity>
+                                                </View>
+                                                <View style={{ flex: 4, alignItems: 'center' }}>
+                                                    <Text style={[stylesFont.fontNolanBold, { fontSize: _moderateScale(14), color: GREY_FOR_TITLE }]}>
+                                                        Chính sách
+                                                    </Text>
+                                                </View>
+                                                <View style={{ flex: 1, alignItems: 'flex-end' }}>
+                                                    <TouchableOpacity style={{ opacity: 0 }}>
+                                                        <IconBook style={sizeIcon.lllg} />
+                                                    </TouchableOpacity>
+                                                </View>
+                                            </View>
+                                            <View style={{ height: _moderateScale(8 * 3) }} />
+
+                                            <View style={{paddingHorizontal:_moderateScale(8*2)}}>
+                                                <Text>
+                                                    {
+                                                        configChinhSach?.value
+                                                    }
+                                                </Text>
+                                            </View>
+                                        </>
+                                        :
+                                        <>
+                                            <View style={styles.header}>
+                                                <View style={{ flex: 1 }}>
+                                                    <TouchableOpacity
+                                                        onPress={_handleHideModal}
+                                                        style={{}}>
+                                                        <IconBackBase style={sizeIcon.lg} />
+                                                    </TouchableOpacity>
+                                                </View>
+                                                <View style={{ flex: 4, alignItems: 'center' }}>
+                                                    <Text style={[stylesFont.fontNolanBold, { fontSize: _moderateScale(14), color: GREY_FOR_TITLE }]}>
+                                                        Danh sách hạng thành viên
+                                                    </Text>
+                                                </View>
+                                                <View style={{ flex: 1, alignItems: 'flex-end' }}>
+                                                    <TouchableOpacity
+                                                        onPress={() => {
+                                                            setShowChinhsach(old => !old)
+                                                        }}
+                                                        style={{}}>
+                                                        <IconBook style={sizeIcon.lllg} />
+                                                    </TouchableOpacity>
+                                                </View>
+                                            </View>
+                                            <View style={{ height: _moderateScale(8 * 3) }} />
+
+
+                                            <TabView
+                                                renderTabBar={renderTabBar}
+                                                swipeEnabled={true}
+                                                navigationState={{ index, routes }}
+                                                renderScene={renderScene}
+                                                onIndexChange={setIndex}
+                                                lazy
+                                            />
+                                        </>
+                                }
+
+
 
                             </View>
                         </Animated.View>

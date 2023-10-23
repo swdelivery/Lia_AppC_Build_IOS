@@ -46,28 +46,28 @@ const MainTab = (props) => {
 
 
     const tabBarOptions = {
-        tabBarLabelStyle: { fontSize: 12 },
-        // tabBarItemStyle: { width: 100 },
-        tabBarStyle: { backgroundColor: 'white' },
-        // activeTintColor: BASE_COLOR,
-        // inactiveTintColor: GREY,
-        // style: {
-        //     paddingBottom: _heightScale(8 * 3) / 2,
-        //     borderTopWidth: 0.5,
-        //     borderColor: BG_GREY_OPACITY_3,
-        //     padding: 0,
-        //     margin: 0,
-        // },
-        // showIcon: true,
-        // showLabel: true,
-        // indicatorStyle: { backgroundColor: BASE_COLOR, top: 0, width: _width / 10, left: (_width / 10) / 1.25 },
-        // labelStyle: {
-        //     fontSize: _moderateScale(8),
-        //     textTransform: 'capitalize',
-        //     margin: 0,
-        //     padding: 0,
-        //     fontWeight:'500'
-        // },
+        // tabBarLabelStyle: { fontSize: _moderateScale(10) },
+        swipeEnabled:false,
+        tabBarActiveTintColor: BASE_COLOR,
+        tabBarInactiveTintColor: GREY,
+        tabBarStyle: {
+            paddingBottom: getBottomSpace() / 2,
+            borderTopWidth: 0.5,
+            borderColor: BG_GREY_OPACITY_3,
+            padding: 0,
+            margin: 0,
+        },
+        showIcon: true,
+        showLabel: false,
+        tabBarIndicatorStyle: { backgroundColor: BASE_COLOR, top: 0, width: _width / 10, left: (_width / 10) / 1.25 },
+        tabBarLabelStyle: {
+            fontSize: _moderateScale(12),
+            fontFamily: Platform.OS == 'ios' ? 'NolanNext' : 'Kastelov-NolanNext-Regular',
+            textTransform: 'capitalize',
+            margin: 0,
+            padding: 0,
+        },
+        
     }
     return (
         <Tab.Navigator

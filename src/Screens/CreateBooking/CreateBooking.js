@@ -682,7 +682,7 @@ const CreateBooking = memo((props) => {
                 }}>
                     <View style={[styles.wave]} />
                     <KeyboardAwareScrollView>
-                        {
+                        {/* {
                             collaboratorRelationship?.canEnterReferralCode ?
                                 <>
                                     <InputRefCode
@@ -742,7 +742,7 @@ const CreateBooking = memo((props) => {
                                     <View style={{ height: _moderateScale(8), backgroundColor: BG_GREY_OPACITY_2, marginVertical: _moderateScale(8 * 2) }} />
                                 </>
                                 : <></>
-                        }
+                        } */}
 
 
                         <InputBranch currBranch={currBranch} handleOpenListBranch={_handleOpenListBranch} />

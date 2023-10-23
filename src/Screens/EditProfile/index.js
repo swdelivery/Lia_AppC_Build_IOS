@@ -25,11 +25,13 @@ import moment from 'moment';
 import Button from '../../Components/Button/Button';
 import ImagePicker from 'react-native-image-crop-picker';
 import { uploadModule } from '../../Redux/Action/BookingAction'
-import { updateProfilePartner } from '../../Redux/Action/ProfileAction';
+import { getPartnerByCollaboratorCode, updateProfilePartner } from '../../Redux/Action/ProfileAction';
 import StatusBarCustom from '../../Components/StatusBar/StatusBarCustom';
 import { isEmpty } from 'lodash-es';
 import { getBottomSpace } from 'react-native-iphone-x-helper';
 import LinearGradient from 'react-native-linear-gradient';
+import Collapsible from 'react-native-collapsible';
+import { IconTick } from '../../Components/Icon/Icon';
 
 
 const EditProfile = props => {
@@ -42,6 +44,9 @@ const EditProfile = props => {
     const [isShowGallery, setShowGallery] = useState(false)
     const [infoUser, setInfoUser] = useState({})
     const [showModalCalendar, setShowModalCalendar] = useState(false)
+
+    const [codeAffiliate, setCodeAffiliate] = useState('')
+    const [currPartnerCollab, setCurrPartnerCollab] = useState({})
 
     const _renderLevelImage = (code) => {
 
@@ -65,6 +70,20 @@ const EditProfile = props => {
             default:
                 break;
         }
+    }
+
+    useEffect(() => {
+        if (codeAffiliate?.length > 0) {
+            _getPartnerInviter(codeAffiliate)
+        }
+    }, [codeAffiliate])
+
+    const _getPartnerInviter = async (codeAffiliate) => {
+        let result = await getPartnerByCollaboratorCode({
+            collaboratorCode: codeAffiliate?.trim()
+        })
+        if (result?.isAxiosError) return setCurrPartnerCollab({})
+        setCurrPartnerCollab(result?.data?.data)
     }
 
 
@@ -185,10 +204,15 @@ const EditProfile = props => {
             "gender": infoUser?.gender,
             "address": infoUser?.address,
             "idCard": infoUser?.idCard,
-            "birthday": infoUser?.birthday,
+            // "birthday": infoUser?.birthday,
             "profession": infoUser?.profession,
             "nationality": infoUser?.nationality,
             "ethnicity": infoUser?.ethnicity,
+            // "inviterCode": codeAffiliate?.trim()
+        }
+
+        if (codeAffiliate?.trim()?.length > 0) {
+            data.inviterCode = codeAffiliate?.trim()
         }
 
         // if(infoUser?.fileAvatar?.isLocal === true)
@@ -379,6 +403,31 @@ const EditProfile = props => {
 
                             <View style={[styles.containTitle]}>
                                 <Text style={[stylesFont.fontNolanBold, styles.titleMain]}>
+                                    Mã giới thiệu
+                                </Text>
+                            </View>
+                            <View style={[styles.rowContent]}>
+                                <TextInput
+                                    value={codeAffiliate}
+                                    onChangeText={(content) => {
+                                        setCodeAffiliate(content.toUpperCase())
+                                    }}
+                                    placeholder={`Nhập mã giới thiệu`}
+                                    style={[styles.inputElement, { ...stylesFont.fontNolan500, color: BLUE_FB }]}
+                                />
+                            </View>
+
+                            <Collapsible collapsed={currPartnerCollab?._id ? false : true}>
+                                <View style={{ marginLeft: _moderateScale(8 * 2), padding: _moderateScale(8 * 2), paddingBottom: 0, ...styleElement.rowAliCenter }}>
+                                    <Text style={{ marginRight: _moderateScale(8) }}>
+                                        Tìm thấy người giới thiệu: <Text style={{ fontWeight: 'bold' }}>{currPartnerCollab?.name}</Text>
+                                    </Text>
+                                    <IconTick style={sizeIcon.sm} />
+                                </View>
+                            </Collapsible>
+
+                            <View style={[styles.containTitle]}>
+                                <Text style={[stylesFont.fontNolanBold, styles.titleMain]}>
                                     Họ tên
                                 </Text>
                             </View>
@@ -553,23 +602,23 @@ const EditProfile = props => {
                     marginVertical: _moderateScale(8),
                     marginBottom: getBottomSpace() + _moderateScale(8)
                 }]}>
-                    <LinearGradient
-                        start={{ x: 0, y: 1 }}
-                        end={{ x: 1, y: 1 }}
-                        locations={[0, 0.6, 1]}
-                        colors={[
-                            BASE_COLOR,
-                            '#8c104e',
-                            '#db0505',
-                        ]}
-                        style={{
-                            width: '100%',
-                            height: '100%',
-                            position: 'absolute',
-                            top: 0,
-                            left: 0,
-                            borderRadius: _moderateScale(8),
-                        }} />
+                <LinearGradient
+                    start={{ x: 0, y: 1 }}
+                    end={{ x: 1, y: 1 }}
+                    locations={[0, 0.6, 1]}
+                    colors={[
+                        BASE_COLOR,
+                        '#8c104e',
+                        '#db0505',
+                    ]}
+                    style={{
+                        width: '100%',
+                        height: '100%',
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        borderRadius: _moderateScale(8),
+                    }} />
 
                 <Text style={[stylesFont.fontNolanBold, { fontSize: _moderateScale(16), color: WHITE }]}>
                     Cập nhật
@@ -622,7 +671,7 @@ const styles = StyleSheet.create({
     coverTop: {
         height: '100%',
         justifyContent: 'flex-start',
-        paddingTop:_moderateScale(8*2),
+        paddingTop: _moderateScale(8 * 2),
     },
     container: {
         flex: 1,

@@ -1,18 +1,19 @@
 import { Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React from 'react'
-import { BASE_COLOR, WHITE } from '../../../Constant/Color'
+import React, { memo } from 'react'
+import { BASE_COLOR, WHITE } from '../../Constant/Color'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
-import { _moderateScale } from '../../../Constant/Scale'
-import { IconBXH, IconBackWhite, IconWallet } from '../../../Components/Icon/Icon'
-import { stylesFont } from '../../../Constant/Font'
-import { navigation } from '../../../../rootNavigation'
-import ScreenKey from '../../../Navigation/ScreenKey'
+import { _moderateScale } from '../../Constant/Scale'
+import { IconBXH, IconBackWhite, IconWallet } from '../../Components/Icon/Icon'
+import { stylesFont } from '../../Constant/Font'
 
-const Header = () => {
+import ScreenKey from '../../Navigation/ScreenKey'
+import { navigation } from '../../../rootNavigation'
+
+const LiAHeader = memo((props) => {
     return (
         <View style={styles.header}>
             <View style={{
-                height:  getStatusBarHeight() 
+                height: getStatusBarHeight()
             }} />
             <View style={styles.header__box}>
                 <View style={{ flex: 1 }}>
@@ -22,24 +23,19 @@ const Header = () => {
                 </View>
                 <View style={{ flex: 1, alignItems: 'center' }}>
                     <Text style={[stylesFont.fontNolanBold, { color: WHITE, fontSize: _moderateScale(16) }]}>
-                        TRI ÂN
+                        {
+                            props?.title
+                        }
                     </Text>
                 </View>
                 <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}>
-                    <TouchableOpacity onPress={() => navigation.navigate(ScreenKey.LIST_RANKED)}>
-                        <IconBXH />
-                    </TouchableOpacity>
-                    <View style={{ width: _moderateScale(8 * 2) }} />
-                    <TouchableOpacity onPress={() => navigation.navigate(ScreenKey.INFO_WALLET_NEW_AFFILIATE)}>
-                        <IconWallet />
-                    </TouchableOpacity>
                 </View>
             </View>
         </View>
     )
-}
+})
 
-export default Header
+export default LiAHeader
 
 const styles = StyleSheet.create({
     header__box: {

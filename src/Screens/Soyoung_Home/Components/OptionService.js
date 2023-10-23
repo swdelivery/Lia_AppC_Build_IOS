@@ -53,7 +53,7 @@ const OptionService = memo(() => {
             }}>
 
                 {
-                    [...listServiceGroupRedux,'1']?.map((item, index) => {
+                    [...listServiceGroupRedux]?.map((item, index) => {
                         return (
                             <TouchableOpacity
                             onPress={() => {
