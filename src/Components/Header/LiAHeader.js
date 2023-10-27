@@ -1,37 +1,47 @@
-import { Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Platform, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { memo } from 'react'
 import { BASE_COLOR, WHITE } from '../../Constant/Color'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 import { _moderateScale } from '../../Constant/Scale'
-import { IconBXH, IconBackWhite, IconWallet } from '../../Components/Icon/Icon'
+import { IconBXH, IconBackGrey, IconBackWhite, IconWallet } from '../../Components/Icon/Icon'
 import { stylesFont } from '../../Constant/Font'
 
 import ScreenKey from '../../Navigation/ScreenKey'
 import { navigation } from '../../../rootNavigation'
+import { sizeIcon } from '../../Constant/Icon'
 
 const LiAHeader = memo((props) => {
     return (
-        <View style={styles.header}>
-            <View style={{
-                height: getStatusBarHeight()
-            }} />
-            <View style={styles.header__box}>
-                <View style={{ flex: 1 }}>
-                    <TouchableOpacity onPress={() => navigation.goBack()}>
-                        <IconBackWhite />
-                    </TouchableOpacity>
-                </View>
-                <View style={{ flex: 1, alignItems: 'center' }}>
-                    <Text style={[stylesFont.fontNolanBold, { color: WHITE, fontSize: _moderateScale(16) }]}>
-                        {
-                            props?.title
-                        }
-                    </Text>
-                </View>
-                <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}>
+        <>
+            <StatusBar translucent={props?.translucent ? true : false} barStyle={props?.barStyle || 'light-content'} />
+            <View style={[styles.header, props?.bg && { backgroundColor: props?.bg } ]}>
+                <View style={{
+                    height: getStatusBarHeight()
+                }} />
+                <View style={styles.header__box}>
+                    <View style={{ flex: 1 }}>
+                        <TouchableOpacity onPress={() => navigation.goBack()}>
+                            {
+                                props?.barStyle == "light-content" ?
+                                    <IconBackWhite style={sizeIcon.llg} />
+                                    :
+                                    <IconBackGrey style={sizeIcon.llg} />
+                            }
+
+                        </TouchableOpacity>
+                    </View>
+                    <View style={{ flex: 4, alignItems: 'center' }}>
+                        <Text style={[stylesFont.fontNolanBold, { color: WHITE, fontSize: _moderateScale(16) }, props?.titleColor && { color: props?.titleColor }]}>
+                            {
+                                props?.title
+                            }
+                        </Text>
+                    </View>
+                    <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}>
+                    </View>
                 </View>
             </View>
-        </View>
+        </>
     )
 })
 
@@ -46,5 +56,7 @@ const styles = StyleSheet.create({
     },
     header: {
         backgroundColor: BASE_COLOR,
+        // borderBottomWidth:.5,
+        // borderBottomColor:'rgba(0,0,0,.3)'
     }
 })

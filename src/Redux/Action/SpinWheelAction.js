@@ -6,6 +6,74 @@ import { setLogStyle, useLogStyle } from './LogConfig';
 import { Alert } from 'react-native';
 
 
+export const takeAward = (data) => {
+
+    return Axios.post(`${URL_FOR_PARTNER}/partner-wheel-turn/mission/get-award`,data)
+        .then(res => {
+            console.log(useLogStyle + '----FETCHING SUCCESS: ', setLogStyle('green'), { takeAward: res });
+            return res
+        })
+        .catch(error => {
+            console.log(useLogStyle + '----FETCHING FAIL: ', setLogStyle('red'), { takeAward: error });
+            _checkError(error)
+            return error
+        })
+}
+
+export const getListMissions = () => {
+
+    return Axios.get(`${URL_FOR_PARTNER}/partner-wheel-turn/missions`)
+        .then(res => {
+            console.log(useLogStyle + '----FETCHING SUCCESS: ', setLogStyle('green'), { getListMissions: res });
+            return res
+        })
+        .catch(error => {
+            console.log(useLogStyle + '----FETCHING FAIL: ', setLogStyle('red'), { getListMissions: error });
+            _checkError(error)
+            return error
+        })
+}
+export const byTurnWheel = (data) => {
+
+    return Axios.post(`${URL_FOR_PARTNER}/partner-wheel-turn/by-turn`,data)
+        .then(res => {
+            console.log(useLogStyle + '----FETCHING SUCCESS: ', setLogStyle('green'), { byTurnWheel: res });
+            return res
+        })
+        .catch(error => {
+            console.log(useLogStyle + '----FETCHING FAIL: ', setLogStyle('red'), { byTurnWheel: error });
+            _checkError(error)
+            return error
+        })
+}
+
+export const getHistorySpin = (data) => {
+
+    return Axios.post(`${URL_FOR_PARTNER}/lia-bonus-event`,data)
+        .then(res => {
+            console.log(useLogStyle + '----FETCHING SUCCESS: ', setLogStyle('green'), { getHistorySpin: res });
+            return res
+        })
+        .catch(error => {
+            console.log(useLogStyle + '----FETCHING FAIL: ', setLogStyle('red'), { getHistorySpin: error });
+            _checkError(error)
+            return error
+        })
+}
+export const getCurrentActiveWheel = (code) => {
+
+    return Axios.get(`${URL_FOR_PARTNER}/config-lucky-wheel/current-active-wheel`)
+        .then(res => {
+            console.log(useLogStyle + '----FETCHING SUCCESS: ', setLogStyle('green'), { getCurrentActiveWheel: res });
+            return res
+        })
+        .catch(error => {
+            console.log(useLogStyle + '----FETCHING FAIL: ', setLogStyle('red'), { getCurrentActiveWheel: error });
+            _checkError(error)
+            return error
+        })
+}
+
 export const getConfigFileByCode = (code) => {
 
     return Axios.get(`${URL_FOR_PARTNER}/config-file/get-by-code?code=${code}`)
@@ -99,6 +167,20 @@ export const getSpinWheel = () => {
         })
         .catch(error => {
             console.log(useLogStyle + '----FETCHING FAIL: ', setLogStyle('red'), { getSpinWheel: error });
+            _checkError(error)
+            return error
+        })
+}
+
+export const getSpinWheelv2 = () => {
+
+    return Axios.get(`${URL_FOR_PARTNER}/partner-wheel-turn/spin-wheel-v2`)
+        .then(res => {
+            console.log(useLogStyle + '----FETCHING SUCCESS: ', setLogStyle('green'), { getSpinWheelv2: res });
+            return res
+        })
+        .catch(error => {
+            console.log(useLogStyle + '----FETCHING FAIL: ', setLogStyle('red'), { getSpinWheelv2: error });
             _checkError(error)
             return error
         })

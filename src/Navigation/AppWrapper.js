@@ -192,6 +192,9 @@ import QANewAffiliate from '../Screens/NewAffiliate/QAAffiliate';
 import InfoWalletNewAffiliate from '../Screens/NewAffiliate/InfoWalletNewAffiliate';
 import ListRanked from '../Screens/NewAffiliate/ListRanked';
 import LiAVoucher from '../Screens/LiAVoucher';
+import DetailLiAVoucher from '../Screens/LiAVoucher/DetailLiAVoucher';
+import MyVouchers from '../Screens/LiAVoucher/MyVouchers';
+import DetailNewsVoucher from '../Screens/LiAVoucher/DetailNewsVoucher';
 
 const Tab = createMaterialTopTabNavigator();
 const Stack = createStackNavigator();
@@ -372,7 +375,7 @@ const AppWrapper = (props) => {
             }))
 
             const unsubscribe = messaging().onMessage(async remoteMessage => {
-                Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+                // Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
             });
 
 
@@ -685,6 +688,9 @@ const AppWrapper = (props) => {
 
                                     {/* LiA Voucher */}
                                     <rootStack.Screen options={{ ...TransitionPresets.SlideFromRightIOS }} name={ScreenKey.LIA_VOUCHER} component={LiAVoucher} />
+                                    <rootStack.Screen options={{ ...TransitionPresets.SlideFromRightIOS }} name={ScreenKey.DETAIL_LIA_VOUCHER} component={DetailLiAVoucher} />
+                                    <rootStack.Screen options={{ ...TransitionPresets.SlideFromRightIOS }} name={ScreenKey.MY_VOUCHERS} component={MyVouchers} />
+                                    <rootStack.Screen options={{ ...TransitionPresets.SlideFromRightIOS }} name={ScreenKey.DETAIL_NEWS_VOUCHER} component={DetailNewsVoucher} />
 
 
                                     <rootStack.Screen

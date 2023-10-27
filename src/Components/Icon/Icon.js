@@ -41,6 +41,17 @@ import SVGArrowDown from '../../SGV/arrowDown.svg'
 import SVGQRScaner from '../../SGV/qrScaner.svg'
 import SVGTick from '../../SGV/tick.svg'
 import SVGVoucher from '../../SGV/voucher.svg'
+import SVGVoucherGold from '../../SGV/voucherGold.svg'
+import SVGChecklistWhite from '../../SGV/checklistWhite.svg'
+import SVGHistoryWhite from '../../SGV/historyWhite.svg'
+import SVGHelpWhite from '../../SGV/iconHelpWhite.svg'
+import SVGCancelGrey from '../../SGV/cancelGrey.svg'
+import SVGBtnMission from '../../SGV/btnMission.svg'
+import SVGBtnHistory from '../../SGV/btnHistory.svg'
+import SVGCoin from '../../SGV/coin.svg'
+import SVGArrowRightLarge from '../../SGV/arrowRightLarge.svg'
+import SVGIncrease from '../../SGV/increase.svg'
+import SVGDecrease from '../../SGV/decrease.svg'
 import { _moderateScale } from "../../Constant/Scale"
 
 
@@ -333,6 +344,14 @@ export const IconCancelWhite = (props) => {
         />
     )
 }
+export const IconCancelGrey = (props) => {
+    return (
+        <SVGCancelGrey
+            width={props?.style?.width ? props?.style?.width : _moderateScale(8*4)}
+            height={props?.style?.height ? props?.style?.height : _moderateScale(8*4)}
+        />
+    )
+}
 export const IconDollars = (props) => {
     return (
         <SVGDollars
@@ -424,6 +443,87 @@ export const IconTick = (props) => {
 export const IconVoucher = (props) => {
     return (
         <SVGVoucher
+            width={props?.style?.width ? props?.style?.width : _moderateScale(8*4)}
+            height={props?.style?.height ? props?.style?.height : _moderateScale(8*4)}
+        />
+    )
+}
+export const IconVoucherGold = (props) => {
+    return (
+        <SVGVoucherGold
+            width={props?.style?.width ? props?.style?.width : _moderateScale(8*4)}
+            height={props?.style?.height ? props?.style?.height : _moderateScale(8*4)}
+        />
+    )
+}
+export const IconChecklistWhite = (props) => {
+    return (
+        <SVGChecklistWhite
+            width={props?.style?.width ? props?.style?.width : _moderateScale(8*4)}
+            height={props?.style?.height ? props?.style?.height : _moderateScale(8*4)}
+        />
+    )
+}
+
+export const IconHistoryWhite = (props) => {
+    return (
+        <SVGHistoryWhite
+            width={props?.style?.width ? props?.style?.width : _moderateScale(8*4)}
+            height={props?.style?.height ? props?.style?.height : _moderateScale(8*4)}
+        />
+    )
+}
+export const IconHelpWhite = (props) => {
+    return (
+        <SVGHelpWhite
+            width={props?.style?.width ? props?.style?.width : _moderateScale(8*4)}
+            height={props?.style?.height ? props?.style?.height : _moderateScale(8*4)}
+        />
+    )
+}
+export const BtnMission = (props) => {
+    return (
+        <SVGBtnMission
+            width={props?.style?.width ? props?.style?.width : _moderateScale(8*4)}
+            height={props?.style?.height ? props?.style?.height : _moderateScale(8*4)}
+        />
+    )
+}
+export const BtnHistory = (props) => {
+    return (
+        <SVGBtnHistory
+            width={props?.style?.width ? props?.style?.width : _moderateScale(8*4)}
+            height={props?.style?.height ? props?.style?.height : _moderateScale(8*4)}
+        />
+    )
+}
+export const IconCoin = (props) => {
+    return (
+        <SVGCoin
+            width={props?.style?.width ? props?.style?.width : _moderateScale(8*4)}
+            height={props?.style?.height ? props?.style?.height : _moderateScale(8*4)}
+        />
+    )
+}
+export const IconArrowRightLarge = (props) => {
+    return (
+        <SVGArrowRightLarge
+            width={props?.style?.width ? props?.style?.width : _moderateScale(8*4)}
+            height={props?.style?.height ? props?.style?.height : _moderateScale(8*4)}
+        />
+    )
+}
+export const IconIncrease = (props) => {
+    return (
+        <SVGIncrease
+            width={props?.style?.width ? props?.style?.width : _moderateScale(8*4)}
+            height={props?.style?.height ? props?.style?.height : _moderateScale(8*4)}
+        />
+    )
+}
+export const IconDecrease = (props) => {
+    return (
+        <SVGDecrease
             width={props?.style?.width ? props?.style?.width : _moderateScale(8*4)}
             height={props?.style?.height ? props?.style?.height : _moderateScale(8*4)}
         />

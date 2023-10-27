@@ -5,7 +5,7 @@ import { sizeIcon, sizeLogo } from '../../Constant/Icon';
 import ModalSuccess from './ModalSuccess';
 import { _moderateScale, _heightScale, _widthScale } from '../../Constant/Scale';
 import PressBtn from './Components/PressBtn';
-import { getSpinWheel, getLuckyCircle } from '../../Redux/Action/SpinWheelAction';
+import { getSpinWheel, getLuckyCircle, getSpinWheelv2 } from '../../Redux/Action/SpinWheelAction';
 import { getBottomSpace } from 'react-native-iphone-x-helper';
 import { URL_ORIGINAL } from '../../Constant/Url';
 import { BG_GREY_OPACITY_2 } from '../../Constant/Color';
@@ -33,10 +33,10 @@ const LuckyCircle = memo((props, ref) => {
 
     const _getLuckyNumber = async () => {
 
-        let result1 = await getSpinWheel()
+        let result1 = await getSpinWheelv2()
         if (result1?.isAxiosError) return props?.showOverLay(false)
-
-        let findIndex = props?.data?.findIndex(item => item?.code == result1?.data?.data?.code);
+        
+        let findIndex = props?.currActiveWheel?.details?.findIndex(item => item?.code == result1?.data?.data?.awards?.code);
         if (findIndex !== -1) {
             _startSpin(findIndex, { data: result1?.data })
         }
@@ -75,40 +75,16 @@ const LuckyCircle = memo((props, ref) => {
         Animated.timing(
             spinValue,
             {
-                toValue: spinValue._value + (6 + luckyNumber / props?.data?.length),
+                toValue: spinValue._value + (6 + luckyNumber / props?.currActiveWheel?.details?.length),
                 duration: 5000,
                 useNativeDriver: true,  // To make use of native driver for performance
                 easing: Easing.out(Easing.quad)
-                // easing: Easing.inOut(Easing.quad)
             }
         ).start(() => {
-            // spinValue.setValue(spinValue._value + (6+ luckyNumber / 10))
             props?.onSpinEnd(data)
         })
     }
 
-    // useImperativeHandle(ref, () => ({
-
-    //     getAlert() {
-    //         console.log({ spinValuex: spinValue._value });
-
-    //         spinValue.setValue(0)
-
-    //         Animated.timing(
-    //             spinValue,
-    //             {
-    //                 toValue: spinValue._value + (2 + props?.number / 10),
-    //                 duration: 3000,
-    //                 useNativeDriver: true,  // To make use of native driver for performance
-    //                 easing: Easing.inOut(Easing.quad)
-    //             }
-    //         ).start(() => {
-    //             spinValue.setValue(spinValue._value + (2 + props?.number / 10))
-    //             props?.onSpinEnd()
-    //         })
-    //     }
-
-    // }));
 
     const spin = spinValue.interpolate({
         inputRange: [0, 1],
@@ -132,7 +108,7 @@ const LuckyCircle = memo((props, ref) => {
                     source={require('../../Image/spin/arrowDown.png')} />
 
                 {
-                    luckyCircle?.fileArr?.length > 0 ?
+                    props?.currActiveWheel?.imageResponse?.link ?
                         <Animated.Image
                             style={[
                                 {
@@ -141,20 +117,20 @@ const LuckyCircle = memo((props, ref) => {
                                     }]
                                 },
                                 {
-                                    width: _heightScale(8 * 42.5),
-                                    height: _heightScale(8 * 42.5),
+                                    width: _heightScale(8 * 40.5),
+                                    height: _heightScale(8 * 40.5),
                                     backgroundColor: BG_GREY_OPACITY_2,
-                                    borderRadius: _heightScale(8 * 42.5 / 2)
+                                    borderRadius: _heightScale(8 * 40.5 / 2)
                                 }]}
-                            source={{ uri: `${URL_ORIGINAL}${luckyCircle?.fileArr[0]?.link}` }}
+                            source={{ uri: `${URL_ORIGINAL}${props?.currActiveWheel?.imageResponse?.link}` }}
                         // source={require('../../Image/spin/circleHD.png')}
                         />
                         :
                         <View style={{
-                            width: _heightScale(8 * 42.5),
-                            height: _heightScale(8 * 42.5),
+                            width: _heightScale(8 * 40.5),
+                            height: _heightScale(8 * 40.5),
                             backgroundColor: BG_GREY_OPACITY_2,
-                            borderRadius: _heightScale(8 * 42.5 / 2)
+                            borderRadius: _heightScale(8 * 40.5 / 2)
                         }}>
                         </View>
                 }
@@ -164,7 +140,7 @@ const LuckyCircle = memo((props, ref) => {
                     height: _heightScale(8 * 7),
                     resizeMode: 'contain',
                     position: 'absolute',
-                    top: _heightScale(8 * 41.5),
+                    top: _heightScale(8 * 39.5),
                     zIndex: 0
                 }} source={require('../../Image/spin/wire.png')} />
 

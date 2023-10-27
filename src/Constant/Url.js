@@ -1,6 +1,8 @@
 // const BASE_URL = `https://stagingapi.trangbeautycenter.com`
 // http://14.161.18.75:7000/api
 
+// const URL_FOR_PARTNER = 'http://14.161.18.75:7000/api/cs'
+// const URL_ORIGINAL="http://14.161.18.75:7000" 
 const URL_FOR_PARTNER = 'https://liabeautyapi-staging.vndigitech.com/api/cs'
 const URL_ORIGINAL="https://liabeautyapi-staging.vndigitech.com" 
 // const URL_FOR_PARTNER = 'https://api.trangbeautycenter.com/api/cs'

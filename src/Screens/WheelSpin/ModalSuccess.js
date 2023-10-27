@@ -65,7 +65,8 @@ const ModalSuccess = memo((props) => {
                         alignSelf: 'center'
                     }}
                     source={{
-                        uri: `${URL_ORIGINAL}${props?.data?.data?.data?.imageResponse?.link}`
+                        // uri: `${URL_ORIGINAL}${props?.data?.data?.data?.imageResponse?.link}`
+                        uri:`https://img.freepik.com/premium-vector/giveaway-winner-announcement-social-media-post-banner-template_22857-1223.jpg?w=1800`
                     }} >
 
                     <TouchableOpacity
