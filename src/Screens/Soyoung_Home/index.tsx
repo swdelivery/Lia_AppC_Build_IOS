@@ -1,17 +1,7 @@
-import React, { memo, useEffect } from "react";
-import PropTypes from "prop-types";
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  StatusBar,
-  TouchableOpacity,
-  Alert,
-} from "react-native";
+import React, { useEffect } from "react";
+import { View, StyleSheet } from "react-native";
 import Banner from "./Components/Banner";
 import Search from "./Components/Search";
-import { getStatusBarHeight } from "react-native-status-bar-height";
 import {
   _height,
   _heightScale,
@@ -26,20 +16,15 @@ import SoYoung_Branch from "../SoYoung_Branch/index";
 import So_Young_Doctor from "../SoYoung_Doctor/index";
 import So_Young_Expert from "../SoYoung_Expert";
 import { useRef } from "react";
-import { WHITE } from "../../Constant/Color";
-import Collapsible from "react-native-collapsible";
-import Animated, {
+import {
   useAnimatedStyle,
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
 import { getAllServiceGroup } from "../../Redux/Action/ServiceGroup";
 import { useDispatch, useSelector } from "react-redux";
-import { stylesFont } from "../../Constant/Font";
-import ModalPickSingleNotSearch from "../../Components/ModalPickSingleNotSearch/ModalPickSingleNotSearch";
 import Screen from "../../Components/Screen";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import LinearGradient from "react-native-linear-gradient";
 
 const SoyoungHome = () => {
   const dispatch = useDispatch();
@@ -135,7 +120,6 @@ const SoyoungHome = () => {
       </View>
 
       <ScrollableTabView
-        titleArgs={{}}
         title={<View />}
         titleArgs={{
           interpolateHeight: {

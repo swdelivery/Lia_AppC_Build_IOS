@@ -1,0 +1,25 @@
+diff --git a/node_modules/react-native-material-dropdown/src/components/dropdown/index.js b/node_modules/react-native-material-dropdown/src/components/dropdown/index.js
+index 54c02b2..c6e4391 100644
+--- a/node_modules/react-native-material-dropdown/src/components/dropdown/index.js
++++ b/node_modules/react-native-material-dropdown/src/components/dropdown/index.js
+@@ -9,7 +9,6 @@ import {
+   TouchableOpacity,
+   Dimensions,
+   Platform,
+-  ViewPropTypes,
+   I18nManager,
+ } from 'react-native';
+ import Ripple from 'react-native-material-ripple';
+@@ -146,9 +145,9 @@ export default class Dropdown extends PureComponent {
+     renderBase: PropTypes.func,
+     renderAccessory: PropTypes.func,
+ 
+-    containerStyle: (ViewPropTypes || View.propTypes).style,
+-    overlayStyle: (ViewPropTypes || View.propTypes).style,
+-    pickerStyle: (ViewPropTypes || View.propTypes).style,
++    containerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
++    overlayStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
++    pickerStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+ 
+     supportedOrientations: PropTypes.arrayOf(PropTypes.string),
+ 
