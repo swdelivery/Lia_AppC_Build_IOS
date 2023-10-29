@@ -12,37 +12,49 @@ import { sizeIcon } from '../../Constant/Icon'
 
 const LiAHeader = memo((props) => {
     return (
-        <>
-            <StatusBar translucent={props?.translucent ? true : false} barStyle={props?.barStyle || 'light-content'} />
-            <View style={[styles.header, props?.bg && { backgroundColor: props?.bg } ]}>
-                <View style={{
-                    height: getStatusBarHeight()
-                }} />
-                <View style={styles.header__box}>
-                    <View style={{ flex: 1 }}>
-                        <TouchableOpacity onPress={() => navigation.goBack()}>
-                            {
-                                props?.barStyle == "light-content" ?
-                                    <IconBackWhite style={sizeIcon.llg} />
-                                    :
-                                    <IconBackGrey style={sizeIcon.llg} />
-                            }
-
-                        </TouchableOpacity>
-                    </View>
-                    <View style={{ flex: 4, alignItems: 'center' }}>
-                        <Text style={[stylesFont.fontNolanBold, { color: WHITE, fontSize: _moderateScale(16) }, props?.titleColor && { color: props?.titleColor }]}>
-                            {
-                                props?.title
-                            }
-                        </Text>
-                    </View>
-                    <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}>
-                    </View>
-                </View>
+      <>
+        <StatusBar translucent barStyle={props?.barStyle || "light-content"} />
+        <View
+          style={[styles.header, props?.bg && { backgroundColor: props?.bg }]}
+        >
+          <View
+            style={{
+              height: getStatusBarHeight(),
+            }}
+          />
+          <View style={styles.header__box}>
+            <View style={{ flex: 1 }}>
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                {props?.barStyle == "light-content" ? (
+                  <IconBackWhite style={sizeIcon.llg} />
+                ) : (
+                  <IconBackGrey style={sizeIcon.llg} />
+                )}
+              </TouchableOpacity>
             </View>
-        </>
-    )
+            <View style={{ flex: 4, alignItems: "center" }}>
+              <Text
+                style={[
+                  stylesFont.fontNolanBold,
+                  { color: WHITE, fontSize: _moderateScale(16) },
+                  props?.titleColor && { color: props?.titleColor },
+                ]}
+              >
+                {props?.title}
+              </Text>
+            </View>
+            <View
+              style={{
+                flex: 1,
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "flex-end",
+              }}
+            ></View>
+          </View>
+        </View>
+      </>
+    );
 })
 
 export default LiAHeader

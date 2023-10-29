@@ -26,8 +26,12 @@ import { getAllNewsv2 } from "../../../Redux/Action/News";
 import { URL_ORIGINAL } from "../../../Constant/Url";
 import { navigation } from "../../../../rootNavigation";
 import ScreenKey from "../../../Navigation/ScreenKey";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import Spacer from "../../../Components/Spacer";
+import useItemExtractor from "../../../Hooks/useItemExtractor";
 
 const Banner = () => {
+  const { top } = useSafeAreaInsets();
   const FlatListRef = useRef(null);
   const [listImage, setListImage] = useState([]);
   const widthImg = useSharedValue(380);
@@ -185,6 +189,8 @@ const Banner = () => {
     );
   };
 
+  const { keyExtractor } = useItemExtractor((item) => item._id);
+
   return (
     <Animated.View style={[styles.container, animBG]}>
       <LinearGradient
@@ -193,7 +199,7 @@ const Banner = () => {
         end={{ x: 0, y: 1 }}
         colors={["transparent", "#EE79B8"]}
       />
-      <View style={{ height: _moderateScale(8 * 16) }} />
+      <Spacer top={top + 60} />
       <View style={{}}>
         <FlatList
           ref={FlatListRef}
@@ -220,7 +226,7 @@ const Banner = () => {
           pagingEnabled
           renderItem={_renderImage}
           data={listImage}
-          keyExtractor={(item) => item._id}
+          keyExtractor={keyExtractor}
         />
 
         <View
@@ -234,6 +240,7 @@ const Banner = () => {
           {listImage?.map((item, index) => {
             return (
               <View
+                key={keyExtractor(item)}
                 style={[
                   {
                     width: 6,

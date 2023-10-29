@@ -502,134 +502,139 @@ const index = memo((props) => {
     }
 
     return (
-        <View style={styles.container}>
-            <StatusBar translucent={Platform.OS == 'ios' ? true : false} barStyle={'light-content'} backgroundColor={props?.bgColor || BASE_COLOR} />
+      <View style={styles.container}>
+        <StatusBar
+          barStyle={"light-content"}
+          backgroundColor={props?.bgColor || BASE_COLOR}
+        />
 
+        {isAdsFlashSaleReady == true ? (
+          <TouchableOpacity
+            onPress={() => {
+              setIsAdsFlashSaleReady(false);
+            }}
+            activeOpacity={1}
+            style={{
+              position: "absolute",
+              width: "100%",
+              height: "100%",
+              zIndex: 1000,
+              backgroundColor: "rgba(0,0,0,0.5)",
+            }}
+          >
+            <AdsFlashSale _hanleClickSale={_hanleClickSale}></AdsFlashSale>
+          </TouchableOpacity>
+        ) : (
+          <></>
+        )}
+
+        <ScrollableTabView
+          titleArgs={
             {
-                isAdsFlashSaleReady == true ?
-                    <TouchableOpacity
-                        onPress={() => {
-                            setIsAdsFlashSaleReady(false)
-                        }}
-                        activeOpacity={1}
-                        style={{
-                            position: 'absolute',
-                            width: '100%',
-                            height: '100%',
-                            zIndex: 1000,
-                            backgroundColor: 'rgba(0,0,0,0.5)'
-                        }}>
-                        <AdsFlashSale _hanleClickSale={_hanleClickSale}></AdsFlashSale>
-                    </TouchableOpacity>
-                    : <></>
+              // style: {
+              //     backgroundColor: BASE_COLOR,
+              // },
             }
-
-            <ScrollableTabView
-                titleArgs={{
-                    // style: {
-                    //     backgroundColor: BASE_COLOR,
-                    // },
+          }
+          title={<View>{_renderListOptionTitle()}</View>}
+          onTabviewChanged={(index, tabLabel) => {
+            console.log(`${index},${tabLabel}`);
+            refreshCurrentTab();
+          }}
+          mappingProps={{
+            rootTime: rootTime,
+          }}
+          stacks={stacks}
+          tabWrapStyle={{ flex: 1 }}
+          tabInnerStyle={{ width: "100%" }}
+          tabActiveOpacity={1}
+          tabsStyle={{
+            height: _moderateScale(8 * 5),
+            backgroundColor: "white",
+            borderBottomColor: BG_GREY_OPACITY_3,
+            borderBottomWidth: 1,
+          }}
+          tabStyle={{
+            backgroundColor: "white",
+            // borderBottomColor: "#22242f",
+            // borderBottomWidth: 0.5,
+            width: deviceWidth / 4.25,
+          }}
+          tabUnderlineStyle={{
+            backgroundColor: BASE_COLOR,
+            top: 8 * 4,
+            height: 3,
+          }}
+          textStyle={{
+            color: BG_GREY_OPACITY_7,
+            ...stylesFont.fontNolanBold,
+            fontSize: _moderateScale(14),
+          }}
+          // ref={scrollableTabViewRef}
+          ref={(it) => (scrollableTabViewRef.current = it)}
+          textActiveStyle={{
+            color: BASE_COLOR,
+            ...stylesFont.fontNolanBold,
+            fontSize: _moderateScale(14),
+            // backgroundColor:SECOND_COLOR,
+          }}
+          header={_renderHeader}
+          firstIndex={0}
+          useScroll={true}
+          toTabsOnTab={true}
+          oneTabHidden={true}
+          enableCachePage={true}
+          onScroll={Animated.event([
+            {
+              nativeEvent: { contentOffset: { y: scrollY } },
+            },
+          ])}
+          onScroll2Horizontal={({ nativeEvent }) => {
+            console.log(nativeEvent.contentOffset.x);
+          }}
+          tabsEnableAnimatedUnderlineWidth={40}
+          tabsEnableAnimated={true}
+        ></ScrollableTabView>
+        {isFlashSaleReady ? (
+          <TouchableOpacity
+            onPress={() => navigation.navigate(ScreenKey.FLASHSALE_SCREEN)}
+            style={{
+              position: "absolute",
+              right: _moderateScale(8 * 2),
+              bottom: _heightScale(8 * 2),
+            }}
+          >
+            {btnFlashSale?.fileArr?.length > 0 ? (
+              <ImageBackground
+                style={[
+                  styleElement.centerChild,
+                  {
+                    width: _moderateScale(76),
+                    height: _moderateScale(76),
+                    paddingBottom: _moderateScale(4),
+                  },
+                ]}
+                resizeMode="contain"
+                source={{
+                  uri: `${URL_ORIGINAL}${btnFlashSale?.fileArr[0]?.link}`,
                 }}
-                title={
-                    <View>
-                        {_renderListOptionTitle()}
-                    </View>
-                }
-                onTabviewChanged={(index, tabLabel) => {
-                    console.log(`${index},${tabLabel}`);
-                    refreshCurrentTab()
-                }}
-                mappingProps={{
-                    rootTime: rootTime,
-                }}
-                stacks={stacks}
-                tabWrapStyle={{ flex: 1 }}
-                tabInnerStyle={{ width: "100%", }}
-                tabActiveOpacity={1}
-                tabsStyle={{
-                    height: _moderateScale(8 * 5),
-                    backgroundColor: "white",
-                    borderBottomColor: BG_GREY_OPACITY_3,
-                    borderBottomWidth: 1,
-                }}
-                tabStyle={{
-                    backgroundColor: "white",
-                    // borderBottomColor: "#22242f",
-                    // borderBottomWidth: 0.5,
-                    width: deviceWidth / 4.25,
-                }}
-                tabUnderlineStyle={{
-                    backgroundColor: BASE_COLOR,
-                    top: 8 * 4,
-                    height: 3,
-                }}
-                textStyle={{
-                    color: BG_GREY_OPACITY_7,
-                    ...stylesFont.fontNolanBold,
-                    fontSize: _moderateScale(14)
-                }}
-                // ref={scrollableTabViewRef}
-                ref={(it) => (scrollableTabViewRef.current = it)}
-                textActiveStyle={{
-                    color: BASE_COLOR,
+              >
+                <Text
+                  style={{
                     ...stylesFont.fontNolanBold,
                     fontSize: _moderateScale(14),
-                    // backgroundColor:SECOND_COLOR,
-                }}
-                header={
-                    _renderHeader
-                }
-                firstIndex={0}
-                useScroll={true}
-                toTabsOnTab={true}
-                oneTabHidden={true}
-                enableCachePage={true}
-                onScroll={Animated.event(
-                    [
-                        {
-                            nativeEvent: { contentOffset: { y: scrollY } },
-                        },
-                    ]
-                )}
-                onScroll2Horizontal={({ nativeEvent }) => {
-                    console.log(nativeEvent.contentOffset.x);
-                }}
-
-
-                tabsEnableAnimatedUnderlineWidth={40}
-                tabsEnableAnimated={true}
-            >
-
-            </ScrollableTabView>
-            {
-                isFlashSaleReady ?
-                    <TouchableOpacity
-                        onPress={() => navigation.navigate(ScreenKey.FLASHSALE_SCREEN)}
-                        style={{
-                            position: 'absolute',
-                            right: _moderateScale(8 * 2), bottom: _heightScale(8 * 2)
-                        }}>
-                        {
-                            btnFlashSale?.fileArr?.length > 0 ?
-                                <ImageBackground style={[styleElement.centerChild, {
-                                    width: _moderateScale(76),
-                                    height: _moderateScale(76),
-                                    paddingBottom: _moderateScale(4)
-                                }]}
-                                    resizeMode="contain"
-                                    source={{ uri: `${URL_ORIGINAL}${btnFlashSale?.fileArr[0]?.link}` }}
-                                >
-                                    <Text style={{ ...stylesFont.fontNolanBold, fontSize: _moderateScale(14), color: WHITE }}>
-
-                                    </Text>
-                                </ImageBackground>
-                                : <></>
-                        }
-                    </TouchableOpacity>
-                    :
-                    <></>
-            }
-        </View>
+                    color: WHITE,
+                  }}
+                ></Text>
+              </ImageBackground>
+            ) : (
+              <></>
+            )}
+          </TouchableOpacity>
+        ) : (
+          <></>
+        )}
+      </View>
     );
 });
 

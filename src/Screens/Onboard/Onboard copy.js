@@ -62,91 +62,104 @@ const Onboard = memo((props) => {
     }
 
     return (
-        <View style={styles.container}>
-            <LinearGradient
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 1 }}
-                colors={gradient.color}
-                style={gradient.container}>
-                {/* <View style={{ height: getStatusBarHeight() }} /> */}
-                <StatusBar backgroundColor={'transparent'} translucent={false} barStyle={props?.barStyle || 'light-content'} />
-                {/* <StatusBarCustom barStyle={"light-content"} bgColor={BASE_COLOR} /> */}
+      <View style={styles.container}>
+        <LinearGradient
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+          colors={gradient.color}
+          style={gradient.container}
+        >
+          {/* <View style={{ height: getStatusBarHeight() }} /> */}
+          <StatusBar
+            backgroundColor={"transparent"}
+            barStyle={props?.barStyle || "light-content"}
+          />
+          {/* <StatusBarCustom barStyle={"light-content"} bgColor={BASE_COLOR} /> */}
 
-                <View style={{
-                    position: 'absolute',
-                    zIndex: 10,
-                    top: getStatusBarHeight() + _moderateScale(8 * 1),
-                    right: _moderateScale(8 * 2),
-                    // marginTop: _moderateScale(8 * 2),
-                    // marginRight: _moderateScale(8 * 2),
-                }}>
+          <View
+            style={{
+              position: "absolute",
+              zIndex: 10,
+              top: getStatusBarHeight() + _moderateScale(8 * 1),
+              right: _moderateScale(8 * 2),
+              // marginTop: _moderateScale(8 * 2),
+              // marginRight: _moderateScale(8 * 2),
+            }}
+          >
+            <TouchableOpacity
+              onPress={() => {
+                props?.setShow(false, null);
+              }}
+              style={[shadow, styles.btnSkip]}
+            >
+              <Text
+                style={{
+                  ...stylesFont.fontNolanBold,
+                  fontSize: _moderateScale(15),
+                  color: GREY_FOR_TITLE,
+                }}
+              >
+                Bỏ qua
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <View style={{}}>
+            <FlatList
+              // bounces={false}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              data={listImage}
+              pagingEnabled
+              onViewableItemsChanged={onViewRef.current}
+              viewabilityConfig={viewConfigRef.current}
+              renderItem={({ item, index }) => {
+                return (
+                  <View style={{ width: _width, height: _height }}>
                     <TouchableOpacity
-                        onPress={() => {
-                            props?.setShow(false, null)
+                      activeOpacity={0.9}
+                      onPress={() => {
+                        // props?.setShow(false, null)
+                        // navigation.navigate(ScreenKey.DETAIL_NEWS, { idNews: props?.data?._id })
+
+                        props?.setShow(false, {
+                          screenKey: ScreenKey.DETAIL_NEWS,
+                          params: {
+                            idNews: item?._id,
+                          },
+                        });
+                      }}
+                      style={{
+                        width: _width,
+                        height: _height,
+                      }}
+                    >
+                      <ImageBackground
+                        style={{ flex: 1 }}
+                        source={{
+                          uri: `${URL_ORIGINAL}${item?.startUpFileArr[0]?.link}`,
                         }}
-                        style={[shadow, styles.btnSkip]}>
-                        <Text style={{
-                            ...stylesFont.fontNolanBold,
-                            fontSize: _moderateScale(15),
-                            color: GREY_FOR_TITLE
-                        }}>
-                            Bỏ qua
-                        </Text>
+                      >
+                        <LinearGradient
+                          start={{ x: 1, y: 1 }}
+                          end={{ x: 1, y: 0 }}
+                          colors={[
+                            // 'rgba(0,0,0,0.9)',
+                            // 'rgba(255,255,255,0.0)',
+                            // 'rgba(255,255,255,0.0)',
+
+                            "rgba(0,0,0,0.9)",
+                            "rgba(255,255,255,0.0)",
+                            "rgba(255,255,255,0.0)",
+                            "rgba(255,255,255,0.0)",
+                          ]}
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                          }}
+                        ></LinearGradient>
+                      </ImageBackground>
                     </TouchableOpacity>
-                </View>
-                <View style={{}}>
-                    <FlatList
-                        // bounces={false}
-                        horizontal
-                        showsHorizontalScrollIndicator={false}
-                        data={listImage}
-                        pagingEnabled
-                        onViewableItemsChanged={onViewRef.current}
-                        viewabilityConfig={viewConfigRef.current}
-                        renderItem={({ item, index }) => {
-                            return (
-                                <View style={{ width: _width, height: _height }}>
-                                    <TouchableOpacity
-                                        activeOpacity={0.9}
-                                        onPress={() => {
-                                            // props?.setShow(false, null)
-                                            // navigation.navigate(ScreenKey.DETAIL_NEWS, { idNews: props?.data?._id })
-
-                                            props?.setShow(false, {
-                                                screenKey: ScreenKey.DETAIL_NEWS,
-                                                params: {
-                                                    idNews : item?._id
-                                                }
-                                            })
-                                        }}
-                                        style={{
-                                            width: _width,
-                                            height: _height,
-                                        }}>
-
-                                        <ImageBackground style={{ flex: 1 }} source={{ uri: `${URL_ORIGINAL}${item?.startUpFileArr[0]?.link}` }} >
-                                            <LinearGradient
-                                                start={{ x: 1, y: 1 }}
-                                                end={{ x: 1, y: 0 }}
-                                                colors={[
-                                                    // 'rgba(0,0,0,0.9)',
-                                                    // 'rgba(255,255,255,0.0)',
-                                                    // 'rgba(255,255,255,0.0)',
-
-                                                    'rgba(0,0,0,0.9)',
-                                                    'rgba(255,255,255,0.0)',
-                                                    'rgba(255,255,255,0.0)',
-                                                    'rgba(255,255,255,0.0)'
-                                                
-                                                ]}
-                                                style={{
-                                                    width: '100%',
-                                                    height: '100%',
-                                                }}>
-                                            </LinearGradient>
-                                        </ImageBackground>
-                                    </TouchableOpacity>
-                                    {/* <View style={{ marginTop: _moderateScale(8 * 2) }}>
+                    {/* <View style={{ marginTop: _moderateScale(8 * 2) }}>
                                         <Text style={{ alignSelf: 'center', marginHorizontal: _moderateScale(8 * 3), textAlign: 'center', ...stylesFont.fontNolanBold, color: WHITE, fontSize: _moderateScale(18) }}>
                                             {item?.title}
                                         </Text>
@@ -156,133 +169,147 @@ const Onboard = memo((props) => {
                                             {item?.description}
                                         </Text>
                                     </View> */}
-                                </View>
-                            )
-                        }}
-                    />
+                  </View>
+                );
+              }}
+            />
+          </View>
 
-                </View>
-
-                <View style={{
-                    alignSelf: 'center',
-                    marginTop: _moderateScale(8 * 4),
-                    flexDirection: 'row'
-                }}>
+          <View
+            style={{
+              alignSelf: "center",
+              marginTop: _moderateScale(8 * 4),
+              flexDirection: "row",
+            }}
+          >
+            {listImage?.map((item, index) => {
+              return (
+                <View
+                  style={[
                     {
-                        listImage?.map((item, index) => {
-                            return (
-                                <View style={[{
-                                    width: _moderateScale(8 * 3),
-                                    height: _moderateScale(8 * 1),
-                                    borderRadius: _moderateScale(4),
-                                    marginHorizontal: _moderateScale(4),
-                                    backgroundColor: BG_GREY_OPACITY_5
-                                },
-                                index == currIndexImage && { backgroundColor: '#147869' }
+                      width: _moderateScale(8 * 3),
+                      height: _moderateScale(8 * 1),
+                      borderRadius: _moderateScale(4),
+                      marginHorizontal: _moderateScale(4),
+                      backgroundColor: BG_GREY_OPACITY_5,
+                    },
+                    index == currIndexImage && { backgroundColor: "#147869" },
+                  ]}
+                />
+              );
+            })}
+          </View>
 
-                                ]} />
-                            )
-                        })
-                    }
-                </View>
+          {/* <View style={{ flex: 1 }} /> */}
 
-                {/* <View style={{ flex: 1 }} /> */}
+          <View
+            style={{
+              position: "absolute",
+              bottom: 0,
+              width: _width,
+            }}
+          >
+            <View
+              style={{
+                alignSelf: "center",
+                marginTop: _moderateScale(8 * 4),
+                flexDirection: "row",
+                marginBottom: _moderateScale(8 * 4),
+              }}
+            >
+              {listImage?.map((item, index) => {
+                return (
+                  <View
+                    style={[
+                      {
+                        width: _moderateScale(8 * 3),
+                        height: _moderateScale(8 * 1),
+                        borderRadius: _moderateScale(4),
+                        marginHorizontal: _moderateScale(4),
+                        backgroundColor: BG_GREY_OPACITY_5,
+                      },
+                      index == currIndexImage && { backgroundColor: "#147869" },
+                    ]}
+                  />
+                );
+              })}
+            </View>
 
+            <TouchableOpacity
+              onPress={() => {
+                // props?.setShow(false, ScreenKey.REGISTER_IN_APP)
+                // props?.setShow(false, {
+                //     screenKey: ScreenKey.REGISTER_IN_APP,
+                //     params: null
+                // })
+                props?.setShow(false, {
+                  screenKey: ScreenKey.LOGIN_IN_APP,
+                  params: null,
+                });
+              }}
+              style={[
+                styleElement.centerChild,
+                {
+                  marginHorizontal: _moderateScale(8 * 3),
+                  height: _moderateScale(8 * 6),
+                  backgroundColor: WHITE,
+                  borderRadius: _moderateScale(8),
+                },
+              ]}
+            >
+              <Text
+                style={{
+                  ...stylesFont.fontNolanBold,
+                  color: BASE_COLOR,
+                  fontSize: _moderateScale(18),
+                }}
+              >
+                Đăng nhập ngay!
+              </Text>
+            </TouchableOpacity>
 
-                <View style={{
-                    position: 'absolute',
-                    bottom: 0,
-                    width: _width
-                }}>
+            <View style={{ height: _moderateScale(8 * 2) }} />
 
-                    <View style={{
-                        alignSelf: 'center',
-                        marginTop: _moderateScale(8 * 4),
-                        flexDirection: 'row',
-                        marginBottom: _moderateScale(8 * 4)
-                    }}>
-                        {
-                            listImage?.map((item, index) => {
-                                return (
-                                    <View style={[{
-                                        width: _moderateScale(8 * 3),
-                                        height: _moderateScale(8 * 1),
-                                        borderRadius: _moderateScale(4),
-                                        marginHorizontal: _moderateScale(4),
-                                        backgroundColor: BG_GREY_OPACITY_5
-                                    },
-                                    index == currIndexImage && { backgroundColor: '#147869' }
-
-                                    ]} />
-                                )
-                            })
-                        }
-                    </View>
-
-                    <TouchableOpacity
-                        onPress={() => {
-                            // props?.setShow(false, ScreenKey.REGISTER_IN_APP)
-                            // props?.setShow(false, {
-                            //     screenKey: ScreenKey.REGISTER_IN_APP,
-                            //     params: null
-                            // })
-                            props?.setShow(false, {
-                                screenKey: ScreenKey.LOGIN_IN_APP,
-                                params: null
-                            })
-                        }}
-                        style={[styleElement.centerChild, {
-                            marginHorizontal: _moderateScale(8 * 3),
-                            height: _moderateScale(8 * 6),
-                            backgroundColor: WHITE,
-                            borderRadius: _moderateScale(8)
-                        }]}>
-                        <Text style={{
-                            ...stylesFont.fontNolanBold,
-                            color: BASE_COLOR,
-                            fontSize: _moderateScale(18)
-                        }}>
-                            Đăng nhập ngay!
-                        </Text>
-                    </TouchableOpacity>
-
-                    <View style={{ height: _moderateScale(8 * 2) }} />
-
-                    <TouchableOpacity
-                        onPress={() => {
-                            // props?.setShow(false, ScreenKey.LOGIN_IN_APP)
-                            // props?.setShow(false, {
-                            //     screenKey: ScreenKey.LOGIN_IN_APP,
-                            //     params: null
-                            // })
-                            props?.setShow(false, {
-                                screenKey: ScreenKey.REGISTER_IN_APP,
-                                params: null
-                            })
-                        }}
-                        style={[styleElement.rowAliCenter, { alignSelf: 'center' }]}>
-                        <Text style={{
-                            ...stylesFont.fontNolan500,
-                            color: WHITE,
-                            fontSize: _moderateScale(16)
-                        }}>
-                            Bạn chưa có tài khoản?
-                        </Text>
-                        <View style={{ width: _moderateScale(8) }} />
-                        <Text style={{
-                            ...stylesFont.fontNolanBold,
-                            color: WHITE,
-                            fontSize: _moderateScale(18)
-                        }}>
-                            Đăng ký
-                        </Text>
-                    </TouchableOpacity>
-                    <View style={{ height: getBottomSpace() + _moderateScale(8 * 2) }} />
-
-                </View>
-
-            </LinearGradient>
-        </View>
+            <TouchableOpacity
+              onPress={() => {
+                // props?.setShow(false, ScreenKey.LOGIN_IN_APP)
+                // props?.setShow(false, {
+                //     screenKey: ScreenKey.LOGIN_IN_APP,
+                //     params: null
+                // })
+                props?.setShow(false, {
+                  screenKey: ScreenKey.REGISTER_IN_APP,
+                  params: null,
+                });
+              }}
+              style={[styleElement.rowAliCenter, { alignSelf: "center" }]}
+            >
+              <Text
+                style={{
+                  ...stylesFont.fontNolan500,
+                  color: WHITE,
+                  fontSize: _moderateScale(16),
+                }}
+              >
+                Bạn chưa có tài khoản?
+              </Text>
+              <View style={{ width: _moderateScale(8) }} />
+              <Text
+                style={{
+                  ...stylesFont.fontNolanBold,
+                  color: WHITE,
+                  fontSize: _moderateScale(18),
+                }}
+              >
+                Đăng ký
+              </Text>
+            </TouchableOpacity>
+            <View
+              style={{ height: getBottomSpace() + _moderateScale(8 * 2) }}
+            />
+          </View>
+        </LinearGradient>
+      </View>
     );
 });
 
