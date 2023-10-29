@@ -194,13 +194,13 @@ const Banner = () => {
   return (
     <Animated.View style={[styles.container, animBG]}>
       <LinearGradient
-        style={[StyleSheet.absoluteFill, { zIndex: -1 }]}
+        style={StyleSheet.absoluteFill}
         start={{ x: 0, y: 0 }}
         end={{ x: 0, y: 1 }}
         colors={["transparent", "#EE79B8"]}
       />
-      <Spacer top={top + 60} />
-      <View style={{}}>
+      <Spacer top={top + 50} />
+      <View>
         <FlatList
           ref={FlatListRef}
           showsHorizontalScrollIndicator={false}
@@ -259,14 +259,9 @@ const Banner = () => {
           })}
         </View>
       </View>
-      <View style={{ height: 8 * 1 }} />
-
       <OptionService />
-      <View style={{ height: 8 }} />
       <Voucher />
-      <View style={{ height: 8 }} />
       <FlashSale />
-      <View style={{ height: 8 }} />
       <ListDoctor />
     </Animated.View>
   );
@@ -280,6 +275,7 @@ const styles = StyleSheet.create({
   container: {
     // height: 780,,
     paddingBottom: _moderateScale(8 * 1),
+    gap: 8,
   },
 });
 

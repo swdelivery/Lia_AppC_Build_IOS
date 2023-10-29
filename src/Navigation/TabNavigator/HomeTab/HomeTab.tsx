@@ -3,7 +3,7 @@ import {
   TransitionPresets,
 } from "@react-navigation/stack";
 import React from "react";
-import Home from "../../../Screens/Soyoung_Home/index";
+import Home from "../../../Screens/SoyoungHome/index";
 import SearchingHome from "../../../Screens/NewSearchHome/index";
 import ScreenKey from "../../ScreenKey";
 import ListBranch from "../../../Screens/ListBranch";

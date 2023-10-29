@@ -11,10 +11,10 @@ import {
 } from "../../Constant/Scale";
 import ScrollableTabView from "@itenl/react-native-scrollable-tabview";
 import { useState } from "react";
-import SoYoung_Service from "../SoYoung_Service/index";
-import SoYoung_Branch from "../SoYoung_Branch/index";
-import So_Young_Doctor from "../SoYoung_Doctor/index";
-import So_Young_Expert from "../SoYoung_Expert";
+import SoYoungService from "../SoYoungService/index";
+import SoYoungBranch from "../SoYoungBranch/index";
+import SoYoungDoctor from "../SoYoungDoctor/index";
+import SoYoungExpert from "../SoYoungExpert";
 import { useRef } from "react";
 import {
   useAnimatedStyle,
@@ -25,6 +25,7 @@ import { getAllServiceGroup } from "../../Redux/Action/ServiceGroup";
 import { useDispatch, useSelector } from "react-redux";
 import Screen from "../../Components/Screen";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { styleElement } from "../../Constant/StyleElement";
 
 const SoyoungHome = () => {
   const dispatch = useDispatch();
@@ -42,23 +43,23 @@ const SoyoungHome = () => {
 
   const [stacks, setStacks] = useState([
     {
-      screen: SoYoung_Service,
+      screen: SoYoungService,
       tabLabel: "Dịch vụ",
     },
     {
-      screen: SoYoung_Branch,
+      screen: SoYoungBranch,
       tabLabel: "Phòng khám",
     },
     {
-      screen: So_Young_Doctor,
+      screen: SoYoungDoctor,
       tabLabel: "Bác sĩ",
     },
     {
-      screen: So_Young_Expert,
+      screen: SoYoungExpert,
       tabLabel: "Chuyên viên",
     },
     {
-      screen: SoYoung_Service,
+      screen: SoYoungService,
       tabLabel: "Vật liệu",
     },
   ]);
@@ -83,10 +84,6 @@ const SoyoungHome = () => {
     dispatch(getAllServiceGroup(condition));
   };
 
-  const _renderHeader = () => {
-    return <Banner />;
-  };
-
   useEffect(() => {
     if (expandServiceGr) {
       heightExpandServiceGr.value = withTiming(200, { duration: 300 });
@@ -97,15 +94,7 @@ const SoyoungHome = () => {
 
   return (
     <Screen style={styles.container}>
-      <View
-        style={{
-          position: "absolute",
-          top: top + 8,
-          zIndex: 1,
-          alignItems: "center",
-          width: _width,
-        }}
-      >
+      <View style={styles.searchContainer}>
         <Search
           press={() => {
             setExpandServiceGr((old) => !old);
@@ -118,17 +107,16 @@ const SoyoungHome = () => {
         titleArgs={{
           interpolateHeight: {
             inputRange: [0, 160 + top],
-            outputRange: [0, 60 + top],
+            outputRange: [0, 55 + top],
             extrapolate: "clamp",
           },
         }}
-        onTabviewChanged={(index, tabLabel) => {}}
         mappingProps={{
           rootTime: rootTime,
         }}
         stacks={stacks}
-        tabWrapStyle={{ flex: 1 }}
-        tabInnerStyle={{ width: "100%" }}
+        tabWrapStyle={styleElement.flex}
+        tabInnerStyle={styles.tabInnerStyle}
         tabActiveOpacity={1}
         tabsStyle={styles.tabsStyle}
         tabStyle={styles.tabStyle}
@@ -139,7 +127,7 @@ const SoyoungHome = () => {
           color: "#4BA888",
           fontWeight: "bold",
         }}
-        header={_renderHeader}
+        header={<Banner />}
         firstIndex={0}
         useScroll={true}
         toTabsOnTab={true}
@@ -179,4 +167,11 @@ const styles = StyleSheet.create({
     top: 8 * 4,
     height: 3,
   },
+  searchContainer: {
+    position: "absolute",
+    zIndex: 1,
+    alignItems: "center",
+    width: _width,
+  },
+  tabInnerStyle: { width: "100%" },
 });

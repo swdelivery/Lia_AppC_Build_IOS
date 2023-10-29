@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import React, { memo, useEffect, useState } from "react";
+import React, { memo, useEffect, useMemo, useState } from "react";
 import IconRight from "../../../SGV/right.svg";
 import IconFind from "../../../SGV/find_grey.svg";
 import {
@@ -20,8 +20,10 @@ import { useSelector } from "react-redux";
 import ModalPickSingleNotSearch from "../../../Components/ModalPickSingleNotSearch/ModalPickSingleNotSearch";
 import { IconArrowDown, IconQRScaner } from "../../../Components/Icon/Icon";
 import { sizeIcon } from "../../../Constant/Icon";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const Search = memo((props) => {
+  const { top } = useSafeAreaInsets();
   const listServiceGroupRedux = useSelector(
     (state) => state.serviceGroupReducer?.listServiceGroup
   );
@@ -46,12 +48,14 @@ const Search = memo((props) => {
     };
   });
 
+  const containerStyle = useMemo(() => {
+    return {
+      marginTop: top + 8,
+    };
+  }, [top]);
+
   return (
-    <View
-      style={{
-        flexDirection: "row",
-      }}
-    >
+    <View style={[styles.container, containerStyle]}>
       <View style={[styles.search, shadow]}>
         <ModalPickSingleNotSearch
           hide={() => {
@@ -150,6 +154,9 @@ const Search = memo((props) => {
 });
 
 const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+  },
   search__input: {
     // width: _widthScale(250),
     flex: 1,
