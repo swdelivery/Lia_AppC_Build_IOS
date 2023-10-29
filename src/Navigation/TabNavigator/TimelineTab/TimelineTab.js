@@ -14,18 +14,18 @@ const rootStack = createStackNavigator();
 
 const TimelineTab = () => {
     return (
-        <Stack.Navigator screenOptions={{ headerShown: false, ...TransitionPresets.ModalSlideFromBottomIOS, gestureResponseDistance: { vertical: 800 } }}>
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false,
+          ...TransitionPresets.ModalSlideFromBottomIOS,
+        }}
+      >
+        <Stack.Screen name={ScreenKey.TIMELINE} component={TimelineTabView} />
 
-            <Stack.Screen
-                name={ScreenKey.TIMELINE}
-                component={TimelineTabView} />
-
-            {/* <rootStack.Screen options={{ ...TransitionPresets.SlideFromRightIOS }} name={ScreenKey.DETAIL_NEW_FEED} component={DetailNewFeed} /> */}
-            {/* <rootStack.Screen options={{ ...TransitionPresets.SlideFromRightIOS }} name={ScreenKey.MY_PERSONAL_PAGE} component={MyPersonalPage} /> */}
-
-
-        </Stack.Navigator>
-    )
+        {/* <rootStack.Screen options={{ ...TransitionPresets.SlideFromRightIOS }} name={ScreenKey.DETAIL_NEW_FEED} component={DetailNewFeed} /> */}
+        {/* <rootStack.Screen options={{ ...TransitionPresets.SlideFromRightIOS }} name={ScreenKey.MY_PERSONAL_PAGE} component={MyPersonalPage} /> */}
+      </Stack.Navigator>
+    );
 }
 
 export default TimelineTab 

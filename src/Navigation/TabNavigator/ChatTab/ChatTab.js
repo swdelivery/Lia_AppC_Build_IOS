@@ -14,17 +14,18 @@ const rootStack = createStackNavigator();
 
 const CostTab = () => {
     return (
-        <Stack.Navigator screenOptions={{ headerShown: false, ...TransitionPresets.SlideFromRightIOS, gestureResponseDistance: { vertical: 800 } }}>
-
-            <Stack.Screen
-                name={ScreenKey.CHAT}
-                component={OverViewChatTab} />
-            {/* <Stack.Screen
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false,
+          ...TransitionPresets.SlideFromRightIOS,
+        }}
+      >
+        <Stack.Screen name={ScreenKey.CHAT} component={OverViewChatTab} />
+        {/* <Stack.Screen
                 name={ScreenKey.LIST_MEMBER_APP}
                 component={ListMembers} /> */}
-
-        </Stack.Navigator>
-    )
+      </Stack.Navigator>
+    );
 }
 
 export default CostTab 

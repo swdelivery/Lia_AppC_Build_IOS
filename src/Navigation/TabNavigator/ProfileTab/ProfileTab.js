@@ -19,19 +19,36 @@ const rootStack = createStackNavigator();
 
 const ProfileTab = () => {
     return (
-        <Stack.Navigator screenOptions={{ headerShown: false, ...TransitionPresets.SlideFromRightIOS, gestureResponseDistance: { vertical: 800 } }}>
+      <Stack.Navigator
+        screenOptions={{
+          headerShown: false,
+          ...TransitionPresets.SlideFromRightIOS,
+        }}
+      >
+        <Stack.Screen name={ScreenKey.PROFILE} component={OverViewProfileTab} />
 
-            <Stack.Screen
-                name={ScreenKey.PROFILE}
-                component={OverViewProfileTab} />
-
-            <rootStack.Screen options={{ ...TransitionPresets.SlideFromRightIOS }} name={ScreenKey.TREATMENT_RECORD} component={TreatmentRecord} />
-            <rootStack.Screen options={{ ...TransitionPresets.SlideFromRightIOS }} name={ScreenKey.PICK_TREATMENT_TO_BOOKING} component={PickTreatmentDiary} />
-            <rootStack.Screen options={{ ...TransitionPresets.SlideFromRightIOS }} name={ScreenKey.LIST_PARTNER_DIARY} component={ListDiary} />
-            <rootStack.Screen options={{ ...TransitionPresets.SlideFromRightIOS }} name={ScreenKey.LIST_PARTNER_DIARY_CHILD} component={ListDiaryOfPartnerChild} />
-
-        </Stack.Navigator>
-    )
+        <rootStack.Screen
+          options={{ ...TransitionPresets.SlideFromRightIOS }}
+          name={ScreenKey.TREATMENT_RECORD}
+          component={TreatmentRecord}
+        />
+        <rootStack.Screen
+          options={{ ...TransitionPresets.SlideFromRightIOS }}
+          name={ScreenKey.PICK_TREATMENT_TO_BOOKING}
+          component={PickTreatmentDiary}
+        />
+        <rootStack.Screen
+          options={{ ...TransitionPresets.SlideFromRightIOS }}
+          name={ScreenKey.LIST_PARTNER_DIARY}
+          component={ListDiary}
+        />
+        <rootStack.Screen
+          options={{ ...TransitionPresets.SlideFromRightIOS }}
+          name={ScreenKey.LIST_PARTNER_DIARY_CHILD}
+          component={ListDiaryOfPartnerChild}
+        />
+      </Stack.Navigator>
+    );
 }
 
 export default ProfileTab 

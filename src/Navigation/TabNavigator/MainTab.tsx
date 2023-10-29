@@ -26,8 +26,6 @@ import QRTab from "../../Screens/QRCode/index";
 import store from "../../Redux/Store";
 import * as ActionType from "../../Redux/Constants/ActionType";
 import { getInfoUserReducer } from "../../Redux/Selectors";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { getBottomSpace } from "react-native-iphone-x-helper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const Tab = createMaterialTopTabNavigator();

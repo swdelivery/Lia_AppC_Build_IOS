@@ -26,9 +26,9 @@
 		4E3C4F7632D24592ACC879C7 /* Kastelov - NolanNext-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7C1E025B7C70403F8469B49B /* Kastelov - NolanNext-Light.ttf */; };
 		5A5ED75DE03349B19DA337EE /* Kastelov - NolanNext-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 907C05D357B941289FF29FB6 /* Kastelov - NolanNext-ThinItalic.ttf */; };
 		5D7FF0DB10DC445A8C9190F4 /* Kastelov - NolanNext-BookItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 123D309D438D4D839FBE3943 /* Kastelov - NolanNext-BookItalic.ttf */; };
+		629960322AED1394003FB8BE /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 629960312AED1394003FB8BE /* BootSplash.storyboard */; };
 		7699B88040F8A987B510C191 /* libPods-LiaAppC-LiaAppCTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-LiaAppC-LiaAppCTests.a */; };
 		78B4869E944743F188CE3A4A /* Kastelov - NolanNext-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6E1EB421B6F944D5BD8F6760 /* Kastelov - NolanNext-Medium.ttf */; };
-		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		84E396BE775F41DA970451DA /* Kastelov-Nolan-Next-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0B6441AC00264EEEBC6F6B44 /* Kastelov-Nolan-Next-Bold.ttf */; };
 		91790764D4D047CEB379EF28 /* Mohave-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A58E9B1C5BD34D5AA2F19541 /* Mohave-Regular.ttf */; };
 		9F50E347B3184BDFB00B6354 /* SVN-PF Din Text Pro Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2AA27A36042C467497D5F9C7 /* SVN-PF Din Text Pro Bold.otf */; };
@@ -84,11 +84,11 @@
 		5B7EB9410499542E8C5724F5 /* Pods-LiaAppC-LiaAppCTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LiaAppC-LiaAppCTests.debug.xcconfig"; path = "Target Support Files/Pods-LiaAppC-LiaAppCTests/Pods-LiaAppC-LiaAppCTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5C5B65B097D14483A2AAB02D /* Kastelov-Nolan-Next-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Kastelov-Nolan-Next-Italic.ttf"; path = "../assets/fonts/Kastelov-Nolan-Next-Italic.ttf"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-LiaAppC.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LiaAppC.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		629960312AED1394003FB8BE /* BootSplash.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = BootSplash.storyboard; path = LiaAppC/BootSplash.storyboard; sourceTree = "<group>"; };
 		6AC37F8B28E549EC982778B5 /* Mohave-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Mohave-Bold.ttf"; path = "../assets/fonts/Mohave-Bold.ttf"; sourceTree = "<group>"; };
 		6E1EB421B6F944D5BD8F6760 /* Kastelov - NolanNext-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Kastelov - NolanNext-Medium.ttf"; path = "../assets/fonts/Kastelov - NolanNext-Medium.ttf"; sourceTree = "<group>"; };
 		7C1E025B7C70403F8469B49B /* Kastelov - NolanNext-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Kastelov - NolanNext-Light.ttf"; path = "../assets/fonts/Kastelov - NolanNext-Light.ttf"; sourceTree = "<group>"; };
 		7CD5747BA95B497E84015372 /* Mohave-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Mohave-Medium.ttf"; path = "../assets/fonts/Mohave-Medium.ttf"; sourceTree = "<group>"; };
-		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = LiaAppC/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		82961EAD34664875AB63DA41 /* Fester Book.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Fester Book.otf"; path = "../assets/fonts/Fester Book.otf"; sourceTree = "<group>"; };
 		86F18A5336AF4A349BB86FC2 /* icomoon.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = icomoon.ttf; path = ../assets/fonts/icomoon.ttf; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-LiaAppC-LiaAppCTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LiaAppC-LiaAppCTests.release.xcconfig"; path = "Target Support Files/Pods-LiaAppC-LiaAppCTests/Pods-LiaAppC-LiaAppCTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -149,13 +149,13 @@
 		13B07FAE1A68108700A75B9A /* LiaAppC */ = {
 			isa = PBXGroup;
 			children = (
+				629960312AED1394003FB8BE /* BootSplash.storyboard */,
 				FAE41A342AD51E07004E4EF2 /* LiaAppC.entitlements */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				FAE41A322AD50E98004E4EF2 /* GoogleService-Info.plist */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
-				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
 			name = LiaAppC;
@@ -346,7 +346,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				F1E634FA136D4F299B972313 /* Fester Book.otf in Resources */,
 				1E26583448D249CEB456E76A /* Fester Medium.otf in Resources */,
@@ -359,6 +358,7 @@
 				1F08711A9CD64E5FB53B7C8E /* Kastelov - NolanNext-ExtraBold.ttf in Resources */,
 				D527C665387244CE8FC27034 /* Kastelov - NolanNext-ExtraBoldItalic.ttf in Resources */,
 				1FEE1C5C7E814DF69C15BF0B /* Kastelov - NolanNext-Heavy.ttf in Resources */,
+				629960322AED1394003FB8BE /* BootSplash.storyboard in Resources */,
 				F05B153F46E34EA585B23125 /* Kastelov - NolanNext-HeavyItalic.ttf in Resources */,
 				4E3C4F7632D24592ACC879C7 /* Kastelov - NolanNext-Light.ttf in Resources */,
 				0EFF3A3FE979490A873BB54A /* Kastelov - NolanNext-LightItalic.ttf in Resources */,
@@ -637,7 +637,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = EPJFRX9T32;
+				DEVELOPMENT_TEAM = 263F8XJ79V;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = LiaAppC/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -669,7 +669,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = EPJFRX9T32;
+				DEVELOPMENT_TEAM = 263F8XJ79V;
 				INFOPLIST_FILE = LiaAppC/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -760,8 +760,8 @@
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
-					" ",
-					"-Wl -ld_classic ",
+					"-Wl",
+					"-ld_classic",
 				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
@@ -834,8 +834,8 @@
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
-					" ",
-					"-Wl -ld_classic ",
+					"-Wl",
+					"-ld_classic",
 				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;

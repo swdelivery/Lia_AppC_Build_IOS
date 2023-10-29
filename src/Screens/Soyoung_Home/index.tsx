@@ -95,12 +95,6 @@ const SoyoungHome = () => {
     }
   }, [expandServiceGr]);
 
-  const animHeightExpandServiceGr = useAnimatedStyle(() => {
-    return {
-      height: heightExpandServiceGr.value,
-    };
-  });
-
   return (
     <Screen style={styles.container}>
       <View
@@ -136,26 +130,10 @@ const SoyoungHome = () => {
         tabWrapStyle={{ flex: 1 }}
         tabInnerStyle={{ width: "100%" }}
         tabActiveOpacity={1}
-        tabsStyle={{
-          height: 8 * 5,
-          backgroundColor: "white",
-          borderBottomColor: "grey",
-          // borderBottomWidth: 1,
-        }}
-        tabStyle={{
-          backgroundColor: "white",
-          width: _width / 4.25,
-        }}
-        tabUnderlineStyle={{
-          backgroundColor: "#4BA888",
-          top: 8 * 4,
-          height: 3,
-        }}
-        textStyle={{
-          color: "black",
-          fontWeight: "500",
-          fontSize: 14,
-        }}
+        tabsStyle={styles.tabsStyle}
+        tabStyle={styles.tabStyle}
+        tabUnderlineStyle={styles.tabUnderlineStyle}
+        textStyle={styles.textStyle}
         ref={(it) => (scrollableTabViewRef.current = it)}
         textActiveStyle={{
           color: "#4BA888",
@@ -180,5 +158,25 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "white",
+  },
+  tabsStyle: {
+    height: 8 * 5,
+    backgroundColor: "white",
+    borderBottomColor: "grey",
+    // borderBottomWidth: 1,
+  },
+  tabStyle: {
+    backgroundColor: "white",
+    width: _width / 4.25,
+  },
+  textStyle: {
+    color: "black",
+    fontWeight: "500",
+    fontSize: 14,
+  },
+  tabUnderlineStyle: {
+    backgroundColor: "#4BA888",
+    top: 8 * 4,
+    height: 3,
   },
 });
