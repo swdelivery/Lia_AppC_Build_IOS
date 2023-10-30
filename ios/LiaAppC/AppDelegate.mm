@@ -1,5 +1,5 @@
 #import "AppDelegate.h"
-#import "RNBootSplash.h"
+//#import "RNBootSplash.h"
 #import <Firebase.h>
 #import <React/RCTBundleURLProvider.h>
 
@@ -32,7 +32,7 @@
                                           moduleName:moduleName
                                            initProps:initProps];
 
-  [RNBootSplash initWithStoryboard:@"BootSplash" rootView:rootView]; // ⬅️ initialize the splash screen
+  // [RNBootSplash initWithStoryboard:@"BootSplash" rootView:rootView]; // ⬅️ initialize the splash screen
 
   return rootView;
 }
