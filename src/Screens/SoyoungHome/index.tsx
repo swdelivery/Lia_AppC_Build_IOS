@@ -65,26 +65,6 @@ const SoyoungHome = () => {
   ]);
 
   useEffect(() => {
-    _getDataServiceGr();
-  }, []);
-
-  const _getDataServiceGr = () => {
-    var condition = {
-      condition: {
-        parentCode: {
-          equal: null,
-        },
-      },
-      sort: {
-        orderNumber: -1,
-      },
-      limit: 100,
-      page: 1,
-    };
-    dispatch(getAllServiceGroup(condition));
-  };
-
-  useEffect(() => {
     if (expandServiceGr) {
       heightExpandServiceGr.value = withTiming(200, { duration: 300 });
     } else {
