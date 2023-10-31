@@ -2,6 +2,14 @@ apply plugin: "com.android.application"
 apply plugin: "com.facebook.react"
 apply plugin: 'com.google.gms.google-services' // <- Add this line
 
+project.ext.envConfigFiles = [
+    dev: ".env",
+    staging: ".env.staging",
+    prod: ".env.prod"
+]
+apply from: "./dotenv.gradle"
+apply from: './versions.gradle'
+
 /**
  * This is the configuration block to customize your React Native Android app.
  * By default you don't need to apply any configuration, just uncomment the lines you need.
@@ -76,11 +84,10 @@ android {
 
     namespace "com.liaappc"
     defaultConfig {
-        applicationId "com.liaappc"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode project.hasProperty('versionCode') ? project.property('versionCode') as int : 1
+        versionName project.hasProperty('versionName') ? project.property('versionName') : "0.1"
         vectorDrawables.useSupportLibrary = true
     }
     signingConfigs {
@@ -90,19 +97,21 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
-        release {
-            if (project.hasProperty('MYAPP_RELEASE_STORE_FILE')) {
-                storeFile file(MYAPP_RELEASE_STORE_FILE)
-                storePassword MYAPP_RELEASE_STORE_PASSWORD
-                keyAlias MYAPP_RELEASE_KEY_ALIAS
-                keyPassword MYAPP_RELEASE_KEY_PASSWORD
+        staging {
+            if (project.hasProperty('MYAPP_STAGING_STORE_FILE')) {
+                storeFile file(MYAPP_STAGING_STORE_FILE)
+                storePassword MYAPP_STAGING_STORE_PASSWORD
+                keyAlias MYAPP_STAGING_KEY_ALIAS
+                keyPassword MYAPP_STAGING_KEY_PASSWORD
             }
-            // if (project.hasProperty('MYAPP_UPLOAD_STORE_FILE')) {
-            //     storeFile file(MYAPP_UPLOAD_STORE_FILE)
-            //     storePassword MYAPP_UPLOAD_STORE_PASSWORD
-            //     keyAlias MYAPP_UPLOAD_KEY_ALIAS
-            //     keyPassword MYAPP_UPLOAD_KEY_PASSWORD
-            // }
+        }
+        release {
+            if (project.hasProperty('MYAPP_UPLOAD_STORE_FILE')) {
+                storeFile file(MYAPP_UPLOAD_STORE_FILE)
+                storePassword MYAPP_UPLOAD_STORE_PASSWORD
+                keyAlias MYAPP_UPLOAD_KEY_ALIAS
+                keyPassword MYAPP_UPLOAD_KEY_PASSWORD
+            }
         }
     }
     buildTypes {
@@ -116,6 +125,21 @@ android {
             signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+        }
+    }
+    flavorDimensions "default"
+    productFlavors {
+        dev {
+            applicationId "com.liaappc"
+            signingConfig signingConfigs.debug
+        }
+        staging {
+            applicationId "com.liaappc"
+            signingConfig signingConfigs.staging
+        }
+        prod {
+            applicationId "com.liaappc"
+            signingConfig signingConfigs.release
         }
     }
 }
