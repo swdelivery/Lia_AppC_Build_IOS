@@ -23,11 +23,17 @@ import { sizeIcon } from "../../Constant/Icon";
 import usePhoneAuth from "../../Hooks/usePhoneAuth";
 import ResendOtp from "./components/ResendOtp";
 import { delay } from "../../utils/common";
+import { useNavigationParams } from "src/Hooks/useNavigation";
+import { ScreenRouteProp } from "@Navigation/types";
+
+type ScreenK = typeof ScreenKey.ACTIVATION_IN_APP;
 
 const ActivationInApp = (props: any) => {
   const dispatch = useDispatch();
   const [activeCode, setActiveCode] = useState("");
   const resendRef = useRef<any>();
+  const { fullPhone, phoneNumber, password, routeName } =
+    useNavigationParams<ScreenRouteProp<ScreenK>>();
 
   const handleUserLogin = useCallback(
     async (
@@ -52,13 +58,13 @@ const ActivationInApp = (props: any) => {
           loginInApp(
             {
               phone: {
-                phoneNumber: props?.route?.params?.fullPhone,
+                phoneNumber: fullPhone,
                 nationCode: "+84",
               },
-              password: props?.route?.params?.password,
+              password: password,
               appName: "CS_APP",
             },
-            props?.route?.params?.routeName
+            routeName
           )
         );
       }
@@ -67,7 +73,7 @@ const ActivationInApp = (props: any) => {
   );
 
   const { confirmCode, verifyPhoneNumber } = usePhoneAuth(
-    props?.route?.params?.phoneNumber,
+    phoneNumber,
     handleUserLogin
   );
 

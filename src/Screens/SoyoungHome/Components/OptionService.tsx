@@ -21,8 +21,6 @@ const OptionService = memo(() => {
     _getData();
   }, []);
 
-  console.log({ data });
-
   const _getData = useCallback(() => {
     const condition = {
       condition: {

@@ -64,12 +64,12 @@ const RegisterInApp = (props) => {
   };
 
   const _handleRegister = useCallback(async () => {
-    // return navigation.navigate(ScreenKey.ACTIVATION_IN_APP, {
-    //   phoneNumber: "+84374557646",
-    //   fullPhone: phoneNumber,
-    //   password: password,
-    //   routeName: props?.route?.params?.routeName,
-    // });
+    return navigation.navigate(ScreenKey.ACTIVATION_IN_APP, {
+      phoneNumber: "+84909001660",
+      fullPhone: phoneNumber,
+      password: password,
+      routeName: props?.route?.params?.routeName,
+    });
 
     console.log({
       name,
