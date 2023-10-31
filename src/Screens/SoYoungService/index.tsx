@@ -1,6 +1,7 @@
 import React, { memo, useEffect, useState } from "react";
 import {
   Alert,
+  FlatList,
   Image,
   StyleSheet,
   Text,
@@ -13,6 +14,8 @@ import ScreenKey from "../../Navigation/ScreenKey";
 import { getServicev2 } from "../../Redux/Action/Service";
 import { URL_ORIGINAL } from "../../Constant/Url";
 import { formatMonney } from "../../Constant/Utils";
+import ServiceItem from "./components/ServiceItem";
+import { RenderItemProps } from "typings/common";
 
 const SoYoungService = memo((props) => {
   const [listService, setListService] = useState([]);
@@ -33,6 +36,10 @@ const SoYoungService = memo((props) => {
     setListService(result?.data?.data);
   };
 
+  function renderItem({ item }: RenderItemProps<any>) {
+    return <ServiceItem item={item} />;
+  }
+
   return (
     <View style={styles.container}>
       <View
@@ -42,135 +49,7 @@ const SoYoungService = memo((props) => {
         }}
       >
         {listService?.map((item, index) => {
-          return (
-            <View style={styles.card} key={item._id}>
-              <TouchableOpacity
-                activeOpacity={0.8}
-                onPress={() => {
-                  navigation.navigate(ScreenKey.DETAIL_SERVICE);
-                }}
-                style={{
-                  width: "90%",
-                  height: 180,
-                  backgroundColor: "white",
-                  borderBottomLeftRadius: 8,
-                  borderBottomRightRadius: 8,
-                }}
-              >
-                <View>
-                  <Image
-                    style={{
-                      width: "100%",
-                      height: 120,
-                      borderTopLeftRadius: 8,
-                      borderTopRightRadius: 8,
-                    }}
-                    source={{
-                      uri: `${URL_ORIGINAL}${item?.representationFileArr[0]?.link}`,
-                    }}
-                  />
-                </View>
-                <View
-                  style={{
-                    padding: 4,
-                  }}
-                >
-                  <Text
-                    style={{
-                      fontSize: 12,
-                      fontWeight: "bold",
-                    }}
-                  >
-                    {item?.name}
-                  </Text>
-
-                  <View>
-                    <View
-                      style={{ flexDirection: "row", alignItems: "center" }}
-                    >
-                      {/* <Image style={styles.start} source={require('../../../Image/locationRed.png')}/> */}
-                      <Image
-                        style={styles.start}
-                        source={require("../../Image/a_star2.png")}
-                      />
-                      <Image
-                        style={styles.start}
-                        source={require("../../Image/a_star2.png")}
-                      />
-                      <Image
-                        style={styles.start}
-                        source={require("../../Image/a_star2.png")}
-                      />
-                      <Image
-                        style={styles.start}
-                        source={require("../../Image/a_star2.png")}
-                      />
-                      <Image
-                        style={styles.start}
-                        source={require("../../Image/a_star2.png")}
-                      />
-                      <Text
-                        style={{
-                          fontSize: 10,
-                          marginLeft: 4,
-                        }}
-                      >
-                        ({item?.reviewCount})
-                      </Text>
-                    </View>
-                  </View>
-
-                  <View
-                    style={{
-                      marginTop: 8,
-                      flexDirection: "row",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    <View
-                      style={{ flexDirection: "row", alignItems: "center" }}
-                    >
-                      <Text
-                        style={{
-                          fontSize: 12,
-                          fontWeight: "bold",
-                          color: "red",
-                          textDecorationLine: "underline",
-                        }}
-                      >
-                        đ
-                      </Text>
-                      <Text
-                        style={{
-                          fontSize: 12,
-                          fontWeight: "bold",
-                          color: "red",
-                        }}
-                      >
-                        {formatMonney(item?.price)}
-                      </Text>
-                    </View>
-
-                    <View style={{ flexDirection: "row" }}>
-                      <Image
-                        style={styles.start}
-                        source={require("../../Image/people.png")}
-                      />
-                      <Text
-                        style={{
-                          fontSize: 10,
-                          marginLeft: 4,
-                        }}
-                      >
-                        ({item?.countPartner})
-                      </Text>
-                    </View>
-                  </View>
-                </View>
-              </TouchableOpacity>
-            </View>
-          );
+          return <ServiceItem item={item} key={item._id} />;
         })}
       </View>
 
@@ -179,15 +58,6 @@ const SoYoungService = memo((props) => {
           height: 200,
         }}
       />
-      {/* <View style={{
-                height: 200
-            }} />
-            <View style={{
-                height: 200
-            }} />
-            <View style={{
-                height: 200
-            }} /> */}
     </View>
   );
 });
@@ -207,7 +77,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   container: {
-    // flex: 1,
+    flex: 1,
     paddingTop: 8 * 2,
     backgroundColor: "#F5F9FA",
   },
