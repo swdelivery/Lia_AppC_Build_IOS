@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
 import React, { memo, useMemo } from "react";
 import { _moderateScale, _width, _widthScale } from "../../../Constant/Scale";
 import { sizeIcon } from "../../../Constant/Icon";
@@ -11,6 +11,7 @@ import { getBranchDetailsState } from "@Redux/branch/selectors";
 import { useSelector } from "react-redux";
 import { getImageAvataUrl } from "src/utils/common";
 import Row from "@Components/Row";
+import Text from "@Components/Text";
 
 const BannerInfo = () => {
   const { data } = useSelector(getBranchDetailsState);
@@ -20,7 +21,7 @@ const BannerInfo = () => {
   const avatarSource = useMemo(() => {
     return {
       uri: getImageAvataUrl(
-        data.avatar,
+        data?.avatar,
         "https://cfw.rabbitloader.xyz/eyJjIjp0cnVlLCJoIjoibGlhYmVhdXR5LnZuIiwidiI6OTczNjIwMDQ3LCJpIjoiZjgxYWIyZTctMGZlZi00YmU2LTZhNmItODI5MWI4YWExZTAwIn0/wp-content/uploads/2023/06/photo.png"
       ),
     };
@@ -32,7 +33,9 @@ const BannerInfo = () => {
         <Image style={styles.bannerInfo__avatarBranch} source={avatarSource} />
       </View>
 
-      <Text style={styles.nameBranch}>{data?.name}</Text>
+      <Text weight="bold" size={16} color={"#F5DDB0"}>
+        {data?.name}
+      </Text>
 
       <Row top={8} gap={8}>
         <View style={styles.certificateContainer}>
@@ -48,25 +51,26 @@ const BannerInfo = () => {
       <CountStar2
         lightContent
         larger
-        rating={data.averageRating}
-        count={data.reviewCount}
+        rating={data?.averageRating}
+        count={data?.reviewCount}
       />
       <Row gap={8}>
-        <Text style={styles.opentime__text}>Mở cửa</Text>
-        <Text style={[styles.opentime__text, { fontWeight: "bold" }]}>
+        <Text size={12} color={"white"}>
+          Mở cửa
+        </Text>
+        <Text size={12} weight="bold" color="white">
           8:00 - 18:00
         </Text>
       </Row>
-      <View style={{ flexDirection: "row", alignItems: "center" }}>
+      <Row gap={8}>
         <Image
           style={sizeIcon.xs}
           source={require("../../../Image/locationRed.png")}
         />
-        <View style={{ width: 8 }} />
-        <Text style={[styles.opentime__text, { fontWeight: "bold" }]}>
-          {data.address}
+        <Text size={12} weight="bold" color="white">
+          {data?.address}
         </Text>
-      </View>
+      </Row>
       <View style={{ height: 8 }} />
 
       <View style={{ flexDirection: "row", alignItems: "center" }}>
