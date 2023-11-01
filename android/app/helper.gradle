@@ -1,0 +1,31 @@
+import java.util.regex.Matcher
+import java.util.regex.Pattern
+
+def getCurrentBuildConfig() {
+    Gradle gradle = getGradle()
+    String tskReqStr = gradle.getStartParameter().getTaskRequests().toString()
+    println tskReqStr
+
+    Pattern pattern = Pattern.compile("(assemble|install|bundle|generate)(\\w+)(ReleaseStaging|ReleaseInternal|Release|Debug)")
+
+    Matcher matcher = pattern.matcher(tskReqStr)
+
+    if(matcher.find()) {
+        println matcher.group(2).toLowerCase()
+
+        return [
+            flavour: matcher.group(2).toLowerCase(),
+            buildType: matcher.group(3).toLowerCase()
+        ]
+    } else {
+        println "NO MATCH FOUND"
+        return [
+            flavour: "dev",
+            buildType: "debug"
+        ]
+    }
+}
+
+ext {
+  getCurrentBuildConfig = this.&getCurrentBuildConfig
+}
