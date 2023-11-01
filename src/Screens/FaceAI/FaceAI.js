@@ -11,157 +11,56 @@ import LeftEffectTextEye from './Components/LeftEffectTextEye';
 import LeftEyeResult from './Components/LeftEyeResult';
 import { navigation } from '../../../rootNavigation';
 import ScreenKey from '../../Navigation/ScreenKey';
+import { scanningEyes } from '../../Redux/Action/FaceAiAction';
+import { getStatusBarHeight } from 'react-native-iphone-x-helper';
+import BackDropOpacity from './Components/BackDropOpacity';
+import RightCircle from './Components/RightCircle';
+import LeftCircle from './Components/LeftCircle';
 
 
-// const PosEyeX = 290;
-// const PosEyeY = 490
-
-
-// const PosEyeX = _widthScale(243);
-// const PosEyeY = _heightScale(260)
-
-// const PosEyeX = 245;
-// const PosEyeY = 310
-
-// const PosLeftEyeX = 133;
-// const PosLeftEyeY = 315
-
-// const PosEyeX = _widthScale(240);
-// const PosEyeY = _heightScale(380)
 
 const FaceAI = () => {
   const device = useCameraDevice('front')
   const refCamera = useRef(null)
 
+  const tranImageX = useSharedValue(0);
+  const tranImageY = useSharedValue(0);
+  const scaleImage = useSharedValue(1);
 
-  const [PosEyeX, setPosEyeX] = useState(_widthScale(230))
-  const [PosEyeY, setPosEyeY] = useState(_heightScale(360))
-  const [leftPosEyeX, leftsetPosEyeX] = useState(_widthScale(120))
-  const [leftPosEyeY, leftsetPosEyeY] = useState(_heightScale(360))
+  const [posRightEyeX, setPosRightEyeX] = useState(null);
+  const [posRightEyeY, setPosRightEyeY] = useState(null);
+  const [posLeftEyeX, setPosLeftEyeX] = useState(null);
+  const [posLeftEyeY, setPosLeftEyeY] = useState(null);
 
-  const [imageHasTake, setImageHasTake] = useState(null)
+  const [imageScan, setImageScan] = useState(null)
 
-  const [flagDoneZoom, setFlagDoneZoom] = useState(false)
-  const [startTextEye, setStartTextEye] = useState(false)
-  const [startRightResult, setStartRightResult] = useState(false)
-  const [endProcessAnimCirleText, setEndProcessAnimCirleText] = useState(false)
-  const rotateFlag1 = useSharedValue(0);
-  const rotateFlag2 = useSharedValue(0);
-  const opacityCircle1 = useSharedValue(0);
-  const opacityCircle2 = useSharedValue(0);
-  const opacityGridEffect = useSharedValue(0);
-
-  const [leftflagDoneZoom, leftsetFlagDoneZoom] = useState(false)
-  const [leftstartTextEye, leftsetStartTextEye] = useState(false)
-  const [leftstartRightResult, leftsetStartRightResult] = useState(false)
-  const [leftendProcessAnimCirleText, leftsetEndProcessAnimCirleText] = useState(false)
-  const leftrotateFlag1 = useSharedValue(0);
-  const leftrotateFlag2 = useSharedValue(0);
-  const leftopacityCircle1 = useSharedValue(0);
-  const leftopacityCircle2 = useSharedValue(0);
-  const leftopacityGridEffect = useSharedValue(0);
-
-  const [startLeftAnimEye, setStartLeftAnimEye] = useState(false)
+  const [scanningResult, setScanningResult] = useState({})
 
 
-  const scaleImage = useSharedValue(1)
-  const tranX = useSharedValue(0);
-  const tranY = useSharedValue(0);
+  const [startDotRightEye, setStartDotRightEye] = useState(null)
+  const [startCirlRightEye, setStartCirlRightEye] = useState(null)
+  const [startTextRightEye, setStartTextRightEye] = useState(null)
+  const [startResultRightEye, setStartResultRightEye] = useState(null)
+
+  const [startZoomLeftEye, setStartZoomLeftEye] = useState(null)
+  const [startDotLeftEye, setStartDotLeftEye] = useState(null)
+  const [startCirlLeftEye, setStartCirlLeftEye] = useState(null)
+  const [startTextLeftEye, setStartTextLeftEye] = useState(null)
+  const [startResultLeftEye, setStartResultLeftEye] = useState(null)
 
 
 
-  // const flagDoneZoom = useSharedValue(0);
+  const [showBackDropOpacity, setShowBackDropOpacity] = useState(null)
 
-
-
-  const [stateX, setStateX] = useState(false)
 
   useEffect(() => {
-    // setImageHasTake(`https://images.unsplash.com/photo-1554151228-14d9def656e4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3086&q=80`)
-    // setImageHasTake(`https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3000&q=80`)
-    // setImageHasTake(`https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2787&q=80`)
-  }, [])
-
-  useEffect(() => {
-    if (endProcessAnimCirleText) {
-      setTimeout(() => {
-        scaleImage.value = withTiming(1, {
-          duration: 500
-        }, (isFinished) => {
-          if (isFinished) {
-            tranX.value = withTiming(0, {
-              duration: 500
-            })
-            tranY.value = withTiming(0, {
-              duration: 700
-            })
-            runOnJS(_handleDoneAnimRightEye)()
-          }
-        })
-      }, 0);
-      // tranX.value = withTiming(-100, { duration: 500 })
-      // setStartRightResult(true)
-    }
-  }, [endProcessAnimCirleText])
-
-  useEffect(() => {
-    if (leftendProcessAnimCirleText) {
-      opacityGridEffect.value = withTiming(0, { duration: 1000 })
-      setTimeout(() => {
-        scaleImage.value = withTiming(1, {
-          duration: 500
-        }, (isFinished) => {
-          if (isFinished) {
-            tranX.value = withTiming(0, {
-              duration: 500
-            })
-            tranY.value = withTiming(0, {
-              duration: 700
-            })
-            runOnJS(_handleDoneAnimLeftEye)()
-          }
-        })
-      }, 0);
-      // tranX.value = withTiming(-100, { duration: 500 })
-      // setStartRightResult(true)
-      setStartRightResult(true)
-      leftsetStartRightResult(true)
-    }
-  }, [leftendProcessAnimCirleText])
-
-  const _handleDoneAnimRightEye = () => {
-    // Alert.alert('awd')
-    setPosEyeX(leftPosEyeX)
-    setPosEyeY(leftPosEyeY)
-    setStartLeftAnimEye(true)
-  }
-  const _handleDoneAnimLeftEye = () => {
-    // Alert.alert('awd')
-    // setPosEyeX(133)
-    // setPosEyeY(315)
-    setStartLeftAnimEye(true)
-    setTimeout(() => {
-        navigation.navigate(ScreenKey.RESULT_AI_SCAN_EYES)
-    }, 2000);
-  }
-
-  useEffect(() => {
-    if (startLeftAnimEye) return
-    if (PosEyeX && imageHasTake) {
+    if (posRightEyeX && posRightEyeY) {
 
       setTimeout(() => {
-        opacityGridEffect.value = withTiming(0.3, {
-          duration: 500
-        }, (isFinished) => {
-
-        })
-      }, 1500);
-
-      setTimeout(() => {
-        tranX.value = withTiming(-(PosEyeX - (_width / 2 - 80 - 5) - (160 / 2)), {
+        tranImageX.value = withTiming(-(posRightEyeX - (_width / 2)), {
           duration: 500
         })
-        tranY.value = withTiming(-(PosEyeY - ((_height / 2 - 80) + 75)), {
+        tranImageY.value = withTiming(-(posRightEyeY - ((_height / 2))), {
           duration: 700
         })
         setTimeout(() => {
@@ -169,28 +68,87 @@ const FaceAI = () => {
             duration: 500
           }, (isFinished) => {
             if (isFinished) {
-              runOnJS(_handleDoneAnim)()
+              runOnJS(setStartDotRightEye)('doing')
             }
           })
         }, 0);
 
       }, 2000);
+
     }
-  }, [PosEyeX, imageHasTake])
+  }, [posRightEyeX, posRightEyeY])
 
   useEffect(() => {
-    if (startLeftAnimEye) {
+    if (startDotRightEye == 'done') {
+      setStartCirlRightEye('doing')
+      setStartTextRightEye('doing')
+    }
+  }, [startDotRightEye])
+
+  useEffect(() => {
+    if (startDotLeftEye == 'done') {
+      setStartCirlLeftEye('doing')
+      setStartTextLeftEye('doing')
+    }
+  }, [startDotLeftEye])
+
+
+
+  useEffect(() => {
+    if (startTextRightEye == 'done') {
       setTimeout(() => {
-        opacityGridEffect.value = withTiming(0.3, {
+        scaleImage.value = withTiming(1, {
           duration: 500
         }, (isFinished) => {
+          if (isFinished) {
+            tranImageX.value = withTiming(0, {
+              duration: 500
+            })
+            tranImageY.value = withTiming(0, {
+              duration: 700
+            })
+            runOnJS(setStartZoomLeftEye)('doing')
+          }
         })
-      }, 1500);
+      }, 1000);
+    }
+  }, [startTextRightEye])
+
+  useEffect(() => {
+    if (startTextLeftEye == 'done') {
       setTimeout(() => {
-        tranX.value = withTiming(-(PosEyeX - (_width / 2 - 80 - 5) - (160 / 2)), {
+        scaleImage.value = withTiming(1, {
+          duration: 500
+        }, (isFinished) => {
+          if (isFinished) {
+            tranImageX.value = withTiming(0, {
+              duration: 500
+            })
+            tranImageY.value = withTiming(0, {
+              duration: 700
+            })
+            // runOnJS(setStartZoomLeftEye)('doing')
+          }
+        })
+        setShowBackDropOpacity('hiding')
+        setStartResultRightEye(true)
+        setStartResultLeftEye(true)
+
+        setTimeout(() => {
+          navigation.navigate(ScreenKey.RESULT_AI_SCAN_EYES)
+        }, 6000);
+
+      }, 1000);
+    }
+  }, [startTextLeftEye])
+
+  useEffect(() => {
+    if (startZoomLeftEye == 'doing') {
+      setTimeout(() => {
+        tranImageX.value = withTiming(-(posLeftEyeX - (_width / 2)), {
           duration: 500
         })
-        tranY.value = withTiming(-(PosEyeY - ((_height / 2 - 80) + 75)), {
+        tranImageY.value = withTiming(-(posLeftEyeY - ((_height / 2))), {
           duration: 700
         })
         setTimeout(() => {
@@ -198,126 +156,58 @@ const FaceAI = () => {
             duration: 500
           }, (isFinished) => {
             if (isFinished) {
-              runOnJS(_handleDoneAnimLeft)()
+              runOnJS(setStartDotLeftEye)('doing')
             }
           })
         }, 0);
-      }, 2000);
+
+      }, 1000);
     }
-  }, [startLeftAnimEye])
+  }, [startZoomLeftEye])
 
 
 
   const _handleTakePhoto = async () => {
-
     const photo = await refCamera.current.takePhoto({
     })
-    console.log({ photo });
-    // alert(photo?.path)
-    setImageHasTake(photo?.path);
-  }
 
-  const _handleDoneAnim = () => {
-    setFlagDoneZoom(true)
-  }
-  const _handleDoneAnimLeft = () => {
-    leftsetFlagDoneZoom(true)
-  }
+    setImageScan(photo?.path);
+    let result = await scanningEyes(photo);
+    if (result?.data?.message == "SUCCESS") {
+      console.log("DONE" + result?.data?.data?.right?.coordinate_eye_origi);
 
-  const _startCircleAnim = () => {
+      console.log({ x: result?.data?.data?.right?.coordinate_eye_origi[0] });
+      console.log({ y: result?.data?.data?.right?.coordinate_eye_origi[1] });
 
-    setStartTextEye(true)
+      let valueRightX = (result?.data?.data?.right?.coordinate_eye_origi[0] * _width) / result?.data?.data?.width;
+      let valueRightY = (result?.data?.data?.right?.coordinate_eye_origi[1] * _height) / result?.data?.data?.height;
 
-    opacityCircle1.value = withTiming(1, {
-      duration: 300
-    })
-    opacityCircle2.value = withTiming(1, {
-      duration: 300
-    })
+      let valueLeftX = (result?.data?.data?.left?.coordinate_eye_origi[0] * _width) / result?.data?.data?.width;
+      let valueLeftY = (result?.data?.data?.left?.coordinate_eye_origi[1] * _height) / result?.data?.data?.height;
 
-    rotateFlag1.value = withTiming(1, {
-      duration: 2000
-    }, (isFinished) => {
-      if (isFinished) {
-        rotateFlag1.value = 0
-      }
-    })
-    rotateFlag2.value = withTiming(1, {
-      duration: 2000
-    }, (isFinished) => {
-      if (isFinished) {
-        rotateFlag2.value = 0
-        runOnJS(_startCircleAnim)()
-      }
-    })
-  }
-  const _startCircleAnimLeft = () => {
-    // return
-    leftsetStartTextEye(true)
+      setShowBackDropOpacity('doing')
 
-    leftopacityCircle1.value = withTiming(1, {
-      duration: 300
-    })
-    leftopacityCircle2.value = withTiming(1, {
-      duration: 300
-    })
+      setPosRightEyeX(valueRightX);
+      setPosRightEyeY(valueRightY);
 
-    leftrotateFlag1.value = withTiming(1, {
-      duration: 2000
-    }, (isFinished) => {
-      if (isFinished) {
-        leftrotateFlag1.value = 0
-      }
-    })
-    leftrotateFlag2.value = withTiming(1, {
-      duration: 2000
-    }, (isFinished) => {
-      if (isFinished) {
-        leftrotateFlag2.value = 0
-        runOnJS(_startCircleAnimLeft)()
-      }
-    })
-  }
+      setPosLeftEyeX(valueLeftX);
+      setPosLeftEyeY(valueLeftY);
 
+      setScanningResult(result?.data?.data)
 
-  useEffect(() => {
-    if (imageHasTake) {
+      // setPosRightEyeX(valueLeftX)
+      // leftsetPosEyeY(valueLeftY)
 
-      // setTimeout(() => {
-      //   opacityGridEffect.value = withTiming(0.3, {
-      //     duration: 500
-      //   }, (isFinished) => {
-
-      //   })
-      // }, 1500);
-
-      // setTimeout(() => {
-
-      //   tranX.value = withTiming(-(PosEyeX - (_width / 2 - 80 - 5) - (160 / 2)), {
-      //     duration: 500
-      //   })
-      //   tranY.value = withTiming(-(PosEyeY - ((_height / 2 - 80) + 75)), {
-      //     duration: 700
-      //   })
-
-      //   setTimeout(() => {
-      //     scaleImage.value = withTiming(2, {
-      //       duration: 500
-      //     }, (isFinished) => {
-      //       if (isFinished) {
-
-      //         runOnJS(_handleDoneAnim)()
-      //       }
-      //     })
-      //   }, 0);
-
-      // }, 2000);
-
+      // setResultEyeScan(result?.data?.data)
+    } else {
+      Alert.alert('Hình chưa hợp lệ!')
+      setImageScan(null)
     }
-  }, [imageHasTake])
+  }
 
 
 
+  // ANIMATED
   const animScaleImage = useAnimatedStyle(() => {
     return {
       transform: [
@@ -325,201 +215,59 @@ const FaceAI = () => {
           scale: scaleImage.value
         },
         {
-          translateX: tranX.value,
+          translateX: tranImageX.value,
         },
         {
-          translateY: tranY.value,
+          translateY: tranImageY.value,
         },
       ],
     };
   })
 
-  const animCircle1 = useAnimatedStyle(() => {
-
-    const interpolateRotate = interpolate(rotateFlag1.value, [0, 1], ['0', '360'], {});
-
-
-    return {
-      transform: [{
-        rotate: `${interpolateRotate}deg`
-      }],
-      opacity: opacityCircle1.value
-    }
-  })
-  const animCircle2 = useAnimatedStyle(() => {
-
-    const interpolateRotate = interpolate(rotateFlag2.value, [0, 1], ['0', '360'], {});
-    return {
-      transform: [{
-        rotate: `-${interpolateRotate}deg`
-      }],
-      opacity: opacityCircle2.value
-    }
-  })
-
-  const leftanimCircle1 = useAnimatedStyle(() => {
-
-    const interpolateRotate = interpolate(leftrotateFlag1.value, [0, 1], ['0', '360'], {});
-
-
-    return {
-      transform: [{
-        rotate: `${interpolateRotate}deg`
-      }],
-      opacity: leftopacityCircle1.value
-    }
-  })
-  const leftanimCircle2 = useAnimatedStyle(() => {
-
-    const interpolateRotate = interpolate(leftrotateFlag2.value, [0, 1], ['0', '360'], {});
-    return {
-      transform: [{
-        rotate: `-${interpolateRotate}deg`
-      }],
-      opacity: leftopacityCircle2.value
-    }
-  })
-
-  const animOpacityGridEffect = useAnimatedStyle(() => {
-    return {
-      opacity: opacityGridEffect.value
-    }
-  })
-
   return (
     <View style={{ flex: 1 }}>
 
+
+      <View style={{
+        width: 10,
+        height: 10,
+        backgroundColor: "red",
+        position: 'absolute',
+        zIndex: 100,
+        top: posRightEyeY,
+        left: posRightEyeX
+      }} />
+      <View style={{
+        width: 10,
+        height: 10,
+        backgroundColor: "red",
+        position: 'absolute',
+        zIndex: 100,
+        top: posLeftEyeY,
+        left: posLeftEyeX
+      }} />
+
+      <BackDropOpacity setShowBackDropOpacity={setShowBackDropOpacity} show={showBackDropOpacity} />
+
+      <RightCircle
+        startTextRightEye={startTextRightEye}
+        startCirlRightEye={startCirlRightEye}
+        setStartCirlRightEye={setStartCirlRightEye}
+      />
+      <LeftCircle
+        startTextLeftEye={startTextLeftEye}
+        startCirlLeftEye={startCirlLeftEye}
+        setStartCirlLeftEye={setStartCirlLeftEye}
+      />
+      <RightEffectTextEye scanningResult={scanningResult} setStartTextRightEye={setStartTextRightEye} startTextRightEye={startTextRightEye} />
+      <LeftEffectTextEye scanningResult={scanningResult} setStartTextLeftEye={setStartTextLeftEye} startTextLeftEye={startTextLeftEye} />
+
+      <RightEyeResult startRightResult={startResultRightEye} />
+      <LeftEyeResult startRightResult={startResultLeftEye} />
+
       {
-        imageHasTake ?
+        imageScan ?
           <View>
-
-
-            <RightEyeResult startRightResult={startRightResult} />
-            <LeftEyeResult startRightResult={leftstartRightResult} />
-
-
-            {
-              !endProcessAnimCirleText ?
-                <View style={{
-                  width: 160,
-                  height: 160,
-                  borderRadius: 16,
-                  // borderWidth: 1,
-                  position: 'absolute',
-                  zIndex: 10,
-                  top: _height / 2 - 80,
-                  left: _width / 2 - 80,
-                  justifyContent: 'center',
-                  alignItems: 'center'
-                }}>
-
-                  <Animated.Image
-                    source={require('../../Image/circle.png')}
-                    style={[{
-                      width: _widthScale(200),
-                      height: _widthScale(200),
-                      position: 'absolute'
-                    }, animCircle1]} />
-
-                  <Animated.Image
-                    source={require('../../Image/circle.png')}
-                    style={[{
-                      width: _widthScale(250),
-                      height: _widthScale(250),
-                      position: 'absolute'
-                    }, animCircle2]} />
-
-                  <View style={{
-                    width: 10,
-                    height: 10,
-                    borderRadius: 5,
-                    // backgroundColor: 'red',
-                    position: 'absolute'
-                  }} />
-                </View>
-                : <></>
-            }
-
-            {
-              !leftendProcessAnimCirleText ?
-                <View style={{
-                  width: 160,
-                  height: 160,
-                  borderRadius: 16,
-                  // borderWidth: 1,
-                  position: 'absolute',
-                  zIndex: 10,
-                  top: _height / 2 - 80,
-                  left: _width / 2 - 80,
-                  justifyContent: 'center',
-                  alignItems: 'center'
-                }}>
-
-                  <Animated.Image
-                    source={require('../../Image/circle.png')}
-                    style={[{
-                      width: _widthScale(200),
-                      height: _widthScale(200),
-                      position: 'absolute'
-                    }, leftanimCircle1]} />
-
-                  <Animated.Image
-                    source={require('../../Image/circle.png')}
-                    style={[{
-                      width: _widthScale(250),
-                      height: _widthScale(250),
-                      position: 'absolute'
-                    }, leftanimCircle2]} />
-
-                  <View style={{
-                    width: 10,
-                    height: 10,
-                    borderRadius: 5,
-                    // backgroundColor: 'red',
-                    position: 'absolute'
-                  }} />
-                </View>
-                : <></>
-            }
-
-
-
-            <RightEffectTextEye setEndProcessAnimCirleText={setEndProcessAnimCirleText} startTextEye={startTextEye} />
-            <LeftEffectTextEye setEndProcessAnimCirleText={leftsetEndProcessAnimCirleText} startTextEye={leftstartTextEye} />
-
-
-            <Animated.View style={[{
-              width: '100%',
-              height: '100%',
-              position: 'absolute',
-              zIndex: 1
-            }, animOpacityGridEffect]}>
-
-              <View style={[StyleSheet.absoluteFillObject, { backgroundColor: 'rgba(0,0,0,1)', zIndex: 1 }]} />
-
-              <View style={{
-                position: 'absolute',
-                alignSelf: 'center',
-                top: _moderateScale(8 * 10),
-                zIndex: 1
-              }}>
-                <Text style={{
-                  color: 'white',
-                  fontSize: _moderateScale(50),
-                  fontWeight: 'bold',
-                  opacity: .7
-                }}>
-                  EYE ANALYSIS
-                </Text>
-              </View>
-              {/* <Image
-                style={[{
-                  width: '100%',
-                  height: '100%',
-                  zIndex: 2
-                },]}
-                source={require('../../Image/Portrait_effect.png')} /> */}
-            </Animated.View>
 
             <Animated.View
               style={animScaleImage}>
@@ -530,22 +278,16 @@ const FaceAI = () => {
                       width: _width,
                       height: _height,
                     },]}
-                    source={{ uri: `${imageHasTake}` }} />
+                    source={{ uri: `${imageScan}` }} />
                   :
                   <Image
                     style={[{
                       width: _width,
                       height: _height,
                     },]}
-                    source={{ uri: `file://${imageHasTake}` }} />
-
+                    source={{ uri: `file://${imageScan}` }} />
               }
-              {/* <Image
-                style={[{
-                  width: _width,
-                  height: _height,
-                },]}
-                source={{ uri: `${imageHasTake}` }} /> */}
+
               <View
                 style={{
                   position: 'absolute',
@@ -553,16 +295,31 @@ const FaceAI = () => {
                   height: 10,
                   borderRadius: 5,
                   // backgroundColor: 'green',
-                  zIndex: 10,
-                  top: PosEyeY,
-                  left: PosEyeX
+                  zIndex: 100,
+                  top: posRightEyeY,
+                  left: posRightEyeX
                 }} >
-                <RightEffectDotEye _startCircleAnim={_startCircleAnim} setFlagDoneZoom={setFlagDoneZoom} flagDoneZoom={flagDoneZoom} PosEyeX={PosEyeY} PosEyeY={PosEyeX} />
-                <LeftEffectDotEye _startCircleAnim={_startCircleAnimLeft} setFlagDoneZoom={leftsetFlagDoneZoom} flagDoneZoom={leftflagDoneZoom} PosEyeX={PosEyeY} PosEyeY={PosEyeX} />
+                <RightEffectDotEye setStartDotRightEye={setStartDotRightEye} startDotRightEye={startDotRightEye} />
               </View>
 
+              <View
+                style={{
+                  position: 'absolute',
+                  width: 10,
+                  height: 10,
+                  borderRadius: 5,
+                  // backgroundColor: 'green',
+                  zIndex: 100,
+                  top: posLeftEyeY,
+                  left: posLeftEyeX
+                }} >
+                <LeftEffectDotEye setStartDotLeftEye={setStartDotLeftEye} startDotLeftEye={startDotLeftEye} />
+              </View>
 
             </Animated.View>
+
+
+
           </View>
           :
           <View style={{ flex: 1 }}>
@@ -574,28 +331,6 @@ const FaceAI = () => {
               backgroundColor: 'rgba(0,0,0,.5)'
             }}>
 
-              <View
-                style={{
-                  position: 'absolute',
-                  width: 10,
-                  height: 10,
-                  borderRadius: 5,
-                  backgroundColor: 'green',
-                  zIndex: 10,
-                  top: PosEyeY,
-                  left: PosEyeX
-                }} />
-              <View
-                style={{
-                  position: 'absolute',
-                  width: 10,
-                  height: 10,
-                  borderRadius: 5,
-                  backgroundColor: 'green',
-                  zIndex: 10,
-                  top: leftPosEyeY,
-                  left: leftPosEyeX
-                }} />
 
               <View style={{
                 flex: 1, justifyContent: 'center',
@@ -664,4 +399,23 @@ const FaceAI = () => {
 
 export default FaceAI
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  btnTakeImage__child: {
+    width: _moderateScale(8 * 8),
+    height: _moderateScale(8 * 8),
+    borderRadius: _moderateScale(8 * 8) / 2,
+    backgroundColor: 'white'
+  },
+  btnTakeImage: {
+    position: 'absolute',
+    bottom: _heightScale(8 * 10),
+    width: _moderateScale(8 * 10),
+    height: _moderateScale(8 * 10),
+    borderRadius: _moderateScale(8 * 10) / 2,
+    borderWidth: 3,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderColor: 'white'
+  }
+
+})

@@ -3,6 +3,8 @@ import React, { memo, useEffect } from 'react'
 import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 import { _moderateScale } from '../../../Constant/Scale';
 
+const DURATION_DOT = 500
+
 const RightEffectDotEye = memo((props) => {
 
     const tranXDot1 = useSharedValue(0);
@@ -23,60 +25,63 @@ const RightEffectDotEye = memo((props) => {
 
 
     const _handleStopAnimEyeDot = () => {
-        props?.setFlagDoneZoom(false)
-        props?._startCircleAnim()
+        props?.setStartDotRightEye('done')
+        // props?._startCircleAnim()
     }
 
 
     useEffect(() => {
 
-        if (props?.flagDoneZoom) {
-            tranXDot1.value = withTiming(-30, { duration: 1000 })
-            tranYDot1.value = withTiming(8, { duration: 1000 })
+        if (props?.startDotRightEye == 'doing') {
+            tranXDot1.value = withTiming(-30, { duration: DURATION_DOT })
+            tranYDot1.value = withTiming(8, { duration: DURATION_DOT })
             _startScaleDot1()
 
-            tranXDot2.value = withTiming(30, { duration: 1000 })
-            tranYDot2.value = withTiming(0, { duration: 1000 })
+            tranXDot2.value = withTiming(30, { duration: DURATION_DOT })
+            tranYDot2.value = withTiming(0, { duration: DURATION_DOT })
             setTimeout(() => {
                 _startScaleDot2()
             }, 100);
 
-            tranXDot3.value = withTiming(0, { duration: 1000 })
-            tranYDot3.value = withTiming(-20, { duration: 1000 })
+            tranXDot3.value = withTiming(0, { duration: DURATION_DOT })
+            tranYDot3.value = withTiming(-20, { duration: DURATION_DOT })
             setTimeout(() => {
                 _startScaleDot3()
             }, 250);
 
-            tranXDot4.value = withTiming(0, { duration: 1000 })
-            tranYDot4.value = withTiming(20, { duration: 1000 })
+            tranXDot4.value = withTiming(0, { duration: DURATION_DOT })
+            tranYDot4.value = withTiming(20, { duration: DURATION_DOT })
             setTimeout(() => {
                 _startScaleDot4()
             }, 170);
+
+            setTimeout(() => {
+                tranXDot1.value = withTiming(0, { duration: DURATION_DOT })
+                tranYDot1.value = withTiming(0, { duration: DURATION_DOT })
+    
+                tranXDot2.value = withTiming(0, { duration: DURATION_DOT })
+                tranYDot2.value = withTiming(0, { duration: DURATION_DOT })
+    
+    
+                tranXDot3.value = withTiming(0, { duration: DURATION_DOT })
+                tranYDot3.value = withTiming(0, { duration: DURATION_DOT })
+    
+    
+                tranXDot4.value = withTiming(0, { duration: DURATION_DOT })
+                tranYDot4.value = withTiming(0, { duration: DURATION_DOT }, (isFinished) => {
+                    if (isFinished) {
+                        runOnJS(_handleStopAnimEyeDot)()
+                    }
+                })
+    
+            }, 2000);
+
         }
 
-        setTimeout(() => {
-            tranXDot1.value = withTiming(0, { duration: 1000 })
-            tranYDot1.value = withTiming(0, { duration: 1000 })
-
-            tranXDot2.value = withTiming(0, { duration: 1000 })
-            tranYDot2.value = withTiming(0, { duration: 1000 })
+       
 
 
-            tranXDot3.value = withTiming(0, { duration: 1000 })
-            tranYDot3.value = withTiming(0, { duration: 1000 })
-
-
-            tranXDot4.value = withTiming(0, { duration: 1000 })
-            tranYDot4.value = withTiming(0, { duration: 1000 }, (isFinished) => {
-                if (isFinished) {
-                    runOnJS(_handleStopAnimEyeDot)()
-                }
-            })
-
-        }, 5000);
-
-
-    }, [props?.flagDoneZoom])
+    }, [props?.startDotRightEye])
 
     const _startScaleDot1 = () => {
         scaleDot1.value = withTiming(1.2, {
@@ -166,7 +171,7 @@ const RightEffectDotEye = memo((props) => {
             
 
             {
-                props?.flagDoneZoom ?
+                props?.startDotRightEye == 'doing' ?
                     <>
                         <Animated.View style={[{
                             width: _moderateScale(8),

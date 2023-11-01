@@ -3,6 +3,8 @@ import React, { memo, useEffect } from 'react'
 import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 import { _moderateScale } from '../../../Constant/Scale';
 
+const DURATION_DOT = 500
+
 const LeftEffectDotEye = memo((props) => {
 
     const tranXDot1 = useSharedValue(0);
@@ -23,66 +25,64 @@ const LeftEffectDotEye = memo((props) => {
 
 
     const _handleStopAnimEyeDot = () => {
-
-        props?.setFlagDoneZoom(false)
-        props?._startCircleAnim()
+        props?.setStartDotLeftEye('done')
+        // props?.setFlagDoneZoom(false)
+        // props?._startCircleAnim()
     }
 
 
     useEffect(() => {
 
-        if (props?.flagDoneZoom) {
+        if (props?.startDotLeftEye == 'doing') {
             
 
-            tranXDot1.value = withTiming(-30, { duration: 1000 })
-            tranYDot1.value = withTiming(0, { duration: 1000 })
+            tranXDot1.value = withTiming(-30, { duration: DURATION_DOT })
+            tranYDot1.value = withTiming(0, { duration: DURATION_DOT })
             _startScaleDot1()
 
-            tranXDot2.value = withTiming(30, { duration: 1000 })
-            tranYDot2.value = withTiming(8, { duration: 1000 })
+            tranXDot2.value = withTiming(30, { duration: DURATION_DOT })
+            tranYDot2.value = withTiming(8, { duration: DURATION_DOT })
             setTimeout(() => {
                 _startScaleDot2()
             }, 100);
 
-            tranXDot3.value = withTiming(0, { duration: 1000 })
-            tranYDot3.value = withTiming(-20, { duration: 1000 })
+            tranXDot3.value = withTiming(0, { duration: DURATION_DOT })
+            tranYDot3.value = withTiming(-20, { duration: DURATION_DOT })
             setTimeout(() => {
                 _startScaleDot3()
             }, 250);
 
-            tranXDot4.value = withTiming(0, { duration: 1000 })
-            tranYDot4.value = withTiming(20, { duration: 1000 })
+            tranXDot4.value = withTiming(0, { duration: DURATION_DOT })
+            tranYDot4.value = withTiming(20, { duration: DURATION_DOT })
             setTimeout(() => {
                 _startScaleDot4()
             }, 170);
 
             setTimeout(() => {
-                tranXDot1.value = withTiming(0, { duration: 1000 })
-                tranYDot1.value = withTiming(0, { duration: 1000 })
+                tranXDot1.value = withTiming(0, { duration: DURATION_DOT })
+                tranYDot1.value = withTiming(0, { duration: DURATION_DOT })
     
-                tranXDot2.value = withTiming(0, { duration: 1000 })
-                tranYDot2.value = withTiming(0, { duration: 1000 })
+                tranXDot2.value = withTiming(0, { duration: DURATION_DOT })
+                tranYDot2.value = withTiming(0, { duration: DURATION_DOT })
     
+                tranXDot3.value = withTiming(0, { duration: DURATION_DOT })
+                tranYDot3.value = withTiming(0, { duration: DURATION_DOT })
     
-                tranXDot3.value = withTiming(0, { duration: 1000 })
-                tranYDot3.value = withTiming(0, { duration: 1000 })
-    
-    
-                tranXDot4.value = withTiming(0, { duration: 1000 })
-                tranYDot4.value = withTiming(0, { duration: 1000 }, (isFinished) => {
+                tranXDot4.value = withTiming(0, { duration: DURATION_DOT })
+                tranYDot4.value = withTiming(0, { duration: DURATION_DOT }, (isFinished) => {
                     if (isFinished) {
                         runOnJS(_handleStopAnimEyeDot)()
                     }
                 })
     
-            }, 5000);
+            }, 2000);
 
         }
 
         
 
 
-    }, [props?.flagDoneZoom])
+    }, [props?.startDotLeftEye])
 
     const _startScaleDot1 = () => {
         scaleDot1.value = withTiming(1.2, {
@@ -172,7 +172,7 @@ const LeftEffectDotEye = memo((props) => {
 
 
             {
-                props?.flagDoneZoom ?
+                props?.startDotLeftEye == 'doing' ?
                     <>
                         <Animated.View style={[{
                             width: _moderateScale(8),

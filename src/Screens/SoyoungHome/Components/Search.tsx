@@ -21,6 +21,8 @@ import ModalPickSingleNotSearch from "../../../Components/ModalPickSingleNotSear
 import { IconArrowDown, IconQRScaner } from "../../../Components/Icon/Icon";
 import { sizeIcon } from "../../../Constant/Icon";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import ImagePicker from 'react-native-image-crop-picker';
+import { scanningEyes } from "../../../Redux/Action/FaceAiAction";
 
 const Search = memo((props) => {
   const { top } = useSafeAreaInsets();
@@ -53,6 +55,31 @@ const Search = memo((props) => {
       marginTop: top + 8,
     };
   }, [top]);
+
+  const _handleQR = () => {
+    // ImagePicker.openCamera({
+    //   mediaType: 'photo',
+    //   compressImageQuality: 0.5
+    // }).then(async (images) => {
+
+    //   console.log({ images });
+    //   let result = await scanningEyes(images)
+    //   return
+    // }).catch(e => { });
+    ImagePicker.openPicker({
+      multiple: false,
+      waitAnimationEnd: false,
+      includeExif: true,
+      forceJpg: true,
+      mediaType: 'photo',
+      compressImageQuality: 0.5,
+      compressImageMaxWidth: 700,
+    }).then(async (images) => {
+      console.log({ images });
+      let result = await scanningEyes(images)
+      // GlobalStore.socket.emit(CSS_SEND_MESSAGE, data)
+    }).catch(e => { });
+  }
 
   return (
     <View style={[styles.container, containerStyle]}>
@@ -135,6 +162,8 @@ const Search = memo((props) => {
       <View style={{ width: _moderateScale(8) }} />
 
       <TouchableOpacity
+
+        onPress={_handleQR}
         style={[
           {
             height: _moderateScale(8 * 4.5),

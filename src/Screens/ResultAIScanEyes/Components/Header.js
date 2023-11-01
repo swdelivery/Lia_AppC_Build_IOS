@@ -13,7 +13,7 @@ const Header = () => {
 
             <View style={{ flex: 1 }}>
                 <TouchableOpacity onPress={()=>{
-                    navigation.navigate(ScreenKey.HOME_TAB)
+                    navigation.navigate(ScreenKey.SEARCHING_HOME)
                 }}>
                     <IconBackBlack
                         width={_moderateScale(8 * 3)}

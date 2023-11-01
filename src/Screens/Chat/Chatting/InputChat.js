@@ -305,6 +305,10 @@ const InputChat = memo((props) => {
             compressImageQuality: 0.5
         }).then(async (images) => {
 
+            console.log({images});
+
+            return
+
             let listImages = [images].map((i, index) => {
                 return {
                     uri: i.path,

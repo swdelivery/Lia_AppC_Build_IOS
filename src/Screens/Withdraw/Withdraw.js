@@ -144,7 +144,7 @@ const index = memo((props) => {
                             setStk(e)
                         }}
                         value={stk}
-                        editable={false}
+                        // editable={false}
                         keyboardType={'number-pad'}
                         style={[stylesFont.fontNolanBold, styles.textInputCode]}
                         placeholder={"Nhập số tài khoản"} />
