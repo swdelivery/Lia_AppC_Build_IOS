@@ -1,5 +1,5 @@
 import { StatusBar, StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useCallback } from "react";
 import CoverImage from "./Components/CoverImage";
 import Header from "./Components/Header";
 import { getStatusBarHeight } from "react-native-status-bar-height";
@@ -21,9 +21,32 @@ import Animated, {
 } from "react-native-reanimated";
 import { ScrollView } from "react-native-gesture-handler";
 import Screen from "@Components/Screen";
+import {
+  useFocused,
+  useNavigationParam,
+  useNavigationParams,
+} from "src/Hooks/useNavigation";
+import { useDispatch, useSelector } from "react-redux";
+import { getBranchDetails } from "@Redux/branch/actions";
+import ScreenKey from "@Navigation/ScreenKey";
+import { ScreenRouteProp } from "@Navigation/types";
+import { getBranchDetailsState } from "@Redux/branch/selectors";
+
+type ScreenK = typeof ScreenKey.DETAIL_BRAND;
 
 const DetailBranch = () => {
+  const dispatch = useDispatch();
+  const { idBranch } = useNavigationParams<ScreenK>();
+  const { data } = useSelector(getBranchDetailsState);
   const scrollY = useSharedValue(0);
+
+  const getData = useCallback(() => {
+    dispatch(getBranchDetails.request(idBranch));
+  }, [idBranch]);
+
+  useFocused(() => {
+    getData();
+  });
 
   const scrollHandler = useAnimatedScrollHandler({
     onScroll: (event, ctx) => {

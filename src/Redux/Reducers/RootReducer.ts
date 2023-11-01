@@ -26,6 +26,7 @@ import partnerDiaryReducer from "./PartnerDiaryReducer";
 import walletReducer from "./WalletReducer";
 import affiliateReducer from "./AffiliateReducer";
 import home from "../home/reducers";
+import branch from "../branch/reducer";
 
 const rootReducer = combineReducers({
   newsReducer,
@@ -55,6 +56,7 @@ const rootReducer = combineReducers({
   affiliateReducer,
 
   home,
+  branch,
 });
 
 // const rootReducer = (state, action) => {

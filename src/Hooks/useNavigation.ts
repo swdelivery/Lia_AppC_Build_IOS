@@ -6,7 +6,7 @@ import {
   ParamListBase,
   useIsFocused,
 } from "@react-navigation/native";
-import { RootStackParamsList } from "@Navigation/types";
+import { RootStackParamsList, ScreenRouteProp } from "@Navigation/types";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import useSavedCallback from "./useSavedCallback";
 
@@ -24,9 +24,9 @@ export function useNavigationParam<
 }
 
 export function useNavigationParams<
-  T extends RouteProp<ParamListBase>
->(): T["params"] {
-  const route = useRoute<T>();
+  K extends keyof RootStackParamsList
+>(): RootStackParamsList[K] {
+  const route = useRoute<ScreenRouteProp<K>>();
   const cacheValue = useRef<any>();
 
   return useMemo(() => {

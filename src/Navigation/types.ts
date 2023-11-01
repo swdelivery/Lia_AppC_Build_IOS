@@ -11,9 +11,10 @@ type ScreenParams = {
     password: string;
     routeName: string;
   };
+  [ScreenKey.DETAIL_BRAND]: { idBranch: string };
 };
 
-type RootStackParamsList = {
+export type RootStackParamsList = {
   [key in Exclude<Screens, keyof ScreenParams>]: undefined;
 } & ScreenParams;
 

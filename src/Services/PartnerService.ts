@@ -9,6 +9,11 @@ const getServiceGroup = (payload: any) => {
     .then(({ data }) => data.data);
 };
 
+const getBranchById = (id: number) => {
+  return axios.get(`/branch/${id}`).then(({ data }) => data.data);
+};
+
 export default {
   getServiceGroup,
+  getBranchById,
 };

@@ -1,11 +1,26 @@
-import React, { memo } from "react";
+import React, { memo, useCallback, useEffect } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { _moderateScale, _width } from "../../../Constant/Scale";
 import IconCalendar from "../../../SGV/calendar.svg";
 import IconChatWhite from "../../../SGV/chatWhite.svg";
 import IconPhoneWhite from "../../../SGV/phoneWhite.svg";
+import { useDispatch, useSelector } from "react-redux";
+import { getInfoUserReducer } from "@Redux/Selectors";
+import useRequireLoginCallback from "src/Hooks/useRequireLoginAction";
+import { useNavigation } from "@react-navigation/native";
+import ScreenKey from "@Navigation/ScreenKey";
+import { useFocused } from "src/Hooks/useNavigation";
 
 const BottomAction = () => {
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+
+  const handleBooking = useRequireLoginCallback(() => {
+    navigation.navigate(ScreenKey.CREATE_BOOKING, {
+      //   choiceBranch: currentBranch,
+    });
+  }, []);
+
   return (
     <View style={styles.container}>
       <View
@@ -17,7 +32,10 @@ const BottomAction = () => {
           justifyContent: "space-between",
         }}
       >
-        <TouchableOpacity style={{ alignItems: "center" }}>
+        <TouchableOpacity
+          style={{ alignItems: "center" }}
+          onPress={handleBooking}
+        >
           <IconCalendar
             height={_moderateScale(8 * 3)}
             width={_moderateScale(8 * 3)}

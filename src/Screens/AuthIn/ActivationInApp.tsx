@@ -24,7 +24,6 @@ import usePhoneAuth from "../../Hooks/usePhoneAuth";
 import ResendOtp from "./components/ResendOtp";
 import { delay } from "../../utils/common";
 import { useNavigationParams } from "src/Hooks/useNavigation";
-import { ScreenRouteProp } from "@Navigation/types";
 
 type ScreenK = typeof ScreenKey.ACTIVATION_IN_APP;
 
@@ -33,7 +32,7 @@ const ActivationInApp = (props: any) => {
   const [activeCode, setActiveCode] = useState("");
   const resendRef = useRef<any>();
   const { fullPhone, phoneNumber, password, routeName } =
-    useNavigationParams<ScreenRouteProp<ScreenK>>();
+    useNavigationParams<ScreenK>();
 
   const handleUserLogin = useCallback(
     async (

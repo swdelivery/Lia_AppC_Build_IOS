@@ -12,17 +12,18 @@ import { URL_ORIGINAL } from "../../../Constant/Url";
 import { _width } from "@Constant/Scale";
 import { useNavigation } from "@react-navigation/native";
 import ScreenKey from "@Navigation/ScreenKey";
+import { useNavigate } from "src/Hooks/useNavigation";
 
 type Props = {
   item: any;
 };
 
 export default function BranchItem({ item }: Props) {
-  const navigation = useNavigation();
+  const { navigation } = useNavigate();
 
   const handlePress = useCallback(() => {
-    navigation.navigate(ScreenKey.DETAIL_BRAND);
-  }, []);
+    navigation.navigate(ScreenKey.DETAIL_BRAND, { idBranch: item._id });
+  }, [item]);
 
   return (
     <View style={[styles.card, shadow]}>
