@@ -64,7 +64,7 @@ import ListTreatmentDetail from "../Screens/ListTreatmentDetail";
 import ListOrderService from "../Screens/ListOrderService";
 import VideoRequest from "../Screens/VideoRequest";
 import NotifiRightTab from "../Components/NotifiRight/TabRightNotifi";
-import ModalNoti from "../Components/Notification/\bModalNoti";
+import ModalNoti from "../Components/Notification/ModalNoti";
 import ListBranch from "../Screens/ListBranch";
 import DetailBrand from "../Screens/NewDetailBranch/index";
 // import DetailBrand from '../Screens/DetailBrand/index'
