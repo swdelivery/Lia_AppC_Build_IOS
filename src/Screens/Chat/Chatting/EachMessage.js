@@ -305,6 +305,46 @@ const EachMessage = memo((props) => {
                                 }
 
                                 {
+                                    infoMessage?.type == 'chatgpt' ?
+                                        <>
+                                            <View
+                                                disabled={infoMessage?.isActive == true ? false : true}
+                                                style={[styles.message__content, { backgroundColor: Color.SENDER_BG, borderWidth: _moderateScale(0.5), borderColor: Color.BG_GREY_OPACITY_5 }
+                                                    // , infoMessage?.isActive == false && { backgroundColor: 'transparent' }
+                                                ]}>
+
+                                                {
+                                                    infoMessage?.isActive ?
+
+                                                        _renderTypeMessage(infoMessage?.content)
+
+                                                        // <Text style={[stylesFont.fontNolan500, styles.message__content__text, { color: Color.SENDER_COLOR_TEXT }]}>
+                                                        //     {
+                                                        //         infoMessage?.content
+                                                        //     }
+                                                        // </Text>
+                                                        :
+                                                        <Text style={[stylesFont.fontNolan500, styles.message__content__text, { color: Color.GREY, fontStyle: 'italic' }]}>
+                                                            {
+                                                                "Tin nhắn đã thu hồi"
+                                                            }
+                                                        </Text>
+                                                }
+
+
+                                                <Text style={[stylesFont.fontDinTextPro, { alignSelf: 'flex-end', color: Color.BG_GREY_OPACITY_7, fontSize: _moderateScale(12), marginTop: _heightScale(4) }]}>
+                                                    {
+                                                        moment(infoMessage.created).format('LT')
+                                                    }
+                                                </Text>
+                                            </View>
+                                        </>
+                                        :
+                                        <>
+                                        </>
+                                }
+
+                                {
                                     infoMessage?.type == 'video' ?
                                         <>
                                             {
@@ -561,15 +601,27 @@ const EachMessage = memo((props) => {
                                         }}>
                                             {
                                                 currRoomChattingRedux?.infoCurrRoomChatting?.assignedUsers?.find(itemFind => itemFind?.userId == infoMessage?.senderId) ?
-                                                    <Image
-                                                        style={styles.avatarSm}
-                                                        source={{ uri: `${URL_ORIGINAL}${currRoomChattingRedux?.infoCurrRoomChatting?.assignedUsers?.find(itemFind => itemFind?.userId == infoMessage?.senderId)?.profile?.fileAvatar?.link}` }}
-                                                    />
+                                                    infoMessage.type == "chatgpt" ?
+                                                        <Image 
+                                                            style={[styles.avatarSm]}
+                                                            source={require('../../../../src/Icon/a_timeline.png')}
+                                                        /> 
+                                                        :
+                                                        <Image
+                                                            style={styles.avatarSm}
+                                                            source={{ uri: `${URL_ORIGINAL}${currRoomChattingRedux?.infoCurrRoomChatting?.assignedUsers?.find(itemFind => itemFind?.userId == infoMessage?.senderId)?.profile?.fileAvatar?.link}` }}
+                                                        />
                                                     :
-                                                    <Image
-                                                        style={[styles.avatarSm]}
-                                                        source={{ uri: infoMessage?.senderChat?.profile?.fileAvatar?.link ? `${URL_ORIGINAL}${infoMessage?.senderChat?.profile?.fileAvatar?.link}` : URL_AVATAR_DEFAULT }}
-                                                    />
+                                                    infoMessage.type == "chatgpt" ?
+                                                        <Image 
+                                                            style={[styles.avatarSm]}
+                                                            source={require('../../../../src/Icon/a_timeline.png')}
+                                                        /> 
+                                                        :
+                                                        <Image
+                                                            style={[styles.avatarSm]}
+                                                            source={{ uri: infoMessage?.senderChat?.profile?.fileAvatar?.link ? `${URL_ORIGINAL}${infoMessage?.senderChat?.profile?.fileAvatar?.link}` : URL_AVATAR_DEFAULT }}
+                                                        />
                                             }
                                             {/* <Image
                                             style={styles.avatarSm}
@@ -591,10 +643,17 @@ const EachMessage = memo((props) => {
                                                         width: _moderateScale(30),
                                                         height: _moderateScale(30),
                                                     }}>
-                                                        <Image
-                                                            style={styles.avatarSm}
-                                                            source={{ uri: infoMessage?.senderChat?.profile?.fileAvatar?.link ? `${URL_ORIGINAL}${infoMessage?.senderChat?.profile?.fileAvatar?.link}` : URL_AVATAR_DEFAULT }}
-                                                        />
+                                                        infoMessage.type == "chatgpt" ?
+                                                            <Image 
+                                                                style={[styles.avatarSm]}
+                                                                source={require('../../../../src/Icon/a_timeline.png')}
+                                                            /> 
+                                                            :
+                                                            <Image
+                                                                style={styles.avatarSm}
+                                                                source={{ uri: infoMessage?.senderChat?.profile?.fileAvatar?.link ? `${URL_ORIGINAL}${infoMessage?.senderChat?.profile?.fileAvatar?.link}` : URL_AVATAR_DEFAULT }}
+                                                            />
+
                                                         {
                                                             props.isOnline ?
                                                                 <View style={{ position: 'absolute', zIndex: 1, bottom: _moderateScale(-2), right: _moderateScale(-2), width: _moderateScale(8 * 1.75), height: _moderateScale(8 * 1.75), borderWidth: _moderateScale(2), borderColor: Color.WHITE, borderRadius: _moderateScale(9), backgroundColor: Color.ONLINE }} />
@@ -721,6 +780,45 @@ const EachMessage = memo((props) => {
 
                                 {
                                     infoMessage?.type == 'text' ?
+                                        <>
+                                            <View
+                                                // onPress={() => {
+                                                //     var expression = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
+                                                //     var regex = new RegExp(expression);
+                                                //     var url = infoMessage?.content;
+                                                //     alert(url.match(regex) ? `true` : `false`)
+                                                //     // return url.match(regex) ? true : false;
+                                                // }}
+                                                style={[styles.message__content, { backgroundColor: Color.RECEIVER_BG },]}>
+                                                {/* <Text style={[stylesFont.fontNolan500, styles.message__content__text, { color: Color.RECEIVER_COLOR_TEXT }]}>
+                                                {
+                                                    infoMessage?.content
+                                                }
+
+                                            </Text> */}
+                                                {
+                                                    infoMessage?.isActive ?
+                                                        _renderTypeMessage(infoMessage?.content)
+                                                        :
+                                                        <Text style={[stylesFont.fontNolan500, styles.message__content__text, { color: Color.GREY, fontStyle: 'italic' }]}>
+                                                            {
+                                                                "Tin nhắn đã thu hồi"
+                                                            }
+                                                        </Text>
+                                                }
+                                                <Text style={[stylesFont.fontDinTextPro, { alignSelf: 'flex-end', color: Color.BG_GREY_OPACITY_7, fontSize: _moderateScale(12), marginTop: _heightScale(4) }]}>
+                                                    {
+                                                        moment(infoMessage.created).format('LT')
+                                                    }
+                                                </Text>
+                                            </View>
+                                        </>
+                                        :
+                                        <>
+                                        </>
+                                }
+                                {
+                                    infoMessage?.type == 'chatgpt' ?
                                         <>
                                             <View
                                                 // onPress={() => {

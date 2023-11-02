@@ -15,6 +15,7 @@ import { _heightScale, _moderateScale, _width, _widthScale } from '../../../Cons
 import { styleElement } from '../../../Constant/StyleElement';
 import * as ActionType from '../../../Redux/Constants/ActionType';
 import store from '../../../Redux/Store';
+import { useMentions } from 'react-native-controlled-mentions/dist';
 // CALL API
 import { _uploadModule, _uploadModuleDocument } from '../../../Services/api';
 import { handleApi } from '../../../Services/utils';
@@ -178,13 +179,19 @@ const InputChat = memo((props) => {
 
         setLoadingSendMessage(true)
 
+        let flagChatGPT = currTextMessage.includes("{@}[ChatGPT](1)");
+        let customText = currTextMessage.replaceAll("{@}[ChatGPT](1)", "");
+        let customType = flagChatGPT ? "chatgpt" : "text";
+
         let data = {
             conversationId: infoCurrRoomChattingRedux?._id,
             message: {
-                type: "text",
-                content: currTextMessage
+                type: customType,
+                content: flagChatGPT ? customText.trim() : currTextMessage,
             }
         };
+
+        console.log("tuccccccccccccccccccccccccccccccccccccccccccccccc", data);
 
         setIsTyping(false)
         setCurrTextMessage('')
@@ -379,6 +386,70 @@ const InputChat = memo((props) => {
         }
     }
 
+    const users = [
+        {
+            id: '1',
+            name: 'ChatGPT',
+        },
+    ];
+
+    const usersInfo = [
+        {
+            id: '1',
+            avatar: '../../Icon/upload2.png',
+            description: 'Trò chuyện với AI',
+            syntax: '@ChatGPT',
+            userId: '1'
+        },
+    ]
+
+    const Suggestions = {} = ({
+        keyword,
+        onSelect,
+    }) => {
+        if (keyword == null) {
+            return null;
+        }
+
+        return (
+            <ScrollView style={styles.suggestionsContainer}>
+                {users
+                    .filter((one) => one.name.toLocaleLowerCase().includes(keyword.toLocaleLowerCase()))
+                    .map((one) => {
+                        let fnInfo = usersInfo.find(f => f.userId == one.id)
+                        return (
+                            <TouchableOpacity key={one.id} onPress={() => onSelect(one)} style={{ padding: 12 }}>
+                                <View style={styles.suggestion}><Text>{fnInfo.description}</Text><Text style={styles.syntax}>{fnInfo.syntax}</Text></View>
+                            </TouchableOpacity>
+                        );
+                    })}
+            </ScrollView>
+        );
+    };
+
+    // Config of suggestible triggers
+    const triggersConfig = {
+        mention: {
+            trigger: '@',
+        },
+    };
+
+    const patternsConfig = {
+        url: {
+            pattern: /a/gi,
+            textStyle: { color: 'blue' },
+        },
+    };
+
+    const { textInputProps, triggers } = useMentions({
+        value: currTextMessage || '',
+        onChange: (content) => {
+            _changeCurrTextMessage(content)
+        },
+        triggersConfig,
+        // patternsConfig,
+    });
+
     // const pickVideoDocument = async () => {
     //     try {
     //         const res = await DocumentPicker.pick({
@@ -559,6 +630,12 @@ const InputChat = memo((props) => {
                     </>
             }
 
+            {triggers ? (
+                <>
+                    <Suggestions {...triggers.mention} />
+                </>
+            ) : null}
+
             <View style={{}} >
                 <View style={{
                     height: _moderateScale(8 * 3.5),
@@ -653,6 +730,27 @@ const InputChat = memo((props) => {
                         />
                     </TouchableOpacity>
 
+                    <TouchableOpacity
+                        onPress={() => {
+                            let data = {
+                                conversationId: infoCurrRoomChattingRedux?._id,
+                                message: {
+                                    type: 'chatgpt',
+                                    content: 'Tóm tắt lại cuộc trò chuyện',
+                                }
+                            };
+
+                            console.log("tuccccccccccccccccccccccccccccccccccccccccccccccc", data);
+
+                            SocketInstance.socketConn?.emit(CSS_SEND_MESSAGE, data)
+                        }}
+                        style={{ justifyContent: 'center', alignItems: 'center', padding: _moderateScale(2), marginLeft: _moderateScale(8) }} >
+                        <Image
+                            style={[sizeIcon.lllg]}
+                            source={require('../../../../src/Icon/chat_gpt.png')}
+                        />
+                    </TouchableOpacity>
+
                     <TouchableOpacity style={{
                         marginLeft: _moderateScale(8), justifyContent: 'center', alignItems: 'center',
                         padding: _moderateScale(4)
@@ -672,7 +770,7 @@ const InputChat = memo((props) => {
                     borderRadius: _moderateScale(10),
                     paddingVertical: _heightScale(5)
                 }}>
-                    <TextInput
+                    {/* <TextInput
                         onFocus={_onFocusTextInput}
                         onBlur={_outFocusTextInput}
                         multiline
@@ -681,7 +779,15 @@ const InputChat = memo((props) => {
                             _changeCurrTextMessage(content)
                         }}
                         style={styles.input}
-                        placeholder={'Aa'} />
+                        placeholder={'Aa'} /> */}
+                    <TextInput
+                        onFocus={_onFocusTextInput}
+                        onBlur={_outFocusTextInput}
+                        multiline
+                        {...textInputProps}
+                        style={styles.input}
+                        placeholder={'Aa'}
+                    />
                 </View>
                 <View>
 
@@ -715,6 +821,30 @@ const styles = StyleSheet.create({
         fontSize: _widthScale(16),
         paddingHorizontal: _widthScale(16),
         margin: 0
+    },
+    content: {
+        minHeight: 1000,
+    },
+    suggestionsContainer: {
+        position: 'absolute',
+        // top: -100,
+        bottom: 56,
+        maxHeight: 200,
+        width: '100%',
+        backgroundColor: 'white',
+        zIndex: 1000,
+        opacity: 0.95
+    },
+    suggestion: {
+        paddingHorizontal: 4,
+        paddingVertical: 1,
+        display: 'flex',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+    },
+    syntax: {
+        color: 'blue',
+        paddingLeft: 6,
     },
 })
 
