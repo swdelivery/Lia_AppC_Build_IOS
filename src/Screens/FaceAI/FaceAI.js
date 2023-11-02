@@ -255,7 +255,7 @@ const FaceAI = () => {
 
   return (
     <View style={{ flex: 1 }}>
-      <View
+      {/* <View
         style={{
           width: EYE_INDICATOR_SIZE,
           aspectRatio: 1,
@@ -276,11 +276,21 @@ const FaceAI = () => {
           top: posLeftEyeY - EYE_INDICATOR_SIZE / 2,
           left: posLeftEyeX - EYE_INDICATOR_SIZE / 2,
         }}
-      />
+      /> */}
 
       <BackDropOpacity
         setShowBackDropOpacity={setShowBackDropOpacity}
         show={showBackDropOpacity}
+      />
+
+      <RightEffectDotEye
+        setStartDotRightEye={setStartDotRightEye}
+        startDotRightEye={startDotRightEye}
+      />
+
+      <LeftEffectDotEye
+        setStartDotLeftEye={setStartDotLeftEye}
+        startDotLeftEye={startDotLeftEye}
       />
 
       <RightCircle
@@ -333,7 +343,7 @@ const FaceAI = () => {
               />
             )}
 
-            <View
+            {/* <View
               style={{
                 position: "absolute",
                 width: EYE_INDICATOR_SIZE,
@@ -349,9 +359,9 @@ const FaceAI = () => {
                 setStartDotRightEye={setStartDotRightEye}
                 startDotRightEye={startDotRightEye}
               />
-            </View>
+            </View> */}
 
-            <View
+            {/* <View
               style={{
                 position: "absolute",
                 width: EYE_INDICATOR_SIZE,
@@ -367,7 +377,7 @@ const FaceAI = () => {
                 setStartDotLeftEye={setStartDotLeftEye}
                 startDotLeftEye={startDotLeftEye}
               />
-            </View>
+            </View> */}
           </Animated.View>
         </View>
       ) : (
