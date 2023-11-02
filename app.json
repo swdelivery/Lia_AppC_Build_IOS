@@ -3,8 +3,8 @@
   "displayName": "LiaAppC",
   "android": {
     "version": "1.0.0",
-    "build": 2,
-    "buildDate": "03/11/2023 04:56"
+    "build": 3,
+    "buildDate": "03/11/2023 05:04"
   },
   "ios": {
     "version": "1.0.0",
