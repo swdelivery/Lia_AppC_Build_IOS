@@ -1,7 +1,7 @@
 import { createReducer } from "@Redux/helper";
 import { Handler } from "@Redux/types";
-import { GET_BRANCH_DETAILS } from "./types";
-import { Branch } from "typings/branch";
+import { GET_BRANCH_DETAILS } from "../types";
+import { Branch } from "@typings/branch";
 
 export type State = {
   isLoading: boolean;

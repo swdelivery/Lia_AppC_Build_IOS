@@ -15,7 +15,7 @@ import { getServicev2 } from "../../Redux/Action/Service";
 import { URL_ORIGINAL } from "../../Constant/Url";
 import { formatMonney } from "../../Constant/Utils";
 import ServiceItem from "./components/ServiceItem";
-import { RenderItemProps } from "typings/common";
+import { RenderItemProps } from "@typings/common";
 
 const SoYoungService = memo((props) => {
   const [listService, setListService] = useState([]);

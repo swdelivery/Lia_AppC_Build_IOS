@@ -1,7 +1,7 @@
 import { createReducer } from "@Redux/helper";
 import { Handler } from "@Redux/types";
 import { GET_SERVICE_GROUP } from "../types";
-import { ServiceGroup } from "typings/serviceGroup";
+import { ServiceGroup } from "@typings/serviceGroup";
 
 export type State = {
   isLoading: boolean;

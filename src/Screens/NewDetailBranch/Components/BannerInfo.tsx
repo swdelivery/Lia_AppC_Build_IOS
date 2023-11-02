@@ -9,14 +9,12 @@ import CountStar2 from "../../../Components/NewCountStar/CountStar";
 import Certificate from "../../../Components/Certificate/Certificate";
 import { getBranchDetailsState } from "@Redux/branch/selectors";
 import { useSelector } from "react-redux";
-import { getImageAvataUrl } from "src/utils/common";
 import Row from "@Components/Row";
 import Text from "@Components/Text";
+import { getImageAvataUrl } from "src/utils/avatar";
 
 const BannerInfo = () => {
   const { data } = useSelector(getBranchDetailsState);
-
-  console.log({ data });
 
   const avatarSource = useMemo(() => {
     return {
@@ -34,7 +32,7 @@ const BannerInfo = () => {
       </View>
 
       <Text weight="bold" size={16} color={"#F5DDB0"}>
-        {data?.name}
+        {(data?.name ?? "").toUpperCase()}
       </Text>
 
       <Row top={8} gap={8}>

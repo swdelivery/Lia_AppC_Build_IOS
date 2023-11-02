@@ -1,5 +1,5 @@
 import { URL_AVATAR_DEFAULT, URL_ORIGINAL } from "@Constant/Url";
-import { FileAvatar } from "typings/common";
+import { FileAvatar } from "@typings/common";
 
 export const getImageAvataUrl = (
   file?: FileAvatar,

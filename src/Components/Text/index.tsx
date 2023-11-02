@@ -40,7 +40,7 @@ export type TextProps = RNTextProps & {
 const Text = ({
   style,
   weight = "regular",
-  size,
+  size = 14,
   color,
   top = 0,
   left = 0,

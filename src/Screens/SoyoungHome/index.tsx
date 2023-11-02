@@ -27,42 +27,38 @@ import Screen from "../../Components/Screen";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { styleElement } from "../../Constant/StyleElement";
 
+const STACKS = [
+  {
+    screen: SoYoungService,
+    tabLabel: "Dịch vụ",
+  },
+  {
+    screen: SoYoungBranch,
+    tabLabel: "Phòng khám",
+  },
+  {
+    screen: SoYoungDoctor,
+    tabLabel: "Bác sĩ",
+  },
+  {
+    screen: SoYoungExpert,
+    tabLabel: "Chuyên viên",
+  },
+  {
+    screen: SoYoungService,
+    tabLabel: "Vật liệu",
+  },
+];
+
 const SoyoungHome = () => {
   const dispatch = useDispatch();
   const scrollableTabViewRef = useRef();
   const [rootTime, setRootTime] = useState(Date.now());
   const { top } = useSafeAreaInsets();
 
-  const listServiceGroupRedux = useSelector(
-    (state) => state.serviceGroupReducer?.listServiceGroup
-  );
-
   const heightExpandServiceGr = useSharedValue(0);
 
   const [expandServiceGr, setExpandServiceGr] = useState(true);
-
-  const [stacks, setStacks] = useState([
-    {
-      screen: SoYoungService,
-      tabLabel: "Dịch vụ",
-    },
-    {
-      screen: SoYoungBranch,
-      tabLabel: "Phòng khám",
-    },
-    {
-      screen: SoYoungDoctor,
-      tabLabel: "Bác sĩ",
-    },
-    {
-      screen: SoYoungExpert,
-      tabLabel: "Chuyên viên",
-    },
-    {
-      screen: SoYoungService,
-      tabLabel: "Vật liệu",
-    },
-  ]);
 
   useEffect(() => {
     if (expandServiceGr) {
@@ -94,7 +90,7 @@ const SoyoungHome = () => {
         mappingProps={{
           rootTime: rootTime,
         }}
-        stacks={stacks}
+        stacks={STACKS}
         tabWrapStyle={styleElement.flex}
         tabInnerStyle={styles.tabInnerStyle}
         tabActiveOpacity={1}

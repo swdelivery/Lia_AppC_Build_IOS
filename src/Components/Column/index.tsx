@@ -7,19 +7,15 @@ type Props = {
   bottom?: number;
   left?: number;
   right?: number;
-  justifyContent?: "flex-start" | "flex-end" | "center" | "space-between";
-  flexWrap?: "nowrap" | "wrap" | "wrap-reverse";
   children: ReactNode;
 };
 
-export default function Row({
+export default function Column({
   gap,
   top,
   bottom,
   left,
   right,
-  justifyContent,
-  flexWrap,
   children,
 }: Props) {
   const containerStyle = useMemo(() => {
@@ -29,16 +25,11 @@ export default function Row({
       marginBottom: bottom,
       marginLeft: left,
       marginRight: right,
-      justifyContent,
-      flexWrap,
     };
-  }, [gap, top, bottom, left, right, justifyContent, flexWrap]);
+  }, [gap, top, bottom, left, right]);
   return <View style={[styles.container, containerStyle]}>{children}</View>;
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
+  container: {},
 });

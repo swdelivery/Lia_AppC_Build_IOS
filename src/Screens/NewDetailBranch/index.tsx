@@ -31,6 +31,7 @@ import { getBranchDetails } from "@Redux/branch/actions";
 import ScreenKey from "@Navigation/ScreenKey";
 import { ScreenRouteProp } from "@Navigation/types";
 import { getBranchDetailsState } from "@Redux/branch/selectors";
+import Column from "@Components/Column";
 
 type ScreenK = typeof ScreenKey.DETAIL_BRAND;
 
@@ -66,60 +67,16 @@ const DetailBranch = () => {
       <Animated.ScrollView scrollEventThrottle={16} onScroll={scrollHandler}>
         <CoverImage />
         <BannerInfo />
-        <View style={{ flex: 1 }}>
-          <Wave />
-        </View>
-        <View style={{ height: _moderateScale(8 * 3) }} />
-
-        <View style={styleElement.lineHoriGrey8} />
-
-        <MainInfo />
-
-        <View
-          style={[
-            styleElement.lineHoriGrey8,
-            { marginTop: _moderateScale(8 * 2) },
-          ]}
-        />
-
-        <ListDoctor />
-        <View
-          style={[
-            styleElement.lineHoriGrey8,
-            { marginTop: _moderateScale(8 * 2) },
-          ]}
-        />
-
-        <ListDiary />
-
-        <View
-          style={[
-            styleElement.lineHoriGrey8,
-            { marginTop: _moderateScale(8 * 2) },
-          ]}
-        />
-
-        <ConsultanCus />
-        <View
-          style={[
-            styleElement.lineHoriGrey8,
-            { marginTop: _moderateScale(8 * 2) },
-          ]}
-        />
-
-        <TopService />
-
-        <Feedback />
-        <View
-          style={[
-            styleElement.lineHoriGrey8,
-            { marginTop: _moderateScale(8 * 2) },
-          ]}
-        />
-
-        <QandA />
-
-        <View style={{ height: 100 }} />
+        <Wave />
+        <Column gap={16}>
+          <MainInfo />
+          <ListDoctor />
+          <ListDiary />
+          <ConsultanCus />
+          <TopService />
+          <Feedback />
+          <QandA />
+        </Column>
       </Animated.ScrollView>
       <BottomAction />
     </Screen>

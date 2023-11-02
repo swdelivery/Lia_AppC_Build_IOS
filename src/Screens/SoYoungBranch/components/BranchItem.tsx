@@ -1,10 +1,9 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import {
   View,
   StyleSheet,
   TouchableOpacity,
   Image,
-  Text,
   ScrollView,
   Pressable,
 } from "react-native";
@@ -13,6 +12,13 @@ import { _width } from "@Constant/Scale";
 import { useNavigation } from "@react-navigation/native";
 import ScreenKey from "@Navigation/ScreenKey";
 import { useNavigate } from "src/Hooks/useNavigation";
+import FastImage from "@Components/FastImage";
+import Text from "@Components/Text";
+import { styleElement } from "@Constant/StyleElement";
+import Row from "@Components/Row";
+import CountStar2 from "@Components/NewCountStar/CountStar";
+import Certificate from "@Components/Certificate/Certificate";
+import { getImageAvataUrl } from "src/utils/avatar";
 
 type Props = {
   item: any;
@@ -21,6 +27,13 @@ type Props = {
 export default function BranchItem({ item }: Props) {
   const { navigation } = useNavigate();
 
+  const avatarSource = useMemo(() => {
+    return getImageAvataUrl(
+      item?.avatar,
+      "https://cfw.rabbitloader.xyz/eyJjIjp0cnVlLCJoIjoibGlhYmVhdXR5LnZuIiwidiI6OTczNjIwMDQ3LCJpIjoiZjgxYWIyZTctMGZlZi00YmU2LTZhNmItODI5MWI4YWExZTAwIn0/wp-content/uploads/2023/06/photo.png"
+    );
+  }, [item]);
+
   const handlePress = useCallback(() => {
     navigation.navigate(ScreenKey.DETAIL_BRAND, { idBranch: item._id });
   }, [item]);
@@ -28,194 +41,35 @@ export default function BranchItem({ item }: Props) {
   return (
     <View style={[styles.card, shadow]}>
       <Pressable onPress={handlePress} style={styles.upperView}>
-        <View>
-          <Image
-            style={{
-              width: 8 * 6,
-              height: 8 * 6,
-              borderRadius: (8 * 6) / 2,
-              borderWidth: 0.5,
-            }}
-            source={{ uri: `${URL_ORIGINAL}${item?.avatar?.link}` }}
-          />
-        </View>
-        <View style={{ width: 8 }} />
-        <View style={{ flex: 1 }}>
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-            }}
-          >
+        <FastImage style={styles.avatar} uri={avatarSource} />
+        <View style={styleElement.flex}>
+          <Row justifyContent="space-between">
             <Text numberOfLines={1} style={styles.title}>
               {item?.name}
             </Text>
 
-            <TouchableOpacity
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                backgroundColor: "#4BA888",
-                paddingHorizontal: 8,
-                paddingVertical: 2,
-                borderRadius: 8 * 2,
-              }}
-            >
-              <Text
-                style={{
-                  fontSize: 12,
-                  color: "white",
-                  fontWeight: "bold",
-                }}
-              >
+            <TouchableOpacity style={styles.adviseBtn}>
+              <Text size={12} color="white" weight="bold">
                 Tư vấn
               </Text>
             </TouchableOpacity>
-          </View>
+          </Row>
+          <CountStar2 rating={item.averageRating} count={item.reviewCount} />
 
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              marginTop: 2,
-            }}
-          >
+          <Row gap={4}>
             <Image
-              style={styles.start}
-              source={require("../../../Image/a_star2.png")}
-            />
-            <Image
-              style={styles.start}
-              source={require("../../../Image/a_star2.png")}
-            />
-            <Image
-              style={styles.start}
-              source={require("../../../Image/a_star2.png")}
-            />
-            <Image
-              style={styles.start}
-              source={require("../../../Image/a_star2.png")}
-            />
-            <Image
-              style={styles.start}
-              source={require("../../../Image/a_star2.png")}
-            />
-            <Text
-              style={{
-                fontSize: 10,
-                marginLeft: 4,
-              }}
-            >
-              ({item?.reviewCount})
-            </Text>
-            <View style={{ width: 8 }} />
-            <Text>|</Text>
-            <View style={{ width: 8 }} />
-            <View style={{ flexDirection: "row" }}>
-              <Image
-                style={styles.start}
-                source={require("../../../Image/people.png")}
-              />
-              <Text
-                style={{
-                  fontSize: 10,
-                  marginLeft: 4,
-                }}
-              >
-                ({item?.countPartner})
-              </Text>
-            </View>
-          </View>
-
-          <View style={{ flexDirection: "row", marginTop: 4 }}>
-            <Image
-              style={{
-                width: 8 * 2,
-                height: 8 * 2,
-                resizeMode: "contain",
-              }}
+              style={styles.locationIcon}
               source={require("../../../Image/locationRed.png")}
             />
-            <Text
-              style={{
-                fontSize: 12,
-                color: "grey",
-              }}
-            >
+            <Text size={12} color="grey">
               {item?.address}
             </Text>
-          </View>
+          </Row>
 
-          <View
-            style={{
-              flexDirection: "row",
-              flexWrap: "wrap",
-              marginTop: 8,
-            }}
-          >
-            <TouchableOpacity
-              style={{
-                paddingHorizontal: 8,
-                paddingVertical: 4,
-                backgroundColor: "#151617",
-                borderRadius: 4,
-                flexDirection: "row",
-                alignItems: "center",
-                overflow: "hidden",
-              }}
-            >
-              <Image
-                style={{
-                  width: 8 * 1.5,
-                  height: 8 * 1.5,
-                  resizeMode: "contain",
-                  marginRight: 4,
-                }}
-                source={require("../../../Image/kimcuong.png")}
-              />
-              <Text
-                style={{
-                  color: "#F8E6D0",
-                  fontWeight: "bold",
-                  fontSize: 10,
-                }}
-              >
-                Phòng khám
-              </Text>
-            </TouchableOpacity>
-            <View style={{ width: 4 }} />
-
-            <TouchableOpacity
-              style={{
-                paddingHorizontal: 8,
-                paddingVertical: 4,
-                backgroundColor: "#414378",
-                borderRadius: 4,
-                flexDirection: "row",
-                alignItems: "center",
-                overflow: "hidden",
-              }}
-            >
-              <Image
-                style={{
-                  width: 8 * 1.5,
-                  height: 8 * 1.5,
-                  resizeMode: "contain",
-                  marginRight: 4,
-                }}
-                source={require("../../../Image/kimcuong.png")}
-              />
-              <Text
-                style={{
-                  color: "#F8E6D0",
-                  fontWeight: "bold",
-                  fontSize: 10,
-                }}
-              >
-                Giấy phép
-              </Text>
-            </TouchableOpacity>
-          </View>
+          <Row top={8} flexWrap={"wrap"} gap={4}>
+            <Certificate name="Phòng khám" backgroundColor={"#151617"} />
+            <Certificate name="Giấy phép" backgroundColor={"#414378"} />
+          </Row>
         </View>
       </Pressable>
 
@@ -223,128 +77,22 @@ export default function BranchItem({ item }: Props) {
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           {[1, 2, 3, 4, 5]?.map((item, index) => {
             return (
-              <View
-                key={index}
-                style={{
-                  width: 100,
-                  // height: 180,
-                  backgroundColor: "white",
-                  borderBottomLeftRadius: 8,
-                  borderBottomRightRadius: 8,
-                  marginRight: 8 * 1,
-                }}
-              >
+              <View key={index} style={styles.serviceContainer}>
                 <View>
-                  <Image
-                    style={{
-                      width: 100,
-                      height: 75,
-                      borderTopLeftRadius: 8,
-                      borderTopRightRadius: 8,
-                    }}
-                    source={{
-                      uri: `https://img2.soyoung.com/product/20230204/6/4c37c3bc52acc601968d58619dbb4336_400_300.jpg`,
-                    }}
+                  <FastImage
+                    style={styles.serviceImage}
+                    uri={`https://img2.soyoung.com/product/20230204/6/4c37c3bc52acc601968d58619dbb4336_400_300.jpg`}
                   />
                 </View>
-                <View
-                  style={{
-                    padding: 4,
-                  }}
-                >
-                  <Text
-                    numberOfLines={1}
-                    style={{
-                      fontSize: 11,
-                      fontWeight: "bold",
-                    }}
-                  >
+                <View style={styles.serviceContent}>
+                  <Text numberOfLines={1} size={10} weight="bold">
                     Loại bỏ bọng mắt Pinhole
                   </Text>
 
-                  <View>
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        alignItems: "center",
-                      }}
-                    >
-                      <Image
-                        style={styles.start2}
-                        source={require("../../../Image/a_star2.png")}
-                      />
-                      <Image
-                        style={styles.start2}
-                        source={require("../../../Image/a_star2.png")}
-                      />
-                      <Image
-                        style={styles.start2}
-                        source={require("../../../Image/a_star2.png")}
-                      />
-                      <Image
-                        style={styles.start2}
-                        source={require("../../../Image/a_star2.png")}
-                      />
-                      <Image
-                        style={styles.start2}
-                        source={require("../../../Image/a_star2.png")}
-                      />
-                      <Text
-                        style={{
-                          fontSize: 10,
-                          marginLeft: 4,
-                        }}
-                      >
-                        (320)
-                      </Text>
-                    </View>
-                  </View>
-
-                  <View
-                    style={{
-                      marginTop: 4,
-                      flexDirection: "row",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        alignItems: "center",
-                      }}
-                    >
-                      <Text
-                        style={{
-                          fontSize: 11,
-                          fontWeight: "bold",
-                          color: "red",
-                          textDecorationLine: "underline",
-                        }}
-                      >
-                        đ
-                      </Text>
-                      <Text
-                        style={{
-                          fontSize: 10,
-                          fontWeight: "bold",
-                          color: "red",
-                        }}
-                      >
-                        12.000.000
-                      </Text>
-                    </View>
-
-                    {/* <View style={{ flexDirection: 'row' }}>
-                                                        <Image style={styles.start} source={require('../../../Image/people.png')} />
-                                                        <Text style={{
-                                                            fontSize: 10,
-                                                            marginLeft: 4
-                                                        }}>
-                                                            (157)
-                                                        </Text>
-                                                    </View> */}
-                  </View>
+                  <CountStar2 rating={320} size={8} />
+                  <Text size={10} weight="bold" color="red">
+                    đ12.000.000
+                  </Text>
                 </View>
               </View>
             );
@@ -356,6 +104,42 @@ export default function BranchItem({ item }: Props) {
 }
 
 const styles = StyleSheet.create({
+  avatar: {
+    width: 8 * 6,
+    height: 8 * 6,
+    borderRadius: (8 * 6) / 2,
+    borderWidth: 0.5,
+  },
+  adviseBtn: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#4BA888",
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+    borderRadius: 8 * 2,
+  },
+  locationIcon: {
+    width: 12,
+    height: 12,
+    resizeMode: "contain",
+  },
+  serviceContainer: {
+    width: 100,
+    // height: 180,
+    backgroundColor: "white",
+    borderBottomLeftRadius: 8,
+    borderBottomRightRadius: 8,
+    marginRight: 8 * 1,
+  },
+  serviceImage: {
+    width: 100,
+    height: 75,
+    borderTopLeftRadius: 8,
+    borderTopRightRadius: 8,
+  },
+  serviceContent: {
+    padding: 4,
+  },
   title: {
     fontSize: 14,
     fontWeight: "500",
@@ -387,7 +171,7 @@ const styles = StyleSheet.create({
     paddingTop: 8 * 2,
     backgroundColor: "#F5F9FA",
   },
-  upperView: { flexDirection: "row" },
+  upperView: { flexDirection: "row", gap: 8 },
 });
 
 const shadow = {

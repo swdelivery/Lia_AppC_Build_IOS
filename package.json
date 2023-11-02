@@ -5,7 +5,7 @@
   "scripts": {
     "adb": "adb reverse tcp:9090 tcp:9090 && adb reverse tcp:8081 tcp:8081",
     "android": "yarn adb && react-native run-android",
-    "ios": "react-native run-ios",
+    "ios": "react-native run-ios --scheme 'LiaAppC dev'",
     "lint": "eslint .",
     "start": "react-native start",
     "test": "jest",
