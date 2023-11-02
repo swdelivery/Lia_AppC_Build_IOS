@@ -1,8 +1,9 @@
-import { Image, StyleSheet, Text, View } from 'react-native'
+import { Image, Platform, StyleSheet, Text, View } from 'react-native'
 import React, { memo, useEffect, useState } from 'react'
 import { _heightScale, _moderateScale, _widthScale } from '../../../Constant/Scale'
 import Animated, { Extrapolation, interpolate, useAnimatedStyle, useDerivedValue, useSharedValue, withTiming } from 'react-native-reanimated'
 import { ReText } from 'react-native-redash'
+import { FONT_NOLAN_NEXT, FONT_NOLAN_NEXT_ANDROID, stylesFont } from '../../../Constant/Font'
 
 const HEIGHT_BOX_CHOICE = _widthScale(8 * 8)
 
@@ -147,18 +148,23 @@ const RightEyeResult = memo((props) => {
                                     <Text style={{
                                         fontSize: _moderateScale(12),
                                         color: 'white',
-                                        marginBottom: _moderateScale(8)
+                                        top: _moderateScale(8),
+                                        position:'absolute',
+                                        zIndex:1
                                     }}>
                                         Tương thích
                                     </Text>
                                     <View style={{
                                         flexDirection: 'row',
-                                        alignItems: 'center'
+                                        alignItems: 'center',
+                                        // borderWidth:1,
+                                        position:'absolute',
+                                        bottom:Platform.OS == 'ios' ? _heightScale(8) : 0
                                     }}>
                                         <ReText style={{
                                             fontSize: _moderateScale(20),
                                             fontWeight: 'bold',
-                                            color: 'white'
+                                            color: 'white',
                                         }} text={progressText} />
                                         <Text style={{
                                             fontSize: _moderateScale(18),

@@ -3,6 +3,7 @@ import React, { memo, useEffect } from 'react'
 import { _heightScale, _moderateScale, _widthScale } from '../../../Constant/Scale'
 import IconEye from '../../../SGV/eye.svg'
 import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
+import { _codeResultScanning } from '../../../Constant/CodeResultScanningEye'
 
 
 const LeftEffectTextEye = memo((props) => {
@@ -18,12 +19,12 @@ const LeftEffectTextEye = memo((props) => {
 
 
     const _handleEnd = () => {
-        props?.setEndProcessAnimCirleText(true)
+        props?.setStartTextLeftEye('done')
     }
 
     useEffect(() => {
 
-        if (props?.startTextEye) {
+        if (props?.startTextLeftEye == 'doing') {
             opacityText1.value = withTiming(1, {
                 duration: 1000
             })
@@ -73,7 +74,7 @@ const LeftEffectTextEye = memo((props) => {
             }, 4000);
 
         }
-    }, [props?.startTextEye])
+    }, [props?.startTextLeftEye])
 
     const animText1 = useAnimatedStyle(() => {
         return {
@@ -108,95 +109,108 @@ const LeftEffectTextEye = memo((props) => {
 
     return (
         <>
-            <Animated.View style={[{
-                position: 'absolute',
-                zIndex: 100,
-                top: _heightScale(220),
-                left: _widthScale(200),
-                alignItems: 'flex-start',
-            }, animText1]}>
-                <IconEye
-                    width={_moderateScale(8 * 3)}
-                    height={_moderateScale(8 * 3)}
-                />
-                <Text style={{
-                    fontSize: _moderateScale(12),
-                    fontWeight: 'bold',
-                    color: 'white'
-                }}>
-                    RIGHT EYE
-                </Text>
-                <View style={{ height: _moderateScale(4) }} />
-                <Text style={{ fontSize: _moderateScale(8), fontWeight: 'bold', color: '#9fe0ed', letterSpacing: 2 }}>
-                    NORMAL
-                </Text>
-                <Text style={{ fontSize: _moderateScale(8), fontWeight: 'bold', color: '#9fe0ed', letterSpacing: 2 }}>
-                    OUTER
-                </Text>
-                <Text style={{ fontSize: _moderateScale(8), fontWeight: 'bold', color: '#9fe0ed', letterSpacing: 2 }}>
-                    CANTHUS
-                </Text>
-            </Animated.View>
+            {
+                props?.startTextLeftEye == 'doing' ?
+                    <>
+                        <Animated.View style={[{
+                            position: 'absolute',
+                            zIndex: 100,
+                            top: _heightScale(200),
+                            left: _widthScale(130),
+                            alignItems: 'flex-start',
+                        }, animText1]}>
+                            <IconEye
+                                width={_moderateScale(8 * 3)}
+                                height={_moderateScale(8 * 3)}
+                            />
+                            <Text style={{
+                                fontSize: _moderateScale(12),
+                                fontWeight: 'bold',
+                                color: 'white'
+                            }}>
+                                Mắt Trái
+                            </Text>
+                            <View style={{ height: _moderateScale(4) }} />
+                            <Text style={{ fontSize: _moderateScale(12), fontWeight: 'bold', color: '#9fe0ed', letterSpacing: 2 }}>
+                                {
+                                    _codeResultScanning(props?.scanningResult?.left?.eylid_type)
+                                }
+                            </Text>
+                            {/* <Text style={{ fontSize: _moderateScale(8), fontWeight: 'bold', color: '#9fe0ed', letterSpacing: 2 }}>
+                                OUTER
+                            </Text>
+                            <Text style={{ fontSize: _moderateScale(8), fontWeight: 'bold', color: '#9fe0ed', letterSpacing: 2 }}>
+                                CANTHUS
+                            </Text> */}
+                        </Animated.View>
 
-            <Animated.View style={[{
-                position: 'absolute',
-                zIndex: 100,
-                top: _heightScale(260),
-                left: _widthScale(290),
-                alignItems: 'flex-start',
-            }, animText2]}>
-                <IconEye
-                    width={_moderateScale(8 * 3)}
-                    height={_moderateScale(8 * 3)}
-                />
-                <Text style={{
-                    fontSize: _moderateScale(12),
-                    fontWeight: 'bold',
-                    color: 'white'
-                }}>
-                    RIGHT EYE
-                </Text>
-                <View style={{ height: _moderateScale(4) }} />
-                <Text style={{ fontSize: _moderateScale(8), fontWeight: 'bold', color: 'red', letterSpacing: 2 }}>
-                    NORMAL
-                </Text>
-                <Text style={{ fontSize: _moderateScale(8), fontWeight: 'bold', color: '#9fe0ed', letterSpacing: 2 }}>
-                    OUTER
-                </Text>
-                <Text style={{ fontSize: _moderateScale(8), fontWeight: 'bold', color: '#9fe0ed', letterSpacing: 2 }}>
-                    CANTHUS
-                </Text>
-            </Animated.View>
+                        <Animated.View style={[{
+                            position: 'absolute',
+                            zIndex: 100,
+                            top: _heightScale(240),
+                            left: _widthScale(230),
+                            alignItems: 'flex-start',
+                        }, animText2]}>
+                            <IconEye
+                                width={_moderateScale(8 * 3)}
+                                height={_moderateScale(8 * 3)}
+                            />
+                            <Text style={{
+                                fontSize: _moderateScale(12),
+                                fontWeight: 'bold',
+                                color: 'white'
+                            }}>
+                                Bọng mỡ
+                            </Text>
+                            <View style={{ height: _moderateScale(4) }} />
+                            <Text style={{width:_moderateScale(8*8), fontSize: _moderateScale(12), fontWeight: 'bold', color: '#9fe0ed', letterSpacing: 2 }}>
+                                {
+                                    _codeResultScanning(props?.scanningResult?.left?.eye_bag_type)
+                                }
+                            </Text>
+                            {/* <Text style={{ fontSize: _moderateScale(8), fontWeight: 'bold', color: '#9fe0ed', letterSpacing: 2 }}>
+                                OUTER
+                            </Text>
+                            <Text style={{ fontSize: _moderateScale(8), fontWeight: 'bold', color: '#9fe0ed', letterSpacing: 2 }}>
+                                CANTHUS
+                            </Text> */}
+                        </Animated.View>
 
-            <Animated.View style={[{
-                position: 'absolute',
-                zIndex: 100,
-                top: _heightScale(530),
-                left: _widthScale(270),
-                alignItems: 'flex-start',
-            }, animText3]}>
-                <IconEye
-                    width={_moderateScale(8 * 3)}
-                    height={_moderateScale(8 * 3)}
-                />
-                <Text style={{
-                    fontSize: _moderateScale(12),
-                    fontWeight: 'bold',
-                    color: 'white'
-                }}>
-                    RIGHT EYE
-                </Text>
-                <View style={{ height: _moderateScale(4) }} />
-                <Text style={{ fontSize: _moderateScale(8), fontWeight: 'bold', color: '#9fe0ed', letterSpacing: 2 }}>
-                    NORMAL
-                </Text>
-                <Text style={{ fontSize: _moderateScale(8), fontWeight: 'bold', color: '#9fe0ed', letterSpacing: 2 }}>
-                    OUTER
-                </Text>
-                <Text style={{ fontSize: _moderateScale(8), fontWeight: 'bold', color: '#9fe0ed', letterSpacing: 2 }}>
-                    CANTHUS
-                </Text>
-            </Animated.View>
+                        {/* <Animated.View style={[{
+                            position: 'absolute',
+                            zIndex: 100,
+                            top: _heightScale(530),
+                            left: _widthScale(270),
+                            alignItems: 'flex-start',
+                        }, animText3]}>
+                            <IconEye
+                                width={_moderateScale(8 * 3)}
+                                height={_moderateScale(8 * 3)}
+                            />
+                            <Text style={{
+                                fontSize: _moderateScale(12),
+                                fontWeight: 'bold',
+                                color: 'white'
+                            }}>
+                                RIGHT EYE
+                            </Text>
+                            <View style={{ height: _moderateScale(4) }} />
+                            <Text style={{ fontSize: _moderateScale(8), fontWeight: 'bold', color: '#9fe0ed', letterSpacing: 2 }}>
+                                NORMAL
+                            </Text>
+                            <Text style={{ fontSize: _moderateScale(8), fontWeight: 'bold', color: '#9fe0ed', letterSpacing: 2 }}>
+                                OUTER
+                            </Text>
+                            <Text style={{ fontSize: _moderateScale(8), fontWeight: 'bold', color: '#9fe0ed', letterSpacing: 2 }}>
+                                CANTHUS
+                            </Text>
+                        </Animated.View> */}
+                    </>
+                    :
+                    <>
+                    </>
+            }
+
         </>
     )
 })

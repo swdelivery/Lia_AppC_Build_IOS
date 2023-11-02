@@ -1,7 +1,9 @@
 import { Image, StyleSheet, Text, View } from 'react-native'
 import React, { memo, useEffect } from 'react'
 import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
-import { _moderateScale } from '../../../Constant/Scale';
+import { _height, _moderateScale, _width } from '../../../Constant/Scale';
+
+const DURATION_DOT = 500
 
 const RightEffectDotEye = memo((props) => {
 
@@ -23,60 +25,63 @@ const RightEffectDotEye = memo((props) => {
 
 
     const _handleStopAnimEyeDot = () => {
-        props?.setFlagDoneZoom(false)
-        props?._startCircleAnim()
+        props?.setStartDotRightEye('done')
+        // props?._startCircleAnim()
     }
 
 
     useEffect(() => {
 
-        if (props?.flagDoneZoom) {
-            tranXDot1.value = withTiming(-30, { duration: 1000 })
-            tranYDot1.value = withTiming(8, { duration: 1000 })
+        if (props?.startDotRightEye == 'doing') {
+            tranXDot1.value = withTiming(-30*2, { duration: DURATION_DOT })
+            tranYDot1.value = withTiming(8*2, { duration: DURATION_DOT })
             _startScaleDot1()
 
-            tranXDot2.value = withTiming(30, { duration: 1000 })
-            tranYDot2.value = withTiming(0, { duration: 1000 })
+            tranXDot2.value = withTiming(30*2, { duration: DURATION_DOT })
+            tranYDot2.value = withTiming(0, { duration: DURATION_DOT })
             setTimeout(() => {
                 _startScaleDot2()
             }, 100);
 
-            tranXDot3.value = withTiming(0, { duration: 1000 })
-            tranYDot3.value = withTiming(-20, { duration: 1000 })
+            tranXDot3.value = withTiming(0, { duration: DURATION_DOT })
+            tranYDot3.value = withTiming(-20*2, { duration: DURATION_DOT })
             setTimeout(() => {
                 _startScaleDot3()
             }, 250);
 
-            tranXDot4.value = withTiming(0, { duration: 1000 })
-            tranYDot4.value = withTiming(20, { duration: 1000 })
+            tranXDot4.value = withTiming(0, { duration: DURATION_DOT })
+            tranYDot4.value = withTiming(20*2, { duration: DURATION_DOT })
             setTimeout(() => {
                 _startScaleDot4()
             }, 170);
+
+            setTimeout(() => {
+                tranXDot1.value = withTiming(0, { duration: DURATION_DOT })
+                tranYDot1.value = withTiming(0, { duration: DURATION_DOT })
+
+                tranXDot2.value = withTiming(0, { duration: DURATION_DOT })
+                tranYDot2.value = withTiming(0, { duration: DURATION_DOT })
+
+
+                tranXDot3.value = withTiming(0, { duration: DURATION_DOT })
+                tranYDot3.value = withTiming(0, { duration: DURATION_DOT })
+
+
+                tranXDot4.value = withTiming(0, { duration: DURATION_DOT })
+                tranYDot4.value = withTiming(0, { duration: DURATION_DOT }, (isFinished) => {
+                    if (isFinished) {
+                        runOnJS(_handleStopAnimEyeDot)()
+                    }
+                })
+
+            }, 2000);
+
         }
 
-        setTimeout(() => {
-            tranXDot1.value = withTiming(0, { duration: 1000 })
-            tranYDot1.value = withTiming(0, { duration: 1000 })
-
-            tranXDot2.value = withTiming(0, { duration: 1000 })
-            tranYDot2.value = withTiming(0, { duration: 1000 })
 
 
-            tranXDot3.value = withTiming(0, { duration: 1000 })
-            tranYDot3.value = withTiming(0, { duration: 1000 })
 
-
-            tranXDot4.value = withTiming(0, { duration: 1000 })
-            tranYDot4.value = withTiming(0, { duration: 1000 }, (isFinished) => {
-                if (isFinished) {
-                    runOnJS(_handleStopAnimEyeDot)()
-                }
-            })
-
-        }, 5000);
-
-
-    }, [props?.flagDoneZoom])
+    }, [props?.startDotRightEye])
 
     const _startScaleDot1 = () => {
         scaleDot1.value = withTiming(1.2, {
@@ -161,51 +166,62 @@ const RightEffectDotEye = memo((props) => {
     })
 
     return (
-        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+        <>
 
-            
+
 
             {
-                props?.flagDoneZoom ?
-                    <>
-                        <Animated.View style={[{
-                            width: _moderateScale(8),
-                            height: _moderateScale(8),
-                            backgroundColor: 'white',
-                            // backgroundColor: '#9EE5F6',
-                            borderRadius: _moderateScale(4),
-                            position: 'absolute'
-                        }, animDot1]} />
+                props?.startDotRightEye == 'doing' ?
+                        <View style={[{
+                            width: 160,
+                            height: 160,
+                            borderRadius: 16,
+                            // borderWidth: 1,
+                            position: 'absolute',
+                            zIndex: 10,
+                            top: _height / 2 - 80,
+                            left: _width / 2 - 80,
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }]}>
+                            <Animated.View style={[{
+                                width: _moderateScale(8*2),
+                                height: _moderateScale(8*2),
+                                backgroundColor: 'white',
+                                // backgroundColor: '#9EE5F6',
+                                borderRadius: _moderateScale(4*2),
+                                position: 'absolute'
+                            }, animDot1]} />
 
-                        <Animated.View style={[{
-                            width: _moderateScale(8),
-                            height: _moderateScale(8),
-                            backgroundColor: 'white',
-                            borderRadius: _moderateScale(4),
-                            position: 'absolute'
-                        }, animDot2]} />
+                            <Animated.View style={[{
+                                width: _moderateScale(8*2),
+                                height: _moderateScale(8*2),
+                                backgroundColor: 'white',
+                                borderRadius: _moderateScale(4*2),
+                                position: 'absolute'
+                            }, animDot2]} />
 
-                        <Animated.View style={[{
-                            width: _moderateScale(8),
-                            height: _moderateScale(8),
-                            backgroundColor: 'white',
-                            borderRadius: _moderateScale(4),
-                            position: 'absolute'
-                        }, animDot3]} />
+                            <Animated.View style={[{
+                                width: _moderateScale(8*2),
+                                height: _moderateScale(8*2),
+                                backgroundColor: 'white',
+                                borderRadius: _moderateScale(4*2),
+                                position: 'absolute'
+                            }, animDot3]} />
 
-                        <Animated.View style={[{
-                            width: _moderateScale(8),
-                            height: _moderateScale(8),
-                            backgroundColor: 'white',
-                            borderRadius: _moderateScale(4),
-                            position: 'absolute'
-                        }, animDot4]} />
-                    </>
+                            <Animated.View style={[{
+                                width: _moderateScale(8*2),
+                                height: _moderateScale(8*2),
+                                backgroundColor: 'white',
+                                borderRadius: _moderateScale(4*2),
+                                position: 'absolute'
+                            }, animDot4]} />
+                        </View>
                     :
                     <></>
             }
 
-        </View>
+        </>
     )
 })
 

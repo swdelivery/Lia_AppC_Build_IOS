@@ -107,6 +107,7 @@ const RecentFind = memo((props) => {
                 <TouchableOpacity 
                  onPress={()=>{
                     navigation.navigate(ScreenKey.NEW_AFFILIATE)
+                    // navigation.navigate(ScreenKey.AFFILIATE)
                 }}
                 style={styles.btnRecommend}>
                     <View style={styles.btnRecommend__box}>

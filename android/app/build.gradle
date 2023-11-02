@@ -89,6 +89,7 @@ android {
         versionCode project.hasProperty('versionCode') ? project.property('versionCode') as int : 1
         versionName project.hasProperty('versionName') ? project.property('versionName') : "0.1"
         vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true // <-- ADD THIS in the defaultConfig section
     }
     signingConfigs {
         debug {
@@ -149,6 +150,7 @@ dependencies {
     implementation("com.facebook.react:react-android")
     implementation(platform("com.google.firebase:firebase-bom:32.3.1"))
     implementation 'com.google.firebase:firebase-analytics:17.3.0'
+    implementation 'androidx.multidex:multidex:2.0.1'  // <-- ADD THIS DEPENDENCY
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}")
     debugImplementation("com.facebook.flipper:flipper-network-plugin:${FLIPPER_VERSION}") {
