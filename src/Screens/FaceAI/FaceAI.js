@@ -17,6 +17,8 @@ import BackDropOpacity from './Components/BackDropOpacity';
 import RightCircle from './Components/RightCircle';
 import LeftCircle from './Components/LeftCircle';
 import { convertImageCoordsToDeviceCoords } from "src/utils/common";
+import useImagePicker from "./useImagePicker";
+import DeviceInfo from "react-native-device-info";
 
 const EYE_INDICATOR_SIZE = 10;
 
@@ -49,6 +51,14 @@ const FaceAI = () => {
   const [startResultLeftEye, setStartResultLeftEye] = useState(null);
 
   const [showBackDropOpacity, setShowBackDropOpacity] = useState(null);
+
+  // FIXME: This code is used for testing on emulator
+  // useImagePicker((image) => {
+  //   console.log({ image });
+  //   processImage({
+  //     path: image,
+  //   });
+  // });
 
   useEffect(() => {
     if (posRightEyeX && posRightEyeY) {
@@ -171,27 +181,35 @@ const FaceAI = () => {
     }
   }, [startZoomLeftEye]);
 
-  const _handleTakePhoto = async () => {
-    const photo = await refCamera.current.takePhoto({});
-
+  const processImage = async (photo) => {
     setImageScan(photo?.path);
     let result = await scanningEyes(photo);
     console.log({ message: result?.data?.message });
     if (result?.data?.message == "SUCCESS") {
       console.log("DONE" + result?.data?.data?.right?.coordinate_eye_origi);
-      const { left, right, width } = result?.data?.data;
+      const { left, right, width, height } = result?.data?.data;
 
       console.log({ x: result?.data?.data?.right?.coordinate_eye_origi[0] });
       console.log({ y: result?.data?.data?.right?.coordinate_eye_origi[1] });
+      console.log({ _width, _height });
 
       let [valueRightX, valueRightY] = convertImageCoordsToDeviceCoords(
         right?.coordinate_eye_origi,
-        width
+        width,
+        height
       );
       let [valueLeftX, valueLeftY] = convertImageCoordsToDeviceCoords(
         left?.coordinate_eye_origi,
-        width
+        width,
+        height
       );
+
+      console.log({
+        valueRightX,
+        valueRightY,
+        valueLeftX,
+        valueLeftY,
+      });
 
       setShowBackDropOpacity("doing");
 
@@ -211,6 +229,11 @@ const FaceAI = () => {
       Alert.alert("Hình chưa hợp lệ!");
       setImageScan(null);
     }
+  };
+
+  const _handleTakePhoto = async () => {
+    const photo = await refCamera.current.takePhoto({});
+    processImage(photo);
   };
 
   // ANIMATED
@@ -305,6 +328,7 @@ const FaceAI = () => {
                     height: _height,
                   },
                 ]}
+                resizeMode="cover"
                 source={{ uri: `file://${imageScan}` }}
               />
             )}

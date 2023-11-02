@@ -26,10 +26,10 @@ export const scanningEyes = async (photo) => {
             uri: localPath.replace('file://', ''),
         });
     } else {
-        formData.append('image', {
-            name: getFilename(localPath),
-            type:'image/jpeg',
-            uri:`file://${localPath}`
+        formData.append("image", {
+          name: getFilename(localPath),
+          type: "image/jpeg",
+          uri: `file://${localPath.replace("file://", "")}`,
         });
 
         // const imageRes = await fetch(`file://${localPath}`);
