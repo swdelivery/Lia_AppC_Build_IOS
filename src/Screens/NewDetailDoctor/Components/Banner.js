@@ -1,10 +1,50 @@
-import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import { _moderateScale, _width, _widthScale } from '../../../Constant/Scale'
 import CountStar2 from '../../../Components/NewCountStar/CountStar'
 import Certificate from '../../../Components/Certificate/Certificate'
+import { ScrollView } from 'react-native-gesture-handler'
+import { URL_ORIGINAL } from '@Constant/Url'
+import ImageView from "react-native-image-viewing";
+import { getListDiaryByType } from '@Redux/Action/Diary'
+import moment from 'moment'
+import { navigation } from 'rootNavigation'
+import ScreenKey from '@Navigation/ScreenKey'
 
 const Banner = (props) => {
+
+    const { infoDoctor } = props;
+
+    const [showImageViewing, setShowImageViewing] = useState(false)
+    const [indexCurrImageView, setIndexCurrImageView] = useState(0)
+    const [listDiary,setListDiary] = useState([])
+
+    useEffect(() => {
+
+        console.log({infoDoctor});
+
+        if (infoDoctor?.userId) {
+            _getDataDiary(infoDoctor?.userId)
+        }
+    }, [infoDoctor?.userId])
+
+    const _getDataDiary = async (_id) => {
+        let result = await getListDiaryByType({
+            condition: {
+                doctorId: {
+                    equal: _id
+                }
+            },
+            limit: 5,
+            page: 1,
+            sort: {
+                updated: -1
+            }
+        })
+        if (result?.isAxiosError) return
+        setListDiary(result?.data?.data)
+    }
+
     return (
         <View
             onLayout={(e) => {
@@ -12,10 +52,24 @@ const Banner = (props) => {
                 props?.setHeightBanner(e?.nativeEvent?.layout?.height)
             }}
             style={[styles.banner, shadow]}>
+
+            <ImageView
+                images={infoDoctor?.treatmentDoctorFileArr?.map(item => {
+                    return {
+                        uri: `${URL_ORIGINAL}${item?.fileUpload?.link}`,
+                    }
+                })}
+                onRequestClose={() => {
+                    setShowImageViewing(false)
+                }}
+                imageIndex={indexCurrImageView}
+                visible={showImageViewing}
+            />
+
             <Image
                 style={styles.avatar}
                 source={{
-                    uri: `https://api.trangbeautycenter.com/public/treatmentDoctor/1665116656736dBPk.png`
+                    uri: `${URL_ORIGINAL}${infoDoctor?.avatar?.link}`
                 }} />
 
             <View style={{
@@ -23,14 +77,16 @@ const Banner = (props) => {
             }} />
             <View style={{ alignItems: 'center' }}>
                 <Text style={styles.banner__name__doctor}>
-                    B.S Vũ Thị Nga
+                    {
+                        infoDoctor?.name
+                    }
                 </Text>
-                <CountStar2 />
+                <CountStar2 count={infoDoctor?.countPartner} rating={infoDoctor?.reviewCount} />
                 <View style={{
                     height: _moderateScale(4)
                 }} />
                 <Text>
-                    Bác sĩ trưởng <Text style={{ color: 'grey' }}>|</Text> 10 năm KN
+                    {infoDoctor?.position} <Text style={{ color: 'grey' }}>|</Text> {infoDoctor?.experience}
                 </Text>
 
                 <View style={{
@@ -38,26 +94,36 @@ const Banner = (props) => {
                     flexWrap: 'wrap',
                     marginTop: 8
                 }}>
-                    <Certificate name={"Da liễu"} bg={"black"} />
-                    <View style={{ width: 4 }} />
-                    <Certificate name={"Chứng chỉ"} />
-                    <View style={{ width: 4 }} />
-                    <Certificate bg={'blue'} name={"Kinh nghiệm"} />
+                    {
+                        infoDoctor?.treatmentDoctorFileArr?.map((item, index) => {
+                            return (
+                                <>
+                                    <Certificate handlePress={() => {
+                                        setShowImageViewing(true)
+                                        setIndexCurrImageView(index)
+                                    }} key={index} name={item?.name} bg={"black"} />
+                                    <View style={{ width: 4 }} />
+                                </>
+                            )
+                        })
+                    }
                 </View>
 
                 <View style={{ height: _moderateScale(8 * 1) }} />
                 <View style={styles.infoHorizon}>
-                    <View style={styles.infoHorizon__box}>
+                    {/* <View style={styles.infoHorizon__box}>
                         <Text style={styles.infoHorizon__box__textUp}>
                             195
                         </Text>
                         <Text style={styles.infoHorizon__box__textDown}>
                             ABC
                         </Text>
-                    </View>
+                    </View> */}
                     <View style={styles.infoHorizon__box}>
                         <Text style={styles.infoHorizon__box__textUp}>
-                            757
+                            {
+                                infoDoctor?.reviewCount
+                            }
                         </Text>
                         <Text style={styles.infoHorizon__box__textDown}>
                             Lượt đánh giá
@@ -65,30 +131,32 @@ const Banner = (props) => {
                     </View>
                     <View style={styles.infoHorizon__box}>
                         <Text style={styles.infoHorizon__box__textUp}>
-                            195
+                            {
+                                infoDoctor?.countPartner
+                            }
                         </Text>
                         <Text style={styles.infoHorizon__box__textDown}>
-                            Lần điều trị
+                            Khách đã điều trị
                         </Text>
                     </View>
 
                 </View>
                 <View style={{ height: 8 }} />
 
-                <View style={{ width: '100%', paddingRight:_moderateScale(8), alignItems: 'flex-start' }}>
-                    <View style={[styles.box__child,{marginLeft:_moderateScale(8*2)}]}>
+                <View style={{ width: '100%', paddingRight: _moderateScale(8), alignItems: 'flex-start' }}>
+                    <View style={[styles.box__child, { marginLeft: _moderateScale(8 * 2) }]}>
                         <Image style={styles.iconLike} source={require('../../../Image/like.png')} />
                         <View style={{ width: 4 }} />
                         <Text style={{ fontSize: _moderateScale(14), fontWeight: '500' }}>
-                            Chuyên dự án: Da liễu
+                            Chuyên dự án: {infoDoctor?.specialization}
                         </Text>
                     </View>
 
                     <View style={{ height: 8 }} />
-                    <ScrollView showsHorizontalScrollIndicator={false} contentContainerStyle={{paddingLeft:_moderateScale(8*2)}} horizontal>
+                    <ScrollView showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingLeft: _moderateScale(8 * 2) }} horizontal>
                         {
                             [1, 2, 3, 4, 5]?.map((item, index) => {
-                                return(
+                                return (
                                     <View key={index} style={{
                                         width: 100,
                                         // height: 180,
@@ -116,15 +184,15 @@ const Banner = (props) => {
                                                     fontSize: 11,
                                                     fontWeight: 'bold'
                                                 }}>Loại bỏ bọng mắt Pinhole</Text>
-        
+
                                             <View>
                                                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                                    <Image style={{ width: 8 * 1.25,height: 8 * 1.25,marginLeft: 1,resizeMode: 'contain'}} source={require('../../../Image/a_star2.png')} />
-                                                    <Image style={{ width: 8 * 1.25,height: 8 * 1.25,marginLeft: 1,resizeMode: 'contain'}} source={require('../../../Image/a_star2.png')} />
-                                                    <Image style={{ width: 8 * 1.25,height: 8 * 1.25,marginLeft: 1,resizeMode: 'contain'}} source={require('../../../Image/a_star2.png')} />
-                                                    <Image style={{ width: 8 * 1.25,height: 8 * 1.25,marginLeft: 1,resizeMode: 'contain'}} source={require('../../../Image/a_star2.png')} />
-                                                    <Image style={{ width: 8 * 1.25,height: 8 * 1.25,marginLeft: 1,resizeMode: 'contain'}} source={require('../../../Image/a_star2.png')} />
-                                                   
+                                                    <Image style={{ width: 8 * 1.25, height: 8 * 1.25, marginLeft: 1, resizeMode: 'contain' }} source={require('../../../Image/a_star2.png')} />
+                                                    <Image style={{ width: 8 * 1.25, height: 8 * 1.25, marginLeft: 1, resizeMode: 'contain' }} source={require('../../../Image/a_star2.png')} />
+                                                    <Image style={{ width: 8 * 1.25, height: 8 * 1.25, marginLeft: 1, resizeMode: 'contain' }} source={require('../../../Image/a_star2.png')} />
+                                                    <Image style={{ width: 8 * 1.25, height: 8 * 1.25, marginLeft: 1, resizeMode: 'contain' }} source={require('../../../Image/a_star2.png')} />
+                                                    <Image style={{ width: 8 * 1.25, height: 8 * 1.25, marginLeft: 1, resizeMode: 'contain' }} source={require('../../../Image/a_star2.png')} />
+
                                                     <Text style={{
                                                         fontSize: 10,
                                                         marginLeft: 4
@@ -133,9 +201,9 @@ const Banner = (props) => {
                                                     </Text>
                                                 </View>
                                             </View>
-        
+
                                             <View style={{ marginTop: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-        
+
                                                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                                     <Text
                                                         style={{
@@ -183,9 +251,14 @@ const Banner = (props) => {
             <View style={{ marginTop: _moderateScale(8 * 1), paddingRight: _moderateScale(8) }}>
                 <ScrollView showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingLeft: _moderateScale(8 * 2) }} horizontal>
                     {
-                        [1, 2, 3, 4]?.map((item, index) => {
+                        listDiary?.map((item, index) => {
                             return (
-                                <View style={[styles.box__diary]}>
+                                <TouchableOpacity
+                                onPress={()=>{
+                                    navigation.navigate(ScreenKey.DETAIL_NEW_FEED, { idPost: item?.postId })
+                                }}
+                                activeOpacity={.9}
+                                key={index} style={[styles.box__diary]}>
                                     <View style={{
                                         flexDirection: 'row',
                                         margin: _moderateScale(8)
@@ -193,18 +266,20 @@ const Banner = (props) => {
                                         <Image
                                             style={styles.avatar__customer}
                                             source={{
-                                                uri: `https://i.ibb.co/7jbTH44/A-nh-ma-n-hi-nh-2023-09-26-lu-c-14-36-22.png`
+                                                uri: `${URL_ORIGINAL}${item?.partner?.fileAvatar?.link}`
                                             }} />
                                         <View style={{ flex: 1 }}>
                                             <Text
                                                 numberOfLines={1}
                                                 style={styles.customer__name}>
-                                                Trần Thị Thu
+                                                {
+                                                    item?.partner?.name
+                                                }
                                             </Text>
                                             <Text
                                                 numberOfLines={1}
                                                 style={styles.customer__updateTime}>
-                                                Cập nhật <Text>2 Ngày trước</Text>
+                                                Cập nhật <Text>{moment(item?.updated).startOf('minute').fromNow()}</Text>
                                             </Text>
                                         </View>
                                     </View>
@@ -212,7 +287,9 @@ const Banner = (props) => {
                                     <View style={styles.box__diary__name}>
                                         <View style={styles.verticalLine} />
                                         <Text style={styles.box__diary__nameService}>
-                                            Cắt mí T-2022
+                                            {
+                                                item?.serviceName
+                                            }
                                         </Text>
                                     </View>
 
@@ -234,7 +311,7 @@ const Banner = (props) => {
                                             <Image
                                                 style={styles.box__diary__image}
                                                 source={{
-                                                    uri: `https://i.ibb.co/mHZWXF6/IMG-3225.jpg`
+                                                    uri: `${URL_ORIGINAL}${item?.imageBeforeTreatment[0]?.link}`
                                                 }} />
                                         </View>
                                         <View style={styles.box__diary__image}>
@@ -250,12 +327,12 @@ const Banner = (props) => {
                                             <Image
                                                 style={styles.box__diary__image}
                                                 source={{
-                                                    uri: `https://i.ibb.co/8mbV6QR/IMG-3226.jpg`
+                                                    uri: `${URL_ORIGINAL}${item?.imageAfterTreatment[0]?.link}`
                                                 }} />
                                         </View>
                                     </View>
 
-                                </View>
+                                </TouchableOpacity>
                             )
                         })
                     }
@@ -339,7 +416,7 @@ const styles = StyleSheet.create({
     },
     box: {
         width: _widthScale(320),
-        marginTop:_moderateScale(8)
+        marginTop: _moderateScale(8)
         // height: 100,
     },
     infoHorizon__box__textDown: {

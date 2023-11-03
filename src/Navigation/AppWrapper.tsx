@@ -197,6 +197,7 @@ import LiAVoucher from "../Screens/LiAVoucher";
 import DetailLiAVoucher from "../Screens/LiAVoucher/DetailLiAVoucher";
 import MyVouchers from "../Screens/LiAVoucher/MyVouchers";
 import DetailNewsVoucher from "../Screens/LiAVoucher/DetailNewsVoucher";
+import VerticalVideoPlayer from "@Screens/VerticalVideoPlayer/VerticalVideoPlayer";
 
 const Tab = createMaterialTopTabNavigator();
 const Stack = createStackNavigator();
@@ -1177,6 +1178,13 @@ const AppWrapper = (props) => {
                 options={{ ...TransitionPresets.SlideFromRightIOS }}
                 name={ScreenKey.DETAIL_NEWS_VOUCHER}
                 component={DetailNewsVoucher}
+              />
+
+              {/* VIDEO PLAYER */}
+              <rootStack.Screen
+                options={{ ...TransitionPresets.SlideFromRightIOS }}
+                name={ScreenKey.VERTICAL_VIDEO_PLAYER}
+                component={VerticalVideoPlayer}
               />
 
               <rootStack.Screen

@@ -18,6 +18,7 @@ import { Dimensions, Image } from 'react-native'
 import HTMLView from 'react-native-htmlview'
 import { WebView } from 'react-native-webview'
 import { styleTo, styleToComponent } from '../../Constant/styleTo'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 
 
@@ -195,6 +196,8 @@ const QANewAffiliate = () => {
         _getQuestionAnswer()
     }, [])
 
+    const { top } = useSafeAreaInsets();
+
 
     const _getQuestionAnswer = async () => {
         let result = await getQuestionAnswer({
@@ -219,7 +222,7 @@ const QANewAffiliate = () => {
         <View style={{ flex: 1, backgroundColor: WHITE }}>
             <View style={styles.header}>
                 <View style={{
-                    height: getStatusBarHeight()
+                    height: top
                 }} />
                 <View style={styles.header__box}>
                     <View style={{ flex: 1 }}>

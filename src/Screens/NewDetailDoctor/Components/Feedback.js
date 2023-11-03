@@ -1,8 +1,13 @@
 import { StyleSheet, Text, View, Image } from 'react-native'
 import React, { memo } from 'react'
 import { _moderateScale, _width, _widthScale } from '../../../Constant/Scale'
+import moment from 'moment'
+import { stylesFont } from '@Constant/Font'
 
-const Feedback = memo(() => {
+const Feedback = memo((props) => {
+
+    const { listReview } = props
+
     return (
         <View style={styles.container}>
             <Text style={styles.feedBackText}>
@@ -11,7 +16,7 @@ const Feedback = memo(() => {
 
             <View style={{ height: _moderateScale(8 * 0) }} />
             {
-                [1, 2,3]?.map((item, index) => {
+                listReview?.map((item, index) => {
                     return (
                         <View key={index} style={{ marginTop: _moderateScale(8 * 3) }}>
                             <View style={{
@@ -25,7 +30,13 @@ const Feedback = memo(() => {
                                 <View style={{ width: _moderateScale(8) }} />
                                 <View style={{ flex: 1 }}>
                                     <Text style={styles.name}>
-                                        Nguyễn Thị Thu Thảo
+                                        {
+                                            item?.partner?.name
+                                        }
+                                    </Text>
+
+                                    <Text style={[stylesFont.fontNolan, { fontSize: _moderateScale(12), fontStyle: 'italic' }]}>
+                                        {moment(item?.created).format('DD/MM/YYYY')} - {moment(item?.created).format('LT')}
                                     </Text>
 
                                     <View style={{ height: 4 }} />
@@ -46,13 +57,16 @@ const Feedback = memo(() => {
 
                             </View>
 
-                            <View style={styles.box__diary__name}>
+                            <View style={[styles.box__diary__name,{marginTop:_moderateScale(8)}]}>
                                 <View style={styles.verticalLine} />
                                 <Text style={styles.box__diary__nameService}>
-                                    Cắt mí T-2022
+                                    {
+                                        item?.service?.name
+                                    }
                                 </Text>
                             </View>
 
+                            {/* <Text>{item?.csReview?.comment}</Text> */}
                             <Text>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries</Text>
 
                             <View style={{ height: _moderateScale(8) }} />

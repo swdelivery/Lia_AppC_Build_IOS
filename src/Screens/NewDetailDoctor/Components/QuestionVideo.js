@@ -1,9 +1,14 @@
-import { StyleSheet, Text, View, Image } from 'react-native'
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 import React, { memo } from 'react'
 import { _heightScale, _moderateScale, _width, _widthScale } from '../../../Constant/Scale'
 import CountStar from '../../../Components/CountStar'
+import { navigation } from 'rootNavigation'
+import ScreenKey from '@Navigation/ScreenKey'
 
-const QuestionVideo = memo(() => {
+const QuestionVideo = memo((props) => {
+
+    const { infoDoctor } = props;
+
     return (
         <View style={styles.container}>
             <Text style={styles.feedBackText}>
@@ -18,26 +23,30 @@ const QuestionVideo = memo(() => {
                 paddingHorizontal: _moderateScale(8 * 2)
             }}>
                 {
-                    [1, 2, 3, 4, 5, 6]?.map((item, index) => {
+                    infoDoctor?.questionVideoDoctorArr?.map((item, index) => {
                         return (
-                            <View key={index} style={[{
-                                width: '50%',
-                                height: _heightScale(8*36),
-                                marginBottom:_moderateScale(8)
-                            }, index % 2 == 0 ? {alignItems:'flex-start'} : {alignItems:'flex-end'}]}>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    navigation.navigate(ScreenKey.VERTICAL_VIDEO_PLAYER, { data: infoDoctor?.questionVideoDoctorArr })
+                                }}
+                                key={index} style={[{
+                                    width: '50%',
+                                    height: _heightScale(8 * 36),
+                                    marginBottom: _moderateScale(8)
+                                }, index % 2 == 0 ? { alignItems: 'flex-start' } : { alignItems: 'flex-end' }]}>
                                 <View style={{
                                     width: "97%",
                                     height: '100%',
                                 }}>
                                     <Image
-                                    style={{
-                                        width:'100%',
-                                        height:'100%',
-                                        borderRadius:_moderateScale(8)
-                                    }}
-                                    source={require('../../../Image/hoidapbs.jpeg')}/>
+                                        style={{
+                                            width: '100%',
+                                            height: '100%',
+                                            borderRadius: _moderateScale(8)
+                                        }}
+                                        source={require('../../../Image/hoidapbs.jpeg')} />
                                 </View>
-                            </View>
+                            </TouchableOpacity>
                         )
                     })
                 }

@@ -50,55 +50,56 @@ const Bank = memo((props) => {
             backCmnd: props?.backCmnd
         });
         if (!bankName || !accountNumber || !ownerName) {
-            Alert.alert(
-                "Thông báo",
-                "Bạn chưa điền đầy đủ thông tin, xác nhận bỏ qua?",
-                [
-                    {
-                        text: "Huỷ",
-                        onPress: () => console.log("Cancel Pressed"),
-                        style: "cancel"
-                    },
-                    {
-                        text: "Đồng ý", onPress: async () => {
+            Alert.alert('Vui lòng điền đầy đủ thông tin')
+            // Alert.alert(
+            //     "Thông báo",
+            //     "Bạn chưa điền đầy đủ thông tin, xác nhận bỏ qua?",
+            //     [
+            //         {
+            //             text: "Huỷ",
+            //             onPress: () => console.log("Cancel Pressed"),
+            //             style: "cancel"
+            //         },
+            //         {
+            //             text: "Đồng ý", onPress: async () => {
 
-                            let listImages = [props?.frontCmnd, props?.backCmnd].map((i, index) => {
-                                return {
-                                    uri: i.path,
-                                    width: i.width,
-                                    height: i.height,
-                                    mime: i.mime,
-                                    type: i.mime,
-                                    name: `${i.modificationDate}_${index}`
-                                };
-                            })
-                            console.log({ listImages });
+            //                 let listImages = [props?.frontCmnd, props?.backCmnd].map((i, index) => {
+            //                     return {
+            //                         uri: i.path,
+            //                         width: i.width,
+            //                         height: i.height,
+            //                         mime: i.mime,
+            //                         type: i.mime,
+            //                         name: `${i.modificationDate}_${index}`
+            //                     };
+            //                 })
+            //                 console.log({ listImages });
 
-                            let resultUploadImageMessage = await uploadModule({
-                                moduleName: 'collaboratorRequest',
-                                files: listImages
-                            })
-                            if (resultUploadImageMessage?.isAxiosError) return
-                            let listIdImageHasUpload = resultUploadImageMessage?.data?.data?.map(item => item._id);
+            //                 let resultUploadImageMessage = await uploadModule({
+            //                     moduleName: 'collaboratorRequest',
+            //                     files: listImages
+            //                 })
+            //                 if (resultUploadImageMessage?.isAxiosError) return
+            //                 let listIdImageHasUpload = resultUploadImageMessage?.data?.data?.map(item => item._id);
 
-                            let body = {
-                                idImages: listIdImageHasUpload,
-                                bankAccount: {
-                                    "bankName": bankName,
-                                    "bankBranch": bankBranch,
-                                    "ownerName": ownerName,
-                                    "accountNumber": accountNumber
-                                }
-                            }
+            //                 let body = {
+            //                     idImages: listIdImageHasUpload,
+            //                     bankAccount: {
+            //                         "bankName": bankName,
+            //                         "bankBranch": bankBranch,
+            //                         "ownerName": ownerName,
+            //                         "accountNumber": accountNumber
+            //                     }
+            //                 }
 
-                            let result = await createCollaboratorRequest(body)
-                            if (result?.isAxiosError) return
-                            navigation.goBack()
-                        }
-                    }
-                ],
-                { cancelable: false }
-            );
+            //                 let result = await createCollaboratorRequest(body)
+            //                 if (result?.isAxiosError) return
+            //                 navigation.goBack()
+            //             }
+            //         }
+            //     ],
+            //     { cancelable: false }
+            // );
         } else {
             let listImages = [props?.frontCmnd, props?.backCmnd].map((i, index) => {
                 return {

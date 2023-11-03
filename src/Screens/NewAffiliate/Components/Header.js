@@ -7,12 +7,16 @@ import { IconBXH, IconBackWhite, IconWallet } from '../../../Components/Icon/Ico
 import { stylesFont } from '../../../Constant/Font'
 import { navigation } from '../../../../rootNavigation'
 import ScreenKey from '../../../Navigation/ScreenKey'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 const Header = () => {
+
+    const { top } = useSafeAreaInsets();
+
     return (
         <View style={styles.header}>
             <View style={{
-                height:  getStatusBarHeight() 
+                height: top
             }} />
             <View style={styles.header__box}>
                 <View style={{ flex: 1 }}>

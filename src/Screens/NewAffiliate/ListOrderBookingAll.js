@@ -15,6 +15,7 @@ import { getUserById } from '../../Redux/Action/PostAction'
 import { formatMonney, renderStatusBookingByCode } from '../../Constant/Utils'
 import { useSelector } from 'react-redux'
 import moment from 'moment'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 
 const ItemOrderService = (props) => {
@@ -273,6 +274,8 @@ const ListOrderBookingAll = () => {
     ]);
     const [index, setIndex] = useState(0);
 
+    const {top} = useSafeAreaInsets()
+
 
     useEffect(() => {
         _getListOrderService()
@@ -325,7 +328,7 @@ const ListOrderBookingAll = () => {
         <View style={{ flex: 1, backgroundColor: WHITE }}>
             <View style={styles.header}>
                 <View style={{
-                    height: getStatusBarHeight()
+                    height: top
                 }} />
                 <View style={styles.header__box}>
                     <View style={{ flex: 1 }}>

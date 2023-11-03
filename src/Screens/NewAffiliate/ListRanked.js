@@ -12,6 +12,7 @@ import { sizeIcon } from '../../Constant/Icon'
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 import { getListRankedAffiliate } from '../../Redux/Action/Affiilate'
 import { URL_ORIGINAL } from '../../Constant/Url'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 
 const HEIGHT_RANKED_1 = _moderateScale(8 * 16)
@@ -23,6 +24,8 @@ const ListRanked = () => {
     const heightRanked1 = useSharedValue(0);
     const heightRanked2 = useSharedValue(0);
     const heightRanked3 = useSharedValue(0);
+
+    const {top} = useSafeAreaInsets()
 
     const [listRankedAffiliate, setListRankedAffiliate] = useState([])
 
@@ -122,7 +125,7 @@ const ListRanked = () => {
         <View style={{ flex: 1, backgroundColor: WHITE }}>
             <View style={styles.header}>
                 <View style={{
-                    height: getStatusBarHeight()
+                    height: top
                 }} />
                 <View style={styles.header__box}>
                     <View style={{ flex: 1 }}>

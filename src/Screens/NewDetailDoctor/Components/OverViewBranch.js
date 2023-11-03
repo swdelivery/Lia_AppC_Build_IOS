@@ -1,16 +1,22 @@
-import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Alert, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { memo } from 'react'
 import { _moderateScale, _width, _widthScale } from '../../../Constant/Scale'
 import CountStar2 from '../../../Components/NewCountStar/CountStar'
+import { URL_ORIGINAL } from '@Constant/Url'
+import { navigation } from 'rootNavigation'
+import ScreenKey from '@Navigation/ScreenKey'
 
-const OverViewBranch = memo(() => {
-  return (
-    <View style={styles.container}>
+const OverViewBranch = memo((props) => {
+
+    const { infoDoctor } = props;
+
+    return (
+        <View style={styles.container}>
 
             <Text style={{
-                fontSize:_moderateScale(14),
-                fontWeight:'bold',
-                marginBottom:_moderateScale(8*1)
+                fontSize: _moderateScale(14),
+                fontWeight: 'bold',
+                marginBottom: _moderateScale(8 * 1)
             }}>
                 Địa điểm công tác
             </Text>
@@ -22,23 +28,29 @@ const OverViewBranch = memo(() => {
                 <Image
                     style={styles.avatarBranch}
                     source={{
-                        uri: `https://cfw.rabbitloader.xyz/eyJjIjp0cnVlLCJoIjoibGlhYmVhdXR5LnZuIiwidiI6OTczNjIwMDQ3LCJpIjoiZjgxYWIyZTctMGZlZi00YmU2LTZhNmItODI5MWI4YWExZTAwIn0/wp-content/uploads/2023/06/photo.png`
+                        uri: `${URL_ORIGINAL}${infoDoctor?.branch?.avatar?.link}`
                     }} />
                 <View style={{ flex: 1, marginLeft: _moderateScale(8) }}>
                     <Text style={styles.name}>
-                        LiA Beauty 434 Cao Thắng
+                        {
+                            infoDoctor?.branch?.name
+                        }
                     </Text>
-                    <CountStar2 />
+                    <CountStar2 count={infoDoctor?.branch?.countPartner} rating={infoDoctor?.branch?.reviewCount} />
                     <View style={{ flexDirection: 'row', marginTop: _moderateScale(4) }}>
-                        <TouchableOpacity style={{
-                            paddingHorizontal: 8,
-                            paddingVertical: 4,
-                            backgroundColor: '#151617',
-                            borderRadius: 4,
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            overflow: 'hidden'
-                        }}>
+                        <TouchableOpacity
+                            // onPress={() => {
+                            //     Alert.alert("Tính năng đang phát triển")
+                            // }}
+                            style={{
+                                paddingHorizontal: 8,
+                                paddingVertical: 4,
+                                backgroundColor: '#151617',
+                                borderRadius: 4,
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                overflow: 'hidden'
+                            }}>
                             <Image style={{
                                 width: 8 * 1.5,
                                 height: 8 * 1.5,
@@ -53,16 +65,20 @@ const OverViewBranch = memo(() => {
                                 Phòng khám
                             </Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={{
-                            paddingHorizontal: 8,
-                            paddingVertical: 4,
-                            backgroundColor: '#414378',
-                            borderRadius: 4,
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            overflow: 'hidden',
-                            marginLeft: _moderateScale(8)
-                        }}>
+                        <TouchableOpacity
+                            // onPress={() => {
+                            //     Alert.alert("Tính năng đang phát triển")
+                            // }}
+                            style={{
+                                paddingHorizontal: 8,
+                                paddingVertical: 4,
+                                backgroundColor: '#414378',
+                                borderRadius: 4,
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                overflow: 'hidden',
+                                marginLeft: _moderateScale(8)
+                            }}>
                             <Image style={{
                                 width: 8 * 1.5,
                                 height: 8 * 1.5,
@@ -80,6 +96,9 @@ const OverViewBranch = memo(() => {
                     </View>
                 </View>
                 <TouchableOpacity
+                    onPress={()=>{
+                        navigation.navigate(ScreenKey.DETAIL_BRAND, { idBranch: infoDoctor?.branch?._id });
+                    }}
                     style={{
                         flexDirection: 'row',
                         alignItems: 'center',
@@ -102,30 +121,30 @@ const OverViewBranch = memo(() => {
             </View>
 
         </View>
-  )
+    )
 })
 
 export default OverViewBranch
 
 const styles = StyleSheet.create({
-    iconChat:{
-        width:_moderateScale(8*2),
-        height:_moderateScale(8*2)
+    iconChat: {
+        width: _moderateScale(8 * 2),
+        height: _moderateScale(8 * 2)
     },
-    avatarDoctor:{
-        width:_moderateScale(8*5),
-        height:_moderateScale(8*5),
-        borderRadius:_moderateScale(8*5/2)
+    avatarDoctor: {
+        width: _moderateScale(8 * 5),
+        height: _moderateScale(8 * 5),
+        borderRadius: _moderateScale(8 * 5 / 2)
     },
-    doctorCard:{
-        minWidth:_widthScale(200),
-        borderRadius:_moderateScale(8),
-        marginRight:_moderateScale(8),
-        backgroundColor:"#F7F8FA",
-        flexDirection:'row',
-        paddingVertical:_moderateScale(8),
-        paddingHorizontal:_moderateScale(8)
-    },  
+    doctorCard: {
+        minWidth: _widthScale(200),
+        borderRadius: _moderateScale(8),
+        marginRight: _moderateScale(8),
+        backgroundColor: "#F7F8FA",
+        flexDirection: 'row',
+        paddingVertical: _moderateScale(8),
+        paddingHorizontal: _moderateScale(8)
+    },
     name: {
         fontSize: _moderateScale(14),
         fontWeight: 'bold'
@@ -142,6 +161,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: _moderateScale(8 * 2),
         alignSelf: 'center',
         backgroundColor: 'white',
-        marginTop: _moderateScale(8*2),
+        marginTop: _moderateScale(8 * 2),
     }
 })

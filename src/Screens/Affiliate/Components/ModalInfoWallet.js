@@ -132,7 +132,7 @@ const ModalInfoWallet = memo((props) => {
                                 </Text>
                             </View>
                             {
-                                props?.data?.commissionAmount ?
+                                true ?
                                     <TouchableOpacity
                                         onPress={() => {
                                             props?.hide()

@@ -52,6 +52,10 @@ import SVGCoin from '../../SGV/coin.svg'
 import SVGArrowRightLarge from '../../SGV/arrowRightLarge.svg'
 import SVGIncrease from '../../SGV/increase.svg'
 import SVGDecrease from '../../SGV/decrease.svg'
+import SVGPlay from '../../SGV/iconPlay.svg'
+import SVGHeartWhite from '../../SGV/heartWhite.svg'
+import SVGHeartFilled from '../../SGV/heartFilled.svg'
+import SVGCommentWhite from '../../SGV/commentWhite.svg'
 import { _moderateScale } from "../../Constant/Scale"
 
 
@@ -524,6 +528,38 @@ export const IconIncrease = (props) => {
 export const IconDecrease = (props) => {
     return (
         <SVGDecrease
+            width={props?.style?.width ? props?.style?.width : _moderateScale(8*4)}
+            height={props?.style?.height ? props?.style?.height : _moderateScale(8*4)}
+        />
+    )
+}
+export const IconPlayWhite = (props) => {
+    return (
+        <SVGPlay
+            width={props?.style?.width ? props?.style?.width : _moderateScale(8*4)}
+            height={props?.style?.height ? props?.style?.height : _moderateScale(8*4)}
+        />
+    )
+}
+export const IconHeartWhite = (props) => {
+    return (
+        <SVGHeartWhite
+            width={props?.style?.width ? props?.style?.width : _moderateScale(8*4)}
+            height={props?.style?.height ? props?.style?.height : _moderateScale(8*4)}
+        />
+    )
+}
+export const IconHeartFilled = (props) => {
+    return (
+        <SVGHeartFilled
+            width={props?.style?.width ? props?.style?.width : _moderateScale(8*4)}
+            height={props?.style?.height ? props?.style?.height : _moderateScale(8*4)}
+        />
+    )
+}
+export const IconCommentWhite = (props) => {
+    return (
+        <SVGCommentWhite
             width={props?.style?.width ? props?.style?.width : _moderateScale(8*4)}
             height={props?.style?.height ? props?.style?.height : _moderateScale(8*4)}
         />

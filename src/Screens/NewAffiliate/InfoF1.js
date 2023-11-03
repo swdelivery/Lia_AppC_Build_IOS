@@ -14,6 +14,7 @@ import { getListBookingInvitee, getListOrderServiceInvitee } from '../../Redux/A
 import { formatMonney, renderStatusBookingByCode } from '../../Constant/Utils'
 import { useSelector } from 'react-redux'
 import moment from 'moment'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 
 
@@ -202,6 +203,8 @@ const InfoF1 = (props) => {
     const [listOrderServiceInvitee, setListOrderServiceInvitee] = useState([])
     const [listBookingInvitee, setListBookingInvitee] = useState([])
 
+    const {top}  = useSafeAreaInsets()
+
     const [routes] = useState([
         { key: 'first', title: 'Đơn hàng' },
         { key: 'third', title: 'Booking' },
@@ -265,7 +268,7 @@ const InfoF1 = (props) => {
         <View style={{ flex: 1, backgroundColor: WHITE }}>
             <View style={styles.header}>
                 <View style={{
-                    height: getStatusBarHeight()
+                    height: top
                 }} />
                 <View style={styles.header__box}>
                     <View style={{ flex: 1 }}>

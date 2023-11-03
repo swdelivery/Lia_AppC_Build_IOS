@@ -9,6 +9,7 @@ import { sizeIcon } from '../../Constant/Icon'
 import { navigation } from '../../../rootNavigation'
 import ScreenKey from '../../Navigation/ScreenKey'
 import { getListInvitee } from '../../Redux/Action/Affiilate'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 
 const ItemF1 = (data) => {
@@ -36,6 +37,8 @@ const ListF1 = () => {
 
     const [listInvitee, setListInvitee] = useState([])
 
+    const {top} = useSafeAreaInsets()
+
     useEffect(() => {
         _getListF1()
     }, [])
@@ -57,7 +60,7 @@ const ListF1 = () => {
         <View style={{ flex: 1, backgroundColor: WHITE }}>
             <View style={styles.header}>
                 <View style={{
-                    height: getStatusBarHeight()
+                    height: top
                 }} />
                 <View style={styles.header__box}>
                     <View style={{ flex: 1 }}>

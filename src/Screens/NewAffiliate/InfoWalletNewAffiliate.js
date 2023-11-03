@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 import { FlatList, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 import { IconBackWhite, IconCashIn, IconCashOut, IconCommision, IconDollars } from '../../Components/Icon/Icon'
@@ -12,8 +12,28 @@ import * as Color from '../../Constant/Color'
 import { navigation } from '../../../rootNavigation'
 import { sizeIcon } from '../../Constant/Icon'
 import { styleElement } from '../../Constant/StyleElement'
+import { getWallet } from '@Redux/Action/InfoAction'
+import { formatMonney } from '@Constant/Utils'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import ModalCashInWallet from '@Screens/Affiliate/Components/ModalCashInWallet'
+import ScreenKey from '@Navigation/ScreenKey'
 
 const InfoWalletNewAffiliate = memo(() => {
+
+    const [wallet, setWallet] = useState(null)
+    const [showModalCashIn, setShowModalCashIn] = useState(false)
+
+    const { top } = useSafeAreaInsets()
+
+    useEffect(() => {
+        _getWallet()
+    }, [])
+
+    const _getWallet = async () => {
+        var data = await getWallet()
+        if (data?.isAxiosError) return
+        setWallet(data)
+    }
 
 
     const _renderItem = ({ item, index }) => {
@@ -74,9 +94,16 @@ const InfoWalletNewAffiliate = memo(() => {
 
     return (
         <View style={{ flex: 1, backgroundColor: WHITE }}>
+
+            <ModalCashInWallet
+                hide={() => {
+                    setShowModalCashIn(false)
+                }}
+                show={showModalCashIn} />
+
             <View style={styles.header}>
                 <View style={{
-                    height: getStatusBarHeight()
+                    height: top
                 }} />
                 <View style={styles.header__box}>
                     <View style={{ flex: 1 }}>
@@ -102,7 +129,7 @@ const InfoWalletNewAffiliate = memo(() => {
                             Tổng tiền
                         </Text>
                         <Text style={styles.topBanner__textMoney}>
-                            7.900.000 vnd
+                            {formatMonney(wallet?.depositAmount + wallet?.commissionAmount)} vnd
                         </Text>
                     </View>
                     <View style={[{ flex: 2.5, flexDirection: 'row', justifyContent: 'flex-end' }]}>
@@ -116,13 +143,17 @@ const InfoWalletNewAffiliate = memo(() => {
                                 ...styleElement.centerChild,
                                 borderColor: WHITE
                             }}>
-                                <TouchableOpacity style={{
-                                    backgroundColor: WHITE,
-                                    width: _moderateScale(8 * 5),
-                                    height: _moderateScale(8 * 5),
-                                    borderRadius: _moderateScale(8 * 5) / 2,
-                                    ...styleElement.centerChild
-                                }}>
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        setShowModalCashIn(true)
+                                    }}
+                                    style={{
+                                        backgroundColor: WHITE,
+                                        width: _moderateScale(8 * 5),
+                                        height: _moderateScale(8 * 5),
+                                        borderRadius: _moderateScale(8 * 5) / 2,
+                                        ...styleElement.centerChild
+                                    }}>
                                     <View style={{
                                         transform: [
                                             {
@@ -149,7 +180,11 @@ const InfoWalletNewAffiliate = memo(() => {
                                 ...styleElement.centerChild,
                                 borderColor: WHITE
                             }}>
-                                <TouchableOpacity style={{
+                                <TouchableOpacity
+                                onPress={()=>{
+                                    navigation.navigate(ScreenKey.WITH_DRAW, { _getWallet })
+                                }}
+                                style={{
                                     backgroundColor: WHITE,
                                     width: _moderateScale(8 * 5),
                                     height: _moderateScale(8 * 5),
@@ -173,11 +208,11 @@ const InfoWalletNewAffiliate = memo(() => {
 
                 <View style={{ marginTop: _moderateScale(8 * 2), flexDirection: 'row' }}>
                     <Text style={styles.topBanner__moneyIn}>
-                        Tiền nạp: 900.000 vnd
+                        Tiền nạp: {formatMonney(wallet?.depositAmount)} vnd
                     </Text>
                     <View style={{ width: _moderateScale(8 * 2) }} />
                     <Text style={styles.topBanner__moneyHH}>
-                        Hoa hồng: 7.000.000 vnd
+                        Hoa hồng: {formatMonney(wallet?.commissionAmount)} vnd
                     </Text>
 
                 </View>
