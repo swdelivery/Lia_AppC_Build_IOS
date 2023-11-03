@@ -18,7 +18,7 @@ import { BLACK } from "@Constant/Color";
 
 const isAndroid = Platform.OS === "android";
 
-const FONT_WEIGHTS = {
+export const FONT_WEIGHTS = {
   regular: isAndroid ? FONT_NOLAN_NEXT_ANDROID : FONT_NOLAN_NEXT,
   bold: isAndroid ? FONT_NOLAN_NEXT_ANDROID_BOLD : FONT_NOLAN_NEXT,
   medium: isAndroid ? FONT_NOLAN_NEXT_ANDROID_MEDIUM : FONT_NOLAN_NEXT,
@@ -35,6 +35,11 @@ export type TextProps = RNTextProps & {
   bottom?: number;
   right?: number;
   removePadding?: boolean;
+  textDecorationLine?:
+    | "none"
+    | "underline"
+    | "line-through"
+    | "underline line-through";
 };
 
 const Text = ({
@@ -47,6 +52,7 @@ const Text = ({
   bottom = 0,
   right = 0,
   removePadding = false,
+  textDecorationLine = "none",
   ...props
 }: TextProps) => {
   // @ts-ignore
@@ -61,6 +67,7 @@ const Text = ({
       marginLeft: left || undefined,
       marginRight: right || undefined,
       marginBottom: bottom || undefined,
+      textDecorationLine,
       ...(removePadding
         ? {
             height: fontSize,
@@ -68,7 +75,17 @@ const Text = ({
           }
         : {}),
     };
-  }, [weight, size, color, top, left, right, bottom, removePadding]);
+  }, [
+    weight,
+    size,
+    color,
+    top,
+    left,
+    right,
+    bottom,
+    removePadding,
+    textDecorationLine,
+  ]);
 
   return (
     <RNText

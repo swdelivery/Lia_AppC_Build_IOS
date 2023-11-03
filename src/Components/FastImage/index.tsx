@@ -12,7 +12,7 @@ export interface ImageProps extends FastImageProps {
   placeholder?: Source | number;
   placeholderComponent?: ReactNode;
   onReady?: () => void;
-  uri: string;
+  uri?: string;
 }
 
 const DEFAULT_SOURCE = require('../../Image/logo.png');

@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
 import React, { memo, useEffect, useMemo, useState } from "react";
 import IconRight from "../../../SGV/right.svg";
 import IconFind from "../../../SGV/find_grey.svg";
@@ -21,10 +21,12 @@ import ModalPickSingleNotSearch from "../../../Components/ModalPickSingleNotSear
 import { IconArrowDown, IconQRScaner } from "../../../Components/Icon/Icon";
 import { sizeIcon } from "../../../Constant/Icon";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import ImagePicker from 'react-native-image-crop-picker';
+import ImagePicker from "react-native-image-crop-picker";
 import { scanningEyes } from "../../../Redux/Action/FaceAiAction";
+import Text from "@Components/Text";
+import Row from "@Components/Row";
 
-const Search = memo((props) => {
+const Search = (props) => {
   const { top } = useSafeAreaInsets();
   const listServiceGroupRedux = useSelector(
     (state) => state.serviceGroupReducer?.listServiceGroup
@@ -71,19 +73,21 @@ const Search = memo((props) => {
       waitAnimationEnd: false,
       includeExif: true,
       forceJpg: true,
-      mediaType: 'photo',
+      mediaType: "photo",
       compressImageQuality: 0.5,
       compressImageMaxWidth: 700,
-    }).then(async (images) => {
-      console.log({ images });
-      let result = await scanningEyes(images)
-      // GlobalStore.socket.emit(CSS_SEND_MESSAGE, data)
-    }).catch(e => { });
-  }
+    })
+      .then(async (images) => {
+        console.log({ images });
+        let result = await scanningEyes(images);
+        // GlobalStore.socket.emit(CSS_SEND_MESSAGE, data)
+      })
+      .catch((e) => {});
+  };
 
   return (
-    <View style={[styles.container, containerStyle]}>
-      <View style={[styles.search, shadow]}>
+    <Row style={[styles.container, containerStyle]} gap={8}>
+      <Row style={[styles.search, shadow]}>
         <ModalPickSingleNotSearch
           hide={() => {
             setExpandServiceGr(false);
@@ -157,30 +161,14 @@ const Search = memo((props) => {
             Nhập thông tin tìm kiếm
           </Text>
         </TouchableOpacity>
-      </View>
+      </Row>
 
-      <View style={{ width: _moderateScale(8) }} />
-
-      <TouchableOpacity
-
-        onPress={_handleQR}
-        style={[
-          {
-            height: _moderateScale(8 * 4.5),
-            width: _moderateScale(8 * 4.5),
-            justifyContent: "center",
-            alignItems: "center",
-            backgroundColor: WHITE,
-            borderRadius: _moderateScale(8),
-          },
-          shadow,
-        ]}
-      >
+      <TouchableOpacity onPress={_handleQR} style={[styles.qrButton, shadow]}>
         <IconQRScaner style={sizeIcon.lg} />
       </TouchableOpacity>
-    </View>
+    </Row>
   );
-});
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -217,6 +205,14 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     paddingRight: _moderateScale(8 * 1),
+  },
+  qrButton: {
+    height: _moderateScale(8 * 4.5),
+    width: _moderateScale(8 * 4.5),
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: WHITE,
+    borderRadius: _moderateScale(8),
   },
 });
 

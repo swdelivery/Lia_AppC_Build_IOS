@@ -6,7 +6,7 @@ import { GREEN_SUCCESS } from "@Constant/Color";
 
 type Props = {
   rating: number;
-  count: number;
+  count?: number;
   size?: number;
   larger?: boolean;
   lightContent?: boolean;
@@ -18,10 +18,10 @@ const CountStar2 = ({
   size = 14,
   lightContent = false,
 }: Props) => {
-  const iconSize = size + 2;
+  const iconSize = size + 4;
   return (
-    <Row top={2} gap={4}>
-      <Row gap={-3}>
+    <Row gap={4}>
+      <Row gap={-3} top={3}>
         <Icon name="star-box" color={GREEN_SUCCESS} size={iconSize} />
         <Icon name="star-box" color={GREEN_SUCCESS} size={iconSize} />
         <Icon name="star-box" color={GREEN_SUCCESS} size={iconSize} />
@@ -37,7 +37,11 @@ const CountStar2 = ({
           <Text color={lightContent ? "white" : "black"} size={size}>
             |
           </Text>
-          <Icon name="account-multiple" size={iconSize} color="grey" />
+          <Icon
+            name="account-multiple"
+            size={iconSize}
+            color={lightContent ? "white" : "black"}
+          />
           <Text color={lightContent ? "white" : "black"} size={size}>
             {`(${count})`}
           </Text>

@@ -26,6 +26,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Screen from "../../Components/Screen";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { styleElement } from "../../Constant/StyleElement";
+import { FONT_WEIGHTS } from "@Components/Text";
 
 const STACKS = [
   {
@@ -134,6 +135,7 @@ const styles = StyleSheet.create({
     color: "black",
     fontWeight: "500",
     fontSize: 14,
+    fontFamily: FONT_WEIGHTS["bold"],
   },
   tabUnderlineStyle: {
     backgroundColor: "#4BA888",

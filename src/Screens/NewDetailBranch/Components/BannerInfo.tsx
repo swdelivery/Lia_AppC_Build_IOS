@@ -1,5 +1,5 @@
 import { Image, StyleSheet, View } from "react-native";
-import React, { memo, useMemo } from "react";
+import React, { useMemo } from "react";
 import { _moderateScale, _width, _widthScale } from "../../../Constant/Scale";
 import { sizeIcon } from "../../../Constant/Icon";
 import IconLink from "../../../SGV/link.svg";
@@ -12,6 +12,10 @@ import { useSelector } from "react-redux";
 import Row from "@Components/Row";
 import Text from "@Components/Text";
 import { getImageAvataUrl } from "src/utils/avatar";
+import FastImage from "@Components/FastImage";
+import Icon from "@Components/Icon";
+import { GREEN_SUCCESS, RED } from "@Constant/Color";
+import Spacer from "@Components/Spacer";
 
 const BannerInfo = () => {
   const { data } = useSelector(getBranchDetailsState);
@@ -28,7 +32,10 @@ const BannerInfo = () => {
   return (
     <View style={styles.bannerInfo}>
       <View style={styles.bannerInfo__box_avatar_branch}>
-        <Image style={styles.bannerInfo__avatarBranch} source={avatarSource} />
+        <FastImage
+          style={styles.bannerInfo__avatarBranch}
+          source={avatarSource}
+        />
       </View>
 
       <Text weight="bold" size={16} color={"#F5DDB0"}>
@@ -61,22 +68,13 @@ const BannerInfo = () => {
         </Text>
       </Row>
       <Row gap={8}>
-        <Image
-          style={sizeIcon.xs}
-          source={require("../../../Image/locationRed.png")}
-        />
+        <Icon name="map-marker" color={RED} size={14} />
         <Text size={12} weight="bold" color="white">
           {data?.address}
         </Text>
       </Row>
-      <View style={{ height: 8 }} />
-
-      <View style={{ flexDirection: "row", alignItems: "center" }}>
-        <IconLink
-          width={_moderateScale(8 * 3)}
-          height={_moderateScale(8 * 3)}
-        />
-        <View style={{ width: 8 }} />
+      <Row gap={8}>
+        <Icon name="link-variant" size={14} color="white" />
         <Text
           style={[
             styles.opentime__text,
@@ -85,55 +83,38 @@ const BannerInfo = () => {
         >
           https://liabeauty.vn/phau-thuat/sua-mui/
         </Text>
-      </View>
-      <View style={{ flexDirection: "row", alignItems: "center" }}>
-        <IconLink
-          width={_moderateScale(8 * 3)}
-          height={_moderateScale(8 * 3)}
-        />
-        <View style={{ width: 8 }} />
+      </Row>
+      <Row gap={8}>
+        <Icon name="link-variant" size={14} color="white" />
         <Text
-          style={[
-            styles.opentime__text,
-            { fontWeight: "500", textDecorationLine: "underline" },
-          ]}
+          weight="bold"
+          size={12}
+          color={"white"}
+          textDecorationLine={"underline"}
         >
           https://liabeauty.vn/phau-thuat/nhan-mi-mat/
         </Text>
-      </View>
-      <View style={{ height: _moderateScale(8 * 2) }} />
-
-      <View style={{ flexDirection: "row", alignItems: "center" }}>
+      </Row>
+      <Spacer top={_moderateScale(8)} />
+      <Row gap={8}>
         <Text style={[styles.opentime__text, { fontWeight: "bold" }]}>
           Đảm bảo:
         </Text>
-        <View style={{ width: _moderateScale(8 * 2) }} />
         <View style={[styleElement.rowAliCenter]}>
-          <Image
-            style={sizeIcon.md}
-            source={require("../../../Image/ticked.png")}
-          />
-          <Text style={styleText.textWhiteSmall500}>An toàn</Text>
+          <Icon name="checkbox-marked-circle" color={GREEN_SUCCESS} size={18} />
+          <Text style={styleText.textWhiteSmall500} left={4}>
+            An toàn
+          </Text>
         </View>
-        <View style={{ width: _moderateScale(8) }} />
-
         <View style={[styleElement.rowAliCenter]}>
-          <Image
-            style={sizeIcon.md}
-            source={require("../../../Image/ticked.png")}
-          />
+          <Icon name="checkbox-marked-circle" color={GREEN_SUCCESS} size={18} />
           <Text style={styleText.textWhiteSmall500}>Chuyên môn</Text>
         </View>
-        <View style={{ width: _moderateScale(8) }} />
-
         <View style={[styleElement.rowAliCenter]}>
-          <Image
-            style={sizeIcon.md}
-            source={require("../../../Image/ticked.png")}
-          />
+          <Icon name="checkbox-marked-circle" color={GREEN_SUCCESS} size={18} />
           <Text style={styleText.textWhiteSmall500}>Kinh nghiệm</Text>
         </View>
-      </View>
+      </Row>
     </View>
   );
 };

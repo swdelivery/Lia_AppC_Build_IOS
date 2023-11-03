@@ -1,5 +1,5 @@
 import React, { ReactNode, useMemo } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, StyleProp, ViewStyle } from "react-native";
 
 type Props = {
   gap?: number;
@@ -7,17 +7,11 @@ type Props = {
   bottom?: number;
   left?: number;
   right?: number;
+  style?: StyleProp<ViewStyle>;
   children: ReactNode;
 };
 
-export default function Column({
-  gap,
-  top,
-  bottom,
-  left,
-  right,
-  children,
-}: Props) {
+export default function Column({ gap, top, bottom, left, right, style, children }: Props) {
   const containerStyle = useMemo(() => {
     return {
       gap,
@@ -27,7 +21,9 @@ export default function Column({
       marginRight: right,
     };
   }, [gap, top, bottom, left, right]);
-  return <View style={[styles.container, containerStyle]}>{children}</View>;
+  return (
+    <View style={[styles.container, containerStyle, style]}>{children}</View>
+  );
 }
 
 const styles = StyleSheet.create({

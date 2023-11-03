@@ -1,6 +1,7 @@
 import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import React, { useMemo } from "react";
 import Text from "@Components/Text";
+import Icon from "@Components/Icon";
 
 type Props = {
   name: string;
@@ -30,11 +31,8 @@ const Certificate = ({
       onPress={onPress}
       disabled={!onPress}
     >
-      <Image
-        style={[styles.image, larger && styles.larger]}
-        source={require("../../Image/kimcuong.png")}
-      />
-      <Text color={"#F8E6D0"} weight="bold" size={10}>
+      <Icon name="diamond" color="#F8E6D0" size={12} style={styles.icon} />
+      <Text color={"#F8E6D0"} weight="bold" size={10} left={4}>
         {name}
       </Text>
     </TouchableOpacity>
@@ -50,6 +48,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "center",
     overflow: "hidden",
   },
   image: {
@@ -57,6 +56,9 @@ const styles = StyleSheet.create({
     height: 8 * 1.5,
     resizeMode: "contain",
     marginRight: 4,
+  },
+  icon: {
+    marginBottom: -2,
   },
   larger: {
     width: 8 * 2,
