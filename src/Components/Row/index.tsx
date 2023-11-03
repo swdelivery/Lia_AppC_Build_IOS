@@ -1,5 +1,5 @@
 import React, { ReactNode, useMemo } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, StyleProp, ViewStyle } from "react-native";
 
 type Props = {
   gap?: number;
@@ -9,6 +9,7 @@ type Props = {
   right?: number;
   justifyContent?: "flex-start" | "flex-end" | "center" | "space-between";
   flexWrap?: "nowrap" | "wrap" | "wrap-reverse";
+  style?: StyleProp<ViewStyle>;
   children: ReactNode;
 };
 
@@ -20,6 +21,7 @@ export default function Row({
   right,
   justifyContent,
   flexWrap,
+  style,
   children,
 }: Props) {
   const containerStyle = useMemo(() => {
@@ -33,7 +35,9 @@ export default function Row({
       flexWrap,
     };
   }, [gap, top, bottom, left, right, justifyContent, flexWrap]);
-  return <View style={[styles.container, containerStyle]}>{children}</View>;
+  return (
+    <View style={[styles.container, containerStyle, style]}>{children}</View>
+  );
 }
 
 const styles = StyleSheet.create({

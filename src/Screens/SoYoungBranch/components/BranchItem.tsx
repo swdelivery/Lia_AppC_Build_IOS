@@ -19,6 +19,8 @@ import Row from "@Components/Row";
 import CountStar2 from "@Components/NewCountStar/CountStar";
 import Certificate from "@Components/Certificate/Certificate";
 import { getImageAvataUrl } from "src/utils/avatar";
+import Icon from "@Components/Icon";
+import { RED } from "@Constant/Color";
 
 type Props = {
   item: any;
@@ -57,10 +59,7 @@ export default function BranchItem({ item }: Props) {
           <CountStar2 rating={item.averageRating} count={item.reviewCount} />
 
           <Row gap={4}>
-            <Image
-              style={styles.locationIcon}
-              source={require("../../../Image/locationRed.png")}
-            />
+            <Icon name="map-marker" color={RED} size={14} />
             <Text size={12} color="grey">
               {item?.address}
             </Text>

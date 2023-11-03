@@ -99,10 +99,7 @@ const SoyoungHome = () => {
         tabUnderlineStyle={styles.tabUnderlineStyle}
         textStyle={styles.textStyle}
         ref={(it) => (scrollableTabViewRef.current = it)}
-        textActiveStyle={{
-          color: "#4BA888",
-          fontWeight: "bold",
-        }}
+        textActiveStyle={styles.textActiveStyle}
         header={<Banner />}
         firstIndex={0}
         useScroll={true}
@@ -150,4 +147,8 @@ const styles = StyleSheet.create({
     width: _width,
   },
   tabInnerStyle: { width: "100%" },
+  textActiveStyle: {
+    color: "#4BA888",
+    fontWeight: "bold",
+  },
 });

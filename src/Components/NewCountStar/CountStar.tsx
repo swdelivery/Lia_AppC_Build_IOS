@@ -1,7 +1,8 @@
-import { Image, StyleSheet, View } from "react-native";
-import React, { memo, useMemo } from "react";
+import React from "react";
 import Row from "@Components/Row";
 import Text from "@Components/Text";
+import Icon from "@Components/Icon";
+import { GREEN_SUCCESS } from "@Constant/Color";
 
 type Props = {
   rating: number;
@@ -17,36 +18,15 @@ const CountStar2 = ({
   size = 14,
   lightContent = false,
 }: Props) => {
-  const starStyle = useMemo(() => {
-    return {
-      width: size,
-      aspectRatio: 1,
-    };
-  }, [size]);
-
+  const iconSize = size + 2;
   return (
     <Row top={2} gap={4}>
-      <Row>
-        <Image
-          style={[styles.star, starStyle]}
-          source={require("../../Image/a_star2.png")}
-        />
-        <Image
-          style={[styles.star, starStyle]}
-          source={require("../../Image/a_star2.png")}
-        />
-        <Image
-          style={[styles.star, starStyle]}
-          source={require("../../Image/a_star2.png")}
-        />
-        <Image
-          style={[styles.star, starStyle]}
-          source={require("../../Image/a_star2.png")}
-        />
-        <Image
-          style={[styles.star, starStyle]}
-          source={require("../../Image/a_star2.png")}
-        />
+      <Row gap={-3}>
+        <Icon name="star-box" color={GREEN_SUCCESS} size={iconSize} />
+        <Icon name="star-box" color={GREEN_SUCCESS} size={iconSize} />
+        <Icon name="star-box" color={GREEN_SUCCESS} size={iconSize} />
+        <Icon name="star-box" color={GREEN_SUCCESS} size={iconSize} />
+        <Icon name="star-box" color={GREEN_SUCCESS} size={iconSize} />
       </Row>
 
       <Text color={lightContent ? "white" : "black"} size={size}>
@@ -57,10 +37,7 @@ const CountStar2 = ({
           <Text color={lightContent ? "white" : "black"} size={size}>
             |
           </Text>
-          <Image
-            style={styles.star}
-            source={require("../../Image/people.png")}
-          />
+          <Icon name="account-multiple" size={iconSize} color="grey" />
           <Text color={lightContent ? "white" : "black"} size={size}>
             {`(${count})`}
           </Text>
@@ -71,19 +48,3 @@ const CountStar2 = ({
 };
 
 export default CountStar2;
-
-const styles = StyleSheet.create({
-  starLarge: {
-    width: 8 * 2,
-    height: 8 * 2,
-    marginLeft: 1,
-    resizeMode: "contain",
-  },
-  star: {
-    width: 8 * 1.75,
-    height: 8 * 1.75,
-    marginLeft: 1,
-    resizeMode: "contain",
-  },
-  lightContent: { color: "white" },
-});
