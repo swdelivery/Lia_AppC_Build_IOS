@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 import { Image, StyleSheet, TouchableOpacity } from "react-native";
-import { _moderateScale, _widthScale } from "../../../Constant/Scale";
+import { _heightScale, _moderateScale, _widthScale } from "../../../Constant/Scale";
 import { navigation } from "../../../../rootNavigation";
 import ScreenKey from "../../../Navigation/ScreenKey";
 import { useNavigate } from "src/Hooks/useNavigation";
@@ -27,6 +27,7 @@ export default Voucher;
 const styles = StyleSheet.create({
   image: {
     width: _widthScale(350),
+    height:_heightScale(100),
     borderRadius: _moderateScale(8),
   },
 });
