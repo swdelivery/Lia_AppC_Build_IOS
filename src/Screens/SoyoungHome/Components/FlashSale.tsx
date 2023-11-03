@@ -10,19 +10,13 @@ import Row from "@Components/Row";
 const FlashSale = memo(() => {
   const _renderItem = () => {
     return (
-      <View
-        style={{
-          marginRight: 8,
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
+      <View style={styles.itemContainer}>
         <FastImage
           style={styles.image}
           uri={`https://img2.soyoung.com/product/20220314/9/75964f6913b08b834829758a6d88d9d8_400_300.png?imageView2/0/format/webp`}
         />
         <Text color={"red"} size={12} weight="bold" top={2}>
-          1.900.000
+          đ1.900.000
         </Text>
       </View>
     );
@@ -107,5 +101,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 2,
     paddingVertical: 2,
     borderRadius: 4,
+  },
+  itemContainer: {
+    marginRight: 8,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
