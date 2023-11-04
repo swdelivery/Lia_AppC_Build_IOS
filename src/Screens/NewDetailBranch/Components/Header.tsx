@@ -1,30 +1,56 @@
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import React, { useMemo } from "react";
 import { _heightScale, _moderateScale, _width } from "../../../Constant/Scale";
 import { navigation } from "../../../../rootNavigation";
 import IconBackWhite from "../../../SGV/backWhite.svg";
-import Animated from "react-native-reanimated";
+import Animated, {
+  SharedValue,
+  interpolate,
+  useAnimatedStyle,
+} from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import Icon from "@Components/Icon";
+import IconBackBlack from "../../../SGV/backArrBlack.svg";
+import Text from "@Components/Text";
+import { styleElement } from "@Constant/StyleElement";
 
-const Header = (props) => {
+type Props = {
+  scrollY: SharedValue<number>;
+  title: string;
+};
+
+const Header = ({ scrollY, title }: Props) => {
   const { top } = useSafeAreaInsets();
 
   const containerStyle = useMemo(() => {
-    return { marginTop: top };
+    return { paddingTop: top };
   }, [top]);
 
+  const animatedStyle = useAnimatedStyle(() => {
+    const opacity = interpolate(scrollY.value, [0, 200], [0, 1]);
+    return {
+      opacity: opacity,
+    };
+  });
+
+  console.log({ title });
+
   return (
-    <Animated.View style={[styles.header, containerStyle]}>
+    <View style={[styles.header, containerStyle]}>
+      <Animated.View style={[styles.background, animatedStyle]} />
       <TouchableOpacity
+        style={styles.backBtn}
         onPress={navigation.goBack}
         hitSlop={{ top: 12, left: 12, right: 12, bottom: 12 }}
       >
-        <IconBackWhite
-          width={_moderateScale(8 * 4)}
-          height={_moderateScale(8 * 4)}
-        />
+        <IconBackBlack width={24} height={24} />
       </TouchableOpacity>
-    </Animated.View>
+      <Animated.View style={[styleElement.flex, animatedStyle]}>
+        <Text color={"black"} size={16} weight="bold" left={8}>
+          {title}
+        </Text>
+      </Animated.View>
+    </View>
   );
 };
 
@@ -38,10 +64,27 @@ const styles = StyleSheet.create({
     right: 0,
     zIndex: 10,
     width: _width,
-    // borderWidth: 1,
     borderColor: "white",
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: _moderateScale(8),
+    paddingHorizontal: 20,
+    paddingBottom: 8,
+  },
+  background: {
+    backgroundColor: "white",
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+  },
+  backBtn: {
+    backgroundColor: "white",
+    borderRadius: 50,
+    width: 32,
+    aspectRatio: 1,
+    paddingRight: 2,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
