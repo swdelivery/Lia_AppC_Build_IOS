@@ -23,7 +23,18 @@ const openMap = async (address: string) => {
   }
 };
 
+const openPhone = async (phoneNumber: string) => {
+  const link = `tel:${phoneNumber}`;
+  try {
+    const supported = await Linking.canOpenURL(link);
+    if (supported) Linking.openURL(link);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export default {
   open,
   openMap,
+  openPhone,
 };

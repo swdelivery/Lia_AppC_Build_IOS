@@ -46,8 +46,8 @@ export default function BranchItem({ item }: Props) {
   );
 
   return (
-    <Pressable onPress={handlePress} style={[styles.card, shadow]}>
-      <View style={styles.upperView}>
+    <View style={[styles.card, shadow]}>
+      <Pressable onPress={handlePress} style={styles.upperView}>
         <FastImage style={styles.avatar} uri={avatarSource} />
         <View style={styleElement.flex}>
           <Row justifyContent="space-between">
@@ -70,7 +70,7 @@ export default function BranchItem({ item }: Props) {
             </Text>
           </Row>
 
-          <Row top={8} flexWrap={"wrap"} gap={4}>
+          <Row top={8} flexWrap={"wrap"} gap={4} bottom={8}>
             {item?.branchFileArr.length > 0 &&
               item.branchFileArr.map((item, index) => (
                 <Certificate
@@ -83,11 +83,11 @@ export default function BranchItem({ item }: Props) {
               ))}
           </Row>
         </View>
-      </View>
+      </Pressable>
       {item.branchServices.length > 0 && (
         <HorizontalServices items={item.branchServices} />
       )}
-    </Pressable>
+    </View>
   );
 }
 

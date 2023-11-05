@@ -1,5 +1,5 @@
-import { StyleSheet, View } from "react-native";
-import React, { useMemo } from "react";
+import { Pressable, StyleSheet, View } from "react-native";
+import React, { useCallback, useMemo } from "react";
 import { _moderateScale, _widthScale } from "../../Constant/Scale";
 import { ScrollView } from "react-native-gesture-handler";
 import CountStar2 from "@Components/NewCountStar/CountStar";
@@ -9,27 +9,55 @@ import Text from "@Components/Text";
 import { RED } from "@Constant/Color";
 import { formatMonney } from "@Constant/Utils";
 import { getImageAvataUrl } from "src/utils/avatar";
+import { useNavigate } from "src/Hooks/useNavigation";
+import useCallbackItem from "src/Hooks/useCallbackItem";
+import ScreenKey from "@Navigation/ScreenKey";
 
 type Props = {
   title?: string;
   items: BranchService[];
 };
 const HorizontalServices = ({ items, title }: Props) => {
+  const { navigation } = useNavigate();
+
+  const handlePress = useCallback((item: BranchService) => {
+    navigation.navigate(ScreenKey.DETAIL_SERVICE, {
+      idService: item._id,
+    });
+  }, []);
+
   function renderItem(item: BranchService, index: number) {
-    return <BranchServiceItem item={item} key={item._id} />;
+    return (
+      <BranchServiceItem item={item} key={item._id} onPress={handlePress} />
+    );
   }
 
   return (
     <View style={styles.container}>
       {!!title && <Text style={styles.rcmService}>{title}</Text>}
       <View>
-        <ScrollView horizontal>{items.map(renderItem)}</ScrollView>
+        <ScrollView
+          horizontal
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.contentContainer}
+        >
+          {items.map(renderItem)}
+        </ScrollView>
       </View>
     </View>
   );
 };
 
-function BranchServiceItem({ item }: { item: BranchService }) {
+function BranchServiceItem({
+  item,
+  onPress,
+}: {
+  item: BranchService;
+  onPress: (item: BranchService) => void;
+}) {
+  const trigger = useCallbackItem(item);
+
   const serviceImage = useMemo(() => {
     return getImageAvataUrl(
       item.service.representationFileArr[0],
@@ -38,7 +66,7 @@ function BranchServiceItem({ item }: { item: BranchService }) {
   }, [item]);
 
   return (
-    <View style={styles.itemContainer}>
+    <Pressable style={styles.itemContainer} onPress={trigger(onPress)}>
       <FastImage style={styles.serviceImage} uri={serviceImage} />
       <Text color={"black"} size={10} weight="bold" numberOfLines={1} top={4}>
         {item.service.name}
@@ -51,7 +79,7 @@ function BranchServiceItem({ item }: { item: BranchService }) {
       <Text size={10} weight="bold" color={RED}>
         {`₫${formatMonney(item.service.price)}`}
       </Text>
-    </View>
+    </Pressable>
   );
 }
 
@@ -74,7 +102,6 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     alignSelf: "center",
     marginTop: _moderateScale(0),
-    paddingHorizontal: _moderateScale(8 * 2),
     gap: 8,
   },
   itemContainer: {
@@ -89,5 +116,8 @@ const styles = StyleSheet.create({
     height: 75,
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
+  },
+  contentContainer: {
+    paddingHorizontal: _moderateScale(8 * 2),
   },
 });

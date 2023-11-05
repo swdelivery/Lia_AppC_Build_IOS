@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-import { FlatList, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { _width } from "../../Constant/Scale";
 import { RenderItemProps } from "../../typings/common";
 import BranchItem from "./components/BranchItem";
@@ -7,6 +7,7 @@ import { useFocused } from "src/Hooks/useNavigation";
 import useListFilter from "src/Hooks/useListFilter";
 import { getBranchListState } from "@Redux/branch/selectors";
 import { getBranchList, loadMoreBranchList } from "@Redux/branch/actions";
+import { FlatList } from "react-native-gesture-handler";
 
 const SoYoungBranch = memo(() => {
   const { isLoading, data, getData } = useListFilter(
@@ -16,8 +17,6 @@ const SoYoungBranch = memo(() => {
   );
 
   useFocused(() => {
-    console.log("hehehe");
-    
     getData();
   });
 
