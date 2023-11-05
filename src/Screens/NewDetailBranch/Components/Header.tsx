@@ -33,8 +33,6 @@ const Header = ({ scrollY, title }: Props) => {
     };
   });
 
-  console.log({ title });
-
   return (
     <View style={[styles.header, containerStyle]}>
       <Animated.View style={[styles.background, animatedStyle]} />

@@ -1,8 +1,6 @@
-import { Image, StyleSheet, View } from "react-native";
-import React, { useMemo } from "react";
+import { Pressable, StyleSheet, View } from "react-native";
+import React, { useCallback, useMemo } from "react";
 import { _moderateScale, _width, _widthScale } from "../../../Constant/Scale";
-import { sizeIcon } from "../../../Constant/Icon";
-import IconLink from "../../../SGV/link.svg";
 import { styleText } from "../../../Constant/StyleText";
 import { styleElement } from "../../../Constant/StyleElement";
 import CountStar2 from "../../../Components/NewCountStar/CountStar";
@@ -16,6 +14,9 @@ import FastImage from "@Components/FastImage";
 import Icon from "@Components/Icon";
 import { GREEN_SUCCESS, RED } from "@Constant/Color";
 import Spacer from "@Components/Spacer";
+import { isEmpty } from "lodash";
+import linking from "src/utils/linking";
+import { Branch } from "@typings/branch";
 
 const BannerInfo = () => {
   const { data } = useSelector(getBranchDetailsState);
@@ -28,6 +29,26 @@ const BannerInfo = () => {
       ),
     };
   }, [data]);
+
+  const handleOpenLink = useCallback(
+    (link: string) => () => {
+      linking.open(link);
+    },
+    []
+  );
+
+  const handleOpenMap = useCallback(() => {
+    if (data.address) {
+      linking.openMap(data.address);
+    }
+  }, [data]);
+
+  const handleFilePress = useCallback(
+    (item: Branch["branchFileArr"][0]) => () => {
+      linking.open(getImageAvataUrl(item.fileUpload));
+    },
+    []
+  );
 
   return (
     <View style={styles.bannerInfo}>
@@ -43,15 +64,16 @@ const BannerInfo = () => {
       </Text>
 
       <Row top={8} gap={8}>
-        <View style={styles.certificateContainer}>
-          <Certificate larger bg={"black"} name={"Phòng khám"} />
-        </View>
-        <View style={styles.certificateContainer}>
-          <Certificate larger name={"Giấy phép"} />
-        </View>
-        <View style={styles.certificateContainer}>
-          <Certificate larger bg={"blue"} name={"Lorem ipsum"} />
-        </View>
+        {data?.branchFileArr.length > 0 &&
+          data.branchFileArr.map((item) => (
+            <View style={styles.certificateContainer} key={item._id}>
+              <Certificate
+                bg={"black"}
+                name={item.name}
+                onPress={handleFilePress(item)}
+              />
+            </View>
+          ))}
       </Row>
       <CountStar2
         lightContent
@@ -67,34 +89,32 @@ const BannerInfo = () => {
           8:00 - 18:00
         </Text>
       </Row>
-      <Row gap={8}>
-        <Icon name="map-marker" color={RED} size={14} />
-        <Text size={12} weight="bold" color="white">
-          {data?.address}
-        </Text>
-      </Row>
-      <Row gap={8}>
-        <Icon name="link-variant" size={14} color="white" />
-        <Text
-          style={[
-            styles.opentime__text,
-            { fontWeight: "500", textDecorationLine: "underline" },
-          ]}
-        >
-          https://liabeauty.vn/phau-thuat/sua-mui/
-        </Text>
-      </Row>
-      <Row gap={8}>
-        <Icon name="link-variant" size={14} color="white" />
-        <Text
-          weight="bold"
-          size={12}
-          color={"white"}
-          textDecorationLine={"underline"}
-        >
-          https://liabeauty.vn/phau-thuat/nhan-mi-mat/
-        </Text>
-      </Row>
+      <Pressable onPress={handleOpenMap}>
+        <Row gap={8}>
+          <Icon name="map-marker" color={RED} size={14} />
+          <Text size={12} weight="bold" color="white">
+            {data?.address}
+          </Text>
+        </Row>
+      </Pressable>
+
+      {!isEmpty(data?.configureArticleArr)
+        ? data.configureArticleArr.map((item) => (
+            <Pressable key={item} onPress={handleOpenLink(item)}>
+              <Row gap={8}>
+                <Icon name="link-variant" size={14} color="white" />
+                <Text
+                  weight="bold"
+                  textDecorationLine="underline"
+                  size={12}
+                  color={"white"}
+                >
+                  {item}
+                </Text>
+              </Row>
+            </Pressable>
+          ))
+        : null}
       <Spacer top={_moderateScale(8)} />
       <Row gap={8}>
         <Text style={[styles.opentime__text, { fontWeight: "bold" }]}>

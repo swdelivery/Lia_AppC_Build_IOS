@@ -1,11 +1,16 @@
 import { all, call, put, takeLatest } from "redux-saga/effects";
-import { GET_BRANCH_DETAILS, GET_BRANCH_LIST } from "./types";
+import {
+  GET_BRANCH_DETAILS,
+  GET_BRANCH_DOCTORS,
+  GET_BRANCH_LIST,
+} from "./types";
 import * as actions from "./actions";
 import { BaseAction } from "@Redux/types";
 import PartnerService from "src/Services/PartnerService";
 import { Branch } from "@typings/branch";
 import configs from "src/configs";
 import { last } from "lodash";
+import { GetBranchDoctorsParams } from "./types";
 
 function* getBranchList({ payload }: BaseAction<any>) {
   try {
@@ -33,9 +38,23 @@ function* getBranchDetails({ payload }: BaseAction<number>) {
   }
 }
 
+function* getBranchDoctors({ payload }: BaseAction<GetBranchDoctorsParams>) {
+  try {
+    const data = yield call(PartnerService.getDoctorList, {
+      branchCode: {
+        equal: payload.branchCode,
+      },
+    });
+    yield put(actions.getBranchDoctors.success(data));
+  } catch (error: any) {
+    yield put(actions.getBranchDoctors.failure(error.message));
+  }
+}
+
 export default function* sagas() {
   yield all([
     takeLatest(GET_BRANCH_LIST.REQUEST, getBranchList),
     takeLatest(GET_BRANCH_DETAILS.REQUEST, getBranchDetails),
+    takeLatest(GET_BRANCH_DOCTORS.REQUEST, getBranchDoctors),
   ]);
 }

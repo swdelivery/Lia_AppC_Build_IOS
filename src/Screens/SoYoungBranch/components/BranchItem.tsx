@@ -1,15 +1,6 @@
 import React, { useCallback, useMemo } from "react";
-import {
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-  ScrollView,
-  Pressable,
-} from "react-native";
-import { URL_ORIGINAL } from "../../../Constant/Url";
+import { View, StyleSheet, TouchableOpacity, Pressable } from "react-native";
 import { _width } from "@Constant/Scale";
-import { useNavigation } from "@react-navigation/native";
 import ScreenKey from "@Navigation/ScreenKey";
 import { useNavigate } from "src/Hooks/useNavigation";
 import FastImage from "@Components/FastImage";
@@ -21,9 +12,12 @@ import Certificate from "@Components/Certificate/Certificate";
 import { getImageAvataUrl } from "src/utils/avatar";
 import Icon from "@Components/Icon";
 import { RED } from "@Constant/Color";
+import TopService from "@Screens/NewDetailBranch/Components/TopService";
+import { Branch } from "@typings/branch";
+import linking from "linking";
 
 type Props = {
-  item: any;
+  item: Branch;
 };
 
 export default function BranchItem({ item }: Props) {
@@ -39,10 +33,16 @@ export default function BranchItem({ item }: Props) {
   const handlePress = useCallback(() => {
     navigation.navigate(ScreenKey.DETAIL_BRAND, { idBranch: item._id });
   }, [item]);
+  const handleFilePress = useCallback(
+    (item: Branch["branchFileArr"][0]) => () => {
+      linking.open(getImageAvataUrl(item.fileUpload));
+    },
+    []
+  );
 
   return (
-    <View style={[styles.card, shadow]}>
-      <Pressable onPress={handlePress} style={styles.upperView}>
+    <Pressable onPress={handlePress} style={[styles.card, shadow]}>
+      <View style={styles.upperView}>
         <FastImage style={styles.avatar} uri={avatarSource} />
         <View style={styleElement.flex}>
           <Row justifyContent="space-between">
@@ -66,39 +66,23 @@ export default function BranchItem({ item }: Props) {
           </Row>
 
           <Row top={8} flexWrap={"wrap"} gap={4}>
-            <Certificate name="Phòng khám" backgroundColor={"#151617"} />
-            <Certificate name="Giấy phép" backgroundColor={"#414378"} />
+            {item?.branchFileArr.length > 0 &&
+              item.branchFileArr.map((item, index) => (
+                <Certificate
+                  key={item._id}
+                  bg={"black"}
+                  name={item.name}
+                  onPress={handleFilePress(item)}
+                  backgroundColor={index % 2 === 0 ? "#414378" : "#151617"}
+                />
+              ))}
           </Row>
         </View>
-      </Pressable>
-
-      <View style={{ marginTop: 8 * 2 }}>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          {[1, 2, 3, 4, 5]?.map((item, index) => {
-            return (
-              <View key={index} style={styles.serviceContainer}>
-                <View>
-                  <FastImage
-                    style={styles.serviceImage}
-                    uri={`https://img2.soyoung.com/product/20230204/6/4c37c3bc52acc601968d58619dbb4336_400_300.jpg`}
-                  />
-                </View>
-                <View style={styles.serviceContent}>
-                  <Text numberOfLines={1} size={10} weight="bold">
-                    Loại bỏ bọng mắt Pinhole
-                  </Text>
-
-                  <CountStar2 rating={320} size={8} />
-                  <Text size={10} weight="bold" color="red">
-                    đ12.000.000
-                  </Text>
-                </View>
-              </View>
-            );
-          })}
-        </ScrollView>
       </View>
-    </View>
+      {item.branchServices.length > 0 && (
+        <TopService items={item.branchServices} />
+      )}
+    </Pressable>
   );
 }
 

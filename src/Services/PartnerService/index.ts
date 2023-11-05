@@ -1,7 +1,8 @@
 import { URL_FOR_PARTNER } from "@Constant/Url";
-import createAxios from "./axios";
-import { encodeParams } from "./utils";
+import createAxios from "../axios";
+import { encodeParams } from "../utils";
 import configs from "src/configs";
+import { GetDoctorListPayload } from "./types";
 
 const axios = createAxios(URL_FOR_PARTNER);
 
@@ -31,8 +32,22 @@ const getBranchById = (id: number) => {
   return axios.get(`/branch/${id}`).then(({ data }) => data.data);
 };
 
+const getDoctorList = (
+  payload: GetDoctorListPayload,
+  page = 1,
+  pageSize = configs.apiPageSize
+): Promise<any> => {
+  const params = encodeParams({
+    ...payload,
+    limit: pageSize,
+    page,
+  });
+  return axios.get(`/treatment-doctor?${params}`).then(({ data }) => data.data);
+};
+
 export default {
   getServiceGroup,
   getBranchList,
   getBranchById,
+  getDoctorList,
 };

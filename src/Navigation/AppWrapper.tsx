@@ -487,18 +487,6 @@ const AppWrapper = (props) => {
   };
   return (
     <>
-      {/* <StatusBar backgroundColor={BASE_COLOR} translucent={false} barStyle="light-content" />
-            {
-                Platform.OS == 'ios' &&
-                <View style={{
-                    height: _heightScale(getStatusBarHeight() + _heightScale(4)),
-                    backgroundColor: BASE_COLOR
-                }} />
-            } */}
-      {/* <SignalNetwork /> */}
-
-      {/* <StatusBar translucent={true} barStyle={'light-content'}/> */}
-
       <NavigationContainer ref={navigationRef}>
         <rootStack.Navigator
           //  initialRouteName={ScreenKey.MODAL_CREATE_GROUP_CHAT}

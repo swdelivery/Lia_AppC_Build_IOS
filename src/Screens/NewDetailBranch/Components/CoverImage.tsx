@@ -1,5 +1,5 @@
 import { StyleSheet, View } from "react-native";
-import React from "react";
+import React, { useMemo } from "react";
 import { _height, _moderateScale, _width } from "../../../Constant/Scale";
 import FastImage from "@Components/FastImage";
 import Animated, {
@@ -7,14 +7,25 @@ import Animated, {
   interpolate,
   useAnimatedStyle,
 } from "react-native-reanimated";
-
-const HEIGHT_COVER_IMAGE = (_width * 564) / 1125;
+import { getBranchDetailsState } from "@Redux/branch/selectors";
+import { useSelector } from "react-redux";
+import { isEmpty } from "lodash";
+import { getImageAvataUrl } from "src/utils/avatar";
 
 type Props = {
   scrollY: SharedValue<number>;
 };
 
 const CoverImage = ({ scrollY }: Props) => {
+  const { data } = useSelector(getBranchDetailsState);
+
+  const bannerUrl = useMemo(() => {
+    if (!isEmpty(data?.bannerFileArr)) {
+      return getImageAvataUrl(data.bannerFileArr[0]);
+    }
+    return "";
+  }, [data]);
+
   const animatedStyle = useAnimatedStyle(() => {
     return {
       transform: [
@@ -34,11 +45,13 @@ const CoverImage = ({ scrollY }: Props) => {
 
   return (
     <Animated.View style={[styles.coverImage, animatedStyle]}>
-      <FastImage
-        style={styles.coverImage__image}
-        source={require("../../../Image/coverBranch.png")}
-        resizeMode="contain"
-      />
+      {!!bannerUrl && (
+        <FastImage
+          style={styles.coverImage__image}
+          uri={bannerUrl}
+          resizeMode="cover"
+        />
+      )}
     </Animated.View>
   );
 };
@@ -48,7 +61,7 @@ export default CoverImage;
 const styles = StyleSheet.create({
   coverImage__image: {
     width: _width,
-    height: HEIGHT_COVER_IMAGE,
+    height: 200,
   },
   coverImage: {
     position: "absolute",

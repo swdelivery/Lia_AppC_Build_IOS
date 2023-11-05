@@ -8,4 +8,8 @@ export const LOAD_MORE_BRANCH_LIST = generateActionTypes(
 
 export const GET_BRANCH_DETAILS = generateActionTypes("@branch/get-details");
 
-export type GetBranchListParams = {};
+export const GET_BRANCH_DOCTORS = generateActionTypes("@branch/get-doctors");
+
+export type GetBranchDoctorsParams = {
+  branchCode: string;
+};

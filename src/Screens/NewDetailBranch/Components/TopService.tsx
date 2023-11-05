@@ -1,108 +1,59 @@
-import { StyleSheet, Text, View, Image } from "react-native";
-import React, { memo } from "react";
+import { StyleSheet, View } from "react-native";
+import React, { useMemo } from "react";
 import { _moderateScale, _widthScale } from "../../../Constant/Scale";
-import { sizeIcon } from "../../../Constant/Icon";
 import { ScrollView } from "react-native-gesture-handler";
 import CountStar2 from "@Components/NewCountStar/CountStar";
+import { BranchService } from "@typings/branch";
+import FastImage from "@Components/FastImage";
+import Text from "@Components/Text";
+import { RED } from "@Constant/Color";
+import { formatMonney } from "@Constant/Utils";
+import { getImageAvataUrl } from "src/utils/avatar";
 
-const TopService = () => {
+type Props = {
+  title?: string;
+  items: BranchService[];
+};
+const TopService = ({ items, title }: Props) => {
+  function renderItem(item: BranchService, index: number) {
+    return <BranchServiceItem item={item} key={item._id} />;
+  }
+
   return (
     <View style={styles.container}>
-      <Text style={styles.rcmService}>Dịch vụ phổ biến</Text>
-
-      <View style={{ height: 8 }} />
-      <ScrollView horizontal>
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9]?.map((item, index) => {
-          return (
-            <View
-              key={index}
-              style={{
-                width: 100,
-                // height: 180,
-                backgroundColor: "white",
-                borderBottomLeftRadius: 8,
-                borderBottomRightRadius: 8,
-                marginRight: 8 * 1,
-              }}
-            >
-              <View>
-                <Image
-                  style={{
-                    width: 100,
-                    height: 75,
-                    borderTopLeftRadius: 8,
-                    borderTopRightRadius: 8,
-                  }}
-                  source={{
-                    uri: `https://img2.soyoung.com/product/20230204/6/4c37c3bc52acc601968d58619dbb4336_400_300.jpg`,
-                  }}
-                />
-              </View>
-              <View
-                style={{
-                  padding: 4,
-                }}
-              >
-                <Text
-                  numberOfLines={1}
-                  style={{
-                    fontSize: 11,
-                    fontWeight: "bold",
-                  }}
-                >
-                  Loại bỏ bọng mắt Pinhole
-                </Text>
-
-                <CountStar2 rating={4} />
-
-                <View
-                  style={{
-                    marginTop: 4,
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <View style={{ flexDirection: "row", alignItems: "center" }}>
-                    <Text
-                      style={{
-                        fontSize: 11,
-                        fontWeight: "bold",
-                        color: "red",
-                        textDecorationLine: "underline",
-                      }}
-                    >
-                      đ
-                    </Text>
-                    <Text
-                      style={{
-                        fontSize: 10,
-                        fontWeight: "bold",
-                        color: "red",
-                      }}
-                    >
-                      12.000.000
-                    </Text>
-                  </View>
-
-                  {/* <View style={{ flexDirection: 'row' }}>
-                                                        <Image style={styles.start} source={require('../../Image/people.png')} />
-                                                        <Text style={{
-                                                            fontSize: 10,
-                                                            marginLeft: 4
-                                                        }}>
-                                                            (157)
-                                                        </Text>
-                                                    </View> */}
-                </View>
-              </View>
-            </View>
-          );
-        })}
-      </ScrollView>
+      {!!title && <Text style={styles.rcmService}>{title}</Text>}
+      <View>
+        <ScrollView horizontal>{items.map(renderItem)}</ScrollView>
+      </View>
     </View>
   );
 };
+
+function BranchServiceItem({ item }: { item: BranchService }) {
+  const serviceImage = useMemo(() => {
+    return getImageAvataUrl(
+      item.service.representationFileArr[0],
+      "https://img2.soyoung.com/product/20230204/6/4c37c3bc52acc601968d58619dbb4336_400_300.jpg"
+    );
+  }, [item]);
+
+  return (
+    <View style={styles.itemContainer}>
+      <FastImage style={styles.serviceImage} uri={serviceImage} />
+      <Text color={"black"} size={10} weight="bold" numberOfLines={1} top={4}>
+        {item.service.name}
+      </Text>
+      <CountStar2
+        size={10}
+        rating={item.service.averageRating}
+        count={item.service.reviewCount}
+      />
+      <Text size={10} weight="bold" color={RED}>
+        {`₫${formatMonney(item.service.price)}`}
+      </Text>
+    </View>
+  );
+}
 
 export default TopService;
 
@@ -119,11 +70,24 @@ const styles = StyleSheet.create({
   },
   container: {
     width: _widthScale(360),
-    minHeight: 200,
     borderRadius: _moderateScale(8),
     backgroundColor: "white",
     alignSelf: "center",
     marginTop: _moderateScale(0),
     padding: _moderateScale(8 * 2),
+    gap: 8,
+  },
+  itemContainer: {
+    width: 100,
+    backgroundColor: "white",
+    borderBottomLeftRadius: 8,
+    borderBottomRightRadius: 8,
+    marginRight: 8 * 1,
+  },
+  serviceImage: {
+    width: 100,
+    height: 75,
+    borderTopLeftRadius: 8,
+    borderTopRightRadius: 8,
   },
 });

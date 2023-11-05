@@ -1,6 +1,7 @@
 import { generateActionsGroup } from "@Redux/helper";
 import {
   GET_BRANCH_DETAILS,
+  GET_BRANCH_DOCTORS,
   GET_BRANCH_LIST,
   LOAD_MORE_BRANCH_LIST,
 } from "./types";
@@ -18,3 +19,5 @@ export const loadMoreBranchList = generateActionsGroup<
 >(LOAD_MORE_BRANCH_LIST);
 
 export const getBranchDetails = generateActionsGroup(GET_BRANCH_DETAILS);
+
+export const getBranchDoctors = generateActionsGroup(GET_BRANCH_DOCTORS);

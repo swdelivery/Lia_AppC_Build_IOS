@@ -47,11 +47,9 @@ const DetailBranch = () => {
     },
   });
 
-  console.log({ data });
-
   return (
     <Screen safeBottom>
-      <StatusBar barStyle={"light-content"} />
+      <StatusBar barStyle={"dark-content"} />
       <Header scrollY={scrollY} title={data?.name} />
       <CoverImage scrollY={scrollY} />
       <Animated.ScrollView
@@ -66,7 +64,9 @@ const DetailBranch = () => {
           <ListDoctor />
           <ListDiary />
           <ConsultanCus />
-          <TopService />
+          {data?.branchServices?.length > 0 && (
+            <TopService title="Dịch vụ phổ biến" items={data.branchServices} />
+          )}
           <Feedback />
           <QandA />
         </Column>

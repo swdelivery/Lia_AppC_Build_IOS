@@ -19,7 +19,7 @@ const DEFAULT_SOURCE = require('../../Image/logo.png');
 
 function Image({
   auto = false,
-  placeholder = DEFAULT_SOURCE,
+  placeholder,
   placeholderComponent,
   // source,
   style,
@@ -29,7 +29,7 @@ function Image({
 }: ImageProps) {
   const containerStyle: any = useMemo(
     () => StyleSheet.flatten(style) || {},
-    [style],
+    [style]
   );
   const [autoStyle, setAutoStyle] = useState<ViewStyle>({
     width: containerStyle.width,
@@ -40,12 +40,12 @@ function Image({
   const handleLoad = useCallback(
     (evt: OnLoadEvent) => {
       if (auto) {
-        const {width, height} = evt.nativeEvent;
+        const { width, height } = evt.nativeEvent;
         const ratio = width / height;
         if (containerStyle.width) {
           // Auto height
           const newHeight = containerStyle.width / ratio;
-          console.log({newHeight});
+          console.log({ newHeight });
 
           setAutoStyle({
             width: containerStyle.width,
@@ -69,17 +69,17 @@ function Image({
         onReady();
       }
     },
-    [auto, containerStyle, onReady],
+    [auto, containerStyle, onReady]
   );
 
   const normalisedSource = useMemo(
     () =>
-      typeof uri === 'string' &&
+      typeof uri === "string" &&
       // @ts-ignore
-      (!uri.includes('/') || !uri.includes('.'))
+      (!uri.includes("/") || !uri.includes("."))
         ? null
-        : {uri},
-    [uri],
+        : { uri },
+    [uri]
   );
 
   return (
