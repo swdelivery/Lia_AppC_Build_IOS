@@ -46,72 +46,82 @@ const Banner = (props) => {
     }
 
     return (
+      <View
+        onLayout={(e) => {
+          console.log({ ...e });
+          props?.setHeightBanner(e?.nativeEvent?.layout?.height);
+        }}
+        style={[styles.banner, shadow]}
+      >
+        <ImageView
+          images={infoDoctor?.treatmentDoctorFileArr?.map((item) => {
+            return {
+              uri: `${URL_ORIGINAL}${item?.fileUpload?.link}`,
+            };
+          })}
+          onRequestClose={() => {
+            setShowImageViewing(false);
+          }}
+          imageIndex={indexCurrImageView}
+          visible={showImageViewing}
+        />
+
+        <Image
+          style={styles.avatar}
+          source={{
+            uri: `${URL_ORIGINAL}${infoDoctor?.avatar?.link}`,
+          }}
+        />
+
         <View
-            onLayout={(e) => {
-                console.log({ ...e });
-                props?.setHeightBanner(e?.nativeEvent?.layout?.height)
+          style={{
+            height: _moderateScale(8 * 5.5),
+          }}
+        />
+        <View style={{ alignItems: "center" }}>
+          <Text style={styles.banner__name__doctor}>{infoDoctor?.name}</Text>
+          <CountStar2
+            count={infoDoctor?.reviewCount}
+            rating={infoDoctor?.averageRating}
+          />
+          <View
+            style={{
+              height: _moderateScale(4),
             }}
-            style={[styles.banner, shadow]}>
+          />
+          <Text>
+            {infoDoctor?.position} <Text style={{ color: "grey" }}>|</Text>{" "}
+            {infoDoctor?.experience}
+          </Text>
 
-            <ImageView
-                images={infoDoctor?.treatmentDoctorFileArr?.map(item => {
-                    return {
-                        uri: `${URL_ORIGINAL}${item?.fileUpload?.link}`,
-                    }
-                })}
-                onRequestClose={() => {
-                    setShowImageViewing(false)
-                }}
-                imageIndex={indexCurrImageView}
-                visible={showImageViewing}
-            />
+          <View
+            style={{
+              flexDirection: "row",
+              flexWrap: "wrap",
+              marginTop: 8,
+            }}
+          >
+            {infoDoctor?.treatmentDoctorFileArr?.map((item, index) => {
+              return (
+                <>
+                  <Certificate
+                    handlePress={() => {
+                      setShowImageViewing(true);
+                      setIndexCurrImageView(index);
+                    }}
+                    key={index}
+                    name={item?.name}
+                    bg={"black"}
+                  />
+                  <View style={{ width: 4 }} />
+                </>
+              );
+            })}
+          </View>
 
-            <Image
-                style={styles.avatar}
-                source={{
-                    uri: `${URL_ORIGINAL}${infoDoctor?.avatar?.link}`
-                }} />
-
-            <View style={{
-                height: _moderateScale(8 * 5.5)
-            }} />
-            <View style={{ alignItems: 'center' }}>
-                <Text style={styles.banner__name__doctor}>
-                    {
-                        infoDoctor?.name
-                    }
-                </Text>
-                <CountStar2 count={infoDoctor?.countPartner} rating={infoDoctor?.reviewCount} />
-                <View style={{
-                    height: _moderateScale(4)
-                }} />
-                <Text>
-                    {infoDoctor?.position} <Text style={{ color: 'grey' }}>|</Text> {infoDoctor?.experience}
-                </Text>
-
-                <View style={{
-                    flexDirection: 'row',
-                    flexWrap: 'wrap',
-                    marginTop: 8
-                }}>
-                    {
-                        infoDoctor?.treatmentDoctorFileArr?.map((item, index) => {
-                            return (
-                                <>
-                                    <Certificate handlePress={() => {
-                                        setShowImageViewing(true)
-                                        setIndexCurrImageView(index)
-                                    }} key={index} name={item?.name} bg={"black"} />
-                                    <View style={{ width: 4 }} />
-                                </>
-                            )
-                        })
-                    }
-                </View>
-
-                <View style={{ height: _moderateScale(8 * 1) }} />
-                <View style={styles.infoHorizon}>
-                    {/* <View style={styles.infoHorizon__box}>
+          <View style={{ height: _moderateScale(8 * 1) }} />
+          <View style={styles.infoHorizon}>
+            {/* <View style={styles.infoHorizon__box}>
                         <Text style={styles.infoHorizon__box__textUp}>
                             195
                         </Text>
@@ -119,228 +129,317 @@ const Banner = (props) => {
                             ABC
                         </Text>
                     </View> */}
-                    <View style={styles.infoHorizon__box}>
-                        <Text style={styles.infoHorizon__box__textUp}>
-                            {
-                                infoDoctor?.reviewCount
-                            }
-                        </Text>
-                        <Text style={styles.infoHorizon__box__textDown}>
-                            Lượt đánh giá
-                        </Text>
-                    </View>
-                    <View style={styles.infoHorizon__box}>
-                        <Text style={styles.infoHorizon__box__textUp}>
-                            {
-                                infoDoctor?.countPartner
-                            }
-                        </Text>
-                        <Text style={styles.infoHorizon__box__textDown}>
-                            Khách đã điều trị
-                        </Text>
-                    </View>
-
-                </View>
-                <View style={{ height: 8 }} />
-
-                <View style={{ width: '100%', paddingRight: _moderateScale(8), alignItems: 'flex-start' }}>
-                    <View style={[styles.box__child, { marginLeft: _moderateScale(8 * 2) }]}>
-                        <Image style={styles.iconLike} source={require('../../../Image/like.png')} />
-                        <View style={{ width: 4 }} />
-                        <Text style={{ fontSize: _moderateScale(14), fontWeight: '500' }}>
-                            Chuyên dự án: {infoDoctor?.specialization}
-                        </Text>
-                    </View>
-
-                    <View style={{ height: 8 }} />
-                    <ScrollView showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingLeft: _moderateScale(8 * 2) }} horizontal>
-                        {
-                            [1, 2, 3, 4, 5]?.map((item, index) => {
-                                return (
-                                    <View key={index} style={{
-                                        width: 100,
-                                        // height: 180,
-                                        backgroundColor: 'white',
-                                        borderBottomLeftRadius: 8,
-                                        borderBottomRightRadius: 8,
-                                        marginRight: 8 * 1
-                                    }}>
-                                        <View>
-                                            <Image
-                                                style={{
-                                                    width: 100,
-                                                    height: 75,
-                                                    borderTopLeftRadius: 8,
-                                                    borderTopRightRadius: 8
-                                                }}
-                                                source={{ uri: `https://img2.soyoung.com/product/20230204/6/4c37c3bc52acc601968d58619dbb4336_400_300.jpg` }} />
-                                        </View>
-                                        <View style={{
-                                            padding: 4
-                                        }}>
-                                            <Text
-                                                numberOfLines={1}
-                                                style={{
-                                                    fontSize: 11,
-                                                    fontWeight: 'bold'
-                                                }}>Loại bỏ bọng mắt Pinhole</Text>
-
-                                            <View>
-                                                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                                    <Image style={{ width: 8 * 1.25, height: 8 * 1.25, marginLeft: 1, resizeMode: 'contain' }} source={require('../../../Image/a_star2.png')} />
-                                                    <Image style={{ width: 8 * 1.25, height: 8 * 1.25, marginLeft: 1, resizeMode: 'contain' }} source={require('../../../Image/a_star2.png')} />
-                                                    <Image style={{ width: 8 * 1.25, height: 8 * 1.25, marginLeft: 1, resizeMode: 'contain' }} source={require('../../../Image/a_star2.png')} />
-                                                    <Image style={{ width: 8 * 1.25, height: 8 * 1.25, marginLeft: 1, resizeMode: 'contain' }} source={require('../../../Image/a_star2.png')} />
-                                                    <Image style={{ width: 8 * 1.25, height: 8 * 1.25, marginLeft: 1, resizeMode: 'contain' }} source={require('../../../Image/a_star2.png')} />
-
-                                                    <Text style={{
-                                                        fontSize: 10,
-                                                        marginLeft: 4
-                                                    }}>
-                                                        (320)
-                                                    </Text>
-                                                </View>
-                                            </View>
-
-                                            <View style={{ marginTop: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-
-                                                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                                    <Text
-                                                        style={{
-                                                            fontSize: 11,
-                                                            fontWeight: 'bold',
-                                                            color: 'red',
-                                                            textDecorationLine: 'underline'
-                                                        }}
-                                                    >
-                                                        đ
-                                                    </Text>
-                                                    <Text style={{
-                                                        fontSize: 10,
-                                                        fontWeight: 'bold',
-                                                        color: 'red'
-                                                    }}>
-                                                        12.000.000
-                                                    </Text>
-                                                </View>
-                                            </View>
-                                        </View>
-                                    </View>
-                                )
-                            })
-                        }
-                    </ScrollView>
-                </View>
-
-                <View style={styles.box}>
-
-                    <View style={{ height: 4 }} />
-                    <View style={styles.box__child}>
-                        <Image style={styles.iconLike} source={require('../../../Image/diamon.png')} />
-                        <View style={{ width: 4 }} />
-                        <Text style={{ fontSize: _moderateScale(14), fontWeight: '500' }}>
-                            Danh sách Nhật ký nổi bật 2023
-                        </Text>
-                    </View>
-
-                </View>
-
-
-
+            <View style={styles.infoHorizon__box}>
+              <Text style={styles.infoHorizon__box__textUp}>
+                {infoDoctor?.reviewCount}
+              </Text>
+              <Text style={styles.infoHorizon__box__textDown}>
+                Lượt đánh giá
+              </Text>
             </View>
-            <View style={{ marginTop: _moderateScale(8 * 1), paddingRight: _moderateScale(8) }}>
-                <ScrollView showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingLeft: _moderateScale(8 * 2) }} horizontal>
-                    {
-                        listDiary?.map((item, index) => {
-                            return (
-                                <TouchableOpacity
-                                onPress={()=>{
-                                    navigation.navigate(ScreenKey.DETAIL_NEW_FEED, { idPost: item?.postId })
-                                }}
-                                activeOpacity={.9}
-                                key={index} style={[styles.box__diary]}>
-                                    <View style={{
-                                        flexDirection: 'row',
-                                        margin: _moderateScale(8)
-                                    }}>
-                                        <Image
-                                            style={styles.avatar__customer}
-                                            source={{
-                                                uri: `${URL_ORIGINAL}${item?.partner?.fileAvatar?.link}`
-                                            }} />
-                                        <View style={{ flex: 1 }}>
-                                            <Text
-                                                numberOfLines={1}
-                                                style={styles.customer__name}>
-                                                {
-                                                    item?.partner?.name
-                                                }
-                                            </Text>
-                                            <Text
-                                                numberOfLines={1}
-                                                style={styles.customer__updateTime}>
-                                                Cập nhật <Text>{moment(item?.updated).startOf('minute').fromNow()}</Text>
-                                            </Text>
-                                        </View>
-                                    </View>
+            <View style={styles.infoHorizon__box}>
+              <Text style={styles.infoHorizon__box__textUp}>
+                {infoDoctor?.countPartner}
+              </Text>
+              <Text style={styles.infoHorizon__box__textDown}>
+                Khách đã điều trị
+              </Text>
+            </View>
+          </View>
+          <View style={{ height: 8 }} />
 
-                                    <View style={styles.box__diary__name}>
-                                        <View style={styles.verticalLine} />
-                                        <Text style={styles.box__diary__nameService}>
-                                            {
-                                                item?.serviceName
-                                            }
-                                        </Text>
-                                    </View>
-
-                                    <View style={{
-                                        flexDirection: 'row',
-                                        justifyContent: 'space-between',
-                                        paddingHorizontal: _moderateScale(8)
-                                    }}>
-                                        <View style={styles.box__diary__image}>
-                                            <View style={styles.absoluteText}>
-                                                <Text style={{
-                                                    fontSize: _moderateScale(12),
-                                                    color: 'white',
-                                                    fontWeight: '500'
-                                                }}>
-                                                    Trước
-                                                </Text>
-                                            </View>
-                                            <Image
-                                                style={styles.box__diary__image}
-                                                source={{
-                                                    uri: `${URL_ORIGINAL}${item?.imageBeforeTreatment[0]?.link}`
-                                                }} />
-                                        </View>
-                                        <View style={styles.box__diary__image}>
-                                            <View style={styles.absoluteText}>
-                                                <Text style={{
-                                                    fontSize: _moderateScale(12),
-                                                    color: 'white',
-                                                    fontWeight: '500'
-                                                }}>
-                                                    Sau
-                                                </Text>
-                                            </View>
-                                            <Image
-                                                style={styles.box__diary__image}
-                                                source={{
-                                                    uri: `${URL_ORIGINAL}${item?.imageAfterTreatment[0]?.link}`
-                                                }} />
-                                        </View>
-                                    </View>
-
-                                </TouchableOpacity>
-                            )
-                        })
-                    }
-                </ScrollView>
+          <View
+            style={{
+              width: "100%",
+              paddingRight: _moderateScale(8),
+              alignItems: "flex-start",
+            }}
+          >
+            <View
+              style={[styles.box__child, { marginLeft: _moderateScale(8 * 2) }]}
+            >
+              <Image
+                style={styles.iconLike}
+                source={require("../../../Image/like.png")}
+              />
+              <View style={{ width: 4 }} />
+              <Text style={{ fontSize: _moderateScale(14), fontWeight: "500" }}>
+                Chuyên dự án: {infoDoctor?.specialization}
+              </Text>
             </View>
 
+            <View style={{ height: 8 }} />
+            <ScrollView
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={{ paddingLeft: _moderateScale(8 * 2) }}
+              horizontal
+            >
+              {[1, 2, 3, 4, 5]?.map((item, index) => {
+                return (
+                  <View
+                    key={index}
+                    style={{
+                      width: 100,
+                      // height: 180,
+                      backgroundColor: "white",
+                      borderBottomLeftRadius: 8,
+                      borderBottomRightRadius: 8,
+                      marginRight: 8 * 1,
+                    }}
+                  >
+                    <View>
+                      <Image
+                        style={{
+                          width: 100,
+                          height: 75,
+                          borderTopLeftRadius: 8,
+                          borderTopRightRadius: 8,
+                        }}
+                        source={{
+                          uri: `https://img2.soyoung.com/product/20230204/6/4c37c3bc52acc601968d58619dbb4336_400_300.jpg`,
+                        }}
+                      />
+                    </View>
+                    <View
+                      style={{
+                        padding: 4,
+                      }}
+                    >
+                      <Text
+                        numberOfLines={1}
+                        style={{
+                          fontSize: 11,
+                          fontWeight: "bold",
+                        }}
+                      >
+                        Loại bỏ bọng mắt Pinhole
+                      </Text>
+
+                      <View>
+                        <View
+                          style={{ flexDirection: "row", alignItems: "center" }}
+                        >
+                          <Image
+                            style={{
+                              width: 8 * 1.25,
+                              height: 8 * 1.25,
+                              marginLeft: 1,
+                              resizeMode: "contain",
+                            }}
+                            source={require("../../../Image/a_star2.png")}
+                          />
+                          <Image
+                            style={{
+                              width: 8 * 1.25,
+                              height: 8 * 1.25,
+                              marginLeft: 1,
+                              resizeMode: "contain",
+                            }}
+                            source={require("../../../Image/a_star2.png")}
+                          />
+                          <Image
+                            style={{
+                              width: 8 * 1.25,
+                              height: 8 * 1.25,
+                              marginLeft: 1,
+                              resizeMode: "contain",
+                            }}
+                            source={require("../../../Image/a_star2.png")}
+                          />
+                          <Image
+                            style={{
+                              width: 8 * 1.25,
+                              height: 8 * 1.25,
+                              marginLeft: 1,
+                              resizeMode: "contain",
+                            }}
+                            source={require("../../../Image/a_star2.png")}
+                          />
+                          <Image
+                            style={{
+                              width: 8 * 1.25,
+                              height: 8 * 1.25,
+                              marginLeft: 1,
+                              resizeMode: "contain",
+                            }}
+                            source={require("../../../Image/a_star2.png")}
+                          />
+
+                          <Text
+                            style={{
+                              fontSize: 10,
+                              marginLeft: 4,
+                            }}
+                          >
+                            (320)
+                          </Text>
+                        </View>
+                      </View>
+
+                      <View
+                        style={{
+                          marginTop: 4,
+                          flexDirection: "row",
+                          alignItems: "center",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <View
+                          style={{ flexDirection: "row", alignItems: "center" }}
+                        >
+                          <Text
+                            style={{
+                              fontSize: 11,
+                              fontWeight: "bold",
+                              color: "red",
+                              textDecorationLine: "underline",
+                            }}
+                          >
+                            đ
+                          </Text>
+                          <Text
+                            style={{
+                              fontSize: 10,
+                              fontWeight: "bold",
+                              color: "red",
+                            }}
+                          >
+                            12.000.000
+                          </Text>
+                        </View>
+                      </View>
+                    </View>
+                  </View>
+                );
+              })}
+            </ScrollView>
+          </View>
+
+          <View style={styles.box}>
+            <View style={{ height: 4 }} />
+            <View style={styles.box__child}>
+              <Image
+                style={styles.iconLike}
+                source={require("../../../Image/diamon.png")}
+              />
+              <View style={{ width: 4 }} />
+              <Text style={{ fontSize: _moderateScale(14), fontWeight: "500" }}>
+                Danh sách Nhật ký nổi bật 2023
+              </Text>
+            </View>
+          </View>
         </View>
-    )
+        <View
+          style={{
+            marginTop: _moderateScale(8 * 1),
+            paddingRight: _moderateScale(8),
+          }}
+        >
+          <ScrollView
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{ paddingLeft: _moderateScale(8 * 2) }}
+            horizontal
+          >
+            {listDiary?.map((item, index) => {
+              return (
+                <TouchableOpacity
+                  onPress={() => {
+                    navigation.navigate(ScreenKey.DETAIL_NEW_FEED, {
+                      idPost: item?.postId,
+                    });
+                  }}
+                  activeOpacity={0.9}
+                  key={index}
+                  style={[styles.box__diary]}
+                >
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      margin: _moderateScale(8),
+                    }}
+                  >
+                    <Image
+                      style={styles.avatar__customer}
+                      source={{
+                        uri: `${URL_ORIGINAL}${item?.partner?.fileAvatar?.link}`,
+                      }}
+                    />
+                    <View style={{ flex: 1 }}>
+                      <Text numberOfLines={1} style={styles.customer__name}>
+                        {item?.partner?.name}
+                      </Text>
+                      <Text
+                        numberOfLines={1}
+                        style={styles.customer__updateTime}
+                      >
+                        Cập nhật{" "}
+                        <Text>
+                          {moment(item?.updated).startOf("minute").fromNow()}
+                        </Text>
+                      </Text>
+                    </View>
+                  </View>
+
+                  <View style={styles.box__diary__name}>
+                    <View style={styles.verticalLine} />
+                    <Text style={styles.box__diary__nameService}>
+                      {item?.serviceName}
+                    </Text>
+                  </View>
+
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      paddingHorizontal: _moderateScale(8),
+                    }}
+                  >
+                    <View style={styles.box__diary__image}>
+                      <View style={styles.absoluteText}>
+                        <Text
+                          style={{
+                            fontSize: _moderateScale(12),
+                            color: "white",
+                            fontWeight: "500",
+                          }}
+                        >
+                          Trước
+                        </Text>
+                      </View>
+                      <Image
+                        style={styles.box__diary__image}
+                        source={{
+                          uri: `${URL_ORIGINAL}${item?.imageBeforeTreatment[0]?.link}`,
+                        }}
+                      />
+                    </View>
+                    <View style={styles.box__diary__image}>
+                      <View style={styles.absoluteText}>
+                        <Text
+                          style={{
+                            fontSize: _moderateScale(12),
+                            color: "white",
+                            fontWeight: "500",
+                          }}
+                        >
+                          Sau
+                        </Text>
+                      </View>
+                      <Image
+                        style={styles.box__diary__image}
+                        source={{
+                          uri: `${URL_ORIGINAL}${item?.imageAfterTreatment[0]?.link}`,
+                        }}
+                      />
+                    </View>
+                  </View>
+                </TouchableOpacity>
+              );
+            })}
+          </ScrollView>
+        </View>
+      </View>
+    );
 }
 
 export default Banner

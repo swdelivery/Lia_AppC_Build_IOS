@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 const MainInfo = () => {
   const { data } = useSelector(getBranchDetailsState);
   return (
-    <View style={{ paddingHorizontal: _moderateScale(8 * 2) }}>
+    <View style={styles.container}>
       <Text color={"grey"} size={14}>
         {data?.description}
       </Text>
@@ -18,4 +18,6 @@ const MainInfo = () => {
 
 export default MainInfo;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: { paddingHorizontal: _moderateScale(8 * 2) },
+});

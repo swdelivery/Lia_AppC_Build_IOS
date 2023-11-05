@@ -20,3 +20,11 @@ export type ServiceGroup = {
   id: string;
   fileAvatar: FileAvatar;
 };
+
+export type Service = {
+  price: number;
+  _id: string;
+  name: string;
+  code: string;
+  id: string;
+};

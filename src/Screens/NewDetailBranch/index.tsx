@@ -59,7 +59,7 @@ const DetailBranch = () => {
       >
         <BannerInfo />
         <Wave />
-        <Column gap={16}>
+        <Column gap={30}>
           <MainInfo />
           <ListDoctor branch={data} />
           <ListDiary branch={data} />
@@ -70,7 +70,7 @@ const DetailBranch = () => {
               items={data.branchServices}
             />
           )}
-          <Feedback />
+          <Feedback branch={data} />
           <QandA />
         </Column>
       </Animated.ScrollView>
@@ -84,5 +84,6 @@ export default DetailBranch;
 const styles = StyleSheet.create({
   contentContainer: {
     paddingTop: 200,
+    backgroundColor: "transparent",
   },
 });

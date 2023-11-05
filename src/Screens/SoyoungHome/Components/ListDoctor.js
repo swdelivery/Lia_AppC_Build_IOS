@@ -45,7 +45,9 @@ const ListDoctor = memo(() => {
         return (
             <TouchableOpacity
             onPress={()=>{
-                navigation.navigate(ScreenKey.DETAIL_DOCTOR, {_idDoctor: item?._id})
+                navigation.navigate(ScreenKey.DETAIL_DOCTOR, {
+                  idDoctor: item?._id,
+                });
             }}
             style={{
                 marginLeft: 8,

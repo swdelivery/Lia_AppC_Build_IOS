@@ -33,3 +33,13 @@ export type FileAvatar = {
   __v: number;
   id: string;
 } & Timestamp;
+
+export type FileUpload = {
+  isDelete: boolean;
+  _id: string;
+  name: string;
+  userCreate: string;
+  __v: number;
+  id: string;
+  fileUpload: FileAvatar;
+};

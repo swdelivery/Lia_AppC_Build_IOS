@@ -13,7 +13,10 @@ const ConsultanCus = () => {
       <Text
         style={[
           styleText.textBlackNorBold,
-          { padding: _moderateScale(8 * 2), paddingBottom: _moderateScale(8) },
+          {
+            paddingHorizontal: _moderateScale(8 * 2),
+            paddingBottom: _moderateScale(8),
+          },
         ]}
       >
         Bạn đang gặp vấn đề gì?

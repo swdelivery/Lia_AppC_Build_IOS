@@ -1,9 +1,11 @@
 import { all, call, put, takeLatest } from "redux-saga/effects";
 import {
   GET_BRANCH_DETAILS,
+  GET_BRANCH_DIARY,
   GET_BRANCH_DOCTORS,
   GET_BRANCH_LIST,
   GET_BRANCH_REVIEWS,
+  GetBranchDiaryParams,
   GetBranchReviewsParams,
 } from "./types";
 import * as actions from "./actions";
@@ -66,11 +68,25 @@ function* getBranchReviews({ payload }: BaseAction<GetBranchReviewsParams>) {
   }
 }
 
+function* getBranchDiary({ payload }: BaseAction<GetBranchDiaryParams>) {
+  try {
+    const data = yield call(PartnerService.getDiary, {
+      branchCode: {
+        equal: payload.branchCode,
+      },
+    });
+    yield put(actions.getBranchDiary.success(data));
+  } catch (error: any) {
+    yield put(actions.getBranchDiary.failure(error.message));
+  }
+}
+
 export default function* sagas() {
   yield all([
     takeLatest(GET_BRANCH_LIST.REQUEST, getBranchList),
     takeLatest(GET_BRANCH_DETAILS.REQUEST, getBranchDetails),
     takeLatest(GET_BRANCH_DOCTORS.REQUEST, getBranchDoctors),
     takeLatest(GET_BRANCH_REVIEWS.REQUEST, getBranchReviews),
+    takeLatest(GET_BRANCH_DIARY.REQUEST, getBranchDiary),
   ]);
 }

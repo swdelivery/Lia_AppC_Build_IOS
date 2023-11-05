@@ -12,6 +12,7 @@ type ScreenParams = {
     routeName: string;
   };
   [ScreenKey.DETAIL_BRAND]: { idBranch: string };
+  [ScreenKey.DETAIL_DOCTOR]: { idDoctor: string };
 };
 
 export type RootStackParamsList = {

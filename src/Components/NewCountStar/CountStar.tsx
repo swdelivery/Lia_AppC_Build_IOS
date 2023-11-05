@@ -7,7 +7,7 @@ import { GREEN_SUCCESS, GREY, MAIN_BG, TITLE_GREY } from "@Constant/Color";
 type Props = {
   rating: number;
   count?: number;
-  size?: number;
+  size?: 10 | 14 | 16;
   larger?: boolean;
   lightContent?: boolean;
 };
@@ -52,10 +52,11 @@ const CountStar2 = ({
           size={iconSize}
         />
       </Row>
-
-      <Text color={lightContent ? "white" : "black"} size={size}>
-        {`(${count})`}
-      </Text>
+      {!!count && (
+        <Text color={lightContent ? "white" : "black"} size={size}>
+          {`(${count})`}
+        </Text>
+      )}
     </Row>
   );
 };

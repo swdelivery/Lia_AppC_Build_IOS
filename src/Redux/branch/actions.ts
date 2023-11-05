@@ -1,9 +1,11 @@
 import { generateActionsGroup } from "@Redux/helper";
 import {
   GET_BRANCH_DETAILS,
+  GET_BRANCH_DIARY,
   GET_BRANCH_DOCTORS,
   GET_BRANCH_LIST,
   GET_BRANCH_REVIEWS,
+  GetBranchDiaryParams,
   GetBranchDoctorsParams,
   GetBranchReviewsParams,
   LOAD_MORE_BRANCH_LIST,
@@ -13,6 +15,7 @@ import { DataPagingPayload } from "@typings/api";
 import { Branch } from "@typings/branch";
 import { Doctor } from "@typings/doctor";
 import { Review } from "@typings/review";
+import { Diary } from "@typings/diary";
 
 export const getBranchList = generateActionsGroup<
   void,
@@ -40,3 +43,8 @@ export const getBranchReviews = generateActionsGroup<
   GetBranchReviewsParams,
   Review[]
 >(GET_BRANCH_REVIEWS);
+
+export const getBranchDiary = generateActionsGroup<
+  GetBranchDiaryParams,
+  Diary[]
+>(GET_BRANCH_DIARY);

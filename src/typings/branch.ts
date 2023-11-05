@@ -1,4 +1,4 @@
-import { FileAvatar, Timestamp } from "./common";
+import { FileAvatar, FileUpload, Timestamp } from "./common";
 
 export type BranchService = {
   isDelete: false;
@@ -64,15 +64,7 @@ export type Branch = {
   id: string;
   description: string;
   bannerFileArr: FileAvatar[];
-  branchFileArr: {
-    isDelete: boolean;
-    _id: string;
-    name: string;
-    userCreate: string;
-    __v: number;
-    id: string;
-    fileUpload: FileAvatar;
-  }[];
+  branchFileArr: FileUpload[];
   branchServices: BranchService[];
   configureArticleArr: string[];
 } & Timestamp;

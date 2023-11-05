@@ -7,7 +7,7 @@ import Text from "@Components/Text";
 const Wave = () => {
   return (
     <View style={styles.wave}>
-      <IconLiXi width={_moderateScale(8 * 4)} height={_moderateScale(8 * 4)} />
+      {/* <IconLiXi width={_moderateScale(8 * 4)} height={_moderateScale(8 * 4)} />
       <View style={{ width: _moderateScale(8 * 1) }} />
       <View style={styles.voucherBox}>
         <View style={styles.voucherBox__dotWhiteL} />
@@ -30,7 +30,7 @@ const Wave = () => {
         <View style={styles.voucherBox__dotWhiteR} />
 
         <Text style={styles.voucherBox__text}>2.900K</Text>
-      </View>
+      </View> */}
     </View>
   );
 };
@@ -70,13 +70,13 @@ const styles = StyleSheet.create({
   wave: {
     flexDirection: "row",
     alignItems: "center",
-    width: _width,
-    // height: _moderateScale(8 * 6),
-    paddingTop: 16,
-    borderTopLeftRadius: _moderateScale(8 * 4),
-    borderTopRightRadius: _moderateScale(8 * 4),
-    top: -_moderateScale(8 * 3),
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
     backgroundColor: "white",
+    paddingTop: 20,
+    marginTop: -20,
+    height: 40,
+    marginBottom: -10,
     paddingHorizontal: _moderateScale(8 * 2),
   },
 });

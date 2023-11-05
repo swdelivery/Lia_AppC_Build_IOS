@@ -10,16 +10,23 @@ import useRequireLoginCallback from "src/Hooks/useRequireLoginAction";
 import { useNavigation } from "@react-navigation/native";
 import ScreenKey from "@Navigation/ScreenKey";
 import { useFocused } from "src/Hooks/useNavigation";
+import { getBranchDetailsState } from "@Redux/branch/selectors";
 
 const BottomAction = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const { data } = useSelector(getBranchDetailsState);
 
   const handleBooking = useRequireLoginCallback(() => {
-    navigation.navigate(ScreenKey.CREATE_BOOKING, {
-      //   choiceBranch: currentBranch,
+    // navigation.navigate(ScreenKey.CREATE_BOOKING, {
+    //   //   choiceBranch: currentBranch,
+    // });
+    navigation.navigate(ScreenKey.BOOKING_FOR_BRANCH, {
+      infoBranch: data,
+      branchCode: data?.code,
+      refCode: "",
     });
-  }, []);
+  }, [data]);
 
   return (
     <View style={styles.container}>

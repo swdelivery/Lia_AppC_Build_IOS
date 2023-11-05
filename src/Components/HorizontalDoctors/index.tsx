@@ -1,12 +1,9 @@
-import FastImage from "@Components/FastImage";
-import CountStar2 from "@Components/NewCountStar/CountStar";
 import Text from "@Components/Text";
 import { _moderateScale } from "@Constant/Scale";
-import ScreenKey from "@Navigation/ScreenKey";
 import { Doctor } from "@typings/doctor";
 import React from "react";
-import { View, StyleSheet, ScrollView, Pressable } from "react-native";
-import { useNavigate } from "src/Hooks/useNavigation";
+import { View, StyleSheet, ScrollView } from "react-native";
+import DoctorItem from "./components/DoctorItem";
 
 type Props = {
   title?: string;
@@ -14,7 +11,10 @@ type Props = {
 };
 
 export default function HorizontalDoctors({ title, items }: Props) {
-  const { navigate } = useNavigate();
+  function renderItem(item: Doctor, index: number) {
+    return <DoctorItem item={item} key={item._id} />;
+  }
+
   return (
     <View>
       {!!title && (
@@ -33,21 +33,7 @@ export default function HorizontalDoctors({ title, items }: Props) {
           contentContainerStyle={styles.contentContainer}
           horizontal
         >
-          {items?.map((item, index) => {
-            return (
-              <Pressable
-                key={item?._id}
-                onPress={navigate(ScreenKey.DETAIL_DOCTOR)}
-                style={styles.doctorItem}
-              >
-                <FastImage style={styles.image} uri={`${item.url}`} />
-                <Text weight="bold" size={12} top={4}>
-                  BS. Pham Thi A
-                </Text>
-                <CountStar2 size={12} rating={4} />
-              </Pressable>
-            );
-          })}
+          {items?.map(renderItem)}
         </ScrollView>
       </View>
     </View>
@@ -55,13 +41,5 @@ export default function HorizontalDoctors({ title, items }: Props) {
 }
 
 const styles = StyleSheet.create({
-  contentContainer: { paddingLeft: _moderateScale(8), gap: 8 },
-  doctorItem: {
-    justifyContent: "center",
-  },
-  image: {
-    width: 100,
-    height: 120,
-    borderRadius: 8,
-  },
+  contentContainer: { paddingHorizontal: 16, gap: 8 },
 });

@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     alignSelf: "center",
     marginTop: _moderateScale(0),
-    padding: _moderateScale(8 * 2),
+    paddingHorizontal: _moderateScale(8 * 2),
     gap: 8,
   },
   itemContainer: {

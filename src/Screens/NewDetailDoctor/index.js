@@ -30,10 +30,10 @@ const DetailDoctor = memo((props) => {
     const [listReview, setListReview] = useState([])
 
     useEffect(() => {
-        if (props?.route?.params?._idDoctor) {
-            _getDetailDoctor(props?.route?.params?._idDoctor)
-        }
-    }, [props?.route?.params?._idDoctor])
+      if (props?.route?.params?.idDoctor) {
+        _getDetailDoctor(props?.route?.params?.idDoctor);
+      }
+    }, [props?.route?.params?.idDoctor]);
 
     useEffect(() => {
         if (infoDoctor?.code) {

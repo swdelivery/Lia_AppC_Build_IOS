@@ -7,3 +7,5 @@ export const getBranchDetailsState = (state: AppState) => state.branch.details;
 export const getBranchDoctorsState = (state: AppState) => state.branch.doctors;
 
 export const getBranchReviewsState = (state: AppState) => state.branch.reviews;
+
+export const getBranchDiaryState = (state: AppState) => state.branch.diary;

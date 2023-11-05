@@ -2,7 +2,11 @@ import { URL_FOR_PARTNER } from "@Constant/Url";
 import createAxios from "../axios";
 import { encodeParams } from "../utils";
 import configs from "src/configs";
-import { GetDoctorListPayload, GetReviewsPayload } from "./types";
+import {
+  GetDiaryPayload,
+  GetDoctorListPayload,
+  GetReviewsPayload,
+} from "./types";
 
 const axios = createAxios(URL_FOR_PARTNER);
 
@@ -58,11 +62,26 @@ const getReview = (
   return axios.get(`/review?${params}`).then(({ data }) => data.data);
 };
 
+const getDiary = (
+  payload: GetDiaryPayload,
+  page = 1,
+  pageSize = configs.apiPageSize
+) => {
+  const params = encodeParams({
+    ...payload,
+    limit: pageSize,
+    page,
+  });
+  return axios
+    .get(`/partner-diary/shared?${params}`)
+    .then(({ data }) => data.data);
+};
+
 export default {
   getServiceGroup,
   getBranchList,
   getBranchById,
   getDoctorList,
   getReview,
-  ß,
+  getDiary,
 };
