@@ -63,7 +63,7 @@ const DetailBranch = () => {
           <MainInfo />
           <ListDoctor branch={data} />
           <ListDiary branch={data} />
-          <ConsultanCus />
+          {/* <ConsultanCus /> */}
           {data?.branchServices?.length > 0 && (
             <HorizontalServices
               title="Dịch vụ phổ biến"
@@ -71,7 +71,7 @@ const DetailBranch = () => {
             />
           )}
           <Feedback branch={data} />
-          <QandA />
+          {/* <QandA /> */}
         </Column>
       </Animated.ScrollView>
       <BottomAction />
