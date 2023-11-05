@@ -1,17 +1,16 @@
 import { createReducer } from "@Redux/helper";
 import { Handler } from "@Redux/types";
-import { GET_BRANCH_DETAILS, SELECT_BRANCH } from "../types";
-import { Branch } from "@typings/branch";
+import { GET_BRANCH_REVIEWS } from "../types";
+import { Review } from "@typings/review";
 
 export type State = {
   isLoading: boolean;
-  data: Branch;
+  data: Review[];
 };
 
 const INITIAL_STATE: State = {
   isLoading: false,
-  // @ts-ignore
-  data: null,
+  data: [],
 };
 
 const request: Handler<State> = (state) => ({
@@ -30,14 +29,8 @@ const success: Handler<State> = (state, { payload }) => ({
   data: payload,
 });
 
-const selectBranch: Handler<State> = (state, { payload }) => ({
-  ...state,
-  data: payload,
-});
-
 export default createReducer(INITIAL_STATE, {
-  [SELECT_BRANCH]: selectBranch,
-  [GET_BRANCH_DETAILS.REQUEST]: request,
-  [GET_BRANCH_DETAILS.SUCCESS]: success,
-  [GET_BRANCH_DETAILS.FAILURE]: failure,
+  [GET_BRANCH_REVIEWS.REQUEST]: request,
+  [GET_BRANCH_REVIEWS.SUCCESS]: success,
+  [GET_BRANCH_REVIEWS.FAILURE]: failure,
 });

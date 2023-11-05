@@ -1,1 +1,3 @@
-export type Doctor = {};
+export type Doctor = {
+  _id: string;
+};

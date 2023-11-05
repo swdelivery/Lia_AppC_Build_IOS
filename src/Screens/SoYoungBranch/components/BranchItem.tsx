@@ -12,15 +12,18 @@ import Certificate from "@Components/Certificate/Certificate";
 import { getImageAvataUrl } from "src/utils/avatar";
 import Icon from "@Components/Icon";
 import { RED } from "@Constant/Color";
-import TopService from "@Screens/NewDetailBranch/Components/TopService";
+import HorizontalServices from "@Components/HorizontalServices";
 import { Branch } from "@typings/branch";
 import linking from "linking";
+import { useDispatch } from "react-redux";
+import { selectBranch } from "@Redux/branch/actions";
 
 type Props = {
   item: Branch;
 };
 
 export default function BranchItem({ item }: Props) {
+  const dispatch = useDispatch();
   const { navigation } = useNavigate();
 
   const avatarSource = useMemo(() => {
@@ -31,8 +34,10 @@ export default function BranchItem({ item }: Props) {
   }, [item]);
 
   const handlePress = useCallback(() => {
+    dispatch(selectBranch(item));
     navigation.navigate(ScreenKey.DETAIL_BRAND, { idBranch: item._id });
   }, [item]);
+
   const handleFilePress = useCallback(
     (item: Branch["branchFileArr"][0]) => () => {
       linking.open(getImageAvataUrl(item.fileUpload));
@@ -80,7 +85,7 @@ export default function BranchItem({ item }: Props) {
         </View>
       </View>
       {item.branchServices.length > 0 && (
-        <TopService items={item.branchServices} />
+        <HorizontalServices items={item.branchServices} />
       )}
     </Pressable>
   );

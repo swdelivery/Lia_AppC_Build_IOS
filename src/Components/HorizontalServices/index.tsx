@@ -1,6 +1,6 @@
 import { StyleSheet, View } from "react-native";
 import React, { useMemo } from "react";
-import { _moderateScale, _widthScale } from "../../../Constant/Scale";
+import { _moderateScale, _widthScale } from "../../Constant/Scale";
 import { ScrollView } from "react-native-gesture-handler";
 import CountStar2 from "@Components/NewCountStar/CountStar";
 import { BranchService } from "@typings/branch";
@@ -14,7 +14,7 @@ type Props = {
   title?: string;
   items: BranchService[];
 };
-const TopService = ({ items, title }: Props) => {
+const HorizontalServices = ({ items, title }: Props) => {
   function renderItem(item: BranchService, index: number) {
     return <BranchServiceItem item={item} key={item._id} />;
   }
@@ -55,7 +55,7 @@ function BranchServiceItem({ item }: { item: BranchService }) {
   );
 }
 
-export default TopService;
+export default HorizontalServices;
 
 const styles = StyleSheet.create({
   start: {

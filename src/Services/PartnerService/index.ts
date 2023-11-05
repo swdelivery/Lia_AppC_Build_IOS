@@ -2,7 +2,7 @@ import { URL_FOR_PARTNER } from "@Constant/Url";
 import createAxios from "../axios";
 import { encodeParams } from "../utils";
 import configs from "src/configs";
-import { GetDoctorListPayload } from "./types";
+import { GetDoctorListPayload, GetReviewsPayload } from "./types";
 
 const axios = createAxios(URL_FOR_PARTNER);
 
@@ -45,9 +45,24 @@ const getDoctorList = (
   return axios.get(`/treatment-doctor?${params}`).then(({ data }) => data.data);
 };
 
+const getReview = (
+  payload: GetReviewsPayload,
+  page = 1,
+  pageSize = configs.apiPageSize
+) => {
+  const params = encodeParams({
+    ...payload,
+    limit: pageSize,
+    page,
+  });
+  return axios.get(`/review?${params}`).then(({ data }) => data.data);
+};
+
 export default {
   getServiceGroup,
   getBranchList,
   getBranchById,
   getDoctorList,
+  getReview,
+  ß,
 };

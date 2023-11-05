@@ -1,13 +1,35 @@
 import { StyleSheet, View, Image } from "react-native";
-import React, { memo } from "react";
+import React, { memo, useEffect } from "react";
 import { _moderateScale } from "../../../Constant/Scale";
 import { styleText } from "../../../Constant/StyleText";
 import { ScrollView } from "react-native-gesture-handler";
 import Text from "@Components/Text";
 import FastImage from "@Components/FastImage";
 import { styleElement } from "@Constant/StyleElement";
+import { useDispatch, useSelector } from "react-redux";
+import { Branch } from "@typings/branch";
+import { getBranchReviews } from "@Redux/branch/actions";
+import { getBranchReviewsState } from "@Redux/branch/selectors";
 
-const ListDiary = memo(() => {
+type Props = {
+  branch: Branch;
+};
+
+const ListDiary = ({ branch }: Props) => {
+  const dispatch = useDispatch();
+  const { data } = useSelector(getBranchReviewsState);
+
+  useEffect(() => {
+    if (!branch) {
+      return;
+    }
+    dispatch(
+      getBranchReviews.request({
+        branchCode: branch.code,
+      })
+    );
+  }, [branch]);
+
   return (
     <View>
       <Text weight="bold" color="black" left={_moderateScale(8 * 2)} bottom={8}>
@@ -16,10 +38,10 @@ const ListDiary = memo(() => {
 
       <ScrollView
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{ paddingLeft: _moderateScale(8 * 2) }}
+        contentContainerStyle={styles.contentContainer}
         horizontal
       >
-        {[1, 2, 3, 4]?.map((item, index) => {
+        {data.map((item, index) => {
           return (
             <View style={[styles.box__diary]}>
               <View
@@ -79,11 +101,14 @@ const ListDiary = memo(() => {
       </ScrollView>
     </View>
   );
-});
+};
 
 export default ListDiary;
 
 const styles = StyleSheet.create({
+  contentContainer: {
+    paddingLeft: _moderateScale(8 * 2),
+  },
   box__diary__name: {
     flexDirection: "row",
     alignItems: "center",

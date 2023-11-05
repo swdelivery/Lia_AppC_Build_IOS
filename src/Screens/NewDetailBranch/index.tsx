@@ -9,7 +9,7 @@ import ListDiary from "./Components/ListDiary";
 import ConsultanCus from "./Components/ConsultanCus";
 import ListDoctor from "./Components/ListDoctor";
 import MainInfo from "./Components/MainInfo";
-import TopService from "./Components/TopService";
+import HorizontalServices from "@Components/HorizontalServices";
 import Feedback from "./Components/Feedback";
 import QandA from "./Components/QandA";
 import BottomAction from "./Components/BottomAction";
@@ -61,11 +61,14 @@ const DetailBranch = () => {
         <Wave />
         <Column gap={16}>
           <MainInfo />
-          <ListDoctor />
-          <ListDiary />
+          <ListDoctor branch={data} />
+          <ListDiary branch={data} />
           <ConsultanCus />
           {data?.branchServices?.length > 0 && (
-            <TopService title="Dịch vụ phổ biến" items={data.branchServices} />
+            <HorizontalServices
+              title="Dịch vụ phổ biến"
+              items={data.branchServices}
+            />
           )}
           <Feedback />
           <QandA />

@@ -16,6 +16,8 @@ const SoYoungBranch = memo(() => {
   );
 
   useFocused(() => {
+    console.log("hehehe");
+    
     getData();
   });
 
