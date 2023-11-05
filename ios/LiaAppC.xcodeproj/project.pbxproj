@@ -694,7 +694,6 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = EPJFRX9T32;
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = EPJFRX9T32;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 i386";
 				INFOPLIST_FILE = LiaAppC/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -710,7 +709,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.liaappc;
 				PRODUCT_NAME = LiaAppC;
 				PROVISIONING_PROFILE = "981936b2-ee26-4b2e-a9ef-af0127ae9357";
-				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc com.liaappc";
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc com.liaappc 1699181825";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -788,16 +787,7 @@
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
-					"-Wl",
-					"-ld_classic",
-					"-Wl",
-					"-ld_classic",
-					"-Wl",
-					"-ld_classic",
-					"-Wl",
-					"-ld_classic",
-					"-Wl",
-					"-ld_classic",
+					" ",
 					"-Wl -ld_classic ",
 				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
@@ -872,16 +862,7 @@
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
-					"-Wl",
-					"-ld_classic",
-					"-Wl",
-					"-ld_classic",
-					"-Wl",
-					"-ld_classic",
-					"-Wl",
-					"-ld_classic",
-					"-Wl",
-					"-ld_classic",
+					" ",
 					"-Wl -ld_classic ",
 				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
