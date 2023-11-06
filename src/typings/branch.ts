@@ -67,4 +67,5 @@ export type Branch = {
   branchFileArr: FileUpload[];
   branchServices: BranchService[];
   configureArticleArr: string[];
+  branchProblemFileArr: FileUpload[];
 } & Timestamp;

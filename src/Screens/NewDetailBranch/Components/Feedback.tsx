@@ -8,6 +8,7 @@ import { getBranchReviews } from "@Redux/branch/actions";
 import ReviewItem from "@Components/ReviewItem";
 import { Review } from "@typings/review";
 import Text from "@Components/Text";
+import PartnerFeedback from "@Components/PartnerFeedback";
 
 type Props = {
   branch: Branch;
@@ -28,17 +29,7 @@ const Feedback = ({ branch }: Props) => {
     );
   }, [branch]);
 
-  function renderItem(item: Review, index: number) {
-    return <ReviewItem item={item} type="branch" />;
-  }
-  return (
-    <View style={styles.container}>
-      <Text weight="bold" bottom={8}>
-        Đánh giá của khách hàng
-      </Text>
-      {data?.map(renderItem)}
-    </View>
-  );
+  return <PartnerFeedback title="Đánh giá của khách hàng" items={data} />;
 };
 
 export default Feedback;

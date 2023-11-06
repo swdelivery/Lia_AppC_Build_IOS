@@ -1,9 +1,10 @@
 import Text from "@Components/Text";
 import { Diary } from "@typings/diary";
 import React from "react";
-import { View, StyleSheet, ScrollView } from "react-native";
+import { View, StyleSheet } from "react-native";
 import DiaryItem from "./components/DiaryItem";
 import { _moderateScale } from "@Constant/Scale";
+import { ScrollView } from "react-native-gesture-handler";
 
 type Props = {
   items: Diary[];

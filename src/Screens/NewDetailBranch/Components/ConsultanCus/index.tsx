@@ -1,13 +1,34 @@
 import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import React, { memo } from "react";
-import { styleText } from "../../../Constant/StyleText";
-import { _moderateScale, _widthScale } from "../../../Constant/Scale";
+import { styleText } from "../../../../Constant/StyleText";
+import { _moderateScale, _widthScale } from "../../../../Constant/Scale";
 import LinearGradient from "react-native-linear-gradient";
-import { styleElement } from "../../../Constant/StyleElement";
+import { styleElement } from "../../../../Constant/StyleElement";
 import { ScrollView } from "react-native-gesture-handler";
 import Text from "@Components/Text";
+import { useSelector } from "react-redux";
+import { getBranchDetailsState } from "@Redux/branch/selectors";
+import ProblemItem from "./ProblemItem";
+import { FileUpload, RenderItemProps } from "@typings/common";
+import useSelectedItems from "src/Hooks/useSelectedItems";
 
 const ConsultanCus = () => {
+  const { data } = useSelector(getBranchDetailsState);
+  const { selectedItems, handleItemSelect, isItemSelected } =
+    useSelectedItems<FileUpload>([], {
+      keyExtractor: (item) => item._id,
+    });
+
+  function renderItem(item: FileUpload) {
+    return (
+      <ProblemItem
+        item={item}
+        onPress={handleItemSelect(item)}
+        isSelected={isItemSelected(item)}
+      />
+    );
+  }
+
   return (
     <View>
       <Text
@@ -39,7 +60,8 @@ const ConsultanCus = () => {
           style={{ padding: _moderateScale(8 * 1.5) }}
           horizontal
         >
-          <TouchableOpacity style={{ alignItems: "center" }}>
+          {data.branchProblemFileArr.map(renderItem)}
+          {/* <TouchableOpacity style={{ alignItems: "center" }}>
             <Image
               style={styles.imageConsul}
               source={require(`../../../Image/consul1.png`)}
@@ -122,7 +144,7 @@ const ConsultanCus = () => {
             >
               Cơ da mặt
             </Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </ScrollView>
 
         <TouchableOpacity style={[styles.btnConsul, styleElement.centerChild]}>

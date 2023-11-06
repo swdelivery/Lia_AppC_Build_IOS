@@ -2,21 +2,27 @@ import Text from "@Components/Text";
 import { _moderateScale } from "@Constant/Scale";
 import { Doctor } from "@typings/doctor";
 import React from "react";
-import { View, StyleSheet, ScrollView } from "react-native";
+import { View, StyleSheet, StyleProp, ViewStyle } from "react-native";
 import DoctorItem from "./components/DoctorItem";
+import { ScrollView } from "react-native-gesture-handler";
 
 type Props = {
   title?: string;
   items: Doctor[];
+  containerStyle?: StyleProp<ViewStyle>;
 };
 
-export default function HorizontalDoctors({ title, items }: Props) {
+export default function HorizontalDoctors({
+  title,
+  items,
+  containerStyle,
+}: Props) {
   function renderItem(item: Doctor, index: number) {
     return <DoctorItem item={item} key={item._id} />;
   }
 
   return (
-    <View>
+    <View style={containerStyle}>
       {!!title && (
         <Text
           weight="bold"
@@ -41,5 +47,5 @@ export default function HorizontalDoctors({ title, items }: Props) {
 }
 
 const styles = StyleSheet.create({
-  contentContainer: { paddingHorizontal: 16, gap: 8 },
+  contentContainer: { paddingHorizontal: 8, gap: 8 },
 });
