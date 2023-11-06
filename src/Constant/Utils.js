@@ -293,10 +293,17 @@ export const getPhoneValid = phone => {
     return `0${phone}`
 }
 
-export const formatMonney = data => {
-    return data ? data.toString().split('.').join("").toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") : 0
-
-}
+export const formatMonney = (data, withUnit = false) => {
+  const value = data
+    ? data
+        .toString()
+        .split(".")
+        .join("")
+        .toString()
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+    : 0;
+  return withUnit ? `₫${value}` : value;
+};
 
 export const parseFloatNumber = (number, fixed = 0) => {
     return parseFloat(Number(number).toFixed(fixed))

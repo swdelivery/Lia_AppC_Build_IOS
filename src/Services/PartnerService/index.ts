@@ -16,6 +16,25 @@ const getServiceGroup = (payload: any) => {
     .then(({ data }) => data.data);
 };
 
+const getServices = (
+  payload: any,
+  page = 1,
+  pageSize = configs.apiPageSize
+) => {
+  const query = encodeParams({
+    ...payload,
+    sort: {
+      orderNumber: -1,
+    },
+    limit: pageSize,
+    page,
+  });
+  return axios.get(`service?${query}`).then(({ data }) => data.data);
+};
+
+const getServiceDetails = (serviceId: string): Promise<any> =>
+  axios.post(`/service/${serviceId}`).then(({ data }) => data.data);
+
 const getBranchList = (
   payload: any,
   page = 1,
@@ -79,6 +98,8 @@ const getDiary = (
 
 export default {
   getServiceGroup,
+  getServices,
+  getServiceDetails,
   getBranchList,
   getBranchById,
   getDoctorList,

@@ -1,5 +1,5 @@
 import React, { memo, useCallback, useEffect } from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import {
   _heightScale,
   _moderateScale,
@@ -12,6 +12,7 @@ import { stylesFont } from "../../../Constant/Font";
 import ScreenKey from "../../../Navigation/ScreenKey";
 import { getServiceGroup } from "@Redux/home/actions";
 import { getServiceGroupState } from "@Redux/home/selectors";
+import Image from "@Components/Image";
 
 const OptionService = memo(() => {
   const { data } = useSelector(getServiceGroupState);
@@ -61,7 +62,7 @@ const OptionService = memo(() => {
                   width: "100%",
                   height: "100%",
                 }}
-                source={{ uri: `${URL_ORIGINAL}${item?.fileAvatar?.link}` }}
+                avatar={item?.fileAvatar}
               />
             </View>
             <Text

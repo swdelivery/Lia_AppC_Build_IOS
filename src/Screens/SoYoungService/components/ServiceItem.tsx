@@ -1,152 +1,61 @@
-import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { View, StyleSheet, TouchableOpacity, Image, Text } from "react-native";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { _width } from "@Constant/Scale";
-import { URL_ORIGINAL } from "@Constant/Url";
 import { formatMonney } from "@Constant/Utils";
 import ScreenKey from "@Navigation/ScreenKey";
+import { useNavigate } from "src/Hooks/useNavigation";
+import Image from "@Components/Image";
+import Text from "@Components/Text";
+import CountStar2 from "@Components/NewCountStar/CountStar";
+import { Service } from "@typings/serviceGroup";
+import Column from "@Components/Column";
+import { GREY, RED } from "@Constant/Color";
+import Row from "@Components/Row";
+import { styleElement } from "@Constant/StyleElement";
+import Icon from "@Components/Icon";
 
 type Props = {
-  item: any;
+  item: Service;
 };
 
 export default function ServiceItem({ item }: Props) {
-  const navigation = useNavigation();
+  const { navigate } = useNavigate();
 
   return (
-    <View style={styles.card} key={item._id}>
+    <View style={styles.card}>
       <TouchableOpacity
         activeOpacity={0.8}
-        onPress={() => {
-          navigation.navigate(ScreenKey.DETAIL_SERVICE);
-        }}
-        style={{
-          width: "90%",
-          height: 180,
-          backgroundColor: "white",
-          borderBottomLeftRadius: 8,
-          borderBottomRightRadius: 8,
-        }}
+        onPress={navigate(ScreenKey.DETAIL_SERVICE, { idService: item._id })}
+        style={styles.content}
       >
-        <View>
-          <Image
-            style={{
-              width: "100%",
-              height: 120,
-              borderTopLeftRadius: 8,
-              borderTopRightRadius: 8,
-            }}
-            source={{
-              uri: `${URL_ORIGINAL}${item?.representationFileArr[0]?.link}`,
-            }}
-          />
-        </View>
-        <View
-          style={{
-            padding: 4,
-          }}
-        >
-          <Text
-            style={{
-              fontSize: 12,
-              fontWeight: "bold",
-            }}
-          >
+        <Image style={styles.image} avatar={item.representationFileArr[0]} />
+        <Column style={styles.info}>
+          <Text size={12} weight="bold">
             {item?.name}
           </Text>
-
-          <View>
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              {/* <Image style={styles.start} source={require('../../../../Image/locationRed.png')}/> */}
-              <Image
-                style={styles.start}
-                source={require("../../../Image/a_star2.png")}
-              />
-              <Image
-                style={styles.start}
-                source={require("../../../Image/a_star2.png")}
-              />
-              <Image
-                style={styles.start}
-                source={require("../../../Image/a_star2.png")}
-              />
-              <Image
-                style={styles.start}
-                source={require("../../../Image/a_star2.png")}
-              />
-              <Image
-                style={styles.start}
-                source={require("../../../Image/a_star2.png")}
-              />
-              <Text
-                style={{
-                  fontSize: 10,
-                  marginLeft: 4,
-                }}
-              >
-                ({item?.reviewCount})
-              </Text>
-            </View>
-          </View>
-
-          <View
-            style={{
-              marginTop: 8,
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-between",
-            }}
-          >
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <Text
-                style={{
-                  fontSize: 12,
-                  fontWeight: "bold",
-                  color: "red",
-                  textDecorationLine: "underline",
-                }}
-              >
-                đ
-              </Text>
-              <Text
-                style={{
-                  fontSize: 12,
-                  fontWeight: "bold",
-                  color: "red",
-                }}
-              >
-                {formatMonney(item?.price)}
-              </Text>
-            </View>
-
-            <View style={{ flexDirection: "row" }}>
-              <Image
-                style={styles.start}
-                source={require("../../../Image/people.png")}
-              />
-              <Text
-                style={{
-                  fontSize: 10,
-                  marginLeft: 4,
-                }}
-              >
-                ({item?.countPartner})
-              </Text>
-            </View>
-          </View>
-        </View>
+          <CountStar2
+            rating={item.averageRating}
+            count={item.reviewCount}
+            size={10}
+          />
+          <Row>
+            <Text size={12} weight="bold" color={RED} style={styleElement.flex}>
+              {`${formatMonney(item?.price, true)}`}
+            </Text>
+            <Icon name="account-multiple" size={14} color={GREY} />
+            <Text
+              size={10}
+              bottom={2}
+              left={2}
+            >{`(${item.countPartner})`}</Text>
+          </Row>
+        </Column>
       </TouchableOpacity>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  start: {
-    width: 8 * 1.25,
-    height: 8 * 1.25,
-    marginLeft: 1,
-    resizeMode: "contain",
-  },
   card: {
     width: _width / 2,
     height: _width / 2,
@@ -156,5 +65,21 @@ const styles = StyleSheet.create({
     // flex: 1,
     paddingTop: 8 * 2,
     backgroundColor: "#F5F9FA",
+  },
+  content: {
+    width: "90%",
+    height: 180,
+    backgroundColor: "white",
+    borderBottomLeftRadius: 8,
+    borderBottomRightRadius: 8,
+  },
+  image: {
+    width: "100%",
+    height: 120,
+    borderTopLeftRadius: 8,
+    borderTopRightRadius: 8,
+  },
+  info: {
+    padding: 4,
   },
 });

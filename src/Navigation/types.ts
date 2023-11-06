@@ -13,6 +13,7 @@ type ScreenParams = {
   };
   [ScreenKey.DETAIL_BRAND]: { idBranch: string };
   [ScreenKey.DETAIL_DOCTOR]: { idDoctor: string };
+  [ScreenKey.DETAIL_SERVICE]: { idService: string };
 };
 
 export type RootStackParamsList = {

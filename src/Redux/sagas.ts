@@ -4,5 +4,6 @@ export function* rootSaga() {
   yield all([
     fork(require("./home/sagas").default),
     fork(require("./branch/sagas").default),
+    fork(require("./service/sagas").default),
   ]);
 }

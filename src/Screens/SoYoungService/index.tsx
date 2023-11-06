@@ -1,84 +1,49 @@
-import React, { memo, useEffect, useState } from "react";
-import {
-  Alert,
-  FlatList,
-  Image,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import React from "react";
+import { StyleSheet, View } from "react-native";
 import { _width } from "../../Constant/Scale";
-import { navigation } from "../../../rootNavigation";
-import ScreenKey from "../../Navigation/ScreenKey";
-import { getServicev2 } from "../../Redux/Action/Service";
-import { URL_ORIGINAL } from "../../Constant/Url";
-import { formatMonney } from "../../Constant/Utils";
 import ServiceItem from "./components/ServiceItem";
+import { useDispatch, useSelector } from "react-redux";
+import { useFocused } from "src/Hooks/useNavigation";
+import { getServices } from "@Redux/service/actions";
+import { getServiceListState } from "@Redux/service/selectors";
+import { FlatList } from "react-native";
 import { RenderItemProps } from "@typings/common";
+import { Service } from "@typings/serviceGroup";
+import useCallbackItem from "src/Hooks/useCallbackItem";
+import useItemExtractor from "src/Hooks/useItemExtractor";
 
-const SoYoungService = memo((props) => {
-  const [listService, setListService] = useState([]);
+const SoYoungService = () => {
+  const dispatch = useDispatch();
+  const { data } = useSelector(getServiceListState);
 
-  useEffect(() => {
-    _getListService();
-    // _startAnimation()
-  }, []);
-  const _getListService = async () => {
-    let result = await getServicev2({
-      sort: {
-        orderNumber: -1,
-      },
-      limit: 8,
-      page: 1,
-    });
-    if (result?.isAxiosError) return;
-    setListService(result?.data?.data);
-  };
+  useFocused(() => {
+    dispatch(getServices.request());
+  });
 
-  function renderItem({ item }: RenderItemProps<any>) {
+  function renderItem({ item }: RenderItemProps<Service>) {
     return <ServiceItem item={item} />;
   }
 
-  return (
-    <View style={styles.container}>
-      <View
-        style={{
-          flexDirection: "row",
-          flexWrap: "wrap",
-        }}
-      >
-        {listService?.map((item, index) => {
-          return <ServiceItem item={item} key={item._id} />;
-        })}
-      </View>
+  const { keyExtractor } = useItemExtractor<Service>((item) => item._id);
 
-      <View
-        style={{
-          height: 200,
-        }}
-      />
-    </View>
+  return (
+    <FlatList
+      contentContainerStyle={styles.container}
+      scrollEnabled={false}
+      numColumns={2}
+      data={data}
+      renderItem={renderItem}
+      keyExtractor={keyExtractor}
+    />
   );
-});
+};
 
 export default SoYoungService;
 
 const styles = StyleSheet.create({
-  start: {
-    width: 8 * 1.25,
-    height: 8 * 1.25,
-    marginLeft: 1,
-    resizeMode: "contain",
-  },
-  card: {
-    width: _width / 2,
-    height: _width / 2,
-    alignItems: "center",
-  },
   container: {
-    flex: 1,
-    paddingTop: 8 * 2,
+    paddingTop: 12,
+    paddingBottom: 30,
     backgroundColor: "#F5F9FA",
   },
 });
