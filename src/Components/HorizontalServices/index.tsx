@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, View } from "react-native";
+import { Pressable, StyleProp, StyleSheet, View } from "react-native";
 import React, { useCallback, useMemo } from "react";
 import { _moderateScale, _widthScale } from "../../Constant/Scale";
 import { ScrollView } from "react-native-gesture-handler";
@@ -12,12 +12,14 @@ import { getImageAvataUrl } from "src/utils/avatar";
 import { useNavigate } from "src/Hooks/useNavigation";
 import useCallbackItem from "src/Hooks/useCallbackItem";
 import ScreenKey from "@Navigation/ScreenKey";
+import { ViewStyle } from "react-native";
 
 type Props = {
   title?: string;
   items: BranchService[];
+  containerStyle?: StyleProp<ViewStyle>;
 };
-const HorizontalServices = ({ items, title }: Props) => {
+const HorizontalServices = ({ items, title, containerStyle }: Props) => {
   const { navigation } = useNavigate();
 
   const handlePress = useCallback((item: BranchService) => {
@@ -33,8 +35,8 @@ const HorizontalServices = ({ items, title }: Props) => {
   }
 
   return (
-    <View style={styles.container}>
-      {!!title && <Text style={styles.rcmService}>{title}</Text>}
+    <View style={[styles.container, containerStyle]}>
+      {!!title && <Text weight="bold">{title}</Text>}
       <View>
         <ScrollView
           horizontal
@@ -91,10 +93,6 @@ const styles = StyleSheet.create({
     height: 8 * 1.25,
     marginLeft: 1,
     resizeMode: "contain",
-  },
-  rcmService: {
-    fontSize: _moderateScale(14),
-    fontWeight: "bold",
   },
   container: {
     width: _widthScale(360),

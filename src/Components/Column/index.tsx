@@ -9,9 +9,19 @@ type Props = {
   right?: number;
   style?: StyleProp<ViewStyle>;
   children: ReactNode;
+  alignItems?: "flex-start" | "flex-end" | "center";
 };
 
-export default function Column({ gap, top, bottom, left, right, style, children }: Props) {
+export default function Column({
+  gap,
+  top,
+  bottom,
+  left,
+  right,
+  style,
+  children,
+  alignItems,
+}: Props) {
   const containerStyle = useMemo(() => {
     return {
       gap,
@@ -19,8 +29,10 @@ export default function Column({ gap, top, bottom, left, right, style, children 
       marginBottom: bottom,
       marginLeft: left,
       marginRight: right,
+      alignItems,
     };
-  }, [gap, top, bottom, left, right]);
+  }, [gap, top, bottom, left, right, alignItems]);
+
   return (
     <View style={[styles.container, containerStyle, style]}>{children}</View>
   );

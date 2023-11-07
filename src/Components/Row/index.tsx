@@ -7,6 +7,7 @@ type Props = {
   bottom?: number;
   left?: number;
   right?: number;
+  alignItems?: "flex-start" | "flex-end" | "center";
   justifyContent?: "flex-start" | "flex-end" | "center" | "space-between";
   flexWrap?: "nowrap" | "wrap" | "wrap-reverse";
   style?: StyleProp<ViewStyle>;
@@ -19,6 +20,7 @@ export default function Row({
   bottom,
   left,
   right,
+  alignItems,
   justifyContent,
   flexWrap,
   style,
@@ -32,9 +34,10 @@ export default function Row({
       marginLeft: left,
       marginRight: right,
       justifyContent,
+      alignItems,
       flexWrap,
     };
-  }, [gap, top, bottom, left, right, justifyContent, flexWrap]);
+  }, [gap, top, bottom, left, right, justifyContent, flexWrap, alignItems]);
   return (
     <View style={[styles.container, containerStyle, style]}>{children}</View>
   );

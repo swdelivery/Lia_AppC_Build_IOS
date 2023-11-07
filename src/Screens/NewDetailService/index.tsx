@@ -1,8 +1,6 @@
-import React, { memo, useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
-import ImageColors from "react-native-image-colors";
 import LinearGradient from "react-native-linear-gradient";
-import { getStatusBarHeight } from "react-native-status-bar-height";
 import { _moderateScale, _width, _widthScale } from "../../Constant/Scale";
 import Feedback from "./Components/Feedback";
 import FlashSale from "./Components/FlashSale";
@@ -21,6 +19,7 @@ import ScreenKey from "@Navigation/ScreenKey";
 import { useNavigationParams } from "src/Hooks/useNavigation";
 import { useDispatch } from "react-redux";
 import { getServiceDetails } from "@Redux/service/actions";
+import Spacer from "@Components/Spacer";
 
 const HEIGHT_IMAGE_SERVICE = (_width * 926) / 1242;
 
@@ -28,46 +27,20 @@ type ScreenKey = typeof ScreenKey.DETAIL_SERVICE;
 
 const DetailService = () => {
   const dispatch = useDispatch();
-  const [bgColorImage, setBgColorImage] = useState(null);
   const { idService } = useNavigationParams<ScreenKey>();
 
   useEffect(() => {
     dispatch(getServiceDetails.request(idService));
   }, [idService]);
 
-  useEffect(() => {
-    _getBGColorImage();
-  }, []);
-
-  const _getBGColorImage = async () => {
-    const result = await ImageColors.getColors(
-      `https://i.ibb.co/F7VK3zW/bg-Service.jpg`,
-      {
-        fallback: "#228B22",
-        cache: false,
-        key: "",
-      }
-    );
-    setBgColorImage(result?.background);
-  };
-
   return (
     <Screen safeTop style={styles.container}>
       <Header />
       <ScrollView>
         <HorizonListImage />
-
         <View style={styles.body}>
           <LinearGradient
-            style={[
-              StyleSheet.absoluteFill,
-              {
-                zIndex: -1,
-                borderRadius: _moderateScale(8 * 2),
-                borderBottomLeftRadius: 0,
-                borderBottomRightRadius: 0,
-              },
-            ]}
+            style={[StyleSheet.absoluteFill, styles.bodyBg]}
             start={{ x: 0, y: 0 }}
             end={{ x: 0, y: 1 }}
             colors={["#EC54C3", "white", "#F7F8FA"]}
@@ -76,7 +49,6 @@ const DetailService = () => {
           <NameService />
           <OverViewFeedBack />
         </View>
-        {/* <Certificate /> */}
         <InfoBranch />
         <Material />
         <Tutorial />
@@ -84,12 +56,8 @@ const DetailService = () => {
         <RecomendService />
         <Feedback />
 
-        <View style={{ height: _moderateScale(8 * 2) }} />
+        <Spacer top={16} />
         <ListBottonService />
-
-        {/* <Text>awd</Text> */}
-
-        <View style={{ height: 100 }} />
       </ScrollView>
     </Screen>
   );
@@ -140,13 +108,19 @@ const styles = StyleSheet.create({
   },
   body: {
     width: _width,
-    marginTop: 8,
-    borderTopStartRadius: _moderateScale(8 * 2),
-    borderTopEndRadius: _moderateScale(8 * 2),
+    marginTop: -20,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
     paddingBottom: _moderateScale(8 * 2),
   },
   container: {
     flex: 1,
     backgroundColor: "#F7F8FA",
+  },
+  bodyBg: {
+    zIndex: -1,
+    borderRadius: _moderateScale(8 * 2),
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0,
   },
 });

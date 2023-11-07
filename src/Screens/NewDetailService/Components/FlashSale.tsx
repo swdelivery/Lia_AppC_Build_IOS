@@ -3,6 +3,9 @@ import React, { memo } from "react";
 import { _moderateScale, _widthScale } from "../../../Constant/Scale";
 import CountDownTimer from "../../../Components/CountDownTimer/CountDownTimer";
 import Text from "@Components/Text";
+import { RED } from "@Constant/Color";
+import Row from "@Components/Row";
+import Column from "@Components/Column";
 
 const FlashSale = () => {
   return (
@@ -28,103 +31,45 @@ const FlashSale = () => {
         </View>
       </View>
 
-      <View style={styles.priceFlashSale}>
-        <View style={styles.priceFlashSale__filnalPrice}>
-          <Text weight="bold" color="red">
+      <Row style={styles.priceFlashSale} gap={16}>
+        <Row style={styles.priceFlashSale__filnalPrice} gap={4}>
+          <Text weight="bold" color={RED}>
             Giá cuối
           </Text>
-          <View style={{ width: 4 }} />
-          <Text
-            style={{
-              fontSize: _moderateScale(20),
-              color: "red",
-              fontWeight: "bold",
-            }}
-          >
+          <Text weight="bold" size={20} color={RED}>
             1.900K
           </Text>
-        </View>
+        </Row>
 
-        <View style={{ width: 16 }} />
         <View style={styles.priceFlashSale__filnalPrice}>
-          <Text
-            style={{
-              fontSize: _moderateScale(20),
-              color: "red",
-              fontWeight: "bold",
-            }}
-          >
+          <Text weight="bold" size={20} color={RED}>
             =
           </Text>
         </View>
-        <View style={{ width: 16 }} />
-
-        <View
-          style={{
-            alignItems: "center",
-          }}
-        >
-          <Text
-            style={{
-              fontSize: _moderateScale(14),
-              color: "red",
-              fontWeight: "bold",
-            }}
-          >
+        <Column alignItems="center">
+          <Text weight="bold" color={RED}>
             Giá gốc
           </Text>
-          <View style={{ width: 4 }} />
-          <Text
-            style={{
-              fontSize: _moderateScale(20),
-              color: "red",
-              fontWeight: "500",
-            }}
-          >
+          <Text weight="bold" size={20} color={RED}>
             3.900K
           </Text>
-        </View>
-        <View style={{ width: 16 }} />
+        </Column>
 
         <View style={styles.priceFlashSale__filnalPrice}>
-          <Text
-            style={{
-              fontSize: _moderateScale(20),
-              color: "red",
-              fontWeight: "500",
-            }}
-          >
+          <Text weight="bold" size={20} color={RED}>
             -
           </Text>
         </View>
-        <View style={{ width: 16 }} />
 
-        <View
-          style={{
-            alignItems: "center",
-          }}
-        >
-          <Text
-            style={{
-              fontSize: _moderateScale(14),
-              color: "red",
-              fontWeight: "500",
-            }}
-          >
+        <Column alignItems="center">
+          <Text weight="bold" color={RED}>
             FlashSale
           </Text>
-          <View style={{ width: 4 }} />
-          <Text
-            style={{
-              fontSize: _moderateScale(20),
-              color: "red",
-              fontWeight: "500",
-            }}
-          >
+          <Text weight="bold" size={20} color={RED}>
             2.000K
           </Text>
-        </View>
-      </View>
+        </Column>
+      </Row>
     </View>
   );
 };
