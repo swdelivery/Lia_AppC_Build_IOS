@@ -203,7 +203,6 @@ const styles = StyleSheet.create({
     backgroundColor: Color.SECOND_COLOR,
     width: "48%",
     borderRadius: _moderateScale(8),
-    height: _heightScale(8 * 4),
   },
 });
 

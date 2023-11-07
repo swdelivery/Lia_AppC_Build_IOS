@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, TouchableOpacity } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { _width } from "@Constant/Scale";
 import { formatMonney } from "@Constant/Utils";
 import ScreenKey from "@Navigation/ScreenKey";
@@ -13,6 +13,7 @@ import { GREY, RED } from "@Constant/Color";
 import Row from "@Components/Row";
 import { styleElement } from "@Constant/StyleElement";
 import Icon from "@Components/Icon";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 type Props = {
   item: Service;
@@ -22,12 +23,12 @@ export default function ServiceItem({ item }: Props) {
   const { navigate } = useNavigate();
 
   return (
-    <View style={styles.card}>
-      <TouchableOpacity
-        activeOpacity={0.8}
-        onPress={navigate(ScreenKey.DETAIL_SERVICE, { idService: item._id })}
-        style={styles.content}
-      >
+    <TouchableOpacity
+      activeOpacity={0.8}
+      onPress={navigate(ScreenKey.DETAIL_SERVICE, { idService: item._id })}
+      style={styles.card}
+    >
+      <View style={styles.content}>
         <Image style={styles.image} avatar={item.representationFileArr[0]} />
         <Column style={styles.info}>
           <Text size={12} weight="bold">
@@ -50,8 +51,8 @@ export default function ServiceItem({ item }: Props) {
             >{`(${item.countPartner})`}</Text>
           </Row>
         </Column>
-      </TouchableOpacity>
-    </View>
+      </View>
+    </TouchableOpacity>
   );
 }
 

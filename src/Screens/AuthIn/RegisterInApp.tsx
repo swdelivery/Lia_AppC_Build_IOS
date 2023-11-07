@@ -2,7 +2,6 @@ import React, { useState, useEffect, useCallback } from "react";
 import {
   Image,
   StyleSheet,
-  Text,
   TextInput,
   TouchableOpacity,
   View,
@@ -28,6 +27,9 @@ import { getPartnerByCollaboratorCode } from "../../Redux/Action/ProfileAction";
 import Collapsible from "react-native-collapsible";
 import { IconTick } from "../../Components/Icon/Icon";
 import Spacer from "../../Components/Spacer";
+import Screen from "@Components/Screen";
+import Text from "@Components/Text";
+import Header from "./components/Header";
 
 const RegisterInApp = (props) => {
   const [showModal, setShowModal] = useState(false);
@@ -64,20 +66,6 @@ const RegisterInApp = (props) => {
   };
 
   const _handleRegister = useCallback(async () => {
-    // return navigation.navigate(ScreenKey.ACTIVATION_IN_APP, {
-    //   phoneNumber: "+84909001660",
-    //   fullPhone: phoneNumber,
-    //   password: password,
-    //   routeName: props?.route?.params?.routeName,
-    // });
-
-    console.log({
-      name,
-      phoneNumber,
-      password,
-      password2,
-    });
-
     if (
       !name.trim() ||
       !phoneNumber.trim() ||
@@ -96,7 +84,7 @@ const RegisterInApp = (props) => {
       return alertCustomNotAction(`Lỗi`, `Mật khẩu xác nhận không đúng`);
     }
 
-    let dataPost = {
+    let dataPost: any = {
       name: name,
       phone: {
         phoneNumber: phoneNumber,
@@ -130,133 +118,46 @@ const RegisterInApp = (props) => {
   }, [name, phoneNumber, password, password2, codeAffiliate]);
 
   return (
-    <>
+    <Screen safeTop style={styles.container}>
       <StatusBarCustom bgColor={"white"} barStyle={"dark-content"} />
-
+      <Header title="Đăng ký" onBack={navigation.goBack} />
       <KeyboardAwareScrollView
         bounces={false}
-        contentContainerStyle={{
-          flexGrow: 1,
-        }}
+        contentContainerStyle={styles.content}
       >
-        <View style={styles.container}>
-          <View
-            style={[
-              styleElement.rowAliCenter,
-              {
-                justifyContent: "space-between",
-                marginTop: _moderateScale(8 * 2),
-                paddingHorizontal: _moderateScale(8 * 2),
-              },
-            ]}
-          >
-            <TouchableOpacity
-              onPress={() => navigation.goBack()}
-              hitSlop={styleElement.hitslopSm}
-            >
-              <Image
-                style={sizeIcon.lg}
-                source={require("../../NewIcon/backBold.png")}
-              />
-            </TouchableOpacity>
-            <Text
-              style={{
-                ...stylesFont.fontNolanBold,
-                fontSize: _moderateScale(16),
-              }}
-            >
-              Đăng ký
-            </Text>
-            <View style={sizeIcon.lg} />
-          </View>
+        <View style={{ height: _moderateScale(8 * 2) }} />
+        <View
+          style={[
+            {
+              height: _moderateScale(8 * 20),
+              borderWidth: 0,
+              margin: _moderateScale(8 * 2),
+              borderRadius: _moderateScale(8 * 2),
+            },
+            styleElement.centerChild,
+          ]}
+        >
+          {/* <Text>LOGO HERE</Text> */}
+          <Image
+            resizeMode={"contain"}
+            style={{ width: "70%", height: "70%" }}
+            source={require("../../NewImage/logoCenterBase.png")}
+          />
+        </View>
+        <View style={{ height: _moderateScale(8 * 2) }} />
 
-          <View style={{ height: _moderateScale(8 * 2) }} />
+        <View style={{ paddingHorizontal: _moderateScale(8 * 2) }}>
           <View
             style={[
               {
-                height: _moderateScale(8 * 20),
-                borderWidth: 0,
-                margin: _moderateScale(8 * 2),
-                borderRadius: _moderateScale(8 * 2),
+                width: "100%",
+                backgroundColor: Color.BG_GREY_OPACITY_2,
+                paddingVertical: _moderateScale(8 * 2),
+                borderRadius: _moderateScale(8),
               },
-              styleElement.centerChild,
             ]}
           >
-            {/* <Text>LOGO HERE</Text> */}
-            <Image
-              resizeMode={"contain"}
-              style={{ width: "70%", height: "70%" }}
-              source={require("../../NewImage/logoCenterBase.png")}
-            />
-          </View>
-          <View style={{ height: _moderateScale(8 * 2) }} />
-
-          <View style={{ paddingHorizontal: _moderateScale(8 * 2) }}>
-            <View
-              style={[
-                {
-                  width: "100%",
-                  backgroundColor: Color.BG_GREY_OPACITY_2,
-                  paddingVertical: _moderateScale(8 * 2),
-                  borderRadius: _moderateScale(8),
-                },
-              ]}
-            >
-              <View style={[styleElement.rowAliCenter]}>
-                <Image
-                  style={[
-                    sizeIcon.md,
-                    { marginHorizontal: _moderateScale(8 * 2), opacity: 0.7 },
-                  ]}
-                  source={require("../../NewIcon/peopleBlack.png")}
-                />
-                <TextInput
-                  value={codeAffiliate}
-                  onChangeText={(content) => {
-                    setCodeAffiliate(content.toUpperCase());
-                  }}
-                  // style={styles.input}
-                  placeholder={"Mã giới thiệu"}
-                  style={{
-                    ...stylesFont.fontNolan500,
-                    fontSize: _moderateScale(14),
-                    paddingVertical: 0,
-                    flex: 1,
-                  }}
-                />
-              </View>
-
-              <Collapsible collapsed={currPartnerCollab?._id ? false : true}>
-                <View
-                  style={{
-                    padding: _moderateScale(8 * 2),
-                    paddingBottom: 0,
-                    ...styleElement.rowAliCenter,
-                  }}
-                >
-                  <Text style={{ marginRight: _moderateScale(8) }}>
-                    Tìm thấy người giới thiệu:{" "}
-                    <Text style={{ fontWeight: "bold" }}>
-                      {currPartnerCollab?.name}
-                    </Text>
-                  </Text>
-                  <IconTick style={sizeIcon.sm} />
-                </View>
-              </Collapsible>
-            </View>
-            <View style={{ height: _moderateScale(8 * 2) }} />
-
-            <View
-              style={[
-                {
-                  width: "100%",
-                  backgroundColor: Color.BG_GREY_OPACITY_2,
-                  paddingVertical: _moderateScale(8 * 2),
-                  borderRadius: _moderateScale(8),
-                },
-                styleElement.rowAliCenter,
-              ]}
-            >
+            <View style={[styleElement.rowAliCenter]}>
               <Image
                 style={[
                   sizeIcon.md,
@@ -265,131 +166,190 @@ const RegisterInApp = (props) => {
                 source={require("../../NewIcon/peopleBlack.png")}
               />
               <TextInput
-                value={name}
-                onChangeText={setName}
-                // style={styles.input}
-                placeholder={"Tên của bạn"}
-                style={{
-                  ...stylesFont.fontNolan500,
-                  fontSize: _moderateScale(14),
-                  paddingVertical: 0,
-                  flex: 1,
-                }}
-              />
-            </View>
-            <View style={{ height: _moderateScale(8 * 2) }} />
-
-            <View
-              style={[
-                {
-                  width: "100%",
-                  backgroundColor: Color.BG_GREY_OPACITY_2,
-                  paddingVertical: _moderateScale(8 * 2),
-                  borderRadius: _moderateScale(8),
-                },
-                styleElement.rowAliCenter,
-              ]}
-            >
-              <Image
-                style={[
-                  sizeIcon.md,
-                  { marginHorizontal: _moderateScale(8 * 2), opacity: 0.7 },
-                ]}
-                source={require("../../NewIcon/phoneBlack.png")}
-              />
-              <TextInput
-                value={phoneNumber}
-                keyboardType={"number-pad"}
-                onChangeText={setphoneNumber}
-                // style={styles.input}
-                style={{
-                  ...stylesFont.fontNolan500,
-                  fontSize: _moderateScale(14),
-                  paddingVertical: 0,
-                  flex: 1,
-                }}
-                placeholder={"Số điện thoại"}
-              />
-            </View>
-            <View style={{ height: _moderateScale(8 * 2) }} />
-
-            <View
-              style={[
-                {
-                  width: "100%",
-                  backgroundColor: Color.BG_GREY_OPACITY_2,
-                  paddingVertical: _moderateScale(8 * 2),
-                  borderRadius: _moderateScale(8),
-                },
-                styleElement.rowAliCenter,
-              ]}
-            >
-              <Image
-                style={[
-                  sizeIcon.md,
-                  { marginHorizontal: _moderateScale(8 * 2), opacity: 0.7 },
-                ]}
-                source={require("../../NewIcon/lockBlack.png")}
-              />
-              <TextInput
-                secureTextEntry={true}
-                value={password}
+                value={codeAffiliate}
                 onChangeText={(content) => {
-                  setPassword(content);
+                  setCodeAffiliate(content.toUpperCase());
                 }}
                 // style={styles.input}
+                placeholder={"Mã giới thiệu"}
+                placeholderTextColor={"grey"}
                 style={{
                   ...stylesFont.fontNolan500,
                   fontSize: _moderateScale(14),
                   paddingVertical: 0,
                   flex: 1,
+                  color: Color.BLACK,
                 }}
-                placeholder={"Mật khẩu"}
               />
             </View>
-            <View style={{ height: _moderateScale(8 * 2) }} />
 
-            <View
-              style={[
-                {
-                  width: "100%",
-                  backgroundColor: Color.BG_GREY_OPACITY_2,
-                  paddingVertical: _moderateScale(8 * 2),
-                  borderRadius: _moderateScale(8),
-                },
-                styleElement.rowAliCenter,
-              ]}
-            >
-              <Image
-                style={[
-                  sizeIcon.md,
-                  { marginHorizontal: _moderateScale(8 * 2), opacity: 0.7 },
-                ]}
-                source={require("../../NewIcon/lockBlack.png")}
-              />
-              <TextInput
-                secureTextEntry={true}
-                value={password2}
-                onChangeText={(content) => {
-                  setPassword2(content);
-                }}
-                // style={styles.input}
+            <Collapsible collapsed={currPartnerCollab?._id ? false : true}>
+              <View
                 style={{
-                  ...stylesFont.fontNolan500,
-                  fontSize: _moderateScale(14),
-                  paddingVertical: 0,
-                  flex: 1,
+                  padding: _moderateScale(8 * 2),
+                  paddingBottom: 0,
+                  ...styleElement.rowAliCenter,
                 }}
-                placeholder={"Xác nhận mật khẩu"}
-              />
-            </View>
-
-            <Spacer top={_moderateScale(8 * 4)} />
-            <Button.Gradient title="Đăng ký" onPress={_handleRegister} />
+              >
+                <Text style={{ marginRight: _moderateScale(8) }}>
+                  Tìm thấy người giới thiệu:{" "}
+                  <Text style={{ fontWeight: "bold" }}>
+                    {currPartnerCollab?.name}
+                  </Text>
+                </Text>
+                <IconTick style={sizeIcon.sm} />
+              </View>
+            </Collapsible>
           </View>
+          <View style={{ height: _moderateScale(8 * 2) }} />
+
+          <View
+            style={[
+              {
+                width: "100%",
+                backgroundColor: Color.BG_GREY_OPACITY_2,
+                paddingVertical: _moderateScale(8 * 2),
+                borderRadius: _moderateScale(8),
+              },
+              styleElement.rowAliCenter,
+            ]}
+          >
+            <Image
+              style={[
+                sizeIcon.md,
+                { marginHorizontal: _moderateScale(8 * 2), opacity: 0.7 },
+              ]}
+              source={require("../../NewIcon/peopleBlack.png")}
+            />
+            <TextInput
+              value={name}
+              onChangeText={setName}
+              // style={styles.input}
+              placeholder={"Tên của bạn"}
+              placeholderTextColor={"grey"}
+              style={{
+                ...stylesFont.fontNolan500,
+                fontSize: _moderateScale(14),
+                paddingVertical: 0,
+                flex: 1,
+              }}
+            />
+          </View>
+          <View style={{ height: _moderateScale(8 * 2) }} />
+
+          <View
+            style={[
+              {
+                width: "100%",
+                backgroundColor: Color.BG_GREY_OPACITY_2,
+                paddingVertical: _moderateScale(8 * 2),
+                borderRadius: _moderateScale(8),
+              },
+              styleElement.rowAliCenter,
+            ]}
+          >
+            <Image
+              style={[
+                sizeIcon.md,
+                { marginHorizontal: _moderateScale(8 * 2), opacity: 0.7 },
+              ]}
+              source={require("../../NewIcon/phoneBlack.png")}
+            />
+            <TextInput
+              value={phoneNumber}
+              keyboardType={"number-pad"}
+              onChangeText={setphoneNumber}
+              // style={styles.input}
+              style={{
+                ...stylesFont.fontNolan500,
+                fontSize: _moderateScale(14),
+                paddingVertical: 0,
+                flex: 1,
+              }}
+              placeholder={"Số điện thoại"}
+              placeholderTextColor={"grey"}
+            />
+          </View>
+          <View style={{ height: _moderateScale(8 * 2) }} />
+
+          <View
+            style={[
+              {
+                width: "100%",
+                backgroundColor: Color.BG_GREY_OPACITY_2,
+                paddingVertical: _moderateScale(8 * 2),
+                borderRadius: _moderateScale(8),
+              },
+              styleElement.rowAliCenter,
+            ]}
+          >
+            <Image
+              style={[
+                sizeIcon.md,
+                { marginHorizontal: _moderateScale(8 * 2), opacity: 0.7 },
+              ]}
+              source={require("../../NewIcon/lockBlack.png")}
+            />
+            <TextInput
+              secureTextEntry={true}
+              value={password}
+              onChangeText={(content) => {
+                setPassword(content);
+              }}
+              // style={styles.input}
+              style={{
+                ...stylesFont.fontNolan500,
+                fontSize: _moderateScale(14),
+                paddingVertical: 0,
+                flex: 1,
+              }}
+              placeholder={"Mật khẩu"}
+              placeholderTextColor={"grey"}
+            />
+          </View>
+          <View style={{ height: _moderateScale(8 * 2) }} />
+
+          <View
+            style={[
+              {
+                width: "100%",
+                backgroundColor: Color.BG_GREY_OPACITY_2,
+                paddingVertical: _moderateScale(8 * 2),
+                borderRadius: _moderateScale(8),
+              },
+              styleElement.rowAliCenter,
+            ]}
+          >
+            <Image
+              style={[
+                sizeIcon.md,
+                { marginHorizontal: _moderateScale(8 * 2), opacity: 0.7 },
+              ]}
+              source={require("../../NewIcon/lockBlack.png")}
+            />
+            <TextInput
+              secureTextEntry={true}
+              value={password2}
+              onChangeText={(content) => {
+                setPassword2(content);
+              }}
+              // style={styles.input}
+              style={{
+                ...stylesFont.fontNolan500,
+                fontSize: _moderateScale(14),
+                paddingVertical: 0,
+                flex: 1,
+              }}
+              placeholder={"Xác nhận mật khẩu"}
+              placeholderTextColor={"grey"}
+            />
+          </View>
+
+          <Spacer top={_moderateScale(8 * 4)} />
+          <Button.Gradient title="Đăng ký" onPress={_handleRegister} />
         </View>
       </KeyboardAwareScrollView>
-    </>
+    </Screen>
   );
 };
 
@@ -405,6 +365,15 @@ const styles = StyleSheet.create({
     fontSize: _widthScale(14),
     paddingHorizontal: _widthScale(0),
     margin: 0,
+  },
+  headerContainer: {
+    justifyContent: "space-between",
+    paddingHorizontal: _moderateScale(8 * 2),
+    paddingBottom: 8,
+  },
+  content: {
+    flexGrow: 1,
+    paddingBottom: 30,
   },
 });
 

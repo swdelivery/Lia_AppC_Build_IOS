@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useDispatch } from "react-redux";
 import * as Color from "../../Constant/Color";
@@ -24,12 +24,16 @@ import usePhoneAuth from "../../Hooks/usePhoneAuth";
 import ResendOtp from "./components/ResendOtp";
 import { delay } from "../../utils/common";
 import { useNavigationParams } from "src/Hooks/useNavigation";
+import Screen from "@Components/Screen";
+import Text from "@Components/Text";
+import Header from "./components/Header";
 
 type ScreenK = typeof ScreenKey.ACTIVATION_IN_APP;
 
 const ActivationInApp = (props: any) => {
   const dispatch = useDispatch();
   const [activeCode, setActiveCode] = useState("");
+  const resentCount = useRef(0);
   const resendRef = useRef<any>();
   const { fullPhone, phoneNumber, password, routeName } =
     useNavigationParams<ScreenK>();
@@ -48,7 +52,6 @@ const ActivationInApp = (props: any) => {
           },
         });
         if (resultVerifyAccount?.isAxiosError) {
-          auth().signOut();
           return navigation.navigate(ScreenKey.LOGIN_IN_APP);
         }
 
@@ -95,72 +98,48 @@ const ActivationInApp = (props: any) => {
     }
     await delay(3000);
 
-    verifyPhoneNumber();
-    // auth().signOut();
+    if (resentCount.current < 1) {
+      verifyPhoneNumber();
+      resentCount.current++;
+      return;
+    }
 
-    // let result = await forceVerifyAccount({
-    //   phone: {
-    //     phoneNumber: props?.route?.params?.fullPhone,
-    //     nationCode: "+84",
-    //   },
-    // });
-    // if (result?.isAxiosError) return;
+    auth().signOut();
 
-    // dispatch(
-    //   loginInApp(
-    //     {
-    //       phone: {
-    //         phoneNumber: props?.route?.params?.fullPhone,
-    //         nationCode: "+84",
-    //       },
-    //       password: props?.route?.params?.password,
-    //       appName: "CS_APP",
-    //     },
-    //     props?.route?.params?.routeName
-    //   )
-    // );
+    let result = await forceVerifyAccount({
+      phone: {
+        phoneNumber: props?.route?.params?.fullPhone,
+        nationCode: "+84",
+      },
+    });
+    if (result?.isAxiosError) return;
+
+    dispatch(
+      loginInApp(
+        {
+          phone: {
+            phoneNumber: props?.route?.params?.fullPhone,
+            nationCode: "+84",
+          },
+          password: props?.route?.params?.password,
+          appName: "CS_APP",
+        },
+        props?.route?.params?.routeName
+      )
+    );
   }, [verifyPhoneNumber]);
 
   return (
     <>
-      <StatusBarCustom bgColor={"white"} barStyle={"dark-content"} />
-
-      <KeyboardAwareScrollView
-        bounces={false}
-        contentContainerStyle={{
-          flexGrow: 1,
-        }}
-      >
-        <View style={styles.container}>
-          <View
-            style={[
-              styleElement.rowAliCenter,
-              {
-                justifyContent: "space-between",
-                marginTop: _moderateScale(8 * 2),
-                paddingHorizontal: _moderateScale(8 * 2),
-              },
-            ]}
-          >
-            <TouchableOpacity
-              onPress={() => navigation.goBack()}
-              hitSlop={styleElement.hitslopSm}
-            >
-              <Image
-                style={sizeIcon.lg}
-                source={require("../../NewIcon/backBold.png")}
-              />
-            </TouchableOpacity>
-            <Text
-              style={{
-                ...stylesFont.fontNolanBold,
-                fontSize: _moderateScale(16),
-              }}
-            >
-              Xác thực OTP
-            </Text>
-            <View style={sizeIcon.lg} />
-          </View>
+      <Screen safeTop style={styles.container}>
+        <StatusBarCustom bgColor={"white"} barStyle={"dark-content"} />
+        <Header title="Xác thực OTP" onBack={navigation.goBack} />
+        <KeyboardAwareScrollView
+          bounces={false}
+          contentContainerStyle={{
+            flexGrow: 1,
+          }}
+        >
           <Text
             style={{
               ...stylesFont.fontNolan500,
@@ -198,8 +177,8 @@ const ActivationInApp = (props: any) => {
             autoFocusOnLoad={true}
           />
           <ResendOtp ref={resendRef} onResend={_reSendOTP} />
-        </View>
-      </KeyboardAwareScrollView>
+        </KeyboardAwareScrollView>
+      </Screen>
     </>
   );
 };
@@ -255,6 +234,11 @@ const styles = StyleSheet.create({
     width: 80,
     textAlign: "center",
     color: Color.BASE_COLOR,
+  },
+  headerContainer: {
+    justifyContent: "space-between",
+    paddingHorizontal: _moderateScale(8 * 2),
+    paddingBottom: 8,
   },
 });
 

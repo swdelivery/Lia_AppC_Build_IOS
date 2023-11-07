@@ -15,6 +15,8 @@ export default function usePhoneAuth(
   useEffect(() => {
     const subcriber = auth().onAuthStateChanged(async (user) => {
       if (user) {
+        console.log("onAuthStateChanged", user);
+        
         const token = await user.getIdTokenResult();
         savedCallback.current(user, token);
       }
