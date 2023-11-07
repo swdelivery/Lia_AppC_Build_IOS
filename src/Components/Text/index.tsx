@@ -60,7 +60,11 @@ const Text = ({
     const fontSize = size || 14;
     return {
       fontFamily: FONT_WEIGHTS[weight],
-      fontWeight: isAndroid ? undefined : weight,
+      fontWeight: isAndroid
+        ? undefined
+        : weight === "regular"
+        ? "normal"
+        : "bold",
       fontSize,
       color: color || BLACK,
       marginTop: top || undefined,
