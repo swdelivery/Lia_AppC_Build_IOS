@@ -85,7 +85,7 @@ const RightCircle = memo((props) => {
         rotateCircle2.value = withTiming(1, { duration: 10000 })
         rotateCircle3.value = withTiming(1, { duration: 10000 })
         rotateCircle4.value = withTiming(5, { duration: 10000 })
-        rotateCircle5.value = withTiming(10, { duration: 10000 })
+        rotateCircle5.value = withTiming(3, { duration: 10000 })
         rotateCircle6.value = withTiming(1, { duration: 10000 })
         // rotateCircle1.value = withRepeat(withTiming(1,{duration:10000}), -1,false,()=>{},'never');
     }
