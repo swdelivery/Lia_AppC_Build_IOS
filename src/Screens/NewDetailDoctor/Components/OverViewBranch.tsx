@@ -1,18 +1,9 @@
-import {
-  Alert,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import React, { memo, useCallback } from "react";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
+import React, { useCallback } from "react";
 import { _moderateScale, _width, _widthScale } from "../../../Constant/Scale";
 import CountStar2 from "../../../Components/NewCountStar/CountStar";
-import { URL_ORIGINAL } from "@Constant/Url";
-import { navigation } from "rootNavigation";
 import ScreenKey from "@Navigation/ScreenKey";
-import { useDispatch, useSelector } from "react-redux";
-import { getDoctorDetailsState } from "@Redux/doctor/selectors";
+import { useDispatch } from "react-redux";
 import Text from "@Components/Text";
 import { Branch } from "@typings/branch";
 import Image from "@Components/Image";
@@ -26,7 +17,7 @@ import Icon from "@Components/Icon";
 type Props = {
   branch: Branch;
 };
-const OverViewBranch = ({ branch }) => {
+const OverViewBranch = ({ branch }: Props) => {
   const { navigation } = useNavigate();
   const dispatch = useDispatch();
 
@@ -51,19 +42,13 @@ const OverViewBranch = ({ branch }) => {
           {branch.branchFileArr && (
             <Row flexWrap="wrap">
               {branch.branchFileArr.map((item) => {
-                <Certificate item={item} key={item._id} />;
+                return <Certificate item={item} key={item._id} />;
               })}
             </Row>
           )}
         </View>
         <TouchableOpacity onPress={handleBranchPress} style={styles.button}>
-          <Text
-            style={{
-              fontSize: 12,
-              color: "white",
-              fontWeight: "bold",
-            }}
-          >
+          <Text weight="bold" color="white" size={12}>
             {`Chi tiết`}
           </Text>
           <Icon name="chevron-right" size={14} color="white" />
@@ -110,7 +95,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: _moderateScale(8 * 2),
     alignSelf: "center",
     backgroundColor: "white",
-    marginTop: _moderateScale(8 * 2),
   },
   button: {
     flexDirection: "row",

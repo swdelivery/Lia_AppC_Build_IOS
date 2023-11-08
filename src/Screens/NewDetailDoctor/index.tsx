@@ -59,15 +59,19 @@ const DetailDoctor = (props) => {
           style={styles.gradientBg}
           start={{ x: 0, y: 0 }}
           end={{ x: 0, y: 1 }}
-          colors={["rgba(255,255,255,0.1)", "#F6F8F8", "#F6F8F8", "#F6F8F8"]}
-        >
+          colors={["rgba(255,255,255,0.1)", "#F6F8F8"]}
+        ></LinearGradient>
+        <View style={styles.content}>
+          <View style={styles.bg} />
           <Banner />
+        </View>
+        <View style={styles.info}>
           <OverViewBranch branch={data.branch} />
           <MainInfoDoctor />
           <Feedback doctor={data} />
           <QuestionVideo doctor={data} />
           <ListBottonService />
-        </LinearGradient>
+        </View>
       </Animated.ScrollView>
 
       <BottomAction doctor={data} />
@@ -89,9 +93,26 @@ const styles = StyleSheet.create({
   },
   gradientBg: {
     width: _width,
-    marginTop: 100,
+    top: 100,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     paddingTop: -26,
+    position: "absolute",
+    height: 150,
+  },
+  content: {
+    marginTop: 90,
+    paddingHorizontal: 8,
+  },
+  bg: {
+    backgroundColor: "#F6F8F8",
+    position: "absolute",
+    top: 150,
+    left: 0,
+    right: 0,
+    height: 500,
+  },
+  info: {
+    backgroundColor: "#F6F8F8",
   },
 });

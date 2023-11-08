@@ -213,11 +213,10 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 0,
   },
   banner: {
-    marginHorizontal: 8,
     backgroundColor: "white",
     borderRadius: _moderateScale(8 * 3),
     paddingBottom: _moderateScale(8 * 2),
-    zIndex: 10,
+    marginBottom: 8,
   },
 });
 
