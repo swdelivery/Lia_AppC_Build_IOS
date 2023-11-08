@@ -17,7 +17,7 @@ import {
   _moderateScale,
 } from "../../Constant/Scale";
 import * as ActionType from "../../Redux/Constants/ActionType";
-import Store from "../../Redux/Store";
+import Store from "../../Redux/store";
 import { styleElement } from "../../Constant/StyleElement";
 import { sizeIcon } from "../../Constant/Icon";
 import ScreenKey from "../../Navigation/ScreenKey";
@@ -203,7 +203,6 @@ const styles = StyleSheet.create({
     backgroundColor: Color.SECOND_COLOR,
     width: "48%",
     borderRadius: _moderateScale(8),
-    height: _heightScale(8 * 4),
   },
 });
 

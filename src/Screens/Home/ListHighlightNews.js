@@ -15,7 +15,7 @@ import ListServices from './ListServices'
 import ItemNews from './Components/ItemNews'
 import ScreenKey from '../../Navigation/ScreenKey';
 import { useSelector } from 'react-redux';
-import store from '../../Redux/Store';
+import store from "../../Redux/store";
 import { getHightlightNews } from '../../Redux/Action/News';
 import { URL_ORIGINAL } from '../../Constant/Url';
 import { navigation } from '../../../rootNavigation';

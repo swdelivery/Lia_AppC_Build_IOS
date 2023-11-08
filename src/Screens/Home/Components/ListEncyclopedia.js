@@ -19,7 +19,7 @@ import AlarmNotifi from '../../../Components/AlarmNotifi/AlarmNotifi';
 import Header from '../../../Components/HeaderLoseWeight/index';
 import HeaderLeft from '../../../Components/HeaderLeft';
 import CountStar from '../../../Components/CountStar/index';
-import store from '../../../Redux/Store';
+import store from "../../../Redux/store";
 import * as ActionType from '../../../Redux/Constants/ActionType'
 import FastImage from '../../../Components/Image/FastImage';
 import ItemEncyclopedia from './ItemEncyclopedia';

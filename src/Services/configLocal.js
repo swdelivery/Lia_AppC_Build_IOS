@@ -1,6 +1,6 @@
 import axios from "axios";
 import * as ActionType from '../Redux/Constants/ActionType';
-import Store from '../Redux/Store';
+import Store from "../Redux/store";
 
 
 

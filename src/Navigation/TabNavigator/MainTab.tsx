@@ -23,7 +23,7 @@ import TimelineTab from "./TimelineTab/TimelineTab";
 import LiveStreamTab from "../../Screens/LiveStream/index";
 import { navigation } from "../../../rootNavigation";
 import QRTab from "../../Screens/QRCode/index";
-import store from "../../Redux/Store";
+import store from "../../Redux/store";
 import * as ActionType from "../../Redux/Constants/ActionType";
 import { getInfoUserReducer } from "../../Redux/Selectors";
 import { useSafeAreaInsets } from "react-native-safe-area-context";

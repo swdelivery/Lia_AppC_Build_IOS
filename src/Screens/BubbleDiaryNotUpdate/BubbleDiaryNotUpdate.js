@@ -7,7 +7,7 @@ import { styleElement } from '../../Constant/StyleElement';
 import { stylesFont } from '../../Constant/Font';
 import { RED, WHITE, BLACK, BLACK_OPACITY_7 } from '../../Constant/Color';
 import ModalListDiaryNotUpdate from './ModalListDiaryNotUpdate';
-import store from '../../Redux/Store';
+import store from "../../Redux/store";
 import * as ActionType from '../../Redux/Constants/ActionType'
 
 const BubbleDiaryNotUpdate = memo((props) => {

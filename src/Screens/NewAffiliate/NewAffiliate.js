@@ -19,7 +19,7 @@ import ModalRequireBecomeCTV from './Components/ModalRequireBecomeCTV'
 import ModalShareCodeAffiliate from './Components/ModalShareCodeAffiliate'
 import { getPartnerLevel } from '../../Redux/Action/InfoAction'
 import { useSelector } from 'react-redux'
-import store from '../../Redux/Store'
+import store from "../../Redux/store";
 import * as ActionType from '../../Redux/Constants/ActionType';
 import { checkStepUnlockAffiliate } from '../../Redux/Action/Affiilate'
 // import ModalDemo from './Components/ModalDemo'

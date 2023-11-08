@@ -105,7 +105,7 @@ const EachMessage = memo((props) => {
 
             {/* SENDER */}
             {
-                !infoMessage?.isSystemNotification && infoMessage?.senderId == infoUserRedux._id ?
+                !infoMessage?.isSystemNotification && infoMessage?.senderId == infoUserRedux._id && infoMessage?.type != 'chatgpt' ?
                     <>
                         <View style={[
                             { justifyContent: 'flex-end', paddingRight: _widthScale(16), width: _width, marginBottom: _heightScale(4) },
@@ -571,12 +571,14 @@ const EachMessage = memo((props) => {
 
             {/* RECEIVER */}
             {
-                !infoMessage?.isSystemNotification && infoMessage?.senderId !== infoUserRedux._id ?
+                (!infoMessage?.isSystemNotification && infoMessage?.senderId !== infoUserRedux._id) || (infoMessage?.senderId == infoUserRedux._id && infoMessage?.type == "chatgpt") ?
                     <>
                         <View style={[styles.message, { marginLeft: _widthScale(8) }, currRoomChattingRedux?.messages[props?.index + 1]?.senderId && infoMessage?.senderId !== currRoomChattingRedux?.messages[props?.index + 1]?.senderId && { marginTop: _heightScale(8 * 2) }, props?.index == 0 && { marginBottom: _heightScale(40) }]}>
 
                             {
-                                currRoomChattingRedux?.messages[props?.index + 1]?.senderId && infoMessage?.senderId !== currRoomChattingRedux?.messages[props?.index + 1]?.senderId ?
+                                (currRoomChattingRedux?.messages[props?.index + 1]?.senderId && infoMessage?.senderId !== currRoomChattingRedux?.messages[props?.index + 1]?.senderId) 
+                                || (infoMessage?.type !== "chatgpt" && currRoomChattingRedux?.messages[props?.index + 1]?.type === "chatgpt") 
+                                || (infoMessage?.type === "chatgpt" && currRoomChattingRedux?.messages[props?.index + 1]?.type !== "chatgpt") ?
                                     <>
                                         {
                                             currRoomChattingRedux?.infoCurrRoomChatting?.assignedUsers?.find(itemFind => itemFind?.userId == infoMessage?.senderId)?.name ?
@@ -594,7 +596,9 @@ const EachMessage = memo((props) => {
                             }
                             <View style={{ flexDirection: 'row' }}>
                                 {
-                                    currRoomChattingRedux?.messages[props?.index + 1]?.senderId && infoMessage?.senderId !== currRoomChattingRedux?.messages[props?.index + 1]?.senderId ?
+                                    (currRoomChattingRedux?.messages[props?.index + 1]?.senderId && infoMessage?.senderId !== currRoomChattingRedux?.messages[props?.index + 1]?.senderId) 
+                                    || (infoMessage?.type !== "chatgpt" && currRoomChattingRedux?.messages[props?.index + 1]?.type === "chatgpt") 
+                                    || (infoMessage?.type === "chatgpt" && currRoomChattingRedux?.messages[props?.index + 1]?.type !== "chatgpt") ?
                                         <View style={{
                                             width: _moderateScale(30),
                                             height: _moderateScale(30),
@@ -643,7 +647,8 @@ const EachMessage = memo((props) => {
                                                         width: _moderateScale(30),
                                                         height: _moderateScale(30),
                                                     }}>
-                                                        infoMessage.type == "chatgpt" ?
+                                                        {
+                                                            infoMessage.type == "chatgpt" ?
                                                             <Image 
                                                                 style={[styles.avatarSm]}
                                                                 source={require('../../../../src/Icon/a_timeline.png')}
@@ -653,7 +658,7 @@ const EachMessage = memo((props) => {
                                                                 style={styles.avatarSm}
                                                                 source={{ uri: infoMessage?.senderChat?.profile?.fileAvatar?.link ? `${URL_ORIGINAL}${infoMessage?.senderChat?.profile?.fileAvatar?.link}` : URL_AVATAR_DEFAULT }}
                                                             />
-
+                                                        }
                                                         {
                                                             props.isOnline ?
                                                                 <View style={{ position: 'absolute', zIndex: 1, bottom: _moderateScale(-2), right: _moderateScale(-2), width: _moderateScale(8 * 1.75), height: _moderateScale(8 * 1.75), borderWidth: _moderateScale(2), borderColor: Color.WHITE, borderRadius: _moderateScale(9), backgroundColor: Color.ONLINE }} />

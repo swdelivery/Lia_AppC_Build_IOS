@@ -20,7 +20,7 @@ import cloneDeep from 'lodash/cloneDeep';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { getBottomSpace } from 'react-native-iphone-x-helper';
 import { alertCustomNotAction } from '../../../Constant/Utils';
-import store from '../../../Redux/Store';
+import store from "../../../Redux/store";
 import * as ActionType from '../../../Redux/Constants/ActionType'
 import ModalIframeYoutube from '../../../Components/ModalIframeYoutube/ModalIframeYoutube';
 import ExpandContent from './ExpandContent';

@@ -6,7 +6,7 @@ import * as Color from '../../Constant/Color';
 import { stylesFont } from '../../Constant/Font';
 import { _heightScale, _widthScale, _moderateScale, _width, _height } from '../../Constant/Scale';
 import * as ActionType from '../../Redux/Constants/ActionType';
-import Store from '../../Redux/Store';
+import Store from "../../Redux/store";
 import { styleElement } from '../../Constant/StyleElement';
 import { sizeIcon } from '../../Constant/Icon';
 import ScreenKey from '../../Navigation/ScreenKey'

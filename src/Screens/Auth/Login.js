@@ -13,6 +13,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import StatusBarCustom from '../../Components/StatusBar/StatusBarCustom';
 
 import { findPhoneNumbersInText } from 'libphonenumber-js'
+import Screen from "@Components/Screen";
 
 
 const Login = props => {
@@ -104,143 +105,209 @@ const Login = props => {
         // })
     }
     return (
-        <KeyboardAwareScrollView bounces={false} contentContainerStyle={{
+      <Screen safeTop style={styles.container}>
+        <KeyboardAwareScrollView
+          bounces={false}
+          contentContainerStyle={{
             flexGrow: 1,
-        }}>
-            <View style={styles.container}>
-                <StatusBarCustom />
+          }}
+        >
+          <StatusBarCustom />
 
-                <ImageBackground source={require(
-                    '../../Image/auth/bg_top.png'
-                )}
-                    style={{
-                        flex: 1,
-                        justifyContent: "center",
-                        backgroundColor: Color.WHITE,
-                        marginBottom: _heightScale(8 * 4),
-                        width: "100%",
-                        height: _heightScale(300),
-                    }}
-                    resizeMode='stretch' >
-                    <View style={{
-                        flex: 0.5,
-                        justifyContent: 'flex-end',
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        paddingHorizontal: _moderateScale(12)
-                    }}>
-                        {/* <Text style={[stylesFont.fontNolan500,{color:Color.WHITE, fontSize:_moderateScale(16)}]}>
+          <ImageBackground
+            source={require("../../Image/auth/bg_top.png")}
+            style={{
+              flex: 1,
+              justifyContent: "center",
+              backgroundColor: Color.WHITE,
+              marginBottom: _heightScale(8 * 4),
+              width: "100%",
+              height: _heightScale(300),
+            }}
+            resizeMode="stretch"
+          >
+            <View
+              style={{
+                flex: 0.5,
+                justifyContent: "flex-end",
+                flexDirection: "row",
+                alignItems: "center",
+                paddingHorizontal: _moderateScale(12),
+              }}
+            >
+              {/* <Text style={[stylesFont.fontNolan500,{color:Color.WHITE, fontSize:_moderateScale(16)}]}>
                         Trang Beauty Center</Text> */}
-                    </View>
-                    <View style={{
-                        flex: 2,
-                        justifyContent: 'center',
-                        alignItems: 'center'
-                    }}>
-                        <Image
-                            style={{
-                                width: _moderateScale(280),
-                                height: _heightScale(77),
-                                resizeMode: 'contain',
-                            }}
-                            source={
-                                focusInput == 2 ?
-                                    require('../../Image/auth/logo.png')
-                                    :
-                                    require('../../Image/auth/logo.png')
-                            } />
-                    </View>
-                    <View style={{
-                        flex: 2,
-                        justifyContent: 'center'
-                    }}>
-                        <Text style={[stylesFont.fontNolanBold, {
-                            maxWidth: _moderateScale(250),
-                            marginLeft: _moderateScale(24),
-                            color: Color.GREY,
-                            marginBottom: 24,
-                            fontSize: _heightScale(30)
-                        }]}>Đăng nhập</Text>
-                        <Text style={[{
-                            maxWidth: _moderateScale(180),
-                            color: Color.GREY,
-                            lineHeight: 18,
-                            marginLeft: _moderateScale(24),
-                            fontSize: _heightScale(14)
-                        }]}>Vui lòng nhập chính xác thông tin bên dưới (*)</Text>
+            </View>
+            <View
+              style={{
+                flex: 2,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Image
+                style={{
+                  width: _moderateScale(280),
+                  height: _heightScale(77),
+                  resizeMode: "contain",
+                }}
+                source={
+                  focusInput == 2
+                    ? require("../../Image/auth/logo.png")
+                    : require("../../Image/auth/logo.png")
+                }
+              />
+            </View>
+            <View
+              style={{
+                flex: 2,
+                justifyContent: "center",
+              }}
+            >
+              <Text
+                style={[
+                  stylesFont.fontNolanBold,
+                  {
+                    maxWidth: _moderateScale(250),
+                    marginLeft: _moderateScale(24),
+                    color: Color.GREY,
+                    marginBottom: 24,
+                    fontSize: _heightScale(30),
+                  },
+                ]}
+              >
+                Đăng nhập
+              </Text>
+              <Text
+                style={[
+                  {
+                    maxWidth: _moderateScale(180),
+                    color: Color.GREY,
+                    lineHeight: 18,
+                    marginLeft: _moderateScale(24),
+                    fontSize: _heightScale(14),
+                  },
+                ]}
+              >
+                Vui lòng nhập chính xác thông tin bên dưới (*)
+              </Text>
+            </View>
+          </ImageBackground>
 
-                    </View>
-                </ImageBackground>
-
-
-                <View style={{ width: _moderateScale(320), alignSelf: 'center' }}>
-                    <View style={[styles.containInput, { flexDirection: 'row', alignItems: 'center', paddingLeft: _moderateScale(8 * 2) }]}>
-
-                        <TextInput
-                            value={phoneNumber}
-                            onFocus={() => {
-                                setFocusInput(1)
-                            }}
-                            onBlur={() => {
-                                setFocusInput(0)
-                            }}
-                            keyboardType={'number-pad'}
-                            onChangeText={(content) => {
-                                setphoneNumber(content)
-                            }}
-                            style={styles.input}
-                            placeholderTextColor={Color.THIRD_COLOR}
-                            placeholder={'Số điện thoại'} />
-                        {/* <View style={{ width: _moderateScale(1), backgroundColor: Color.GREY, height: _moderateScale(16), marginHorizontal: _moderateScale(0) }} />
+          <View style={{ width: _moderateScale(320), alignSelf: "center" }}>
+            <View
+              style={[
+                styles.containInput,
+                {
+                  flexDirection: "row",
+                  alignItems: "center",
+                  paddingLeft: _moderateScale(8 * 2),
+                },
+              ]}
+            >
+              <TextInput
+                value={phoneNumber}
+                onFocus={() => {
+                  setFocusInput(1);
+                }}
+                onBlur={() => {
+                  setFocusInput(0);
+                }}
+                keyboardType={"number-pad"}
+                onChangeText={(content) => {
+                  setphoneNumber(content);
+                }}
+                style={styles.input}
+                placeholderTextColor={Color.THIRD_COLOR}
+                placeholder={"Số điện thoại"}
+              />
+              {/* <View style={{ width: _moderateScale(1), backgroundColor: Color.GREY, height: _moderateScale(16), marginHorizontal: _moderateScale(0) }} />
 
                         <Text style={{ marginHorizontal: _moderateScale(8 * 2), ...stylesFont.fontNolan500, color: Color.GREY, fontSize: _moderateScale(16) }}>
                             +84
                         </Text> */}
-                    </View>
-                    <View style={[styles.containInput, { justifyContent: 'center', paddingLeft: _moderateScale(8 * 2) }]}>
-                        <TextInput
-                            onFocus={() => {
-                                setFocusInput(1)
-                            }}
-                            secureTextEntry={true}
-                            onBlur={() => {
-                                setFocusInput(0)
-                            }}
-                            value={password}
-                            onChangeText={(content) => {
-                                setPassword(content)
-                            }}
-                            style={styles.input}
-                            placeholderTextColor={Color.THIRD_COLOR}
-                            placeholder={'Mật khẩu'} />
-                    </View>
-                </View>
-
-                <View style={{ marginTop: 40, alignItems: 'center' }}>
-                    <View style={{ width: _moderateScale(320), alignSelf: 'center', marginBottom: _moderateScale(16) }}>
-                        <Button.ButtonPrimary pressAction={() => fetchData()}
-                            text={`Đăng nhập`} height={48} />
-                    </View>
-                    <View style={{ width: _moderateScale(320), alignSelf: 'center', marginBottom: _moderateScale(16) }}>
-                        <Button.ButtonOutline
-                            pressAction={() => navigation.navigate(ScreenKey.REGISTER)}
-                            text={`Đăng ký`} height={48} />
-                    </View>
-                    <TouchableOpacity>
-                        <Text style={{ color: Color.GREY, marginTop: 12 }}>Quên mật khẩu?</Text>
-                    </TouchableOpacity>
-                </View>
-
-
-                <View style={{ flex: 1, justifyContent: 'flex-end', paddingBottom: _moderateScale(32), alignSelf: 'center' }}>
-                    <Text style={[stylesFont.fontDinTextPro, { color: Color.THIRD_COLOR, fontSize: _moderateScale(12) }]}>
-                    Copyright © Trang Beauty 2021.
-                </Text>
-                </View>
-
-
             </View>
+            <View
+              style={[
+                styles.containInput,
+                {
+                  justifyContent: "center",
+                  paddingLeft: _moderateScale(8 * 2),
+                },
+              ]}
+            >
+              <TextInput
+                onFocus={() => {
+                  setFocusInput(1);
+                }}
+                secureTextEntry={true}
+                onBlur={() => {
+                  setFocusInput(0);
+                }}
+                value={password}
+                onChangeText={(content) => {
+                  setPassword(content);
+                }}
+                style={styles.input}
+                placeholderTextColor={Color.THIRD_COLOR}
+                placeholder={"Mật khẩu"}
+              />
+            </View>
+          </View>
+
+          <View style={{ marginTop: 40, alignItems: "center" }}>
+            <View
+              style={{
+                width: _moderateScale(320),
+                alignSelf: "center",
+                marginBottom: _moderateScale(16),
+              }}
+            >
+              <Button.ButtonPrimary
+                pressAction={() => fetchData()}
+                text={`Đăng nhập`}
+                height={48}
+              />
+            </View>
+            <View
+              style={{
+                width: _moderateScale(320),
+                alignSelf: "center",
+                marginBottom: _moderateScale(16),
+              }}
+            >
+              <Button.ButtonOutline
+                pressAction={() => navigation.navigate(ScreenKey.REGISTER)}
+                text={`Đăng ký`}
+                height={48}
+              />
+            </View>
+            <TouchableOpacity>
+              <Text style={{ color: Color.GREY, marginTop: 12 }}>
+                Quên mật khẩu?
+              </Text>
+            </TouchableOpacity>
+          </View>
+
+          <View
+            style={{
+              flex: 1,
+              justifyContent: "flex-end",
+              paddingBottom: _moderateScale(32),
+              alignSelf: "center",
+            }}
+          >
+            <Text
+              style={[
+                stylesFont.fontDinTextPro,
+                { color: Color.THIRD_COLOR, fontSize: _moderateScale(12) },
+              ]}
+            >
+              Copyright © Trang Beauty 2021.
+            </Text>
+          </View>
         </KeyboardAwareScrollView>
+      </Screen>
     );
 };
 

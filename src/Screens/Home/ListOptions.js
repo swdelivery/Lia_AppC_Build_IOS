@@ -8,7 +8,7 @@ import ScreenKey from '../../Navigation/ScreenKey';
 import { checkCurrentPartnerTrackingWeight } from '../../Redux/Action/LoseWeightAction';
 import { useSelector } from 'react-redux';
 import { alertCustomNotAction } from '../../Constant/Utils';
-import store from '../../Redux/Store';
+import store from "../../Redux/store";
 import * as ActionType from '../../Redux/Constants/ActionType'
 
 

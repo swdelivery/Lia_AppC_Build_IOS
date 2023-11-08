@@ -19,7 +19,7 @@ import { URL_ORIGINAL, URL_AVATAR_DEFAULT } from '../../Constant/Url';
 import ScreenKey from '../../Navigation/ScreenKey';
 import { likePost, removePost } from '../../Redux/Action/PostAction';
 import * as ActionType from '../../Redux/Constants/ActionType';
-import Store from '../../Redux/Store';
+import Store from "../../Redux/store";
 
 
 

@@ -7,7 +7,7 @@ import { URL_ORIGINAL, URL_FOR_PARTNER } from '../../Constant/Url';
 // CALL API
 import { handleApi } from '../../Services/utils';
 import * as ActionType from '../Constants/ActionType';
-import Store from '../Store';
+import Store from "../store";
 import { useLogStyle, setLogStyle } from './LogConfig';
 import isArray from 'lodash/isArray'
 import { navigation } from '../../../rootNavigation';

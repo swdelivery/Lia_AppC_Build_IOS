@@ -64,14 +64,10 @@ const BannerInfo = () => {
       </Text>
 
       <Row top={8} gap={8}>
-        {data?.branchFileArr.length > 0 &&
+        {data?.branchFileArr?.length > 0 &&
           data.branchFileArr.map((item) => (
             <View style={styles.certificateContainer} key={item._id}>
-              <Certificate
-                bg={"black"}
-                name={item.name}
-                onPress={handleFilePress(item)}
-              />
+              <Certificate item={item} />
             </View>
           ))}
       </Row>
@@ -117,7 +113,7 @@ const BannerInfo = () => {
         : null}
       <Spacer top={_moderateScale(8)} />
       <Row gap={8}>
-        <Text style={[styles.opentime__text, { fontWeight: "bold" }]}>
+        <Text weight="bold" style={styles.opentime__text}>
           Đảm bảo:
         </Text>
         <View style={[styleElement.rowAliCenter]}>

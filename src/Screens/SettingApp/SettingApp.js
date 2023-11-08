@@ -11,7 +11,7 @@ import { stylesFont } from '../../Constant/Font';
 
 import ScreenKey from '../../Navigation/ScreenKey';
 import { useSelector } from 'react-redux';
-import Store from '../../Redux/Store';
+import Store from "../../Redux/store";
 import * as ActionType from '../../Redux/Constants/ActionType'
 import Header from '../../Components/HeaderLoseWeight/index';
 import LinearGradient from 'react-native-linear-gradient';

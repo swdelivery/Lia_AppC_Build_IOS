@@ -9,7 +9,7 @@ import * as Color from '../../Constant/Color';
 
 import { _heightScale, _moderateScale, _width, _widthScale } from '../../Constant/Scale';
 import * as ActionType from '../../Redux/Constants/ActionType';
-import Store from '../../Redux/Store';
+import Store from "../../Redux/store";
 // API
 import { URL_AVATAR_DEFAULT, URL_ORIGINAL } from '../../Constant/Url';
 import { styleElement } from '../../Constant/StyleElement';

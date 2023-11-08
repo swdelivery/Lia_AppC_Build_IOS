@@ -16,7 +16,7 @@ import { URL_AVATAR_DEFAULT, URL_ORIGINAL } from '../../../Constant/Url';
 import { navigation } from '../../../../rootNavigation';
 import ScreenKey from '../../../Navigation/ScreenKey';
 import moment from 'moment'
-import store from '../../../Redux/Store';
+import store from "../../../Redux/store";
 import * as ActionType from '../../../Redux/Constants/ActionType'
 import { useSelector } from 'react-redux';
 

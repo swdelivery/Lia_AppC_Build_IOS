@@ -23,7 +23,7 @@ const Header = ({ scrollY, title }: Props) => {
   const { top } = useSafeAreaInsets();
 
   const containerStyle = useMemo(() => {
-    return { paddingTop: top };
+    return { paddingTop: top + 8 };
   }, [top]);
 
   const animatedStyle = useAnimatedStyle(() => {

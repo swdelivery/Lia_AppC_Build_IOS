@@ -17,7 +17,7 @@ import { URL_ORIGINAL, URL_AVATAR_DEFAULT } from '../../Constant/Url';
 import ScreenKey from '../../Navigation/ScreenKey';
 import { getMedicalPrescription, getTreatmentDetail } from '../../Redux/Action/InfoAction';
 import * as ActionType from '../../Redux/Constants/ActionType';
-import Store from '../../Redux/Store';
+import Store from "../../Redux/store";
 import ItemHistory from './component/ItemHistory';
 import ItemMedical from './component/ItemMedical';
 import StatusBarCustom from '../../Components/StatusBar/StatusBarCustom';

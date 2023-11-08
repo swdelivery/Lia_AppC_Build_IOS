@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Platform } from "react-native";
 import Banner from "./Components/Banner";
 import Search from "./Components/Search";
 import {
@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     color: "black",
-    fontWeight: "500",
+    fontWeight: Platform.OS === "ios" ? "bold" : undefined,
     fontSize: 14,
     fontFamily: FONT_WEIGHTS["bold"],
   },
@@ -152,6 +152,6 @@ const styles = StyleSheet.create({
   tabInnerStyle: { width: "100%" },
   textActiveStyle: {
     color: "#4BA888",
-    fontWeight: "bold",
+    fontWeight: Platform.OS === "ios" ? "bold" : undefined,
   },
 });

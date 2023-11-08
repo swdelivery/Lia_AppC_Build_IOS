@@ -20,7 +20,7 @@ import StatusBarCustom from '../../Components/StatusBar/StatusBarCustom';
 import HeaderLeft from '../../Components/HeaderLeft';
 import RenderHtml from 'react-native-render-html';
 import { getBottomSpace } from 'react-native-iphone-x-helper';
-import store from '../../Redux/Store';
+import store from "../../Redux/store";
 import * as ActionType from '../../Redux/Constants/ActionType'
 import { useSelector } from 'react-redux';
 import { getBranchById } from '../../Redux/Action/BranchAction';

@@ -15,7 +15,7 @@ import ListServices from './ListServices'
 import ItemNews from './Components/ItemNews'
 import ScreenKey from '../../Navigation/ScreenKey';
 import { useSelector, useDispatch } from 'react-redux';
-import store from '../../Redux/Store';
+import store from "../../Redux/store";
 import * as ActionType from '../../Redux/Constants/ActionType'
 import StatusBarCustom from '../../Components/StatusBar/StatusBarCustom';
 import ListNews from './ListNews';

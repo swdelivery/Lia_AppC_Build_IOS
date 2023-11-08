@@ -22,7 +22,7 @@ import cloneDeep from 'lodash/cloneDeep'
 import StatusBarCustom from '../../Components/StatusBar/StatusBarCustom';
 import ItemComment from './Components/ItemComment';
 import { getBottomSpace } from 'react-native-iphone-x-helper';
-import store from '../../Redux/Store';
+import store from "../../Redux/store";
 import * as ActionType from '../../Redux/Constants/ActionType'
 
 const ModalCommentPost = memo((props) => {

@@ -6,7 +6,8 @@ export type Handler<State, A = any> = (
 ) => State;
 
 export type PagingInfo = {
-  after: string;
+  after?: string;
+  page?: number;
   canLoadMore: boolean;
 };
 

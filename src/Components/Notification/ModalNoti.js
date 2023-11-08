@@ -8,7 +8,7 @@ import { sizeIcon } from '../../Constant/Icon';
 import { _moderateScale } from '../../Constant/Scale';
 import { getNotificationForPartner } from '../../Redux/Action/NotificationAction';
 import * as ActionType from '../../Redux/Constants/ActionType';
-import store from '../../Redux/Store';
+import store from "../../Redux/store";
 
 const colors = [
     {

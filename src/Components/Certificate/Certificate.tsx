@@ -1,40 +1,51 @@
-import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
+import { StyleSheet } from "react-native";
 import React, { useMemo } from "react";
 import Text from "@Components/Text";
 import Icon from "@Components/Icon";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import EnhancedImageViewing from "react-native-image-viewing/dist/ImageViewing";
+import { FileUpload } from "@typings/common";
+import { getImageAvataUrl } from "src/utils/avatar";
+import useVisible from "src/Hooks/useVisible";
 
 type Props = {
-  name: string;
+  item: FileUpload;
   backgroundColor?: string;
-  bg?: string;
-  larger?: boolean;
-  onPress?: () => void;
 };
 
-const Certificate = ({
-  name,
-  backgroundColor = "#414378",
-  bg,
-  larger,
-  onPress,
-}: Props) => {
+const Certificate = ({ item, backgroundColor = "#414378" }: Props) => {
+  const imageViewer = useVisible();
+
   const containerStyle = useMemo(() => {
     return {
-      backgroundColor:
-        bg == "black" ? "#151617" : bg == "blue" ? "#6AB6D3" : backgroundColor,
+      backgroundColor,
     };
-  }, [backgroundColor, bg]);
+  }, [backgroundColor]);
+
+  const images = useMemo(() => {
+    return [
+      {
+        uri: getImageAvataUrl(item.fileUpload),
+      },
+    ];
+  }, [item]);
 
   return (
     <TouchableOpacity
       style={[styles.container, containerStyle]}
-      onPress={onPress}
-      disabled={!onPress}
+      onPress={imageViewer.show}
     >
       <Icon name="diamond" color="#F8E6D0" size={12} style={styles.icon} />
       <Text color={"#F8E6D0"} weight="bold" size={10} left={4}>
-        {name}
+        {item.name}
       </Text>
+
+      <EnhancedImageViewing
+        images={images}
+        onRequestClose={imageViewer.hide}
+        imageIndex={0}
+        visible={imageViewer.visible}
+      />
     </TouchableOpacity>
   );
 };

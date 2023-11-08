@@ -15,7 +15,7 @@ import { styleElement } from '../../Constant/StyleElement';
 import ScreenKey from '../../Navigation/ScreenKey';
 import { getNotificationForPartner, partnerReadNotification } from '../../Redux/Action/NotificationAction';
 import * as ActionType from '../../Redux/Constants/ActionType';
-import store from '../../Redux/Store';
+import store from "../../Redux/store";
 import ItemNoti from './ItemNoti';
 import { stylesFont } from '../../Constant/Font';
 const TabRightNotifi = (props) => {

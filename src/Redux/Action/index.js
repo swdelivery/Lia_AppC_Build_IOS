@@ -3,7 +3,7 @@ import Axios from 'axios';
 import { URL_ORIGINAL } from '../../Constant/Url';
 import { } from '../../Services/api';
 import * as ActionType from "../Constants/ActionType";
-import Store from '../Store';
+import Store from "../store";
 
 
 

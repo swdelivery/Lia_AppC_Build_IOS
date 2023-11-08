@@ -13,7 +13,7 @@ import { styleElement } from '../../Constant/StyleElement';
 import { navigation } from '../../../rootNavigation';
 import ModalHistory from './ModalHistory';
 import { getConfigSpinWheel, getPartnerWheelTurn } from '../../Redux/Action/SpinWheelAction';
-import store from '../../Redux/Store';
+import store from "../../Redux/store";
 import * as ActionType from '../../Redux/Constants/ActionType'
 import { getWallet } from '../../Redux/Action/InfoAction';
 import { getBottomSpace } from 'react-native-iphone-x-helper';

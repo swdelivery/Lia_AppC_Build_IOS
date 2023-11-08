@@ -25,7 +25,7 @@ const ListDiary = ({ branch }: Props) => {
     );
   }, [branch]);
 
-  return <PartnerDiary items={data} />;
+  return <PartnerDiary items={data} title="Nhật ký từ khách hàng" />;
 };
 
 export default ListDiary;

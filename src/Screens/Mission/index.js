@@ -10,7 +10,7 @@ import ListMission from './Component/ListMission';
 import { TabBar, TabView } from 'react-native-tab-view';
 import { getWallet } from '../../Redux/Action/InfoAction';
 import StatusBarCustom from '../../Components/StatusBar/StatusBarCustom';
-import store from '../../Redux/Store';
+import store from "../../Redux/store";
 import * as ActionType from '../../Redux/Constants/ActionType'
 import { useSelector } from 'react-redux';
 import { sizeIcon } from '../../Constant/Icon';

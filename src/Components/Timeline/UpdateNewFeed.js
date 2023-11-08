@@ -21,7 +21,7 @@ import { styleElement } from '../../Constant/StyleElement';
 import { URL_ORIGINAL, URL_AVATAR_DEFAULT } from '../../Constant/Url';
 import { confirmEditPost } from '../../Redux/Action/PostAction';
 import * as ActionType from '../../Redux/Constants/ActionType';
-import Store from '../../Redux/Store';
+import Store from "../../Redux/store";
 import { _uploadModule, _uploadModuleDocument } from '../../Services/api';
 // CALL API
 import { handleApi } from '../../Services/utils';

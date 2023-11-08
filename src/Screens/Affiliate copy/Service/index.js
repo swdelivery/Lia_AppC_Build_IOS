@@ -13,7 +13,7 @@ import { getListServiceForBooking } from '../../../Redux/Action/BookingAction';
 import { sizeIcon } from '../../../Constant/Icon';
 import ModalPickSingleNotSearch from '../../../Components/ModalPickSingleNotSearch/ModalPickSingleNotSearch'
 import _isEmpty from 'lodash/isEmpty'
-import store from '../../../Redux/Store';
+import store from "../../../Redux/store";
 import { navigation } from '../../../../rootNavigation';
 import ScreenKey from '../../../Navigation/ScreenKey'
 
