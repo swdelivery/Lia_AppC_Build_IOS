@@ -86,42 +86,39 @@ const DetailMaterial = (props) => {
     ];
 
     return (
-        <Screen safeBottom>
-            <StatusBar barStyle={"light-content"} />
-            <Header title={'Thông tin vật liệu'} />
+      <Screen safeBottom>
+        <StatusBar barStyle={"light-content"} />
+        <Header title={"Thông tin vật liệu"} />
 
-            <ScrollableTabView
-                title={<View />}
-                titleArgs={{
-                    interpolateHeight: {
-                        inputRange: [0, 0],
-                        outputRange: [0, 0],
-                        extrapolate: "clamp",
-                    },
-                }}
-                mappingProps={{
-                    rootTime: rootTime,
-                }}
-                stacks={STACKS}
-                ref={(it) => (scrollableTabViewRef.current = it)}
-                header={<Banner />}
-                tabsStyle={styles.tabsStyle}
-                tabStyle={styles.tabStyle}
-                tabsEnableAnimated={true}
-
-
-                tabInnerStyle={styles.tabInnerStyle}
-                tabActiveOpacity={1}
-                tabUnderlineStyle={styles.tabUnderlineStyle}
-                textStyle={styles.textStyle}
-                textActiveStyle={styles.textActiveStyle}
-                firstIndex={0}
-                toTabsOnTab={true}
-                oneTabHidden={true}
-                enableCachePage={true}
-            />
-
-        </Screen>
+        <ScrollableTabView
+          title={<View />}
+          titleArgs={{
+            interpolateHeight: {
+              inputRange: [0, 0],
+              outputRange: [0, 0],
+              extrapolate: "clamp",
+            },
+          }}
+          mappingProps={{
+            rootTime: rootTime,
+          }}
+          stacks={STACKS}
+          ref={(it) => (scrollableTabViewRef.current = it)}
+          header={<Banner />}
+          tabsStyle={styles.tabsStyle}
+          tabStyle={styles.tabStyle}
+          tabsEnableAnimated={true}
+          tabInnerStyle={styles.tabInnerStyle}
+          tabActiveOpacity={1}
+          tabUnderlineStyle={styles.tabUnderlineStyle}
+          textStyle={styles.textStyle}
+          textActiveStyle={styles.textActiveStyle}
+          firstIndex={0}
+          toTabsOnTab={true}
+          oneTabHidden={true}
+          enableCachePage={true}
+        />
+      </Screen>
     );
 };
 
