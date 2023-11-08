@@ -8,7 +8,7 @@ import ModalShowListUserHasSeenMessage from '../../../Components/Message/ModalSh
 import ModalRemoveMessage from '../../../Components/Message/ModalRemoveMessage'
 import { URL_ORIGINAL } from '../../../Constant/Url';
 import * as ActionType from '../../../Redux/Constants/ActionType';
-import Store from '../../../Redux/Store';
+import Store from "../../../Redux/store";
 // CALL API
 import { _getMoreMessageByLastedId, _getNewestMessageByFirstMessageId } from '../../../Services/api';
 import { handleApi } from '../../../Services/utils';

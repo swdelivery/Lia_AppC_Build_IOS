@@ -12,7 +12,7 @@ import { _heightScale, _moderateScale, _width, _widthScale } from '../../../Cons
 import { styleElement } from '../../../Constant/StyleElement';
 import { URL_ORIGINAL, URL_AVATAR_DEFAULT } from '../../../Constant/Url';
 import * as ActionType from '../../../Redux/Constants/ActionType';
-import Store from '../../../Redux/Store';
+import Store from "../../../Redux/store";
 // API
 import { _addMembersToGroupChat } from '../../../Services/api';
 import { handleApi } from '../../../Services/utils';

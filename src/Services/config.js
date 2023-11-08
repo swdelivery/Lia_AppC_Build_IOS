@@ -2,7 +2,7 @@ import axios from "axios";
 // import { setLogStyle } from './log-config'
 import {  URL_ORIGINAL } from '../../src/Constant/Url';
 import * as ActionType from '../Redux/Constants/ActionType';
-import Store from '../Redux/Store';
+import Store from "../Redux/store";
 
 
 

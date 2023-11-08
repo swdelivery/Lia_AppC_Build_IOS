@@ -15,7 +15,7 @@ import {
     SkypeIndicator,
 } from 'react-native-indicators';
 import { _widthScale, _width, _height, _moderateScale } from '../../Constant/Scale';
-import store from '../../Redux/Store';
+import store from "../../Redux/store";
 
 
 class Loading extends Component {

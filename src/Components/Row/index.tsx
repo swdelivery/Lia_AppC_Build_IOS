@@ -20,7 +20,7 @@ export default function Row({
   bottom,
   left,
   right,
-  alignItems,
+  alignItems = "center",
   justifyContent,
   flexWrap,
   style,

@@ -7,7 +7,7 @@ import { _moderateScale, _width } from '../../../Constant/Scale';
 import { navigation } from '../../../../rootNavigation';
 import ScreenKey from '../../../Navigation/ScreenKey'
 import { useSelector } from 'react-redux';
-import store from '../../../Redux/Store';
+import store from "../../../Redux/store";
 import * as ActionType from '../../../Redux/Constants/ActionType'
 import { alertCustomNotAction } from '../../../Constant/Utils';
 

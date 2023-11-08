@@ -1,13 +1,15 @@
 import { Condition } from "../types";
 
 export type GetDoctorListPayload = {
-  branchCode: Condition;
+  branchCode?: Condition;
 };
 
 export type GetReviewsPayload = {
-  branchCode: Condition;
+  branchCode?: Condition;
+  doctorCode?: Condition;
 };
 
 export type GetDiaryPayload = {
-  branchCode: Condition;
+  branchCode?: Condition;
+  doctorId?: Condition;
 };

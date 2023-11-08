@@ -14,13 +14,6 @@ import { checkRefreshToken } from './src/Redux/Action/AuthAction';
 import messaging from '@react-native-firebase/messaging';
 import {PermissionsAndroid} from 'react-native';
 
-StatusBar.setBarStyle("dark-content");
-if (Platform.OS === "android") {
-  //   StatusBar.setBackgroundColor("rgba(0,0,0,0)");
-  StatusBar.setTranslucent(true);
-}
-
-
 async function registerAppWithFCM() {
     await messaging().registerDeviceForRemoteMessages();
 }

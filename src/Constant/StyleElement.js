@@ -84,4 +84,15 @@ export const styleElement = StyleSheet.create({
     flexDirection: "column",
     alignItems: "flex-start",
   },
+  shadow: {
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
+    shadowOpacity: 0.15,
+    shadowRadius: 4,
+
+    elevation: 3,
+  },
 });

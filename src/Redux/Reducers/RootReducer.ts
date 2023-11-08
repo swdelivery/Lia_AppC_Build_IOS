@@ -28,6 +28,7 @@ import affiliateReducer from "./AffiliateReducer";
 import home from "../home/reducers";
 import branch from "../branch/reducers";
 import service from "../service/reducers";
+import doctor from "../doctor/reducers";
 
 const rootReducer = combineReducers({
   newsReducer,
@@ -59,6 +60,7 @@ const rootReducer = combineReducers({
   home,
   branch,
   service,
+  doctor,
 });
 
 // const rootReducer = (state, action) => {

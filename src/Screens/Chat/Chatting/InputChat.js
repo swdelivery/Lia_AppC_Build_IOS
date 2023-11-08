@@ -14,7 +14,7 @@ import { sizeIcon } from '../../../Constant/Icon';
 import { _heightScale, _moderateScale, _width, _widthScale } from '../../../Constant/Scale';
 import { styleElement } from '../../../Constant/StyleElement';
 import * as ActionType from '../../../Redux/Constants/ActionType';
-import store from '../../../Redux/Store';
+import store from "../../../Redux/store";
 import { useMentions } from 'react-native-controlled-mentions/dist';
 // CALL API
 import { _uploadModule, _uploadModuleDocument } from '../../../Services/api';

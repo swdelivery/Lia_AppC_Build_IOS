@@ -12,7 +12,7 @@ import { URL_ORIGINAL } from '../../../Constant/Url';
 import { navigation } from '../../../../rootNavigation';
 import ScreenKey from '../../../Navigation/ScreenKey'
 import { useSelector } from 'react-redux';
-import store from '../../../Redux/Store';
+import store from "../../../Redux/store";
 import * as ActionType from '../../../Redux/Constants/ActionType'
 import { alertCustomNotAction } from '../../../Constant/Utils';
 import { sizeIcon } from '../../../Constant/Icon';

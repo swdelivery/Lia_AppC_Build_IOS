@@ -1,4 +1,4 @@
-import { Branch } from "./branch";
+import { Branch, BranchService } from "./branch";
 import { FileAvatar, FileUpload, Timestamp } from "./common";
 
 export type Doctor = {
@@ -38,4 +38,6 @@ export type Doctor = {
   treatmentDoctorFileArr: FileUpload[];
   branch: Branch;
   id: string;
+  doctorServices: BranchService[];
+  questionVideoDoctorArr: any[];
 } & Timestamp;

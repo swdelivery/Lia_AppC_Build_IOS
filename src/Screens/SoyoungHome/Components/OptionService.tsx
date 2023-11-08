@@ -1,22 +1,22 @@
-import React, { memo, useCallback, useEffect } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import React, { useCallback, useEffect } from "react";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import {
   _heightScale,
   _moderateScale,
   _widthScale,
 } from "../../../Constant/Scale";
 import { useDispatch, useSelector } from "react-redux";
-import { URL_ORIGINAL } from "../../../Constant/Url";
-import { navigation } from "../../../../rootNavigation";
-import { stylesFont } from "../../../Constant/Font";
 import ScreenKey from "../../../Navigation/ScreenKey";
 import { getServiceGroup } from "@Redux/home/actions";
 import { getServiceGroupState } from "@Redux/home/selectors";
 import Image from "@Components/Image";
+import Text from "@Components/Text";
+import { useNavigate } from "src/Hooks/useNavigation";
 
-const OptionService = memo(() => {
+const OptionService = () => {
   const { data } = useSelector(getServiceGroupState);
   const dispatch = useDispatch();
+  const { navigate } = useNavigate();
 
   useEffect(() => {
     _getData();
@@ -45,34 +45,13 @@ const OptionService = memo(() => {
         return (
           <TouchableOpacity
             key={item._id}
-            onPress={() => {
-              navigation.navigate(ScreenKey.LIST_SERVICE, {
-                currServiceGr: item,
-              });
-            }}
-            style={{
-              alignItems: "center",
-              width: _widthScale(65),
-              marginTop: _moderateScale(4),
-            }}
+            onPress={navigate(ScreenKey.LIST_SERVICE, {
+              currServiceGr: item,
+            })}
+            style={styles.itemContainer}
           >
-            <View style={styles.item__option}>
-              <Image
-                style={{
-                  width: "100%",
-                  height: "100%",
-                }}
-                avatar={item?.fileAvatar}
-              />
-            </View>
-            <Text
-              style={[
-                stylesFont.fontNolan500,
-                {
-                  fontSize: _moderateScale(12),
-                },
-              ]}
-            >
+            <Image style={styles.item__option} avatar={item?.fileAvatar} />
+            <Text weight="bold" size={12}>
               {item.name}
             </Text>
           </TouchableOpacity>
@@ -80,7 +59,7 @@ const OptionService = memo(() => {
       })}
     </View>
   );
-});
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -98,6 +77,11 @@ const styles = StyleSheet.create({
     width: _widthScale(8 * 5),
     height: _widthScale(8 * 5),
     borderRadius: _widthScale((8 * 5) / 2),
+  },
+  itemContainer: {
+    alignItems: "center",
+    width: _widthScale(65),
+    marginTop: _moderateScale(4),
   },
 });
 

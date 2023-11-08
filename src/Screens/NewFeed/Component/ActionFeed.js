@@ -9,7 +9,7 @@ import { _heightScale, _moderateScale } from '../../../Constant/Scale';
 import { createPostReaction } from '../../../Redux/Action/PostAction';
 import { navigation } from '../../../../rootNavigation';
 import ScreenKey from '../../../Navigation/ScreenKey'
-import store from '../../../Redux/Store';
+import store from "../../../Redux/store";
 import * as ActionType from '../../../Redux/Constants/ActionType'
 
 var images = [

@@ -1,30 +1,31 @@
 import Avatar from "@Components/Avatar";
-import FastImage from "@Components/FastImage";
+import Image from "@Components/Image";
 import Row from "@Components/Row";
 import Text from "@Components/Text";
 import { _moderateScale } from "@Constant/Scale";
 import { styleElement } from "@Constant/StyleElement";
 import { Diary } from "@typings/diary";
+import { first } from "lodash";
 import moment from "moment";
-import React, { useMemo } from "react";
+import React from "react";
 import { View, StyleSheet } from "react-native";
-import { getImageAvataUrl } from "src/utils/avatar";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import useCallbackItem from "src/Hooks/useCallbackItem";
 
 type Props = {
   item: Diary;
+  onPress: (item: Diary) => void;
 };
 
-export default function DiaryItem({ item }: Props) {
-  const beforeImage = useMemo(() => {
-    return getImageAvataUrl(item.imageBeforeTreatment[0]);
-  }, [item]);
-
-  const afterImage = useMemo(() => {
-    return getImageAvataUrl(item.imageAfterTreatment[0]);
-  }, [item]);
+export default function DiaryItem({ item, onPress }: Props) {
+  const trigger = useCallbackItem(item);
 
   return (
-    <View style={[styles.box__diary]}>
+    <TouchableOpacity
+      activeOpacity={0.9}
+      onPress={trigger(onPress)}
+      style={[styles.box__diary]}
+    >
       <Row gap={8}>
         <Avatar avatar={item.partner.fileAvatar} size={40} circle />
         <View style={styleElement.flex}>
@@ -49,7 +50,10 @@ export default function DiaryItem({ item }: Props) {
               Trước
             </Text>
           </View>
-          <FastImage style={styles.box__diary__image} uri={beforeImage} />
+          <Image
+            style={styles.box__diary__image}
+            avatar={first(item.imageBeforeTreatment)}
+          />
         </View>
         <View style={styles.box__diary__image}>
           <View style={styles.absoluteText}>
@@ -57,10 +61,13 @@ export default function DiaryItem({ item }: Props) {
               Sau
             </Text>
           </View>
-          <FastImage style={styles.box__diary__image} uri={afterImage} />
+          <Image
+            style={styles.box__diary__image}
+            avatar={first(item.imageAfterTreatment)}
+          />
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 

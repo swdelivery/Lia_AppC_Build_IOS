@@ -13,7 +13,7 @@ import { getListServiceForBooking, getListProductForBooking } from '../../../Red
 import { sizeIcon } from '../../../Constant/Icon';
 import ModalPickSingleNotSearch from '../../../Components/ModalPickSingleNotSearch/ModalPickSingleNotSearch'
 import _isEmpty from 'lodash/isEmpty'
-import store from '../../../Redux/Store';
+import store from "../../../Redux/store";
 import { getProductByGroup } from '../../../Redux/Action/ProductGroup';
 
 const index = memo((props) => {

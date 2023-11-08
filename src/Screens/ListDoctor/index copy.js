@@ -19,7 +19,7 @@ import { URL_ORIGINAL, URL_FOR_PARTNER } from '../../Constant/Url';
 import AlarmNotifi from '../../Components/AlarmNotifi/AlarmNotifi';
 import HeaderLeft from '../../Components/HeaderLeft';
 import CountStar from '../../Components/CountStar/index';
-import store from '../../Redux/Store';
+import store from "../../Redux/store";
 import * as ActionType from '../../Redux/Constants/ActionType'
 import FastImage from '../../Components/Image/FastImage';
 import LinearGradient from 'react-native-linear-gradient';

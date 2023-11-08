@@ -5,7 +5,7 @@ import { randomStringFixLengthCode } from '../../Constant/Utils';
 import { Platform } from 'react-native';
 import { navigation, dispatch } from '../../../rootNavigation';
 import { isEmpty } from 'lodash'
-import store from '../Store';
+import store from "../store";
 
 
 export const modalCreateTask = (props) => {

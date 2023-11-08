@@ -28,7 +28,7 @@ import {
   getListDoctorForPartner,
 } from "../Redux/Action/MembersAction";
 import * as ActionType from "../Redux/Constants/ActionType";
-import Store from "../Redux/Store";
+import Store from "../Redux/store";
 import Login from "../Screens/Auth/Login";
 import Register from "../Screens/Auth/Register";
 import Activation from "../Screens/Auth/Activation";
@@ -129,7 +129,7 @@ import RegisterInApp from "../Screens/AuthIn/RegisterInApp";
 import ActivationInApp from "../Screens/AuthIn/ActivationInApp";
 import FillPhoneToGetNewPass from "../Screens/AuthIn/FillPhoneToGetNewPass";
 import GetOtpNewPass from "../Screens/AuthIn/GetOtpNewPass";
-import store from "../Redux/Store";
+import store from "../Redux/store";
 import ModalRequireLogin from "../Components/Notification/ModalRequireLogin";
 import Axios from "axios";
 import { useLogStyle, setLogStyle } from "../Redux/Action/LogConfig";

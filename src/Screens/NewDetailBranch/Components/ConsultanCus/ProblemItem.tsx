@@ -37,7 +37,11 @@ export default function ProblemItem({ item, onPress, isSelected }: Props) {
 }
 
 const styles = StyleSheet.create({
-  container: { alignItems: "center", marginRight: _moderateScale(8) },
+  container: {
+    alignItems: "center",
+    marginRight: _moderateScale(8),
+    maxWidth: 100,
+  },
   imageConsul: {
     width: _moderateScale(8 * 12),
     height: _moderateScale(8 * 12),

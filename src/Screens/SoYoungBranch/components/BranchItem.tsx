@@ -1,22 +1,21 @@
-import React, { useCallback, useMemo } from "react";
-import { View, StyleSheet, TouchableOpacity, Pressable } from "react-native";
+import React, { useCallback } from "react";
+import { View, StyleSheet } from "react-native";
 import { _width } from "@Constant/Scale";
 import ScreenKey from "@Navigation/ScreenKey";
 import { useNavigate } from "src/Hooks/useNavigation";
-import FastImage from "@Components/FastImage";
 import Text from "@Components/Text";
 import { styleElement } from "@Constant/StyleElement";
 import Row from "@Components/Row";
 import CountStar2 from "@Components/NewCountStar/CountStar";
 import Certificate from "@Components/Certificate/Certificate";
-import { getImageAvataUrl } from "src/utils/avatar";
 import Icon from "@Components/Icon";
 import { RED } from "@Constant/Color";
 import HorizontalServices from "@Components/HorizontalServices";
 import { Branch } from "@typings/branch";
-import linking from "linking";
 import { useDispatch } from "react-redux";
 import { selectBranch } from "@Redux/branch/actions";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import Avatar from "@Components/Avatar";
 
 type Props = {
   item: Branch;
@@ -26,32 +25,22 @@ export default function BranchItem({ item }: Props) {
   const dispatch = useDispatch();
   const { navigation } = useNavigate();
 
-  const avatarSource = useMemo(() => {
-    return getImageAvataUrl(
-      item?.avatar,
-      "https://cfw.rabbitloader.xyz/eyJjIjp0cnVlLCJoIjoibGlhYmVhdXR5LnZuIiwidiI6OTczNjIwMDQ3LCJpIjoiZjgxYWIyZTctMGZlZi00YmU2LTZhNmItODI5MWI4YWExZTAwIn0/wp-content/uploads/2023/06/photo.png"
-    );
-  }, [item]);
-
   const handlePress = useCallback(() => {
     dispatch(selectBranch(item));
     navigation.navigate(ScreenKey.DETAIL_BRAND, { idBranch: item._id });
   }, [item]);
 
-  const handleFilePress = useCallback(
-    (item: Branch["branchFileArr"][0]) => () => {
-      linking.open(getImageAvataUrl(item.fileUpload));
-    },
-    []
-  );
-
   return (
-    <View style={[styles.card, shadow]}>
-      <Pressable onPress={handlePress} style={styles.upperView}>
-        <FastImage style={styles.avatar} uri={avatarSource} />
+    <TouchableOpacity
+      activeOpacity={0.9}
+      onPress={handlePress}
+      style={[styles.card, shadow]}
+    >
+      <View style={styles.upperView}>
+        <Avatar size={48} avatar={item.avatar} circle />
         <View style={styleElement.flex}>
           <Row justifyContent="space-between">
-            <Text numberOfLines={1} style={styles.title}>
+            <Text numberOfLines={1} weight="bold">
               {item?.name}
             </Text>
 
@@ -65,7 +54,7 @@ export default function BranchItem({ item }: Props) {
 
           <Row gap={4}>
             <Icon name="map-marker" color={RED} size={14} />
-            <Text size={12} color="grey">
+            <Text size={12} color="grey" right={8} style={styleElement.flex}>
               {item?.address}
             </Text>
           </Row>
@@ -75,19 +64,17 @@ export default function BranchItem({ item }: Props) {
               item.branchFileArr.map((item, index) => (
                 <Certificate
                   key={item._id}
-                  bg={"black"}
-                  name={item.name}
-                  onPress={handleFilePress(item)}
+                  item={item}
                   backgroundColor={index % 2 === 0 ? "#414378" : "#151617"}
                 />
               ))}
           </Row>
         </View>
-      </Pressable>
+      </View>
       {item.branchServices.length > 0 && (
         <HorizontalServices items={item.branchServices} />
       )}
-    </View>
+    </TouchableOpacity>
   );
 }
 
@@ -127,11 +114,6 @@ const styles = StyleSheet.create({
   },
   serviceContent: {
     padding: 4,
-  },
-  title: {
-    fontSize: 14,
-    fontWeight: "500",
-    width: 220,
   },
   start: {
     width: 8 * 1.75,

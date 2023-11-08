@@ -14,7 +14,7 @@ import ScreenKey from '../../../Navigation/ScreenKey';
 import { getConversationByIdForPartner, getDataPartnerMessage } from '../../../Redux/Action/MessageActionV2';
 import { getStringeeToken } from '../../../Redux/Action/StringeeAction';
 import * as ActionType from "../../../Redux/Constants/ActionType";
-import Store from '../../../Redux/Store';
+import Store from "../../../Redux/store";
 import Header from './Header';
 import InputChat from './InputChat';
 import ListMessages from './ListMessages';

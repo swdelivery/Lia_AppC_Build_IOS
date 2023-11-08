@@ -14,7 +14,7 @@ import { styleElement } from '../../Constant/StyleElement';
 import { getServiceDiaryGuide, getTreatmentDiaryByTreatmentDetail } from '../../Redux/Action/Diary';
 import ItemDate from './Components/ItemDate';
 import StatusBarCustom from '../../Components/StatusBar/StatusBarCustom';
-import store from '../../Redux/Store';
+import store from "../../Redux/store";
 import * as ActionType from '../../Redux/Constants/ActionType'
 import { TabBar, TabView } from 'react-native-tab-view';
 

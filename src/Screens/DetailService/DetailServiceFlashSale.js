@@ -24,7 +24,7 @@ import { WebView } from 'react-native-webview';
 import { styleTo, styleToComponent } from '../../Constant/styleTo';
 import { useSelector } from 'react-redux';
 import ModalPickLocationToCreateBooking from '../../Components/ModalPickLocationToCreateBooking/ModalPickLocationToCreateBooking';
-import store from '../../Redux/Store';
+import store from "../../Redux/store";
 import * as ActionType from '../../Redux/Constants/ActionType'
 import RenderHtml from 'react-native-render-html';
 import { getBottomSpace, getStatusBarHeight } from 'react-native-iphone-x-helper';

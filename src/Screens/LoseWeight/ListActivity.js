@@ -9,7 +9,7 @@ import { stylesFont } from '../../Constant/Font';
 
 import ScreenKey from '../../Navigation/ScreenKey';
 import { useSelector } from 'react-redux';
-import store from '../../Redux/Store';
+import store from "../../Redux/store";
 import * as ActionType from '../../Redux/Constants/ActionType'
 import { URL_AVATAR_DEFAULT, URL_ORIGINAL } from '../../Constant/Url';
 import { removePartnerActivityMenu } from '../../Redux/Action/LoseWeightAction';

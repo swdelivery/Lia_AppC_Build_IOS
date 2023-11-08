@@ -63,7 +63,7 @@ const DetailBranch = () => {
           <MainInfo />
           <ListDoctor branch={data} />
           <ListDiary branch={data} />
-          <ConsultanCus />
+          {data?.branchProblemFileArr?.length > 0 && <ConsultanCus />}
           {data?.branchServices?.length > 0 && (
             <HorizontalServices
               title="Dịch vụ phổ biến"

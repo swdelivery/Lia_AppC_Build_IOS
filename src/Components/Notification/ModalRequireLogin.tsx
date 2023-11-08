@@ -17,7 +17,7 @@ import {
   _moderateScale,
 } from "../../Constant/Scale";
 import * as ActionType from "../../Redux/Constants/ActionType";
-import Store from "../../Redux/Store";
+import Store from "../../Redux/store";
 import { styleElement } from "../../Constant/StyleElement";
 import { sizeIcon } from "../../Constant/Icon";
 import ScreenKey from "../../Navigation/ScreenKey";

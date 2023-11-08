@@ -8,7 +8,7 @@ import { styleElement } from '../../../Constant/StyleElement';
 import Carousel, { ParallaxImage, Pagination } from 'react-native-snap-carousel';
 import { sizeIcon } from '../../../Constant/Icon';
 import { useSelector } from 'react-redux';
-import store from '../../../Redux/Store';
+import store from "../../../Redux/store";
 import * as ActionType from '../../../Redux/Constants/ActionType'
 import { navigation } from '../../../../rootNavigation';
 import ScreenKey from '../../../Navigation/ScreenKey'

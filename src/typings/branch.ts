@@ -1,4 +1,5 @@
 import { FileAvatar, FileUpload, Timestamp } from "./common";
+import { Service } from "./serviceGroup";
 
 export type BranchService = {
   isDelete: false;
@@ -8,38 +9,8 @@ export type BranchService = {
   userCreate: string;
   __v: number;
   id: string;
-  service: {
-    price: number;
-    warranty: number;
-    actionTime: number;
-    codeGroup: string[];
-    totalProgress: number;
-    representationFileIdArr: any[];
-    representationFileArr: FileAvatar[];
-    parameterDescription: string;
-    advantageDescription: string;
-    procedureDescription: string;
-    reviewCount: number;
-    averageRating: number;
-    materialCodeArr: any[];
-    countPartner: number;
-    orderNumber: number;
-    isDisplayed: boolean;
-    searchFields: string[];
-    searchKeys: string[];
-    isActive: boolean;
-    isDelete: boolean;
-    _id: string;
-    name: string;
-    code: string;
-    created: string;
-    updated: string;
-    slug: string;
-    __v: number;
-    options: any[];
-    id: string;
-  };
-} & Timestamp;
+  service: Service;
+};
 
 export type Branch = {
   isActive: boolean;

@@ -20,7 +20,7 @@ import { getStatusBarHeight, getBottomSpace } from 'react-native-iphone-x-helper
 import CountStar from '../../Components/CountStar/index';
 import BottomBtn from '../../Components/BottomBtn/BottomBtn';
 import ScreenKey from '../../Navigation/ScreenKey'
-import store from '../../Redux/Store';
+import store from "../../Redux/store";
 import * as ActionType from '../../Redux/Constants/ActionType'
 import moment from 'moment'
 import { FROM_GROUP_CHAT_ID } from '../../Constant/Flag';

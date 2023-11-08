@@ -1,31 +1,34 @@
-import FastImage from "@Components/FastImage";
+import Image from "@Components/Image";
 import CountStar2 from "@Components/NewCountStar/CountStar";
 import Text from "@Components/Text";
 import ScreenKey from "@Navigation/ScreenKey";
+import { selectDoctor } from "@Redux/doctor/actions";
 import { Doctor } from "@typings/doctor";
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import { StyleSheet, Pressable } from "react-native";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "src/Hooks/useNavigation";
-import { getImageAvataUrl } from "src/utils/avatar";
 
 type Props = {
   item: Doctor;
 };
 
 export default function DoctorItem({ item }: Props) {
-  const { navigate } = useNavigate();
+  const { navigation } = useNavigate();
+  const dispatch = useDispatch();
 
-  const doctorImage = useMemo(() => {
-    return getImageAvataUrl(item.avatar);
-  }, [item]);
+  const handleDoctorPress = useCallback(() => {
+    dispatch(selectDoctor(item));
+    navigation.navigate(ScreenKey.DETAIL_DOCTOR, { idDoctor: item._id });
+  }, []);
 
   return (
     <Pressable
       key={item?._id}
-      onPress={navigate(ScreenKey.DETAIL_DOCTOR, { idDoctor: item._id })}
+      onPress={handleDoctorPress}
       style={styles.doctorItem}
     >
-      <FastImage style={styles.image} uri={doctorImage} />
+      <Image style={styles.image} avatar={item.avatar} />
       <Text weight="bold" size={12} top={4}>
         {item.name}
       </Text>

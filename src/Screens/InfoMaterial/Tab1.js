@@ -11,7 +11,7 @@ import { stylesFont } from '../../Constant/Font';
 
 import ScreenKey from '../../Navigation/ScreenKey';
 import { useSelector } from 'react-redux';
-import store from '../../Redux/Store';
+import store from "../../Redux/store";
 import * as ActionType from '../../Redux/Constants/ActionType'
 import StatusBarCustom from '../../Components/StatusBar/StatusBarCustom';
 import { URL_ORIGINAL } from '../../Constant/Url';

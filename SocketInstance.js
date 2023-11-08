@@ -4,7 +4,7 @@ import io from 'socket.io-client/dist/socket.io';
 import { navigation } from './rootNavigation';
 import { URL_ORIGINAL } from './src/Constant/Url';
 import * as ActionType from './src/Redux/Constants/ActionType';
-import Store from './src/Redux/Store';
+import Store from "./src/Redux/store";
 import {
     SSC_NOTIFICATION,
     SSC_ONLINE_USERS, SSC_PARTNER_MESSAGE_UPDATE, SSC_PARTNER_NOTIFICATION_CREATE, SSC_PARTNER_SEEN_MESSAGE, SSC_SEND_NEW_MESSAGE, SSC_USER_CONNECT,

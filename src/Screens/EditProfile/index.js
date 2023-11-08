@@ -15,7 +15,7 @@ import { _heightScale, _moderateScale, _widthScale } from '../../Constant/Scale'
 import { styleElement } from '../../Constant/StyleElement';
 import { URL_ORIGINAL, URL_AVATAR_DEFAULT } from '../../Constant/Url';
 import * as ActionType from '../../Redux/Constants/ActionType';
-import Store from '../../Redux/Store';
+import Store from "../../Redux/store";
 import { _logout } from '../../Services/api';
 import { handleApi } from '../../Services/utils';
 import { partnerLevel } from '../../Constant/PartnerLevel';

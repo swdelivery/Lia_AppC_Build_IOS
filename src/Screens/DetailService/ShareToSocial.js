@@ -26,7 +26,7 @@ import { getPartnerDiaryDailyByIdv2 } from '../../Redux/Action/PartnerDiary';
 import ScreenKey from '../../Navigation/ScreenKey'
 import * as ActionType from '../../Redux/Constants/ActionType'
 import ImageView from "react-native-image-viewing";
-import store from '../../Redux/Store';
+import store from "../../Redux/store";
 import { TabBar, TabView } from 'react-native-tab-view';
 import { getCurrentCollaborator } from '../../Redux/Action/Affiilate'
 import Header from '../../Components/HeaderLoseWeight';

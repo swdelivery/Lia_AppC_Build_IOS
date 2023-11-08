@@ -6,7 +6,7 @@ import * as Color from '../../Constant/Color';
 import { stylesFont } from '../../Constant/Font';
 import { _heightScale, _widthScale } from '../../Constant/Scale';
 import * as ActionType from '../../Redux/Constants/ActionType';
-import Store from '../../Redux/Store';
+import Store from "../../Redux/store";
 
 const NetworkErr = props => {
     

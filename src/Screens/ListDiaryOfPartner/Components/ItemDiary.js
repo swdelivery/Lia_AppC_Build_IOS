@@ -11,7 +11,7 @@ import { _moderateScale, _width } from "../../../Constant/Scale";
 import { styleElement } from '../../../Constant/StyleElement';
 import { URL_ORIGINAL } from '../../../Constant/Url';
 import ScreenKey from '../../../Navigation/ScreenKey';
-import Store from '../../../Redux/Store'
+import Store from "../../../Redux/store";
 import Carousel from 'react-native-snap-carousel';
 import ImageView from "react-native-image-viewing";
 

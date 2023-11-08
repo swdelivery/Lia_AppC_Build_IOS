@@ -15,7 +15,7 @@ import ScreenKey, { AFFILIATE } from '../../Navigation/ScreenKey'
 import { getConfigFileByCode } from '../../Redux/Action/SpinWheelAction';
 import { formatMonney } from '../../Constant/Utils';
 import { useSelector } from 'react-redux';
-import store from '../../Redux/Store';
+import store from "../../Redux/store";
 import * as ActionType from '../../Redux/Constants/ActionType'
 
 const ModalCongrats = memo((props) => {

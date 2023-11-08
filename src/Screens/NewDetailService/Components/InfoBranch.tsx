@@ -22,9 +22,7 @@ const InfoBranch = () => {
         <View style={{ flex: 1, marginLeft: _moderateScale(8) }}>
           <Text style={styles.name}>LiA Beauty 434 Cao Thắng</Text>
           <CountStar2 rating={4} size={10} />
-          <Row top={4}>
-            <Certificate name="Giấy phép" />
-          </Row>
+          <Row top={4}>{/* <Certificate item={} /> */}</Row>
         </View>
         <TouchableOpacity style={styles.more}>
           <Text weight="bold" size={12} color={"white"} bottom={3}>

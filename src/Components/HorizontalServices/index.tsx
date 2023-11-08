@@ -1,18 +1,18 @@
-import { Pressable, StyleProp, StyleSheet, View } from "react-native";
-import React, { useCallback, useMemo } from "react";
+import { StyleProp, StyleSheet, View } from "react-native";
+import React, { useCallback } from "react";
 import { _moderateScale, _widthScale } from "../../Constant/Scale";
-import { ScrollView } from "react-native-gesture-handler";
+import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import CountStar2 from "@Components/NewCountStar/CountStar";
 import { BranchService } from "@typings/branch";
-import FastImage from "@Components/FastImage";
 import Text from "@Components/Text";
 import { RED } from "@Constant/Color";
 import { formatMonney } from "@Constant/Utils";
-import { getImageAvataUrl } from "src/utils/avatar";
 import { useNavigate } from "src/Hooks/useNavigation";
 import useCallbackItem from "src/Hooks/useCallbackItem";
 import ScreenKey from "@Navigation/ScreenKey";
 import { ViewStyle } from "react-native";
+import Image from "@Components/Image";
+import { first } from "lodash";
 
 type Props = {
   title?: string;
@@ -36,7 +36,11 @@ const HorizontalServices = ({ items, title, containerStyle }: Props) => {
 
   return (
     <View style={[styles.container, containerStyle]}>
-      {!!title && <Text weight="bold">{title}</Text>}
+      {!!title && (
+        <Text left={16} weight="bold">
+          {title}
+        </Text>
+      )}
       <View>
         <ScrollView
           horizontal
@@ -60,16 +64,16 @@ function BranchServiceItem({
 }) {
   const trigger = useCallbackItem(item);
 
-  const serviceImage = useMemo(() => {
-    return getImageAvataUrl(
-      item.service.representationFileArr[0],
-      "https://img2.soyoung.com/product/20230204/6/4c37c3bc52acc601968d58619dbb4336_400_300.jpg"
-    );
-  }, [item]);
-
   return (
-    <Pressable style={styles.itemContainer} onPress={trigger(onPress)}>
-      <FastImage style={styles.serviceImage} uri={serviceImage} />
+    <TouchableOpacity
+      activeOpacity={0.9}
+      style={styles.itemContainer}
+      onPress={trigger(onPress)}
+    >
+      <Image
+        style={styles.serviceImage}
+        avatar={first(item.service?.representationFileArr)}
+      />
       <Text color={"black"} size={10} weight="bold" numberOfLines={1} top={4}>
         {item.service.name}
       </Text>
@@ -81,7 +85,7 @@ function BranchServiceItem({
       <Text size={10} weight="bold" color={RED}>
         {`₫${formatMonney(item.service.price)}`}
       </Text>
-    </Pressable>
+    </TouchableOpacity>
   );
 }
 
@@ -95,10 +99,8 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
   },
   container: {
-    width: _widthScale(360),
     borderRadius: _moderateScale(8),
     backgroundColor: "white",
-    alignSelf: "center",
     marginTop: _moderateScale(0),
     gap: 8,
   },

@@ -7,6 +7,7 @@ import {
   GetDoctorListPayload,
   GetReviewsPayload,
 } from "./types";
+import { Doctor } from "@typings/doctor";
 
 const axios = createAxios(URL_FOR_PARTNER);
 
@@ -68,6 +69,9 @@ const getDoctorList = (
   return axios.get(`/treatment-doctor?${params}`).then(({ data }) => data.data);
 };
 
+const getDoctorDetails = (doctorId: string): Promise<Doctor> =>
+  axios.get(`treatment-doctor/${doctorId}`).then(({ data }) => data.data);
+
 const getReview = (
   payload: GetReviewsPayload,
   page = 1,
@@ -103,6 +107,7 @@ export default {
   getBranchList,
   getBranchById,
   getDoctorList,
+  getDoctorDetails,
   getReview,
   getDiary,
 };
