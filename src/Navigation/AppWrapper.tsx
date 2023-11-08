@@ -198,6 +198,7 @@ import DetailLiAVoucher from "../Screens/LiAVoucher/DetailLiAVoucher";
 import MyVouchers from "../Screens/LiAVoucher/MyVouchers";
 import DetailNewsVoucher from "../Screens/LiAVoucher/DetailNewsVoucher";
 import VerticalVideoPlayer from "@Screens/VerticalVideoPlayer/VerticalVideoPlayer";
+import DetailMaterial from "@Screens/DetailMaterial";
 
 const Tab = createMaterialTopTabNavigator();
 const Stack = createStackNavigator();
@@ -474,7 +475,7 @@ const AppWrapper = (props) => {
     // gestureResponseDistance: {
     //     vertical: 800
     // }
-    gestureEnabled: true,
+    gestureEnabled: Platform.OS == 'ios' ? true : false,
     cardOverlayEnabled: true,
   };
 
@@ -1173,6 +1174,13 @@ const AppWrapper = (props) => {
                 options={{ ...TransitionPresets.SlideFromRightIOS }}
                 name={ScreenKey.VERTICAL_VIDEO_PLAYER}
                 component={VerticalVideoPlayer}
+              />
+
+              {/* MATERIAL */}
+              <rootStack.Screen
+                options={{ ...TransitionPresets.SlideFromRightIOS }}
+                name={ScreenKey.DETAIL_MATERIAL}
+                component={DetailMaterial}
               />
 
               <rootStack.Screen
