@@ -241,7 +241,7 @@ const index = memo((props) => {
             <StatusBarCustom bgColor={WHITE} barStyle={'dark-content'} />
 
 
-            <View style={[styles.container, {marginTop: top, paddingBottom: bottom}]}>
+            <View style={[styles.container, {paddingBottom: bottom}]}>
                 <Header />
                 <ListMessages />
                 <InputChat />
