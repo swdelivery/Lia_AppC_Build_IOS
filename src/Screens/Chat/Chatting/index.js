@@ -45,6 +45,10 @@ const index = memo((props) => {
     const [showBtnAnswer, setShowBtnAnswer] = useState(false)
 
     const {top, bottom} = useSafeAreaInsets()
+    
+    if (Platform.OS === 'ios'){
+        top = 0
+    }
 
     useEffect(() => {
 
@@ -241,7 +245,7 @@ const index = memo((props) => {
             <StatusBarCustom bgColor={WHITE} barStyle={'dark-content'} />
 
 
-            <View style={[styles.container, {paddingBottom: bottom}]}>
+            <View style={[styles.container, {paddingBottom: bottom, paddingTop: top}]}>
                 <Header />
                 <ListMessages />
                 <InputChat />
