@@ -34,7 +34,7 @@ workflows:
           cd ios && pod install
       - name: Build and run iOS emulator
         script: |
-          yarn ios:dev
+          yarn ios
     artifacts:
       - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
