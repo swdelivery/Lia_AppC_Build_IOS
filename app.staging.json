@@ -1,0 +1,14 @@
+{
+  "name": "LiaAppC",
+  "displayName": "LiaAppC",
+  "android": {
+    "version": "1.0.0",
+    "build": 1,
+    "buildDate": ""
+  },
+  "ios": {
+    "version": "1.0.0",
+    "build": 1,
+    "buildDate": ""
+  }
+}

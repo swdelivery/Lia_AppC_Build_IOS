@@ -1,0 +1,3 @@
+Device ID	Device Name	Device Platform
+00008030-00090d163a39802e	bk.ok2006@gmail.com - iPhone 11 Pro	ios
+c71329849a4934e5ea2948686f03107b4d78ac77	quynhtrana1k45@icloud.com - iPhone 8 Plus	ios

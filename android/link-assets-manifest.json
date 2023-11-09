@@ -1,0 +1,125 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/Fester Book.otf",
+      "sha1": "68ca3b5e2da76b6a0688f6f738af93efb75e92c9"
+    },
+    {
+      "path": "assets/fonts/Fester Medium.otf",
+      "sha1": "ace3a6b577b5e248e504063c1d9d76a044e849c1"
+    },
+    {
+      "path": "assets/fonts/Kastelov - NolanNext-Book.ttf",
+      "sha1": "f28d33468e1641f40c781ceb5dca2ee21d261f8e"
+    },
+    {
+      "path": "assets/fonts/Kastelov - NolanNext-BookItalic.ttf",
+      "sha1": "a92126c44f6dae847bbc1017c417a189796343d6"
+    },
+    {
+      "path": "assets/fonts/Kastelov - NolanNext-ExtraBold.ttf",
+      "sha1": "f69ed7b83a7df09721dc63215a8dbfab453008ec"
+    },
+    {
+      "path": "assets/fonts/Kastelov - NolanNext-ExtraBoldItalic.ttf",
+      "sha1": "0fed948a6d06d882b8eae7af89d8fc805fde53b7"
+    },
+    {
+      "path": "assets/fonts/Kastelov - NolanNext-Heavy.ttf",
+      "sha1": "be07ea3438abc52d972f624775574bf89169462d"
+    },
+    {
+      "path": "assets/fonts/Kastelov - NolanNext-HeavyItalic.ttf",
+      "sha1": "f89ea77d2995e0c6fc65d4e973df51b3cd6f6029"
+    },
+    {
+      "path": "assets/fonts/Kastelov - NolanNext-Light.ttf",
+      "sha1": "f807a739280cf2a681135549001498cbef5abf75"
+    },
+    {
+      "path": "assets/fonts/Kastelov - NolanNext-LightItalic.ttf",
+      "sha1": "26594b4b963bad303d0931c9fd4d3a58dabffff7"
+    },
+    {
+      "path": "assets/fonts/Kastelov - NolanNext-Medium.ttf",
+      "sha1": "1f71c527a9cf25ba464c4b7204a70fb1a59b99e9"
+    },
+    {
+      "path": "assets/fonts/Kastelov - NolanNext-MediumItalic.ttf",
+      "sha1": "dde8eb152909cc03d0b8d7ad71728a7d6316dbaa"
+    },
+    {
+      "path": "assets/fonts/Kastelov - NolanNext-Thin.ttf",
+      "sha1": "5d94222b0185d5b3f3fdc90c71fe2ed10f537f7f"
+    },
+    {
+      "path": "assets/fonts/Kastelov - NolanNext-ThinItalic.ttf",
+      "sha1": "5137ef2c0a7cf78720486f92b7255a75a689cd66"
+    },
+    {
+      "path": "assets/fonts/Kastelov-Nolan-Next-Bold-Italic.ttf",
+      "sha1": "cbd28b70a1ed4907dda3db442bdd396419c29f69"
+    },
+    {
+      "path": "assets/fonts/Kastelov-Nolan-Next-Bold.ttf",
+      "sha1": "9de5963ab456318ecef2ec709f0a996afa8189e4"
+    },
+    {
+      "path": "assets/fonts/Kastelov-Nolan-Next-Italic.ttf",
+      "sha1": "9f46eb9c71093d4a3af74787b9be4b5926c490cf"
+    },
+    {
+      "path": "assets/fonts/Kastelov-NolanNext-Regular.ttf",
+      "sha1": "4f50782218633255dd6bde8cf848c4054d6b14ca"
+    },
+    {
+      "path": "assets/fonts/Mohave-Bold.ttf",
+      "sha1": "1d8d57b0a8114b81717fba3c6193dd6ae6057a19"
+    },
+    {
+      "path": "assets/fonts/Mohave-BoldItalic.ttf",
+      "sha1": "0d1f8792788e915b1813c35ce6c92eb6828bb7cc"
+    },
+    {
+      "path": "assets/fonts/Mohave-Italic.ttf",
+      "sha1": "913eecc786c486ac8828236766ef09e740844f33"
+    },
+    {
+      "path": "assets/fonts/Mohave-Light.ttf",
+      "sha1": "ce109d185b373a1f1e538e59fd046dd35ddd14e9"
+    },
+    {
+      "path": "assets/fonts/Mohave-LightItalic.ttf",
+      "sha1": "2ccb1406ea5f36c7e213912f3a2d8171cca29f86"
+    },
+    {
+      "path": "assets/fonts/Mohave-Medium.ttf",
+      "sha1": "f711c15ad4625e5bb49e429ec566d7d0fb87a55a"
+    },
+    {
+      "path": "assets/fonts/Mohave-MediumItalic.ttf",
+      "sha1": "5572a9d33f06273375f690235cba67f5ffee9b41"
+    },
+    {
+      "path": "assets/fonts/Mohave-Regular.ttf",
+      "sha1": "7c0fe17b4dae4d7b57965d67f0a56aa8e8327c9c"
+    },
+    {
+      "path": "assets/fonts/SVN-PF Din Text Pro Bold.otf",
+      "sha1": "9956b161c2f82bd5a744f21529f83be964fb0617"
+    },
+    {
+      "path": "assets/fonts/SVN-PF Din Text Pro Medium Italic copy.otf",
+      "sha1": "b452e30325a7d312a6ae89264350b1f56f063108"
+    },
+    {
+      "path": "assets/fonts/SVN-PF Din Text Pro Regular.otf",
+      "sha1": "0575eb29deeadb9ad58bf5de0b385d6baa8af370"
+    },
+    {
+      "path": "assets/fonts/icomoon.ttf",
+      "sha1": "72df32d01c469f7af9be4bea96c0f0225465fa33"
+    }
+  ]
+}
