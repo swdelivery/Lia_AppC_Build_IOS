@@ -18,6 +18,7 @@ import Store from "../../../Redux/store";
 import Header from './Header';
 import InputChat from './InputChat';
 import ListMessages from './ListMessages';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 
 
@@ -43,6 +44,8 @@ const index = memo((props) => {
 
     const [showBtnAnswer, setShowBtnAnswer] = useState(false)
 
+    const {top, bottom} = useSafeAreaInsets()
+    
     useEffect(() => {
 
         // _getStringeeToken()
@@ -238,7 +241,7 @@ const index = memo((props) => {
             <StatusBarCustom bgColor={WHITE} barStyle={'dark-content'} />
 
 
-            <View style={styles.container}>
+            <View style={[styles.container, {paddingBottom: bottom, paddingTop: Platform.OS == 'ios' ? 0 : top}]}>
                 <Header />
                 <ListMessages />
                 <InputChat />
