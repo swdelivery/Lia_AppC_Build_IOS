@@ -234,7 +234,7 @@ const index = memo((props) => {
     const parameters = JSON.stringify(myObj);
 
     return (
-        <KeyboardAvoidingView keyboardVerticalOffset={Platform.OS == 'ios' && getBottomSpace() == 0 ? _heightScale(0) : 0} behavior={Platform.OS == 'ios' ? 'padding' : null} style={{
+        <KeyboardAvoidingView keyboardVerticalOffset={Platform.OS == 'ios' && getBottomSpace() == 0 ? _heightScale(0) : 0} behavior='padding' style={{
             flexGrow: 1
         }}>
 
