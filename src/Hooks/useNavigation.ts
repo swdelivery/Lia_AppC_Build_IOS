@@ -5,6 +5,7 @@ import {
   RouteProp,
   ParamListBase,
   useIsFocused,
+  StackActions,
 } from "@react-navigation/native";
 import { RootStackParamsList, ScreenRouteProp } from "@Navigation/types";
 import { useCallback, useEffect, useMemo, useRef } from "react";
@@ -58,7 +59,17 @@ export function useNavigate() {
     []
   );
 
-  return { navigate, navigation };
+  const replace = useCallback(
+    <ScreenKey extends keyof RootStackParamsList>(
+      screen: ScreenKey,
+      params?: RootStackParamsList[ScreenKey]
+    ) => {
+      navigation.dispatch(StackActions.replace(screen, params));
+    },
+    []
+  );
+
+  return { navigate, navigation, replace };
 }
 
 export function useFocused(callback: () => void, ignoreFirst = false) {
