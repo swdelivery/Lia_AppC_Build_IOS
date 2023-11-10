@@ -1,18 +1,10 @@
-import {
-  CommonActions,
-  StackActions,
-  createNavigationContainerRef,
-} from "@react-navigation/native";
+import * as React from "react";
+import { CommonActions, StackActions } from "@react-navigation/native";
 
-export const navigationRef = createNavigationContainerRef();
+export const navigationRef = React.createRef();
 // export const navigation = navigationRef.current
 export function navigate(name, params) {
-	if (navigationRef.isReady()) {
-    // @ts-ignore
-    navigationRef.navigate(routeName, params);
-  } else {
-    console.error("Trying to navigatte but hasnt mounted");
-  }
+  navigationRef.current?.navigate(name, params);
 }
 export function dispatch(action) {
   navigationRef.current?.dispatch(action);
@@ -40,9 +32,7 @@ export function reset() {
 }
 
 function setParams(params: any) {
-  if (navigationRef.isReady()) {
-    navigationRef.dispatch(CommonActions.setParams(params));
-  }
+  navigationRef.current?.dispatch(CommonActions.setParams(params));
 }
 
 export const navigation = {
