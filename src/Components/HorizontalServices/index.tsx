@@ -24,7 +24,7 @@ const HorizontalServices = ({ items, title, containerStyle }: Props) => {
 
   const handlePress = useCallback((item: BranchService) => {
     navigation.navigate(ScreenKey.DETAIL_SERVICE, {
-      idService: item._id,
+      idService: item?.service?._id,
     });
   }, []);
 
@@ -78,15 +78,15 @@ function BranchServiceItem({
         avatar={first(item.service?.representationFileArr)}
       />
       <Text color={"black"} size={10} weight="bold" numberOfLines={1} top={4}>
-        {item.service.name}
+        {item?.service?.name}
       </Text>
       <CountStar2
         size={10}
-        rating={item.service.averageRating}
-        count={item.service.reviewCount}
+        rating={item?.service?.averageRating}
+        count={item.service?.reviewCount}
       />
       <Text size={10} weight="bold" color={RED}>
-        {`₫${formatMonney(item.service.price)}`}
+        {`₫${formatMonney(item.service?.price)}`}
       </Text>
     </TouchableOpacity>
   );

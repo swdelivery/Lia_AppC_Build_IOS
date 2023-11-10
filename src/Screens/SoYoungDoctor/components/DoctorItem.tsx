@@ -16,6 +16,7 @@ import { View, StyleSheet } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "src/Hooks/useNavigation";
+import ContentLoader, { Circle, Rect } from "react-content-loader/native";
 
 type Props = {
   item: Doctor;
@@ -52,7 +53,7 @@ export default function DoctorItem({ item }: Props) {
           </Row>
 
           <Row marginTop={2} gap={8}>
-            <CountStar2 rating={4} size={10} />
+            <CountStar2 rating={4} count={item?.reviewCount} size={10} />
             <Text size={10}>|</Text>
             <Row gap={4} marginTop={2}>
               <Icon name="account-multiple" size={14} color="grey" />
@@ -67,7 +68,7 @@ export default function DoctorItem({ item }: Props) {
             </Text>
           </Row>
           {item?.treatmentDoctorFileArr.length > 0 && (
-            <Row marginTop={8} flexWrap={"wrap"} gap={4} bottom={8}>
+            <Row marginTop={4} flexWrap={"wrap"} gap={4} marginBottom={8}>
               {item.treatmentDoctorFileArr.map((item, i) => (
                 <Certificate
                   key={item._id}
@@ -83,6 +84,22 @@ export default function DoctorItem({ item }: Props) {
         <HorizontalServices items={item.doctorServices} />
       )}
     </TouchableOpacity>
+  );
+}
+
+export const PLACEHOLDER_HEIGHT = 200;
+
+export function Placeholder() {
+  return (
+    <View style={[styles.container, styles.placeholderItem]}>
+      <ContentLoader>
+        <Circle x="20" y="20" r="20" />
+        <Rect x="60" y="0" rx="4" ry="4" width="80" height="13" />
+        <Rect x="60" y="20" rx="3" ry="3" width="100%" height="15" />
+        <Rect x="60" y="40" rx="3" ry="3" width="100" height="12" />
+        <Rect x="0" y="60" rx="3" ry="3" width="100%" height="120" />
+      </ContentLoader>
+    </View>
   );
 }
 
@@ -119,5 +136,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     paddingVertical: 2,
     borderRadius: 8 * 2,
+  },
+  placeholderItem: {
+    height: PLACEHOLDER_HEIGHT,
+    borderWidth: 0,
+    backgroundColor: "white",
+    padding: 8,
+    borderRadius: 8,
+    marginTop: 8,
   },
 });

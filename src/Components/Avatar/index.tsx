@@ -13,7 +13,7 @@ type Props = {
   style?: ImageStyle;
 };
 
-export default function Avatar({ avatar, size, style, circle }: Props) {
+export default function Avatar({ avatar, size = 24, style, circle }: Props) {
   const uri = useMemo(() => {
     return getImageAvataUrl(avatar);
   }, [avatar]);

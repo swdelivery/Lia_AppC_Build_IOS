@@ -7,7 +7,7 @@ import FlashSale from "./Components/FlashSale";
 import Header from "./Components/Header";
 import HorizonListImage from "./Components/HorizonListImage";
 import InfoBranch from "./Components/InfoBranch";
-import ListBottonService from "./Components/ListBottonService";
+// import ListBottonService from "./Components/ListBottonService";
 import MainInfoService from "./Components/MainInfoService";
 import Material from "./Components/Material";
 import NameService from "./Components/NameService";
@@ -17,9 +17,12 @@ import Tutorial from "./Components/Tutorial";
 import Screen from "@Components/Screen";
 import ScreenKey from "@Navigation/ScreenKey";
 import { useNavigationParams } from "src/Hooks/useNavigation";
-import { useDispatch } from "react-redux";
-import { getServiceDetails } from "@Redux/service/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { getServiceDetails, getServiceReviews, getServicesByGroups } from "@Redux/service/actions";
 import Spacer from "@Components/Spacer";
+import { getServiceDetailsState, getServiceListState, getServiceReviewsState } from "@Redux/service/selectors";
+import ListBottomService from "@Components/ListBottomService/ListBottomService";
+import BottomAction from "./Components/BottomAction";
 
 const HEIGHT_IMAGE_SERVICE = (_width * 926) / 1242;
 
@@ -29,12 +32,35 @@ const DetailService = () => {
   const dispatch = useDispatch();
   const { idService } = useNavigationParams<ScreenKey>();
 
+  const { data } = useSelector(getServiceDetailsState);
+
+  const { data : dataListService} = useSelector(getServiceListState);
+
+
   useEffect(() => {
     dispatch(getServiceDetails.request(idService));
   }, [idService]);
 
+  useEffect(() => {
+    if (data?.code) {
+      dispatch(
+        getServiceReviews.request({
+          serviceCode: data.code,
+        })
+      );
+    }
+  }, [data?.code])
+
+  useEffect(() => {
+    dispatch(
+      getServicesByGroups.request({
+        codeGroup: data?.codeGroup,
+      })
+    );
+  }, [data?.codeGroup]);
+
   return (
-    <Screen safeTop style={styles.container}>
+    <Screen safeBottom safeTop style={styles.container}>
       <Header />
       <ScrollView>
         <HorizonListImage />
@@ -45,7 +71,7 @@ const DetailService = () => {
             end={{ x: 0, y: 1 }}
             colors={["#EC54C3", "white", "#F7F8FA"]}
           />
-          <FlashSale />
+          {/* <FlashSale /> */}
           <NameService />
           <OverViewFeedBack />
         </View>
@@ -57,8 +83,9 @@ const DetailService = () => {
         <Feedback />
 
         <Spacer top={16} />
-        <ListBottonService />
+        <ListBottomService data={dataListService}/>
       </ScrollView>
+      <BottomAction/>
     </Screen>
   );
 };

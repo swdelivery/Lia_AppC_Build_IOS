@@ -15,3 +15,10 @@ export type DataPagingPayload<T = any> = {
   paging: PagingInfo;
   [key: string]: any;
 };
+
+export type ApiMeta = {
+  page: number;
+  perPage: number;
+  totalDocuments: number;
+  totalPage: number
+};

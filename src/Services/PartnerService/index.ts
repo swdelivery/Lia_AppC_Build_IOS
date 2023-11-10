@@ -6,8 +6,10 @@ import {
   GetDiaryPayload,
   GetDoctorListPayload,
   GetReviewsPayload,
+  GetServiceByGroupsPayload,
 } from "./types";
 import { Doctor } from "@typings/doctor";
+import { Practitioner } from "@typings/practitioner";
 
 const axios = createAxios(URL_FOR_PARTNER);
 
@@ -33,8 +35,24 @@ const getServices = (
   return axios.get(`service?${query}`).then(({ data }) => data.data);
 };
 
+const getServicesByGroups = (
+  payload: GetServiceByGroupsPayload,
+  page = 1,
+  pageSize = configs.apiPageSize
+) => {
+  const query = encodeParams({
+    ...payload,
+    sort: {
+      orderNumber: -1,
+    },
+    limit: pageSize,
+    page,
+  });
+  return axios.get(`/service?${query}`).then(({ data }) => data.data);
+};
+
 const getServiceDetails = (serviceId: string): Promise<any> =>
-  axios.post(`/service/${serviceId}`).then(({ data }) => data.data);
+  axios.get(`/service/${serviceId}`).then(({ data }) => data.data);
 
 const getBranchList = (
   payload: any,
@@ -72,42 +90,53 @@ const getDoctorList = (
 const getDoctorDetails = (doctorId: string): Promise<Doctor> =>
   axios.get(`treatment-doctor/${doctorId}`).then(({ data }) => data.data);
 
-const getReview = (
-  payload: GetReviewsPayload,
-  page = 1,
-  pageSize = configs.apiPageSize
-) => {
-  const params = encodeParams({
-    ...payload,
-    limit: pageSize,
-    page,
-  });
-  return axios.get(`/review?${params}`).then(({ data }) => data.data);
-};
+  const getPractitioners = () =>
+    axios.get("practitioner").then(({ data }) => data.data);
 
-const getDiary = (
-  payload: GetDiaryPayload,
-  page = 1,
-  pageSize = configs.apiPageSize
-) => {
-  const params = encodeParams({
-    ...payload,
-    limit: pageSize,
-    page,
-  });
-  return axios
-    .get(`/partner-diary/shared?${params}`)
-    .then(({ data }) => data.data);
-};
+  const getPractitionerDetails = (
+    practitionerId: string
+  ): Promise<Practitioner> =>
+    axios.get(`practitioner/${practitionerId}`).then(({ data }) => data.data);
 
-export default {
-  getServiceGroup,
-  getServices,
-  getServiceDetails,
-  getBranchList,
-  getBranchById,
-  getDoctorList,
-  getDoctorDetails,
-  getReview,
-  getDiary,
-};
+  const getReview = (
+    payload: GetReviewsPayload,
+    page = 1,
+    pageSize = configs.apiPageSize
+  ) => {
+    const params = encodeParams({
+      ...payload,
+      limit: pageSize,
+      page,
+    });
+    return axios.get(`/review?${params}`).then(({ data }) => data);
+  };
+
+  const getDiary = (
+    payload: GetDiaryPayload,
+    page = 1,
+    pageSize = configs.apiPageSize
+  ) => {
+    const params = encodeParams({
+      ...payload,
+      limit: pageSize,
+      page,
+    });
+    return axios
+      .get(`/partner-diary/shared?${params}`)
+      .then(({ data }) => data.data);
+  };
+
+  export default {
+    getServiceGroup,
+    getServices,
+    getServicesByGroups,
+    getServiceDetails,
+    getBranchList,
+    getBranchById,
+    getDoctorList,
+    getDoctorDetails,
+    getPractitioners,
+    getPractitionerDetails,
+    getReview,
+    getDiary,
+  };

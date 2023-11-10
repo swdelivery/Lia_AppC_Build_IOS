@@ -1,13 +1,21 @@
 import { StyleSheet } from "react-native";
 import React from "react";
 import { _moderateScale, _width, _widthScale } from "../../../Constant/Scale";
-import HorizontalServices from "@Components/HorizontalServices";
+import { getServiceByGroupsListState } from "@Redux/service/selectors";
+import { useSelector } from "react-redux";
+import HorizontalServicesV2 from "@Components/HorizontalServicesV2";
 
 const RecomendService = () => {
+
+  const { data } = useSelector(getServiceByGroupsListState);
+
+  console.log({abc:data});
+  
+
   return (
-    <HorizontalServices
+    <HorizontalServicesV2
       title="Có thể bạn sẽ quan tâm"
-      items={[]}
+      items={data}
       containerStyle={styles.container}
     />
   );

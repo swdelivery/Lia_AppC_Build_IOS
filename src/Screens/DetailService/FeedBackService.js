@@ -1,33 +1,41 @@
 import _isEmpty from 'lodash/isEmpty';
-import React, { useEffect, useRef, useState, memo } from 'react';
-import { Animated, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View, ImageBackground, Platform, Linking, ActivityIndicator } from 'react-native';
-import ImageView from "react-native-image-viewing";
-import LinearGradient from 'react-native-linear-gradient';
+import React, { useEffect, useState, memo } from "react";
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  ActivityIndicator,
+  StatusBar,
+} from "react-native";
 import { useSelector } from 'react-redux';
 import { navigation } from '../../../rootNavigation';
-import FastImage from '../../Components/Image/FastImage';
-import { BASE_COLOR, BG_GREY_OPACITY_2, BG_GREY_OPACITY_3, BG_GREY_OPACITY_9, BLACK, BLACK_OPACITY_8, BLUE_FB, BTN_PRICE, GREY, GREY_FOR_TITLE, SECOND_COLOR, THIRD_COLOR, WHITE, BG_MAIN_OPACITY, MAIN_BG, BG_GREY_OPACITY_7, BLACK_OPACITY_7, GREEN_SUCCESS, RED, BLUE, BG_GREY_OPACITY_5 } from '../../Constant/Color';
+import {
+  BASE_COLOR,
+  BG_GREY_OPACITY_2,
+  BG_GREY_OPACITY_3,
+  BLACK,
+  BLACK_OPACITY_8,
+  BLUE_FB,
+  GREY,
+  THIRD_COLOR,
+  WHITE,
+  BLACK_OPACITY_7,
+  BG_GREY_OPACITY_5,
+} from "../../Constant/Color";
 import { stylesFont } from '../../Constant/Font';
-import { sizeIcon, sizeLogo } from '../../Constant/Icon';
+import { sizeIcon } from "../../Constant/Icon";
 import { _heightScale, _moderateScale, _widthScale } from '../../Constant/Scale';
 import { styleElement } from '../../Constant/StyleElement';
-import { URL_AVATAR_DEFAULT, URL_ORIGINAL } from '../../Constant/Url';
-import { getBranchById, getBranchReviewByCode } from '../../Redux/Action/BranchAction';
-import { formatMonney } from '../../Constant/Utils';
-import { BOOKING_FOR_BRANCH, BOOKING_MAIN } from '../../Navigation/ScreenKey';
-import StatusBarCustom from '../../Components/StatusBar/StatusBarCustom';
-import { getStatusBarHeight, getBottomSpace } from 'react-native-iphone-x-helper';
-import CountStar from '../../Components/CountStar/index';
-import BottomBtn from '../../Components/BottomBtn/BottomBtn';
-import ScreenKey from '../../Navigation/ScreenKey'
-import store from "../../Redux/store";
-import * as ActionType from '../../Redux/Constants/ActionType'
-import moment from 'moment'
-import { FROM_GROUP_CHAT_ID } from '../../Constant/Flag';
-import { getDoctorReviewByCode } from '../../Redux/Action/DoctorAction';
+import { getBottomSpace } from "react-native-iphone-x-helper";
 import { getServiceReviewByCodev2 } from '../../Redux/Action/Service';
+import ReviewItem from '@Components/ReviewItem';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const FeedBackService = memo((props) => {
+    const {top} = useSafeAreaInsets()
 
     const [listReview, setListReview] = useState([])
 
@@ -155,7 +163,8 @@ const FeedBackService = memo((props) => {
 
     return (
         <View style={{ flex: 1, backgroundColor: WHITE }}>
-            <StatusBarCustom barStyle={'dark-content'} bgColor={WHITE} />
+            <StatusBar barStyle='dark-content'/>
+            <View style={{height:top}}/>
             <View style={{ margin: _moderateScale(8 * 1.5), flexDirection: 'row', justifyContent: 'space-between' }}>
                 <View style={{ width: _moderateScale(8 * 3.5), }} />
 
@@ -186,130 +195,133 @@ const FeedBackService = memo((props) => {
                                     <View style={{ height: _moderateScale(8 * 2) }} />
 
                                     {listReview?.map((item, index) => {
-                                        return <View style={[styles.itemReview, { backgroundColor: WHITE, padding: _moderateScale(8 * 1.5), borderRadius: _moderateScale(8) }]}>
-                                            <View style={{
-                                                width: _moderateScale(60),
-                                                height: _moderateScale(60),
-                                                borderRadius: _moderateScale(30),
-                                                borderWidth: _moderateScale(1),
-                                                // backgroundColor: THIRD_COLOR,
-                                                borderColor: WHITE,
-                                            }}>
-                                                <TouchableOpacity
-                                                    onPress={() => {
-                                                        if (item?.partner?._id == infoUserRedux?._id) {
-                                                            navigation.navigate(ScreenKey.MY_PERSONAL_PAGE)
-                                                        } else {
-                                                            navigation.navigate(ScreenKey.OTHER_PERSONAL_PAGE, { userId: item?.partner?._id })
-                                                        }
-                                                    }}
-                                                >
-                                                    <Image
-                                                        style={{
-                                                            width: _moderateScale(60),
-                                                            height: _moderateScale(60),
-                                                            borderRadius: _moderateScale(30),
-                                                        }}
-                                                        source={{ uri: `${URL_ORIGINAL}${item?.partner?.fileAvatar?.link}` }}
-                                                    />
-                                                </TouchableOpacity>
-                                                {
-                                                    _renderReactionIcon(item?.reaction)
-                                                }
-                                            </View>
-                                            <View style={[styles.rightReview, { paddingLeft: _moderateScale(8 * 1.5) }]}>
-                                                <View style={[styleElement.rowAliTop]}>
-                                                    <View style={{ flex: 1, marginBottom: _moderateScale(4), }}>
-                                                        <TouchableOpacity
-                                                            onPress={() => {
-                                                                if (item?.partner?._id == infoUserRedux?._id) {
-                                                                    navigation.navigate(ScreenKey.MY_PERSONAL_PAGE)
-                                                                } else {
-                                                                    navigation.navigate(ScreenKey.OTHER_PERSONAL_PAGE, { userId: item?.partner?._id })
-                                                                }
-                                                            }}
-                                                        >
-                                                            <Text style={[stylesFont.fontNolan500, { textTransform: 'capitalize', flex: 1, color: BLACK_OPACITY_8, fontSize: _moderateScale(14) }]}>
-                                                                {item?.partner?.name}
-                                                            </Text>
-                                                        </TouchableOpacity>
+                                        return (
 
-                                                        <View style={[styleElement.rowAliCenter]}>
-                                                            <Text style={[stylesFont.fontNolan, { color: GREY, fontSize: _moderateScale(12) }]}>
-                                                                {moment(item?.created).format('DD/MM/YYYY')} - {moment(item?.created).format('LT')}
-                                                            </Text>
-                                                        </View>
-                                                    </View>
+                                            <ReviewItem item={item} type="branch" />
 
-                                                    <View style={[styles.lineStar]}>
-                                                        {
-                                                            [1, 2, 3, 4, 5]?.map((star, index) => {
-                                                                if (star <= item?.branchReview?.rating) {
-                                                                    return <Image
-                                                                        resizeMode={'stretch'}
-                                                                        style={[sizeIcon.xxxxs]}
-                                                                        source={require('../../Icon/a_star.png')}
-                                                                    />
-                                                                }
-                                                                else {
-                                                                    return <Image
-                                                                        resizeMode={'stretch'}
-                                                                        style={[sizeIcon.xxxxs]}
-                                                                        source={require('../../Icon/i_star.png')}
-                                                                    />
-                                                                }
-                                                            })
-                                                        }
-                                                    </View>
-                                                </View>
+                                            // <View style={[styles.itemReview, { backgroundColor: WHITE, padding: _moderateScale(8 * 1.5), borderRadius: _moderateScale(8) }]}>
+                                            //     <View style={{
+                                            //         width: _moderateScale(60),
+                                            //         height: _moderateScale(60),
+                                            //         borderRadius: _moderateScale(30),
+                                            //         borderWidth: _moderateScale(1),
+                                            //         // backgroundColor: THIRD_COLOR,
+                                            //         borderColor: WHITE,
+                                            //     }}>
+                                            //         <TouchableOpacity
+                                            //             onPress={() => {
+                                            //                 if (item?.partner?._id == infoUserRedux?._id) {
+                                            //                     navigation.navigate(ScreenKey.MY_PERSONAL_PAGE)
+                                            //                 } else {
+                                            //                     navigation.navigate(ScreenKey.OTHER_PERSONAL_PAGE, { userId: item?.partner?._id })
+                                            //                 }
+                                            //             }}
+                                            //         >
+                                            //             <Image
+                                            //                 style={{
+                                            //                     width: _moderateScale(60),
+                                            //                     height: _moderateScale(60),
+                                            //                     borderRadius: _moderateScale(30),
+                                            //                 }}
+                                            //                 source={{ uri: `${URL_ORIGINAL}${item?.partner?.fileAvatar?.link}` }}
+                                            //             />
+                                            //         </TouchableOpacity>
+                                            //         {
+                                            //             _renderReactionIcon(item?.reaction)
+                                            //         }
+                                            //     </View>
+                                            //     <View style={[styles.rightReview, { paddingLeft: _moderateScale(8 * 1.5) }]}>
+                                            //         <View style={[styleElement.rowAliTop]}>
+                                            //             <View style={{ flex: 1, marginBottom: _moderateScale(4), }}>
+                                            //                 <TouchableOpacity
+                                            //                     onPress={() => {
+                                            //                         if (item?.partner?._id == infoUserRedux?._id) {
+                                            //                             navigation.navigate(ScreenKey.MY_PERSONAL_PAGE)
+                                            //                         } else {
+                                            //                             navigation.navigate(ScreenKey.OTHER_PERSONAL_PAGE, { userId: item?.partner?._id })
+                                            //                         }
+                                            //                     }}
+                                            //                 >
+                                            //                     <Text style={[stylesFont.fontNolan500, { textTransform: 'capitalize', flex: 1, color: BLACK_OPACITY_8, fontSize: _moderateScale(14) }]}>
+                                            //                         {item?.partner?.name}
+                                            //                     </Text>
+                                            //                 </TouchableOpacity>
 
-                                                {/* <View style={[styles.briefName]}>
+                                            //                 <View style={[styleElement.rowAliCenter]}>
+                                            //                     <Text style={[stylesFont.fontNolan, { color: GREY, fontSize: _moderateScale(12) }]}>
+                                            //                         {moment(item?.created).format('DD/MM/YYYY')} - {moment(item?.created).format('LT')}
+                                            //                     </Text>
+                                            //                 </View>
+                                            //             </View>
 
-                                                    {renderStatus(item.reaction)}
-                                                </View> */}
-                                                {
-                                                    item?.branchReview?.comment?.length > 0 ?
-                                                        <View style={[{ marginTop: _moderateScale(8) }]}>
-                                                            <Text style={{ color: BLACK, flex: 1, ...stylesFont.fontNolan500, fontSize: _moderateScale(14) }} >
-                                                                {item?.branchReview?.comment !== '' ? item?.branchReview?.comment.trim() : ''}
-                                                                {/* {item?.branchReview?.comment !== '' ? item?.branchReview?.comment : '...'} */}
-                                                            </Text>
-                                                        </View>
-                                                        :
-                                                        <></>
-                                                }
+                                            //             <View style={[styles.lineStar]}>
+                                            //                 {
+                                            //                     [1, 2, 3, 4, 5]?.map((star, index) => {
+                                            //                         if (star <= item?.branchReview?.rating) {
+                                            //                             return <Image
+                                            //                                 resizeMode={'stretch'}
+                                            //                                 style={[sizeIcon.xxxxs]}
+                                            //                                 source={require('../../Icon/a_star.png')}
+                                            //                             />
+                                            //                         }
+                                            //                         else {
+                                            //                             return <Image
+                                            //                                 resizeMode={'stretch'}
+                                            //                                 style={[sizeIcon.xxxxs]}
+                                            //                                 source={require('../../Icon/i_star.png')}
+                                            //                             />
+                                            //                         }
+                                            //                     })
+                                            //                 }
+                                            //             </View>
+                                            //         </View>
 
-                                                <View style={{ flexDirection: 'row', marginTop: _moderateScale(8) }}>
-                                                    <View style={{ width: _moderateScale(2), height: _moderateScale(8 * 5), backgroundColor: RED, opacity: 0.3 }} />
-                                                    <View style={{ flex: 1, marginLeft: _moderateScale(8) }}>
-                                                        <TouchableOpacity
-                                                            onPress={() => {
-                                                                navigation.navigate(ScreenKey.DETAIL_DOCTOR, { idDoctor: item?.doctor?._id })
-                                                            }}
-                                                            style={[styleElement.rowAliCenter]}>
-                                                            <Image style={[sizeIcon.xs, { marginRight: _moderateScale(8) }]} source={require('../../NewIcon/doctorBase.png')} />
-                                                            <Text style={{ color: SECOND_COLOR, ...stylesFont.fontNolan500, fontSize: _moderateScale(13) }} >
-                                                                {item?.doctor?.name}
-                                                            </Text>
-                                                        </TouchableOpacity>
+                                                  
+                                            //         {
+                                            //             item?.branchReview?.comment?.length > 0 ?
+                                            //                 <View style={[{ marginTop: _moderateScale(8) }]}>
+                                            //                     <Text style={{ color: BLACK, flex: 1, ...stylesFont.fontNolan500, fontSize: _moderateScale(14) }} >
+                                            //                         {item?.branchReview?.comment !== '' ? item?.branchReview?.comment.trim() : ''}
+                                            //                         {/* {item?.branchReview?.comment !== '' ? item?.branchReview?.comment : '...'} */}
+                                            //                     </Text>
+                                            //                 </View>
+                                            //                 :
+                                            //                 <></>
+                                            //         }
 
-                                                        <TouchableOpacity
-                                                            onPress={() => {
-                                                                navigation.navigate(ScreenKey.DETAIL_BRAND, { idBranch: item?.branch?._id })
-                                                            }}
-                                                            style={[styleElement.rowAliCenter]}>
-                                                            <Image style={[sizeIcon.xs, { marginRight: _moderateScale(8) }]} source={require('../../NewIcon/branchThird.png')} />
-                                                            <Text style={{ color: '#F8B175', ...stylesFont.fontNolan500, fontSize: _moderateScale(13) }} >
-                                                                {item?.branch?.name}
-                                                            </Text>
-                                                        </TouchableOpacity>
-                                                        {/* <Text style={{ color: BLACK_OPACITY_7, ...stylesFont.fontNolan500, fontSize: _moderateScale(13) }} >
-                                                                {item?.service?.name}
-                                                            </Text> */}
-                                                    </View>
-                                                </View>
-                                            </View>
-                                        </View>
+                                            //         <View style={{ flexDirection: 'row', marginTop: _moderateScale(8) }}>
+                                            //             <View style={{ width: _moderateScale(2), height: _moderateScale(8 * 5), backgroundColor: RED, opacity: 0.3 }} />
+                                            //             <View style={{ flex: 1, marginLeft: _moderateScale(8) }}>
+                                            //                 <TouchableOpacity
+                                            //                     onPress={() => {
+                                            //                         navigation.navigate(ScreenKey.DETAIL_DOCTOR, { idDoctor: item?.doctor?._id })
+                                            //                     }}
+                                            //                     style={[styleElement.rowAliCenter]}>
+                                            //                     <Image style={[sizeIcon.xs, { marginRight: _moderateScale(8) }]} source={require('../../NewIcon/doctorBase.png')} />
+                                            //                     <Text style={{ color: SECOND_COLOR, ...stylesFont.fontNolan500, fontSize: _moderateScale(13) }} >
+                                            //                         {item?.doctor?.name}
+                                            //                     </Text>
+                                            //                 </TouchableOpacity>
+
+                                            //                 <TouchableOpacity
+                                            //                     onPress={() => {
+                                            //                         navigation.navigate(ScreenKey.DETAIL_BRAND, { idBranch: item?.branch?._id })
+                                            //                     }}
+                                            //                     style={[styleElement.rowAliCenter]}>
+                                            //                     <Image style={[sizeIcon.xs, { marginRight: _moderateScale(8) }]} source={require('../../NewIcon/branchThird.png')} />
+                                            //                     <Text style={{ color: '#F8B175', ...stylesFont.fontNolan500, fontSize: _moderateScale(13) }} >
+                                            //                         {item?.branch?.name}
+                                            //                     </Text>
+                                            //                 </TouchableOpacity>
+                                            //                 {/* <Text style={{ color: BLACK_OPACITY_7, ...stylesFont.fontNolan500, fontSize: _moderateScale(13) }} >
+                                            //                     {item?.service?.name}
+                                            //                 </Text> */}
+                                            //             </View>
+                                            //         </View>
+                                            //     </View>
+                                            // </View>
+                                        )
+
                                     })}
                                 </>
                                 :

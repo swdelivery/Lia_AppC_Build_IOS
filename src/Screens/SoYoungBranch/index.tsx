@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 import { StyleSheet } from "react-native";
-import { _width } from "../../Constant/Scale";
+import { _height, _width } from "../../Constant/Scale";
 import { RenderItemProps } from "../../typings/common";
 import BranchItem, {
   PLACEHOLDER_HEIGHT,
@@ -31,6 +31,7 @@ const SoYoungBranch = memo(() => {
 
   return (
     <FlatList
+      style={styles.list}
       contentContainerStyle={styles.container}
       scrollEnabled={false}
       data={data}
@@ -51,9 +52,12 @@ const SoYoungBranch = memo(() => {
 export default SoYoungBranch;
 
 const styles = StyleSheet.create({
+  list: {
+    backgroundColor: "#F5F9FA",
+  },
   container: {
     paddingTop: 12,
     paddingBottom: 30,
-    backgroundColor: "#F5F9FA",
+    minHeight: _height,
   },
 });

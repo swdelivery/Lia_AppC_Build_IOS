@@ -36,10 +36,10 @@ const OverViewBranch = ({ branch }: Props) => {
         <View style={styleElement.flex}>
           <Text style={styles.name}>{branch?.name}</Text>
           <CountStar2
-            count={branch?.countPartner}
-            rating={branch?.reviewCount}
+            rating={branch.averageRating}
+            count={branch?.reviewCount}
           />
-          {branch.branchFileArr && (
+          {branch?.branchFileArr && (
             <Row flexWrap="wrap">
               {branch.branchFileArr.map((item) => {
                 return <Certificate item={item} key={item._id} />;

@@ -59,15 +59,6 @@ const Search = (props) => {
   }, [top]);
 
   const _handleQR = () => {
-    // ImagePicker.openCamera({
-    //   mediaType: 'photo',
-    //   compressImageQuality: 0.5
-    // }).then(async (images) => {
-
-    //   console.log({ images });
-    //   let result = await scanningEyes(images)
-    //   return
-    // }).catch(e => { });
     ImagePicker.openPicker({
       multiple: false,
       waitAnimationEnd: false,

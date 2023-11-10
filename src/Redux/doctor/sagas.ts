@@ -59,7 +59,7 @@ function* getDoctorReviews({ payload }: BaseAction<GetDoctorReviewsParams>) {
         equal: payload.doctorCode,
       },
     });
-    yield put(actions.getDoctorReviews.success(data));
+    yield put(actions.getDoctorReviews.success(data.data));
   } catch (error: any) {
     yield put(actions.getDoctorReviews.failure(error.message));
   }

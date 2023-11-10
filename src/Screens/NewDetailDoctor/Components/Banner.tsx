@@ -78,7 +78,7 @@ const Banner = () => {
           </View>
         </View>
       </Column>
-      <Column right={8} gap={8} top={8}>
+      <Column right={8} gap={8} top={8} left={0}>
         <Row left={16} gap={4}>
           <Image
             style={styles.iconLike}
@@ -86,13 +86,13 @@ const Banner = () => {
           />
           <Text weight="bold">Chuyên dự án: {data?.specialization}</Text>
         </Row>
-        {data.doctorServices.length > 0 && (
+        {data?.doctorServices?.length > 0 && (
           <HorizontalServices items={data.doctorServices} />
         )}
       </Column>
 
       {diaries.length > 0 && (
-        <Column right={8} gap={8} top={16}>
+        <Column right={8} gap={8} top={16} left={0}>
           <Row left={16} gap={4}>
             <Image
               style={styles.iconLike}
@@ -215,7 +215,7 @@ const styles = StyleSheet.create({
   banner: {
     backgroundColor: "white",
     borderRadius: _moderateScale(8 * 3),
-    paddingBottom: _moderateScale(8 * 2),
+    paddingBottom: _moderateScale(8 * 3),
     marginBottom: 8,
   },
 });

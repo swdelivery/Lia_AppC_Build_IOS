@@ -1,5 +1,5 @@
-import { StyleSheet, View } from "react-native";
-import React from "react";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
+import React, { useCallback } from "react";
 import {
   _heightScale,
   _moderateScale,
@@ -8,40 +8,55 @@ import {
 import Text from "@Components/Text";
 import Column from "@Components/Column";
 import Row from "@Components/Row";
+import { useSelector } from "react-redux";
+import { getServiceDetailsState } from "@Redux/service/selectors";
+import { stylesFont } from "@Constant/Font";
+import { IconEyeBase } from "@Components/Icon/Icon";
+import { sizeIcon } from "@Constant/Icon";
+import { navigation } from "rootNavigation";
+import ScreenKey from "@Navigation/ScreenKey";
 
 const Material = () => {
+
+  const { data: dataService } = useSelector(getServiceDetailsState);
+
+  const _handleGoDetailMaterial = useCallback((data) => () => {
+    navigation.navigate(ScreenKey.DETAIL_MATERIAL, { _id: data?._id })
+  }, [])
+
   return (
     <View style={styles.container}>
-      <View>
+      <View style={{marginBottom:8}}>
         <Text weight="bold">Vật liệu</Text>
       </View>
 
-      <Column gap={8}>
+      <Column  gap={8}>
         <View style={styles.box__header}>
           <Text color={"#4DA887"} weight="bold">
-            Chỉ phẩu thuật
+            Thông tin vật liệu
           </Text>
 
           <Text color={"#4DA887"} weight="bold">
-            3 Loại
+            {dataService?.materialArr?.length} Loại
           </Text>
         </View>
 
-        <Column left={8} right={8}>
-          <Row>
-            <Text style={styles.box__textLeft}>Chỉ Polypropylene</Text>
-            <Text style={styles.box__textRight}>1.5 mm</Text>
-          </Row>
-          <Row>
-            <Text style={styles.box__textLeft}>Chỉ lụa Silk</Text>
-            <Text style={styles.box__textRight}>3.5 mm</Text>
-          </Row>
-          <Row>
-            <Text style={styles.box__textLeft}>Chỉ Ethibond</Text>
-            <Text style={styles.box__textRight}>
-              3.25 mm, Lorem ipsum asmet
-            </Text>
-          </Row>
+        <Column style={{paddingHorizontal:_moderateScale(8)}} gap={8} left={0} right={8}>
+          {
+            dataService?.materialArr?.map((item, index) => {
+              return (
+                <TouchableOpacity onPress={_handleGoDetailMaterial(item)}>
+                  <Row gap={16}>
+                    <View style={{ flex: 1 }}>
+                      <Text numberOfLines={1} style={[styles.box__textLeft, stylesFont.fontNolanBold]}>{item?.name}</Text>
+                    </View>
+
+                    <IconEyeBase style={sizeIcon.md} />
+                  </Row>
+                </TouchableOpacity>
+              )
+            })
+          }
         </Column>
       </Column>
     </View>
@@ -58,7 +73,8 @@ const styles = StyleSheet.create({
   box__textLeft: {
     fontSize: _moderateScale(14),
     color: "grey",
-    fontWeight: "500",
+    fontWeight: "bold",
+
   },
   box__header: {
     width: "100%",

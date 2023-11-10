@@ -9,10 +9,10 @@ import Row from "@Components/Row";
 import { styleElement } from "@Constant/StyleElement";
 import Icon from "@Components/Icon";
 
-const ListBottonService = () => {
+const ListBottonService = (props) => {
   return (
     <View style={styles.container}>
-      {[1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4, 5]?.map((item, index) => {
+      {props?.data?.map((item, index) => {
         return (
           <View style={styles.card}>
             <View style={styles.itemContent}>

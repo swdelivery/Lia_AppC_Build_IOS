@@ -62,7 +62,7 @@ function* getBranchReviews({ payload }: BaseAction<GetBranchReviewsParams>) {
         equal: payload.branchCode,
       },
     });
-    yield put(actions.getBranchReviews.success(data));
+    yield put(actions.getBranchReviews.success(data.data));
   } catch (error: any) {
     yield put(actions.getBranchReviews.failure(error.message));
   }

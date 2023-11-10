@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { View, StyleSheet } from "react-native";
 import { _width } from "@Constant/Scale";
 import { formatMonney } from "@Constant/Utils";
@@ -15,18 +15,26 @@ import { styleElement } from "@Constant/StyleElement";
 import Icon from "@Components/Icon";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import ContentLoader, { Circle, Rect } from "react-content-loader/native";
+import { selectService } from "@Redux/service/actions";
+import { useDispatch } from "react-redux";
 
 type Props = {
   item: Service;
 };
 
 export default function ServiceItem({ item }: Props) {
-  const { navigate } = useNavigate();
+  const dispatch = useDispatch();
+  const { navigation } = useNavigate();
+
+  const _handleGoDetailService = useCallback(() => {
+    dispatch(selectService(item));
+    navigation.navigate(ScreenKey.DETAIL_SERVICE, { idService: item._id });
+  }, []);
 
   return (
     <TouchableOpacity
       activeOpacity={0.8}
-      onPress={navigate(ScreenKey.DETAIL_SERVICE, { idService: item._id })}
+      onPress={_handleGoDetailService}
       style={styles.card}
     >
       <View style={styles.content}>
