@@ -2,7 +2,10 @@ import React, { memo } from "react";
 import { StyleSheet } from "react-native";
 import { _width } from "../../Constant/Scale";
 import { RenderItemProps } from "../../typings/common";
-import BranchItem, { PLACEHOLDER_HEIGHT } from "./components/BranchItem";
+import BranchItem, {
+  PLACEHOLDER_HEIGHT,
+  Placeholder,
+} from "./components/BranchItem";
 import { useFocused } from "src/Hooks/useNavigation";
 import useListFilter from "src/Hooks/useListFilter";
 import { getBranchListState } from "@Redux/branch/selectors";
@@ -35,7 +38,7 @@ const SoYoungBranch = memo(() => {
       ListEmptyComponent={
         isLoading ? (
           <PlaceholderSkeletons count={5} itemHeight={PLACEHOLDER_HEIGHT}>
-            <BranchItem.Placeholder />
+            <Placeholder />
           </PlaceholderSkeletons>
         ) : (
           <ListEmpty isLoading={isLoading} title="Không tìm thấy phòng khám" />

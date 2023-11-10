@@ -17,7 +17,10 @@ export const getDoctorList = generateActionsGroup<
   DataPagingPayload<Doctor[]>
 >(GET_DOCTOR_LIST);
 
-export const loadMoreDoctorList = generateActionsGroup(LOAD_MORE_DOCTOR_LIST);
+export const loadMoreDoctorList = generateActionsGroup<
+  void,
+  DataPagingPayload<Doctor[]>
+>(LOAD_MORE_DOCTOR_LIST);
 
 export const getDoctorDetails = generateActionsGroup<string, Doctor>(
   GET_DOCTOR_DETAILS

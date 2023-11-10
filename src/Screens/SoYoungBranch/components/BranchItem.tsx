@@ -81,7 +81,7 @@ export default function BranchItem({ item }: Props) {
 
 export const PLACEHOLDER_HEIGHT = 200;
 
-function Placeholder() {
+export function Placeholder() {
   return (
     <View style={[styles.container, styles.placeholderItem]}>
       <ContentLoader>

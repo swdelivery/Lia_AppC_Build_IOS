@@ -59,7 +59,7 @@ export default function ServiceItem({ item }: Props) {
 
 export const PLACEHOLDER_HEIGHT = 200;
 
-function Placeholder() {
+export function Placeholder() {
   return (
     <Row style={[styles.container, styles.placeholderRow]} gap={8}>
       <View style={styles.placeholderItem}>
@@ -81,8 +81,6 @@ function Placeholder() {
     </Row>
   );
 }
-
-ServiceItem.Placeholder = Placeholder;
 
 const styles = StyleSheet.create({
   card: {

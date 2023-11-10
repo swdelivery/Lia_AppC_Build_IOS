@@ -1,7 +1,10 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { _width } from "../../Constant/Scale";
-import ServiceItem, { PLACEHOLDER_HEIGHT } from "./components/ServiceItem";
+import ServiceItem, {
+  PLACEHOLDER_HEIGHT,
+  Placeholder,
+} from "./components/ServiceItem";
 import { useDispatch, useSelector } from "react-redux";
 import { useFocused } from "src/Hooks/useNavigation";
 import { getServices } from "@Redux/service/actions";
@@ -37,7 +40,7 @@ const SoYoungService = () => {
       ListEmptyComponent={
         isLoading ? (
           <PlaceholderSkeletons count={5} itemHeight={PLACEHOLDER_HEIGHT}>
-            <ServiceItem.Placeholder />
+            <Placeholder />
           </PlaceholderSkeletons>
         ) : null
       }
