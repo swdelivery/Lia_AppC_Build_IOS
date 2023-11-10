@@ -1,3 +1,7 @@
 Device ID	Device Name	Device Platform
 00008030-00090d163a39802e	bk.ok2006@gmail.com - iPhone 11 Pro	ios
 c71329849a4934e5ea2948686f03107b4d78ac77	quynhtrana1k45@icloud.com - iPhone 8 Plus	ios
+00008030-001231083ad1802e	thanhandp147@gmail.com - iPhone 11 Pro Max	ios
+00008110-000168cc26c3801e	lifeofdev.thn@gmail.com - iPhone 13 Pro	ios
+7a54ccd965c3dfcf782a4e143ec5f825957feb02	tuanluong.it@gmail.com - iPhone 7	ios
+00008030-001e75390281802e	phuocnv.vndigitech@gmail.com - iPhone 11	ios
