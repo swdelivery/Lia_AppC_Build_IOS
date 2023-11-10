@@ -60,7 +60,7 @@ export default function BranchItem({ item }: Props) {
             </Text>
           </Row>
 
-          <Row top={8} flexWrap={"wrap"} gap={4} bottom={8}>
+          <Row marginTop={8} flexWrap={"wrap"} gap={4} bottom={8}>
             {item?.branchFileArr.length > 0 &&
               item.branchFileArr.map((item, index) => (
                 <Certificate

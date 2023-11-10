@@ -59,7 +59,7 @@ const Banner = () => {
           {data?.position} <Text color="grey">{` | `}</Text> {data?.experience}
         </Text>
 
-        <Row gap={4} flexWrap="wrap" top={8}>
+        <Row gap={4} flexWrap="wrap" marginTop={8}>
           {data?.treatmentDoctorFileArr?.map((item, index) => {
             return <Certificate item={item} key={item._id} />;
           })}

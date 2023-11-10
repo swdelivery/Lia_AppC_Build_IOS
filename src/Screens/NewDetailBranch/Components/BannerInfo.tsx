@@ -63,7 +63,7 @@ const BannerInfo = () => {
         {(data?.name ?? "").toUpperCase()}
       </Text>
 
-      <Row top={8} gap={8}>
+      <Row marginTop={8} gap={8}>
         {data?.branchFileArr?.length > 0 &&
           data.branchFileArr.map((item) => (
             <View style={styles.certificateContainer} key={item._id}>

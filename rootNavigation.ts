@@ -7,7 +7,12 @@ import {
 export const navigationRef = createNavigationContainerRef();
 // export const navigation = navigationRef.current
 export function navigate(name, params) {
-  navigationRef.current?.navigate(name, params);
+	if (navigationRef.isReady()) {
+    // @ts-ignore
+    navigationRef.navigate(routeName, params);
+  } else {
+    console.error("Trying to navigatte but hasnt mounted");
+  }
 }
 export function dispatch(action) {
   navigationRef.current?.dispatch(action);

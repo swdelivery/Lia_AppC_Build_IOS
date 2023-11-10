@@ -51,10 +51,10 @@ export default function DoctorItem({ item }: Props) {
             </TouchableOpacity>
           </Row>
 
-          <Row top={2} gap={8}>
+          <Row marginTop={2} gap={8}>
             <CountStar2 rating={4} size={10} />
             <Text size={10}>|</Text>
-            <Row gap={4} top={2}>
+            <Row gap={4} marginTop={2}>
               <Icon name="account-multiple" size={14} color="grey" />
               <Text size={10}>({item?.countPartner})</Text>
             </Row>
@@ -67,7 +67,7 @@ export default function DoctorItem({ item }: Props) {
             </Text>
           </Row>
           {item?.treatmentDoctorFileArr.length > 0 && (
-            <Row top={8} flexWrap={"wrap"} gap={4} bottom={8}>
+            <Row marginTop={8} flexWrap={"wrap"} gap={4} bottom={8}>
               {item.treatmentDoctorFileArr.map((item, i) => (
                 <Certificate
                   key={item._id}

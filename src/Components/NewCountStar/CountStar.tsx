@@ -25,7 +25,7 @@ const CountStar2 = ({
   const iconSize = size + 4;
   return (
     <Row gap={4}>
-      <Row gap={-3} top={3}>
+      <Row gap={-3} marginTop={3}>
         <Icon
           name={rating >= 1 ? "star-box" : "star-box-outline"}
           color={rating >= 1 ? GREEN_SUCCESS : TITLE_GREY}

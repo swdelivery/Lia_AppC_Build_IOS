@@ -31,7 +31,7 @@ const OverViewBranch = ({ branch }: Props) => {
   return (
     <View style={styles.container}>
       <Text weight="bold">Địa điểm công tác</Text>
-      <Row top={8} gap={8}>
+      <Row marginTop={8} gap={8}>
         <Image style={styles.avatarBranch} avatar={branch?.avatar} />
         <View style={styleElement.flex}>
           <Text style={styles.name}>{branch?.name}</Text>
