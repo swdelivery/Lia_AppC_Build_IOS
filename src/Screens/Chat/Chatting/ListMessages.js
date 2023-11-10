@@ -242,57 +242,59 @@ const ListMessages = memo((props) => {
     }
 
     return (
-        <>
+      <>
+        <ModalShowListUserHasSeenMessage
+          data={currFocusMessage}
+          closeModalListUserHasSeenMessage={() =>
+            setIsModalListUserHasSeenMessage(false)
+          }
+          isShowModalListUserHasSeenMessage={isShowModalListUserHasSeenMessage}
+        />
 
-            <ModalShowListUserHasSeenMessage
-                data={currFocusMessage}
-                closeModalListUserHasSeenMessage={() => setIsModalListUserHasSeenMessage(false)}
-                isShowModalListUserHasSeenMessage={isShowModalListUserHasSeenMessage} />
+        <ModalRemoveMessage
+          data={currMessageForRemove}
+          closeModalRemoveMessage={() => setIsShowModalRemoveMessage(false)}
+          isShowModalRemoveMessage={isShowModalRemoveMessage}
+        />
 
-            <ModalRemoveMessage
-                data={currMessageForRemove}
-                closeModalRemoveMessage={() => setIsShowModalRemoveMessage(false)}
-                isShowModalRemoveMessage={isShowModalRemoveMessage} />
+        <ImageView
+          images={listImagesSeeCurr?.map((item) => {
+            return {
+              uri: `${URL_ORIGINAL}${item.link}`,
+            };
+          })}
+          onRequestClose={() => {
+            setShowListImagesSee(false);
+          }}
+          imageIndex={indexCurrImageView}
+          visible={showListImagesSee}
+        />
 
-
-
-            <ImageView
-                images={listImagesSeeCurr?.map(item => {
-                    return {
-                        uri: `${URL_ORIGINAL}${item.link}`,
-                    }
-                })}
-
-                onRequestClose={() => {
-                    setShowListImagesSee(false)
-                }}
-                imageIndex={indexCurrImageView}
-                visible={showListImagesSee}
-            />
-
-            <FlatList
-                onMomentumScrollBegin={() => {
-                    setOnEndReachedCalledDuringMomentum(false)
-                }}
-                inverted
-                onEndReachedThreshold={0.01}
-                contentContainerStyle={{ flexGrow: 1 }}
-                data={!isEmpty(currListMessageRedux?.messages) ? currListMessageRedux?.messages : []}
-                renderItem={_renderMessage}
-                keyExtractor={_awesomeChildListKeyExtractor}
-                onEndReached={() => {
-                    if (!isLoadingMoreMessage) {
-                        if (!onEndReachedCalledDuringMomentum) {
-                            _onLoadMoreMessages()
-                            setOnEndReachedCalledDuringMomentum(true)
-                        }
-                    }
-
-
-                }}
-                ListFooterComponent={_renderListFooter}
-            />
-        </>
+        <FlatList
+          onMomentumScrollBegin={() => {
+            setOnEndReachedCalledDuringMomentum(false);
+          }}
+          inverted
+          onEndReachedThreshold={0.01}
+          contentContainerStyle={{ flexGrow: 1, backgroundColor: "#E3E9F1" }}
+          data={
+            !isEmpty(currListMessageRedux?.messages)
+              ? currListMessageRedux?.messages
+              : []
+          }
+          renderItem={_renderMessage}
+          keyExtractor={_awesomeChildListKeyExtractor}
+          onEndReached={() => {
+            if (!isLoadingMoreMessage) {
+              if (!onEndReachedCalledDuringMomentum) {
+                _onLoadMoreMessages();
+                setOnEndReachedCalledDuringMomentum(true);
+              }
+            }
+          }}
+          ListFooterComponent={_renderListFooter}
+        />
+      </>
     );
 });
 
