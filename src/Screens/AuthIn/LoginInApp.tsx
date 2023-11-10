@@ -125,7 +125,6 @@ const Login = (props) => {
   };
   return (
     <Screen safeTop style={styles.container}>
-      <StatusBarCustom barStyle={"dark-content"} bgColor={"white"} />
       <Header title="Đăng nhập" onBack={navigation.goBack} />
       <KeyboardAwareScrollView
         bounces={false}

@@ -29,6 +29,6 @@ const styles = StyleSheet.create({
   headerContainer: {
     justifyContent: "space-between",
     paddingHorizontal: _moderateScale(8 * 2),
-    paddingBottom: 8,
+    paddingVertical: 8,
   },
 });
