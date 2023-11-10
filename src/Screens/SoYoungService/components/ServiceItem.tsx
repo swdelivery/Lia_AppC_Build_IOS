@@ -14,6 +14,7 @@ import Row from "@Components/Row";
 import { styleElement } from "@Constant/StyleElement";
 import Icon from "@Components/Icon";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import ContentLoader, { Circle, Rect } from "react-content-loader/native";
 
 type Props = {
   item: Service;
@@ -56,6 +57,33 @@ export default function ServiceItem({ item }: Props) {
   );
 }
 
+export const PLACEHOLDER_HEIGHT = 200;
+
+function Placeholder() {
+  return (
+    <Row style={[styles.container, styles.placeholderRow]} gap={8}>
+      <View style={styles.placeholderItem}>
+        <ContentLoader>
+          <Rect x="0" y="0" rx="4" ry="4" height="100" width="100%" />
+          <Rect x="0" y="110" rx="3" ry="3" width="80%" height="12" />
+          <Rect x="0" y="128" rx="3" ry="3" width="50%" height="12" />
+          <Rect x="0" y="145" rx="3" ry="3" width="50%" height="12" />
+        </ContentLoader>
+      </View>
+      <View style={styles.placeholderItem}>
+        <ContentLoader>
+          <Rect x="0" y="0" rx="4" ry="4" height="100" width="100%" />
+          <Rect x="0" y="110" rx="3" ry="3" width="80%" height="12" />
+          <Rect x="0" y="128" rx="3" ry="3" width="50%" height="12" />
+          <Rect x="0" y="145" rx="3" ry="3" width="50%" height="12" />
+        </ContentLoader>
+      </View>
+    </Row>
+  );
+}
+
+ServiceItem.Placeholder = Placeholder;
+
 const styles = StyleSheet.create({
   card: {
     width: _width / 2,
@@ -82,5 +110,17 @@ const styles = StyleSheet.create({
   },
   info: {
     padding: 4,
+  },
+  placeholderRow: {
+    height: PLACEHOLDER_HEIGHT,
+    marginHorizontal: 16,
+  },
+  placeholderItem: {
+    flex: 1,
+    borderWidth: 0,
+    backgroundColor: "white",
+    padding: 8,
+    borderRadius: 8,
+    marginTop: 8,
   },
 });

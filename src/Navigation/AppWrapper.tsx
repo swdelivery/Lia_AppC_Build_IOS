@@ -211,7 +211,10 @@ Axios.interceptors.response.use(
   },
   async (error) => {
     if (error?.response?.status == 401) {
-      navigation.replace("MainTab");
+      // FIXME: can use setParams to pass "Unauthorized" command
+      // In the screens which requires login,
+      // add hook that listen for this command and redirect to Main tab
+      navigation.navigate("MainTab");
 
       Store.dispatch({
         type: ActionType.CLEAR_INFO_USER,

@@ -29,6 +29,9 @@ const HorizontalServices = ({ items, title, containerStyle }: Props) => {
   }, []);
 
   function renderItem(item: BranchService, index: number) {
+    if (!item || !item.service) {
+      return null;
+    }
     return (
       <BranchServiceItem item={item} key={item._id} onPress={handlePress} />
     );

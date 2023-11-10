@@ -16,6 +16,7 @@ import { useDispatch } from "react-redux";
 import { selectBranch } from "@Redux/branch/actions";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Avatar from "@Components/Avatar";
+import ContentLoader, { Circle, Rect } from "react-content-loader/native";
 
 type Props = {
   item: Branch;
@@ -34,7 +35,7 @@ export default function BranchItem({ item }: Props) {
     <TouchableOpacity
       activeOpacity={0.9}
       onPress={handlePress}
-      style={[styles.card, shadow]}
+      style={[styles.card, styleElement.shadow]}
     >
       <View style={styles.upperView}>
         <Avatar size={48} avatar={item.avatar} circle />
@@ -77,6 +78,24 @@ export default function BranchItem({ item }: Props) {
     </TouchableOpacity>
   );
 }
+
+export const PLACEHOLDER_HEIGHT = 200;
+
+function Placeholder() {
+  return (
+    <View style={[styles.container, styles.placeholderItem]}>
+      <ContentLoader>
+        <Circle x="20" y="20" r="20" />
+        <Rect x="60" y="0" rx="4" ry="4" width="80" height="13" />
+        <Rect x="60" y="20" rx="3" ry="3" width="100%" height="15" />
+        <Rect x="60" y="40" rx="3" ry="3" width="100" height="12" />
+        <Rect x="0" y="60" rx="3" ry="3" width="100%" height="120" />
+      </ContentLoader>
+    </View>
+  );
+}
+
+BranchItem.Placeholder = Placeholder;
 
 const styles = StyleSheet.create({
   avatar: {
@@ -142,16 +161,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#F5F9FA",
   },
   upperView: { flexDirection: "row", gap: 8 },
-});
-
-const shadow = {
-  shadowColor: "#000",
-  shadowOffset: {
-    width: 0,
-    height: 0,
+  placeholderItem: {
+    height: PLACEHOLDER_HEIGHT,
+    borderWidth: 0,
+    backgroundColor: "white",
+    marginHorizontal: 16,
+    padding: 8,
+    borderRadius: 8,
+    marginTop: 8,
   },
-  shadowOpacity: 0.15,
-  shadowRadius: 4,
-
-  elevation: 2,
-};
+});
