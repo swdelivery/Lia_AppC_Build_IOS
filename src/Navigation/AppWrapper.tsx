@@ -72,6 +72,7 @@ import FakeModal from "../Screens/DemoFakeModal/index";
 import ListDoctor from "../Screens/ListDoctor";
 // import DetailDoctor from '../Screens/DetailDoctor/index'
 import DetailDoctor from "../Screens/NewDetailDoctor";
+import DetailPractitioner from "../Screens/NewDetailPractitioner/index";
 import BookingForDoctor from "../Screens/Booking/bookingForDoctor";
 import EditBooking from "../Screens/Booking/editBooking/index";
 import LoseWeight from "../Screens/LoseWeight/index";
@@ -663,6 +664,11 @@ const AppWrapper = (props) => {
                 options={{ ...TransitionPresets.SlideFromRightIOS }}
                 name={ScreenKey.DETAIL_DOCTOR}
                 component={DetailDoctor}
+              />
+              <rootStack.Screen
+                options={{ ...TransitionPresets.SlideFromRightIOS }}
+                name={ScreenKey.DETAIL_PRACTITIONER}
+                component={DetailPractitioner}
               />
 
               <rootStack.Screen

@@ -7,9 +7,12 @@ export type GetDoctorListPayload = {
 export type GetReviewsPayload = {
   branchCode?: Condition;
   doctorCode?: Condition;
+  serviceCode?: Condition;
+  practitionerCode?: Condition;
 };
 
 export type GetDiaryPayload = {
   branchCode?: Condition;
   doctorId?: Condition;
+  practitionerId?: Condition;
 };

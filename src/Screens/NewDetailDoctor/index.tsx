@@ -66,7 +66,7 @@ const DetailDoctor = (props) => {
           <Banner />
         </View>
         <View style={styles.info}>
-          <OverViewBranch branch={data.branch} />
+          <OverViewBranch branch={data?.branch} />
           <MainInfoDoctor />
           <Feedback doctor={data} />
           <QuestionVideo doctor={data} />

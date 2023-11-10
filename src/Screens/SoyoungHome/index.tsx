@@ -28,6 +28,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { styleElement } from "../../Constant/StyleElement";
 import { FONT_WEIGHTS } from "@Components/Text";
 import SoYoungMaterial from "@Screens/SoYoungMaterial";
+import SoYoungPractitioner from "@Screens/SoYoungPractitioner";
 
 const STACKS = [
   {
@@ -43,7 +44,7 @@ const STACKS = [
     tabLabel: "Bác sĩ",
   },
   {
-    screen: SoYoungExpert,
+    screen: SoYoungPractitioner,
     tabLabel: "Chuyên viên",
   },
   {

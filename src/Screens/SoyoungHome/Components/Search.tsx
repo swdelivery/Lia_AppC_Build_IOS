@@ -59,6 +59,7 @@ const Search = (props) => {
   }, [top]);
 
   const _handleQR = () => {
+   return navigation.navigate(ScreenKey.LIST_SERVICE)
     // ImagePicker.openCamera({
     //   mediaType: 'photo',
     //   compressImageQuality: 0.5

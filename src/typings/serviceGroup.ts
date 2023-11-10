@@ -37,6 +37,12 @@ export type ServiceOption = {
     id: string;
   }[];
 };
+export type MaterialInfo = {
+  _id: string;
+  name: string;
+  code: string;
+  id: string;
+};
 
 export type Service = {
   price: number;
@@ -54,6 +60,7 @@ export type Service = {
   reviewCount: number;
   averageRating: number;
   materialCodeArr: string[];
+  materialArr: MaterialInfo[];
   countPartner: number;
   orderNumber: number;
   isDisplayed: boolean;

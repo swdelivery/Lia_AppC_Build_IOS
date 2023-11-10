@@ -1,39 +1,59 @@
-import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
-import React, { memo } from "react";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
+import React, { memo, useCallback, useMemo } from "react";
 import { _moderateScale, _width, _widthScale } from "../../../Constant/Scale";
 import Text from "@Components/Text";
 import Icon from "@Components/Icon";
+import { useSelector } from "react-redux";
+import { getServiceDetailsState, getServiceReviewsState } from "@Redux/service/selectors";
+import { URL_ORIGINAL } from "@Constant/Url";
+import Row from "@Components/Row";
+import { navigation } from "rootNavigation";
+import ScreenKey from "@Navigation/ScreenKey";
+import Image from "@Components/Image";
+import Avatar from "@Components/Avatar";
 
 const OverViewFeedBack = () => {
+
+  const { data: dataReview, meta: metaReview } = useSelector(getServiceReviewsState);
+  const { data: dataService } = useSelector(getServiceDetailsState);
+
+  const _handleViewAllFeedBack = useCallback(()=>{
+    navigation.navigate(ScreenKey.FEED_BACK_SERVICE, { currentService: dataService })
+  },[dataService])
+
+  const _dataReviewSlice = useMemo(() => {
+    return dataReview?.slice(0, 3);
+  }, [dataReview])
+
   return (
     <View style={styles.container}>
-      <View style={styles.listAvatar}>
-        <Image
-          style={styles.image}
-          source={{
-            uri: `https://i.ibb.co/7jbTH44/A-nh-ma-n-hi-nh-2023-09-26-lu-c-14-36-22.png`,
-          }}
-        />
-        <Image
-          style={styles.image}
-          source={{
-            uri: `https://i.ibb.co/7jbTH44/A-nh-ma-n-hi-nh-2023-09-26-lu-c-14-36-22.png`,
-          }}
-        />
-        <Image
-          style={styles.image}
-          source={{
-            uri: `https://i.ibb.co/7jbTH44/A-nh-ma-n-hi-nh-2023-09-26-lu-c-14-36-22.png`,
-          }}
-        />
-      </View>
+      <Row>
 
-      <Text style={styles.text}>Lorem Ipsum is simply dummy</Text>
+        <View style={styles.listAvatar}>
+          {
+            _dataReviewSlice.map((item, index) => {
+              return (
+                <Avatar
+                  circle
+                  style={styles.image}
+                  size={_moderateScale(24)}
+                  avatar={item?.partner?.fileAvatar}
+                />
+              )
+            })
+          }
+        </View>
 
-      <TouchableOpacity style={styles.textFeedbackContainer}>
-        <Text style={styles.textFeedback}>{`79 đánh giá`}</Text>
-        <Icon name="chevron-right" size={14} />
-      </TouchableOpacity>
+        <Text numberOfLines={1} style={styles.text}>{dataReview[0]?.serviceReview?.comment}</Text>
+        <View style={{ width: 8 * 2 }} />
+
+        <TouchableOpacity
+          onPress={_handleViewAllFeedBack}
+          style={styles.textFeedbackContainer}>
+          <Text style={styles.textFeedback}>{`${metaReview?.totalDocuments} đánh giá`}</Text>
+          <Icon name="chevron-right" size={14} />
+        </TouchableOpacity>
+      </Row>
     </View>
   );
 };
@@ -50,9 +70,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   image: {
-    width: _moderateScale(8 * 3),
-    height: _moderateScale(8 * 3),
-    borderRadius: _moderateScale(8 * 1.5),
     marginLeft: -8,
   },
   listAvatar: {

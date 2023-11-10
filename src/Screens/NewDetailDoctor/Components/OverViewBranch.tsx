@@ -39,7 +39,7 @@ const OverViewBranch = ({ branch }: Props) => {
             count={branch?.countPartner}
             rating={branch?.reviewCount}
           />
-          {branch.branchFileArr && (
+          {branch?.branchFileArr && (
             <Row flexWrap="wrap">
               {branch.branchFileArr.map((item) => {
                 return <Certificate item={item} key={item._id} />;

@@ -1,6 +1,6 @@
 import { createReducer } from "@Redux/helper";
 import { Handler } from "@Redux/types";
-import { GET_SERVICE_DETAILS } from "../types";
+import { GET_SERVICE_DETAILS, SELECT_SERVICE } from "../types";
 import { Service } from "@typings/serviceGroup";
 
 export type State = {
@@ -30,8 +30,15 @@ const success: Handler<State> = (state, { payload }) => ({
   data: payload,
 });
 
+
+const selectService: Handler<State> = (state, { payload }) => ({
+  ...state,
+  data: payload,
+});
+
 export default createReducer(INITIAL_STATE, {
   [GET_SERVICE_DETAILS.REQUEST]: request,
   [GET_SERVICE_DETAILS.SUCCESS]: success,
   [GET_SERVICE_DETAILS.FAILURE]: failure,
+  [SELECT_SERVICE]: selectService,
 });

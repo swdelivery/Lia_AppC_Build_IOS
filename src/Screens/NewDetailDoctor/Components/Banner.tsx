@@ -86,7 +86,7 @@ const Banner = () => {
           />
           <Text weight="bold">Chuyên dự án: {data?.specialization}</Text>
         </Row>
-        {data.doctorServices.length > 0 && (
+        {data?.doctorServices?.length > 0 && (
           <HorizontalServices items={data.doctorServices} />
         )}
       </Column>

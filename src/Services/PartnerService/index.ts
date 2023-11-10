@@ -8,6 +8,7 @@ import {
   GetReviewsPayload,
 } from "./types";
 import { Doctor } from "@typings/doctor";
+import { Practitioner } from "@typings/practitioner";
 
 const axios = createAxios(URL_FOR_PARTNER);
 
@@ -33,8 +34,24 @@ const getServices = (
   return axios.get(`service?${query}`).then(({ data }) => data.data);
 };
 
+const getServicesByGroups = (
+  payload: any,
+  page = 1,
+  pageSize = configs.apiPageSize
+) => {
+  const query = encodeParams({
+    ...payload,
+    sort: {
+      orderNumber: -1,
+    },
+    limit: pageSize,
+    page,
+  });
+  return axios.get(`/service?${query}`).then(({ data }) => data.data);
+};
+
 const getServiceDetails = (serviceId: string): Promise<any> =>
-  axios.post(`/service/${serviceId}`).then(({ data }) => data.data);
+  axios.get(`/service/${serviceId}`).then(({ data }) => data.data);
 
 const getBranchList = (
   payload: any,
@@ -72,6 +89,9 @@ const getDoctorList = (
 const getDoctorDetails = (doctorId: string): Promise<Doctor> =>
   axios.get(`treatment-doctor/${doctorId}`).then(({ data }) => data.data);
 
+const getPractitionerDetails = (practitionerId: string): Promise<Practitioner> =>
+  axios.get(`practitioner/${practitionerId}`).then(({ data }) => data.data);
+
 const getReview = (
   payload: GetReviewsPayload,
   page = 1,
@@ -82,7 +102,7 @@ const getReview = (
     limit: pageSize,
     page,
   });
-  return axios.get(`/review?${params}`).then(({ data }) => data.data);
+  return axios.get(`/review?${params}`).then(({ data }) => data);
 };
 
 const getDiary = (
@@ -103,11 +123,13 @@ const getDiary = (
 export default {
   getServiceGroup,
   getServices,
+  getServicesByGroups,
   getServiceDetails,
   getBranchList,
   getBranchById,
   getDoctorList,
   getDoctorDetails,
+  getPractitionerDetails,
   getReview,
   getDiary,
 };
