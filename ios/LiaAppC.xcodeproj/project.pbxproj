@@ -711,11 +711,7 @@
 				PRODUCT_NAME = LiaAppC;
 				PROVISIONING_PROFILE = "981936b2-ee26-4b2e-a9ef-af0127ae9357";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-<<<<<<< HEAD
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AdHoc com.liaappc 1699586572";
-=======
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = liaappc_provi;
->>>>>>> 6cb019d (integrate api detail service)
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -793,12 +789,7 @@
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
-<<<<<<< HEAD
-					"-Wl",
-					"-ld_classic",
-=======
 					" ",
->>>>>>> 6cb019d (integrate api detail service)
 				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
@@ -872,12 +863,7 @@
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
-<<<<<<< HEAD
-					"-Wl",
-					"-ld_classic",
-=======
 					" ",
->>>>>>> 6cb019d (integrate api detail service)
 				);
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;

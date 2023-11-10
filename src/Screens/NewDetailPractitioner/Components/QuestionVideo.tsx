@@ -10,6 +10,10 @@ import ScreenKey from "@Navigation/ScreenKey";
 import { Doctor } from "@typings/doctor";
 import Text from "@Components/Text";
 import { useNavigate } from "src/Hooks/useNavigation";
+import { URL_ORIGINAL } from "@Constant/Url";
+import LinearGradient from "react-native-linear-gradient";
+import Column from "@Components/Column";
+import { IconPlayWhite } from "@Components/Icon/Icon";
 
 type Props = {
   doctor: Doctor;
@@ -24,11 +28,11 @@ const QuestionVideo = ({ doctor }: Props) => {
       </Text>
 
       <View style={styles.content}>
-        {doctor?.questionVideoDoctorArr?.map((item, index) => {
+        {doctor?.questionVideoPractitionerArr?.map((item, index) => {
           return (
             <TouchableOpacity
               onPress={navigate(ScreenKey.VERTICAL_VIDEO_PLAYER, {
-                data: doctor?.questionVideoDoctorArr,
+                data: doctor?.questionVideoPractitionerArr,
               })}
               key={index}
               style={[
@@ -48,13 +52,36 @@ const QuestionVideo = ({ doctor }: Props) => {
                   height: "100%",
                 }}
               >
+                <LinearGradient
+                  style={[StyleSheet.absoluteFillObject, { justifyContent: 'flex-end', zIndex: 1, borderRadius: _moderateScale(8) }]}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 0, y: 1 }}
+                  colors={["transparent", "#000"]}
+                >
+                  <View style={{
+                    position:'absolute',
+                    top:"45%",
+                    alignSelf:'center',
+                    opacity:.5
+                  }}>
+                    <IconPlayWhite />
+                  </View>
+
+                  <View style={{ margin: 8 * 2 }}>
+                    <Column gap={8}>
+                      <Text weight="bold" color={'white'}>{item?.name}</Text>
+                      <Text numberOfLines={3} color={'white'}>{item?.description}</Text>
+                    </Column>
+                  </View>
+                </LinearGradient>
+
                 <Image
                   style={{
                     width: "100%",
                     height: "100%",
                     borderRadius: _moderateScale(8),
                   }}
-                  source={require("../../../Image/hoidapbs.jpeg")}
+                  source={{ uri: `${URL_ORIGINAL}${item?.avatar?.link}` }}
                 />
               </View>
             </TouchableOpacity>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { _width } from "../../Constant/Scale";
+import { _height, _width } from "../../Constant/Scale";
 import MaterialItem from "./components/MaterialItem";
 import { useDispatch, useSelector } from "react-redux";
 import { useFocused } from "src/Hooks/useNavigation";
@@ -24,14 +24,14 @@ const SoYoungMaterial = () => {
   const _getData = async () => {
     let result = await getListMaterial({});
     if (result?.isAxiosError) return;
-    console.log({result});
-    
+    console.log({ result });
+
     setListMaterial(result?.data?.data)
   }
 
   const _renderItem = ({ item, index }) => {
-    console.log({item});
-    
+    console.log({ item });
+
 
     return (
       <MaterialItem item={item} />
@@ -40,14 +40,22 @@ const SoYoungMaterial = () => {
 
 
   return (
-    <FlatList
-      contentContainerStyle={styles.container}
-      scrollEnabled={false}
-      numColumns={2}
-      data={listMaterial}
-      renderItem={_renderItem}
-      keyExtractor={(item, index) => index}
-    />
+    <>
+      {
+        listMaterial?.length > 0 ?
+          <FlatList
+            contentContainerStyle={styles.container}
+            scrollEnabled={false}
+            numColumns={2}
+            data={listMaterial}
+            renderItem={_renderItem}
+            keyExtractor={(item, index) => index}
+          />
+          :
+          <View style={{ height: _height }} />
+      }
+
+    </>
   );
 };
 

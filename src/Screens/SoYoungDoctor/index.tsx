@@ -1,6 +1,6 @@
 import React, { memo, useEffect, useState } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { _width } from "../../Constant/Scale";
+import { _height, _width } from "../../Constant/Scale";
 import { navigation } from "../../../rootNavigation";
 import ScreenKey from "../../Navigation/ScreenKey";
 import { getAllDoctorv2 } from "../../Redux/Action/DoctorAction";
@@ -32,11 +32,19 @@ const SoYoungDoctor = memo(() => {
   };
 
   return (
-    <View style={styles.container}>
-      {listDoctor?.map((item, index) => {
-        return <DoctorItem key={item._id} item={item} />;
-      })}
-    </View>
+    <>
+      {
+        listDoctor?.length > 0 ?
+          <View style={styles.container}>
+            {listDoctor?.map((item, index) => {
+              return <DoctorItem key={item._id} item={item} />;
+            })}
+          </View>
+          :
+          <View style={{ height: _height }} />
+      }
+
+    </>
   );
 });
 

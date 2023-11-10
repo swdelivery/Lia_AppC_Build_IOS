@@ -24,7 +24,7 @@ const HorizontalServices = ({ items, title, containerStyle }: Props) => {
 
   const handlePress = useCallback((item: BranchService) => {
     navigation.navigate(ScreenKey.DETAIL_SERVICE, {
-      idService: item._id,
+      idService: item?.service?._id,
     });
   }, []);
 

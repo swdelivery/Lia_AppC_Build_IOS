@@ -18,34 +18,23 @@ import HorizontalServices from "@Components/HorizontalServices";
 import Spacer from "@Components/Spacer";
 import PartnerDiary from "@Components/PartnerDiary";
 import { getDoctorDiaries } from "@Redux/doctor/actions";
+import { getPractitionerDetailsState } from "@Redux/practitioner/selectors";
 
 const Banner = () => {
   const dispatch = useDispatch();
-  const { data } = useSelector(getDoctorDetailsState);
+  const { data } = useSelector(getPractitionerDetailsState);
 
   const [showImageViewing, setShowImageViewing] = useState(false);
   const [indexCurrImageView, setIndexCurrImageView] = useState(0);
 
-  const { data: diaries } = useSelector(getDoctorDiariesState);
+  // const { data: diaries } = useSelector(getDoctorDiariesState);
 
   useEffect(() => {
-    dispatch(getDoctorDiaries.request(data._id));
+    // dispatch(getDoctorDiaries.request(data._id));
   }, [data._id]);
 
   return (
     <View style={[styles.banner, shadow]}>
-      <ImageView
-        images={data?.treatmentDoctorFileArr?.map((item) => {
-          return {
-            uri: `${URL_ORIGINAL}${item?.fileUpload?.link}`,
-          };
-        })}
-        onRequestClose={() => {
-          setShowImageViewing(false);
-        }}
-        imageIndex={indexCurrImageView}
-        visible={showImageViewing}
-      />
 
       <View style={styles.avatarContainer}>
         <Avatar size={72} circle avatar={data.avatar} style={styles.avatar} />
@@ -54,13 +43,13 @@ const Banner = () => {
       <Spacer top={50} />
       <Column alignItems={"center"}>
         <Text weight="bold">{data?.name}</Text>
-        <CountStar2 count={data?.reviewCount} rating={data?.averageRating} />
+        <CountStar2 rating={5} count={data?.reviewCount} rating={data?.averageRating} />
         <Text>
           {data?.position} <Text color="grey">{` | `}</Text> {data?.experience}
         </Text>
 
-        <Row gap={4} flexWrap="wrap" top={8}>
-          {data?.treatmentDoctorFileArr?.map((item, index) => {
+        <Row gap={4} flexWrap="wrap" marginTop={8}>
+          {data?.practitionerFileArr?.map((item, index) => {
             return <Certificate item={item} key={item._id} />;
           })}
         </Row>
@@ -78,7 +67,7 @@ const Banner = () => {
           </View>
         </View>
       </Column>
-      <Column right={8} gap={8} top={8}>
+      <Column right={8} gap={8} top={8} left={0}>
         <Row left={16} gap={4}>
           <Image
             style={styles.iconLike}
@@ -86,13 +75,13 @@ const Banner = () => {
           />
           <Text weight="bold">Chuyên dự án: {data?.specialization}</Text>
         </Row>
-        {data.doctorServices.length > 0 && (
-          <HorizontalServices items={data.doctorServices} />
+        {data?.practitionerServices?.length > 0 && (
+          <HorizontalServices items={data.practitionerServices} />
         )}
       </Column>
 
-      {diaries.length > 0 && (
-        <Column right={8} gap={8} top={16}>
+      {/* {diaries.length > 0 && (
+        <Column right={8} gap={8} top={16} left={0}>
           <Row left={16} gap={4}>
             <Image
               style={styles.iconLike}
@@ -102,7 +91,7 @@ const Banner = () => {
           </Row>
           <PartnerDiary items={diaries} />
         </Column>
-      )}
+      )} */}
     </View>
   );
 };
@@ -215,7 +204,7 @@ const styles = StyleSheet.create({
   banner: {
     backgroundColor: "white",
     borderRadius: _moderateScale(8 * 3),
-    paddingBottom: _moderateScale(8 * 2),
+    paddingBottom: _moderateScale(8 * 3),
     marginBottom: 8,
   },
 });

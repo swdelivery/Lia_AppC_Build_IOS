@@ -10,9 +10,10 @@ import { _moderateScale, _width, _widthScale } from "../../../Constant/Scale";
 import { useSelector } from "react-redux";
 import { getDoctorDetailsState } from "@Redux/doctor/selectors";
 import Text from "@Components/Text";
+import { getPractitionerDetailsState } from "@Redux/practitioner/selectors";
 
 const MainInfoDoctor = (props) => {
-  const { data } = useSelector(getDoctorDetailsState);
+  const { data } = useSelector(getPractitionerDetailsState);
 
   return (
     <View style={styles.container}>

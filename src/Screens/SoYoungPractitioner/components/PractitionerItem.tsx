@@ -10,6 +10,7 @@ import { _width } from "@Constant/Scale";
 import { styleElement } from "@Constant/StyleElement";
 import ScreenKey from "@Navigation/ScreenKey";
 import { selectDoctor } from "@Redux/doctor/actions";
+import { selectPractitioner } from "@Redux/practitioner/actions";
 import { Doctor } from "@typings/doctor";
 import React, { useCallback } from "react";
 import { View, StyleSheet } from "react-native";
@@ -21,14 +22,17 @@ type Props = {
   item: Doctor;
 };
 
-export default function PractitionerItem({ item }: Props) {
+export default function DoctorItem({ item }: Props) {
   const { navigation } = useNavigate();
   const dispatch = useDispatch();
 
   const handleItemPress = useCallback(() => {
-    dispatch(selectDoctor(item));
+
+    dispatch(selectPractitioner(item));
     navigation.navigate(ScreenKey.DETAIL_PRACTITIONER, { idPractitioner: item._id });
   }, [item]);
+
+  
 
   return (
     <TouchableOpacity
@@ -51,10 +55,10 @@ export default function PractitionerItem({ item }: Props) {
             </TouchableOpacity>
           </Row>
 
-          <Row top={2} gap={8}>
-            <CountStar2 rating={4} size={10} />
+          <Row marginTop={2} gap={8}>
+            <CountStar2 count={item?.reviewCount}  rating={5} size={10} />
             <Text size={10}>|</Text>
-            <Row gap={4} top={2}>
+            <Row gap={4} marginTop={2}>
               <Icon name="account-multiple" size={14} color="grey" />
               <Text size={10}>({item?.countPartner})</Text>
             </Row>
@@ -67,8 +71,8 @@ export default function PractitionerItem({ item }: Props) {
             </Text>
           </Row>
           {item?.practitionerFileArr?.length > 0 && (
-            <Row top={8} flexWrap={"wrap"} gap={4} bottom={8}>
-              {item.practitionerFileArr.map((item, i) => (
+            <Row marginTop={8} flexWrap={"wrap"} gap={4} bottom={8}>
+              {item?.practitionerFileArr.map((item, i) => (
                 <Certificate
                   key={item._id}
                   item={item}
@@ -80,7 +84,7 @@ export default function PractitionerItem({ item }: Props) {
         </View>
       </Row>
       {item?.practitionerServices?.length > 0 && (
-        <HorizontalServices items={item?.practitionerServices} />
+        <HorizontalServices items={item.practitionerServices} />
       )}
     </TouchableOpacity>
   );

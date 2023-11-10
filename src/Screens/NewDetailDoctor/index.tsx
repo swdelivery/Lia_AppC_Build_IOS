@@ -26,6 +26,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getDoctorDetailsState } from "@Redux/doctor/selectors";
 import { getDoctorDetails } from "@Redux/doctor/actions";
 import ListBottonService from "@Screens/NewDetailService/Components/ListBottonService";
+import Screen from "@Components/Screen";
+import { WHITE } from "@Constant/Color";
 
 type ScreenK = typeof ScreenKey.DETAIL_DOCTOR;
 
@@ -45,37 +47,44 @@ const DetailDoctor = (props) => {
     onScroll: (event, ctx) => {
       scrollY.value = event.contentOffset.y;
     },
-    onBeginDrag: (e) => {},
+    onBeginDrag: (e) => { },
   });
 
-  return (
-    <ImageBackground
-      style={styles.container}
-      source={require("../../Image/bgGreen.png")}
-    >
-      <Header scrollY={scrollY} doctor={data} />
-      <Animated.ScrollView scrollEventThrottle={16} onScroll={scrollHandler}>
-        <LinearGradient
-          style={styles.gradientBg}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 0, y: 1 }}
-          colors={["rgba(255,255,255,0.1)", "#F6F8F8"]}
-        ></LinearGradient>
-        <View style={styles.content}>
-          <View style={styles.bg} />
-          <Banner />
-        </View>
-        <View style={styles.info}>
-          <OverViewBranch branch={data?.branch} />
-          <MainInfoDoctor />
-          <Feedback doctor={data} />
-          <QuestionVideo doctor={data} />
-          <ListBottonService />
-        </View>
-      </Animated.ScrollView>
+  console.log({ xaxax: data });
 
-      <BottomAction doctor={data} />
-    </ImageBackground>
+
+  return (
+    <Screen safeBottom>
+      <ImageBackground
+        style={styles.container}
+        source={require("../../Image/bgGreen.png")}
+      >
+        <Header scrollY={scrollY} doctor={data} />
+        <Animated.ScrollView scrollEventThrottle={16} onScroll={scrollHandler}>
+          <LinearGradient
+            style={styles.gradientBg}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 0, y: 1 }}
+            colors={["rgba(255,255,255,0.1)", "#F6F8F8"]}
+          ></LinearGradient>
+          <View style={styles.content}>
+            <View style={styles.bg} />
+            <Banner />
+          </View>
+          <View style={styles.info}>
+            <OverViewBranch branch={data?.branch} />
+            <MainInfoDoctor />
+            <Feedback doctor={data} />
+            <QuestionVideo doctor={data} />
+            <ListBottonService />
+            <View style={{ height: 100, backgroundColor: WHITE }} />
+
+          </View>
+        </Animated.ScrollView>
+
+        <BottomAction doctor={data} />
+      </ImageBackground>
+    </Screen>
   );
 };
 

@@ -47,5 +47,5 @@ export default function HorizontalDoctors({
 }
 
 const styles = StyleSheet.create({
-  contentContainer: { paddingHorizontal: 8, gap: 8 },
+  contentContainer: { paddingHorizontal: 8*2, gap: 8 },
 });

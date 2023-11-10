@@ -36,8 +36,8 @@ const OverViewBranch = ({ branch }: Props) => {
         <View style={styleElement.flex}>
           <Text style={styles.name}>{branch?.name}</Text>
           <CountStar2
-            count={branch?.countPartner}
-            rating={branch?.reviewCount}
+            rating={5}
+            count={branch?.reviewCount}
           />
           {branch?.branchFileArr && (
             <Row flexWrap="wrap">

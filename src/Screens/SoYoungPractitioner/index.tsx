@@ -1,6 +1,6 @@
 import React, { memo, useEffect, useState } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { _width } from "../../Constant/Scale";
+import { _height, _width } from "../../Constant/Scale";
 import { navigation } from "../../../rootNavigation";
 import ScreenKey from "../../Navigation/ScreenKey";
 import { getAllDoctorv2, getAllPractitioner } from "../../Redux/Action/DoctorAction";
@@ -28,11 +28,19 @@ const SoYoungPractitioner = memo(() => {
 
 
   return (
-    <View style={styles.container}>
-      {listPractitioner?.map((item, index) => {
-        return <PractitionerItem key={item._id} item={item} />;
-      })}
-    </View>
+    <>
+      {
+        listPractitioner?.length > 0 ?
+          <View style={styles.container}>
+            {listPractitioner?.map((item, index) => {
+              return <PractitionerItem key={item._id} item={item} />;
+            })}
+          </View>
+          :
+          <View style={{height:_height}}/>
+      }
+
+    </>
   );
 });
 

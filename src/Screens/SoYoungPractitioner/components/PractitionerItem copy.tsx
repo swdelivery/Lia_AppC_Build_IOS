@@ -21,17 +21,14 @@ type Props = {
   item: Doctor;
 };
 
-export default function DoctorItem({ item }: Props) {
+export default function PractitionerItem({ item }: Props) {
   const { navigation } = useNavigate();
   const dispatch = useDispatch();
 
   const handleItemPress = useCallback(() => {
-
     dispatch(selectDoctor(item));
-    navigation.navigate(ScreenKey.DETAIL_DOCTOR, { idDoctor: item._id });
+    navigation.navigate(ScreenKey.DETAIL_PRACTITIONER, { idPractitioner: item._id });
   }, [item]);
-
-  
 
   return (
     <TouchableOpacity
@@ -54,10 +51,10 @@ export default function DoctorItem({ item }: Props) {
             </TouchableOpacity>
           </Row>
 
-          <Row marginTop={2} gap={8}>
+          <Row top={2} gap={8}>
             <CountStar2 rating={4} size={10} />
             <Text size={10}>|</Text>
-            <Row gap={4} marginTop={2}>
+            <Row gap={4} top={2}>
               <Icon name="account-multiple" size={14} color="grey" />
               <Text size={10}>({item?.countPartner})</Text>
             </Row>
@@ -69,9 +66,9 @@ export default function DoctorItem({ item }: Props) {
               {item?.branch?.name}
             </Text>
           </Row>
-          {item?.treatmentDoctorFileArr.length > 0 && (
-            <Row marginTop={8} flexWrap={"wrap"} gap={4} bottom={8}>
-              {item.treatmentDoctorFileArr.map((item, i) => (
+          {item?.practitionerFileArr?.length > 0 && (
+            <Row top={8} flexWrap={"wrap"} gap={4} bottom={8}>
+              {item.practitionerFileArr.map((item, i) => (
                 <Certificate
                   key={item._id}
                   item={item}
@@ -82,8 +79,8 @@ export default function DoctorItem({ item }: Props) {
           )}
         </View>
       </Row>
-      {item.doctorServices.length > 0 && (
-        <HorizontalServices items={item.doctorServices} />
+      {item?.practitionerServices?.length > 0 && (
+        <HorizontalServices items={item?.practitionerServices} />
       )}
     </TouchableOpacity>
   );

@@ -41,7 +41,7 @@ const Material = () => {
           </Text>
         </View>
 
-        <Column gap={8} left={8} right={8}>
+        <Column style={{paddingHorizontal:_moderateScale(8)}} gap={8} left={0} right={8}>
           {
             dataService?.materialArr?.map((item, index) => {
               return (
