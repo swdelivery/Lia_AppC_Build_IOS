@@ -4,4 +4,5 @@ export type Condition =
     }
   | {
       like: string;
-    };
+    }
+  | { in: string };

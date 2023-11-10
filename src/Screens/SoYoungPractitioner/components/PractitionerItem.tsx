@@ -9,9 +9,8 @@ import { RED } from "@Constant/Color";
 import { _width } from "@Constant/Scale";
 import { styleElement } from "@Constant/StyleElement";
 import ScreenKey from "@Navigation/ScreenKey";
-import { selectDoctor } from "@Redux/doctor/actions";
 import { selectPractitioner } from "@Redux/practitioner/actions";
-import { Doctor } from "@typings/doctor";
+import { Practitioner } from "@typings/practitioner";
 import React, { useCallback } from "react";
 import { View, StyleSheet } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -19,7 +18,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "src/Hooks/useNavigation";
 
 type Props = {
-  item: Doctor;
+  item: Practitioner;
 };
 
 export default function DoctorItem({ item }: Props) {
@@ -27,12 +26,11 @@ export default function DoctorItem({ item }: Props) {
   const dispatch = useDispatch();
 
   const handleItemPress = useCallback(() => {
-
     dispatch(selectPractitioner(item));
-    navigation.navigate(ScreenKey.DETAIL_PRACTITIONER, { idPractitioner: item._id });
+    navigation.navigate(ScreenKey.DETAIL_PRACTITIONER, {
+      idPractitioner: item._id,
+    });
   }, [item]);
-
-  
 
   return (
     <TouchableOpacity
@@ -56,7 +54,7 @@ export default function DoctorItem({ item }: Props) {
           </Row>
 
           <Row marginTop={2} gap={8}>
-            <CountStar2 count={item?.reviewCount}  rating={5} size={10} />
+            <CountStar2 count={item?.reviewCount} rating={5} size={10} />
             <Text size={10}>|</Text>
             <Row gap={4} marginTop={2}>
               <Icon name="account-multiple" size={14} color="grey" />
@@ -71,7 +69,7 @@ export default function DoctorItem({ item }: Props) {
             </Text>
           </Row>
           {item?.practitionerFileArr?.length > 0 && (
-            <Row marginTop={8} flexWrap={"wrap"} gap={4} bottom={8}>
+            <Row marginTop={4} flexWrap={"wrap"} gap={4} marginBottom={8}>
               {item?.practitionerFileArr.map((item, i) => (
                 <Certificate
                   key={item._id}

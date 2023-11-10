@@ -1,30 +1,35 @@
 import _isEmpty from 'lodash/isEmpty';
-import React, { useEffect, useRef, useState, memo } from 'react';
-import { Animated, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View, ImageBackground, Platform, Linking, ActivityIndicator, StatusBar } from 'react-native';
-import ImageView from "react-native-image-viewing";
-import LinearGradient from 'react-native-linear-gradient';
+import React, { useEffect, useState, memo } from "react";
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  ActivityIndicator,
+  StatusBar,
+} from "react-native";
 import { useSelector } from 'react-redux';
 import { navigation } from '../../../rootNavigation';
-import FastImage from '../../Components/Image/FastImage';
-import { BASE_COLOR, BG_GREY_OPACITY_2, BG_GREY_OPACITY_3, BG_GREY_OPACITY_9, BLACK, BLACK_OPACITY_8, BLUE_FB, BTN_PRICE, GREY, GREY_FOR_TITLE, SECOND_COLOR, THIRD_COLOR, WHITE, BG_MAIN_OPACITY, MAIN_BG, BG_GREY_OPACITY_7, BLACK_OPACITY_7, GREEN_SUCCESS, RED, BLUE, BG_GREY_OPACITY_5 } from '../../Constant/Color';
+import {
+  BASE_COLOR,
+  BG_GREY_OPACITY_2,
+  BG_GREY_OPACITY_3,
+  BLACK,
+  BLACK_OPACITY_8,
+  BLUE_FB,
+  GREY,
+  THIRD_COLOR,
+  WHITE,
+  BLACK_OPACITY_7,
+  BG_GREY_OPACITY_5,
+} from "../../Constant/Color";
 import { stylesFont } from '../../Constant/Font';
-import { sizeIcon, sizeLogo } from '../../Constant/Icon';
+import { sizeIcon } from "../../Constant/Icon";
 import { _heightScale, _moderateScale, _widthScale } from '../../Constant/Scale';
 import { styleElement } from '../../Constant/StyleElement';
-import { URL_AVATAR_DEFAULT, URL_ORIGINAL } from '../../Constant/Url';
-import { getBranchById, getBranchReviewByCode } from '../../Redux/Action/BranchAction';
-import { formatMonney } from '../../Constant/Utils';
-import { BOOKING_FOR_BRANCH, BOOKING_MAIN } from '../../Navigation/ScreenKey';
-import StatusBarCustom from '../../Components/StatusBar/StatusBarCustom';
-import { getStatusBarHeight, getBottomSpace } from 'react-native-iphone-x-helper';
-import CountStar from '../../Components/CountStar/index';
-import BottomBtn from '../../Components/BottomBtn/BottomBtn';
-import ScreenKey from '../../Navigation/ScreenKey'
-import store from "../../Redux/store";
-import * as ActionType from '../../Redux/Constants/ActionType'
-import moment from 'moment'
-import { FROM_GROUP_CHAT_ID } from '../../Constant/Flag';
-import { getDoctorReviewByCode } from '../../Redux/Action/DoctorAction';
+import { getBottomSpace } from "react-native-iphone-x-helper";
 import { getServiceReviewByCodev2 } from '../../Redux/Action/Service';
 import ReviewItem from '@Components/ReviewItem';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';

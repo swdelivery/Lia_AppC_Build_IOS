@@ -1,5 +1,5 @@
 import { Alert, Image, StyleSheet, TouchableOpacity, View } from "react-native";
-import React, { memo } from "react";
+import React, { memo, useMemo } from "react";
 import { _moderateScale, _width } from "../../../Constant/Scale";
 import { getBottomSpace } from "react-native-iphone-x-helper";
 import { navigation } from "rootNavigation";
@@ -10,11 +10,15 @@ import { Doctor } from "@typings/doctor";
 import Text from "@Components/Text";
 import useRequireLoginCallback from "src/Hooks/useRequireLoginAction";
 import Row from "@Components/Row";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import Column from "@Components/Column";
 
 type Props = {
   doctor: Doctor;
 };
 const BottomAction = ({ doctor }: Props) => {
+  const { bottom } = useSafeAreaInsets();
+
   const handleBooking = useRequireLoginCallback(() => {
     navigation.navigate(ScreenKey.CREATE_BOOKING, {
       choiceDoctor: doctor,
@@ -34,7 +38,7 @@ const BottomAction = ({ doctor }: Props) => {
   }, []);
 
   return (
-    <View style={styles.container}>
+    <Column style={styles.container} paddingBottom={bottom}>
       <View
         style={{
           width: _width,
@@ -67,7 +71,7 @@ const BottomAction = ({ doctor }: Props) => {
           </TouchableOpacity>
         </Row>
       </View>
-    </View>
+    </Column>
   );
 };
 

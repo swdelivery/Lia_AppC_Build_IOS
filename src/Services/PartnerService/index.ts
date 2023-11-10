@@ -6,6 +6,7 @@ import {
   GetDiaryPayload,
   GetDoctorListPayload,
   GetReviewsPayload,
+  GetServiceByGroupsPayload,
 } from "./types";
 import { Doctor } from "@typings/doctor";
 import { Practitioner } from "@typings/practitioner";
@@ -35,7 +36,7 @@ const getServices = (
 };
 
 const getServicesByGroups = (
-  payload: any,
+  payload: GetServiceByGroupsPayload,
   page = 1,
   pageSize = configs.apiPageSize
 ) => {
@@ -89,47 +90,53 @@ const getDoctorList = (
 const getDoctorDetails = (doctorId: string): Promise<Doctor> =>
   axios.get(`treatment-doctor/${doctorId}`).then(({ data }) => data.data);
 
-const getPractitionerDetails = (practitionerId: string): Promise<Practitioner> =>
-  axios.get(`practitioner/${practitionerId}`).then(({ data }) => data.data);
+  const getPractitioners = () =>
+    axios.get("practitioner").then(({ data }) => data.data);
 
-const getReview = (
-  payload: GetReviewsPayload,
-  page = 1,
-  pageSize = configs.apiPageSize
-) => {
-  const params = encodeParams({
-    ...payload,
-    limit: pageSize,
-    page,
-  });
-  return axios.get(`/review?${params}`).then(({ data }) => data);
-};
+  const getPractitionerDetails = (
+    practitionerId: string
+  ): Promise<Practitioner> =>
+    axios.get(`practitioner/${practitionerId}`).then(({ data }) => data.data);
 
-const getDiary = (
-  payload: GetDiaryPayload,
-  page = 1,
-  pageSize = configs.apiPageSize
-) => {
-  const params = encodeParams({
-    ...payload,
-    limit: pageSize,
-    page,
-  });
-  return axios
-    .get(`/partner-diary/shared?${params}`)
-    .then(({ data }) => data.data);
-};
+  const getReview = (
+    payload: GetReviewsPayload,
+    page = 1,
+    pageSize = configs.apiPageSize
+  ) => {
+    const params = encodeParams({
+      ...payload,
+      limit: pageSize,
+      page,
+    });
+    return axios.get(`/review?${params}`).then(({ data }) => data);
+  };
 
-export default {
-  getServiceGroup,
-  getServices,
-  getServicesByGroups,
-  getServiceDetails,
-  getBranchList,
-  getBranchById,
-  getDoctorList,
-  getDoctorDetails,
-  getPractitionerDetails,
-  getReview,
-  getDiary,
-};
+  const getDiary = (
+    payload: GetDiaryPayload,
+    page = 1,
+    pageSize = configs.apiPageSize
+  ) => {
+    const params = encodeParams({
+      ...payload,
+      limit: pageSize,
+      page,
+    });
+    return axios
+      .get(`/partner-diary/shared?${params}`)
+      .then(({ data }) => data.data);
+  };
+
+  export default {
+    getServiceGroup,
+    getServices,
+    getServicesByGroups,
+    getServiceDetails,
+    getBranchList,
+    getBranchById,
+    getDoctorList,
+    getDoctorDetails,
+    getPractitioners,
+    getPractitionerDetails,
+    getReview,
+    getDiary,
+  };

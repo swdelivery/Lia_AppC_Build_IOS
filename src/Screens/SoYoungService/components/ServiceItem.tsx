@@ -23,11 +23,8 @@ type Props = {
 };
 
 export default function ServiceItem({ item }: Props) {
-  const { navigate } = useNavigate();
-  const { navigation } = useNavigate();
-
   const dispatch = useDispatch();
-
+  const { navigation } = useNavigate();
 
   const _handleGoDetailService = useCallback(() => {
     dispatch(selectService(item));

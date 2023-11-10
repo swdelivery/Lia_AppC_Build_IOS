@@ -16,3 +16,7 @@ export type GetDiaryPayload = {
   doctorId?: Condition;
   practitionerId?: Condition;
 };
+
+export type GetServiceByGroupsPayload = {
+  codeGroup: Condition;
+};

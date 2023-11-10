@@ -28,6 +28,7 @@ import { getDoctorDetails } from "@Redux/doctor/actions";
 import ListBottonService from "@Screens/NewDetailService/Components/ListBottonService";
 import Screen from "@Components/Screen";
 import { WHITE } from "@Constant/Color";
+import StickyBackground from "@Components/StickyBackground";
 
 type ScreenK = typeof ScreenKey.DETAIL_DOCTOR;
 
@@ -47,20 +48,18 @@ const DetailDoctor = (props) => {
     onScroll: (event, ctx) => {
       scrollY.value = event.contentOffset.y;
     },
-    onBeginDrag: (e) => { },
+    onBeginDrag: (e) => {},
   });
 
-  console.log({ xaxax: data });
-
-
   return (
-    <Screen safeBottom>
+    <Screen>
       <ImageBackground
         style={styles.container}
         source={require("../../Image/bgGreen.png")}
       >
         <Header scrollY={scrollY} doctor={data} />
         <Animated.ScrollView scrollEventThrottle={16} onScroll={scrollHandler}>
+          <StickyBackground position="bottom" backgroundColor="white" />
           <LinearGradient
             style={styles.gradientBg}
             start={{ x: 0, y: 0 }}
@@ -78,7 +77,6 @@ const DetailDoctor = (props) => {
             <QuestionVideo doctor={data} />
             <ListBottonService />
             <View style={{ height: 100, backgroundColor: WHITE }} />
-
           </View>
         </Animated.ScrollView>
 

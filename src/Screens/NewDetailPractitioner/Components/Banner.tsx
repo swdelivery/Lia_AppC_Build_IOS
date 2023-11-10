@@ -3,39 +3,20 @@ import React, { useEffect, useState } from "react";
 import { _moderateScale, _width, _widthScale } from "../../../Constant/Scale";
 import CountStar2 from "../../../Components/NewCountStar/CountStar";
 import Certificate from "../../../Components/Certificate/Certificate";
-import { URL_ORIGINAL } from "@Constant/Url";
-import ImageView from "react-native-image-viewing";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  getDoctorDetailsState,
-  getDoctorDiariesState,
-} from "@Redux/doctor/selectors";
+import { useSelector } from "react-redux";
 import Avatar from "@Components/Avatar";
 import Text from "@Components/Text";
 import Row from "@Components/Row";
 import Column from "@Components/Column";
 import HorizontalServices from "@Components/HorizontalServices";
 import Spacer from "@Components/Spacer";
-import PartnerDiary from "@Components/PartnerDiary";
-import { getDoctorDiaries } from "@Redux/doctor/actions";
 import { getPractitionerDetailsState } from "@Redux/practitioner/selectors";
 
 const Banner = () => {
-  const dispatch = useDispatch();
   const { data } = useSelector(getPractitionerDetailsState);
-
-  const [showImageViewing, setShowImageViewing] = useState(false);
-  const [indexCurrImageView, setIndexCurrImageView] = useState(0);
-
-  // const { data: diaries } = useSelector(getDoctorDiariesState);
-
-  useEffect(() => {
-    // dispatch(getDoctorDiaries.request(data._id));
-  }, [data._id]);
 
   return (
     <View style={[styles.banner, shadow]}>
-
       <View style={styles.avatarContainer}>
         <Avatar size={72} circle avatar={data.avatar} style={styles.avatar} />
       </View>
@@ -43,7 +24,7 @@ const Banner = () => {
       <Spacer top={50} />
       <Column alignItems={"center"}>
         <Text weight="bold">{data?.name}</Text>
-        <CountStar2 rating={5} count={data?.reviewCount} rating={data?.averageRating} />
+        <CountStar2 count={data?.reviewCount} rating={data?.averageRating} />
         <Text>
           {data?.position} <Text color="grey">{` | `}</Text> {data?.experience}
         </Text>

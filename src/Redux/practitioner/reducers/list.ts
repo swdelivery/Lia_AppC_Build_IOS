@@ -1,12 +1,12 @@
 import { createReducer } from "@Redux/helper";
 import { Handler, PagingInfo } from "@Redux/types";
 import { GET_PRACTITIONER_LIST, LOAD_MORE_PRACTITIONER_LIST } from "../types";
-import { Doctor } from "@typings/doctor";
+import { Practitioner } from "@typings/practitioner";
 
 export type State = {
   isLoading: boolean;
   isLoadingMore: boolean;
-  data: Doctor[];
+  data: Practitioner[];
   total: number;
   paging?: PagingInfo;
 };

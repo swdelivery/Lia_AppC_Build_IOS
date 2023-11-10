@@ -1,4 +1,4 @@
-import { StyleSheet, View, Image, TouchableOpacity } from "react-native";
+import { StyleSheet, View, TouchableOpacity } from "react-native";
 import React from "react";
 import {
   _heightScale,
@@ -14,6 +14,7 @@ import { URL_ORIGINAL } from "@Constant/Url";
 import LinearGradient from "react-native-linear-gradient";
 import Column from "@Components/Column";
 import { IconPlayWhite } from "@Components/Icon/Icon";
+import Image from "@Components/Image";
 
 type Props = {
   doctor: Doctor;
@@ -53,24 +54,37 @@ const QuestionVideo = ({ doctor }: Props) => {
                 }}
               >
                 <LinearGradient
-                  style={[StyleSheet.absoluteFillObject, { justifyContent: 'flex-end', zIndex: 1, borderRadius: _moderateScale(8) }]}
+                  style={[
+                    StyleSheet.absoluteFillObject,
+                    {
+                      justifyContent: "flex-end",
+                      zIndex: 1,
+                      borderRadius: _moderateScale(8),
+                    },
+                  ]}
                   start={{ x: 0, y: 0 }}
                   end={{ x: 0, y: 1 }}
                   colors={["transparent", "#000"]}
                 >
-                  <View style={{
-                    position:'absolute',
-                    top:"45%",
-                    alignSelf:'center',
-                    opacity:.5
-                  }}>
+                  <View
+                    style={{
+                      position: "absolute",
+                      top: "45%",
+                      alignSelf: "center",
+                      opacity: 0.5,
+                    }}
+                  >
                     <IconPlayWhite />
                   </View>
 
                   <View style={{ margin: 8 * 2 }}>
                     <Column gap={8}>
-                      <Text weight="bold" color={'white'}>{item?.name}</Text>
-                      <Text numberOfLines={3} color={'white'}>{item?.description}</Text>
+                      <Text weight="bold" color={"white"}>
+                        {item?.name}
+                      </Text>
+                      <Text numberOfLines={3} color={"white"}>
+                        {item?.description}
+                      </Text>
                     </Column>
                   </View>
                 </LinearGradient>
@@ -81,7 +95,7 @@ const QuestionVideo = ({ doctor }: Props) => {
                     height: "100%",
                     borderRadius: _moderateScale(8),
                   }}
-                  source={{ uri: `${URL_ORIGINAL}${item?.avatar?.link}` }}
+                  avatar={item?.avatar}
                 />
               </View>
             </TouchableOpacity>

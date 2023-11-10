@@ -1,5 +1,5 @@
 import { ImageBackground, StyleSheet, View } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
   _heightScale,
   _moderateScale,
@@ -10,21 +10,16 @@ import LinearGradient from "react-native-linear-gradient";
 import Banner from "./Components/Banner";
 import OverViewBranch from "./Components/OverViewBranch";
 import MainInfoDoctor from "./Components/MainInfoDoctor";
-import Feedback from "./Components/Feedback";
 import QuestionVideo from "./Components/QuestionVideo";
 import Animated, {
   useAnimatedScrollHandler,
   useSharedValue,
 } from "react-native-reanimated";
 import BottomAction from "./Components/BottomAction";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { getDetailPractitioner, getDoctorReviewByCode } from "@Redux/Action/DoctorAction";
 import Header from "./Components/Header";
 import ScreenKey from "@Navigation/ScreenKey";
 import { useNavigationParams } from "src/Hooks/useNavigation";
 import { useDispatch, useSelector } from "react-redux";
-import { getDoctorDetailsState } from "@Redux/doctor/selectors";
-import { getDoctorDetails } from "@Redux/doctor/actions";
 import ListBottonService from "@Screens/NewDetailService/Components/ListBottonService";
 import { getPractitionerDetails } from "@Redux/practitioner/actions";
 import { getPractitionerDetailsState } from "@Redux/practitioner/selectors";

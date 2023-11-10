@@ -30,7 +30,6 @@ const success: Handler<State> = (state, { payload }) => ({
   data: payload,
 });
 
-
 const selectService: Handler<State> = (state, { payload }) => ({
   ...state,
   data: payload,

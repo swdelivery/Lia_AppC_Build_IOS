@@ -1,45 +1,30 @@
-import React, { memo, useEffect, useState } from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import React, { memo, useEffect } from "react";
+import { StyleSheet, View } from "react-native";
 import { _height, _width } from "../../Constant/Scale";
-import { navigation } from "../../../rootNavigation";
-import ScreenKey from "../../Navigation/ScreenKey";
-import { getAllDoctorv2, getAllPractitioner } from "../../Redux/Action/DoctorAction";
-import { URL_ORIGINAL } from "../../Constant/Url";
-import { ScrollView } from "react-native-gesture-handler";
 import PractitionerItem from "./components/PractitionerItem";
+import { useDispatch, useSelector } from "react-redux";
+import { getPractitionerList } from "@Redux/practitioner/actions";
+import { getPractitionerListState } from "@Redux/practitioner/selectors";
 
 const SoYoungPractitioner = memo(() => {
-  const [listPractitioner, setListPractitioner] = useState([]);
+  const dispatch = useDispatch();
+  const { data } = useSelector(getPractitionerListState);
 
   useEffect(() => {
-    _getListDoctor();
+    dispatch(getPractitionerList.request());
   }, []);
-  const _getListDoctor = async () => {
-    let result = await getAllPractitioner({
-      sort: {
-        orderNumber: -1,
-      },
-      limit: 8,
-      page: 1,
-    });
-    if (result?.isAxiosError) return;
-    setListPractitioner(result?.data?.data);
-  };
-
 
   return (
     <>
-      {
-        listPractitioner?.length > 0 ?
-          <View style={styles.container}>
-            {listPractitioner?.map((item, index) => {
-              return <PractitionerItem key={item._id} item={item} />;
-            })}
-          </View>
-          :
-          <View style={{height:_height}}/>
-      }
-
+      {data?.length > 0 ? (
+        <View style={styles.container}>
+          {data?.map((item, index) => {
+            return <PractitionerItem key={item._id} item={item} />;
+          })}
+        </View>
+      ) : (
+        <View style={{ height: _height }} />
+      )}
     </>
   );
 });
@@ -78,5 +63,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8 * 1,
     backgroundColor: "#F5F9FA",
     paddingBottom: 30,
+    minHeight: _height,
   },
 });

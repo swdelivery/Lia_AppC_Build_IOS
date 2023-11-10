@@ -10,7 +10,10 @@ export const GET_SERVICE_REVIEWS = generateActionTypes("@service/get-reviews");
 
 export const SELECT_SERVICE = "@service/select-service";
 
-
 export type GetServiceReviewsParams = {
-    serviceCode: string;
-  };
+  serviceCode: string;
+};
+
+export type GetServiceByGroupParams = {
+  codeGroup: string;
+};

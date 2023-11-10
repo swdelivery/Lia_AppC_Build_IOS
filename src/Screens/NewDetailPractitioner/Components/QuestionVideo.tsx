@@ -7,16 +7,16 @@ import {
   _widthScale,
 } from "../../../Constant/Scale";
 import ScreenKey from "@Navigation/ScreenKey";
-import { Doctor } from "@typings/doctor";
 import Text from "@Components/Text";
 import { useNavigate } from "src/Hooks/useNavigation";
 import { URL_ORIGINAL } from "@Constant/Url";
 import LinearGradient from "react-native-linear-gradient";
 import Column from "@Components/Column";
 import { IconPlayWhite } from "@Components/Icon/Icon";
+import { Practitioner } from "@typings/practitioner";
 
 type Props = {
-  doctor: Doctor;
+  doctor: Practitioner;
 };
 
 const QuestionVideo = ({ doctor }: Props) => {

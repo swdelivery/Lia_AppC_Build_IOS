@@ -9,21 +9,41 @@ import {
 } from "./types";
 import * as actions from "./actions";
 import PartnerService from "src/Services/PartnerService";
-import { Practitioner } from "@typings/practitioner";
-import configs from "src/configs";
 import { BaseAction } from "@Redux/types";
+import configs from "src/configs";
 
+function* getPractitionerList() {
+  try {
+    const data = yield call(PartnerService.getPractitioners);
+    yield put(
+      actions.getPractitionerList.success({
+        data,
+        paging: {
+          canLoadMore: data.length === configs.apiPageSize,
+          page: 1,
+        },
+      })
+    );
+  } catch (error: any) {
+    yield put(actions.getPractitionerList.failure(error.message));
+  }
+}
 
 function* getPractitionerDetails({ payload }: BaseAction<string>) {
   try {
-    const practitioner = yield call(PartnerService.getPractitionerDetails, payload);
+    const practitioner = yield call(
+      PartnerService.getPractitionerDetails,
+      payload
+    );
     yield put(actions.getPractitionerDetails.success(practitioner));
   } catch (error: any) {
     yield put(actions.getPractitionerDetails.failure(error.message));
   }
 }
 
-function* getPractitionerDiaries({ payload }: BaseAction<GetPractitionerDiariesParams>) {
+function* getPractitionerDiaries({
+  payload,
+}: BaseAction<GetPractitionerDiariesParams>) {
   try {
     const data = yield call(PartnerService.getDiary, {
       practitionerId: {
@@ -36,7 +56,9 @@ function* getPractitionerDiaries({ payload }: BaseAction<GetPractitionerDiariesP
   }
 }
 
-function* getPractitionerReviews({ payload }: BaseAction<GetPractitionerReviewsParams>) {
+function* getPractitionerReviews({
+  payload,
+}: BaseAction<GetPractitionerReviewsParams>) {
   try {
     const data = yield call(PartnerService.getReview, {
       practitionerCode: {
@@ -51,7 +73,7 @@ function* getPractitionerReviews({ payload }: BaseAction<GetPractitionerReviewsP
 
 export default function* sagas() {
   yield all([
-    // takeLatest(GET_PRACTITIONER_LIST.REQUEST, getDoctorList),
+    takeLatest(GET_PRACTITIONER_LIST.REQUEST, getPractitionerList),
     takeLatest(GET_PRACTITIONER_DETAILS.REQUEST, getPractitionerDetails),
     takeLatest(GET_PRACTITIONER_DIARIES.REQUEST, getPractitionerDiaries),
     takeLatest(GET_PRACTITIONER_REVIEWS.REQUEST, getPractitionerReviews),

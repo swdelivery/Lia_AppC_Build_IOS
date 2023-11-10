@@ -1,5 +1,12 @@
 import { all, call, put, takeLatest } from "redux-saga/effects";
-import { GET_SERVICES, GET_SERVICE_DETAILS, GET_SERVICE_REVIEWS, GetServiceReviewsParams ,GET_SERVICES_BY_GROUPS} from "./types";
+import {
+  GET_SERVICES,
+  GET_SERVICE_DETAILS,
+  GET_SERVICE_REVIEWS,
+  GetServiceReviewsParams,
+  GET_SERVICES_BY_GROUPS,
+  GetServiceByGroupParams,
+} from "./types";
 import * as actions from "./actions";
 import PartnerService from "src/Services/PartnerService";
 import { BaseAction } from "@Redux/types";
@@ -13,9 +20,15 @@ function* getServices() {
   }
 }
 
-function* getServicesByGroups(payload) {
+function* getServicesByGroups({
+  payload,
+}: BaseAction<GetServiceByGroupParams>) {
   try {
-    const data = yield call(PartnerService.getServicesByGroups, payload);
+    const data = yield call(PartnerService.getServicesByGroups, {
+      codeGroup: {
+        in: payload.codeGroup,
+      },
+    });
     yield put(actions.getServicesByGroups.success(data));
   } catch (error: any) {
     yield put(actions.getServicesByGroups.failure(error.message));

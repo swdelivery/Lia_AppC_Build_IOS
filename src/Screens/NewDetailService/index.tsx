@@ -52,17 +52,12 @@ const DetailService = () => {
   }, [data?.code])
 
   useEffect(() => {
-      dispatch(
-        getServicesByGroups.request({
-          "condition": {
-            "codeGroup": {
-              "in": data?.codeGroup
-            }
-          },
-        })
-      );
-  }, [data?.codeGroup])
-
+    dispatch(
+      getServicesByGroups.request({
+        codeGroup: data?.codeGroup,
+      })
+    );
+  }, [data?.codeGroup]);
 
   return (
     <Screen safeBottom safeTop style={styles.container}>

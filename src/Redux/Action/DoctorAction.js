@@ -6,40 +6,6 @@ import { setLogStyle, useLogStyle } from './LogConfig';
 import { Platform, Alert } from 'react-native';
 
 
-export const getDetailPractitioner = (id) => {
-
-
-    return Axios.get(`${URL_FOR_PARTNER}/practitioner/${id}`)
-        .then(res => {
-            console.log(useLogStyle + '----FETCHING SUCCESS: ', setLogStyle('green'), { getDetailPractitioner: res });
-            return res
-        })
-        .catch(err => {
-            console.log(useLogStyle + '----FETCHING FAIL: ', setLogStyle('red'), { getDetailPractitioner: err });
-            _checkError(err)
-            return err
-        })
-}
-
-export const getAllPractitioner = (params) => {
-
-    var esc = encodeURIComponent;
-    var query = Object.keys(params)
-        .map(k => esc(k) + '=' + esc(JSON.stringify(params[k])))
-        .join('&');
-
-    return Axios.get(`${URL_FOR_PARTNER}/practitioner?${query}`)
-        .then(res => {
-            console.log(useLogStyle + '----FETCHING SUCCESS: ', setLogStyle('green'), { getAllPractitioner: res });
-            return res
-        })
-        .catch(err => {
-            console.log(useLogStyle + '----FETCHING FAIL: ', setLogStyle('red'), { getAllPractitioner: err });
-            _checkError(err)
-            return err
-        })
-}
-
 export const getAllDoctorv2 = (params) => {
 
     var esc = encodeURIComponent;

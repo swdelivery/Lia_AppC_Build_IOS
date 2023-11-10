@@ -1,52 +1,51 @@
-import React, { memo, useEffect, useState } from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import React, { useEffect } from "react";
+import { StyleSheet } from "react-native";
 import { _height, _width } from "../../Constant/Scale";
-import { navigation } from "../../../rootNavigation";
-import ScreenKey from "../../Navigation/ScreenKey";
-import { getAllDoctorv2 } from "../../Redux/Action/DoctorAction";
-import { URL_ORIGINAL } from "../../Constant/Url";
-import { ScrollView } from "react-native-gesture-handler";
-import DoctorItem from "./components/DoctorItem";
+import DoctorItem, {
+  Placeholder,
+  PLACEHOLDER_HEIGHT,
+} from "./components/DoctorItem";
+import PlaceholderSkeletons from "@Components/PlaceholderSkeletons";
+import useListFilter from "src/Hooks/useListFilter";
+import { getDoctorListState } from "@Redux/doctor/selectors";
+import { getDoctorList, loadMoreDoctorList } from "@Redux/doctor/actions";
+import ListEmpty from "@Components/ListEmpty";
+import { FlatList } from "react-native-gesture-handler";
+import { RenderItemProps } from "@typings/common";
 
-const SoYoungDoctor = memo(() => {
-  const [listDoctor, setListDoctor] = useState([]);
+const SoYoungDoctor = () => {
+  const { data, isLoading, getData } = useListFilter(
+    getDoctorListState,
+    getDoctorList,
+    loadMoreDoctorList
+  );
 
   useEffect(() => {
-    _getListDoctor();
-    // _startAnimation()
+    getData();
   }, []);
-  const _getListDoctor = async () => {
-    let result = await getAllDoctorv2({
-      sort: {
-        orderNumber: -1,
-      },
-      limit: 8,
-      page: 1,
-    });
-    if (result?.isAxiosError) return;
-    setListDoctor(result?.data?.data);
-  };
 
-  const _renderItem = () => {
-    return <View style={styles.card}></View>;
-  };
+  function renderItem({ item }: RenderItemProps<any>) {
+    return <DoctorItem item={item} />;
+  }
 
   return (
-    <>
-      {
-        listDoctor?.length > 0 ?
-          <View style={styles.container}>
-            {listDoctor?.map((item, index) => {
-              return <DoctorItem key={item._id} item={item} />;
-            })}
-          </View>
-          :
-          <View style={{ height: _height }} />
+    <FlatList
+      contentContainerStyle={styles.container}
+      scrollEnabled={false}
+      data={data}
+      renderItem={renderItem}
+      ListEmptyComponent={
+        isLoading ? (
+          <PlaceholderSkeletons count={5} itemHeight={PLACEHOLDER_HEIGHT}>
+            <Placeholder />
+          </PlaceholderSkeletons>
+        ) : (
+          <ListEmpty isLoading={isLoading} title="Không tìm thấy phòng khám" />
+        )
       }
-
-    </>
+    />
   );
-});
+};
 
 export default SoYoungDoctor;
 
@@ -82,5 +81,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8 * 1,
     backgroundColor: "#F5F9FA",
     paddingBottom: 30,
+    minHeight: _height,
   },
 });

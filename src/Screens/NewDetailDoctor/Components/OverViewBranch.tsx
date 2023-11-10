@@ -36,7 +36,7 @@ const OverViewBranch = ({ branch }: Props) => {
         <View style={styleElement.flex}>
           <Text style={styles.name}>{branch?.name}</Text>
           <CountStar2
-            rating={5}
+            rating={branch.averageRating}
             count={branch?.reviewCount}
           />
           {branch?.branchFileArr && (
