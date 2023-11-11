@@ -1,4 +1,10 @@
-import { ColorValue, StyleSheet, TouchableOpacity, View } from "react-native";
+import {
+  ColorValue,
+  StatusBar,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import React from "react";
 import { BASE_COLOR, WHITE } from "../../../Constant/Color";
 import { _moderateScale } from "../../../Constant/Scale";
@@ -18,6 +24,7 @@ import Text from "@Components/Text";
 import { useNavigate } from "src/Hooks/useNavigation";
 import useRequireLoginCallback from "src/Hooks/useRequireLoginAction";
 import Column from "@Components/Column";
+import StatusBarCustom from "@Components/StatusBar/StatusBarCustom";
 
 type Props = {
   title: string;
@@ -41,6 +48,7 @@ const Header = ({ title, animatedPrimaryColor }: Props) => {
   return (
     <Animated.View style={[styles.header, animBG]}>
       <Spacer top={top} />
+      <StatusBar barStyle="light-content" />
       <View style={styles.header__box}>
         <View style={styleElement.flex}>
           <TouchableOpacity onPress={navigation.goBack}>
