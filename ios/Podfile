@@ -95,11 +95,6 @@ target 'LiaAppC' do
   pod 'Firebase/Messaging', :modular_headers => true
   pod 'GoogleUtilities', :modular_headers => true;
 
-  target 'LiaAppCTests' do
-    inherit! :complete
-    # Pods for testing
-  end
-
   post_install do |installer|
     # https://github.com/facebook/react-native/blob/main/packages/react-native/scripts/react_native_pods.rb#L197-L202
     react_native_post_install(
