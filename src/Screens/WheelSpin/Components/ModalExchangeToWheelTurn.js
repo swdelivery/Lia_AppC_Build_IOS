@@ -14,7 +14,7 @@ import RenderHTML from '../../../Components/RenderHTML/RenderHTML'
 import { URL_ORIGINAL } from '../../../Constant/Url'
 import { formatMonney } from '../../../Constant/Utils'
 import { getConfigData } from '../../../Redux/Action/OrtherAction'
-import { PRICE_PER_WHEEL_TURN } from '../../../Constant/CodeConfigData'
+import { PRICE_PER_WHEEL_TURN } from "../../../Constant/CodeConfig";
 import { byTurnWheel } from '../../../Redux/Action/SpinWheelAction'
 
 const ModalExchangeToWheelTurn = memo((props) => {

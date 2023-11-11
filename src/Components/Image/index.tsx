@@ -13,12 +13,13 @@ import {
 import { getImageAvataUrl } from "src/utils/avatar";
 
 type Props = {
+  auto?: boolean;
   avatar?: FileAvatar;
   style?: StyleProp<ViewStyle>;
   placeholderComponent?: React.ReactNode;
 };
 
-export default function Image({ avatar, style }: Props) {
+export default function Image({ avatar, auto, style }: Props) {
   const uri = useMemo(() => {
     return getImageAvataUrl(avatar, URL_AVATAR_DEFAULT);
   }, [avatar]);
@@ -26,6 +27,7 @@ export default function Image({ avatar, style }: Props) {
   return (
     <View style={[styles.container, style]}>
       <FastImage
+        auto={auto}
         style={StyleSheet.absoluteFillObject}
         uri={uri}
         placeholderComponent={<DefaultPlaceholder />}

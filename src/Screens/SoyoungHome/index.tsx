@@ -54,7 +54,6 @@ const STACKS = [
 ];
 
 const SoyoungHome = () => {
-  const dispatch = useDispatch();
   const scrollableTabViewRef = useRef();
   const [rootTime, setRootTime] = useState(Date.now());
   const { top } = useSafeAreaInsets();

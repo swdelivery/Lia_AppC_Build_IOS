@@ -10,6 +10,7 @@ import {
 } from "./types";
 import { Doctor } from "@typings/doctor";
 import { Practitioner } from "@typings/practitioner";
+import { ConfigFile } from "@typings/configFile";
 
 const axios = createAxios(URL_FOR_PARTNER);
 
@@ -126,6 +127,11 @@ const getDoctorDetails = (doctorId: string): Promise<Doctor> =>
       .then(({ data }) => data.data);
   };
 
+  const getConfigFileByCode = (code: string): Promise<ConfigFile> =>
+    axios
+      .get("/config-file/get-by-code?code=" + code)
+      .then(({ data }) => data.data);
+
   export default {
     getServiceGroup,
     getServices,
@@ -139,4 +145,5 @@ const getDoctorDetails = (doctorId: string): Promise<Doctor> =>
     getPractitionerDetails,
     getReview,
     getDiary,
+    getConfigFileByCode,
   };

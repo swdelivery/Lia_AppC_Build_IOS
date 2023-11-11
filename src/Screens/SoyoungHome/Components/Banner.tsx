@@ -45,29 +45,7 @@ const Banner = () => {
 
   const [isDragingBanner, setIsDragingBanner] = useState(false);
 
-  const [interval, setInterval] = useState(null);
-
   useEffect(() => {
-    // setListImage([
-    //     {
-    //         _id: '1',
-    //         url: `https://img2.soyoung.com/upload/20210924/2/9a0441f5159d66125f5252bd886c3946.jpg`
-    //     },
-    //     {
-    //         _id: '2',
-    //         url: `https://img2.soyoung.com/upload/20210924/6/642739b17effba4d31b163757e4d0114.jpg`
-    //     },
-    //     {
-    //         _id: '3',
-    //         url: `https://img2.soyoung.com/upload/20210924/4/b61733f1b5fafde858db04c7bcb04869.jpg`
-    //     },
-    //     {
-    //         _id: '4',
-    //         url: `https://img2.soyoung.com/upload/20210924/9/e4b63471060c8d9cfd934752fb3dafe8.jpg`
-    //     }
-    // ])
-    // startInterval()
-
     _getAllNews();
   }, []);
 
@@ -92,20 +70,9 @@ const Banner = () => {
 
     setListImage(listImages);
   };
-
-  const startInterval = () => {
-    const timer = window.setInterval(() => {
-      setTime((prevTime) => prevTime + 1);
-    }, 5000);
-    setInterval(timer);
-    return () => {
-      window.clearInterval(timer);
-    };
-  };
-
   useEffect(() => {
     if (time) {
-      if (isDragingBanner) return window.clearInterval(interval);
+      if (isDragingBanner) return clearInterval(interval);
       if (currIndexBanner == listImage?.length - 1) {
         FlatListRef?.current?.scrollToIndex({
           index: 0,
