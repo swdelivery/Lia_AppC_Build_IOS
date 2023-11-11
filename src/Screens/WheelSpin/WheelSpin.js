@@ -177,7 +177,7 @@ const WheelSpin = memo((props) => {
             {/* <StatusBarCustom barStyle={'light-content'} bgColor={BASE_COLOR} /> */}
 
             <ModalRulesSpinWheel
-                dataHTML={configThele}
+                dataHTML={currActiveWheel}
                 isShow={showModalRulesSpinWheel} onHideModal={() => setShowModalRulesSpinWheel(false)} />
 
             <ModalListMissions

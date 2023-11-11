@@ -83,10 +83,10 @@ const ModalRulesSpinWheel = memo((props) => {
                         <Animated.View
                             style={[{
                                 position: 'absolute',
-                                width:_width,
-                                alignItems:'center',
+                                width: _width,
+                                alignItems: 'center',
                                 right: -_width
-                            },animXModal]}>
+                            }, animXModal]}>
                             <View style={{
                                 width: _widthScale(350),
                                 height: _widthScale(550),
@@ -95,29 +95,34 @@ const ModalRulesSpinWheel = memo((props) => {
                                 paddingBottom: _moderateScale(8 * 2),
                             }}>
                                 <View style={{
-                                    alignItems:'center',
-                                    marginTop:_moderateScale(8*2),
-                                    paddingBottom:_moderateScale(8*2)
+                                    alignItems: 'center',
+                                    marginTop: _moderateScale(8 * 2),
+                                    paddingBottom: _moderateScale(8 * 2)
                                 }}>
                                     <Text style={sizeText.normal_bold}>
                                         Thể lệ vòng quay
                                     </Text>
 
                                     <TouchableOpacity
-                                    onPress={_handleHideModal}
-                                    style={{
-                                        position:'absolute',
-                                        right:_moderateScale(8*2)
-                                    }}>
-                                        <IconCancelGrey style={sizeIcon.md}/>
+                                        onPress={_handleHideModal}
+                                        style={{
+                                            position: 'absolute',
+                                            right: _moderateScale(8 * 2)
+                                        }}>
+                                        <IconCancelGrey style={sizeIcon.md} />
                                     </TouchableOpacity>
                                 </View>
 
-                                <ScrollView style={{paddingHorizontal:_moderateScale(8*2)}}>
-                                    <RenderHTML data={props?.dataHTML?.value}/>
+                                <ScrollView style={{ paddingHorizontal: _moderateScale(8 * 2) }}>
+                                    {/* <RenderHTML data={props?.dataHTML?.value}/> */}
+                                    <Text>
+                                        {
+                                            props?.dataHTML?.description
+                                        }
+                                    </Text>
                                 </ScrollView>
 
-                                
+
                             </View>
                         </Animated.View>
 
