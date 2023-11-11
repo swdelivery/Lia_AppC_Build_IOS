@@ -205,7 +205,6 @@ const WheelSpin = memo((props) => {
                 }}
                 data={showModalGetWheelSpinReward?.data}
                 show={showModalGetWheelSpinReward?.show} />
-
             <ImageBackground
                 resizeMode={'cover'}
                 source={require('../../Image/spin/newBGWhellSpin.png')}
@@ -311,29 +310,27 @@ const WheelSpin = memo((props) => {
                     <IconHelpWhite style={{ width: _moderateScale(8 * 3), height: _moderateScale(8 * 3) }} />
                 </TouchableOpacity>
 
-                <Image style={{
-                    height: _heightScale(8 * 10),
-                    width: '100%',
-                    resizeMode: 'contain',
-                    marginTop: _heightScale(8 * 8),
-                }} source={require('../../Image/spin/newTextTop.png')} />
+                <View style={{flex:1, justifyContent: 'center', alignItems:'center'}}>
+                    <Image style={{
+                        height: _heightScale(8 * 10),
+                        width: '100%',
+                        resizeMode: 'contain',
+                    }} source={require('../../Image/spin/newTextTop.png')} />
 
-                <View style={{ marginTop: _moderateScale(8) }}>
-                    <LuckyCircle
+                    <View style={{ marginTop: _moderateScale(8) }}>
+                        <LuckyCircle
 
-                        currActiveWheel={currActiveWheel}
+                            currActiveWheel={currActiveWheel}
 
-                        data={configSpinWheel}
-                        showOverLay={_showOverLay}
-                        number={3}
-                        onSpinEnd={_onSpinEnd} />
-                    <Text style={{ position: 'absolute', bottom: _heightScale(7), alignSelf: 'center', ...stylesFont.fontNolanBold, fontSize: _heightScale(12), color: WHITE }}>
-                        {wheelTurnCount?.amount} lượt
-                    </Text>
-                </View>
-
-
-                <View style={{ marginTop: _heightScale(8 * 6), width: '100%' }}>
+                            data={configSpinWheel}
+                            showOverLay={_showOverLay}
+                            number={3}
+                            onSpinEnd={_onSpinEnd} />
+                        <Text style={{ position: 'absolute', bottom: _heightScale(7), alignSelf: 'center', ...stylesFont.fontNolanBold, fontSize: _heightScale(12), color: WHITE }}>
+                            {wheelTurnCount?.amount} lượt
+                        </Text>
+                    </View>
+                    <View style={{ marginTop: _heightScale(8 * 6), width: '100%' }}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', width: '100%', justifyContent: 'space-between', paddingHorizontal: _widthScale(8 * 8) }}>
                         <TouchableOpacity style={{
                             alignItems: 'center'
@@ -358,9 +355,7 @@ const WheelSpin = memo((props) => {
                             </Text>
                         </TouchableOpacity>
                     </View>
-
                 </View>
-
                 <TouchableOpacity
                     onPress={() => {
                         setShowModalExchangeToWheelTurn(true)
@@ -383,8 +378,7 @@ const WheelSpin = memo((props) => {
                         Mua lượt quay
                     </Text>
                 </TouchableOpacity>
-
-
+                </View>
             </ImageBackground>
         </View>
 

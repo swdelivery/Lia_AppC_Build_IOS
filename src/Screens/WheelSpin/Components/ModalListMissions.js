@@ -236,7 +236,7 @@ const ModalListMissions = memo((props) => {
                             borderBottomRightRadius: 0,
                             paddingBottom: _moderateScale(8 * 2),
                             position: 'absolute',
-                            bottom: -650,
+                            bottom: - _moderateScale(8*85),
                             height: 650,
                         }, animTranY]}>
 
