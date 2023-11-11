@@ -16,6 +16,7 @@ import { View, StyleSheet } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "src/Hooks/useNavigation";
+import ContentLoader, { Circle, Rect } from "react-content-loader/native";
 
 type Props = {
   item: Practitioner;
@@ -88,6 +89,22 @@ export default function DoctorItem({ item }: Props) {
   );
 }
 
+export const PLACEHOLDER_HEIGHT = 200;
+
+export function Placeholder() {
+  return (
+    <View style={[styles.container, styles.placeholderItem]}>
+      <ContentLoader>
+        <Circle x="20" y="20" r="20" />
+        <Rect x="60" y="0" rx="4" ry="4" width="80" height="13" />
+        <Rect x="60" y="20" rx="3" ry="3" width="100%" height="15" />
+        <Rect x="60" y="40" rx="3" ry="3" width="100" height="12" />
+        <Rect x="0" y="60" rx="3" ry="3" width="100%" height="120" />
+      </ContentLoader>
+    </View>
+  );
+}
+
 const styles = StyleSheet.create({
   start: {
     width: 8 * 1.75,
@@ -121,5 +138,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     paddingVertical: 2,
     borderRadius: 8 * 2,
+  },
+  placeholderItem: {
+    height: PLACEHOLDER_HEIGHT,
+    borderWidth: 0,
+    backgroundColor: "white",
+    padding: 8,
+    borderRadius: 8,
+    marginTop: 8,
   },
 });

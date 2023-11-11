@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
 import { _height, _width } from "../../Constant/Scale";
 import MaterialItem from "./components/MaterialItem";
 import { useDispatch } from "react-redux";

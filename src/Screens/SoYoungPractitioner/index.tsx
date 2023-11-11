@@ -1,31 +1,46 @@
 import React, { memo, useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import { _height, _width } from "../../Constant/Scale";
-import PractitionerItem from "./components/PractitionerItem";
+import PractitionerItem, {
+  PLACEHOLDER_HEIGHT,
+  Placeholder,
+} from "./components/PractitionerItem";
 import { useDispatch, useSelector } from "react-redux";
 import { getPractitionerList } from "@Redux/practitioner/actions";
 import { getPractitionerListState } from "@Redux/practitioner/selectors";
+import { FlatList } from "react-native-gesture-handler";
+import { RenderItemProps } from "@typings/common";
+import PlaceholderSkeletons from "@Components/PlaceholderSkeletons";
+import ListEmpty from "@Components/ListEmpty";
 
 const SoYoungPractitioner = memo(() => {
   const dispatch = useDispatch();
-  const { data } = useSelector(getPractitionerListState);
+  const { isLoading, data } = useSelector(getPractitionerListState);
 
   useEffect(() => {
     dispatch(getPractitionerList.request());
   }, []);
 
+  function renderItem({ item }: RenderItemProps<any>) {
+    return <PractitionerItem item={item} />;
+  }
+
   return (
-    <>
-      {data?.length > 0 ? (
-        <View style={styles.container}>
-          {data?.map((item, index) => {
-            return <PractitionerItem key={item._id} item={item} />;
-          })}
-        </View>
-      ) : (
-        <View style={{ height: _height }} />
-      )}
-    </>
+    <FlatList
+      contentContainerStyle={styles.container}
+      scrollEnabled={false}
+      data={data}
+      renderItem={renderItem}
+      ListEmptyComponent={
+        isLoading ? (
+          <PlaceholderSkeletons count={5} itemHeight={PLACEHOLDER_HEIGHT}>
+            <Placeholder />
+          </PlaceholderSkeletons>
+        ) : (
+          <ListEmpty isLoading={isLoading} title="Không tìm thấy phòng khám" />
+        )
+      }
+    />
   );
 });
 
