@@ -1,16 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
-import {
-  FlatList,
-  Platform,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import ImageColors from "react-native-image-colors";
+import { FlatList, StyleSheet, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import Animated, {
   interpolateColor,
-  runOnJS,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
@@ -21,7 +13,6 @@ import ListDoctor from "./ListDoctor";
 import OptionService from "./OptionService";
 import Voucher from "./Voucher";
 import { _moderateScale } from "../../../Constant/Scale";
-import { BASE_COLOR } from "../../../Constant/Color";
 import { getAllNewsv2 } from "../../../Redux/Action/News";
 import { URL_ORIGINAL } from "../../../Constant/Url";
 import { navigation } from "../../../../rootNavigation";
@@ -29,21 +20,18 @@ import ScreenKey from "../../../Navigation/ScreenKey";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Spacer from "../../../Components/Spacer";
 import useItemExtractor from "../../../Hooks/useItemExtractor";
+import useImageColors from "src/Hooks/useImageColors";
 
 const Banner = () => {
   const { top } = useSafeAreaInsets();
   const FlatListRef = useRef(null);
   const [listImage, setListImage] = useState([]);
-  const widthImg = useSharedValue(380);
-  const heightImg = useSharedValue(140);
   const [currIndexBanner, setCurrIndexBanner] = useState(0);
-  const [primaryColor, setPrimaryColor] = useState(null);
-
   const flagIndexHasChanged = useSharedValue(0);
-  const [preColor, setPreColor] = useState("#000");
-  const [time, setTime] = useState(0);
-
-  const [isDragingBanner, setIsDragingBanner] = useState(false);
+  const preColor = useSharedValue("#000");
+  const { primaryColor, getColors } = useImageColors({
+    defaultPrimayColor: "#228B22",
+  });
 
   useEffect(() => {
     _getAllNews();
@@ -70,77 +58,40 @@ const Banner = () => {
 
     setListImage(listImages);
   };
-  useEffect(() => {
-    if (time) {
-      if (isDragingBanner) return clearInterval(interval);
-      if (currIndexBanner == listImage?.length - 1) {
-        FlatListRef?.current?.scrollToIndex({
-          index: 0,
-          animated: true,
-        });
-      } else {
-        FlatListRef?.current?.scrollToIndex({
-          index: currIndexBanner + 1,
-          animated: true,
-        });
-      }
-    }
-  }, [time]);
-
-  const _getPrimaryColor = async (url) => {
-    const result = await ImageColors.getColors(url, {
-      fallback: "#228B22",
-      cache: false,
-      key: "",
-    });
-    console.log({ result });
-    if (Platform.OS == "ios") {
-      setPrimaryColor(result?.secondary);
-    } else {
-      setPrimaryColor(result?.dominant);
-    }
-  };
-
-  const _changePreColor = (color) => {
-    setPreColor(color);
-  };
 
   useEffect(() => {
     if (primaryColor) {
-      flagIndexHasChanged.value = withTiming(
-        1,
-        {
-          duration: 700,
-        },
-        (isFinished) => {
-          if (isFinished) {
-            runOnJS(_changePreColor)(primaryColor);
-          }
-        }
-      );
     }
   }, [primaryColor]);
 
   useEffect(() => {
     flagIndexHasChanged.value = 0;
     if (listImage?.length > 0) {
-      _getPrimaryColor(listImage[currIndexBanner]?.url);
+      getColors(listImage[currIndexBanner]?.url).then(() => {
+        flagIndexHasChanged.value = withTiming(
+          1,
+          {
+            duration: 700,
+          },
+          (isFinished) => {
+            if (isFinished) {
+              preColor.value = primaryColor.value;
+            }
+          }
+        );
+      });
     }
   }, [currIndexBanner, listImage]);
 
   const animBG = useAnimatedStyle(() => {
-    if (primaryColor) {
-      const animtedColor = interpolateColor(
-        flagIndexHasChanged.value,
-        [0, 1],
-        [preColor, primaryColor]
-      );
-      return {
-        backgroundColor: animtedColor,
-      };
-    } else {
-      return {};
-    }
+    const animtedColor = interpolateColor(
+      flagIndexHasChanged.value,
+      [0, 1],
+      [preColor.value, primaryColor.value]
+    );
+    return {
+      backgroundColor: animtedColor,
+    };
   });
 
   const _renderImage = ({ item, index }) => {
@@ -187,8 +138,7 @@ const Banner = () => {
             const index =
               event.nativeEvent.contentOffset.x /
               event.nativeEvent.layoutMeasurement.width;
-            console.log({ index });
-            setCurrIndexBanner(index.toFixed());
+            setCurrIndexBanner(index);
           }}
           pagingEnabled
           renderItem={_renderImage}

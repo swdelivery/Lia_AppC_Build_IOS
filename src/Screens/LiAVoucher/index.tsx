@@ -1,7 +1,6 @@
-import { StyleSheet, Text, View } from "react-native";
-import React, { memo, useState } from "react";
-import { BASE_COLOR, BG_SERVICE, WHITE } from "../../Constant/Color";
-import LiAHeader from "../../Components/Header/LiAHeader";
+import { StyleSheet } from "react-native";
+import React from "react";
+import { BASE_COLOR, BG_SERVICE } from "../../Constant/Color";
 import HorizontalBanner from "./Components/HorizontalBanner";
 import HorizontalTab from "./Components/HorizontalTab";
 import ListVoucher from "./Components/ListVoucher";
@@ -16,16 +15,10 @@ import Header from "./Components/Header";
 const LiAVoucher = () => {
   const preColor = useSharedValue("#000");
   const primaryColor = useSharedValue(BG_SERVICE);
-
   const preSecondColor = useSharedValue("#000");
   const secondColor = useSharedValue(BG_SERVICE);
-  // const secondColor = useSharedValue();
-
   const flagIndexHasChanged = useSharedValue(0);
   const flagSecondIndexHasChanged = useSharedValue(0);
-  const [time, setTime] = useState(0);
-  const [isDragingBanner, setIsDragingBanner] = useState(false);
-  const [interval, setInterval] = useState(null);
 
   const animatedPrimaryColor = useDerivedValue(() => {
     return interpolateColor(

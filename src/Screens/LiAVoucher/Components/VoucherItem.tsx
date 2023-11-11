@@ -5,6 +5,7 @@ import { BASE_COLOR, GREY, WHITE } from "@Constant/Color";
 import { _moderateScale, _widthScale } from "@Constant/Scale";
 import { styleElement } from "@Constant/StyleElement";
 import { sizeText } from "@Constant/Text";
+import { Voucher } from "@typings/voucher";
 import moment from "moment";
 import React from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
@@ -15,7 +16,7 @@ import Animated, {
 import useCallbackItem from "src/Hooks/useCallbackItem";
 
 type Props = {
-  item: any;
+  item: Voucher;
   onDetails: (item: any) => void;
   onTakeVoucher: (item: any) => void;
   animatedSecondColor: SharedValue<string>;

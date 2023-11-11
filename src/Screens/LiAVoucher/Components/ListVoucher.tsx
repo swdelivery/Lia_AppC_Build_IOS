@@ -17,9 +17,11 @@ import {
 } from "../../../Redux/Action/VoucherAction";
 import { useSelector } from "react-redux";
 import VoucherItem from "./VoucherItem";
-import { useNavigate } from "src/Hooks/useNavigation";
+import { useFocused, useNavigate } from "src/Hooks/useNavigation";
 import { getInfoUserReducer } from "@Redux/Selectors";
 import useVisible from "src/Hooks/useVisible";
+import moment from "moment";
+import { useAppState } from "@r0b0t3d/react-native-hooks";
 
 type Props = {
   animatedSecondColor: SharedValue<string>;
@@ -32,9 +34,15 @@ const ListVoucher = ({ animatedSecondColor }: Props) => {
   const [listVoucher, setListVoucher] = useState([]);
   const flashMsgPopup = useVisible();
 
-  useEffect(() => {
+  useFocused(() => {
     _getListPublicVoucher();
-  }, []);
+  });
+
+  useAppState((state) => {
+    if (state === "active") {
+      getListPublicVoucher();
+    }
+  });
 
   const _getListPublicVoucher = async () => {
     let result = await getListPublicVoucher();
@@ -94,6 +102,9 @@ const ListVoucher = ({ animatedSecondColor }: Props) => {
 
       <ScrollView>
         {listVoucher?.map((item, index) => {
+          if (moment(item.expiredAt).isBefore(moment())) {
+            return null;
+          }
           return (
             <VoucherItem
               item={item}
