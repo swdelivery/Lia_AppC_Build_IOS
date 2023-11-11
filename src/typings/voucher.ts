@@ -24,3 +24,16 @@ export type Voucher = {
   id: string;
   couponImg: FileAvatar;
 } & Timestamp;
+
+export type MyVoucher = {
+  linkedOrderId: number;
+  usedAt: string;
+  isAutoGen: boolean;
+  isActive: boolean;
+  isDelete: boolean;
+  _id: string;
+  uniqueKey: string;
+  couponCode: string;
+  partnerId: string;
+  coupon: Voucher;
+} & Timestamp;

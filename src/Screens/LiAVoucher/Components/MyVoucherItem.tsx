@@ -1,79 +1,50 @@
 import Column from "@Components/Column";
 import Image from "@Components/Image";
 import Text from "@Components/Text";
-import { BASE_COLOR, GREY, WHITE } from "@Constant/Color";
+import { BASE_COLOR, WHITE } from "@Constant/Color";
 import { _moderateScale, _widthScale } from "@Constant/Scale";
 import { styleElement } from "@Constant/StyleElement";
 import { sizeText } from "@Constant/Text";
-import { Voucher } from "@typings/voucher";
+import { MyVoucher } from "@typings/voucher";
 import moment from "moment";
 import React from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
-import Animated, {
-  SharedValue,
-  useAnimatedStyle,
-} from "react-native-reanimated";
 import useCallbackItem from "src/Hooks/useCallbackItem";
 
 type Props = {
-  item: Voucher;
-  onDetails: (item: any) => void;
-  onTakeVoucher?: (item: any) => void;
-  animatedSecondColor: SharedValue<string>;
+  item: MyVoucher;
+  onDetails: (item: MyVoucher) => void;
+  onUseCoupon: (item: MyVoucher) => void;
 };
 
-export default function VoucherItem({
-  item,
-  onDetails,
-  onTakeVoucher,
-  animatedSecondColor,
-}: Props) {
+export default function MyVoucherItem({ item, onDetails, onUseCoupon }: Props) {
   const trigger = useCallbackItem(item);
-
-  const animBG = useAnimatedStyle(() => {
-    return {
-      backgroundColor: animatedSecondColor.value,
-    };
-  });
 
   return (
     <TouchableOpacity onPress={trigger(onDetails)} style={styles.voucherBox}>
       <View style={styles.voucherBox__left}>
-        <Image style={styles.avatarVoucher} avatar={item?.couponImg} />
+        <Image style={styles.avatarVoucher} avatar={item.coupon?.couponImg} />
         <Column flex={1} marginLeft={8}>
-          <Text style={sizeText.small_500}>{item?.name}</Text>
+          <Text style={sizeText.small_500}>{item.coupon?.name}</Text>
           <Text numberOfLines={2} style={sizeText.small_bold}>
-            {item?.description}
+            {item.coupon?.description}
           </Text>
           <Text numberOfLines={2} style={[sizeText.small]}>
-            Hiệu lực đến ngày: {moment(item?.expiredAt).format("DD/MM/YYYY")}
+            Hiệu lực đến ngày:{" "}
+            {moment(item.coupon?.expiredAt).format("DD/MM/YYYY")}
           </Text>
         </Column>
       </View>
       <View style={styles.dashLine} />
       <View style={styles.voucherBox__right}>
-        {item?.isTaked ? (
-          <Column
-            style={styles.voucherBox__right__btn}
-            backgroundColor={GREY}
-            borderRadius={4}
-          >
-            <Text color={WHITE} size={12} weight="bold">
-              Đã lấy
-            </Text>
-          </Column>
-        ) : (
-          <Animated.View style={[styles.btn, animBG]}>
-            <TouchableOpacity
-              onPress={trigger(onTakeVoucher)}
-              style={styles.voucherBox__right__btn}
-            >
-              <Text color={WHITE} size={12} weight="bold">
-                Lấy mã
-              </Text>
-            </TouchableOpacity>
-          </Animated.View>
-        )}
+        <TouchableOpacity
+          onPress={trigger(onUseCoupon)}
+          style={styles.voucherBox__right__btn}
+        >
+          <Text color={WHITE} size={12} weight="bold">
+            Sử dụng
+          </Text>
+        </TouchableOpacity>
       </View>
     </TouchableOpacity>
   );
@@ -84,6 +55,7 @@ const styles = StyleSheet.create({
     width: _moderateScale(8 * 8),
     height: _moderateScale(8 * 3),
     ...styleElement.centerChild,
+    backgroundColor: BASE_COLOR,
   },
   avatarVoucher: {
     width: _moderateScale(8 * 8),
