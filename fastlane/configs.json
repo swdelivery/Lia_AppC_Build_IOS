@@ -1,3 +1,4 @@
 {
-  "branches": ["dev", "main"]
+  "branches": ["dev", "main"],
+  "testerGroups": "liatesters"
 }
