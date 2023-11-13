@@ -30,6 +30,9 @@ import branch from "../branch/reducers";
 import service from "../service/reducers";
 import doctor from "../doctor/reducers";
 import practitioner from '../practitioner/reducers'
+import user from "../user/reducers";
+import voucher from "../voucher/reducers";
+import { resetable } from "@Redux/resettableReducer";
 
 const rootReducer = combineReducers({
   newsReducer,
@@ -62,7 +65,9 @@ const rootReducer = combineReducers({
   branch,
   service,
   doctor,
-  practitioner
+  practitioner,
+  voucher,
+  user: resetable(user),
 });
 
 // const rootReducer = (state, action) => {

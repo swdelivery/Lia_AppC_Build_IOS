@@ -34,15 +34,21 @@ export const takeVoucher = (data) => {
 
 export const getListPublicVoucher = () => {
     return Axios.get(`${URL_FOR_PARTNER}/coupon`, {})
-        .then(res => {
-            console.log(useLogStyle + '----FETCHING SUCCESS: ', setLogStyle('green'), { getListPublicVoucher: res });
-            return res
-        })
-        .catch(error => {
-            console.log(useLogStyle + '----FETCHING FAIL: ', setLogStyle('red'), { getListPublicVoucher: error });
-            _checkError(error)
-            return error
-        })
+      .then((res) => {
+        console.log(
+          useLogStyle + "----FETCHING SUCCESS: ",
+          setLogStyle("green"),
+          { getListPublicVoucher: res }
+        );
+        return res;
+      })
+      .catch((error) => {
+        console.log(useLogStyle + "----FETCHING FAIL: ", setLogStyle("red"), {
+          getListPublicVoucher: error,
+        });
+        _checkError(error);
+        return error;
+      });
 }
 
 

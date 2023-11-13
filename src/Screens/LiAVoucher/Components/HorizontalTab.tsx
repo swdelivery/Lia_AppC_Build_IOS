@@ -12,6 +12,7 @@ import Animated, {
 import ScreenKey from "../../../Navigation/ScreenKey";
 import Text from "@Components/Text";
 import { useNavigate } from "src/Hooks/useNavigation";
+import useRequireLoginCallback from "src/Hooks/useRequireLoginAction";
 
 type Props = {
   animatedPrimaryColor: SharedValue<string>;
@@ -22,7 +23,13 @@ const HorizontalTab = ({
   animatedPrimaryColor,
   animatedSecondColor,
 }: Props) => {
-  const { navigate } = useNavigate();
+  const { navigation } = useNavigate();
+
+  const handleLuckyWheelPress = useRequireLoginCallback(() => {
+    console.log("hehehehe");
+
+    navigation.navigate(ScreenKey.WHEEL_SPIN);
+  }, []);
 
   const animBG = useAnimatedStyle(() => {
     return {
@@ -62,7 +69,7 @@ const HorizontalTab = ({
       </Animated.View>
       <Animated.View style={[styles.tab__child, animBG]}>
         <TouchableOpacity
-          onPress={navigate(ScreenKey.WHEEL_SPIN)}
+          onPress={handleLuckyWheelPress}
           style={{ alignItems: "center" }}
         >
           <IconVoucher style={sizeIcon.lg} />

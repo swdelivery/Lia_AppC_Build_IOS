@@ -12,17 +12,20 @@ export default function useRequireLoginCallback<T extends Function>(
   const route = useRoute();
   const { infoUser } = useSelector(getInfoUserReducer);
 
-  return useCallback(() => {
-    if (!infoUser?._id) {
-      dispatch({
-        type: SHOW_MODAL_REQUIRE_LOGIN,
-        payload: {
-          flag: true,
-          currRouteName: route?.name,
-        },
-      });
-      return;
-    }
-    return callback();
-  }, [route, infoUser, ...deps]);
+  return useCallback(
+    (params: any) => {
+      if (!infoUser?._id) {
+        dispatch({
+          type: SHOW_MODAL_REQUIRE_LOGIN,
+          payload: {
+            flag: true,
+            currRouteName: route?.name,
+          },
+        });
+        return () => {};
+      }
+      return callback(params);
+    },
+    [route, infoUser, callback, ...deps]
+  );
 }
