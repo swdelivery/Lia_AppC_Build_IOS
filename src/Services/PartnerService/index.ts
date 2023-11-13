@@ -152,6 +152,7 @@ const getVouchers = (
 ): Promise<any> => {
   const params = encodeParams({
     ...payload,
+    isShowExpired: false,
     limit: pageSize,
     page,
   });
@@ -165,6 +166,7 @@ const getPublicVouchers = (
 ): Promise<any> => {
   const params = encodeParams({
     ...payload,
+    isShowExpired: false,
     limit: pageSize,
     page,
   });
