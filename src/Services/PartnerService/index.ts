@@ -91,59 +91,106 @@ const getDoctorList = (
 const getDoctorDetails = (doctorId: string): Promise<Doctor> =>
   axios.get(`treatment-doctor/${doctorId}`).then(({ data }) => data.data);
 
-  const getPractitioners = () =>
-    axios.get("practitioner").then(({ data }) => data.data);
+const getPractitioners = () =>
+  axios.get("practitioner").then(({ data }) => data.data);
 
-  const getPractitionerDetails = (
-    practitionerId: string
-  ): Promise<Practitioner> =>
-    axios.get(`practitioner/${practitionerId}`).then(({ data }) => data.data);
+const getPractitionerDetails = (
+  practitionerId: string
+): Promise<Practitioner> =>
+  axios.get(`practitioner/${practitionerId}`).then(({ data }) => data.data);
 
-  const getReview = (
-    payload: GetReviewsPayload,
-    page = 1,
-    pageSize = configs.apiPageSize
-  ) => {
-    const params = encodeParams({
-      ...payload,
-      limit: pageSize,
-      page,
-    });
-    return axios.get(`/review?${params}`).then(({ data }) => data);
-  };
+const getReview = (
+  payload: GetReviewsPayload,
+  page = 1,
+  pageSize = configs.apiPageSize
+) => {
+  const params = encodeParams({
+    ...payload,
+    limit: pageSize,
+    page,
+  });
+  return axios.get(`/review?${params}`).then(({ data }) => data);
+};
 
-  const getDiary = (
-    payload: GetDiaryPayload,
-    page = 1,
-    pageSize = configs.apiPageSize
-  ) => {
-    const params = encodeParams({
-      ...payload,
-      limit: pageSize,
-      page,
-    });
-    return axios
-      .get(`/partner-diary/shared?${params}`)
-      .then(({ data }) => data.data);
-  };
+const getDiary = (
+  payload: GetDiaryPayload,
+  page = 1,
+  pageSize = configs.apiPageSize
+) => {
+  const params = encodeParams({
+    ...payload,
+    limit: pageSize,
+    page,
+  });
+  return axios
+    .get(`/partner-diary/shared?${params}`)
+    .then(({ data }) => data.data);
+};
 
-  const getConfigFileByCode = (code: string): Promise<ConfigFile> =>
-    axios
-      .get("/config-file/get-by-code?code=" + code)
-      .then(({ data }) => data.data);
+const getConfigFileByCode = (code: string): Promise<ConfigFile> =>
+  axios
+    .get("/config-file/get-by-code?code=" + code)
+    .then(({ data }) => data.data);
 
-  export default {
-    getServiceGroup,
-    getServices,
-    getServicesByGroups,
-    getServiceDetails,
-    getBranchList,
-    getBranchById,
-    getDoctorList,
-    getDoctorDetails,
-    getPractitioners,
-    getPractitionerDetails,
-    getReview,
-    getDiary,
-    getConfigFileByCode,
-  };
+const getMyCoupons = (
+  payload: any,
+  page = 1,
+  pageSize = configs.apiPageSize
+): Promise<any> => {
+  const params = encodeParams({
+    ...payload,
+    limit: pageSize,
+    page,
+  });
+  return axios.get("/partner-coupon?" + params).then(({ data }) => data);
+};
+
+const getVouchers = (
+  payload: any,
+  page = 1,
+  pageSize = configs.apiPageSize
+): Promise<any> => {
+  const params = encodeParams({
+    ...payload,
+    limit: pageSize,
+    page,
+  });
+  return axios.get("/coupon?" + params).then(({ data }) => data);
+};
+
+const getPublicVouchers = (
+  payload: any,
+  page = 1,
+  pageSize = configs.apiPageSize
+): Promise<any> => {
+  const params = encodeParams({
+    ...payload,
+    limit: pageSize,
+    page,
+  });
+  return axios.get("/coupon/public?" + params).then(({ data }) => data);
+};
+
+const takeVoucher = (payload: any) => {
+  return axios.post("/partner-coupon", payload).then(({ data }) => data.data);
+};
+
+export default {
+  getServiceGroup,
+  getServices,
+  getServicesByGroups,
+  getServiceDetails,
+  getBranchList,
+  getBranchById,
+  getDoctorList,
+  getDoctorDetails,
+  getPractitioners,
+  getPractitionerDetails,
+  getReview,
+  getDiary,
+  getConfigFileByCode,
+  getMyCoupons,
+  getVouchers,
+  getPublicVouchers,
+  takeVoucher,
+};

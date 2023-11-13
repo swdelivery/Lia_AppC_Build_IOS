@@ -5,12 +5,7 @@ type State = {
 };
 
 let initialState: State = {
-  infoUser: {
-    // name:'Lê Thành An',
-    // job:'Mobile Developer',
-    // role: '2',
-    // avatar:'https://i.ibb.co/gmnnGMQ/avatar-Mau.jpg'
-  },
+  infoUser: null,
 };
 
 const InfoUserReducer = (state = initialState, action: any) => {

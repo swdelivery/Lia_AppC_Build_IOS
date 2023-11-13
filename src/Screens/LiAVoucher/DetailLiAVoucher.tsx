@@ -1,10 +1,4 @@
-import {
-  Alert,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { WHITE } from "../../Constant/Color";
 import LiAHeader from "../../Components/Header/LiAHeader";
@@ -13,54 +7,45 @@ import { styleElement } from "../../Constant/StyleElement";
 import { sizeText } from "../../Constant/Text";
 import RenderHTML from "../../Components/RenderHTML/RenderHTML";
 import { getConfigData } from "../../Redux/Action/OrtherAction";
-import {
-  Extrapolation,
-  interpolate,
-  runOnJS,
-  useAnimatedGestureHandler,
-  useAnimatedStyle,
-  useSharedValue,
-  withDecay,
-  withTiming,
-} from "react-native-reanimated";
 import ModalFlashMsg from "../../Components/ModalFlashMsg/ModalFlashMsg";
-import { navigation } from "../../../rootNavigation";
 import ScreenKey from "../../Navigation/ScreenKey";
-import {
-  getDetailVoucher,
-  takeVoucher,
-} from "../../Redux/Action/VoucherAction";
+import { getDetailVoucher } from "../../Redux/Action/VoucherAction";
 import moment from "moment";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Text from "@Components/Text";
 import Screen from "@Components/Screen";
 import Image from "@Components/Image";
 import Column from "@Components/Column";
-
-const HEIGHT_BOTTOM_SWIPER = _moderateScale(90);
-
-const clamp = (value, min, max) => {
-  "worklet";
-  return Math.min(Math.max(value, min), max);
-};
+import useRequireLoginCallback from "src/Hooks/useRequireLoginAction";
+import { takeVoucher } from "@Redux/voucher/actions";
+import useNavigationParamUpdate from "src/Hooks/useNavigationParamUpdate";
+import { getInfoUserReducer } from "@Redux/Selectors";
+import { useNavigate } from "src/Hooks/useNavigation";
 
 const DetailLiAVoucher = (props) => {
-  const infoUserRedux = useSelector(
-    (state) => state?.infoUserReducer?.infoUser
-  );
-
+  const { navigation } = useNavigate();
+  const dispatch = useDispatch();
+  const { infoUser } = useSelector(getInfoUserReducer);
   const [dataHTML, setDataHTML] = useState("");
-  const [takingVoucher, setTakingVoucher] = useState(false);
-
-  const tranYBottomSwiper = useSharedValue(0);
   const [showModalFlashMsg, setShowModalFlashMsg] = useState(false);
 
-  const tranCircleX = useSharedValue(0);
+  useNavigationParamUpdate("isTakeVoucherSuccess", (value) => {
+    if (value) {
+      navigation.setParams({
+        data: {
+          ...props?.route?.params?.data,
+          isTaked: true,
+        },
+      });
+      setShowModalFlashMsg(true);
+      setTimeout(() => {
+        setShowModalFlashMsg(false);
+      }, 500);
+    }
+  });
 
   useEffect(() => {
     _getData();
-    console.log({ props });
-    // _getDetailVoucher()
   }, []);
 
   useEffect(() => {
@@ -73,26 +58,15 @@ const DetailLiAVoucher = (props) => {
     let result = await getDetailVoucher(_id);
   };
 
-  useEffect(() => {
-    if (takingVoucher) {
-      _handleTakeVoucher(props?.route?.params?.data);
-    }
-  }, [takingVoucher]);
-
-  const _handleTakeVoucher = async (item) => {
-    let result = await takeVoucher({
-      partnerId: infoUserRedux?._id,
-      couponCode: item?.code,
-    });
-    if (result?.isAxiosError) return;
-
-    props?.route?.params?._getListPublicVoucher();
-
-    setShowModalFlashMsg(true);
-    setTimeout(() => {
-      setShowModalFlashMsg(false);
-    }, 500);
-  };
+  const _handleTakeVoucher = useRequireLoginCallback(() => {
+    const item = props?.route?.params?.data;
+    dispatch(
+      takeVoucher.request({
+        partnerId: infoUser?._id,
+        couponCode: item?.code,
+      })
+    );
+  }, [props?.route?.params?.data]);
 
   const _getData = async () => {
     let result = await getConfigData("DEMO_HTML_DATA");
@@ -112,61 +86,6 @@ const DetailLiAVoucher = (props) => {
   useEffect(() => {
     console.log({ dataHTML });
   }, [dataHTML]);
-
-  const eventHandler = useAnimatedGestureHandler({
-    onStart: (event, ctx) => {
-      ctx.startX = tranCircleX.value;
-    },
-    onActive: (event, ctx) => {
-      tranCircleX.value = clamp(event.translationX + ctx.startX, 0, 120);
-    },
-    onEnd: (event) => {
-      tranCircleX.value = withDecay(
-        {
-          velocity: event.velocityX,
-          clamp: [0, 120], // optionally define boundaries for the animation
-        },
-        () => {
-          runOnJS(setShowModalFlashMsg)(true);
-          runOnJS(setTakingVoucher)(true);
-          tranYBottomSwiper.value = withTiming(HEIGHT_BOTTOM_SWIPER, {
-            duration: 500,
-          });
-        }
-      );
-    },
-  });
-
-  const showModal = () => {
-    "worklet";
-    Alert.alert("awdawd");
-  };
-
-  const animCircleX = useAnimatedStyle(() => {
-    return {
-      transform: [{ translateX: tranCircleX.value }],
-    };
-  });
-  const animWidthBG = useAnimatedStyle(() => {
-    const interpolateWidth = interpolate(
-      tranCircleX.value,
-      [0, 120],
-      [0, 120],
-      { extrapolateRight: Extrapolation.CLAMP }
-    );
-    return {
-      width: interpolateWidth,
-    };
-  });
-  const animTranYBottomSwiper = useAnimatedStyle(() => {
-    return {
-      transform: [
-        {
-          translateY: tranYBottomSwiper.value,
-        },
-      ],
-    };
-  });
 
   return (
     <Screen safeTop safeBottom style={styles.container}>
@@ -234,9 +153,7 @@ const DetailLiAVoucher = (props) => {
           </TouchableOpacity>
         ) : (
           <TouchableOpacity
-            onPress={() => {
-              navigation.navigate(ScreenKey.CREATE_BOOKING);
-            }}
+            onPress={_handleTakeVoucher}
             style={styles.bottomButton}
           >
             <Text style={[sizeText.normal_bold, { color: WHITE }]}>

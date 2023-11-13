@@ -1,48 +1,31 @@
-import {
-  Image,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import React, { memo, useCallback, useEffect, useState } from "react";
+import { FlatList, StyleSheet, View } from "react-native";
+import React, { useCallback } from "react";
 import { BASE_COLOR, WHITE } from "../../Constant/Color";
 import LiAHeader from "../../Components/Header/LiAHeader";
 import LinearGradient from "react-native-linear-gradient";
-import { navigation } from "../../../rootNavigation";
 import ScreenKey from "../../Navigation/ScreenKey";
-import { sizeText } from "../../Constant/Text";
-import Animated, { useSharedValue } from "react-native-reanimated";
 import { _moderateScale, _widthScale } from "../../Constant/Scale";
 import { styleElement } from "../../Constant/StyleElement";
-import { getPartnerCoupon } from "../../Redux/Action/BookingAction";
-import moment from "moment";
-import { URL_ORIGINAL } from "../../Constant/Url";
-import VoucherItem from "./Components/VoucherItem";
-import { MyVoucher, Voucher } from "@typings/voucher";
+import { MyVoucher } from "@typings/voucher";
 import MyVoucherItem from "./Components/MyVoucherItem";
-import { useNavigate } from "src/Hooks/useNavigation";
+import { useFocused, useNavigate } from "src/Hooks/useNavigation";
+import { RenderItemProps } from "@typings/common";
+import useItemExtractor from "src/Hooks/useItemExtractor";
+import { getMyCoupons, loadMoreMyCoupons } from "@Redux/user/actions";
+import { getMyCouponsState } from "@Redux/user/selectors";
+import useListFilter from "src/Hooks/useListFilter";
 
 const MyVouchers = () => {
   const { navigation } = useNavigate();
-  const [listVoucher, setListVoucher] = useState([]);
+  const { isLoading, data, getData, loadMoreData, refreshData } = useListFilter(
+    getMyCouponsState,
+    getMyCoupons,
+    loadMoreMyCoupons
+  );
 
-  useEffect(() => {
-    _getListCoupon();
-  }, []);
-
-  const _getListCoupon = async () => {
-    let result = await getPartnerCoupon({
-      condition: {
-        // "usedAt": {
-        //     "equal": null
-        // }
-      },
-    });
-    if (result?.isAxiosError) return;
-    setListVoucher(result?.data?.data);
-  };
+  useFocused(() => {
+    getData();
+  });
 
   const handleUseCoupon = useCallback((item: MyVoucher) => {
     navigation.navigate(ScreenKey.CREATE_BOOKING);
@@ -53,6 +36,18 @@ const MyVouchers = () => {
       data: { ...item.coupon, isTaked: true },
     });
   }, []);
+
+  function renderItem({ item }: RenderItemProps<MyVoucher>) {
+    return (
+      <MyVoucherItem
+        item={item}
+        onDetails={handleViewDetails}
+        onUseCoupon={handleUseCoupon}
+      />
+    );
+  }
+
+  const { keyExtractor } = useItemExtractor<MyVoucher>((item) => item._id);
 
   return (
     <View style={styles.container}>
@@ -69,17 +64,16 @@ const MyVouchers = () => {
         colors={[BASE_COLOR, "white"]}
       />
 
-      <ScrollView contentContainerStyle={styles.contentContainer}>
-        {listVoucher?.map((item, index) => {
-          return (
-            <MyVoucherItem
-              item={item}
-              onDetails={handleViewDetails}
-              onUseCoupon={handleUseCoupon}
-            />
-          );
-        })}
-      </ScrollView>
+      <FlatList
+        data={data}
+        contentContainerStyle={styles.contentContainer}
+        renderItem={renderItem}
+        keyExtractor={keyExtractor}
+        refreshing={isLoading}
+        onRefresh={refreshData}
+        onEndReached={loadMoreData}
+        onEndReachedThreshold={0.2}
+      />
     </View>
   );
 };

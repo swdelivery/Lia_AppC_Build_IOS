@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native";
+import { FlatList, StyleSheet, View } from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
 import LinearGradient from "react-native-linear-gradient";
 import { ScrollView } from "react-native-gesture-handler";
@@ -11,71 +11,79 @@ import Animated, {
 } from "react-native-reanimated";
 import ScreenKey from "../../../Navigation/ScreenKey";
 import ModalFlashMsg from "../../../Components/ModalFlashMsg/ModalFlashMsg";
-import {
-  getListPublicVoucher,
-  takeVoucher,
-} from "../../../Redux/Action/VoucherAction";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import VoucherItem from "./VoucherItem";
 import { useFocused, useNavigate } from "src/Hooks/useNavigation";
 import { getInfoUserReducer } from "@Redux/Selectors";
 import useVisible from "src/Hooks/useVisible";
 import moment from "moment";
 import { useAppState } from "@r0b0t3d/react-native-hooks";
+import useRequireLoginCallback from "src/Hooks/useRequireLoginAction";
+import useListFilter from "src/Hooks/useListFilter";
+import { getVouchersState } from "@Redux/voucher/selectors";
+import {
+  getVouchers,
+  loadMoreVouchers,
+  takeVoucher,
+} from "@Redux/voucher/actions";
+import { RenderItemProps } from "@typings/common";
+import { Voucher } from "@typings/voucher";
+import useItemExtractor from "src/Hooks/useItemExtractor";
+import useNavigationParamUpdate from "src/Hooks/useNavigationParamUpdate";
 
 type Props = {
   animatedSecondColor: SharedValue<string>;
 };
 
 const ListVoucher = ({ animatedSecondColor }: Props) => {
+  const dispatch = useDispatch();
   const { navigation } = useNavigate();
   const { infoUser } = useSelector(getInfoUserReducer);
-
-  const [listVoucher, setListVoucher] = useState([]);
+  const { isLoading, data, loadMoreData, refreshData } = useListFilter(
+    getVouchersState,
+    getVouchers,
+    loadMoreVouchers
+  );
   const flashMsgPopup = useVisible();
 
-  useFocused(() => {
-    _getListPublicVoucher();
-  });
-
-  useAppState((state) => {
-    if (state === "active") {
-      getListPublicVoucher();
-    }
-  });
-
-  const _getListPublicVoucher = async () => {
-    let result = await getListPublicVoucher();
-    if (result?.isAxiosError) return;
-    setListVoucher(result?.data?.data);
-  };
-
-  const handleViewDetails = useCallback(
-    (item) => {
-      navigation.navigate(ScreenKey.DETAIL_LIA_VOUCHER, {
-        data: item,
-        _getListPublicVoucher,
-      });
-    },
-    [_getListPublicVoucher]
-  );
-
-  const _handleTakeVoucher = useCallback(
-    async (item) => {
-      let result = await takeVoucher({
-        partnerId: infoUser?._id,
-        couponCode: item?.code,
-      });
-      if (result?.isAxiosError) return;
-
-      _getListPublicVoucher();
-
+  useNavigationParamUpdate<boolean>("isTakeVoucherSuccess", (value) => {
+    if (value) {
+      refreshData();
       flashMsgPopup.show();
       setTimeout(() => {
         flashMsgPopup.hide();
       }, 500);
+    }
+  });
+
+  useFocused(() => {
+    refreshData();
+  });
+
+  useAppState((state) => {
+    if (state === "active") {
+      refreshData();
+    }
+  });
+
+  const handleViewDetails = useCallback((item) => {
+    navigation.navigate(ScreenKey.DETAIL_LIA_VOUCHER, {
+      data: item,
+    });
+  }, []);
+
+  const _handleTakeVoucher = useRequireLoginCallback(
+    async (item: Voucher) => {
+      console.log({ item });
+
+      dispatch(
+        takeVoucher.request({
+          partnerId: infoUser?._id,
+          couponCode: item?.code,
+        })
+      );
     },
-    [infoUser, _getListPublicVoucher]
+    [infoUser]
   );
 
   const animBG = useAnimatedStyle(() => {
@@ -83,6 +91,22 @@ const ListVoucher = ({ animatedSecondColor }: Props) => {
       backgroundColor: animatedSecondColor.value,
     };
   });
+
+  function renderItem({ item }: RenderItemProps<Voucher>) {
+    if (moment(item.expiredAt).isBefore(moment())) {
+      return null;
+    }
+    return (
+      <VoucherItem
+        item={item}
+        onDetails={handleViewDetails}
+        onTakeVoucher={_handleTakeVoucher}
+        animatedSecondColor={animatedSecondColor}
+      />
+    );
+  }
+
+  const { keyExtractor } = useItemExtractor<Voucher>((item) => item._id);
 
   return (
     <Animated.View style={[styles.container, animBG]}>
@@ -94,29 +118,21 @@ const ListVoucher = ({ animatedSecondColor }: Props) => {
       />
 
       <LinearGradient
-        style={[StyleSheet.absoluteFill, { zIndex: -1 }]}
+        style={StyleSheet.absoluteFill}
         start={{ x: 0, y: 0 }}
         end={{ x: 0, y: 1 }}
         colors={["transparent", "white"]}
       />
 
-      <ScrollView>
-        {listVoucher?.map((item, index) => {
-          if (moment(item.expiredAt).isBefore(moment())) {
-            return null;
-          }
-          return (
-            <VoucherItem
-              item={item}
-              onDetails={handleViewDetails}
-              onTakeVoucher={_handleTakeVoucher}
-              animatedSecondColor={animatedSecondColor}
-            />
-          );
-        })}
-
-        <View style={{ height: 100 }} />
-      </ScrollView>
+      <FlatList
+        data={data}
+        renderItem={renderItem}
+        refreshing={isLoading}
+        onRefresh={refreshData}
+        onEndReached={loadMoreData}
+        onEndReachedThreshold={0.2}
+        keyExtractor={keyExtractor}
+      />
     </Animated.View>
   );
 };
