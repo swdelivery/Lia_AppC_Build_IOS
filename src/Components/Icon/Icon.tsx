@@ -56,6 +56,13 @@ import SVGPlay from "../../SGV/iconPlay.svg";
 import SVGHeartWhite from "../../SGV/heartWhite.svg";
 import SVGHeartFilled from "../../SGV/heartFilled.svg";
 import SVGCommentWhite from "../../SGV/commentWhite.svg";
+import SVGLineArrowDown from "../../SGV/lineArrowDown.svg";
+import SVGHospital from "../../SGV/hospital.svg";
+import SVGPhoneBase from "../../SGV/phoneBase.svg";
+import SVGLocationBase from "../../SGV/locationBase.svg";
+import SVGDoctorBase from "../../SGV/doctorBase.svg";
+import SVGCalendarBase from "../../SGV/calendar.svg";
+import SVGPlusGrey from "../../SGV/plusGrey.svg";
 import { _moderateScale } from "../../Constant/Scale";
 import { SvgProps } from "react-native-svg";
 
@@ -625,6 +632,76 @@ export const IconHeartFilled = (props) => {
 export const IconCommentWhite = (props) => {
   return (
     <SVGCommentWhite
+      width={props?.style?.width ? props?.style?.width : _moderateScale(8 * 4)}
+      height={
+        props?.style?.height ? props?.style?.height : _moderateScale(8 * 4)
+      }
+    />
+  );
+};
+export const IconLineArrowDown = (props) => {
+  return (
+    <SVGLineArrowDown
+      width={props?.style?.width ? props?.style?.width : _moderateScale(8 * 4)}
+      height={
+        props?.style?.height ? props?.style?.height : _moderateScale(8 * 4)
+      }
+    />
+  );
+};
+export const IconHospital = (props) => {
+  return (
+    <SVGHospital
+      width={props?.style?.width ? props?.style?.width : _moderateScale(8 * 4)}
+      height={
+        props?.style?.height ? props?.style?.height : _moderateScale(8 * 4)
+      }
+    />
+  );
+};
+export const IconPhoneBase = (props) => {
+  return (
+    <SVGPhoneBase
+      width={props?.style?.width ? props?.style?.width : _moderateScale(8 * 4)}
+      height={
+        props?.style?.height ? props?.style?.height : _moderateScale(8 * 4)
+      }
+    />
+  );
+};
+export const IconLocationBase = (props) => {
+  return (
+    <SVGLocationBase
+      width={props?.style?.width ? props?.style?.width : _moderateScale(8 * 4)}
+      height={
+        props?.style?.height ? props?.style?.height : _moderateScale(8 * 4)
+      }
+    />
+  );
+};
+export const IconDoctorBase = (props) => {
+  return (
+    <SVGDoctorBase
+      width={props?.style?.width ? props?.style?.width : _moderateScale(8 * 4)}
+      height={
+        props?.style?.height ? props?.style?.height : _moderateScale(8 * 4)
+      }
+    />
+  );
+};
+export const IconCalendarBase = (props) => {
+  return (
+    <SVGCalendarBase
+      width={props?.style?.width ? props?.style?.width : _moderateScale(8 * 4)}
+      height={
+        props?.style?.height ? props?.style?.height : _moderateScale(8 * 4)
+      }
+    />
+  );
+};
+export const IconPlusGrey = (props) => {
+  return (
+    <SVGPlusGrey
       width={props?.style?.width ? props?.style?.width : _moderateScale(8 * 4)}
       height={
         props?.style?.height ? props?.style?.height : _moderateScale(8 * 4)

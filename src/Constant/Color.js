@@ -65,6 +65,7 @@ const BG_BEAUTY_OPACITY_2 = '#FBFCFD'
 const PRICE_ORANGE = "#F96603"
 const MAIN_BG = '#F5F5F5'
 const BG_CLEAR = "#ecf1f7ad"
+const BORDER_COLOR = "#E2E2E0"
 
 // 8c104e, db0505, 641a96
 
@@ -117,5 +118,6 @@ export {
     BG_GREY_OPACITY_1,
     MAIN_BG,
     BLACK_OPACITY_4,
-    BG_BEAUTY_OPACITY_1
+    BG_BEAUTY_OPACITY_1,
+    BORDER_COLOR
 }

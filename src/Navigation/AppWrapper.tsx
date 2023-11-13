@@ -153,7 +153,8 @@ import FeedBackBranch from "../Screens/DetailBrand/FeedBackBranch";
 import ModalRequireAvatar from "../Components/Notification/ModalRequireAvatar";
 import FeedBackDoctor from "../Screens/DetailDoctor/FeedBackDoctor";
 import FeedBackService from "../Screens/DetailService/FeedBackService";
-import CreateBooking from "../Screens/CreateBooking/CreateBooking";
+// import CreateBooking from "../Screens/CreateBooking/CreateBooking";
+import CreateBooking from "../Screens/NewCreateBooking/index";
 import ListVoucher from "../Screens/ListVoucher/ListVoucher";
 import OtherPersonalPage from "../Screens/MyPersonalPage/OtherPersonalPage";
 import ListAllHistoryTreatment from "../Screens/Profile/ListAllHistoryTreatment";
@@ -1026,6 +1027,11 @@ const AppWrapper = (props) => {
                 name={ScreenKey.CREATE_BOOKING}
                 component={CreateBooking}
               />
+              {/* <rootStack.Screen
+                options={{ ...TransitionPresets.SlideFromRightIOS }}
+                name={ScreenKey.CREATE_BOOKING}
+                component={CreateBooking}
+              /> */}
               <rootStack.Screen
                 options={{ ...TransitionPresets.SlideFromRightIOS }}
                 name={ScreenKey.CREATE_BOOKING_FLASH_SALE}
