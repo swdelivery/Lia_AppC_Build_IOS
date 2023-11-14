@@ -23,6 +23,9 @@ import Spacer from "@Components/Spacer";
 import { getServiceDetailsState, getServiceListState, getServiceReviewsState } from "@Redux/service/selectors";
 import ListBottomService from "@Components/ListBottomService/ListBottomService";
 import BottomAction from "./Components/BottomAction";
+import BeautyInsurance from "./Components/BeautyInsurance";
+import BeautyInsurancePopup from "./Components/BeautyInsurancePopup";
+import useVisible from "src/Hooks/useVisible";
 
 const HEIGHT_IMAGE_SERVICE = (_width * 926) / 1242;
 
@@ -31,11 +34,9 @@ type ScreenKey = typeof ScreenKey.DETAIL_SERVICE;
 const DetailService = () => {
   const dispatch = useDispatch();
   const { idService } = useNavigationParams<ScreenKey>();
-
   const { data } = useSelector(getServiceDetailsState);
-
-  const { data : dataListService} = useSelector(getServiceListState);
-
+  const { data: dataListService } = useSelector(getServiceListState);
+  const beautyInsurancePopup = useVisible(false);
 
   useEffect(() => {
     dispatch(getServiceDetails.request(idService));
@@ -49,7 +50,7 @@ const DetailService = () => {
         })
       );
     }
-  }, [data?.code])
+  }, [data?.code]);
 
   useEffect(() => {
     dispatch(
@@ -77,15 +78,20 @@ const DetailService = () => {
         </View>
         <InfoBranch />
         <Material />
+        <BeautyInsurance onViewMore={beautyInsurancePopup.show} />
         <Tutorial />
         <MainInfoService />
         <RecomendService />
         <Feedback />
 
         <Spacer top={16} />
-        <ListBottomService data={dataListService}/>
+        <ListBottomService data={dataListService} />
       </ScrollView>
-      <BottomAction/>
+      <BottomAction />
+      <BeautyInsurancePopup
+        visible={beautyInsurancePopup.visible}
+        onClose={beautyInsurancePopup.hide}
+      />
     </Screen>
   );
 };
@@ -135,7 +141,7 @@ const styles = StyleSheet.create({
   },
   body: {
     width: _width,
-    marginTop: -20,
+    marginTop: -15,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     paddingBottom: _moderateScale(8 * 2),

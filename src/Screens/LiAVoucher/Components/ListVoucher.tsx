@@ -74,8 +74,6 @@ const ListVoucher = ({ animatedSecondColor }: Props) => {
 
   const _handleTakeVoucher = useRequireLoginCallback(
     async (item: Voucher) => {
-      console.log({ item });
-
       dispatch(
         takeVoucher.request({
           partnerId: infoUser?._id,

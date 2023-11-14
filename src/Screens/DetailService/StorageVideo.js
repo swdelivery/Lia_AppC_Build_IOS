@@ -17,8 +17,7 @@ import { SET_CURRENT_LIST_COMMENT_CHILD } from '../../Redux/Constants/ActionType
 import StatusBarCustom from '../../Components/StatusBar/StatusBarCustom';
 import { getAllPostComment, getPostById, getPostByIdv2, createPostReaction, addReactionPost } from '../../Redux/Action/PostAction';
 import { AppState } from 'react-native'
-import SocketInstance from '../../../SocketInstance'
-import BackgroundTimer from "react-native-background-timer";
+import SocketInstance from "../../../SocketInstance";
 import { CSS_PARTNER_POST_JOIN_ROOM, CSS_PARTNER_POST_LEFT_ROOM } from '../../Sockets/type'
 import isEmpty from 'lodash/isEmpty';
 import ListImage from '../NewFeed/Component/ListImage';

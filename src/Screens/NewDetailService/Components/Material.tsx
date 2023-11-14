@@ -26,11 +26,10 @@ const Material = () => {
 
   return (
     <View style={styles.container}>
-      <View style={{marginBottom:8}}>
-        <Text weight="bold">Vật liệu</Text>
-      </View>
-
-      <Column  gap={8}>
+      <Text weight="bold" bottom={8}>
+        Vật liệu
+      </Text>
+      <Column gap={8}>
         <View style={styles.box__header}>
           <Text color={"#4DA887"} weight="bold">
             Thông tin vật liệu
@@ -41,22 +40,30 @@ const Material = () => {
           </Text>
         </View>
 
-        <Column style={{paddingHorizontal:_moderateScale(8)}} gap={8} left={0} right={8}>
-          {
-            dataService?.materialArr?.map((item, index) => {
-              return (
-                <TouchableOpacity onPress={_handleGoDetailMaterial(item)}>
-                  <Row gap={16}>
-                    <View style={{ flex: 1 }}>
-                      <Text numberOfLines={1} style={[styles.box__textLeft, stylesFont.fontNolanBold]}>{item?.name}</Text>
-                    </View>
+        <Column
+          paddingHorizontal={_moderateScale(8)}
+          gap={8}
+          left={0}
+          right={8}
+        >
+          {dataService?.materialArr?.map((item, index) => {
+            return (
+              <TouchableOpacity onPress={_handleGoDetailMaterial(item)}>
+                <Row gap={16}>
+                  <View style={{ flex: 1 }}>
+                    <Text
+                      numberOfLines={1}
+                      style={[styles.box__textLeft, stylesFont.fontNolanBold]}
+                    >
+                      {item?.name}
+                    </Text>
+                  </View>
 
-                    <IconEyeBase style={sizeIcon.md} />
-                  </Row>
-                </TouchableOpacity>
-              )
-            })
-          }
+                  <IconEyeBase style={sizeIcon.md} />
+                </Row>
+              </TouchableOpacity>
+            );
+          })}
         </Column>
       </Column>
     </View>
