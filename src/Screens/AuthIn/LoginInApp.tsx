@@ -35,6 +35,7 @@ import Text from "@Components/Text";
 import Header from "./components/Header";
 import EyeOn from "../../SGV/eyeOn.svg";
 import EyeOff from "../../SGV/eyeOff.svg";
+import Row from "@Components/Row";
 
 const Login = (props) => {
   const [showModal, setShowModal] = useState(false);
@@ -198,25 +199,22 @@ const Login = (props) => {
             {
               phoneNumber ?
               <View style={styles.labelContainer}>
-                <Text style={{
-                  ...stylesFont.fontNolan,
-                  fontSize: _moderateScale(14),
-                  color: Color.GREY
-                  }}>Số điện thoại đã đăng kí</Text>
+                <Text size={14} color={Color.GREY} >Số điện thoại đã đăng kí</Text>
               </View> 
               : <></>
             }
-            <View
-              style={[
-                {
-                  width: "100%",
-                  paddingVertical: _moderateScale(8 * 2),
-                  borderRadius: _moderateScale(8),
-                  borderColor: errorPhoneNumber ? Color.ERROR_COLOR : (phoneNumber ? Color.BORDER_INPUT_TEXT_FOCUSED : Color.BORDER_INPUT_TEXT),
-                  borderWidth: 1
-                },
-                styleElement.rowAliCenter,
-              ]}
+            <Row
+                paddingVertical={_moderateScale(8 * 2)}
+                borderRadius={_moderateScale(8)}
+                borderColor={
+                    errorPhoneNumber
+                    ? Color.ERROR_COLOR
+                    : phoneNumber
+                    ? Color.BORDER_INPUT_TEXT_FOCUSED
+                    : Color.BORDER_INPUT_TEXT
+                }
+                borderWidth={1}
+                paddingHorizontal={10}
             >
               <TextInput
                 value={phoneNumber}
@@ -227,18 +225,11 @@ const Login = (props) => {
                     validatePhoneNumber(content);
                   }
                 }}
-                style={{
-                  ...stylesFont.fontNolan,
-                  fontSize: _moderateScale(14),
-                  paddingVertical: 0,
-                  flex: 1,
-                  paddingHorizontal: 10,
-                  color: Color.BLACK
-                }}
+                style={styles.input_text}
                 placeholder={"Số điện thoại đã đăng kí"}
                 placeholderTextColor={"grey"}
               />
-            </View>
+            </Row>
             <Text style={[{...stylesFont.fontNolan},styles.error_text]}>
               {errorPhoneNumber}
             </Text>
@@ -249,26 +240,16 @@ const Login = (props) => {
             {
               password ?
               <View style={styles.labelContainer}>
-                <Text style={{
-                  ...stylesFont.fontNolan,
-                  fontSize: _moderateScale(14),
-                  color: Color.GREY
-                  }}>Nhập mật khẩu</Text>
+                <Text size={14} color={Color.GREY} >Nhập mật khẩu</Text>
               </View> 
               : <></>
             }
-            <View
-              style={[
-                {
-                  width: "100%",
-                  paddingVertical: _moderateScale(8 * 2),
-                  borderRadius: _moderateScale(8),
-                  borderColor: errorPassword ? Color.ERROR_COLOR : (password ? Color.BORDER_INPUT_TEXT_FOCUSED : Color.BORDER_INPUT_TEXT),
-                  borderWidth:1,
-                  paddingHorizontal:10,
-                },
-                styleElement.rowAliCenter,
-              ]}
+            <Row
+              paddingVertical={_moderateScale(8 * 2)}
+              borderRadius={ _moderateScale(8)}
+              borderColor={errorPassword ? Color.ERROR_COLOR : (password ? Color.BORDER_INPUT_TEXT_FOCUSED : Color.BORDER_INPUT_TEXT)}
+              borderWidth={1}
+              paddingHorizontal={10}
             >
               <TextInput
                 secureTextEntry={!isShowPass}
@@ -279,13 +260,8 @@ const Login = (props) => {
                     validatePassword(content);
                   }
                 }}
-                style={{
-                  ...stylesFont.fontNolan,
-                  fontSize: _moderateScale(14),
-                  paddingVertical: 0,
-                  flex: 1,
-                  color: Color.BLACK
-                }}
+                
+                style={styles.input_text}
                 placeholder={"Nhập mật khẩu"}
                 placeholderTextColor={"grey"}
               />
@@ -298,7 +274,7 @@ const Login = (props) => {
                   <EyeOn width={20} height={20}/>
                 }
               </TouchableOpacity>
-            </View>
+            </Row>
             <Text style={[{...stylesFont.fontNolan},styles.error_text]}>
               {errorPassword}
             </Text>
@@ -402,12 +378,10 @@ const Login = (props) => {
             </Text>
           </TouchableOpacity>
         </View>
-        <View
-          style={{
-            justifyContent: "flex-end",
-            paddingBottom: _moderateScale(32),
-            alignSelf: "center",
-          }}
+        <Row
+        justifyContent="flex-end"
+        paddingBottom={_moderateScale(32)}
+        alignSelf="center"
         >
           <Text
             style={[
@@ -417,7 +391,7 @@ const Login = (props) => {
           >
             Copyright © Lia Beauty 2023.
           </Text>
-        </View>
+        </Row>
       </KeyboardAwareScrollView>
     </Screen>
   );
@@ -466,6 +440,13 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     fontStyle: 'italic',
     marginVertical: 5
+  },
+  input_text:{
+    ...stylesFont.fontNolan,
+    fontSize: _moderateScale(14),
+    paddingVertical: 0,
+    flex: 1,
+    color: Color.BLACK
   }
 });
 
