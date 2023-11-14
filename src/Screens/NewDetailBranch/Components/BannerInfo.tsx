@@ -5,8 +5,6 @@ import { styleText } from "../../../Constant/StyleText";
 import { styleElement } from "../../../Constant/StyleElement";
 import CountStar2 from "../../../Components/NewCountStar/CountStar";
 import Certificate from "../../../Components/Certificate/Certificate";
-import { getBranchDetailsState } from "@Redux/branch/selectors";
-import { useSelector } from "react-redux";
 import Row from "@Components/Row";
 import Text from "@Components/Text";
 import { getImageAvataUrl } from "src/utils/avatar";
@@ -18,17 +16,19 @@ import { isEmpty } from "lodash";
 import linking from "src/utils/linking";
 import { Branch } from "@typings/branch";
 
-const BannerInfo = () => {
-  const { data } = useSelector(getBranchDetailsState);
+type Props = {
+  branch: Branch;
+};
 
+const BannerInfo = ({ branch }: Props) => {
   const avatarSource = useMemo(() => {
     return {
       uri: getImageAvataUrl(
-        data?.avatar,
+        branch?.avatar,
         "https://cfw.rabbitloader.xyz/eyJjIjp0cnVlLCJoIjoibGlhYmVhdXR5LnZuIiwidiI6OTczNjIwMDQ3LCJpIjoiZjgxYWIyZTctMGZlZi00YmU2LTZhNmItODI5MWI4YWExZTAwIn0/wp-content/uploads/2023/06/photo.png"
       ),
     };
-  }, [data]);
+  }, [branch]);
 
   const handleOpenLink = useCallback(
     (link: string) => () => {
@@ -38,10 +38,10 @@ const BannerInfo = () => {
   );
 
   const handleOpenMap = useCallback(() => {
-    if (data.address) {
-      linking.openMap(data.address);
+    if (branch.address) {
+      linking.openMap(branch.address);
     }
-  }, [data]);
+  }, [branch]);
 
   const handleFilePress = useCallback(
     (item: Branch["branchFileArr"][0]) => () => {
@@ -60,12 +60,12 @@ const BannerInfo = () => {
       </View>
 
       <Text weight="bold" size={16} color={"#F5DDB0"}>
-        {(data?.name ?? "").toUpperCase()}
+        {(branch?.name ?? "").toUpperCase()}
       </Text>
 
       <Row marginTop={8} gap={8}>
-        {data?.branchFileArr?.length > 0 &&
-          data.branchFileArr.map((item) => (
+        {branch?.branchFileArr?.length > 0 &&
+          branch.branchFileArr.map((item) => (
             <View style={styles.certificateContainer} key={item._id}>
               <Certificate item={item} />
             </View>
@@ -74,8 +74,8 @@ const BannerInfo = () => {
       <CountStar2
         lightContent
         larger
-        rating={data?.averageRating}
-        count={data?.reviewCount}
+        rating={branch?.averageRating}
+        count={branch?.reviewCount}
       />
       <Row gap={8}>
         <Text size={12} color={"white"}>
@@ -89,13 +89,13 @@ const BannerInfo = () => {
         <Row gap={8}>
           <Icon name="map-marker" color={RED} size={14} />
           <Text size={12} weight="bold" color="white">
-            {data?.address}
+            {branch?.address}
           </Text>
         </Row>
       </Pressable>
 
-      {!isEmpty(data?.configureArticleArr)
-        ? data.configureArticleArr.map((item) => (
+      {!isEmpty(branch?.configureArticleArr)
+        ? branch.configureArticleArr.map((item) => (
             <Pressable key={item} onPress={handleOpenLink(item)}>
               <Row gap={8}>
                 <Icon name="link-variant" size={14} color="white" />

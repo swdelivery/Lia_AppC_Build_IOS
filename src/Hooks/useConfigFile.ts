@@ -1,5 +1,5 @@
 import PartnerService from "src/Services/PartnerService";
-import useApi from "./useApi";
+import useApi from "./services/useApi";
 import { ConfigFileCode } from "@typings/configFile";
 import { useFocused } from "./useNavigation";
 

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import ScreenKey from "@Navigation/ScreenKey";
 import { Service } from "@typings/serviceGroup";
 import { createContext, useContext, useMemo } from "react";
-import useApi from "src/Hooks/useApi";
+import useApi from "src/Hooks/services/useApi";
 import { useNavigationParams } from "src/Hooks/useNavigation";
 import PartnerService from "src/Services/PartnerService";
 

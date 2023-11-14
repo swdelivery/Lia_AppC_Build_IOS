@@ -25,7 +25,7 @@ import HorizontalServicesV2 from "@Components/HorizontalServicesV2";
 
 const DetailService = () => {
   const { service } = useServiceDetailsContext();
-  const { data: reviews } = useServiceReviews(service);
+  const { data: reviews, meta: reviewsMeta } = useServiceReviews(service);
   const recomendServices = useRecomendServices(service);
   const beautyInsurancePopup = useVisible(false);
 
@@ -44,7 +44,11 @@ const DetailService = () => {
             />
             {/* <FlashSale /> */}
             <NameService service={service} />
-            <OverViewFeedBack service={service} reviewsData={reviews} />
+            <OverViewFeedBack
+              service={service}
+              reviews={reviews}
+              total={reviewsMeta?.totalDocuments}
+            />
           </View>
           <InfoBranch service={service} />
           <Material service={service} />
@@ -56,12 +60,12 @@ const DetailService = () => {
             items={recomendServices}
             containerStyle={styles.recomendService}
           />
-          <Feedback reviews={reviews?.data} />
+          <Feedback reviews={reviews} />
 
           <Spacer top={16} />
           <ListBottomService services={recomendServices} />
         </ScrollView>
-        <BottomAction />
+        <BottomAction branch={service.branchServices[0]} />
         <BeautyInsurancePopup
           visible={beautyInsurancePopup.visible}
           onClose={beautyInsurancePopup.hide}

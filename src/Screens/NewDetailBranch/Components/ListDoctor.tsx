@@ -1,27 +1,25 @@
 import React, { useEffect } from "react";
 import { _moderateScale } from "../../../Constant/Scale";
-import { useDispatch, useSelector } from "react-redux";
-import { getBranchDoctors } from "@Redux/branch/actions";
 import { Branch } from "@typings/branch";
-import { getBranchDoctorsState } from "@Redux/branch/selectors";
 import HorizontalDoctors from "@Components/HorizontalDoctors";
+import useApiPaging from "src/Hooks/services/useApiPaging";
+import PartnerService from "src/Services/PartnerService";
 
 type Props = {
   branch: Branch;
 };
 const ListDoctor = ({ branch }: Props) => {
-  const dispatch = useDispatch();
-  const { data } = useSelector(getBranchDoctorsState);
+  const { data, getData } = useApiPaging(PartnerService.getDoctorList);
 
   useEffect(() => {
     if (!branch) {
       return;
     }
-    dispatch(
-      getBranchDoctors.request({
-        branchCode: branch.code,
-      })
-    );
+    getData({
+      branchCode: {
+        in: branch.code,
+      },
+    });
   }, [branch]);
 
   return (

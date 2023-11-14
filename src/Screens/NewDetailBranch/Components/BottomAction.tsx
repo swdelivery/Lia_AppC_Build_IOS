@@ -1,39 +1,40 @@
-import React, { memo, useCallback, useEffect } from "react";
+import React, { useCallback } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { _moderateScale, _width } from "../../../Constant/Scale";
 import IconCalendar from "../../../SGV/calendar.svg";
 import IconChatWhite from "../../../SGV/chatWhite.svg";
 import IconPhoneWhite from "../../../SGV/phoneWhite.svg";
-import { useDispatch, useSelector } from "react-redux";
-import { getInfoUserReducer } from "@Redux/Selectors";
+import { useDispatch } from "react-redux";
 import useRequireLoginCallback from "src/Hooks/useRequireLoginAction";
 import { useNavigation } from "@react-navigation/native";
 import ScreenKey from "@Navigation/ScreenKey";
-import { useFocused } from "src/Hooks/useNavigation";
-import { getBranchDetailsState } from "@Redux/branch/selectors";
 import Row from "@Components/Row";
 import linking from "src/utils/linking";
 import Text from "@Components/Text";
+import { Branch } from "@typings/branch";
 
-const BottomAction = () => {
+type Props = {
+  branch: Branch;
+};
+
+const BottomAction = ({ branch }: Props) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const { data } = useSelector(getBranchDetailsState);
 
   const handleBooking = useRequireLoginCallback(() => {
     // navigation.navigate(ScreenKey.CREATE_BOOKING, {
     //   //   choiceBranch: currentBranch,
     // });
     navigation.navigate(ScreenKey.BOOKING_FOR_BRANCH, {
-      infoBranch: data,
-      branchCode: data?.code,
+      infoBranch: branch,
+      branchCode: branch?.code,
       refCode: "",
     });
-  }, [data]);
+  }, [branch]);
 
   const handlePhonePress = useCallback(() => {
-    linking.openPhone(data.phone);
-  }, [data]);
+    linking.openPhone(branch.phone);
+  }, [branch]);
 
   const handleChatPress = useRequireLoginCallback(() => {
     //

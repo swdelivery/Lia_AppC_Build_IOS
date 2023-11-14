@@ -12,8 +12,6 @@ import Icon from "@Components/Icon";
 import { RED } from "@Constant/Color";
 import HorizontalServices from "@Components/HorizontalServices";
 import { Branch } from "@typings/branch";
-import { useDispatch } from "react-redux";
-import { selectBranch } from "@Redux/branch/actions";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Avatar from "@Components/Avatar";
 import ContentLoader, { Circle, Rect } from "react-content-loader/native";
@@ -23,12 +21,10 @@ type Props = {
 };
 
 export default function BranchItem({ item }: Props) {
-  const dispatch = useDispatch();
   const { navigation } = useNavigate();
 
   const handlePress = useCallback(() => {
-    dispatch(selectBranch(item));
-    navigation.navigate(ScreenKey.DETAIL_BRAND, { idBranch: item._id });
+    navigation.navigate(ScreenKey.DETAIL_BRAND, { branch: item });
   }, [item]);
 
   return (
@@ -53,14 +49,14 @@ export default function BranchItem({ item }: Props) {
           </Row>
           <CountStar2 rating={item.averageRating} count={item.reviewCount} />
 
-          <Row gap={4}>
+          <Row gap={4} marginTop={2}>
             <Icon name="map-marker" color={RED} size={14} />
             <Text size={12} color="grey" right={8} style={styleElement.flex}>
               {item?.address}
             </Text>
           </Row>
 
-          <Row marginTop={8} flexWrap={"wrap"} gap={4} bottom={8}>
+          <Row marginTop={4} flexWrap={"wrap"} gap={4} marginBottom={8}>
             {item?.branchFileArr.length > 0 &&
               item.branchFileArr.map((item, index) => (
                 <Certificate

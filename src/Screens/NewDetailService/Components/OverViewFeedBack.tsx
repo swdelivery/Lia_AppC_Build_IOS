@@ -9,14 +9,14 @@ import ScreenKey from "@Navigation/ScreenKey";
 import Avatar from "@Components/Avatar";
 import { Service } from "@typings/serviceGroup";
 import { Review } from "@typings/review";
-import { ApiMeta, ApiResponse } from "@typings/api";
 
 type Props = {
   service: Service;
-  reviewsData?: ApiResponse<Review[]>;
+  reviews: Review[];
+  total: number;
 };
 
-const OverViewFeedBack = ({ service, reviewsData }: Props) => {
+const OverViewFeedBack = ({ service, reviews, total }: Props) => {
   const _handleViewAllFeedBack = useCallback(() => {
     navigation.navigate(ScreenKey.FEED_BACK_SERVICE, {
       currentService: service,
@@ -24,8 +24,8 @@ const OverViewFeedBack = ({ service, reviewsData }: Props) => {
   }, [service]);
 
   const _dataReviewSlice = useMemo(() => {
-    return reviewsData?.data?.slice(0, 3) ?? [];
-  }, [reviewsData]);
+    return reviews.slice(0, 3) ?? [];
+  }, [reviews]);
 
   return (
     <View style={styles.container}>
@@ -45,15 +45,13 @@ const OverViewFeedBack = ({ service, reviewsData }: Props) => {
         </View>
 
         <Text numberOfLines={1} style={styles.text} right={16}>
-          {reviewsData?.data[0]?.serviceReview?.comment}
+          {reviews[0]?.serviceReview?.comment}
         </Text>
         <TouchableOpacity
           onPress={_handleViewAllFeedBack}
           style={styles.textFeedbackContainer}
         >
-          <Text
-            style={styles.textFeedback}
-          >{`${reviewsData?.meta?.totalDocuments} đánh giá`}</Text>
+          <Text style={styles.textFeedback}>{`${total} đánh giá`}</Text>
           <Icon name="chevron-right" size={14} />
         </TouchableOpacity>
       </Row>

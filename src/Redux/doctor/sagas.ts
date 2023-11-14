@@ -41,7 +41,7 @@ function* getDoctorDetails({ payload }: BaseAction<string>) {
 
 function* getDoctorDiaries({ payload }: BaseAction<GetDoctorDiariesParams>) {
   try {
-    const data = yield call(PartnerService.getDiary, {
+    const data = yield call(PartnerService.getDiaryList, {
       doctorId: {
         equal: payload.doctorId,
       },
@@ -54,7 +54,7 @@ function* getDoctorDiaries({ payload }: BaseAction<GetDoctorDiariesParams>) {
 
 function* getDoctorReviews({ payload }: BaseAction<GetDoctorReviewsParams>) {
   try {
-    const data = yield call(PartnerService.getReview, {
+    const data = yield call(PartnerService.getReviewList, {
       doctorCode: {
         equal: payload.doctorCode,
       },

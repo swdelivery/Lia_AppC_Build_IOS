@@ -1,28 +1,25 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { _moderateScale } from "../../../Constant/Scale";
-import { useDispatch, useSelector } from "react-redux";
 import { Branch } from "@typings/branch";
-import { getBranchDiary } from "@Redux/branch/actions";
-import { getBranchDiaryState } from "@Redux/branch/selectors";
 import PartnerDiary from "@Components/PartnerDiary";
+import PartnerService from "src/Services/PartnerService";
+import useApiPaging from "src/Hooks/services/useApiPaging";
 
 type Props = {
   branch: Branch;
 };
 
 const ListDiary = ({ branch }: Props) => {
-  const dispatch = useDispatch();
-  const { data } = useSelector(getBranchDiaryState);
+  const { data, getData } = useApiPaging(PartnerService.getDiaryList);
 
   useEffect(() => {
-    if (!branch) {
-      return;
+    if (branch) {
+      getData({
+        branchCode: {
+          equal: branch.code,
+        },
+      });
     }
-    dispatch(
-      getBranchDiary.request({
-        branchCode: branch.code,
-      })
-    );
   }, [branch]);
 
   return <PartnerDiary items={data} title="Nhật ký từ khách hàng" />;

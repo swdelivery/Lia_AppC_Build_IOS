@@ -13,7 +13,7 @@ type Props = {
 
 const PartnerFeedback = ({ items, title, containerStyle }: Props) => {
   function renderItem(item: Review, index: number) {
-    return <ReviewItem item={item} type="branch" />;
+    return <ReviewItem key={item._id} item={item} type="branch" />;
   }
   return (
     <View style={[styles.container, containerStyle]}>
@@ -32,6 +32,7 @@ export default PartnerFeedback;
 const styles = StyleSheet.create({
   container: {
     width: _widthScale(360),
+    minHeight: 150,
     borderRadius: _moderateScale(8),
     backgroundColor: "white",
     alignSelf: "center",

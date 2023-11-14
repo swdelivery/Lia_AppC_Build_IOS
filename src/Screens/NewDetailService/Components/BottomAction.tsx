@@ -1,41 +1,29 @@
-import React, { memo, useCallback, useEffect } from "react";
+import React, { useCallback } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { _moderateScale, _width } from "../../../Constant/Scale";
 import IconCalendar from "../../../SGV/calendar.svg";
 import IconChatWhite from "../../../SGV/chatWhite.svg";
 import IconPhoneWhite from "../../../SGV/phoneWhite.svg";
-import { useDispatch, useSelector } from "react-redux";
-import { getInfoUserReducer } from "@Redux/Selectors";
 import useRequireLoginCallback from "src/Hooks/useRequireLoginAction";
-import { useNavigation } from "@react-navigation/native";
-import ScreenKey from "@Navigation/ScreenKey";
-import { useFocused } from "src/Hooks/useNavigation";
-import { getBranchDetailsState } from "@Redux/branch/selectors";
 import Row from "@Components/Row";
-import linking from "src/utils/linking";
 import Text from "@Components/Text";
+import { Branch } from "@typings/branch";
 
-const BottomAction = () => {
-  const dispatch = useDispatch();
-  const navigation = useNavigation();
-  const { data } = useSelector(getBranchDetailsState);
+type Props = {
+  branch: Branch;
+};
 
-  const handleBooking = useRequireLoginCallback(() => {
-  }, [data]);
+const BottomAction = ({ branch }) => {
+  const handleBooking = useRequireLoginCallback(() => {}, [branch]);
 
-  const handlePhonePress = useCallback(() => {
-  }, [data]);
+  const handlePhonePress = useCallback(() => {}, [branch]);
 
-  const handleChatPress = useRequireLoginCallback(() => {
-  }, []);
+  const handleChatPress = useRequireLoginCallback(() => {}, []);
 
   return (
     <View style={styles.container}>
       <View style={styles.content}>
-        <TouchableOpacity
-          style={{ alignItems: "center" }}
-          onPress={handleBooking}
-        >
+        <TouchableOpacity onPress={handleBooking} style={styles.bookingBtn}>
           <IconCalendar
             height={_moderateScale(8 * 3)}
             width={_moderateScale(8 * 3)}
@@ -46,10 +34,7 @@ const BottomAction = () => {
         </TouchableOpacity>
 
         <Row gap={16}>
-          <TouchableOpacity
-            style={styles.bookingBtn}
-            onPress={handlePhonePress}
-          >
+          <TouchableOpacity style={styles.phoneBtn} onPress={handlePhonePress}>
             <IconPhoneWhite
               height={_moderateScale(8 * 3)}
               width={_moderateScale(8 * 3)}
@@ -94,6 +79,9 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   bookingBtn: {
+    alignItems: "center",
+  },
+  phoneBtn: {
     width: _moderateScale(8 * 15),
     height: _moderateScale(8 * 5),
     borderRadius: _moderateScale(8 * 2),

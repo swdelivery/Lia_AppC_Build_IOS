@@ -1,19 +1,21 @@
-import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
-import React, { memo } from "react";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
+import React from "react";
 import { styleText } from "../../../../Constant/StyleText";
 import { _moderateScale, _widthScale } from "../../../../Constant/Scale";
 import LinearGradient from "react-native-linear-gradient";
 import { styleElement } from "../../../../Constant/StyleElement";
 import { ScrollView } from "react-native-gesture-handler";
 import Text from "@Components/Text";
-import { useSelector } from "react-redux";
-import { getBranchDetailsState } from "@Redux/branch/selectors";
 import ProblemItem from "./ProblemItem";
-import { FileUpload, RenderItemProps } from "@typings/common";
+import { FileUpload } from "@typings/common";
 import useSelectedItems from "src/Hooks/useSelectedItems";
+import { Branch } from "@typings/branch";
 
-const ConsultanCus = () => {
-  const { data } = useSelector(getBranchDetailsState);
+type Props = {
+  branch: Branch;
+};
+
+const ConsultanCus = ({ branch }: Props) => {
   const { selectedItems, handleItemSelect, isItemSelected } =
     useSelectedItems<FileUpload>([], {
       keyExtractor: (item) => item._id,
@@ -22,6 +24,7 @@ const ConsultanCus = () => {
   function renderItem(item: FileUpload) {
     return (
       <ProblemItem
+        key={item._id}
         item={item}
         onPress={handleItemSelect(item)}
         isSelected={isItemSelected(item)}
@@ -60,7 +63,7 @@ const ConsultanCus = () => {
           style={{ padding: _moderateScale(8 * 1.5) }}
           horizontal
         >
-          {data.branchProblemFileArr.map(renderItem)}
+          {branch.branchProblemFileArr.map(renderItem)}
         </ScrollView>
 
         <TouchableOpacity style={[styles.btnConsul, styleElement.centerChild]}>
