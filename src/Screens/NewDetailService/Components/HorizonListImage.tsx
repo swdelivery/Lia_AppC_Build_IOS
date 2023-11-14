@@ -1,40 +1,30 @@
-import { FlatList, Image, StyleSheet, Text, View } from "react-native";
-import React, { memo } from "react";
+import { FlatList, StyleSheet } from "react-native";
+import React from "react";
 import { _width } from "../../../Constant/Scale";
-import FastImage from "@Components/FastImage";
-import { useSelector } from "react-redux";
-import { getServiceDetailsState } from "@Redux/service/selectors";
-import { URL_ORIGINAL } from "@Constant/Url";
 import useItemExtractor from "../../../Hooks/useItemExtractor";
+import { Service } from "@typings/serviceGroup";
+import Image from "@Components/Image";
+import { FileAvatar } from "@typings/common";
 
 const HEIGHT_IMAGE_SERVICE = (_width * 926) / 1242;
 
-const HorizonListImage = () => {
+type Props = {
+  service: Service;
+};
 
-  const { data } = useSelector(getServiceDetailsState);
+const HorizonListImage = ({ service }: Props) => {
+  const _renderItem = ({ item, index }) => {
+    return <Image style={styles.image} avatar={item} />;
+  };
 
-  const _renderItem = ({item, index}) => {
-    return (
-      <FastImage
-        style={{
-          width: _width,
-          height: HEIGHT_IMAGE_SERVICE,
-        }}
-        source={{
-          uri: `${URL_ORIGINAL}${item?.link}`
-        }}
-      />
-    )
-  }
-
-  const { keyExtractor } = useItemExtractor((item) => item._id);
+  const { keyExtractor } = useItemExtractor<FileAvatar>((item) => item._id);
 
   return (
     <FlatList
       horizontal
       pagingEnabled
       renderItem={_renderItem}
-      data={data?.representationFileArr}
+      data={service?.representationFileArr}
       keyExtractor={keyExtractor}
     />
   );
@@ -42,4 +32,9 @@ const HorizonListImage = () => {
 
 export default HorizonListImage;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  image: {
+    width: _width,
+    height: HEIGHT_IMAGE_SERVICE,
+  },
+});

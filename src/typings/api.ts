@@ -1,11 +1,9 @@
 import { PagingInfo } from "@Redux/types";
 
 export type ApiResponse<T = any> = {
-  success: boolean;
   message?: string;
-  code?: string;
   data: T;
-  total: number;
+  meta?: ApiMeta;
   [key: string]: any;
 };
 

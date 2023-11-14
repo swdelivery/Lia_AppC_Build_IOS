@@ -5,20 +5,21 @@ import Text from "@Components/Text";
 import Column from "@Components/Column";
 import { useSelector } from "react-redux";
 import { getServiceDetailsState } from "@Redux/service/selectors";
+import { Service } from "@typings/serviceGroup";
+import { GREY } from "@Constant/Color";
 
-const MainInfoService = memo(() => {
+type Props = {
+  service: Service;
+};
 
-  const { data} = useSelector(getServiceDetailsState);
-
+const MainInfoService = ({ service }: Props) => {
   return (
     <Column style={styles.container} gap={8}>
       <Text weight="bold">Thông tin</Text>
-      <Text style={{ color: "grey" }}>
-        {data?.description}
-      </Text>
+      <Text color={GREY}>{service?.description}</Text>
     </Column>
   );
-});
+};
 
 export default MainInfoService;
 

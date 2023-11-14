@@ -18,14 +18,19 @@ import Image from "@Components/Image";
 import { GREY } from "@Constant/Color";
 import Avatar from "@Components/Avatar";
 import { selectBranch } from "@Redux/branch/actions";
+import { Service } from "@typings/serviceGroup";
+import { Doctor } from "@typings/doctor";
 
-const InfoBranch = () => {
+type Props = {
+  service: Service;
+};
+
+const InfoBranch = ({ service }: Props) => {
   const dispatch = useDispatch();
-  const { data } = useSelector(getServiceDetailsState);
 
   const branch = useMemo(() => {
-    return data?.branchServices[0]?.branch;
-  }, [data]);
+    return service?.branchServices[0]?.branch;
+  }, [service]);
 
   const _handleGoDetailBranch = useCallback(() => {
     if (!branch) {
@@ -38,10 +43,10 @@ const InfoBranch = () => {
   }, [branch]);
 
   const _handleGoDetailDoctor = useCallback(
-    (data) => () => {
-      dispatch(selectDoctor(data?.treatmentDoctor));
+    (doctor: Doctor) => () => {
+      dispatch(selectDoctor(doctor));
       navigation.navigate(ScreenKey.DETAIL_DOCTOR, {
-        idDoctor: data?.treatmentDoctor?._id,
+        idDoctor: doctor?._id,
       });
     },
     []
@@ -54,12 +59,12 @@ const InfoBranch = () => {
         <Column flex={1} marginLeft={_moderateScale(8)}>
           <Text style={styles.name}>{branch?.name}</Text>
           <CountStar2
-            count={data?.branchServices[0]?.branch?.reviewCount}
+            count={service?.branchServices[0]?.branch?.reviewCount}
             rating={5}
             size={10}
           />
           {branch?.branchFileArr && (
-            <Row flexWrap="wrap">
+            <Row flexWrap="wrap" top={4} gap={4}>
               {branch.branchFileArr.map((item) => {
                 return <Certificate item={item} key={item._id} />;
               })}
@@ -77,10 +82,10 @@ const InfoBranch = () => {
       <Separator color="#dcdedc" top={16} bottom={16} />
 
       <ScrollView showsHorizontalScrollIndicator={false} horizontal>
-        {data?.doctorServices?.map((item, index) => {
+        {service?.doctorServices?.map((item, index) => {
           return (
             <TouchableOpacity
-              onPress={_handleGoDetailDoctor(item)}
+              onPress={_handleGoDetailDoctor(item.treatmentDoctor)}
               key={index}
               style={styles.doctorCard}
             >

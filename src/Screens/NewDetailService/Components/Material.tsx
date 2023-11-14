@@ -8,21 +8,24 @@ import {
 import Text from "@Components/Text";
 import Column from "@Components/Column";
 import Row from "@Components/Row";
-import { useSelector } from "react-redux";
-import { getServiceDetailsState } from "@Redux/service/selectors";
 import { stylesFont } from "@Constant/Font";
 import { IconEyeBase } from "@Components/Icon/Icon";
 import { sizeIcon } from "@Constant/Icon";
 import { navigation } from "rootNavigation";
 import ScreenKey from "@Navigation/ScreenKey";
+import { Service } from "@typings/serviceGroup";
 
-const Material = () => {
+type Props = {
+  service: Service;
+};
 
-  const { data: dataService } = useSelector(getServiceDetailsState);
-
-  const _handleGoDetailMaterial = useCallback((data) => () => {
-    navigation.navigate(ScreenKey.DETAIL_MATERIAL, { _id: data?._id })
-  }, [])
+const Material = ({ service }: Props) => {
+  const _handleGoDetailMaterial = useCallback(
+    (data) => () => {
+      navigation.navigate(ScreenKey.DETAIL_MATERIAL, { _id: data?._id });
+    },
+    []
+  );
 
   return (
     <View style={styles.container}>
@@ -36,7 +39,7 @@ const Material = () => {
           </Text>
 
           <Text color={"#4DA887"} weight="bold">
-            {dataService?.materialArr?.length} Loại
+            {service?.materialArr?.length} Loại
           </Text>
         </View>
 
@@ -46,18 +49,16 @@ const Material = () => {
           left={0}
           right={8}
         >
-          {dataService?.materialArr?.map((item, index) => {
+          {service?.materialArr?.map((item, index) => {
             return (
               <TouchableOpacity onPress={_handleGoDetailMaterial(item)}>
-                <Row gap={16}>
-                  <View style={{ flex: 1 }}>
-                    <Text
-                      numberOfLines={1}
-                      style={[styles.box__textLeft, stylesFont.fontNolanBold]}
-                    >
-                      {item?.name}
-                    </Text>
-                  </View>
+                <Row gap={16} justifyContent="space-between">
+                  <Text
+                    numberOfLines={1}
+                    style={[styles.box__textLeft, stylesFont.fontNolanBold]}
+                  >
+                    {item?.name}
+                  </Text>
 
                   <IconEyeBase style={sizeIcon.md} />
                 </Row>

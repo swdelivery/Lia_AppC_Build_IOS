@@ -1,5 +1,6 @@
 import { RouteProp } from "@react-navigation/native";
 import ScreenKey from "./ScreenKey";
+import { Service } from "@typings/serviceGroup";
 
 type valueof<T> = T[keyof T];
 type Screens = valueof<typeof ScreenKey>;
@@ -13,7 +14,7 @@ type ScreenParams = {
   };
   [ScreenKey.DETAIL_BRAND]: { idBranch: string };
   [ScreenKey.DETAIL_DOCTOR]: { idDoctor: string };
-  [ScreenKey.DETAIL_SERVICE]: { idService: string };
+  [ScreenKey.DETAIL_SERVICE]: { idService: string; service: Service };
   [ScreenKey.DETAIL_PRACTITIONER]: { idPractitioner: string };
 };
 

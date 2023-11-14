@@ -53,7 +53,8 @@ export default SoYoungService;
 const styles = StyleSheet.create({
   container: {
     paddingTop: 12,
-    paddingBottom: 30,
+    paddingBottom: 60,
+    paddingRight: 8,
     backgroundColor: "#F5F9FA",
   },
 });
