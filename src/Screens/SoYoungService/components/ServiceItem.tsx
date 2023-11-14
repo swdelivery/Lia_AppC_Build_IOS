@@ -14,22 +14,21 @@ import Row from "@Components/Row";
 import { styleElement } from "@Constant/StyleElement";
 import Icon from "@Components/Icon";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import ContentLoader, { Circle, Rect } from "react-content-loader/native";
-import { selectService } from "@Redux/service/actions";
-import { useDispatch } from "react-redux";
+import ContentLoader, { Rect } from "react-content-loader/native";
 
 type Props = {
   item: Service;
 };
 
 export default function ServiceItem({ item }: Props) {
-  const dispatch = useDispatch();
   const { navigation } = useNavigate();
 
   const _handleGoDetailService = useCallback(() => {
-    dispatch(selectService(item));
-    navigation.navigate(ScreenKey.DETAIL_SERVICE, { idService: item._id });
-  }, []);
+    navigation.navigate(ScreenKey.DETAIL_SERVICE, {
+      idService: item._id,
+      service: item,
+    });
+  }, [item]);
 
   return (
     <TouchableOpacity
@@ -92,9 +91,8 @@ export function Placeholder() {
 
 const styles = StyleSheet.create({
   card: {
-    width: _width / 2,
+    width: _width / 2 - 4,
     height: _width / 2,
-    alignItems: "center",
   },
   container: {
     // flex: 1,
@@ -102,11 +100,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#F5F9FA",
   },
   content: {
-    width: "90%",
     height: 180,
+    marginLeft: 8,
     backgroundColor: "white",
     borderBottomLeftRadius: 8,
     borderBottomRightRadius: 8,
+    ...styleElement.shadow,
   },
   image: {
     width: "100%",

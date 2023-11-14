@@ -2,17 +2,17 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import { _moderateScale, _widthScale } from "../../../Constant/Scale";
 import PartnerFeedback from "@Components/PartnerFeedback";
-import { useSelector } from "react-redux";
-import { getServiceReviewsState } from "@Redux/service/selectors";
+import { Review } from "@typings/review";
 
-const Feedback = () => {
+type Props = {
+  reviews: Review[];
+};
 
-  const { data: dataReview, meta: metaReview } = useSelector(getServiceReviewsState);
-
+const Feedback = ({ reviews }: Props) => {
   return (
     <PartnerFeedback
       containerStyle={styles.container}
-      items={dataReview}
+      items={reviews}
       title="Đánh giá của khách hàng"
     />
   );

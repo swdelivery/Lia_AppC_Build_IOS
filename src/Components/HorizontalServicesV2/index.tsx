@@ -1,39 +1,28 @@
 import { StyleProp, StyleSheet, View } from "react-native";
-import React, { useCallback } from "react";
+import React from "react";
 import { _moderateScale, _widthScale } from "../../Constant/Scale";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import CountStar2 from "@Components/NewCountStar/CountStar";
-import { BranchService } from "@typings/branch";
 import Text from "@Components/Text";
 import { RED } from "@Constant/Color";
 import { formatMonney } from "@Constant/Utils";
 import useCallbackItem from "src/Hooks/useCallbackItem";
-import ScreenKey from "@Navigation/ScreenKey";
 import { ViewStyle } from "react-native";
 import Image from "@Components/Image";
 import { first } from "lodash";
-import { useDispatch } from "react-redux";
-import { selectService } from "@Redux/service/actions";
-import { useNavigate } from "src/Hooks/useNavigation";
+import { Service } from "@typings/serviceGroup";
+import useServiceDetailsNavigation from "src/Hooks/navigation/useServiceDetailsNavigation";
 
 type Props = {
   title?: string;
-  items: BranchService[];
+  items: Service[];
   containerStyle?: StyleProp<ViewStyle>;
 };
 const HorizontalServicesV2 = ({ items, title, containerStyle }: Props) => {
-  // const { navigation } = useNavigate();
+  const handlePress = useServiceDetailsNavigation();
 
-  const handlePress = useCallback((item: BranchService) => {
-    navigation.replace(ScreenKey.DETAIL_SERVICE, {
-      idService: item._id,
-    });
-  }, []);
-
-  function renderItem(item: BranchService, index: number) {
-    return (
-      <BranchServiceItem item={item} key={item._id} onPress={handlePress} />
-    );
+  function renderItem(item: Service, index: number) {
+    return <ServiceItem item={item} key={item._id} onPress={handlePress} />;
   }
 
   return (
@@ -57,12 +46,12 @@ const HorizontalServicesV2 = ({ items, title, containerStyle }: Props) => {
   );
 };
 
-function BranchServiceItem({
+function ServiceItem({
   item,
   onPress,
 }: {
-  item: BranchService;
-  onPress: (item: BranchService) => void;
+  item: Service;
+  onPress: (item: Service) => void;
 }) {
   const trigger = useCallbackItem(item);
 

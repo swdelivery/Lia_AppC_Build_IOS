@@ -11,6 +11,10 @@ import {
 import { Doctor } from "@typings/doctor";
 import { Practitioner } from "@typings/practitioner";
 import { ConfigFile } from "@typings/configFile";
+import { BranchService } from "@typings/branch";
+import { Service } from "@typings/serviceGroup";
+import { ApiResponse } from "@typings/api";
+import { Review } from "@typings/review";
 
 const axios = createAxios(URL_FOR_PARTNER);
 
@@ -40,7 +44,7 @@ const getServicesByGroups = (
   payload: GetServiceByGroupsPayload,
   page = 1,
   pageSize = configs.apiPageSize
-) => {
+): Promise<Service[]> => {
   const query = encodeParams({
     ...payload,
     sort: {
@@ -103,7 +107,7 @@ const getReview = (
   payload: GetReviewsPayload,
   page = 1,
   pageSize = configs.apiPageSize
-) => {
+): Promise<ApiResponse<Review[]>> => {
   const params = encodeParams({
     ...payload,
     limit: pageSize,

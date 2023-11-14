@@ -1,5 +1,5 @@
 import { Image, StyleSheet, View } from "react-native";
-import React, { memo } from "react";
+import React from "react";
 import { _moderateScale, _widthScale } from "../../../Constant/Scale";
 import Text from "@Components/Text";
 import { styleElement } from "@Constant/StyleElement";
