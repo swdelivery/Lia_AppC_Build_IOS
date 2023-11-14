@@ -1,6 +1,7 @@
 import { RouteProp } from "@react-navigation/native";
 import ScreenKey from "./ScreenKey";
 import { Service } from "@typings/serviceGroup";
+import { Branch } from "@typings/branch";
 
 type valueof<T> = T[keyof T];
 type Screens = valueof<typeof ScreenKey>;
@@ -12,9 +13,9 @@ type ScreenParams = {
     password: string;
     routeName: string;
   };
-  [ScreenKey.DETAIL_BRAND]: { idBranch: string };
+  [ScreenKey.DETAIL_BRAND]: { branch: Branch };
   [ScreenKey.DETAIL_DOCTOR]: { idDoctor: string };
-  [ScreenKey.DETAIL_SERVICE]: { idService: string; service: Service };
+  [ScreenKey.DETAIL_SERVICE]: { service: Service };
   [ScreenKey.DETAIL_PRACTITIONER]: { idPractitioner: string };
 };
 

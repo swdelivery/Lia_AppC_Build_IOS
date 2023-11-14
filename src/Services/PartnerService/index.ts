@@ -6,15 +6,14 @@ import {
   GetDiaryPayload,
   GetDoctorListPayload,
   GetReviewsPayload,
-  GetServiceByGroupsPayload,
+  GetServicesPayload,
 } from "./types";
 import { Doctor } from "@typings/doctor";
 import { Practitioner } from "@typings/practitioner";
 import { ConfigFile } from "@typings/configFile";
-import { BranchService } from "@typings/branch";
-import { Service } from "@typings/serviceGroup";
 import { ApiResponse } from "@typings/api";
 import { Review } from "@typings/review";
+import { Diary } from "@typings/diary";
 
 const axios = createAxios(URL_FOR_PARTNER);
 
@@ -25,26 +24,10 @@ const getServiceGroup = (payload: any) => {
 };
 
 const getServices = (
-  payload: any,
+  payload: GetServicesPayload,
   page = 1,
   pageSize = configs.apiPageSize
 ) => {
-  const query = encodeParams({
-    ...payload,
-    sort: {
-      orderNumber: -1,
-    },
-    limit: pageSize,
-    page,
-  });
-  return axios.get(`service?${query}`).then(({ data }) => data.data);
-};
-
-const getServicesByGroups = (
-  payload: GetServiceByGroupsPayload,
-  page = 1,
-  pageSize = configs.apiPageSize
-): Promise<Service[]> => {
   const query = encodeParams({
     ...payload,
     sort: {
@@ -75,7 +58,7 @@ const getBranchList = (
   return axios.get(`/branch?${query}`).then(({ data }) => data.data);
 };
 
-const getBranchById = (id: number) => {
+const getBranchById = (id: string) => {
   return axios.get(`/branch/${id}`).then(({ data }) => data.data);
 };
 
@@ -83,13 +66,13 @@ const getDoctorList = (
   payload: GetDoctorListPayload,
   page = 1,
   pageSize = configs.apiPageSize
-): Promise<any> => {
+): Promise<ApiResponse<Doctor[]>> => {
   const params = encodeParams({
-    ...payload,
+    ...(payload ? { condition: payload } : {}),
     limit: pageSize,
     page,
   });
-  return axios.get(`/treatment-doctor?${params}`).then(({ data }) => data.data);
+  return axios.get(`/treatment-doctor?${params}`).then(({ data }) => data);
 };
 
 const getDoctorDetails = (doctorId: string): Promise<Doctor> =>
@@ -103,32 +86,30 @@ const getPractitionerDetails = (
 ): Promise<Practitioner> =>
   axios.get(`practitioner/${practitionerId}`).then(({ data }) => data.data);
 
-const getReview = (
+const getReviewList = (
   payload: GetReviewsPayload,
   page = 1,
   pageSize = configs.apiPageSize
 ): Promise<ApiResponse<Review[]>> => {
   const params = encodeParams({
-    ...payload,
+    ...(payload ? { condition: payload } : {}),
     limit: pageSize,
     page,
   });
   return axios.get(`/review?${params}`).then(({ data }) => data);
 };
 
-const getDiary = (
+const getDiaryList = (
   payload: GetDiaryPayload,
   page = 1,
   pageSize = configs.apiPageSize
-) => {
+): Promise<ApiResponse<Diary[]>> => {
   const params = encodeParams({
-    ...payload,
+    ...(payload ? { condition: payload } : {}),
     limit: pageSize,
     page,
   });
-  return axios
-    .get(`/partner-diary/shared?${params}`)
-    .then(({ data }) => data.data);
+  return axios.get(`/partner-diary/shared?${params}`).then(({ data }) => data);
 };
 
 const getConfigFileByCode = (code: string): Promise<ConfigFile> =>
@@ -184,7 +165,6 @@ const takeVoucher = (payload: any) => {
 export default {
   getServiceGroup,
   getServices,
-  getServicesByGroups,
   getServiceDetails,
   getBranchList,
   getBranchById,
@@ -192,8 +172,8 @@ export default {
   getDoctorDetails,
   getPractitioners,
   getPractitionerDetails,
-  getReview,
-  getDiary,
+  getReviewList,
+  getDiaryList,
   getConfigFileByCode,
   getMyCoupons,
   getVouchers,

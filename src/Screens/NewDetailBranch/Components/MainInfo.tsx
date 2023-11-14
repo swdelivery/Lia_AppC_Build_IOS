@@ -2,15 +2,17 @@ import { StyleSheet, View } from "react-native";
 import React from "react";
 import { _moderateScale } from "../../../Constant/Scale";
 import Text from "@Components/Text";
-import { getBranchDetailsState } from "@Redux/branch/selectors";
-import { useSelector } from "react-redux";
+import { Branch } from "@typings/branch";
 
-const MainInfo = () => {
-  const { data } = useSelector(getBranchDetailsState);
+type Props = {
+  branch: Branch;
+};
+
+const MainInfo = ({ branch }: Props) => {
   return (
     <View style={styles.container}>
       <Text color={"grey"} size={14}>
-        {data?.description}
+        {branch?.description}
       </Text>
     </View>
   );

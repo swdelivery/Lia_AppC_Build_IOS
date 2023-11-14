@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
 import React, { useMemo } from "react";
 import { _height, _moderateScale, _width } from "../../../Constant/Scale";
 import FastImage from "@Components/FastImage";
@@ -7,24 +7,22 @@ import Animated, {
   interpolate,
   useAnimatedStyle,
 } from "react-native-reanimated";
-import { getBranchDetailsState } from "@Redux/branch/selectors";
-import { useSelector } from "react-redux";
 import { isEmpty } from "lodash";
 import { getImageAvataUrl } from "src/utils/avatar";
+import { Branch } from "@typings/branch";
 
 type Props = {
   scrollY: SharedValue<number>;
+  branch: Branch;
 };
 
-const CoverImage = ({ scrollY }: Props) => {
-  const { data } = useSelector(getBranchDetailsState);
-
+const CoverImage = ({ scrollY, branch }: Props) => {
   const bannerUrl = useMemo(() => {
-    if (!isEmpty(data?.bannerFileArr)) {
-      return getImageAvataUrl(data.bannerFileArr[0]);
+    if (!isEmpty(branch?.bannerFileArr)) {
+      return getImageAvataUrl(branch.bannerFileArr[0]);
     }
     return "";
-  }, [data]);
+  }, [branch]);
 
   const animatedStyle = useAnimatedStyle(() => {
     return {

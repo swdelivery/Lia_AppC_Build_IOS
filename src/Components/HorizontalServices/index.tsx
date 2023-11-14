@@ -1,5 +1,5 @@
 import { StyleProp, StyleSheet, View } from "react-native";
-import React, { useCallback } from "react";
+import React from "react";
 import { _moderateScale, _widthScale } from "../../Constant/Scale";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import CountStar2 from "@Components/NewCountStar/CountStar";
@@ -7,12 +7,12 @@ import { BranchService } from "@typings/branch";
 import Text from "@Components/Text";
 import { RED } from "@Constant/Color";
 import { formatMonney } from "@Constant/Utils";
-import { useNavigate } from "src/Hooks/useNavigation";
 import useCallbackItem from "src/Hooks/useCallbackItem";
-import ScreenKey from "@Navigation/ScreenKey";
 import { ViewStyle } from "react-native";
 import Image from "@Components/Image";
 import { first } from "lodash";
+import useServiceDetailsNavigation from "src/Hooks/navigation/useServiceDetailsNavigation";
+import { Service } from "@typings/serviceGroup";
 
 type Props = {
   title?: string;
@@ -20,13 +20,7 @@ type Props = {
   containerStyle?: StyleProp<ViewStyle>;
 };
 const HorizontalServices = ({ items, title, containerStyle }: Props) => {
-  const { navigation } = useNavigate();
-
-  const handlePress = useCallback((item: BranchService) => {
-    navigation.navigate(ScreenKey.DETAIL_SERVICE, {
-      idService: item?.service?._id,
-    });
-  }, []);
+  const handlePress = useServiceDetailsNavigation();
 
   function renderItem(item: BranchService, index: number) {
     if (!item || !item.service) {
@@ -63,9 +57,9 @@ function BranchServiceItem({
   onPress,
 }: {
   item: BranchService;
-  onPress: (item: BranchService) => void;
+  onPress: (item: Service) => void;
 }) {
-  const trigger = useCallbackItem(item);
+  const trigger = useCallbackItem(item.service);
 
   return (
     <TouchableOpacity
