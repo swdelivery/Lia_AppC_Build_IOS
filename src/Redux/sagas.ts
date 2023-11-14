@@ -7,5 +7,6 @@ export function* rootSaga() {
     fork(require("./service/sagas").default),
     fork(require("./doctor/sagas").default),
     fork(require("./practitioner/sagas").default),
+    fork(require("./booking/sagas").default),
   ]);
 }

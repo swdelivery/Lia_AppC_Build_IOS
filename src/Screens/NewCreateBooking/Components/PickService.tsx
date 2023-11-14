@@ -1,5 +1,5 @@
 import { Image, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import React, { useCallback } from 'react'
 import Text from '@Components/Text'
 import { BORDER_COLOR, GREY, GREY_FOR_TITLE, PRICE_ORANGE, RED } from '@Constant/Color'
 import { _moderateScale } from '@Constant/Scale'
@@ -9,8 +9,15 @@ import CountStar2 from '@Components/NewCountStar/CountStar'
 import Column from '@Components/Column'
 import Row from '@Components/Row'
 import Icon from '@Components/Icon'
+import { navigation } from 'rootNavigation'
+import ScreenKey from '@Navigation/ScreenKey'
 
 const PickService = () => {
+
+    const _handleGoPickerService = useCallback(() => {
+        navigation.navigate(ScreenKey.PICK_SERVICE_TO_BOOKING)
+    }, [])
+
     return (
         <View style={styles.container}>
             <Text size={14} weight='bold'>Dịch vụ <Text color={RED}>*</Text></Text>
@@ -58,7 +65,7 @@ const PickService = () => {
                             </Column>
 
                             <Row style={{ marginTop: 8 * 2 }}>
-                                <Text style={{flex:1}} color={PRICE_ORANGE} weight='bold' size={14} >
+                                <Text style={{ flex: 1 }} color={PRICE_ORANGE} weight='bold' size={14} >
                                     10.000.000 VND
                                 </Text>
 
@@ -75,7 +82,9 @@ const PickService = () => {
 
                 </View>
 
-                <TouchableOpacity activeOpacity={.8} style={[styles.btnAddService, styleElement.centerChild]}>
+                <TouchableOpacity
+                    onPress={_handleGoPickerService}
+                    activeOpacity={.8} style={[styles.btnAddService, styleElement.centerChild]}>
                     <IconPlusGrey />
                 </TouchableOpacity>
             </ScrollView>

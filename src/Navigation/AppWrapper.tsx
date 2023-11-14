@@ -54,7 +54,8 @@ import Affiliate from "../Screens/Affiliate/index";
 import HealthRecord from "../Screens/HealthRecord/index";
 import TreatmentRecord from "../Screens/TreatmentRecord/index";
 import EditProfile from "../Screens/EditProfile/index";
-import PickServiceToBooking from "../Screens/Booking/bookingForBranch/PickServiceToBooking";
+import PickServiceToBooking from "../Screens/NewPickerServiceBooking/index";
+// import PickServiceToBooking from "../Screens/Booking/bookingForBranch/PickServiceToBooking";
 import ListBooking from "../Screens/ListBooking/index";
 import ListDeposit from "../Screens/ListDeposit/index";
 import ListPayment from "../Screens/ListPayment/index";
@@ -729,6 +730,11 @@ const AppWrapper = (props) => {
                 name={ScreenKey.PICK_SERVICE_TO_BOOKING}
                 component={PickServiceToBooking}
               />
+              {/* <rootStack.Screen
+                options={optionsModal}
+                name={ScreenKey.PICK_SERVICE_TO_BOOKING}
+                component={PickServiceToBooking}
+              /> */}
               {/* -------- */}
               {/* Service */}
               <rootStack.Screen
