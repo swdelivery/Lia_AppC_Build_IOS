@@ -7,13 +7,14 @@ import { BranchService } from "@typings/branch";
 import Text from "@Components/Text";
 import { RED } from "@Constant/Color";
 import { formatMonney } from "@Constant/Utils";
-import { useNavigate } from "src/Hooks/useNavigation";
 import useCallbackItem from "src/Hooks/useCallbackItem";
 import ScreenKey from "@Navigation/ScreenKey";
 import { ViewStyle } from "react-native";
 import Image from "@Components/Image";
 import { first } from "lodash";
-import { navigation } from "rootNavigation";
+import { useDispatch } from "react-redux";
+import { selectService } from "@Redux/service/actions";
+import { useNavigate } from "src/Hooks/useNavigation";
 
 type Props = {
   title?: string;

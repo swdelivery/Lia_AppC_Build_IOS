@@ -1,4 +1,6 @@
-import { FileAvatar, Timestamp } from "./common";
+import type { Branch } from "./branch";
+import type { FileAvatar, Timestamp } from "./common";
+import type { Doctor } from "./doctor";
 
 export type ServiceGroup = {
   parentCode: string;
@@ -69,4 +71,18 @@ export type Service = {
   description: string;
   representationFileArr: FileAvatar[];
   options: ServiceOption[];
+  doctorServices: {
+    _id: string;
+    id: string;
+    serviceCode: string;
+    treatmentDoctorCode: string;
+    treatmentDoctor: Doctor;
+  }[];
+  branchServices: {
+    _id: string;
+    id: string;
+    serviceCode: string;
+    branchCode: string;
+    branch: Branch;
+  }[];
 } & Timestamp;

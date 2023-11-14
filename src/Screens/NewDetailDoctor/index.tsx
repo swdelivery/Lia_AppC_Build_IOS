@@ -1,5 +1,5 @@
 import { ImageBackground, StyleSheet, View } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
   _heightScale,
   _moderateScale,
@@ -17,8 +17,6 @@ import Animated, {
   useSharedValue,
 } from "react-native-reanimated";
 import BottomAction from "./Components/BottomAction";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { getDoctorReviewByCode } from "@Redux/Action/DoctorAction";
 import Header from "./Components/Header";
 import ScreenKey from "@Navigation/ScreenKey";
 import { useNavigationParams } from "src/Hooks/useNavigation";
@@ -32,7 +30,7 @@ import StickyBackground from "@Components/StickyBackground";
 
 type ScreenK = typeof ScreenKey.DETAIL_DOCTOR;
 
-const DetailDoctor = (props) => {
+const DetailDoctor = () => {
   const dispatch = useDispatch();
   const scrollY = useSharedValue(0);
   const { idDoctor } = useNavigationParams<ScreenK>();
