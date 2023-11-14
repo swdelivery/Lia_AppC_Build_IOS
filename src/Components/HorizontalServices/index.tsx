@@ -86,7 +86,7 @@ function BranchServiceItem({
         count={item.service?.reviewCount}
       />
       <Text size={10} weight="bold" color={RED}>
-        {`₫${formatMonney(item.service?.price)}`}
+        {`₫${formatMonney(item.service?.price ?? 0)}`}
       </Text>
     </TouchableOpacity>
   );

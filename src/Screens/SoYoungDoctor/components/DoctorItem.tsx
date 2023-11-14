@@ -17,6 +17,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "src/Hooks/useNavigation";
 import ContentLoader, { Circle, Rect } from "react-content-loader/native";
+import Column from "@Components/Column";
 
 type Props = {
   item: Doctor;
@@ -41,9 +42,19 @@ export default function DoctorItem({ item }: Props) {
         <Avatar size={48} avatar={item.avatar} circle />
         <View style={styleElement.flex}>
           <Row justifyContent="space-between">
-            <Text numberOfLines={1} weight="bold">
-              {item?.name}
-            </Text>
+            <Column>
+              <Text numberOfLines={1} weight="bold">
+                {item?.name}
+              </Text>
+              <Row gap={8}>
+                <CountStar2 rating={4} count={item?.reviewCount} size={10} />
+                <Text size={10}>|</Text>
+                <Row gap={4} marginTop={2}>
+                  <Icon name="account-multiple" size={14} color="grey" />
+                  <Text size={10}>({item?.countPartner})</Text>
+                </Row>
+              </Row>
+            </Column>
 
             <TouchableOpacity style={styles.consultButton}>
               <Text size={12} weight="bold" color={"white"}>
@@ -52,23 +63,14 @@ export default function DoctorItem({ item }: Props) {
             </TouchableOpacity>
           </Row>
 
-          <Row marginTop={2} gap={8}>
-            <CountStar2 rating={4} count={item?.reviewCount} size={10} />
-            <Text size={10}>|</Text>
-            <Row gap={4} marginTop={2}>
-              <Icon name="account-multiple" size={14} color="grey" />
-              <Text size={10}>({item?.countPartner})</Text>
-            </Row>
-          </Row>
-
-          <Row gap={4}>
+          <Row gap={4} marginTop={2}>
             <Icon name="map-marker" color={RED} size={14} />
             <Text size={12} color={"grey"}>
               {item?.branch?.name}
             </Text>
           </Row>
           {item?.treatmentDoctorFileArr.length > 0 && (
-            <Row marginTop={4} flexWrap={"wrap"} gap={4} marginBottom={8}>
+            <Row marginTop={6} flexWrap={"wrap"} gap={4} marginBottom={8}>
               {item.treatmentDoctorFileArr.map((item, i) => (
                 <Certificate
                   key={item._id}
