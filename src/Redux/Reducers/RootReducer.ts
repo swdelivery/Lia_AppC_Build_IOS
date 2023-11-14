@@ -34,6 +34,7 @@ import booking from '../booking/reducers'
 import user from "../user/reducers";
 import voucher from "../voucher/reducers";
 import { resetable } from "@Redux/resettableReducer";
+import booking from '../booking/reducers'
 
 const rootReducer = combineReducers({
   newsReducer,
@@ -70,6 +71,7 @@ const rootReducer = combineReducers({
   booking,
   voucher,
   user: resetable(user),
+  booking
 });
 
 // const rootReducer = (state, action) => {
