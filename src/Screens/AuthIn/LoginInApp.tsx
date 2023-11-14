@@ -33,6 +33,8 @@ import LinearGradient from "react-native-linear-gradient";
 import Screen from "@Components/Screen";
 import Text from "@Components/Text";
 import Header from "./components/Header";
+import EyeOn from "../../SGV/eyeOn.svg";
+import EyeOff from "../../SGV/eyeOff.svg";
 
 const Login = (props) => {
   const [showModal, setShowModal] = useState(false);
@@ -40,6 +42,13 @@ const Login = (props) => {
   const [password, setPassword] = useState("");
   const [focusInput, setFocusInput] = useState(null);
   const [nationCode, setNationCode] = useState("+84");
+  const [isShowPass, setIsShowPass] = useState(false);
+
+  // validate
+  const [isValidating, setIsValidating] = useState(false);
+  const [errorPhoneNumber, setErrorPhoneNumber] = useState("");
+  const [errorPassword, setErrorPassword] = useState("");
+
 
   const dispatch = useDispatch();
 
@@ -54,13 +63,45 @@ const Login = (props) => {
     setPassword(password);
   };
 
+  const validatePhoneNumber = (content) => {
+    if (!content){
+      setErrorPhoneNumber("Vui lòng nhập số điện thoại");
+    } else {
+      setErrorPhoneNumber("");
+    }
+  }
+
+  const validatePassword = (content) => {
+    if (!content){
+      setErrorPassword("Vui lòng nhập mật khẩu");
+    } else if (content.length < 6){
+      setErrorPassword("Mật khẩu phải có ít nhất 6 ký tự");
+    } else{
+      setErrorPassword("");
+    }
+  }
+
+  const validation = () => {
+    var isContinue = true;
+    validatePassword(password);
+    validatePhoneNumber(phoneNumber);
+    if (!phoneNumber){
+      isContinue = false;
+    }
+
+    if (!password || password.length < 6){
+      isContinue = false;
+    }
+
+    return isContinue;
+  }
+
   const fetchData = async () => {
     // dispatch(fetchAllData())
 
     // console.log(getCountryCallingCode());
 
     // return
-
     if (!phoneNumber || !password) {
       return alert("Nhập đầy đủ thông tin");
     }
@@ -125,7 +166,7 @@ const Login = (props) => {
   };
   return (
     <Screen safeTop style={styles.container}>
-      <Header title="Đăng nhập" onBack={navigation.goBack} />
+      <Header title="" onBack={navigation.goBack} />
       <KeyboardAwareScrollView
         bounces={false}
         contentContainerStyle={{
@@ -147,87 +188,129 @@ const Login = (props) => {
           <Image
             resizeMode={"contain"}
             style={{ width: "70%", height: "70%" }}
-            source={require("../../NewImage/logoCenterBase.png")}
+            source={require("../../NewImage/NewLogoLogin.png")}
           />
         </View>
         <View style={{ height: _moderateScale(8 * 2) }} />
 
         <View style={{ paddingHorizontal: _moderateScale(8 * 2) }}>
-          <View
-            style={[
-              {
-                width: "100%",
-                backgroundColor: Color.BG_GREY_OPACITY_2,
-                paddingVertical: _moderateScale(8 * 2),
-                borderRadius: _moderateScale(8),
-              },
-              styleElement.rowAliCenter,
-            ]}
-          >
-            <Image
+          <View>
+            {
+              phoneNumber ?
+              <View style={styles.labelContainer}>
+                <Text style={{
+                  ...stylesFont.fontNolan,
+                  fontSize: _moderateScale(14),
+                  color: Color.GREY
+                  }}>Số điện thoại đã đăng kí</Text>
+              </View> 
+              : <></>
+            }
+            <View
               style={[
-                sizeIcon.md,
-                { marginHorizontal: _moderateScale(8 * 2), opacity: 0.7 },
+                {
+                  width: "100%",
+                  paddingVertical: _moderateScale(8 * 2),
+                  borderRadius: _moderateScale(8),
+                  borderColor: errorPhoneNumber ? Color.ERROR_COLOR : (phoneNumber ? Color.BORDER_INPUT_TEXT_FOCUSED : Color.BORDER_INPUT_TEXT),
+                  borderWidth: 1
+                },
+                styleElement.rowAliCenter,
               ]}
-              source={require("../../NewIcon/phoneBlack.png")}
-            />
-            <TextInput
-              value={phoneNumber}
-              keyboardType={"number-pad"}
-              onChangeText={(content) => {
-                setphoneNumber(content);
-              }}
-              style={{
-                ...stylesFont.fontNolan500,
-                fontSize: _moderateScale(14),
-                paddingVertical: 0,
-                flex: 1,
-              }}
-              placeholder={"Số điện thoại đã đăng kí"}
-              placeholderTextColor={"grey"}
-            />
+            >
+              <TextInput
+                value={phoneNumber}
+                keyboardType={"number-pad"}
+                onChangeText={(content) => {
+                  setphoneNumber(content);
+                  if(isValidating){
+                    validatePhoneNumber(content);
+                  }
+                }}
+                style={{
+                  ...stylesFont.fontNolan,
+                  fontSize: _moderateScale(14),
+                  paddingVertical: 0,
+                  flex: 1,
+                  paddingHorizontal: 10,
+                  color: Color.BLACK
+                }}
+                placeholder={"Số điện thoại đã đăng kí"}
+                placeholderTextColor={"grey"}
+              />
+            </View>
+            <Text style={[{...stylesFont.fontNolan},styles.error_text]}>
+              {errorPhoneNumber}
+            </Text>
           </View>
           <View style={{ height: _moderateScale(8 * 2) }} />
 
-          <View
-            style={[
-              {
-                width: "100%",
-                backgroundColor: Color.BG_GREY_OPACITY_2,
-                paddingVertical: _moderateScale(8 * 2),
-                borderRadius: _moderateScale(8),
-              },
-              styleElement.rowAliCenter,
-            ]}
-          >
-            <Image
+          <View>
+            {
+              password ?
+              <View style={styles.labelContainer}>
+                <Text style={{
+                  ...stylesFont.fontNolan,
+                  fontSize: _moderateScale(14),
+                  color: Color.GREY
+                  }}>Nhập mật khẩu</Text>
+              </View> 
+              : <></>
+            }
+            <View
               style={[
-                sizeIcon.md,
-                { marginHorizontal: _moderateScale(8 * 2), opacity: 0.7 },
+                {
+                  width: "100%",
+                  paddingVertical: _moderateScale(8 * 2),
+                  borderRadius: _moderateScale(8),
+                  borderColor: errorPassword ? Color.ERROR_COLOR : (password ? Color.BORDER_INPUT_TEXT_FOCUSED : Color.BORDER_INPUT_TEXT),
+                  borderWidth:1,
+                  paddingHorizontal:10,
+                },
+                styleElement.rowAliCenter,
               ]}
-              source={require("../../NewIcon/lockBlack.png")}
-            />
-            <TextInput
-              secureTextEntry={true}
-              value={password}
-              onChangeText={(content) => {
-                setPassword(content);
-              }}
-              style={{
-                ...stylesFont.fontNolan500,
-                fontSize: _moderateScale(14),
-                paddingVertical: 0,
-                flex: 1,
-              }}
-              placeholder={"Nhập mật khẩu"}
-              placeholderTextColor={"grey"}
-            />
+            >
+              <TextInput
+                secureTextEntry={!isShowPass}
+                value={password}
+                onChangeText={(content) => {
+                  setPassword(content);
+                  if(isValidating){
+                    validatePassword(content);
+                  }
+                }}
+                style={{
+                  ...stylesFont.fontNolan,
+                  fontSize: _moderateScale(14),
+                  paddingVertical: 0,
+                  flex: 1,
+                  color: Color.BLACK
+                }}
+                placeholder={"Nhập mật khẩu"}
+                placeholderTextColor={"grey"}
+              />
+              <TouchableOpacity onPress={()=>{
+                setIsShowPass(!isShowPass);
+              }}>
+                {
+                  isShowPass ? 
+                  <EyeOff width={20} height={20}/> : 
+                  <EyeOn width={20} height={20}/>
+                }
+              </TouchableOpacity>
+            </View>
+            <Text style={[{...stylesFont.fontNolan},styles.error_text]}>
+              {errorPassword}
+            </Text>
           </View>
-          <View style={{ height: _moderateScale(8 * 4) }} />
+          <View style={{ height: _moderateScale(10 * 8) }} />
 
           <TouchableOpacity
             onPress={() => {
-              fetchData();
+              setIsValidating(true);
+              if(validation()){
+                fetchData();
+              }
             }}
             style={[
               {
@@ -235,25 +318,10 @@ const Login = (props) => {
                 borderRadius: _moderateScale(8),
                 justifyContent: "center",
                 alignItems: "center",
-                backgroundColor: Color.SECOND_COLOR,
+                backgroundColor: Color.BG_LOGIN_BUTTON,
               },
             ]}
           >
-            <LinearGradient
-              start={{ x: 0, y: 1 }}
-              end={{ x: 1, y: 1 }}
-              locations={[0, 0.6, 1]}
-              colors={[Color.BASE_COLOR, "#8c104e", "#db0505"]}
-              style={{
-                width: "100%",
-                height: "100%",
-                position: "absolute",
-                top: 0,
-                left: 0,
-                borderRadius: _moderateScale(8),
-              }}
-            />
-
             <Text
               style={[
                 stylesFont.fontNolanBold,
@@ -284,14 +352,24 @@ const Login = (props) => {
             <Text
               style={[
                 stylesFont.fontNolanBold,
-                { fontSize: _moderateScale(14), color: Color.THIRD_COLOR },
+                { fontSize: _moderateScale(14), color: Color.TEXT_COLOR_FORGET_PASS },
               ]}
             >
-              Quên mật khẩu
+              Quên mật khẩu?
             </Text>
           </TouchableOpacity>
           <View style={{ height: _moderateScale(8 * 2) }} />
 
+          
+        </View>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "flex-end",
+            alignSelf: "center",
+            paddingBottom: _moderateScale(10),
+          }}
+        >
           <TouchableOpacity
             onPress={() => {
               navigation.navigate(ScreenKey.REGISTER_IN_APP, {
@@ -301,9 +379,6 @@ const Login = (props) => {
             style={[
               {
                 backgroundColor: "transparent",
-                height: _moderateScale(8 * 4),
-                justifyContent: "center",
-                alignItems: "center",
               },
             ]}
           >
@@ -318,7 +393,7 @@ const Login = (props) => {
                 <Text
                   style={[
                     stylesFont.fontNolanBold,
-                    { fontSize: _moderateScale(14), color: Color.BLUE_FB },
+                    { fontSize: _moderateScale(14), color: Color.TEXT_COLOR_FORGET_PASS },
                   ]}
                 >
                   Đăng ký ngay
@@ -327,10 +402,8 @@ const Login = (props) => {
             </Text>
           </TouchableOpacity>
         </View>
-
         <View
           style={{
-            flex: 1,
             justifyContent: "flex-end",
             paddingBottom: _moderateScale(32),
             alignSelf: "center",
@@ -342,7 +415,7 @@ const Login = (props) => {
               { color: Color.BLACK, fontSize: _moderateScale(12) },
             ]}
           >
-            Copyright © Trang Beauty 2021.
+            Copyright © Lia Beauty 2023.
           </Text>
         </View>
       </KeyboardAwareScrollView>
@@ -377,6 +450,23 @@ const styles = StyleSheet.create({
   active: {
     borderColor: Color.SECOND_COLOR,
   },
+  labelContainer: {
+    backgroundColor: "white", // Same color as background
+    alignSelf: "flex-start", // Have View be same width as Text inside
+    paddingHorizontal: 3, // Amount of spacing between border and first/last letter
+    marginStart: 10, // How far right do you want the label to start
+    zIndex: 1, // Label must overlap border
+    elevation: 1, // Needed for android
+    shadowColor: "white", // Same as background color because elevation: 1 creates a shadow that we don't want
+    position: "absolute", // Needed to be able to precisely overlap label with border
+    top: -12, // Vertical position of label. Eyeball it to see where label intersects border.
+  },
+  error_text:{
+    color: Color.ERROR_COLOR,
+    marginHorizontal: 10,
+    fontStyle: 'italic',
+    marginVertical: 5
+  }
 });
 
 const shadow = {
