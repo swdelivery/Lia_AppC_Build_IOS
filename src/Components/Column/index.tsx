@@ -3,7 +3,7 @@ import { View, StyleSheet, StyleProp, ViewStyle } from "react-native";
 
 type Props = ViewStyle & {
   style?: StyleProp<ViewStyle>;
-  children: ReactNode;
+  children?: ReactNode;
 };
 
 export default function Column({ style, children, ...props }: Props) {

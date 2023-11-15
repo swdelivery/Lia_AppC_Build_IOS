@@ -1,5 +1,5 @@
 import { ImageBackground, StyleSheet, View } from "react-native";
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import {
   _heightScale,
   _moderateScale,
@@ -20,27 +20,40 @@ import BottomAction from "./Components/BottomAction";
 import Header from "./Components/Header";
 import ScreenKey from "@Navigation/ScreenKey";
 import { useNavigationParams } from "src/Hooks/useNavigation";
-import { useDispatch, useSelector } from "react-redux";
-import { getDoctorDetailsState } from "@Redux/doctor/selectors";
-import { getDoctorDetails } from "@Redux/doctor/actions";
 import ListBottonService from "@Screens/NewDetailService/Components/ListBottonService";
 import Screen from "@Components/Screen";
 import { WHITE } from "@Constant/Color";
 import StickyBackground from "@Components/StickyBackground";
+import useApi from "src/Hooks/services/useApi";
+import PartnerService from "src/Services/PartnerService";
+import { AfterTimeoutFragment } from "@Components/AfterTimeoutFragment";
+import Column from "@Components/Column";
+import ListBottomService from "@Components/ListBottomService/ListBottomService";
 
 type ScreenK = typeof ScreenKey.DETAIL_DOCTOR;
 
 const DetailDoctor = () => {
-  const dispatch = useDispatch();
   const scrollY = useSharedValue(0);
-  const { idDoctor } = useNavigationParams<ScreenK>();
-  const { data } = useSelector(getDoctorDetailsState);
+  const { doctor } = useNavigationParams<ScreenK>();
+  const { data, performRequest } = useApi(
+    PartnerService.getDoctorDetails,
+    doctor
+  );
 
   useEffect(() => {
-    if (idDoctor) {
-      dispatch(getDoctorDetails.request(idDoctor));
+    if (doctor) {
+      performRequest(doctor._id);
     }
-  }, [idDoctor]);
+  }, [doctor]);
+
+  const services = useMemo(() => {
+    if (!data || !data.doctorServices) {
+      return [];
+    }
+    return data.doctorServices
+      .map((item) => item.service)
+      .filter((item) => !!item);
+  }, [data]);
 
   const scrollHandler = useAnimatedScrollHandler({
     onScroll: (event, ctx) => {
@@ -56,29 +69,36 @@ const DetailDoctor = () => {
         source={require("../../Image/bgGreen.png")}
       >
         <Header scrollY={scrollY} doctor={data} />
-        <Animated.ScrollView scrollEventThrottle={16} onScroll={scrollHandler}>
-          <StickyBackground position="bottom" backgroundColor="white" />
-          <LinearGradient
-            style={styles.gradientBg}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 0, y: 1 }}
-            colors={["rgba(255,255,255,0.1)", "#F6F8F8"]}
-          ></LinearGradient>
-          <View style={styles.content}>
-            <View style={styles.bg} />
-            <Banner />
-          </View>
-          <View style={styles.info}>
-            <OverViewBranch branch={data?.branch} />
-            <MainInfoDoctor />
-            <Feedback doctor={data} />
-            <QuestionVideo doctor={data} />
-            <ListBottonService />
-            <View style={{ height: 100, backgroundColor: WHITE }} />
-          </View>
-        </Animated.ScrollView>
+        <AfterTimeoutFragment>
+          <Animated.ScrollView
+            scrollEventThrottle={16}
+            onScroll={scrollHandler}
+          >
+            <StickyBackground position="bottom" backgroundColor="#F6F8F8" />
+            <LinearGradient
+              style={styles.gradientBg}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 0, y: 1 }}
+              colors={["rgba(255,255,255,0.1)", "#F6F8F8"]}
+            ></LinearGradient>
+            <View style={styles.content}>
+              <View style={styles.bg} />
+              <Banner doctor={data} />
+            </View>
+            <View style={styles.info}>
+              <OverViewBranch branch={data?.branch} />
+              <MainInfoDoctor doctor={data} />
+              <Feedback doctor={data} />
+              <QuestionVideo doctor={data} />
+              <ListBottomService
+                services={services}
+                containerStyle={styles.services}
+              />
+            </View>
+          </Animated.ScrollView>
 
-        <BottomAction doctor={data} />
+          <BottomAction doctor={data} />
+        </AfterTimeoutFragment>
       </ImageBackground>
     </Screen>
   );
@@ -119,5 +139,11 @@ const styles = StyleSheet.create({
   },
   info: {
     backgroundColor: "#F6F8F8",
+  },
+  services: {
+    marginTop: 8,
+    marginBottom: 60,
+    backgroundColor: "white",
+    paddingTop: 20,
   },
 });

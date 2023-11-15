@@ -7,6 +7,7 @@ import EnhancedImageViewing from "react-native-image-viewing/dist/ImageViewing";
 import { FileUpload } from "@typings/common";
 import { getImageAvataUrl } from "src/utils/avatar";
 import useVisible from "src/Hooks/useVisible";
+import Row from "@Components/Row";
 
 type Props = {
   item: FileUpload;
@@ -49,6 +50,16 @@ const Certificate = ({ item, backgroundColor = "#414378" }: Props) => {
     </TouchableOpacity>
   );
 };
+
+export function Certificates({ data }: { data: FileUpload[] }) {
+  return (
+    <Row flexWrap="wrap" gap={4} top={4}>
+      {data.map((item) => {
+        return <Certificate item={item} key={item._id} />;
+      })}
+    </Row>
+  );
+}
 
 export default Certificate;
 

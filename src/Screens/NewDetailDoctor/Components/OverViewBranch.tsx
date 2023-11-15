@@ -2,30 +2,23 @@ import { StyleSheet, TouchableOpacity, View } from "react-native";
 import React, { useCallback } from "react";
 import { _moderateScale, _width, _widthScale } from "../../../Constant/Scale";
 import CountStar2 from "../../../Components/NewCountStar/CountStar";
-import ScreenKey from "@Navigation/ScreenKey";
-import { useDispatch } from "react-redux";
 import Text from "@Components/Text";
 import { Branch } from "@typings/branch";
 import Image from "@Components/Image";
 import Row from "@Components/Row";
-import Certificate from "@Components/Certificate/Certificate";
-import { useNavigate } from "src/Hooks/useNavigation";
-import { selectBranch } from "@Redux/branch/actions";
+import { Certificates } from "@Components/Certificate/Certificate";
 import { styleElement } from "@Constant/StyleElement";
 import Icon from "@Components/Icon";
+import useBranchDetailsNavigation from "src/Hooks/navigation/useBranchDetailsNavigation";
 
 type Props = {
   branch: Branch;
 };
 const OverViewBranch = ({ branch }: Props) => {
-  const { navigation } = useNavigate();
-  const dispatch = useDispatch();
+  const handlePress = useBranchDetailsNavigation();
 
   const handleBranchPress = useCallback(() => {
-    dispatch(selectBranch(branch));
-    navigation.navigate(ScreenKey.DETAIL_BRAND, {
-      idBranch: branch?._id,
-    });
+    handlePress(branch);
   }, [branch]);
 
   return (
@@ -40,11 +33,7 @@ const OverViewBranch = ({ branch }: Props) => {
             count={branch?.reviewCount}
           />
           {branch?.branchFileArr && (
-            <Row flexWrap="wrap">
-              {branch.branchFileArr.map((item) => {
-                return <Certificate item={item} key={item._id} />;
-              })}
-            </Row>
+            <Certificates data={branch.branchFileArr} />
           )}
         </View>
         <TouchableOpacity onPress={handleBranchPress} style={styles.button}>

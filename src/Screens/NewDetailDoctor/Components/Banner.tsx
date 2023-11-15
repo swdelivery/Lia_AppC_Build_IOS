@@ -5,11 +5,6 @@ import CountStar2 from "../../../Components/NewCountStar/CountStar";
 import Certificate from "../../../Components/Certificate/Certificate";
 import { URL_ORIGINAL } from "@Constant/Url";
 import ImageView from "react-native-image-viewing";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  getDoctorDetailsState,
-  getDoctorDiariesState,
-} from "@Redux/doctor/selectors";
 import Avatar from "@Components/Avatar";
 import Text from "@Components/Text";
 import Row from "@Components/Row";
@@ -17,25 +12,31 @@ import Column from "@Components/Column";
 import HorizontalServices from "@Components/HorizontalServices";
 import Spacer from "@Components/Spacer";
 import PartnerDiary from "@Components/PartnerDiary";
-import { getDoctorDiaries } from "@Redux/doctor/actions";
+import { Doctor } from "@typings/doctor";
+import useApiPaging from "src/Hooks/services/useApiPaging";
+import PartnerService from "src/Services/PartnerService";
 
-const Banner = () => {
-  const dispatch = useDispatch();
-  const { data } = useSelector(getDoctorDetailsState);
+type Props = {
+  doctor: Doctor;
+};
 
+const Banner = ({ doctor }: Props) => {
   const [showImageViewing, setShowImageViewing] = useState(false);
   const [indexCurrImageView, setIndexCurrImageView] = useState(0);
-
-  const { data: diaries } = useSelector(getDoctorDiariesState);
+  const { data: diaries, getData } = useApiPaging(PartnerService.getDiaryList);
 
   useEffect(() => {
-    dispatch(getDoctorDiaries.request(data._id));
-  }, [data._id]);
+    getData({
+      doctorId: {
+        equal: doctor._id,
+      },
+    });
+  }, [doctor._id]);
 
   return (
     <View style={[styles.banner, shadow]}>
       <ImageView
-        images={data?.treatmentDoctorFileArr?.map((item) => {
+        images={doctor?.treatmentDoctorFileArr?.map((item) => {
           return {
             uri: `${URL_ORIGINAL}${item?.fileUpload?.link}`,
           };
@@ -48,30 +49,34 @@ const Banner = () => {
       />
 
       <View style={styles.avatarContainer}>
-        <Avatar size={72} circle avatar={data.avatar} style={styles.avatar} />
+        <Avatar size={72} circle avatar={doctor.avatar} style={styles.avatar} />
       </View>
 
       <Spacer top={50} />
       <Column alignItems={"center"}>
-        <Text weight="bold">{data?.name}</Text>
-        <CountStar2 count={data?.reviewCount} rating={data?.averageRating} />
+        <Text weight="bold">{doctor?.name}</Text>
+        <CountStar2
+          count={doctor?.reviewCount}
+          rating={doctor?.averageRating}
+        />
         <Text>
-          {data?.position} <Text color="grey">{` | `}</Text> {data?.experience}
+          {doctor?.position} <Text color="grey">{` | `}</Text>{" "}
+          {doctor?.experience}
         </Text>
 
         <Row gap={4} flexWrap="wrap" marginTop={8}>
-          {data?.treatmentDoctorFileArr?.map((item, index) => {
+          {doctor?.treatmentDoctorFileArr?.map((item, index) => {
             return <Certificate item={item} key={item._id} />;
           })}
         </Row>
 
         <View style={styles.infoHorizon}>
           <View style={styles.infoHorizon__box}>
-            <Text weight="bold">{data?.reviewCount}</Text>
+            <Text weight="bold">{doctor?.reviewCount}</Text>
             <Text style={styles.infoHorizon__box__textDown}>Lượt đánh giá</Text>
           </View>
           <View style={styles.infoHorizon__box}>
-            <Text weight="bold">{data?.countPartner}</Text>
+            <Text weight="bold">{doctor?.countPartner}</Text>
             <Text style={styles.infoHorizon__box__textDown}>
               Khách đã điều trị
             </Text>
@@ -84,10 +89,10 @@ const Banner = () => {
             style={styles.iconLike}
             source={require("../../../Image/like.png")}
           />
-          <Text weight="bold">Chuyên dự án: {data?.specialization}</Text>
+          <Text weight="bold">Chuyên dự án: {doctor?.specialization}</Text>
         </Row>
-        {data?.doctorServices?.length > 0 && (
-          <HorizontalServices items={data.doctorServices} />
+        {doctor?.doctorServices?.length > 0 && (
+          <HorizontalServices items={doctor.doctorServices} />
         )}
       </Column>
 

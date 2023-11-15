@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native";
+import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import React from "react";
 import { _width } from "../../Constant/Scale";
 import { Service } from "@typings/serviceGroup";
@@ -7,13 +7,14 @@ import ServiceItem from "./components/ServiceItem";
 
 type Props = {
   services: Service[];
+  containerStyle?: StyleProp<ViewStyle>;
 };
 
-const ListBottomService = ({ services }: Props) => {
+const ListBottomService = ({ services, containerStyle }: Props) => {
   const handlePress = useServiceDetailsNavigation();
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, containerStyle]}>
       {services.map((item, index) => {
         return <ServiceItem key={item._id} item={item} onPress={handlePress} />;
       })}

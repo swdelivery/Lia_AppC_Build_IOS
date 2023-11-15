@@ -40,7 +40,7 @@ const SoYoungDoctor = () => {
             <Placeholder />
           </PlaceholderSkeletons>
         ) : (
-          <ListEmpty isLoading={isLoading} title="Không tìm thấy phòng khám" />
+          <ListEmpty isLoading={isLoading} title="Không tìm thấy bác sĩ" />
         )
       }
     />

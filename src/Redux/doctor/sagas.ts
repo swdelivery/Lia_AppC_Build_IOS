@@ -12,10 +12,14 @@ import PartnerService from "src/Services/PartnerService";
 import { Doctor } from "@typings/doctor";
 import configs from "src/configs";
 import { BaseAction } from "@Redux/types";
+import { ApiResponse } from "@typings/api";
 
 function* getDoctorList() {
   try {
-    const data: Doctor[] = yield call(PartnerService.getDoctorList, {});
+    const { data }: ApiResponse<Doctor[]> = yield call(
+      PartnerService.getDoctorList,
+      {}
+    );
     yield put(
       actions.getDoctorList.success({
         data,

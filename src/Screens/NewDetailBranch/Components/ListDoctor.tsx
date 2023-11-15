@@ -17,10 +17,10 @@ const ListDoctor = ({ branch }: Props) => {
     }
     getData({
       branchCode: {
-        in: branch.code,
+        equal: branch.code,
       },
     });
-  }, [branch]);
+  }, [branch.code]);
 
   return (
     <HorizontalDoctors

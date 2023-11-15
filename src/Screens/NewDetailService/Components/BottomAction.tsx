@@ -7,16 +7,16 @@ import IconPhoneWhite from "../../../SGV/phoneWhite.svg";
 import useRequireLoginCallback from "src/Hooks/useRequireLoginAction";
 import Row from "@Components/Row";
 import Text from "@Components/Text";
-import { Branch } from "@typings/branch";
+import { Service } from "@typings/serviceGroup";
 
 type Props = {
-  branch?: Branch;
+  service?: Service;
 };
 
-const BottomAction = ({ branch }) => {
-  const handleBooking = useRequireLoginCallback(() => {}, [branch]);
+const BottomAction = ({ service }: Props) => {
+  const handleBooking = useRequireLoginCallback(() => {}, [service]);
 
-  const handlePhonePress = useCallback(() => {}, [branch]);
+  const handlePhonePress = useCallback(() => {}, [service]);
 
   const handleChatPress = useRequireLoginCallback(() => {}, []);
 

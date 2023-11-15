@@ -1,26 +1,21 @@
 import Image from "@Components/Image";
 import CountStar2 from "@Components/NewCountStar/CountStar";
 import Text from "@Components/Text";
-import ScreenKey from "@Navigation/ScreenKey";
-import { selectDoctor } from "@Redux/doctor/actions";
 import { Doctor } from "@typings/doctor";
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback } from "react";
 import { StyleSheet, Pressable } from "react-native";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "src/Hooks/useNavigation";
+import useDoctorDetailsNavigation from "src/Hooks/navigation/useDoctorDetailsNavigation";
 
 type Props = {
   item: Doctor;
 };
 
 export default function DoctorItem({ item }: Props) {
-  const { navigation } = useNavigate();
-  const dispatch = useDispatch();
+  const handlePress = useDoctorDetailsNavigation();
 
   const handleDoctorPress = useCallback(() => {
-    dispatch(selectDoctor(item));
-    navigation.navigate(ScreenKey.DETAIL_DOCTOR, { idDoctor: item._id });
-  }, []);
+    handlePress(item);
+  }, [item]);
 
   return (
     <Pressable
