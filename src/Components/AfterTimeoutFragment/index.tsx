@@ -1,13 +1,15 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { useTimeout } from "@r0b0t3d/react-native-hooks";
 import { useState } from "react";
 
 export function AfterTimeoutFragment({
   timeout = 500,
+  placeholder,
   children,
 }: {
   timeout?: number;
-  children: any;
+  placeholder?: ReactNode;
+  children: ReactNode;
 }) {
   const [isReady, setIsReady] = useState(false);
 
@@ -16,7 +18,7 @@ export function AfterTimeoutFragment({
   }, timeout);
 
   if (!isReady) {
-    return null;
+    return placeholder;
   }
 
   return <>{children}</>;

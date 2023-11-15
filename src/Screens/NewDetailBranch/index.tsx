@@ -22,6 +22,7 @@ import ScreenKey from "@Navigation/ScreenKey";
 import Column from "@Components/Column";
 import useBranchDetails from "./useBranchDetails";
 import { AfterTimeoutFragment } from "@Components/AfterTimeoutFragment";
+import Placeholder from "./Components/Placeholder";
 
 type ScreenK = typeof ScreenKey.DETAIL_BRAND;
 
@@ -40,7 +41,7 @@ const DetailBranch = () => {
     <Screen safeBottom>
       <StatusBar barStyle={"dark-content"} />
       <Header scrollY={scrollY} title={data?.name} />
-      <AfterTimeoutFragment>
+      <AfterTimeoutFragment placeholder={<Placeholder />}>
         <CoverImage scrollY={scrollY} branch={data} />
         <Animated.ScrollView
           scrollEventThrottle={16}

@@ -26,6 +26,7 @@ import StickyBackground from "@Components/StickyBackground";
 import useApi from "src/Hooks/services/useApi";
 import PartnerService from "src/Services/PartnerService";
 import ListBottomService from "@Components/ListBottomService/ListBottomService";
+import Placeholder from "@Screens/NewDetailDoctor/Components/Placeholder";
 
 type ScreenK = typeof ScreenKey.DETAIL_PRACTITIONER;
 
@@ -65,8 +66,8 @@ const DetailPractitioner = () => {
         style={styles.container}
         source={require("../../Image/bgGreen.png")}
       >
-        <AfterTimeoutFragment>
-          <Header scrollY={scrollY} practitioner={data} />
+        <Header scrollY={scrollY} practitioner={data} />
+        <AfterTimeoutFragment placeholder={<Placeholder />}>
           <Animated.ScrollView
             scrollEventThrottle={16}
             onScroll={scrollHandler}

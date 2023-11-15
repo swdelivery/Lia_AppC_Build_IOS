@@ -26,8 +26,8 @@ import StickyBackground from "@Components/StickyBackground";
 import useApi from "src/Hooks/services/useApi";
 import PartnerService from "src/Services/PartnerService";
 import { AfterTimeoutFragment } from "@Components/AfterTimeoutFragment";
-import Column from "@Components/Column";
 import ListBottomService from "@Components/ListBottomService/ListBottomService";
+import Placeholder from "./Components/Placeholder";
 
 type ScreenK = typeof ScreenKey.DETAIL_DOCTOR;
 
@@ -68,7 +68,7 @@ const DetailDoctor = () => {
         source={require("../../Image/bgGreen.png")}
       >
         <Header scrollY={scrollY} doctor={data} />
-        <AfterTimeoutFragment>
+        <AfterTimeoutFragment placeholder={<Placeholder />}>
           <Animated.ScrollView
             scrollEventThrottle={16}
             onScroll={scrollHandler}
