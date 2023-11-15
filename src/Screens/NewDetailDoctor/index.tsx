@@ -20,7 +20,6 @@ import BottomAction from "./Components/BottomAction";
 import Header from "./Components/Header";
 import ScreenKey from "@Navigation/ScreenKey";
 import { useNavigationParams } from "src/Hooks/useNavigation";
-import ListBottonService from "@Screens/NewDetailService/Components/ListBottonService";
 import Screen from "@Components/Screen";
 import { WHITE } from "@Constant/Color";
 import StickyBackground from "@Components/StickyBackground";

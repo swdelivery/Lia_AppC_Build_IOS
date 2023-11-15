@@ -8,12 +8,14 @@ const Parameter = (props) => {
   const {infoMaterial} = props
 
   return (
-    <View style={{paddingHorizontal:_moderateScale(8*2)}}>
-        <RenderHTML data={infoMaterial?.specs} />
+    <View style={styles.container}>
+      <RenderHTML data={infoMaterial?.specs} />
     </View>
-  )
+  );
 }
 
 export default Parameter
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  container: { paddingHorizontal: _moderateScale(8 * 2), paddingBottom: 30 },
+});

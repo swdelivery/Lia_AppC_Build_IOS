@@ -40,7 +40,7 @@ export type Practitioner = {
   practitionerFileArr: FileUpload[];
   branch: Branch;
   id: string;
-  doctorServices: BranchService[];
   practitionerServices: BranchService[];
   questionVideoPractitionerIdArr: any[];
+  questionVideoPractitionerArr: any[];
 } & Timestamp;

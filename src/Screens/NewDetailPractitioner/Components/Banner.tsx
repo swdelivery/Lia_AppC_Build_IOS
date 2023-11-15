@@ -1,47 +1,57 @@
 import { Image, StyleSheet, View } from "react-native";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { _moderateScale, _width, _widthScale } from "../../../Constant/Scale";
 import CountStar2 from "../../../Components/NewCountStar/CountStar";
 import Certificate from "../../../Components/Certificate/Certificate";
-import { useSelector } from "react-redux";
 import Avatar from "@Components/Avatar";
 import Text from "@Components/Text";
 import Row from "@Components/Row";
 import Column from "@Components/Column";
 import HorizontalServices from "@Components/HorizontalServices";
 import Spacer from "@Components/Spacer";
-import { getPractitionerDetailsState } from "@Redux/practitioner/selectors";
+import { Practitioner } from "@typings/practitioner";
 
-const Banner = () => {
-  const { data } = useSelector(getPractitionerDetailsState);
+type Props = {
+  practitioner: Practitioner;
+};
 
+const Banner = ({ practitioner }: Props) => {
   return (
     <View style={[styles.banner, shadow]}>
       <View style={styles.avatarContainer}>
-        <Avatar size={72} circle avatar={data.avatar} style={styles.avatar} />
+        <Avatar
+          size={72}
+          circle
+          avatar={practitioner.avatar}
+          style={styles.avatar}
+        />
       </View>
 
       <Spacer top={50} />
       <Column alignItems={"center"}>
-        <Text weight="bold">{data?.name}</Text>
-        <CountStar2 count={data?.reviewCount} rating={data?.averageRating} />
+        <Text weight="bold">{practitioner?.name}</Text>
+        <CountStar2
+          count={practitioner?.reviewCount}
+          rating={practitioner?.averageRating}
+        />
         <Text>
-          {data?.position} <Text color="grey">{` | `}</Text> {data?.experience}
+          {practitioner?.position} <Text color="grey">{` | `}</Text>{" "}
+          {practitioner?.experience}
         </Text>
 
         <Row gap={4} flexWrap="wrap" marginTop={8}>
-          {data?.practitionerFileArr?.map((item, index) => {
+          {practitioner?.practitionerFileArr?.map((item, index) => {
             return <Certificate item={item} key={item._id} />;
           })}
         </Row>
 
         <View style={styles.infoHorizon}>
           <View style={styles.infoHorizon__box}>
-            <Text weight="bold">{data?.reviewCount}</Text>
+            <Text weight="bold">{practitioner?.reviewCount}</Text>
             <Text style={styles.infoHorizon__box__textDown}>Lượt đánh giá</Text>
           </View>
           <View style={styles.infoHorizon__box}>
-            <Text weight="bold">{data?.countPartner}</Text>
+            <Text weight="bold">{practitioner?.countPartner}</Text>
             <Text style={styles.infoHorizon__box__textDown}>
               Khách đã điều trị
             </Text>
@@ -54,10 +64,12 @@ const Banner = () => {
             style={styles.iconLike}
             source={require("../../../Image/like.png")}
           />
-          <Text weight="bold">Chuyên dự án: {data?.specialization}</Text>
+          <Text weight="bold">
+            Chuyên dự án: {practitioner?.specialization}
+          </Text>
         </Row>
-        {data?.practitionerServices?.length > 0 && (
-          <HorizontalServices items={data.practitionerServices} />
+        {practitioner?.practitionerServices?.length > 0 && (
+          <HorizontalServices items={practitioner.practitionerServices} />
         )}
       </Column>
 

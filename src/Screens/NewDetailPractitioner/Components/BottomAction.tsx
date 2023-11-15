@@ -1,30 +1,29 @@
 import { Alert, Image, StyleSheet, TouchableOpacity, View } from "react-native";
-import React, { memo } from "react";
+import React from "react";
 import { _moderateScale, _width } from "../../../Constant/Scale";
-import { getBottomSpace } from "react-native-iphone-x-helper";
 import { navigation } from "rootNavigation";
 import ScreenKey from "@Navigation/ScreenKey";
 import { partnerConversationStartChat } from "@Redux/Action/DoctorAction";
 import { FROM_GROUP_CHAT_ID } from "@Constant/Flag";
-import { Doctor } from "@typings/doctor";
 import Text from "@Components/Text";
 import useRequireLoginCallback from "src/Hooks/useRequireLoginAction";
 import Row from "@Components/Row";
+import { Practitioner } from "@typings/practitioner";
 
 type Props = {
-  doctor: Doctor;
+  practitioner: Practitioner;
 };
-const BottomAction = ({ doctor }: Props) => {
+const BottomAction = ({ practitioner }: Props) => {
   const handleBooking = useRequireLoginCallback(() => {
     navigation.navigate(ScreenKey.CREATE_BOOKING, {
-      choiceDoctor: doctor,
+      choiceDoctor: practitioner,
     });
   }, []);
 
   const handleStartChat = useRequireLoginCallback(async () => {
     let result = await partnerConversationStartChat({
       type: "treatment",
-      doctorId: doctor?.userId,
+      doctorId: practitioner?.userId,
     });
     if (result?.isAxiosError) return;
     navigation.navigate(ScreenKey.CHATTING, {

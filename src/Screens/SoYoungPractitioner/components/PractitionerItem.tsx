@@ -9,12 +9,10 @@ import { RED } from "@Constant/Color";
 import { _width } from "@Constant/Scale";
 import { styleElement } from "@Constant/StyleElement";
 import ScreenKey from "@Navigation/ScreenKey";
-import { selectPractitioner } from "@Redux/practitioner/actions";
 import { Practitioner } from "@typings/practitioner";
 import React, { useCallback } from "react";
 import { View, StyleSheet } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "src/Hooks/useNavigation";
 import ContentLoader, { Circle, Rect } from "react-content-loader/native";
 
@@ -24,12 +22,10 @@ type Props = {
 
 export default function DoctorItem({ item }: Props) {
   const { navigation } = useNavigate();
-  const dispatch = useDispatch();
 
   const handleItemPress = useCallback(() => {
-    dispatch(selectPractitioner(item));
     navigation.navigate(ScreenKey.DETAIL_PRACTITIONER, {
-      idPractitioner: item._id,
+      practitioner: item,
     });
   }, [item]);
 
