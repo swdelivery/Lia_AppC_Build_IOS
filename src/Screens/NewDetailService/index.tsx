@@ -22,6 +22,7 @@ import { AfterTimeoutFragment } from "@Components/AfterTimeoutFragment";
 import useServiceReviews from "./useServiceReviews";
 import useRecomendServices from "./useRecomendServices";
 import HorizontalServicesV2 from "@Components/HorizontalServicesV2";
+import Placeholder from "./Components/Placeholder";
 
 const DetailService = () => {
   const { service } = useServiceDetailsContext();
@@ -32,7 +33,7 @@ const DetailService = () => {
   return (
     <Screen safeBottom safeTop style={styles.container}>
       <Header />
-      <AfterTimeoutFragment>
+      <AfterTimeoutFragment placeholder={<Placeholder />}>
         <ScrollView style={styles.content}>
           <HorizonListImage service={service} />
           <View style={styles.body}>
