@@ -1,25 +1,20 @@
-import {
-  Image,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import React, { memo } from "react";
+import { StyleSheet, View } from "react-native";
+import React from "react";
 import { _moderateScale, _width, _widthScale } from "../../../Constant/Scale";
-import { useSelector } from "react-redux";
-import { getDoctorDetailsState } from "@Redux/doctor/selectors";
 import Text from "@Components/Text";
+import { Doctor } from "@typings/doctor";
 
-const MainInfoDoctor = (props) => {
-  const { data } = useSelector(getDoctorDetailsState);
+type Props = {
+  doctor: Doctor;
+};
 
+const MainInfoDoctor = ({ doctor }: Props) => {
   return (
     <View style={styles.container}>
       <Text weight="bold" bottom={8}>
         Thông tin Bác sĩ
       </Text>
-      <Text color={"grey"}>{data?.description}</Text>
+      <Text color={"grey"}>{doctor?.description}</Text>
     </View>
   );
 };

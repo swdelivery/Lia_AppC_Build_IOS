@@ -21,7 +21,7 @@ const Feedback = ({ branch }: Props) => {
         equal: branch.code,
       },
     });
-  }, [branch]);
+  }, [branch?.code]);
 
   return <PartnerFeedback title="Đánh giá của khách hàng" items={data} />;
 };

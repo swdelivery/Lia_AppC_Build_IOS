@@ -15,7 +15,7 @@ export default function useRecomendServices(service: Service) {
         in: service.codeGroup,
       },
     });
-  }, [service]);
+  }, [service.codeGroup]);
 
   return data;
 }

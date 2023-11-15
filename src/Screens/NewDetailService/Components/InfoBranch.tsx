@@ -9,24 +9,21 @@ import Icon from "@Components/Icon";
 import Separator from "@Components/Separator/Separator";
 import { ScrollView } from "react-native-gesture-handler";
 import Column from "@Components/Column";
-import { useDispatch } from "react-redux";
-import { navigation } from "rootNavigation";
-import ScreenKey from "@Navigation/ScreenKey";
-import { selectDoctor } from "@Redux/doctor/actions";
 import Image from "@Components/Image";
 import { GREY } from "@Constant/Color";
 import Avatar from "@Components/Avatar";
 import { Service } from "@typings/serviceGroup";
 import { Doctor } from "@typings/doctor";
 import useBranchDetailsNavigation from "src/Hooks/navigation/useBranchDetailsNavigation";
+import useDoctorDetailsNavigation from "src/Hooks/navigation/useDoctorDetailsNavigation";
 
 type Props = {
   service: Service;
 };
 
 const InfoBranch = ({ service }: Props) => {
-  const dispatch = useDispatch();
   const handlePress = useBranchDetailsNavigation();
+  const handleDoctorPress = useDoctorDetailsNavigation();
 
   const branch = useMemo(() => {
     return service?.branchServices[0]?.branch;
@@ -41,12 +38,9 @@ const InfoBranch = ({ service }: Props) => {
 
   const _handleGoDetailDoctor = useCallback(
     (doctor: Doctor) => () => {
-      dispatch(selectDoctor(doctor));
-      navigation.navigate(ScreenKey.DETAIL_DOCTOR, {
-        idDoctor: doctor?._id,
-      });
+      handleDoctorPress(doctor);
     },
-    []
+    [handleDoctorPress]
   );
 
   return (

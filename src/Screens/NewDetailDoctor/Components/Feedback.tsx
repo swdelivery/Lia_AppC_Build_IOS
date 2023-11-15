@@ -1,29 +1,24 @@
-import { StyleSheet, View, Image } from "react-native";
-import React, { memo, useEffect } from "react";
+import { StyleSheet } from "react-native";
+import React, { useEffect } from "react";
 import { _moderateScale, _width, _widthScale } from "../../../Constant/Scale";
-import moment from "moment";
-import { stylesFont } from "@Constant/Font";
-import Text from "@Components/Text";
-import { useDispatch, useSelector } from "react-redux";
-import { getDoctorReviews } from "@Redux/doctor/actions";
 import { Doctor } from "@typings/doctor";
-import { getDoctorReviewsState } from "@Redux/doctor/selectors";
 import PartnerFeedback from "@Components/PartnerFeedback";
+import useApiPaging from "src/Hooks/services/useApiPaging";
+import PartnerService from "src/Services/PartnerService";
 
 type Props = {
   doctor: Doctor;
 };
 
 const Feedback = ({ doctor }: Props) => {
-  const dispatch = useDispatch();
-  const { data } = useSelector(getDoctorReviewsState);
+  const { data, getData } = useApiPaging(PartnerService.getReviewList);
 
   useEffect(() => {
-    dispatch(
-      getDoctorReviews.request({
-        doctorCode: doctor?.code,
-      })
-    );
+    getData({
+      doctorCode: {
+        equal: doctor?.code,
+      },
+    });
   }, [doctor?.code]);
 
   return (
