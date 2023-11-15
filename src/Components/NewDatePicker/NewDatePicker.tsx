@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from 'react'
+import React, { memo, useCallback, useEffect, useState } from 'react'
 import { Alert, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
 import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 import { useSelector } from 'react-redux'
@@ -26,12 +26,11 @@ type Props = {
 
 const HEIGHT_MODAL = _heightScale(420)
 
-const NewDatePicker = memo(({ visible, onClose,minDate }: Props) => {
+const NewDatePicker = memo(({ visible, onClose, minDate }: Props) => {
 
     const [datePick, setDatePick] = useState(null)
     const opacityBackDrop = useSharedValue(0);
     const tranYModal = useSharedValue(0);
-    const [listBranch, setListBranch] = useState([1, 2, 3, 4, 5])
 
     const { bottom } = useSafeAreaInsets()
 
@@ -65,14 +64,14 @@ const NewDatePicker = memo(({ visible, onClose,minDate }: Props) => {
         }
     })
 
-    const _handleHideModal = () => {
+    const _handleHideModal = useCallback(() => {
         tranYModal.value = withTiming(0, { duration: 200 }, (fnd) => {
             if (fnd) {
                 runOnJS(_hideModal)()
             }
         })
         opacityBackDrop.value = withTiming(0, { duration: 200 })
-    }
+    }, [])
     const _hideModal = () => {
         onClose()
     }
@@ -95,7 +94,7 @@ const NewDatePicker = memo(({ visible, onClose,minDate }: Props) => {
                         }, {
                             backgroundColor: 'rgba(0,0,0,.7)'
                         }, animOpacityBackDrop]}>
-                            <TouchableOpacity onPress={() => _handleHideModal()} style={[StyleSheet.absoluteFillObject]} />
+                            <TouchableOpacity onPress={_handleHideModal} style={[StyleSheet.absoluteFillObject]} />
                         </Animated.View>
 
                         <Animated.View style={[{
@@ -134,18 +133,11 @@ const NewDatePicker = memo(({ visible, onClose,minDate }: Props) => {
                                     borderBottomWidth: .5,
                                     borderBottomColor: BORDER_COLOR
                                 }}
-                                // customDayHeaderStyles={{
-                                //     backgroundColor: 'red'
-                                // }}
                                 width={_width - _widthScale(8 * 2)}
                             />
 
                             <View style={{ flex: 1, justifyContent: 'flex-end', paddingBottom: bottom }}>
-                                <Row gap={16} style={{
-                                    paddingHorizontal: _moderateScale(8 * 2),
-                                    // marginTop: _moderateScale(8 * 5)
-                                    bottom: _moderateScale(0)
-                                }}>
+                                <Row gap={16} paddingHorizontal={_moderateScale(8 * 2)} >
                                     <TouchableOpacity style={styles.leftBtn}>
 
                                         <LinearGradient

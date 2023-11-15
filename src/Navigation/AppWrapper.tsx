@@ -124,6 +124,7 @@ import CreateDiaryDaily from "../Screens/ListDiaryOfPartnerChild/Components/Crea
 import UpdateDiaryDaily from "../Screens/ListDiaryOfPartnerChild/Components/UpdateDiaryForm";
 
 import InfoBooking from "../Screens/InfoBooking/index";
+import DetailBooking from "../Screens/NewDetailBooking/index";
 import InfoMaterial from "../Screens/InfoMaterial/index";
 
 import AskForLgin from "../Screens/Auth/AskForLogin";
@@ -701,6 +702,11 @@ const AppWrapper = (props) => {
                 options={optionsModal}
                 name={ScreenKey.INFO_BOOKING}
                 component={InfoBooking}
+              />
+              <rootStack.Screen
+                options={{ ...TransitionPresets.SlideFromRightIOS }}
+                name={ScreenKey.DETAIL_BOOKING}
+                component={DetailBooking}
               />
               <rootStack.Screen
                 options={optionsModal}

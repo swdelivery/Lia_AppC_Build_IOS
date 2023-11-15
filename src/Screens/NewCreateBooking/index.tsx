@@ -22,7 +22,7 @@ import ActionBottom from "./Components/ActionBottom";
 import Header from "./Components/Header";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
-const index = () => {
+const NewCreateBooking = () => {
 
     const scrollY = useSharedValue(0);
     const [showModalListBranch, setShowModalListBranch] = useState(false)
@@ -105,7 +105,7 @@ const index = () => {
     )
 }
 
-export default index
+export default NewCreateBooking
 
 const styles = StyleSheet.create({
     contentContainer: {

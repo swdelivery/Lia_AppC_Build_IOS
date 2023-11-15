@@ -16,8 +16,8 @@ type Props = {
     title: string;
     visible: boolean;
     onClose: () => void;
-    onConfirm: () => void;
-    options: [];
+    onConfirm: (item) => void;
+    options: any[];
     indexRed: number;
 }
 
@@ -81,7 +81,7 @@ const ActionSheetBottom = memo(({ title, visible, onClose, onConfirm, options, i
     const _handleChoice = useCallback((data) => () => {
         onConfirm(data)
         _handleHideModal()
-    }, [])
+    }, [onConfirm])
 
     if (!visible) {
         return null;

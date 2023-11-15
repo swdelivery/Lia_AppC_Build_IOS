@@ -1,16 +1,18 @@
-import { StyleSheet, TouchableOpacity, View } from 'react-native'
-import React, { useCallback } from 'react'
-import { _moderateScale } from '@Constant/Scale'
+import Column from '@Components/Column'
+import { IconLocation, IconOclock } from '@Components/Icon/Icon'
+import Image from '@Components/Image'
 import Row from '@Components/Row'
 import Text from '@Components/Text'
-import Image from '@Components/Image'
 import { BLACK, BORDER_COLOR, GREY, GREY_FOR_TITLE, WHITE } from '@Constant/Color'
-import Column from '@Components/Column'
-import StatusBooking from './StatusBooking'
-import { IconLocation, IconOclock } from '@Components/Icon/Icon'
-import { useDispatch } from 'react-redux'
-import { openActionSheetBottom } from '@Redux/modal/actions'
+import { _moderateScale } from '@Constant/Scale'
 import { styleElement } from '@Constant/StyleElement'
+import ScreenKey from '@Navigation/ScreenKey'
+import { openActionSheetBottom } from '@Redux/modal/actions'
+import React, { useCallback } from 'react'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
+import { useDispatch } from 'react-redux'
+import { navigation } from 'rootNavigation'
+import StatusBooking from './StatusBooking'
 
 const CardBooking = () => {
     const dispatch = useDispatch()
@@ -22,8 +24,15 @@ const CardBooking = () => {
         }))
     }, [])
 
+    const _handleGoDetailBooking = useCallback(() => {
+        navigation.navigate(ScreenKey.DETAIL_BOOKING)
+    }, [])
+
     return (
-        <View style={[styles.container, shadow]}>
+        <TouchableOpacity
+            onPress={_handleGoDetailBooking}
+            activeOpacity={.8}
+            style={[styles.container, shadow]}>
             <Row gap={8 * 2} alignItems={'flex-start'} style={styles.avatar__title}>
                 <Image style={styles.avatar} />
                 <Column style={{ flex: 1 }} gap={4}>
@@ -61,7 +70,7 @@ const CardBooking = () => {
                     </Text>
                 </Row>
             </Column>
-        </View>
+        </TouchableOpacity>
     )
 }
 

@@ -17,7 +17,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { sizeText } from '@Constant/Text';
 import { navigation } from 'rootNavigation';
 
-const index = () => {
+const NewPickerServiceBooking = () => {
     const dispatch = useDispatch()
     const [routes, setRoutes] = useState([]);
     const [index, setIndex] = useState(0);
@@ -154,7 +154,7 @@ const index = () => {
     )
 }
 
-export default index
+export default NewPickerServiceBooking
 
 const styles = StyleSheet.create({
     btnAction: {
