@@ -60,7 +60,7 @@ const index = () => {
             <StatusBar barStyle={"dark-content"} />
             <ModalListBranch isShow={showModalListBranch} onHideModal={() => setShowModalListBranch(false)} />
             <ModalListDoctor isShow={showModalListDoctor} onHideModal={() => setShowModalListDoctor(false)} />
-            <NewDatePicker minDate={moment()} isShow={showModalDatePicker} onHideModal={() => setShowModalDatePicker(false)} />
+            <NewDatePicker minDate={moment()} visible={showModalDatePicker} onClose={() => setShowModalDatePicker(false)} />
             <TimePicker isShow={showModalTimePicker} onHideModal={() => setShowModalTimePicker(false)} />
             <Header scrollY={scrollY} title={'Đặt hẹn'} />
             <CoverImage scrollY={scrollY} />

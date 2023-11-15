@@ -17,25 +17,32 @@ import Row from '@Components/Row'
 import Text from '@Components/Text'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
+type Props = {
+    visible: boolean;
+    onClose: () => void;
+    minDate: string;
+    // other props
+}
+
 const HEIGHT_MODAL = _heightScale(420)
 
-const NewDatePicker = memo((props) => {
+const NewDatePicker = memo(({ visible, onClose,minDate }: Props) => {
 
     const [datePick, setDatePick] = useState(null)
     const opacityBackDrop = useSharedValue(0);
     const tranYModal = useSharedValue(0);
     const [listBranch, setListBranch] = useState([1, 2, 3, 4, 5])
 
-    const {bottom} = useSafeAreaInsets()
+    const { bottom } = useSafeAreaInsets()
 
 
     useEffect(() => {
-        if (props?.isShow) {
+        if (visible) {
             tranYModal.value = withTiming(-HEIGHT_MODAL, { duration: 200 })
             opacityBackDrop.value = withTiming(1, { duration: 300 })
         } else {
         }
-    }, [props?.isShow])
+    }, [visible])
 
 
     const _handleOnDateChange = (date, type) => {
@@ -67,14 +74,14 @@ const NewDatePicker = memo((props) => {
         opacityBackDrop.value = withTiming(0, { duration: 200 })
     }
     const _hideModal = () => {
-        props?.onHideModal()
+        onClose()
     }
 
     return (
 
         <>
             {
-                props?.isShow ?
+                visible ?
                     <View style={{
                         width: _width,
                         height: _height,
@@ -103,34 +110,12 @@ const NewDatePicker = memo((props) => {
                             height: HEIGHT_MODAL,
                         }, animTranY]}>
                             <View style={{ marginTop: _moderateScale(8 * 2) }} />
-                            {/* <View style={styles.header}>
-
-                                <View style={{ justifyContent: 'center', alignItems: 'center', width: _width, height: _moderateScale(8 * 6) }}>
-
-                                    <Text style={[stylesFont.fontNolanBold, { fontSize: _moderateScale(14) }]}>
-                                        Chọn phòng khám
-                                    </Text>
-
-                                    <TouchableOpacity
-                                        hitSlop={styleElement.hitslopSm}
-                                        onPress={_handleHideModal}
-                                        style={{
-                                            position: 'absolute',
-                                            right: _moderateScale(8 * 3),
-                                            zIndex: 100,
-                                            top: _moderateScale(8 * 2)
-                                        }}>
-                                        <IconCancelGrey style={sizeIcon.sm} />
-                                    </TouchableOpacity>
-                                </View>
-                            </View> */}
-
 
                             <CalendarPicker
 
                                 onDateChange={_handleOnDateChange}
-                                minDate={props?.minDate ? props?.minDate : null}
-                                maxDate={props?.maxDate ? props?.maxDate : null}
+                                minDate={minDate ? minDate : null}
+                                // maxDate={props?.maxDate ? props?.maxDate : null}
                                 previousTitle={"Trước"}
                                 nextTitle={"Sau"}
                                 weekdays={['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7']}
@@ -155,7 +140,7 @@ const NewDatePicker = memo((props) => {
                                 width={_width - _widthScale(8 * 2)}
                             />
 
-                            <View style={{flex:1,justifyContent:'flex-end', paddingBottom:bottom}}>
+                            <View style={{ flex: 1, justifyContent: 'flex-end', paddingBottom: bottom }}>
                                 <Row gap={16} style={{
                                     paddingHorizontal: _moderateScale(8 * 2),
                                     // marginTop: _moderateScale(8 * 5)

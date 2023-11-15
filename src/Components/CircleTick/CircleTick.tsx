@@ -3,9 +3,13 @@ import React from 'react'
 import { _moderateScale } from '@Constant/Scale'
 import { BASE_COLOR, BG_GREY_OPACITY_7, BORDER_COLOR, GREY } from '@Constant/Color'
 
-const CircleTick = (props) => {
+type Props = {
+    isTicked: boolean
+}
 
-    const { isTicked } = props
+const CircleTick = ({ isTicked }: Props) => {
+
+    // const { isTicked } = props
 
     return (
         <>

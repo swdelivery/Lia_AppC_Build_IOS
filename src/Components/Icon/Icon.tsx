@@ -66,6 +66,10 @@ import SVGPlusGrey from "../../SGV/plusGrey.svg";
 import { _moderateScale } from "../../Constant/Scale";
 import { SvgProps } from "react-native-svg";
 
+
+export { default as IconOclock } from "../../SGV/oclock.svg";
+export { default as IconLocation } from "../../SGV/locationBase.svg";
+
 export const IconSetting = (props) => {
   return <SVGSetting width={props?.width} height={props?.height} />;
 };

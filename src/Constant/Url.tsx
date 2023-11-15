@@ -12,6 +12,6 @@ const URL_ORIGINAL = Config.URL_ORIGINAL;
 // const URL_FOR_PARTNER = 'http://192.168.1.17:3240/api/cs'
 
 const URL_AVATAR_DEFAULT =
-  "https://bi.trangbeautycenter.com/assets/default.png";
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFsAoaCvF_W3KpyowaGT2TmB4SlF_mjbHDvU2WK42W2Q44K0MbSSRAhRWDzf8Q1AYHEms&usqp=CAU";
 
 export { URL_ORIGINAL, URL_AVATAR_DEFAULT, URL_FOR_PARTNER };

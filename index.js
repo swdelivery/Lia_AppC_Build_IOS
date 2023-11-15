@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import moment from 'moment';
 import localVI from 'moment/locale/vi';
 import React, { useEffect } from 'react';
-import { Alert, AppRegistry, Platform, StatusBar } from 'react-native';
+import { Alert, AppRegistry, LogBox, Platform, StatusBar } from 'react-native';
 import 'react-native-gesture-handler';
 import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
 import App from './App';
@@ -13,6 +13,8 @@ import { name as appName } from './app.json';
 import { checkRefreshToken } from './src/Redux/Action/AuthAction';
 import messaging from '@react-native-firebase/messaging';
 import {PermissionsAndroid} from 'react-native';
+
+LogBox.ignoreAllLogs()
 
 async function registerAppWithFCM() {
     await messaging().registerDeviceForRemoteMessages();
