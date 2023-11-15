@@ -25,7 +25,6 @@ export default function ServiceItem({ item }: Props) {
 
   const _handleGoDetailService = useCallback(() => {
     navigation.navigate(ScreenKey.DETAIL_SERVICE, {
-      idService: item._id,
       service: item,
     });
   }, [item]);

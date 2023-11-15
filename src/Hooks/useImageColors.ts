@@ -6,6 +6,7 @@ import {
   IOSImageColors,
 } from "react-native-image-colors/lib/typescript/types";
 import { useSharedValue } from "react-native-reanimated";
+import { isIos } from "src/utils/platform";
 
 export default function useImageColors(options?: {
   defaultPrimayColor?: string;
@@ -17,13 +18,13 @@ export default function useImageColors(options?: {
   const getColors = useCallback(async (url: string) => {
     const result = await ImageColors.getColors(url, {
       fallback: "#228B22",
-      cache: false,
+      cache: true,
       key: "",
     });
     if (!result) {
       return;
     }
-    if (Platform.OS == "ios") {
+    if (isIos) {
       primaryColor.value = (result as IOSImageColors).background;
       secondColor.value = (result as IOSImageColors).secondary;
     } else {

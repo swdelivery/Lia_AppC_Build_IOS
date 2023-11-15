@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { _moderateScale, _width, _widthScale } from "../../Constant/Scale";
@@ -23,33 +23,59 @@ import useServiceReviews from "./useServiceReviews";
 import useRecomendServices from "./useRecomendServices";
 import HorizontalServicesV2 from "@Components/HorizontalServicesV2";
 import Placeholder from "./Components/Placeholder";
+import useImageColors from "src/Hooks/useImageColors";
+import Animated, {
+  useAnimatedStyle,
+  withTiming,
+} from "react-native-reanimated";
+import { getImageAvataUrl } from "src/utils/avatar";
 
 const DetailService = () => {
   const { service } = useServiceDetailsContext();
   const { data: reviews, meta: reviewsMeta } = useServiceReviews(service);
   const recomendServices = useRecomendServices(service);
   const beautyInsurancePopup = useVisible(false);
+  const { secondColor, primaryColor, getColors } = useImageColors();
+
+  useEffect(() => {
+    if (service?.representationFileArr?.length) {
+      getColors(getImageAvataUrl(service.representationFileArr[0]));
+    }
+  }, [service]);
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      backgroundColor: withTiming(
+        primaryColor.value === "#FFFFFF"
+          ? secondColor.value
+          : primaryColor.value,
+        { duration: 500 }
+      ),
+    };
+  });
 
   return (
     <Screen safeBottom safeTop style={styles.container}>
       <Header />
       <AfterTimeoutFragment placeholder={<Placeholder />}>
         <ScrollView style={styles.content}>
-          <HorizonListImage service={service} />
+          <HorizonListImage service={service} getColors={getColors} />
           <View style={styles.body}>
+            <Animated.View style={[styles.bodyBg2, animatedStyle]} />
             <LinearGradient
-              style={[StyleSheet.absoluteFill, styles.bodyBg]}
+              style={styles.bodyBg}
               start={{ x: 0, y: 0 }}
               end={{ x: 0, y: 1 }}
-              colors={["#EC54C3", "white", "#F7F8FA"]}
-            />
+              colors={["transparent", "white", "#F7F8FA"]}
+            >
+              <NameService service={service} />
+              <OverViewFeedBack
+                service={service}
+                reviews={reviews}
+                total={reviewsMeta?.totalDocuments}
+              />
+            </LinearGradient>
             {/* <FlashSale /> */}
-            <NameService service={service} />
-            <OverViewFeedBack
-              service={service}
-              reviews={reviews}
-              total={reviewsMeta?.totalDocuments}
-            />
           </View>
           <InfoBranch service={service} />
           <Material service={service} />
@@ -121,10 +147,6 @@ const styles = StyleSheet.create({
   },
   body: {
     width: _width,
-    marginTop: -15,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    paddingBottom: _moderateScale(8 * 2),
   },
   container: {
     flex: 1,
@@ -134,11 +156,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#F7F8FA",
     paddingBottom: 60,
   },
-  bodyBg: {
-    zIndex: -1,
-    borderRadius: _moderateScale(8 * 2),
-    borderBottomLeftRadius: 0,
-    borderBottomRightRadius: 0,
+  bodyBg: {},
+  bodyBg2: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    top: 0,
+    height: 100,
   },
   recomendService: {
     marginHorizontal: 8,

@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     backgroundColor: "white",
     borderRadius: _moderateScale(8),
-    marginTop: _moderateScale(4),
+    marginTop: _moderateScale(8),
   },
   more: {
     flexDirection: "row",

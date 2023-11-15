@@ -16,6 +16,7 @@
   "dependencies": {
     "@itenl/react-native-scrollable-tabview": "^1.1.7",
     "@native-html/iframe-plugin": "^2.6.1",
+    "@r0b0t3d/react-native-carousel": "^3.4.4",
     "@r0b0t3d/react-native-hooks": "^1.0.5",
     "@react-native-community/async-storage": "1.12.1",
     "@react-native-community/clipboard": "^1.5.1",

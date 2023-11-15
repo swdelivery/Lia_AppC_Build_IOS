@@ -1708,7 +1708,14 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@r0b0t3d/react-native-hooks@^1.0.5":
+"@r0b0t3d/react-native-carousel@^3.4.4":
+  version "3.4.4"
+  resolved "https://registry.yarnpkg.com/@r0b0t3d/react-native-carousel/-/react-native-carousel-3.4.4.tgz#8a26a25717325d87078009e0a71529ff50bfe004"
+  integrity sha512-bRVy7diMCygb1jtiyd7fvffffr8RXRWQkW+NLASfb4/RomQqtV+PWn/nJ+2zJHsiy8/psYKUdjWGMfsEQbblbg==
+  dependencies:
+    "@r0b0t3d/react-native-hooks" "^1.0.2"
+
+"@r0b0t3d/react-native-hooks@^1.0.2", "@r0b0t3d/react-native-hooks@^1.0.5":
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/@r0b0t3d/react-native-hooks/-/react-native-hooks-1.0.5.tgz#d0bceb114a88f734d5e75500d04333eb21c28bd6"
   integrity sha512-pC1pfzlB5mK/N0nd1Cw+GwTuTt9aFE0wkMwNTWrgpDpSBgPXzJK5mA8eHyBjB/6+AC7a7rrHKxI6DaJascFUOg==
