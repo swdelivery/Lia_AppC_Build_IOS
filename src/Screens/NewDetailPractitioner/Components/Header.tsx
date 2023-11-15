@@ -15,13 +15,14 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useNavigate } from "src/Hooks/useNavigation";
 import IconBackBlack from "../../../SGV/backArrBlack.svg";
 import Row from "@Components/Row";
+import { Practitioner } from "@typings/practitioner";
 
 type Props = {
   scrollY: SharedValue<number>;
-  doctor: Doctor;
+  practitioner: Practitioner;
 };
 
-export default function Header({ scrollY, doctor }: Props) {
+export default function Header({ scrollY, practitioner }: Props) {
   const { top } = useSafeAreaInsets();
   const { navigation } = useNavigate();
 
@@ -66,14 +67,14 @@ export default function Header({ scrollY, doctor }: Props) {
           />
         </TouchableOpacity>
         <Animated.View style={[styles.content, animSizeImg]}>
-          <Avatar size={32} circle avatar={doctor.avatar} />
+          <Avatar size={32} circle avatar={practitioner.avatar} />
           <View>
             <Text size={12} weight="bold">
-              {doctor?.name}
+              {practitioner?.name}
             </Text>
             <Text size={12}>
-              {doctor?.position} <Text color={"grey"}>|</Text>{" "}
-              {doctor?.experience}
+              {practitioner?.position} <Text color={"grey"}>|</Text>{" "}
+              {practitioner?.experience}
             </Text>
           </View>
         </Animated.View>

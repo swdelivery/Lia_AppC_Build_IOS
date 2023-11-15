@@ -1,5 +1,5 @@
 import { ImageBackground, StyleSheet, View } from "react-native";
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import {
   _heightScale,
   _moderateScale,
@@ -19,37 +19,44 @@ import BottomAction from "./Components/BottomAction";
 import Header from "./Components/Header";
 import ScreenKey from "@Navigation/ScreenKey";
 import { useNavigationParams } from "src/Hooks/useNavigation";
-import { useDispatch, useSelector } from "react-redux";
-import ListBottonService from "@Screens/NewDetailService/Components/ListBottonService";
-import { getPractitionerDetails } from "@Redux/practitioner/actions";
-import { getPractitionerDetailsState } from "@Redux/practitioner/selectors";
 import { WHITE } from "@Constant/Color";
 import Screen from "@Components/Screen";
+import { AfterTimeoutFragment } from "@Components/AfterTimeoutFragment";
+import StickyBackground from "@Components/StickyBackground";
+import useApi from "src/Hooks/services/useApi";
+import PartnerService from "src/Services/PartnerService";
+import ListBottomService from "@Components/ListBottomService/ListBottomService";
 
 type ScreenK = typeof ScreenKey.DETAIL_PRACTITIONER;
 
-const DetailPractitioner = (props) => {
-  const dispatch = useDispatch();
+const DetailPractitioner = () => {
   const scrollY = useSharedValue(0);
-  const { idPractitioner } = useNavigationParams<ScreenK>();
-  const { data } = useSelector(getPractitionerDetailsState);
+  const { practitioner } = useNavigationParams<ScreenK>();
+  const { data, performRequest } = useApi(
+    PartnerService.getPractitionerDetails,
+    practitioner
+  );
 
   useEffect(() => {
-    if (idPractitioner) {
-      console.log({ idPractitioner });
-
-      dispatch(getPractitionerDetails.request(idPractitioner));
+    if (practitioner) {
+      performRequest(practitioner._id);
     }
-  }, [idPractitioner]);
+  }, [practitioner]);
 
-  console.log({ XYZ: data });
-
+  const services = useMemo(() => {
+    if (!data || !data.practitionerServices) {
+      return [];
+    }
+    return data.practitionerServices
+      .map((item) => item.service)
+      .filter((item) => !!item);
+  }, [data]);
 
   const scrollHandler = useAnimatedScrollHandler({
     onScroll: (event, ctx) => {
       scrollY.value = event.contentOffset.y;
     },
-    onBeginDrag: (e) => { },
+    onBeginDrag: (e) => {},
   });
 
   return (
@@ -58,29 +65,37 @@ const DetailPractitioner = (props) => {
         style={styles.container}
         source={require("../../Image/bgGreen.png")}
       >
-        <Header scrollY={scrollY} doctor={data} />
-        <Animated.ScrollView scrollEventThrottle={16} onScroll={scrollHandler}>
-          <LinearGradient
-            style={styles.gradientBg}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 0, y: 1 }}
-            colors={["rgba(255,255,255,0.1)", "#F6F8F8"]}
-          ></LinearGradient>
-          <View style={styles.content}>
-            <View style={styles.bg} />
-            <Banner />
-          </View>
-          <View style={styles.info}>
-            <OverViewBranch branch={data.branch} />
-            <MainInfoDoctor />
-            {/* <Feedback doctor={data} /> */}
-            <QuestionVideo doctor={data} />
-            <ListBottonService />
-            <View style={{ height: 100, backgroundColor: WHITE }} />
-          </View>
-        </Animated.ScrollView>
+        <AfterTimeoutFragment>
+          <Header scrollY={scrollY} practitioner={data} />
+          <Animated.ScrollView
+            scrollEventThrottle={16}
+            onScroll={scrollHandler}
+          >
+            <StickyBackground position="bottom" backgroundColor="#F6F8F8" />
+            <LinearGradient
+              style={styles.gradientBg}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 0, y: 1 }}
+              colors={["rgba(255,255,255,0.1)", "#F6F8F8"]}
+            ></LinearGradient>
+            <View style={styles.content}>
+              <View style={styles.bg} />
+              <Banner practitioner={data} />
+            </View>
+            <View style={styles.info}>
+              <OverViewBranch branch={data?.branch} />
+              <MainInfoDoctor practitioner={data} />
+              {/* <Feedback doctor={data} /> */}
+              <QuestionVideo practitioner={data} />
+              <ListBottomService
+                services={services}
+                containerStyle={styles.services}
+              />
+            </View>
+          </Animated.ScrollView>
 
-        <BottomAction doctor={data} />
+          <BottomAction practitioner={data} />
+        </AfterTimeoutFragment>
       </ImageBackground>
     </Screen>
   );
@@ -121,5 +136,11 @@ const styles = StyleSheet.create({
   },
   info: {
     backgroundColor: "#F6F8F8",
+  },
+  services: {
+    marginTop: 8,
+    marginBottom: 60,
+    backgroundColor: "white",
+    paddingTop: 20,
   },
 });

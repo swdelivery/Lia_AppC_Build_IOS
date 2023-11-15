@@ -16,10 +16,10 @@ import { IconPlayWhite } from "@Components/Icon/Icon";
 import { Practitioner } from "@typings/practitioner";
 
 type Props = {
-  doctor: Practitioner;
+  practitioner: Practitioner;
 };
 
-const QuestionVideo = ({ doctor }: Props) => {
+const QuestionVideo = ({ practitioner }: Props) => {
   const { navigate } = useNavigate();
   return (
     <View style={styles.container}>
@@ -28,11 +28,11 @@ const QuestionVideo = ({ doctor }: Props) => {
       </Text>
 
       <View style={styles.content}>
-        {doctor?.questionVideoPractitionerArr?.map((item, index) => {
+        {practitioner?.questionVideoPractitionerArr?.map((item, index) => {
           return (
             <TouchableOpacity
               onPress={navigate(ScreenKey.VERTICAL_VIDEO_PLAYER, {
-                data: doctor?.questionVideoPractitionerArr,
+                data: practitioner?.questionVideoPractitionerArr,
               })}
               key={index}
               style={[
@@ -53,24 +53,37 @@ const QuestionVideo = ({ doctor }: Props) => {
                 }}
               >
                 <LinearGradient
-                  style={[StyleSheet.absoluteFillObject, { justifyContent: 'flex-end', zIndex: 1, borderRadius: _moderateScale(8) }]}
+                  style={[
+                    StyleSheet.absoluteFillObject,
+                    {
+                      justifyContent: "flex-end",
+                      zIndex: 1,
+                      borderRadius: _moderateScale(8),
+                    },
+                  ]}
                   start={{ x: 0, y: 0 }}
                   end={{ x: 0, y: 1 }}
                   colors={["transparent", "#000"]}
                 >
-                  <View style={{
-                    position:'absolute',
-                    top:"45%",
-                    alignSelf:'center',
-                    opacity:.5
-                  }}>
+                  <View
+                    style={{
+                      position: "absolute",
+                      top: "45%",
+                      alignSelf: "center",
+                      opacity: 0.5,
+                    }}
+                  >
                     <IconPlayWhite />
                   </View>
 
                   <View style={{ margin: 8 * 2 }}>
                     <Column gap={8}>
-                      <Text weight="bold" color={'white'}>{item?.name}</Text>
-                      <Text numberOfLines={3} color={'white'}>{item?.description}</Text>
+                      <Text weight="bold" color={"white"}>
+                        {item?.name}
+                      </Text>
+                      <Text numberOfLines={3} color={"white"}>
+                        {item?.description}
+                      </Text>
                     </Column>
                   </View>
                 </LinearGradient>

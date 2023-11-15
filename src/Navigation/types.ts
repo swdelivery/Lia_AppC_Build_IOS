@@ -3,6 +3,7 @@ import ScreenKey from "./ScreenKey";
 import { Service } from "@typings/serviceGroup";
 import { Branch } from "@typings/branch";
 import { Doctor } from "@typings/doctor";
+import { Practitioner } from "@typings/practitioner";
 
 type valueof<T> = T[keyof T];
 type Screens = valueof<typeof ScreenKey>;
@@ -17,7 +18,7 @@ type ScreenParams = {
   [ScreenKey.DETAIL_BRAND]: { branch: Branch };
   [ScreenKey.DETAIL_DOCTOR]: { doctor: Doctor };
   [ScreenKey.DETAIL_SERVICE]: { service: Service };
-  [ScreenKey.DETAIL_PRACTITIONER]: { idPractitioner: string };
+  [ScreenKey.DETAIL_PRACTITIONER]: { practitioner: Practitioner };
 };
 
 export type RootStackParamsList = {

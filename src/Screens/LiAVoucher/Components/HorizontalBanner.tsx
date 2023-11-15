@@ -217,6 +217,7 @@ const HorizontalBanner = ({
           {listImage?.map((item, index) => {
             return (
               <View
+                key={item._id}
                 style={[
                   {
                     width: 6,

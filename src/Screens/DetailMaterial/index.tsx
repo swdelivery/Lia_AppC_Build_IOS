@@ -22,104 +22,96 @@ import Parameter from "./Parameter";
 import Introduce from "./Introduce";
 import Instruct from "./Instruct";
 import { getDetailMaterial } from "@Redux/Action/Material";
-
-
+import { isAndroid } from "src/utils/platform";
 
 const DetailMaterial = (props) => {
-    const scrollY = useSharedValue(0);
+  const scrollY = useSharedValue(0);
 
-    const [infoMaterial, setInfoMaterial] = useState(null)
-    const scrollableTabViewRef = useRef();
-    const [rootTime, setRootTime] = useState(Date.now());
+  const [infoMaterial, setInfoMaterial] = useState(null);
+  const scrollableTabViewRef = useRef();
+  const [rootTime, setRootTime] = useState(Date.now());
 
-    useFocused(() => {
-        _getData(props?.route?.params?._id)
-    });
+  useFocused(() => {
+    _getData(props?.route?.params?._id);
+  });
 
-    const _getData = async (_id) => {
-        let result = await getDetailMaterial(_id);
-        if (result?.isAxiosError) return;
-        setInfoMaterial(result?.data?.data)
-    }
+  const _getData = async (_id) => {
+    let result = await getDetailMaterial(_id);
+    if (result?.isAxiosError) return;
+    setInfoMaterial(result?.data?.data);
+  };
 
-    const scrollHandler = useAnimatedScrollHandler({
-        onScroll: (event, ctx) => {
-            scrollY.value = event.contentOffset.y;
-        },
-    });
+  const scrollHandler = useAnimatedScrollHandler({
+    onScroll: (event, ctx) => {
+      scrollY.value = event.contentOffset.y;
+    },
+  });
 
-    const Banner = () => {
-        return (
-            <>
-                <HorizontalListImage infoMaterial={infoMaterial} />
-                <MainInfo infoMaterial={infoMaterial} />
-            </>
-        )
-    }
-
-
-    const STACKS = [
-        {
-            screen: () => {
-                return (
-                    <Parameter infoMaterial={infoMaterial}/>
-                )
-            },
-            tabLabel: "Thông số",
-        },
-        {
-            screen: () => {
-                return (
-                    <Introduce infoMaterial={infoMaterial}/>
-                )
-            },
-            tabLabel: "Giới thiệu",
-        },
-        {
-            screen: () => {
-                return (
-                    <Instruct infoMaterial={infoMaterial}/>
-                )
-            },
-            tabLabel: "Hướng dẫn",
-        },
-    ];
-
+  const Banner = () => {
     return (
-      <Screen safeBottom>
-        <StatusBar barStyle={"light-content"} />
-        <Header title={"Thông tin vật liệu"} />
-
-        <ScrollableTabView
-          title={<View />}
-          titleArgs={{
-            interpolateHeight: {
-              inputRange: [0, 0],
-              outputRange: [0, 0],
-              extrapolate: "clamp",
-            },
-          }}
-          mappingProps={{
-            rootTime: rootTime,
-          }}
-          stacks={STACKS}
-          ref={(it) => (scrollableTabViewRef.current = it)}
-          header={<Banner />}
-          tabsStyle={styles.tabsStyle}
-          tabStyle={styles.tabStyle}
-          tabsEnableAnimated={true}
-          tabInnerStyle={styles.tabInnerStyle}
-          tabActiveOpacity={1}
-          tabUnderlineStyle={styles.tabUnderlineStyle}
-          textStyle={styles.textStyle}
-          textActiveStyle={styles.textActiveStyle}
-          firstIndex={0}
-          toTabsOnTab={true}
-          oneTabHidden={true}
-          enableCachePage={true}
-        />
-      </Screen>
+      <>
+        <HorizontalListImage infoMaterial={infoMaterial} />
+        <MainInfo infoMaterial={infoMaterial} />
+      </>
     );
+  };
+
+  const STACKS = [
+    {
+      screen: () => {
+        return <Parameter infoMaterial={infoMaterial} />;
+      },
+      tabLabel: "Thông số",
+    },
+    {
+      screen: () => {
+        return <Introduce infoMaterial={infoMaterial} />;
+      },
+      tabLabel: "Giới thiệu",
+    },
+    {
+      screen: () => {
+        return <Instruct infoMaterial={infoMaterial} />;
+      },
+      tabLabel: "Hướng dẫn",
+    },
+  ];
+
+  return (
+    <Screen safeBottom={isAndroid}>
+      <StatusBar barStyle={"light-content"} />
+      <Header title={"Thông tin vật liệu"} />
+
+      <ScrollableTabView
+        title={<View />}
+        titleArgs={{
+          interpolateHeight: {
+            inputRange: [0, 0],
+            outputRange: [0, 0],
+            extrapolate: "clamp",
+          },
+        }}
+        mappingProps={{
+          rootTime: rootTime,
+        }}
+        stacks={STACKS}
+        ref={(it) => (scrollableTabViewRef.current = it)}
+        header={<Banner />}
+        tabsStyle={styles.tabsStyle}
+        tabStyle={styles.tabStyle}
+        tabsEnableAnimated={true}
+        tabInnerStyle={styles.tabInnerStyle}
+        tabActiveOpacity={1}
+        tabUnderlineStyle={styles.tabUnderlineStyle}
+        textStyle={styles.textStyle}
+        textActiveStyle={styles.textActiveStyle}
+        firstIndex={0}
+        toTabsOnTab={true}
+        oneTabHidden={true}
+        enableCachePage={true}
+      />
+    </Screen>
+  );
 };
 
 export default DetailMaterial;
