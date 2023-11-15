@@ -9,17 +9,16 @@ import Icon from "@Components/Icon";
 import Separator from "@Components/Separator/Separator";
 import { ScrollView } from "react-native-gesture-handler";
 import Column from "@Components/Column";
-import { useDispatch, useSelector } from "react-redux";
-import { getServiceDetailsState } from "@Redux/service/selectors";
+import { useDispatch } from "react-redux";
 import { navigation } from "rootNavigation";
 import ScreenKey from "@Navigation/ScreenKey";
 import { selectDoctor } from "@Redux/doctor/actions";
 import Image from "@Components/Image";
 import { GREY } from "@Constant/Color";
 import Avatar from "@Components/Avatar";
-import { selectBranch } from "@Redux/branch/actions";
 import { Service } from "@typings/serviceGroup";
 import { Doctor } from "@typings/doctor";
+import useBranchDetailsNavigation from "src/Hooks/navigation/useBranchDetailsNavigation";
 
 type Props = {
   service: Service;
@@ -27,6 +26,7 @@ type Props = {
 
 const InfoBranch = ({ service }: Props) => {
   const dispatch = useDispatch();
+  const handlePress = useBranchDetailsNavigation();
 
   const branch = useMemo(() => {
     return service?.branchServices[0]?.branch;
@@ -36,10 +36,7 @@ const InfoBranch = ({ service }: Props) => {
     if (!branch) {
       return;
     }
-    dispatch(selectBranch(branch));
-    navigation.navigate(ScreenKey.DETAIL_BRAND, {
-      idBranch: branch?._id,
-    });
+    handlePress(branch);
   }, [branch]);
 
   const _handleGoDetailDoctor = useCallback(
@@ -93,7 +90,7 @@ const InfoBranch = ({ service }: Props) => {
                 style={styles.avatarDoctor}
                 avatar={item?.treatmentDoctor?.avatar}
               />
-              <Column maxWidth={_widthScale(200)} marginRight={8}>
+              <Column maxWidth={_widthScale(200)} marginRight={8} flex={1}>
                 <Text weight="bold">{item?.treatmentDoctor?.name}</Text>
                 <Text size={12} color={"grey"} numberOfLines={2}>
                   {item?.treatmentDoctor?.description}
