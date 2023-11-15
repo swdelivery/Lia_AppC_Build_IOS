@@ -10,7 +10,7 @@ import Text from "@Components/Text";
 import { Branch } from "@typings/branch";
 
 type Props = {
-  branch: Branch;
+  branch?: Branch;
 };
 
 const BottomAction = ({ branch }) => {

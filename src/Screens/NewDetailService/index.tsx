@@ -65,7 +65,7 @@ const DetailService = () => {
           <Spacer top={16} />
           <ListBottomService services={recomendServices} />
         </ScrollView>
-        <BottomAction branch={service.branchServices[0]} />
+        <BottomAction branch={service?.branchServices[0]} />
         <BeautyInsurancePopup
           visible={beautyInsurancePopup.visible}
           onClose={beautyInsurancePopup.hide}
