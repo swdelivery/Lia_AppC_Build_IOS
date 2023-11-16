@@ -10,6 +10,5 @@ export function* rootSaga() {
     fork(require("./booking/sagas").default),
     fork(require("./user/sagas").default),
     fork(require("./voucher/sagas").default),
-    fork(require("./booking/sagas").default),
   ]);
 }

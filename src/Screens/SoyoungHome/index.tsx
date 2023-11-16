@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { View, StyleSheet, Platform } from "react-native";
+import { View, StyleSheet, Platform, StatusBar } from "react-native";
 import Banner from "./Components/Banner";
 import Search from "./Components/Search";
 import {
@@ -14,15 +14,8 @@ import { useState } from "react";
 import SoYoungService from "../SoYoungService/index";
 import SoYoungBranch from "../SoYoungBranch/index";
 import SoYoungDoctor from "../SoYoungDoctor/index";
-import SoYoungExpert from "../SoYoungExpert";
 import { useRef } from "react";
-import {
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming,
-} from "react-native-reanimated";
-import { getAllServiceGroup } from "../../Redux/Action/ServiceGroup";
-import { useDispatch, useSelector } from "react-redux";
+import { useSharedValue, withTiming } from "react-native-reanimated";
 import Screen from "../../Components/Screen";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { styleElement } from "../../Constant/StyleElement";
@@ -72,6 +65,7 @@ const SoyoungHome = () => {
 
   return (
     <Screen style={styles.container}>
+      <StatusBar barStyle="dark-content" />
       <View style={styles.searchContainer}>
         <Search
           press={() => {

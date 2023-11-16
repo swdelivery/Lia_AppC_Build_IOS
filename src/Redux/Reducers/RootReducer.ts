@@ -29,12 +29,12 @@ import home from "../home/reducers";
 import branch from "../branch/reducers";
 import service from "../service/reducers";
 import doctor from "../doctor/reducers";
-import practitioner from '../practitioner/reducers'
-import booking from '../booking/reducers'
+import practitioner from "../practitioner/reducers";
+import booking from "../booking/reducers";
 import user from "../user/reducers";
 import voucher from "../voucher/reducers";
 import { resetable } from "@Redux/resettableReducer";
-import modal from '../modal/reducers'
+import modal from "../modal/reducers";
 
 const rootReducer = combineReducers({
   newsReducer,
@@ -71,7 +71,7 @@ const rootReducer = combineReducers({
   booking,
   voucher,
   user: resetable(user),
-  modal
+  modal,
 });
 
 // const rootReducer = (state, action) => {
