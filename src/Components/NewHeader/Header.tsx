@@ -1,17 +1,33 @@
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { ColorValue, StatusBar, StyleSheet, TouchableOpacity, View } from "react-native";
 import React, { useMemo } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { BASE_COLOR } from "@Constant/Color";
+import { BASE_COLOR, WHITE } from "@Constant/Color";
 import { _moderateScale } from "@Constant/Scale";
 import { IconBackWhite } from "@Components/Icon/Icon";
 import Text from "@Components/Text";
 import { useNavigate } from "src/Hooks/useNavigation";
 import { styleElement } from "@Constant/StyleElement";
 
-const Header = (props) => {
+
+
+type Props = {
+  barStyle: "light-content" | "dark-content";
+  bg?: ColorValue;
+  safeTop?: boolean;
+  titleColor?: ColorValue;
+  title: string;
+};
+
+
+const Header = ({
+  barStyle = 'light-content',
+  bg = BASE_COLOR,
+  safeTop,
+  titleColor = WHITE,
+  title,
+}: Props) => {
   const { navigation } = useNavigate();
   const { top } = useSafeAreaInsets();
-  const { title } = props;
 
   const containerStyle = useMemo(() => {
     return {
@@ -21,6 +37,7 @@ const Header = (props) => {
 
   return (
     <View style={[styles.header, containerStyle]}>
+      <StatusBar translucent barStyle={barStyle || "light-content"} />
       <View style={styles.header__box}>
         <View style={styleElement.flex}>
           <TouchableOpacity onPress={navigation.goBack}>

@@ -54,8 +54,10 @@ import Affiliate from "../Screens/Affiliate/index";
 import HealthRecord from "../Screens/HealthRecord/index";
 import TreatmentRecord from "../Screens/TreatmentRecord/index";
 import EditProfile from "../Screens/EditProfile/index";
-import PickServiceToBooking from "../Screens/Booking/bookingForBranch/PickServiceToBooking";
-import ListBooking from "../Screens/ListBooking/index";
+import PickServiceToBooking from "../Screens/NewPickerServiceBooking/index";
+// import PickServiceToBooking from "../Screens/Booking/bookingForBranch/PickServiceToBooking";
+import ListBooking from "../Screens/NewListBookings/index";
+// import ListBooking from "../Screens/ListBooking/index";
 import ListDeposit from "../Screens/ListDeposit/index";
 import ListPayment from "../Screens/ListPayment/index";
 import ListMedicine from "../Screens/ListMedicine/index";
@@ -122,6 +124,7 @@ import CreateDiaryDaily from "../Screens/ListDiaryOfPartnerChild/Components/Crea
 import UpdateDiaryDaily from "../Screens/ListDiaryOfPartnerChild/Components/UpdateDiaryForm";
 
 import InfoBooking from "../Screens/InfoBooking/index";
+import DetailBooking from "../Screens/NewDetailBooking/index";
 import InfoMaterial from "../Screens/InfoMaterial/index";
 
 import AskForLgin from "../Screens/Auth/AskForLogin";
@@ -153,7 +156,8 @@ import FeedBackBranch from "../Screens/DetailBrand/FeedBackBranch";
 import ModalRequireAvatar from "../Components/Notification/ModalRequireAvatar";
 import FeedBackDoctor from "../Screens/DetailDoctor/FeedBackDoctor";
 import FeedBackService from "../Screens/DetailService/FeedBackService";
-import CreateBooking from "../Screens/CreateBooking/CreateBooking";
+// import CreateBooking from "../Screens/CreateBooking/CreateBooking";
+import CreateBooking from "../Screens/NewCreateBooking/index";
 import ListVoucher from "../Screens/ListVoucher/ListVoucher";
 import OtherPersonalPage from "../Screens/MyPersonalPage/OtherPersonalPage";
 import ListAllHistoryTreatment from "../Screens/Profile/ListAllHistoryTreatment";
@@ -700,6 +704,11 @@ const AppWrapper = (props) => {
                 component={InfoBooking}
               />
               <rootStack.Screen
+                options={{ ...TransitionPresets.SlideFromRightIOS }}
+                name={ScreenKey.DETAIL_BOOKING}
+                component={DetailBooking}
+              />
+              <rootStack.Screen
                 options={optionsModal}
                 name={ScreenKey.INFO_MATERIAL}
                 component={InfoMaterial}
@@ -728,6 +737,11 @@ const AppWrapper = (props) => {
                 name={ScreenKey.PICK_SERVICE_TO_BOOKING}
                 component={PickServiceToBooking}
               />
+              {/* <rootStack.Screen
+                options={optionsModal}
+                name={ScreenKey.PICK_SERVICE_TO_BOOKING}
+                component={PickServiceToBooking}
+              /> */}
               {/* -------- */}
               {/* Service */}
               <rootStack.Screen
@@ -1026,6 +1040,11 @@ const AppWrapper = (props) => {
                 name={ScreenKey.CREATE_BOOKING}
                 component={CreateBooking}
               />
+              {/* <rootStack.Screen
+                options={{ ...TransitionPresets.SlideFromRightIOS }}
+                name={ScreenKey.CREATE_BOOKING}
+                component={CreateBooking}
+              /> */}
               <rootStack.Screen
                 options={{ ...TransitionPresets.SlideFromRightIOS }}
                 name={ScreenKey.CREATE_BOOKING_FLASH_SALE}
