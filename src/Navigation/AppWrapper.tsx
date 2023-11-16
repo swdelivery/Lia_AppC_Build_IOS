@@ -204,6 +204,8 @@ import MyVouchers from "../Screens/LiAVoucher/MyVouchers";
 import DetailNewsVoucher from "../Screens/LiAVoucher/DetailNewsVoucher";
 import VerticalVideoPlayer from "@Screens/VerticalVideoPlayer/VerticalVideoPlayer";
 import DetailMaterial from "@Screens/DetailMaterial";
+import ListBeautyInsurance from "@Screens/ListBeautyInsurance";
+import DetailBeautyInsurance from "@Screens/DetailBeautyInsurance";
 
 const Tab = createMaterialTopTabNavigator();
 const Stack = createStackNavigator();
@@ -1209,6 +1211,18 @@ const AppWrapper = (props) => {
                 options={{ ...TransitionPresets.SlideFromRightIOS }}
                 name={ScreenKey.DETAIL_MATERIAL}
                 component={DetailMaterial}
+              />
+
+              {/* BEAUTY INSURANCE */}
+              <rootStack.Screen
+                options={{ ...TransitionPresets.SlideFromRightIOS }}
+                name={ScreenKey.LIST_BEAUTY_INSURANCE}
+                component={ListBeautyInsurance}
+              />
+              <rootStack.Screen
+                options={{ ...TransitionPresets.SlideFromRightIOS }}
+                name={ScreenKey.DETAIL_BEAUTY_INSURANCE}
+                component={DetailBeautyInsurance}
               />
 
               <rootStack.Screen

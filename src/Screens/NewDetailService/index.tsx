@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { _moderateScale, _width, _widthScale } from "../../Constant/Scale";
@@ -29,6 +29,8 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import { getImageAvataUrl } from "src/utils/avatar";
+import { navigation } from "rootNavigation";
+import ScreenKey from "@Navigation/ScreenKey";
 
 const DetailService = () => {
   const { service } = useServiceDetailsContext();
@@ -53,6 +55,10 @@ const DetailService = () => {
       ),
     };
   });
+
+  const _handleGoListBeautyInsurance = useCallback(() => {
+    navigation.navigate(ScreenKey.LIST_BEAUTY_INSURANCE)
+  }, [])
 
   return (
     <Screen safeBottom safeTop style={styles.container}>
@@ -79,7 +85,7 @@ const DetailService = () => {
           </View>
           <InfoBranch service={service} />
           <Material service={service} />
-          <BeautyInsurance onViewMore={beautyInsurancePopup.show} />
+          <BeautyInsurance onViewMore={_handleGoListBeautyInsurance} />
           {/* <Tutorial /> */}
           <MainInfoService service={service} />
           <HorizontalServicesV2
