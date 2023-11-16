@@ -3792,9 +3792,9 @@ ee-first@1.1.1:
   integrity sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==
 
 electron-to-chromium@^1.4.535:
-  version "1.4.583"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.583.tgz#7b0ac4f36388da4b5485788adb92cd7dd0abffc4"
-  integrity sha512-93y1gcONABZ7uqYe/JWDVQP/Pj/sQSunF0HVAPdlg/pfBnOyBMLlQUxWvkqcljJg1+W6cjvPuYD+r1Th9Tn8mA==
+  version "1.4.585"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.585.tgz#7b3cb6846bb5cc10a8d5904c351a9b8aaa76ea90"
+  integrity sha512-B4yBlX0azdA3rVMxpYwLQfDpdwOgcnLCkpvSOd68iFmeedo+WYjaBJS3/W58LVD8CB2nf+o7C4K9xz1l09RkWg==
 
 eme-encryption-scheme-polyfill@^2.0.1:
   version "2.1.1"
@@ -4444,9 +4444,9 @@ flow-enums-runtime@^0.0.5:
   integrity sha512-PSZF9ZuaZD03sT9YaIs0FrGJ7lSUw7rHZIex+73UYVXg46eL/wxN5PaVcPJFudE2cJu5f0fezitV5aBkLHPUOQ==
 
 flow-parser@0.*:
-  version "0.221.0"
-  resolved "https://registry.yarnpkg.com/flow-parser/-/flow-parser-0.221.0.tgz#e11d7b7d19fb4ce08c3e54461476af4111a62fd0"
-  integrity sha512-i+GzdLcKYy5bxhx1N+FIcR1bTqssuVWTJcuytMhwqLAxifz46g4BSNicWXGrtzT0HibJUBIzZOYA3FveJucTPg==
+  version "0.222.0"
+  resolved "https://registry.yarnpkg.com/flow-parser/-/flow-parser-0.222.0.tgz#88decc0e35bc11c011af66dbc2f669589d69a6b2"
+  integrity sha512-Fq5OkFlFRSMV2EOZW+4qUYMTE0uj8pcLsYJMxXYriSBDpHAF7Ofx3PibCTy3cs5P6vbsry7eYj7Z7xFD49GIOQ==
 
 flow-parser@^0.206.0:
   version "0.206.0"
@@ -7612,9 +7612,9 @@ react-native-video@^5.2.1:
     shaka-player "^2.5.9"
 
 react-native-vision-camera@^3.3.1:
-  version "3.6.4"
-  resolved "https://registry.yarnpkg.com/react-native-vision-camera/-/react-native-vision-camera-3.6.4.tgz#ac77238f31779f647d03bce3cd4b5eba61f3df85"
-  integrity sha512-DDWb8aB5tE7sM7YuU5f31AuhJVDJS3amZoZMQgHWa8S9h0acp3hY3uyriKzXshj/asYu2UAo5QUUglwl7Mcd1Q==
+  version "3.6.6"
+  resolved "https://registry.yarnpkg.com/react-native-vision-camera/-/react-native-vision-camera-3.6.6.tgz#c018c21566e7a6cbfe8078cb8e7430bb2d54b301"
+  integrity sha512-riIepYzel6jrhjd03smvrnI7RVLGPVxTx2ccNqFOx3Gycz1KiQ7X4ClZoZK60asjUlTHG/G3lGJONprljnaNhQ==
 
 react-native-webview@^13.6.2:
   version "13.6.2"

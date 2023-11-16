@@ -5,6 +5,9 @@ import { BORDER_COLOR, GREY, WHITE } from '@Constant/Color'
 import Text from '@Components/Text'
 
 const InputRefCode = () => {
+
+    
+
     return (
         <View style={styles.container}>
             <View style={styles.topTitle}>

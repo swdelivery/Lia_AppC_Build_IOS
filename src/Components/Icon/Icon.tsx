@@ -69,6 +69,7 @@ import { SvgProps } from "react-native-svg";
 
 export { default as IconOclock } from "../../SGV/oclock.svg";
 export { default as IconLocation } from "../../SGV/locationBase.svg";
+export { default as IconPlusBase } from "../../SGV/plusBase.svg";
 
 export const IconSetting = (props) => {
   return <SVGSetting width={props?.width} height={props?.height} />;
