@@ -1,6 +1,8 @@
 import React, { ReactNode } from "react";
 import { useTimeout } from "@r0b0t3d/react-native-hooks";
 import { useState } from "react";
+import Fade from "@Components/Fade";
+import { styleElement } from "@Constant/StyleElement";
 
 export function AfterTimeoutFragment({
   timeout = 500,
@@ -21,5 +23,9 @@ export function AfterTimeoutFragment({
     return placeholder;
   }
 
-  return <>{children}</>;
+  return (
+    <Fade visible initialScale={1} style={styleElement.flex}>
+      {children}
+    </Fade>
+  );
 }

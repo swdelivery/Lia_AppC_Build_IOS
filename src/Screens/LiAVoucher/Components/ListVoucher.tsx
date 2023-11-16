@@ -130,6 +130,7 @@ const ListVoucher = ({ animatedSecondColor }: Props) => {
         onEndReached={loadMoreData}
         onEndReachedThreshold={0.2}
         keyExtractor={keyExtractor}
+        contentContainerStyle={styles.contentContainer}
       />
     </Animated.View>
   );
@@ -184,5 +185,8 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
+  },
+  contentContainer: {
+    paddingBottom: 60,
   },
 });

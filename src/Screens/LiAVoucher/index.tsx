@@ -11,6 +11,7 @@ import Animated, {
   useSharedValue,
 } from "react-native-reanimated";
 import Header from "./Components/Header";
+import { AfterTimeoutFragment } from "@Components/AfterTimeoutFragment";
 
 const LiAVoucher = () => {
   const preColor = useSharedValue("#000");
@@ -48,22 +49,23 @@ const LiAVoucher = () => {
         animatedPrimaryColor={animatedPrimaryColor}
         title={"LIA VOUCHER"}
       />
+      <AfterTimeoutFragment>
+        <HorizontalBanner
+          primaryColor={primaryColor}
+          flagIndexHasChanged={flagIndexHasChanged}
+          flagSecondIndexHasChanged={flagSecondIndexHasChanged}
+          preColor={preColor}
+          preSecondColor={preSecondColor}
+          secondColor={secondColor}
+        />
 
-      <HorizontalBanner
-        primaryColor={primaryColor}
-        flagIndexHasChanged={flagIndexHasChanged}
-        flagSecondIndexHasChanged={flagSecondIndexHasChanged}
-        preColor={preColor}
-        preSecondColor={preSecondColor}
-        secondColor={secondColor}
-      />
+        <HorizontalTab
+          animatedPrimaryColor={animatedPrimaryColor}
+          animatedSecondColor={animatedSecondColor}
+        />
 
-      <HorizontalTab
-        animatedPrimaryColor={animatedPrimaryColor}
-        animatedSecondColor={animatedSecondColor}
-      />
-
-      <ListVoucher animatedSecondColor={animatedSecondColor} />
+        <ListVoucher animatedSecondColor={animatedSecondColor} />
+      </AfterTimeoutFragment>
     </Animated.View>
   );
 };

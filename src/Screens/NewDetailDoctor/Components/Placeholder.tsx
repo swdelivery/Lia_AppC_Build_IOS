@@ -1,10 +1,10 @@
 import React from "react";
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import ContentLoader, { Circle, Rect } from "react-content-loader/native";
 
 export default function Placeholder() {
   return (
-    <View>
+    <View style={styles.container}>
       <ContentLoader>
         <Rect x="10" y="90" rx="20" ry="20" width="94%" height="200" />
         <Circle cx="50%" cy="90" r="40" />
@@ -18,3 +18,9 @@ export default function Placeholder() {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    marginTop: 120,
+  },
+});

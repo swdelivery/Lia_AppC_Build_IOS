@@ -19,7 +19,6 @@ import BottomAction from "./Components/BottomAction";
 import Header from "./Components/Header";
 import ScreenKey from "@Navigation/ScreenKey";
 import { useNavigationParams } from "src/Hooks/useNavigation";
-import { WHITE } from "@Constant/Color";
 import Screen from "@Components/Screen";
 import { AfterTimeoutFragment } from "@Components/AfterTimeoutFragment";
 import StickyBackground from "@Components/StickyBackground";
@@ -62,12 +61,12 @@ const DetailPractitioner = () => {
 
   return (
     <Screen safeBottom>
-      <ImageBackground
-        style={styles.container}
-        source={require("../../Image/bgGreen.png")}
-      >
-        <Header scrollY={scrollY} practitioner={data} />
-        <AfterTimeoutFragment placeholder={<Placeholder />}>
+      <AfterTimeoutFragment placeholder={<Placeholder />}>
+        <ImageBackground
+          style={styles.container}
+          source={require("../../Image/bgGreen.png")}
+        >
+          <Header scrollY={scrollY} practitioner={data} />
           <Animated.ScrollView
             scrollEventThrottle={16}
             onScroll={scrollHandler}
@@ -96,8 +95,8 @@ const DetailPractitioner = () => {
           </Animated.ScrollView>
 
           <BottomAction practitioner={data} />
-        </AfterTimeoutFragment>
-      </ImageBackground>
+        </ImageBackground>
+      </AfterTimeoutFragment>
     </Screen>
   );
 };

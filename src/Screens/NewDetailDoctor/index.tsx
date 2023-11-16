@@ -63,12 +63,12 @@ const DetailDoctor = () => {
 
   return (
     <Screen>
-      <ImageBackground
-        style={styles.container}
-        source={require("../../Image/bgGreen.png")}
-      >
-        <Header scrollY={scrollY} doctor={data} />
-        <AfterTimeoutFragment placeholder={<Placeholder />}>
+      <AfterTimeoutFragment placeholder={<Placeholder />}>
+        <ImageBackground
+          style={styles.container}
+          source={require("../../Image/bgGreen.png")}
+        >
+          <Header scrollY={scrollY} doctor={data} />
           <Animated.ScrollView
             scrollEventThrottle={16}
             onScroll={scrollHandler}
@@ -97,8 +97,8 @@ const DetailDoctor = () => {
           </Animated.ScrollView>
 
           <BottomAction doctor={data} />
-        </AfterTimeoutFragment>
-      </ImageBackground>
+        </ImageBackground>
+      </AfterTimeoutFragment>
     </Screen>
   );
 };
