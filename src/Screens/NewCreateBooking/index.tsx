@@ -1,6 +1,6 @@
 import Column from "@Components/Column";
 import Screen from "@Components/Screen";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { StatusBar, StyleSheet, View } from "react-native";
 import Animated, { useAnimatedScrollHandler, useSharedValue } from "react-native-reanimated";
 import CoverImage from "./Components/CoverImage";
@@ -21,6 +21,8 @@ import Notes from "./Components/Notes";
 import ActionBottom from "./Components/ActionBottom";
 import Header from "./Components/Header";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import ListBeautyInsurance from "./Components/ListBeautyInsurance";
+import ModalListBeautyInsurance from "./Components/ModalListBeautyInsurance";
 
 const NewCreateBooking = () => {
 
@@ -32,6 +34,7 @@ const NewCreateBooking = () => {
     const [currPickDate, setCurrPickDate] = useState(moment())
     const [showModalDatePicker, setShowModalDatePicker] = useState(false)
     const [showModalTimePicker, setShowModalTimePicker] = useState(false)
+    const [showModalPickBeautyInsurance, setShowModalPickBeautyInsurance] = useState(false)
 
     const [listTimeForBooking, setListTimeForBooking] = useState([
         { _id: '2', from: '09:00', to: '10:00' },
@@ -47,6 +50,12 @@ const NewCreateBooking = () => {
     ])
     const [currPickTime, setCurrPickTime] = useState(null)
 
+    const [refCodeValue, setRefCodeValue] = useState(null)
+
+
+    const _handleShowModalPickBeautyInsurance = useCallback(() => {
+        setShowModalPickBeautyInsurance(old => !old)
+    }, [])
 
     const scrollHandler = useAnimatedScrollHandler({
         onScroll: (event, ctx) => {
@@ -62,6 +71,8 @@ const NewCreateBooking = () => {
             <ModalListDoctor isShow={showModalListDoctor} onHideModal={() => setShowModalListDoctor(false)} />
             <NewDatePicker minDate={moment()} visible={showModalDatePicker} onClose={() => setShowModalDatePicker(false)} />
             <TimePicker isShow={showModalTimePicker} onHideModal={() => setShowModalTimePicker(false)} />
+            <ModalListBeautyInsurance visible={showModalPickBeautyInsurance} onClose={_handleShowModalPickBeautyInsurance} />
+
             <Header scrollY={scrollY} title={'Đặt hẹn'} />
             <CoverImage scrollY={scrollY} />
             <Animated.ScrollView
@@ -74,7 +85,10 @@ const NewCreateBooking = () => {
                     enableOnAndroid={true}>
                     <View style={{ backgroundColor: WHITE }}>
                         <Column style={{ marginTop: 8 * 4 }} gap={32}>
-                            <InputRefCode />
+                            <InputRefCode
+                                value={refCodeValue}
+                            // onChange={}
+                            />
                             <InputPicker require title={"Chọn phòng khám"} onPress={() => setShowModalListBranch(old => !old)} />
                             <InputPicker title={'Chọn bác sĩ'} onPress={() => setShowModalListDoctor(old => !old)} />
                             <InputTimeBooking
@@ -88,6 +102,9 @@ const NewCreateBooking = () => {
                                 currPickTime={currPickTime}
                             />
                             <PickService />
+                            <ListBeautyInsurance
+                                onPress={_handleShowModalPickBeautyInsurance}
+                            />
                             <ListVoucher />
                             <Bill />
                             <Notes />

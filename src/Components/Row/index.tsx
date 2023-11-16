@@ -6,10 +6,11 @@ type Props = ViewStyle & {
   children?: ReactNode;
 };
 
-export default function Row({ alignItems = "center", children, style, ...props }: Props) {
+export default function Row({ alignItems = "center", justifyContent = 'flex-start', children, style, ...props }: Props) {
   const containerStyle = useMemo(() => {
     return {
       alignItems,
+      justifyContent,
       ...props,
     };
   }, [alignItems, props]);
