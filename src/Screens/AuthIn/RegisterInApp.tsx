@@ -38,6 +38,9 @@ import SVGArrowDown from "../../SGV/arrowDown.svg";
 import CountryPicker from 'react-native-country-picker-modal' 
 import { Country, CountryCode, CallingCode} from "react-native-country-picker-modal/lib/types";
 import { isValidPhoneNumber } from 'react-phone-number-input';
+import Column from "@Components/Column";
+import PasswordInput from "@Components/PasswordInput";
+import PhoneInput from "@Components/PhoneInput";
 
 const RegisterInApp = (props) => {
   const [showModal, setShowModal] = useState(false);
@@ -52,29 +55,13 @@ const RegisterInApp = (props) => {
   const [isShowPass, setIsShowPass] = useState(false);
   const [isShowPass2, setIsShowPass2] = useState(false);
 
-  const [countryCode, setCountryCode] = useState<CountryCode>('VN')
-  const [country, setCountry] = useState<Country>(null)
   const [countryCallingCode, setCountryCallingCode] = useState<CallingCode>('84')
-  const [withCountryNameButton, setWithCountryNameButton] = useState<boolean>(
-    false,
-  )
-  const [withFlag, setWithFlag] = useState<boolean>(true)
-  const [withEmoji, setWithEmoji] = useState<boolean>(true)
-  const [withFilter, setWithFilter] = useState<boolean>(true)
-  const [withAlphaFilter, setWithAlphaFilter] = useState<boolean>(false)
-  const [withCallingCode, setWithCallingCode] = useState<boolean>(true)
 
-  const [isValidating, setIsValidating] = useState(false);
   const [errorPhoneNumber, setErrorPhoneNumber] = useState("");
   const [errorPassword, setErrorPassword] = useState("");
   const [errorPassword2, setErrorPassword2] = useState("");
   const [errorName, setErrorName] = useState("");
 
-  const onSelect = (country: Country) => {
-    setCountryCode(country.cca2)
-    setCountry(country)
-    setCountryCallingCode(country.callingCode[0])
-  }
   const dispatch = useDispatch();
 
   const fetchData = async () => {
@@ -150,100 +137,96 @@ const RegisterInApp = (props) => {
     });
   }, [name, phoneNumber, password, password2, codeAffiliate]);
 
-  const validatePhoneNumber = (content) => {
-    if (!content){
+  const validatePhoneNumber = () => {
+    if (!phoneNumber){
       setErrorPhoneNumber("Vui lòng nhập số điện thoại");
-    } else if (!isValidPhoneNumber('+' + countryCallingCode + content)){
+      return false;
+    } else if (!isValidPhoneNumber('+' + countryCallingCode + phoneNumber)){
       setErrorPhoneNumber("Số điện thoại không hợp lệ");
+      return false;
     } else {
       setErrorPhoneNumber("");
+      return true;
     }
   }
-  const validateName = (content) => {
-    if (!content){
+  const validateName = () => {
+    if (!name){
       setErrorName("Vui lòng nhập họ và tên");
+      return false;
     } else {
       setErrorName("");
+      return true;
     }
   }
 
-  const validatePassword = (content) => {
-    if (!content){
+  const validatePassword = () => {
+    if (!password){
       setErrorPassword("Vui lòng nhập mật khẩu");
-    } else if (content.length < 6){
+      return false;
+    } else if (password.length < 6){
       setErrorPassword("Mật khẩu phải có ít nhất 6 ký tự");
+      return false;
     } else{
       setErrorPassword("");
+      return true;
     }
   }
 
-  const validatePassword2 = (content) => {
+  const validatePassword2 = () => {
     if (password){
-      if (!content){
+      if (!password2){
         setErrorPassword2("Vui lòng xác nhận lại mật khẩu");
-      } else if (password !== content){
+        return false;
+      } else if (password !== password2){
         setErrorPassword2("Nhập lại mật khẩu không trùng khớp");
+        return false;
       } else {
         setErrorPassword2("");
+        return true;
       }
     }else{
       setErrorPassword2("");
+      return true;
     }
   }
 
   const validation = () => {
     var isContinue = true;
-    validatePassword(password);
-    validatePhoneNumber(phoneNumber);
-    validateName(name);
-    validatePassword2(password2);
-    if (!phoneNumber){
-      isContinue = false;
-    } else if (!isValidPhoneNumber('+' + countryCallingCode + phoneNumber)){
+    if (!validateName()){
       isContinue = false;
     }
 
-    if (!name) {
+    if (!validatePhoneNumber()){
       isContinue = false;
     }
 
-    if (!password){
-      isContinue = false;
-    } else if (password.length < 6){
+    if (!validatePassword()){
       isContinue = false;
     }
 
-    if (password){
-      if (!password2){
-        isContinue = false;
-      } else if (password !== password2){
-        isContinue = false;
-      } 
+    if (!validatePassword2()){
+      isContinue = false;
     }
 
     return isContinue;
   }
 
+  const formatCodeAffiliate = (textValue) => {
+    setCodeAffiliate(textValue.toUpperCase());
+  }
+
 
   return (
     <Screen safeTop style={styles.container}>
-      <StatusBarCustom bgColor={"white"} barStyle={"dark-content"} />
       <Header title="Đăng ký tài khoản" onBack={navigation.goBack} />
         <KeyboardAwareScrollView
           bounces={false}
           contentContainerStyle={styles.content}
-        >
-          <KeyboardAvoidingView
-          behavior="position"> 
-            <View style={{ height: _moderateScale(8 * 2) }} />
+          enableOnAndroid={true}
+          >
             <View
               style={[
-                {
-                  height: _moderateScale(8 * 20),
-                  borderWidth: 0,
-                  margin: _moderateScale(8 * 2),
-                  borderRadius: _moderateScale(8 * 2),
-                },
+                styles.container_logo,
                 styleElement.centerChild,
               ]}
             >
@@ -254,9 +237,8 @@ const RegisterInApp = (props) => {
                 source={require("../../NewImage/NewLogoLogin.png")}
               />
             </View>
-            <View style={{ height: _moderateScale(8 * 2) }} />
 
-            <View style={{ paddingHorizontal: _moderateScale(8 * 2) }}>
+            <Column gap={_moderateScale(8 * 2)} style={{ paddingHorizontal: _moderateScale(8 * 2), marginTop: _moderateScale(8 * 2)}}>
               <View>
                 {
                   codeAffiliate ?
@@ -274,18 +256,14 @@ const RegisterInApp = (props) => {
                   borderWidth={1}
                   paddingHorizontal={10}
                 >
-                  <View style={[styleElement.rowAliCenter]}>
-                    <TextInput
-                      value={codeAffiliate}
-                      onChangeText={(content) => {
-                        setCodeAffiliate(content.toUpperCase());
-                      }}
-                      // style={styles.input}
-                      placeholder={"Mã giới thiệu"}
-                      placeholderTextColor={"grey"}
-                      style={styles.input_text}
-                    />
-                  </View>
+                  <TextInput
+                    value={codeAffiliate}
+                    onChangeText={formatCodeAffiliate}
+                    // style={styles.input}
+                    placeholder={"Mã giới thiệu"}
+                    placeholderTextColor={"grey"}
+                    style={styles.input_text}
+                  />
 
                   <Collapsible collapsed={currPartnerCollab?._id ? false : true}>
                     <View
@@ -306,7 +284,6 @@ const RegisterInApp = (props) => {
                   </Collapsible>
                 </Row>
               </View>
-              <View style={{ height: _moderateScale(8 * 2) }} />
 
               <View>
                 {
@@ -331,16 +308,11 @@ const RegisterInApp = (props) => {
                 >
                   <TextInput
                     value={name}
-                    onChangeText={(content) => {
-                      setName(content);
-                      if (isValidating){
-                        validateName(content);
-                      }
-                    }}
-                    // style={styles.input}
+                    onChangeText={setName}
                     placeholder={"Tên của bạn"}
                     placeholderTextColor={"grey"}
                     style={styles.input_text}
+                    onBlur={validateName}
                   />
                 </Row>
                 {
@@ -349,174 +321,33 @@ const RegisterInApp = (props) => {
                   </Text> : <></>
                 }
               </View>
-              <View style={{ height: _moderateScale(8 * 2) }} />
 
-              <View>
-                {
-                  phoneNumber ?
-                  <View style={styles.labelContainer}>
-                    <Text size={14} color={Color.GREY} >Số điện thoại</Text>
-                  </View> 
-                  : <></>
-                }
-                <Row
-                  paddingVertical={_moderateScale(8 * 2)}
-                  borderRadius={_moderateScale(8)}
-                  borderColor={
-                    errorPhoneNumber
-                      ? Color.ERROR_COLOR
-                      : phoneNumber
-                      ? Color.BORDER_INPUT_TEXT_FOCUSED
-                      : Color.BORDER_INPUT_TEXT
-                  }
-                  borderWidth={1}
-                  paddingHorizontal={10}
-                >
-                  <CountryPicker
-                    {...{
-                      countryCode,
-                      withFilter,
-                      withFlag,
-                      withCountryNameButton,
-                      withAlphaFilter,
-                      withCallingCode,
-                      withEmoji,
-                      onSelect,
-                    }}
-                    visible={false}
-                  />
-                  <Text>
-                    +{countryCallingCode}
-                  </Text>
-                  <TextInput
-                    value={phoneNumber}
-                    keyboardType={"number-pad"}
-                    onChangeText={(item)=>{
-                      setphoneNumber(item);
-                      if (isValidating){
-                        validatePhoneNumber(item);
-                      }
-                    }}
-                    style={styles.input_text}
-                    placeholder={"Số điện thoại"}
-                    placeholderTextColor={"grey"}
-                  />
-                </Row>
-                {
-                  errorPhoneNumber && errorPhoneNumber.length > 0 ? <Text style={styles.error_text}>
-                    {errorPhoneNumber}
-                  </Text> : <></>
-                }
-              </View>
-              <View style={{ height: _moderateScale(8 * 2) }} />
+              <PhoneInput 
+                content={phoneNumber} 
+                countryCallingCode={countryCallingCode} 
+                errorMessage={errorPhoneNumber} 
+                label="Nhập số điện thoại" 
+                onBlur={validatePhoneNumber} 
+                onChangeText={setphoneNumber} 
+                onSelectionCallingCode={setCountryCallingCode}/>
+                
+              <PasswordInput 
+                content={password} 
+                errorMessage={errorPassword} 
+                label="Nhập mật khẩu" 
+                onBlur={validatePassword} 
+                onChangeText={setPassword} />
 
-              <View>
-                {
-                  password ?
-                  <View style={styles.labelContainer}>
-                    <Text size={14} color={Color.GREY} >Mật khẩu</Text>
-                  </View> 
-                  : <></>
-                }
-                <Row
-                  paddingVertical={_moderateScale(8 * 2)}
-                  borderRadius={_moderateScale(8)}
-                  borderColor={
-                    errorPassword
-                    ? Color.ERROR_COLOR
-                    : password
-                    ? Color.BORDER_INPUT_TEXT_FOCUSED
-                    : Color.BORDER_INPUT_TEXT
-                  }
-                  borderWidth={1}
-                  paddingHorizontal={10}
-                >
-                  <TextInput
-                    secureTextEntry={!isShowPass}
-                    value={password}
-                    onChangeText={(content) => {
-                      setPassword(content);
-                      if (isValidating){
-                        validatePassword(content);
-                      }
-                    }}
-                    style={styles.input_text}
-                    placeholder={"Mật khẩu"}
-                    placeholderTextColor={"grey"}
-                  />
-                  <TouchableOpacity onPress={()=>{
-                    setIsShowPass(!isShowPass);
-                  }}>
-                    {
-                      isShowPass ? 
-                      <EyeOff width={20} height={20}/> : 
-                      <EyeOn width={20} height={20}/>
-                    }
-                  </TouchableOpacity>
-                </Row>
-                {
-                  errorPassword && errorPassword.length > 0 ? <Text style={styles.error_text}>
-                    {errorPassword}
-                  </Text> : <></>
-                }
-              </View>
-              <View style={{ height: _moderateScale(8 * 2) }} />
-
-              <View>
-                {
-                  password2 ?
-                  <View style={styles.labelContainer}>
-                    <Text size={14} color={Color.GREY} >Mật khẩu</Text>
-                  </View> 
-                  : <></>
-                }
-                <Row
-                  paddingVertical={_moderateScale(8 * 2)}
-                  borderRadius={_moderateScale(8)}
-                  borderColor={
-                    errorPassword2
-                    ? Color.ERROR_COLOR
-                    : password2
-                    ? Color.BORDER_INPUT_TEXT_FOCUSED
-                    : Color.BORDER_INPUT_TEXT
-                  }
-                  borderWidth={1}
-                  paddingHorizontal={10}
-                >
-                  <TextInput
-                    secureTextEntry={!isShowPass2}
-                    value={password2}
-                    onChangeText={(content) => {
-                      setPassword2(content);
-                      if (isValidating){
-                        validatePassword2(content);
-                      }
-                    }}
-                    style={styles.input_text}
-                    placeholder={"Xác nhận mật khẩu"}
-                    placeholderTextColor={"grey"}
-                  />
-                  <TouchableOpacity onPress={()=>{
-                    setIsShowPass2(!isShowPass2);
-                  }}>
-                    {
-                      isShowPass2 ? 
-                      <EyeOff width={20} height={20}/> : 
-                      <EyeOn width={20} height={20}/>
-                    }
-                  </TouchableOpacity>
-                </Row>
-                {
-                  errorPassword2 && errorPassword2.length > 0 ? <Text style={styles.error_text}>
-                    {errorPassword2}
-                  </Text> : <></>
-                }
-              </View>
+              <PasswordInput 
+                content={password2} 
+                errorMessage={errorPassword2} 
+                label="Xác nhận mật khẩu" 
+                onBlur={validatePassword2} 
+                onChangeText={setPassword2} />
 
               <Spacer top={_moderateScale(8 * 4)} />
               <TouchableOpacity
                 onPress={()=>{
-                  setIsValidating(true);
                   if (validation()){
                     _handleRegister(countryCallingCode);
                   }
@@ -540,9 +371,7 @@ const RegisterInApp = (props) => {
                   Đăng ký
                 </Text>
               </TouchableOpacity>
-            </View>
-          </KeyboardAvoidingView>
-          
+            </Column>
         </KeyboardAwareScrollView>
     </Screen>
   );
@@ -594,6 +423,13 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     marginVertical: 5
   },
+  container_logo: {
+    height: _moderateScale(8 * 20),
+    borderWidth: 0,
+    margin: _moderateScale(8 * 2),
+    borderRadius: _moderateScale(8 * 2),
+    marginTop: _moderateScale(8 * 2)
+  }
 });
 
 export default RegisterInApp;
