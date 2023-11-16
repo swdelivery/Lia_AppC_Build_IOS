@@ -5,7 +5,6 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-  ImageBackground,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useDispatch } from "react-redux";
@@ -18,38 +17,26 @@ import {
   _width,
   _height,
 } from "../../Constant/Scale";
-import { login, loginInApp } from "../../Redux/Action/AuthAction";
-import Button from "../../Components/Button/Button";
+import { loginInApp } from "../../Redux/Action/AuthAction";
 import ScreenKey from "../../Navigation/ScreenKey";
 import { navigation } from "../../../rootNavigation";
 import AsyncStorage from "@react-native-community/async-storage";
-import StatusBarCustom from "../../Components/StatusBar/StatusBarCustom";
 
-import { findPhoneNumbersInText } from "libphonenumber-js";
 import { styleElement } from "../../Constant/StyleElement";
-import { sizeIcon } from "../../Constant/Icon";
-import { getBottomSpace } from "react-native-iphone-x-helper";
-import LinearGradient from "react-native-linear-gradient";
 import Screen from "@Components/Screen";
 import Text from "@Components/Text";
 import Header from "./components/Header";
-import EyeOn from "../../SGV/eyeOn.svg";
-import EyeOff from "../../SGV/eyeOff.svg";
 import Row from "@Components/Row";
+import PasswordInput from "@Components/PasswordInput";
 
 const Login = (props) => {
-  const [showModal, setShowModal] = useState(false);
   const [phoneNumber, setphoneNumber] = useState("");
   const [password, setPassword] = useState("");
-  const [focusInput, setFocusInput] = useState(null);
   const [nationCode, setNationCode] = useState("+84");
-  const [isShowPass, setIsShowPass] = useState(false);
 
   // validate
-  const [isValidating, setIsValidating] = useState(false);
   const [errorPhoneNumber, setErrorPhoneNumber] = useState("");
   const [errorPassword, setErrorPassword] = useState("");
-
 
   const dispatch = useDispatch();
 
@@ -64,38 +51,38 @@ const Login = (props) => {
     setPassword(password);
   };
 
-  const validatePhoneNumber = (content) => {
-    if (!content){
+  const validatePhoneNumber = () => {
+    if (!phoneNumber) {
       setErrorPhoneNumber("Vui lòng nhập số điện thoại");
     } else {
       setErrorPhoneNumber("");
     }
-  }
+  };
 
-  const validatePassword = (content) => {
-    if (!content){
+  const validatePassword = () => {
+    if (!password) {
       setErrorPassword("Vui lòng nhập mật khẩu");
-    } else if (content.length < 6){
+    } else if (password.length < 6) {
       setErrorPassword("Mật khẩu phải có ít nhất 6 ký tự");
-    } else{
+    } else {
       setErrorPassword("");
     }
-  }
+  };
 
   const validation = () => {
     var isContinue = true;
-    validatePassword(password);
-    validatePhoneNumber(phoneNumber);
-    if (!phoneNumber){
+    validatePassword();
+    validatePhoneNumber();
+    if (!phoneNumber) {
       isContinue = false;
     }
 
-    if (!password || password.length < 6){
+    if (!password || password.length < 6) {
       isContinue = false;
     }
 
     return isContinue;
-  }
+  };
 
   const fetchData = async () => {
     // dispatch(fetchAllData())
@@ -173,6 +160,7 @@ const Login = (props) => {
         contentContainerStyle={{
           flexGrow: 1,
         }}
+        enableOnAndroid={true}
       >
         <View style={{ height: _moderateScale(8 * 2) }} />
         <View
@@ -196,95 +184,56 @@ const Login = (props) => {
 
         <View style={{ paddingHorizontal: _moderateScale(8 * 2) }}>
           <View>
-            {
-              phoneNumber ?
+            {phoneNumber ? (
               <View style={styles.labelContainer}>
-                <Text size={14} color={Color.GREY} >Số điện thoại đã đăng kí</Text>
-              </View> 
-              : <></>
-            }
-            <Row
-                paddingVertical={_moderateScale(8 * 2)}
-                borderRadius={_moderateScale(8)}
-                borderColor={
-                    errorPhoneNumber
-                    ? Color.ERROR_COLOR
-                    : phoneNumber
-                    ? Color.BORDER_INPUT_TEXT_FOCUSED
-                    : Color.BORDER_INPUT_TEXT
-                }
-                borderWidth={1}
-                paddingHorizontal={10}
-            >
-              <TextInput
-                value={phoneNumber}
-                keyboardType={"number-pad"}
-                onChangeText={(content) => {
-                  setphoneNumber(content);
-                  if(isValidating){
-                    validatePhoneNumber(content);
-                  }
-                }}
-                style={styles.input_text}
-                placeholder={"Số điện thoại đã đăng kí"}
-                placeholderTextColor={"grey"}
-              />
-            </Row>
-            <Text style={[{...stylesFont.fontNolan},styles.error_text]}>
-              {errorPhoneNumber}
-            </Text>
-          </View>
-          <View style={{ height: _moderateScale(8 * 2) }} />
-
-          <View>
-            {
-              password ?
-              <View style={styles.labelContainer}>
-                <Text size={14} color={Color.GREY} >Nhập mật khẩu</Text>
-              </View> 
-              : <></>
-            }
+                <Text size={14} color={Color.GREY}>
+                  Số điện thoại đã đăng kí
+                </Text>
+              </View>
+            ) : (
+              <></>
+            )}
             <Row
               paddingVertical={_moderateScale(8 * 2)}
-              borderRadius={ _moderateScale(8)}
-              borderColor={errorPassword ? Color.ERROR_COLOR : (password ? Color.BORDER_INPUT_TEXT_FOCUSED : Color.BORDER_INPUT_TEXT)}
+              borderRadius={_moderateScale(8)}
+              borderColor={
+                errorPhoneNumber
+                  ? Color.ERROR_COLOR
+                  : phoneNumber
+                  ? Color.BORDER_INPUT_TEXT_FOCUSED
+                  : Color.BORDER_INPUT_TEXT
+              }
               borderWidth={1}
               paddingHorizontal={10}
             >
               <TextInput
-                secureTextEntry={!isShowPass}
-                value={password}
-                onChangeText={(content) => {
-                  setPassword(content);
-                  if(isValidating){
-                    validatePassword(content);
-                  }
-                }}
-                
+                value={phoneNumber}
+                keyboardType={"number-pad"}
+                onChangeText={setphoneNumber}
                 style={styles.input_text}
-                placeholder={"Nhập mật khẩu"}
+                placeholder={"Số điện thoại đã đăng kí"}
                 placeholderTextColor={"grey"}
+                onBlur={validatePhoneNumber}
               />
-              <TouchableOpacity onPress={()=>{
-                setIsShowPass(!isShowPass);
-              }}>
-                {
-                  isShowPass ? 
-                  <EyeOff width={20} height={20}/> : 
-                  <EyeOn width={20} height={20}/>
-                }
-              </TouchableOpacity>
             </Row>
-            <Text style={[{...stylesFont.fontNolan},styles.error_text]}>
-              {errorPassword}
+            <Text style={[{ ...stylesFont.fontNolan }, styles.error_text]}>
+              {errorPhoneNumber}
             </Text>
           </View>
+          <View style={{ height: _moderateScale(8 * 2) }} />
+          <PasswordInput
+            content={password}
+            label="Nhập mật khẩu"
+            errorMessage={errorPassword}
+            onBlur={validatePassword}
+            onChangeText={setPassword}
+          />
+
           <View style={{ height: _moderateScale(10 * 8) }} />
 
           <TouchableOpacity
             onPress={() => {
-              setIsValidating(true);
-              if(validation()){
+              if (validation()) {
                 fetchData();
               }
             }}
@@ -328,15 +277,16 @@ const Login = (props) => {
             <Text
               style={[
                 stylesFont.fontNolanBold,
-                { fontSize: _moderateScale(14), color: Color.TEXT_COLOR_FORGET_PASS },
+                {
+                  fontSize: _moderateScale(14),
+                  color: Color.TEXT_COLOR_FORGET_PASS,
+                },
               ]}
             >
               Quên mật khẩu?
             </Text>
           </TouchableOpacity>
           <View style={{ height: _moderateScale(8 * 2) }} />
-
-          
         </View>
         <View
           style={{
@@ -369,7 +319,10 @@ const Login = (props) => {
                 <Text
                   style={[
                     stylesFont.fontNolanBold,
-                    { fontSize: _moderateScale(14), color: Color.TEXT_COLOR_FORGET_PASS },
+                    {
+                      fontSize: _moderateScale(14),
+                      color: Color.TEXT_COLOR_FORGET_PASS,
+                    },
                   ]}
                 >
                   Đăng ký ngay
@@ -379,9 +332,9 @@ const Login = (props) => {
           </TouchableOpacity>
         </View>
         <Row
-        justifyContent="flex-end"
-        paddingBottom={_moderateScale(32)}
-        alignSelf="center"
+          justifyContent="flex-end"
+          paddingBottom={_moderateScale(32)}
+          alignSelf="center"
         >
           <Text
             style={[
@@ -435,19 +388,19 @@ const styles = StyleSheet.create({
     position: "absolute", // Needed to be able to precisely overlap label with border
     top: -12, // Vertical position of label. Eyeball it to see where label intersects border.
   },
-  error_text:{
+  error_text: {
     color: Color.ERROR_COLOR,
     marginHorizontal: 10,
-    fontStyle: 'italic',
-    marginVertical: 5
+    fontStyle: "italic",
+    marginVertical: 5,
   },
-  input_text:{
+  input_text: {
     ...stylesFont.fontNolan,
     fontSize: _moderateScale(14),
     paddingVertical: 0,
     flex: 1,
-    color: Color.BLACK
-  }
+    color: Color.BLACK,
+  },
 });
 
 const shadow = {
