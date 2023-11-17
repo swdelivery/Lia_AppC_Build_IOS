@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Image,
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useDispatch } from "react-redux";
 import * as Color from "../../Constant/Color";
@@ -28,16 +22,18 @@ import Row from "@Components/Row";
 import PasswordInput from "@Components/PasswordInput";
 import Column from "@Components/Column";
 import { useNavigate } from "src/Hooks/useNavigation";
+import PhoneInput from "@Components/PhoneInput";
+import { isValidPhoneNumber } from "react-phone-number-input";
 
 const Login = (props) => {
   const { navigate } = useNavigate();
   const [phoneNumber, setphoneNumber] = useState("");
   const [password, setPassword] = useState("");
-  const [nationCode, setNationCode] = useState("+84");
 
   // validate
   const [errorPhoneNumber, setErrorPhoneNumber] = useState("");
   const [errorPassword, setErrorPassword] = useState("");
+  const [countryCallingCode, setCountryCallingCode] = useState("84");
 
   const dispatch = useDispatch();
 
@@ -55,6 +51,8 @@ const Login = (props) => {
   const validatePhoneNumber = () => {
     if (!phoneNumber) {
       setErrorPhoneNumber("Vui lòng nhập số điện thoại");
+    } else if (!isValidPhoneNumber("+" + countryCallingCode + phoneNumber)) {
+      setErrorPhoneNumber("Số điện thoại không hợp lệ");
     } else {
       setErrorPhoneNumber("");
     }
@@ -74,7 +72,10 @@ const Login = (props) => {
     var isContinue = true;
     validatePassword();
     validatePhoneNumber();
+
     if (!phoneNumber) {
+      isContinue = false;
+    } else if (!isValidPhoneNumber("+" + countryCallingCode + phoneNumber)) {
       isContinue = false;
     }
 
@@ -95,7 +96,7 @@ const Login = (props) => {
         {
           phone: {
             phoneNumber: phoneNumber,
-            nationCode: nationCode,
+            nationCode: "+" + countryCallingCode,
           },
           password: password,
           appName: "CS_APP",
@@ -125,8 +126,17 @@ const Login = (props) => {
           />
         </Column>
 
-        <Column paddingHorizontal={_moderateScale(8 * 2)} gap={16}>
-          <Column>
+        <View style={{ paddingHorizontal: _moderateScale(8 * 2) }}>
+          <PhoneInput
+            content={phoneNumber}
+            countryCallingCode={countryCallingCode}
+            errorMessage={errorPhoneNumber}
+            label="Số điện thoại đã đăng ký"
+            onBlur={validatePhoneNumber}
+            onChangeText={setphoneNumber}
+            onSelectionCallingCode={setCountryCallingCode}
+          />
+          {/* <View>
             {phoneNumber ? (
               <View style={styles.labelContainer}>
                 <Text size={14} color={Color.GREY}>
@@ -159,10 +169,11 @@ const Login = (props) => {
                 onBlur={validatePhoneNumber}
               />
             </Row>
-            {!!errorPhoneNumber && (
-              <Text style={styles.error_text}>{errorPhoneNumber}</Text>
-            )}
-          </Column>
+            <Text style={[{ ...stylesFont.fontNolan }, styles.error_text]}>
+              {errorPhoneNumber}
+            </Text>
+          </View> */}
+          <View style={{ height: _moderateScale(8 * 2) }} />
           <PasswordInput
             content={password}
             label="Nhập mật khẩu"
@@ -229,7 +240,7 @@ const Login = (props) => {
             </Text>
           </TouchableOpacity>
           <View style={{ height: _moderateScale(8 * 2) }} />
-        </Column>
+        </View>
         <Column
           flex={1}
           justifyContent="flex-end"

@@ -1,6 +1,8 @@
+import { navigation } from './../../rootNavigation';
 import { useCallback, useEffect, useRef } from "react";
 import auth, { FirebaseAuthTypes } from "@react-native-firebase/auth";
 import useSavedCallback from "./useSavedCallback";
+import { alertCustomNotAction } from "@Constant/Utils";
 
 export default function usePhoneAuth(
   phone: string,
@@ -35,10 +37,15 @@ export default function usePhoneAuth(
   }, [phone]);
 
   const signInWithPhoneNumber = useCallback(async (phoneNumber: string) => {
-    confirmation.current = await auth().signInWithPhoneNumber(
-      phoneNumber,
-      true
-    );
+    try {
+      confirmation.current = await auth().signInWithPhoneNumber(
+        phoneNumber,
+        true
+      );
+    } catch (error) {
+      alertCustomNotAction(`Thông báo`, `lỗi hệ thồng, vui lòng liên hệ để được hỗ trợ`);
+      navigation.goBack();
+    }
   }, []);
 
   const confirmCode = useCallback(async (code: string) => {
