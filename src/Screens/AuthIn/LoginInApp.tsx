@@ -248,9 +248,11 @@ const Login = (props) => {
           paddingBottom={_moderateScale(8)}
         >
           <TouchableOpacity
-            onPress={navigate(ScreenKey.REGISTER_IN_APP, {
-              routeName: props?.route?.params?.routeName,
-            })}
+            onPress={() => {
+              navigation.navigate(ScreenKey.REGISTER_IN_APP, {
+                routeName: props?.route?.params?.routeName,
+              });
+            }}
           >
             <Text color={Color.GREY}>
               {"Bạn chưa có tài khoản?  "}
