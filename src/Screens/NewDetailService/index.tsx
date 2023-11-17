@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { _moderateScale, _width, _widthScale } from "../../Constant/Scale";
@@ -29,6 +29,8 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import { getImageAvataUrl } from "src/utils/avatar";
+import ScreenKey from "@Navigation/ScreenKey";
+import { useNavigate } from "src/Hooks/useNavigation";
 
 const DetailService = () => {
   const { service } = useServiceDetailsContext();
@@ -36,6 +38,8 @@ const DetailService = () => {
   const recomendServices = useRecomendServices(service);
   const beautyInsurancePopup = useVisible(false);
   const { secondColor, primaryColor, getColors } = useImageColors();
+
+  const { navigate } = useNavigate()
 
   useEffect(() => {
     if (service?.representationFileArr?.length) {
@@ -53,6 +57,7 @@ const DetailService = () => {
       ),
     };
   });
+
 
   return (
     <Screen safeBottom safeTop style={styles.container}>
@@ -79,7 +84,7 @@ const DetailService = () => {
           </View>
           <InfoBranch service={service} />
           <Material service={service} />
-          <BeautyInsurance onViewMore={beautyInsurancePopup.show} />
+          <BeautyInsurance onViewMore={navigate(ScreenKey.LIST_BEAUTY_INSURANCE)} />
           {/* <Tutorial /> */}
           <MainInfoService service={service} />
           <HorizontalServicesV2

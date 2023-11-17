@@ -6,7 +6,7 @@
   "editor.formatOnSave": true,
   "editor.trimAutoWhitespace": true,
   "editor.tabSize": 2,
-  "editor.rulers": [80],
+  "editor.rulers": [],
   "eslint.autoFixOnSave": true,
   "eslint.validate": [
     {
