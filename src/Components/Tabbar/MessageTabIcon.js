@@ -8,6 +8,7 @@ import { _moderateScale } from '../../Constant/Scale';
 import { getLastedMessage } from '../../Redux/Action/MessageAction';
 import { stylesFont } from '../../Constant/Font';
 import AsyncStorage from '@react-native-community/async-storage';
+import keychain from "src/utils/keychain";
 
 
 const MessageTabIcon = props => {
@@ -28,7 +29,7 @@ const MessageTabIcon = props => {
     }, [infoUserRedux])
 
     const _getLastedMessage = async () => {
-        let tokenSTR = await AsyncStorage.getItem("token");
+        let tokenSTR = keychain.getTokens().accessToken;
 
         if (tokenSTR && infoUserRedux?._id) {
             dispatch(getLastedMessage({

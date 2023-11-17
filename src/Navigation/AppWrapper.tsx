@@ -189,8 +189,6 @@ import Lession from "../Screens/LiAUNI/Lession";
 import StartExam from "../Screens/LiAUNI/StartExam";
 import FaceAI from "../Screens/FaceAI/FaceAI";
 import ResultAIScanEyes from "../Screens/ResultAIScanEyes/ResultAIScanEyes";
-
-import messaging from "@react-native-firebase/messaging";
 import NewAffiliate from "../Screens/NewAffiliate/NewAffiliate";
 import ListF1 from "../Screens/NewAffiliate/ListF1";
 import InfoF1 from "../Screens/NewAffiliate/InfoF1";
@@ -206,34 +204,9 @@ import VerticalVideoPlayer from "@Screens/VerticalVideoPlayer/VerticalVideoPlaye
 import DetailMaterial from "@Screens/DetailMaterial";
 import ListBeautyInsurance from "@Screens/ListBeautyInsurance";
 import DetailBeautyInsurance from "@Screens/DetailBeautyInsurance";
+import messaging from "@react-native-firebase/messaging";
 
-const Tab = createMaterialTopTabNavigator();
-const Stack = createStackNavigator();
 const rootStack = createStackNavigator();
-
-Axios.interceptors.response.use(
-  (request) => {
-    // console.log(useLogStyle + '----interceptors SUCCESS: ', setLogStyle('purple'), { request });
-    return request;
-  },
-  async (error) => {
-    if (error?.response?.status == 401) {
-      // FIXME: can use setParams to pass "Unauthorized" command
-      // In the screens which requires login,
-      // add hook that listen for this command and redirect to Main tab
-      navigation.navigate("MainTab");
-
-      Store.dispatch({
-        type: ActionType.CLEAR_INFO_USER,
-      });
-
-      SocketInstance.instance = null;
-      SocketInstance?.socketConn?.disconnect();
-      SocketInstance.socketConn = null;
-    }
-    return Promise.reject(error);
-  }
-);
 
 const AppWrapper = (props) => {
   const reduxAuth = useSelector((state) => state.authReducer);
@@ -485,7 +458,7 @@ const AppWrapper = (props) => {
     // gestureResponseDistance: {
     //     vertical: 800
     // }
-    gestureEnabled: Platform.OS == 'ios' ? true : false,
+    gestureEnabled: Platform.OS == "ios" ? true : false,
     cardOverlayEnabled: true,
   };
 
@@ -1278,8 +1251,6 @@ const AppWrapper = (props) => {
       ) : (
         <></>
       )}
-
-      {console.log({ RE_RENDER: "TRUE" })}
 
       {/* {console.log({"ALOOOOOOO": navigation.checkRoute()})
             } */}

@@ -21,15 +21,16 @@ import { loginInApp } from "../../Redux/Action/AuthAction";
 import ScreenKey from "../../Navigation/ScreenKey";
 import { navigation } from "../../../rootNavigation";
 import AsyncStorage from "@react-native-community/async-storage";
-
-import { styleElement } from "../../Constant/StyleElement";
 import Screen from "@Components/Screen";
 import Text from "@Components/Text";
 import Header from "./components/Header";
 import Row from "@Components/Row";
 import PasswordInput from "@Components/PasswordInput";
+import Column from "@Components/Column";
+import { useNavigate } from "src/Hooks/useNavigation";
 
 const Login = (props) => {
+  const { navigate } = useNavigate();
   const [phoneNumber, setphoneNumber] = useState("");
   const [password, setPassword] = useState("");
   const [nationCode, setNationCode] = useState("+84");
@@ -85,11 +86,6 @@ const Login = (props) => {
   };
 
   const fetchData = async () => {
-    // dispatch(fetchAllData())
-
-    // console.log(getCountryCallingCode());
-
-    // return
     if (!phoneNumber || !password) {
       return alert("Nhập đầy đủ thông tin");
     }
@@ -107,83 +103,30 @@ const Login = (props) => {
         props?.route?.params?.routeName
       )
     );
-
-    // console.log({resultLogin});
-
-    // return
-
-    // let resultGetAllDataServiceRevunue = await handleApi(_getAllDataServiceReveunue());
-    // if (resultGetAllDataServiceRevunue.error) return
-
-    // let resultGetAllDataBranchRevenue = await handleApi(_getAllDataBranchRevenue());
-    // if (resultGetAllDataBranchRevenue.error) return
-
-    // let resultGetAllDataCostPart = await handleApi(_getAllDataCostPart())
-    // if (resultGetAllDataCostPart.error) return
-
-    // let resultGetAllDataCostItem = await handleApi(_getAllDataCostItem())
-    // if (resultGetAllDataCostItem.error) return
-
-    // Store.dispatch({
-    //     type: ActionType.SAVE_LIST_REVENUE_BRANCH,
-    //     payload: resultGetAllDataBranchRevenue.data
-    // })
-    // Store.dispatch({
-    //     type: ActionType.SAVE_LIST_REVENUE_SERVICE,
-    //     payload: resultGetAllDataServiceRevunue.data
-    // })
-    // Store.dispatch({
-    //     type: ActionType.SAVE_LIST_COST_PART,
-    //     payload: resultGetAllDataCostPart.data
-    // })
-    // Store.dispatch({
-    //     type: ActionType.SAVE_LIST_COST_ITEM,
-    //     payload: resultGetAllDataCostItem.data
-    // })
-
-    // Store.dispatch({
-    //     type: ActionType.LOADING_DONE,
-    //     payload: null
-    // })
-    // Store.dispatch({
-    //     type: ActionType.LOGIN,
-    //     payload: {
-    //         flag: true
-    //     }
-    // })
   };
+
   return (
-    <Screen safeTop style={styles.container}>
+    <Screen safeTop safeBottom style={styles.container}>
       <Header title="" onBack={navigation.goBack} />
       <KeyboardAwareScrollView
         bounces={false}
-        contentContainerStyle={{
-          flexGrow: 1,
-        }}
+        contentContainerStyle={styles.contentContainer}
         enableOnAndroid={true}
       >
-        <View style={{ height: _moderateScale(8 * 2) }} />
-        <View
-          style={[
-            {
-              height: _moderateScale(8 * 20),
-              borderWidth: 0,
-              margin: _moderateScale(8 * 2),
-              borderRadius: _moderateScale(8 * 2),
-            },
-            styleElement.centerChild,
-          ]}
+        <Column
+          alignItems="center"
+          height={_moderateScale(8 * 20)}
+          margin={_moderateScale(8 * 2)}
         >
           <Image
             resizeMode={"contain"}
             style={{ width: "70%", height: "70%" }}
             source={require("../../NewImage/NewLogoLogin.png")}
           />
-        </View>
-        <View style={{ height: _moderateScale(8 * 2) }} />
+        </Column>
 
-        <View style={{ paddingHorizontal: _moderateScale(8 * 2) }}>
-          <View>
+        <Column paddingHorizontal={_moderateScale(8 * 2)} gap={16}>
+          <Column>
             {phoneNumber ? (
               <View style={styles.labelContainer}>
                 <Text size={14} color={Color.GREY}>
@@ -195,6 +138,7 @@ const Login = (props) => {
             )}
             <Row
               paddingVertical={_moderateScale(8 * 2)}
+              paddingHorizontal={10}
               borderRadius={_moderateScale(8)}
               borderColor={
                 errorPhoneNumber
@@ -204,7 +148,6 @@ const Login = (props) => {
                   : Color.BORDER_INPUT_TEXT
               }
               borderWidth={1}
-              paddingHorizontal={10}
             >
               <TextInput
                 value={phoneNumber}
@@ -216,11 +159,10 @@ const Login = (props) => {
                 onBlur={validatePhoneNumber}
               />
             </Row>
-            <Text style={[{ ...stylesFont.fontNolan }, styles.error_text]}>
-              {errorPhoneNumber}
-            </Text>
-          </View>
-          <View style={{ height: _moderateScale(8 * 2) }} />
+            {!!errorPhoneNumber && (
+              <Text style={styles.error_text}>{errorPhoneNumber}</Text>
+            )}
+          </Column>
           <PasswordInput
             content={password}
             label="Nhập mật khẩu"
@@ -287,50 +229,30 @@ const Login = (props) => {
             </Text>
           </TouchableOpacity>
           <View style={{ height: _moderateScale(8 * 2) }} />
-        </View>
-        <View
-          style={{
-            flex: 1,
-            justifyContent: "flex-end",
-            alignSelf: "center",
-            paddingBottom: _moderateScale(10),
-          }}
+        </Column>
+        <Column
+          flex={1}
+          justifyContent="flex-end"
+          alignSelf="center"
+          paddingBottom={_moderateScale(8)}
         >
           <TouchableOpacity
-            onPress={() => {
-              navigation.navigate(ScreenKey.REGISTER_IN_APP, {
-                routeName: props?.route?.params?.routeName,
-              });
-            }}
-            style={[
-              {
-                backgroundColor: "transparent",
-              },
-            ]}
+            onPress={navigate(ScreenKey.REGISTER_IN_APP, {
+              routeName: props?.route?.params?.routeName,
+            })}
           >
-            <Text
-              style={[
-                stylesFont.fontNolan,
-                { fontSize: _moderateScale(14), color: Color.GREY },
-              ]}
-            >
-              Bạn chưa có tài khoản?{" "}
-              {
-                <Text
-                  style={[
-                    stylesFont.fontNolanBold,
-                    {
-                      fontSize: _moderateScale(14),
-                      color: Color.TEXT_COLOR_FORGET_PASS,
-                    },
-                  ]}
-                >
-                  Đăng ký ngay
-                </Text>
-              }
+            <Text color={Color.GREY}>
+              {"Bạn chưa có tài khoản?  "}
+              <Text
+                weight="bold"
+                size={14}
+                color={Color.TEXT_COLOR_FORGET_PASS}
+              >
+                Đăng ký ngay
+              </Text>
             </Text>
           </TouchableOpacity>
-        </View>
+        </Column>
         <Row
           justifyContent="flex-end"
           paddingBottom={_moderateScale(32)}
@@ -401,18 +323,9 @@ const styles = StyleSheet.create({
     flex: 1,
     color: Color.BLACK,
   },
-});
-
-const shadow = {
-  shadowColor: "#000",
-  shadowOffset: {
-    width: 0,
-    height: 0,
+  contentContainer: {
+    flexGrow: 1,
   },
-  shadowOpacity: 0.15,
-  shadowRadius: 4,
-
-  elevation: 3,
-};
+});
 
 export default Login;

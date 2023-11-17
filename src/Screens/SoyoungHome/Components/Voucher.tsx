@@ -13,6 +13,7 @@ import useConfigFile from "src/Hooks/useConfigFile";
 import { ConfigFileCode } from "@typings/configFile";
 import { first } from "lodash";
 import Image from "@Components/Image";
+import Fade from "@Components/Fade";
 
 const Voucher = () => {
   const { navigate } = useNavigate();
@@ -30,12 +31,14 @@ const Voucher = () => {
   }
 
   return (
-    <TouchableOpacity
-      onPress={navigate(ScreenKey.LIA_VOUCHER)}
-      style={{ alignSelf: "center" }}
-    >
-      <Image auto avatar={voucher} style={styles.image} />
-    </TouchableOpacity>
+    <Fade visible={!!voucher}>
+      <TouchableOpacity
+        onPress={navigate(ScreenKey.LIA_VOUCHER)}
+        style={{ alignSelf: "center" }}
+      >
+        <Image auto avatar={voucher} style={styles.image} />
+      </TouchableOpacity>
+    </Fade>
   );
 };
 

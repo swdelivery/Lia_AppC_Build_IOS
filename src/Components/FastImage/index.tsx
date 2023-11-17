@@ -5,6 +5,7 @@ import FastImage, {
 } from 'react-native-fast-image';
 import React, {ReactNode, useState, useCallback, useMemo} from 'react';
 import {View, StyleSheet, ViewStyle} from 'react-native';
+import Fade from "@Components/Fade";
 
 export type {Source};
 export interface ImageProps extends FastImageProps {
@@ -100,7 +101,9 @@ function Image({
         />
       )}
 
-      {!isReady && placeholderComponent}
+      {!!placeholderComponent && (
+        <Fade visible={!isReady}>{placeholderComponent}</Fade>
+      )}
     </View>
   );
 }

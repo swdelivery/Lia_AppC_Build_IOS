@@ -18,6 +18,7 @@ import {
     SSC_PARTNER_POST_UPDATE,
     SSC_PARTNER_POST_DELETE
 } from './src/Sockets/type';
+import keychain from "src/utils/keychain";
 
 export default class SocketInstance {
     static instance = null;
@@ -34,7 +35,7 @@ export default class SocketInstance {
 
     static async getSocket() {
         if (SocketInstance.socketConn === null) {
-            let tokenSTR = await AsyncStorage.getItem('token')
+            let tokenSTR = keychain.getTokens().accessToken;
             // SocketInstance.socketConn = io.connect(URL_ORIGINAL, { forceNew: true });
 
             SocketInstance.socketConn = io(`${URL_ORIGINAL}/cs-app`,

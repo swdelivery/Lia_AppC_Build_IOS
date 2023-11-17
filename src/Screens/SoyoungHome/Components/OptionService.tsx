@@ -82,6 +82,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: _widthScale(65),
     marginTop: _moderateScale(4),
+    backgroundColor: "white",
   },
 });
 

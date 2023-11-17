@@ -1,10 +1,4 @@
-import {
-  ColorValue,
-  StatusBar,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { StatusBar, StyleSheet, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { BASE_COLOR, WHITE } from "../../../Constant/Color";
 import { _moderateScale } from "../../../Constant/Scale";

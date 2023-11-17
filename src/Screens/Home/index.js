@@ -51,6 +51,7 @@ import { checkFlashSale } from '../../Redux/Action/FlashSaleAction'
 import ItemNew from '../../Screens/Home/Components/ItemNews'
 import ItemEncyclopedia from './Components/ItemEncyclopedia';
 import { getConfigFileByCode } from '../../Redux/Action/SpinWheelAction';
+import keychain from "src/utils/keychain";
 
 
 const HomeScreen = (props) => {
@@ -238,7 +239,7 @@ const HomeScreen = (props) => {
 
     const _getWallet = async () => {
 
-        let tokenSTR = await AsyncStorage.getItem("token");
+        let tokenSTR = keychain.getTokens().accessToken;
 
         if (tokenSTR) {
             var data = await getWallet()

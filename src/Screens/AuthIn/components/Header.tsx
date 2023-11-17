@@ -5,6 +5,7 @@ import IconBackBlack from "../../../SGV/backBase.svg";
 import Text from "@Components/Text";
 import { sizeIcon } from "@Constant/Icon";
 import { _moderateScale } from "@Constant/Scale";
+import Row from "@Components/Row";
 
 type Props = {
   title: string;
@@ -13,15 +14,15 @@ type Props = {
 
 export default function Header({ title, onBack }: Props) {
   return (
-    <View style={[styleElement.rowAliCenter, styles.headerContainer]}>
+    <Row style={[styleElement.rowAliCenter, styles.headerContainer]}>
       <TouchableOpacity onPress={onBack} hitSlop={styleElement.hitslopSm}>
-        <IconBackBlack width={20} height={20}/>
+        <IconBackBlack width={20} height={20} />
       </TouchableOpacity>
       <Text size={16} weight="bold">
         {title}
       </Text>
       <View style={sizeIcon.lg} />
-    </View>
+    </Row>
   );
 }
 
@@ -30,5 +31,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingHorizontal: _moderateScale(8 * 2),
     paddingVertical: 8,
+    height: _moderateScale(45),
   },
 });

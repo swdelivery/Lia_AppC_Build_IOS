@@ -70,6 +70,7 @@ import { getConfigFileByCode } from '../../Redux/Action/SpinWheelAction';
 import ListEncyclopedia from './Components/ListEncyclopedia'
 import { RefreshControl } from 'react-native';
 import { StatusBar } from 'react-native';
+import keychain from "src/utils/keychain";
 
 
 const index = memo((props) => {
@@ -188,7 +189,7 @@ const index = memo((props) => {
 
     const _getWallet = async () => {
 
-        let tokenSTR = await AsyncStorage.getItem("token");
+        let tokenSTR = keychain.getTokens().accessToken;
 
         if (tokenSTR) {
             var data = await getWallet()

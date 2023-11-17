@@ -58,18 +58,18 @@ const index = memo(function index(props) {
   
 
     return (
-        <View style={styles.fill}>
+      <View style={styles.fill}>
         <StatusBar
           translucent
           barStyle="light-content"
-          backgroundColor="rgba(0, 0, 0, 0.251)"
+          // backgroundColor="rgba(0, 0, 0, 0.251)"
         />
         <Animated.ScrollView
           style={styles.fill}
           scrollEventThrottle={1}
           onScroll={Animated.event(
-            [{ nativeEvent: { contentOffset: { y:scrollYState } } }],
-            { useNativeDriver: true },
+            [{ nativeEvent: { contentOffset: { y: scrollYState } } }],
+            { useNativeDriver: true }
           )}
           refreshControl={
             <RefreshControl
@@ -98,9 +98,7 @@ const index = memo(function index(props) {
             styles.header,
             { transform: [{ translateY: headerTranslate }] },
           ]}
-        >
-         
-        </Animated.View>
+        ></Animated.View>
         <Animated.View
           style={[
             styles.bar,
@@ -115,7 +113,7 @@ const index = memo(function index(props) {
           <Text style={styles.title}>Làm thử hidden header</Text>
         </Animated.View>
       </View>
-    )
+    );
 })
 
 
