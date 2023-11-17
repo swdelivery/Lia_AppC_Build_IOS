@@ -1,21 +1,64 @@
 import { StyleSheet, TextInput, View } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { _moderateScale } from '@Constant/Scale'
-import { BORDER_COLOR, GREY, WHITE } from '@Constant/Color'
+import { BORDER_COLOR, GREEN_SUCCESS, GREY, RED, WHITE } from '@Constant/Color'
 import Text from '@Components/Text'
+import { getPartnerByCollaboratorCode } from '@Redux/Action/ProfileAction'
+import Collapsible from 'react-native-collapsible'
+import { IconTick } from '@Components/Icon/Icon'
+import { sizeIcon } from '@Constant/Icon'
+import Row from '@Components/Row'
+
+
 
 const InputRefCode = () => {
 
-    
+    const [valueRefCode, setValueRefCode] = useState('');
+    const [currPartnerCollab, setCurrPartnerCollab] = useState({})
+
+    useEffect(() => {
+        if (valueRefCode?.length > 0) {
+            _getPartnerInviter(valueRefCode)
+        }
+    }, [valueRefCode])
+
+    const _getPartnerInviter = async (valueRefCode) => {
+        let result = await getPartnerByCollaboratorCode({
+            collaboratorCode: valueRefCode?.trim()
+        })
+        if (result?.isAxiosError) return setCurrPartnerCollab({})
+        setCurrPartnerCollab(result?.data?.data)
+    }
 
     return (
-        <View style={styles.container}>
-            <View style={styles.topTitle}>
-                <Text weight='bold'>Mã giới thiệu</Text>
+        <View style={{
+            marginHorizontal: _moderateScale(8 * 2),
+            borderWidth: 1,
+            borderColor: BORDER_COLOR,
+            borderRadius: 8,
+        }}>
+            <View style={styles.container}>
+                <View style={styles.topTitle}>
+                    <Text weight='bold'>Mã giới thiệu</Text>
+                </View>
+                <View style={{ paddingHorizontal: 8 * 3 }}>
+                    <TextInput
+
+                        style={[{ flex: 1 }, currPartnerCollab?._id ? { color: GREEN_SUCCESS } : { color: RED }]}
+                        value={valueRefCode}
+                        onChangeText={setValueRefCode}
+                        placeholder='VD: VJSIFOJWS67' />
+                </View>
             </View>
-            <View style={{paddingHorizontal:8*3}}>
-                <TextInput placeholder='VD: VJSIFOJWS67' />
-            </View>
+            <Collapsible collapsed={currPartnerCollab?._id ? false : true}>
+                <Row gap={8} paddingHorizontal={8 * 3} paddingBottom={8 * 2}>
+                    <Text>
+                        Tìm thấy người giới thiệu: <Text weight='bold'>{currPartnerCollab?.name}</Text>
+                    </Text>
+                    <IconTick style={sizeIcon.sm} />
+                </Row>
+            </Collapsible>
+
         </View>
     )
 }
@@ -32,11 +75,7 @@ const styles = StyleSheet.create({
         position: 'absolute'
     },
     container: {
-        marginHorizontal: _moderateScale(8 * 2),
-        borderWidth: 1,
-        height: _moderateScale(8 * 6),
-        borderColor: BORDER_COLOR,
-        borderRadius: 8,
+        minHeight: _moderateScale(8 * 6),
         justifyContent: 'center'
     }
 })

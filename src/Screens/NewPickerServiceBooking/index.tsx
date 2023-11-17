@@ -1,4 +1,4 @@
-import { Image, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { Alert, Image, StyleSheet, TouchableOpacity, View } from 'react-native'
 import React, { useCallback, useEffect, useState } from 'react'
 import Screen from '@Components/Screen'
 import Header from './Components/Header'
@@ -10,7 +10,7 @@ import ListServices from './Components/ListServices';
 import { getAllServiceGroup } from '@Redux/Action/ServiceGroup';
 import { useDispatch, useSelector } from 'react-redux';
 import Text from '@Components/Text';
-import { getStateShowModalAddServiceToBooking } from '@Redux/booking/selectors';
+import { getDataCreateBookingState } from '@Redux/booking/selectors';
 import ModalConfirmService from './Components/ModalConfirmService';
 import { openModalAddServiceToBooking } from '@Redux/booking/actions';
 import LinearGradient from 'react-native-linear-gradient';
@@ -22,12 +22,26 @@ const NewPickerServiceBooking = () => {
     const [routes, setRoutes] = useState([]);
     const [index, setIndex] = useState(0);
 
+    const { dataBranch, dataDoctor } = useSelector(getDataCreateBookingState)
+
     const listServiceGroup = useSelector(state => state.serviceGroupReducer?.listServiceGroup)
 
-    const { isShowModalAddServiceToBooking } = useSelector(getStateShowModalAddServiceToBooking)
+    const { isShowModalAddServiceToBooking } = useSelector(getDataCreateBookingState)
 
     console.log({ isShowModalAddServiceToBooking });
 
+
+    useEffect(() => {
+
+        if (dataDoctor?.code) {
+            Alert.alert(dataDoctor?.code)
+        } else {
+            if (dataBranch?.code) {
+                Alert.alert(dataBranch?.code)
+            }
+        }
+
+    }, [dataBranch?.code, dataDoctor?.code])
 
     useEffect(() => {
 

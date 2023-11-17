@@ -1,9 +1,9 @@
 import React, { memo, useEffect, useState } from 'react'
-import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Alert, ScrollView, SectionList, StyleSheet, TouchableOpacity, View } from 'react-native'
 import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 import { useSelector } from 'react-redux'
 import { BtnHistory, IconCancelGrey } from '../../../Components/Icon/Icon'
-import { BASE_COLOR, GREY_FOR_TITLE, WHITE } from '../../../Constant/Color'
+import { BASE_COLOR, BORDER_COLOR, GREY_FOR_TITLE, WHITE } from '../../../Constant/Color'
 import { stylesFont } from '../../../Constant/Font'
 import { sizeIcon } from '../../../Constant/Icon'
 import { _height, _heightScale, _moderateScale, _width } from '../../../Constant/Scale'
@@ -11,20 +11,49 @@ import { styleElement } from '@Constant/StyleElement'
 import CardBranch from './CardBranch'
 import Column from '@Components/Column'
 import CardDoctor from './CardDoctor'
+import { getDoctorListForBookingState, getPractitionerListForBookingState } from '@Redux/booking/selectors'
+import Text from '@Components/Text'
 
 const HEIGHT_MODAL = _heightScale(450)
 
 const ModalListDoctor = memo((props) => {
 
+    const { data: dataDoctors } = useSelector(getDoctorListForBookingState)
+    const { data: dataPractitioners } = useSelector(getPractitionerListForBookingState)
 
     const opacityBackDrop = useSharedValue(0);
     const tranYModal = useSharedValue(0);
 
-    const [listBranch, setListBranch] = useState([1, 2, 3, 4, 5])
+    const [sectionList, setSectionList] = useState([])
+
+
 
     useEffect(() => {
+        console.log({ dataDoctors, dataPractitioners });
 
-    }, [])
+        let temp = [
+            {
+                title: 'Bác sĩ',
+                data: dataDoctors.map(item => {
+                    return {
+                        ...item,
+                        identification: 'doctor'
+                    }
+                })
+            },
+            {
+                title: 'Chuyên viên',
+                data: dataPractitioners.map(item => {
+                    return {
+                        ...item,
+                        identification: 'practitioner'
+                    }
+                })
+            }
+        ]
+        setSectionList(temp)
+
+    }, [dataDoctors, dataPractitioners])
 
     useEffect(() => {
         if (props?.isShow) {
@@ -102,7 +131,7 @@ const ModalListDoctor = memo((props) => {
 
                                 <View style={{ justifyContent: 'center', alignItems: 'center', width: _width, height: _moderateScale(8 * 6) }}>
 
-                                    <Text style={[stylesFont.fontNolanBold, { fontSize: _moderateScale(14) }]}>
+                                    <Text weight='bold' size={16}>
                                         Chọn bác sĩ
                                     </Text>
 
@@ -120,19 +149,36 @@ const ModalListDoctor = memo((props) => {
                                 </View>
                             </View>
 
-                            <ScrollView>
+                            <SectionList
+                                contentContainerStyle={{ gap: 8 * 2 }}
+                                sections={sectionList}
+                                keyExtractor={(item, index) => item + index}
+                                renderItem={({ item }) => (
+                                    <CardDoctor onClose={_handleHideModal} data={item} />
+                                )}
+                                renderSectionHeader={({ section: { title } }) => (
+                                    <Column
+                                        borderBottomWidth={.5}
+                                        borderBottomColor={BORDER_COLOR}
+                                        backgroundColor={WHITE} padding={8 * 2}>
+                                        <Text weight='bold'>{title}</Text>
+                                    </Column>
+                                )}
+                            />
+
+                            {/* <ScrollView>
 
                                 <Column style={{ marginTop: 8 * 2 }} gap={8 * 2}>
                                     {
-                                        listBranch?.map((item, index) => {
+                                        dataDoctors?.map((item, index) => {
                                             return (
-                                                <CardDoctor data={item} key={index} />
+                                                <CardDoctor onClose={_handleHideModal} data={item} key={index} />
                                             )
                                         })
                                     }
                                 </Column>
                                 <View style={{ height: 100 }} />
-                            </ScrollView>
+                            </ScrollView> */}
 
                         </Animated.View>
 

@@ -1,5 +1,5 @@
 import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
-import React, { memo, useCallback } from 'react'
+import React, { memo, useCallback, useEffect, useState } from 'react'
 import { _moderateScale, _width, _widthScale } from '@Constant/Scale'
 import Text from '@Components/Text'
 import { BASE_COLOR, BLACK, BORDER_COLOR, GREY, RED, WHITE } from '@Constant/Color'
@@ -9,33 +9,68 @@ import { sizeIcon } from '@Constant/Icon'
 import moment from 'moment'
 import { styleElement } from '@Constant/StyleElement'
 import LinearGradient from 'react-native-linear-gradient'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectDate, selectTime } from '@Redux/booking/actions'
+import { getDataCreateBookingState } from '@Redux/booking/selectors'
+import { Alert } from 'react-native'
 
-const InputTimeBooking = memo((props) => {
 
-    const { list7Days, currPickDate, listTimeForBooking, currPickTime } = props
+type Props = {
+    setShowModalDatePicker: any
+    setShowModalTimePicker: any
+    listTimeForBooking: any
+};
 
-    console.log({ list7Days, currPickDate, });
 
+const InputTimeBooking = memo((
+    {
+        setShowModalDatePicker,
+        setShowModalTimePicker,
+        listTimeForBooking,
+    }
+        : Props) => {
+
+    const dispatch = useDispatch()
+
+    const { dataDate, dataTime } = useSelector(getDataCreateBookingState)
+
+    // DEFINE STATE
+    const [list7Days, setList7Days] = useState(Array.from(new Array(7), (x, i) => moment().add(i, 'days')))
+
+
+    useEffect(() => {
+
+        let find = list7Days.find(item => {
+            return _isSameDate(item, dataDate)
+        })
+        console.log({ find });
+        if (!find) {
+            setList7Days(Array.from(new Array(7), (x, i) => moment(dataDate).add(i, 'days')))
+        }
+    }, [dataDate])
 
     const _handlePickDate = useCallback((date) => () => {
-        props?.setCurrPickDate(date)
+        dispatch(selectDate(date))
     }, [])
 
-    const _handlePickTime = useCallback((time) => () => {
-        props?.setCurrPickTime(time)
+    const _handlePickTime = useCallback((data) => () => {
+        dispatch(selectTime({
+            hour: data?.time?.hour,
+            minute: data?.time?.minute
+        }))
     }, [])
 
     const _handleShowModalDatePicker = useCallback(() => {
-        props?.setShowModalDatePicker(true)
+        setShowModalDatePicker(true)
     }, [])
     const _handleShowModalTimePicker = useCallback(() => {
-        props?.setShowModalTimePicker(true)
+        return Alert.alert('Pending...')
+        setShowModalTimePicker(true)
     }, [])
 
 
     const _renderVietnameseDays = (date) => {
         let numberDate = moment(date).format('d');
-        console.log(numberDate);
 
         if (Number(numberDate) === 0) {
             return `CN`
@@ -56,8 +91,8 @@ const InputTimeBooking = memo((props) => {
             </Text>
 
             <Row style={{ justifyContent: 'space-between', paddingRight: 8 * 1 }}>
-                <Text weight='bold' style={{ marginTop: 8 * 2 }}>
-                    THÁNG 10, 2023
+                <Text weight='bold' style={styles.textUperCase}>
+                    {moment(dataDate).format(`LL`)}
                 </Text>
 
                 <TouchableOpacity onPress={_handleShowModalDatePicker}>
@@ -83,10 +118,10 @@ const InputTimeBooking = memo((props) => {
 
                                 <View style={[
                                     styles.boxDate, styleElement.centerChild,
-                                    _isSameDate(currPickDate, item) && {borderWidth:0}
+                                    _isSameDate(dataDate, item) && { borderWidth: 0 }
                                 ]}>
                                     {
-                                        _isSameDate(currPickDate, item) ?
+                                        _isSameDate(dataDate, item) ?
                                             <LinearGradient
                                                 style={[StyleSheet.absoluteFillObject, { borderRadius: 8, }]}
                                                 start={{ x: 0, y: 0 }}
@@ -95,7 +130,7 @@ const InputTimeBooking = memo((props) => {
                                             />
                                             : <></>
                                     }
-                                    <Text weight={_isSameDate(currPickDate, item) ? 'bold' : 'regular'} color={_isSameDate(currPickDate, item) ? WHITE : BLACK}>
+                                    <Text weight={_isSameDate(dataDate, item) ? 'bold' : 'regular'} color={_isSameDate(dataDate, item) ? WHITE : BLACK}>
                                         {
                                             moment(item).format('DD')
                                         }
@@ -128,11 +163,11 @@ const InputTimeBooking = memo((props) => {
                 {
                     listTimeForBooking?.slice(0, 5)?.map((item, index) => {
 
-                        if (item?._id == currPickTime?._id) {
+                        if (item?.time?.hour == dataTime?.hour && item?.time?.minute == dataTime?.minute) {
                             return (
                                 <TouchableOpacity
                                     onPress={_handlePickTime(item)}
-                                    style={[styles.btnTime,{borderWidth:0}]}>
+                                    style={[styles.btnTime, { borderWidth: 0 }]}>
                                     <LinearGradient
                                         style={[StyleSheet.absoluteFillObject, { borderRadius: 4, }]}
                                         start={{ x: 0, y: 0 }}
@@ -140,7 +175,7 @@ const InputTimeBooking = memo((props) => {
                                         colors={["#01AB84", "#186A57"]}
                                     />
                                     <Text color={WHITE} weight='bold'>
-                                        {item?.from}
+                                        {item?.time?.hour}:{item?.time?.minute}
                                     </Text>
                                 </TouchableOpacity>
                             )
@@ -150,7 +185,7 @@ const InputTimeBooking = memo((props) => {
                                     onPress={_handlePickTime(item)}
                                     style={styles.btnTime}>
                                     <Text color={GREY} weight='bold'>
-                                        {item?.from}
+                                        {item?.time?.hour}:{item?.time?.minute}
                                     </Text>
                                 </TouchableOpacity>
                             )
@@ -164,14 +199,14 @@ const InputTimeBooking = memo((props) => {
             </Text>
 
             <ScrollView showsHorizontalScrollIndicator={false} style={{ marginTop: 8 }} contentContainerStyle={{ gap: 8 }} horizontal>
-            {
+                {
                     listTimeForBooking?.slice(5, 10)?.map((item, index) => {
 
-                        if (item?._id == currPickTime?._id) {
+                        if (item?.time?.hour == dataTime?.hour && item?.time?.minute == dataTime?.minute) {
                             return (
                                 <TouchableOpacity
                                     onPress={_handlePickTime(item)}
-                                    style={[styles.btnTime,{borderWidth:0}]}>
+                                    style={[styles.btnTime, { borderWidth: 0 }]}>
                                     <LinearGradient
                                         style={[StyleSheet.absoluteFillObject, { borderRadius: 4, }]}
                                         start={{ x: 0, y: 0 }}
@@ -205,6 +240,7 @@ const InputTimeBooking = memo((props) => {
 export default InputTimeBooking
 
 const styles = StyleSheet.create({
+    textUperCase: { marginTop: 8 * 2, textTransform: 'uppercase' },
     btnTime: {
         width: _moderateScale(8 * 8),
         height: _moderateScale(8 * 3.5),

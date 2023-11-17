@@ -20,13 +20,14 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 type Props = {
     visible: boolean;
     onClose: () => void;
+    onConfirm: (item) => void;
     minDate: string;
     // other props
 }
 
 const HEIGHT_MODAL = _heightScale(420)
 
-const NewDatePicker = memo(({ visible, onClose, minDate }: Props) => {
+const NewDatePicker = memo(({ visible, onClose, minDate, onConfirm }: Props) => {
 
     const [datePick, setDatePick] = useState(null)
     const opacityBackDrop = useSharedValue(0);
@@ -46,6 +47,11 @@ const NewDatePicker = memo(({ visible, onClose, minDate }: Props) => {
 
     const _handleOnDateChange = (date, type) => {
         setDatePick(date?._d)
+    }
+
+    const _handleConfirmPickDate = () => {
+        _handleHideModal()
+        onConfirm(datePick)
     }
 
     const animTranY = useAnimatedStyle(() => {
@@ -138,7 +144,9 @@ const NewDatePicker = memo(({ visible, onClose, minDate }: Props) => {
 
                             <View style={{ flex: 1, justifyContent: 'flex-end', paddingBottom: bottom }}>
                                 <Row gap={16} paddingHorizontal={_moderateScale(8 * 2)} >
-                                    <TouchableOpacity style={styles.leftBtn}>
+                                    <TouchableOpacity
+                                        onPress={_handleConfirmPickDate}
+                                        style={styles.leftBtn}>
 
                                         <LinearGradient
                                             style={[StyleSheet.absoluteFillObject, { borderRadius: 8 }]}

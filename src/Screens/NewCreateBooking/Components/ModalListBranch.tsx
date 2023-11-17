@@ -10,16 +10,17 @@ import { _height, _heightScale, _moderateScale, _width } from '../../../Constant
 import { styleElement } from '@Constant/StyleElement'
 import CardBranch from './CardBranch'
 import Column from '@Components/Column'
+import { getBranchListForBookingState } from '@Redux/booking/selectors'
 
 const HEIGHT_MODAL = _heightScale(450)
 
 const ModalListBranch = memo((props) => {
 
+    const { data } = useSelector(getBranchListForBookingState)
 
     const opacityBackDrop = useSharedValue(0);
     const tranYModal = useSharedValue(0);
 
-    const [listBranch, setListBranch] = useState([1, 2, 3, 4, 5])
 
     useEffect(() => {
 
@@ -72,7 +73,7 @@ const ModalListBranch = memo((props) => {
                         height: _height,
                         position: 'absolute',
                         zIndex: 100,
-                        bottom:0
+                        bottom: 0
                     }}>
 
 
@@ -123,9 +124,9 @@ const ModalListBranch = memo((props) => {
 
                                 <Column style={{ marginTop: 8 * 2 }} gap={8 * 2}>
                                     {
-                                        listBranch?.map((item, index) => {
+                                        data?.map((item, index) => {
                                             return (
-                                                <CardBranch data={item} key={index} />
+                                                <CardBranch onClose={_handleHideModal} data={item} key={index} />
                                             )
                                         })
                                     }

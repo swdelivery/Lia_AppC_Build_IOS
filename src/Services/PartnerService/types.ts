@@ -4,6 +4,10 @@ export type GetDoctorListPayload = {
   branchCode?: Condition;
 };
 
+export type GetPractitionerListPayload = {
+  branchCode?: Condition;
+};
+
 export type GetReviewsPayload = {
   branchCode?: Condition;
   doctorCode?: Condition;

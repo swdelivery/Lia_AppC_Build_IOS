@@ -5,6 +5,7 @@ import configs from "src/configs";
 import {
   GetDiaryPayload,
   GetDoctorListPayload,
+  GetPractitionerListPayload,
   GetReviewsPayload,
   GetServicesPayload,
 } from "./types";
@@ -80,8 +81,20 @@ const getDoctorList = (
 const getDoctorDetails = (doctorId: string): Promise<Doctor> =>
   axios.get(`treatment-doctor/${doctorId}`).then(({ data }) => data.data);
 
-const getPractitioners = () =>
-  axios.get("practitioner").then(({ data }) => data.data);
+// const getPractitioners = () =>
+//   axios.get("practitioner").then(({ data }) => data.data);
+const getPractitioners = (
+  payload: GetPractitionerListPayload,
+  page = 1,
+  pageSize = configs.apiPageSize
+): Promise<ApiResponse<Practitioner[]>> => {
+  const params = encodeParams({
+    ...(payload ? { condition: payload } : {}),
+    limit: pageSize,
+    page,
+  });
+  return axios.get(`/practitioner?${params}`).then(({ data }) => data.data);
+};
 
 const getPractitionerDetails = (
   practitionerId: string

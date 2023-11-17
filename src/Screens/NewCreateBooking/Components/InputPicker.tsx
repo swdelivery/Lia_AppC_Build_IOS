@@ -1,18 +1,27 @@
 import { StyleSheet, TextInput, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { _moderateScale } from '@Constant/Scale'
-import { BORDER_COLOR, GREY, RED, WHITE } from '@Constant/Color'
+import { BORDER_COLOR, GREEN_SUCCESS, GREY, RED, WHITE } from '@Constant/Color'
 import Text from '@Components/Text'
 import Row from '@Components/Row'
 import { IconArrowDown, IconBackGrey, IconLineArrowDown } from '@Components/Icon/Icon'
 import { sizeIcon } from '@Constant/Icon'
+import { Branch } from '@typings/branch'
 
-const InputPicker = (props) => {
 
-    const { title, require } = props
+
+type Props = {
+    value: any;
+    require?: boolean;
+    title: string;
+    onPress: () => void;
+};
+
+const InputPicker = ({ value, require, title, onPress }: Props) => {
+
 
     const _handlePress = () => {
-        props?.onPress()
+        onPress()
     }
 
     return (
@@ -22,7 +31,12 @@ const InputPicker = (props) => {
             style={styles.container}>
             <Row style={{ paddingHorizontal: 8 * 3 }}>
                 <View style={{ flex: 1, marginRight: 8 * 2 }}>
-                    <Text numberOfLines={1} weight='bold'>{title} {require && <Text color={RED}>*</Text>} </Text>
+                    {
+                        value?._id ?
+                            <Text numberOfLines={1} weight='bold'>{value?.name}</Text>
+                            :
+                            <Text numberOfLines={1} weight='bold'>{title} {require && <Text color={RED}>*</Text>} </Text>
+                    }
                 </View>
 
                 <IconLineArrowDown style={sizeIcon.md} />

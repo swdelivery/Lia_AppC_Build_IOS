@@ -67,7 +67,8 @@ class TimePickerCustom extends Component {
             let hours = wheelPickerHours.find(item => item.value == selectedItem)
             let minutes = wheelPickerMinutes.find(item => item.value == selectedItemMinutes)
 
-            this.props._sendTimeToParent(`${hours.label}:${minutes.label}`)
+            console.log({ hours, minutes });
+            // this.props._sendTimeToParent(`${hours.label}:${minutes.label}`)
 
         } else {
             let { timePickerAndroid } = this.state
@@ -82,7 +83,7 @@ class TimePickerCustom extends Component {
     render() {
         return (
             <>
-            
+
                 {
                     Platform.OS == 'ios' ?
                         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-evenly", paddingHorizontal: _widthScale(30) }}>
@@ -150,12 +151,14 @@ class TimePickerCustom extends Component {
 
                 }
 
-                <View style={{ flex: 1, justifyContent: 'flex-end' ,paddingBottom:this.props.bottom}}>
+                <View style={{ flex: 1, justifyContent: 'flex-end', paddingBottom: this.props.bottom }}>
                     <Row gap={16} style={{
                         paddingHorizontal: _moderateScale(8 * 2),
                         bottom: _moderateScale(0)
                     }}>
-                        <TouchableOpacity style={styles.leftBtn}>
+                        <TouchableOpacity
+                            onPress={this._handleAcceptTime}
+                            style={styles.leftBtn}>
 
                             <LinearGradient
                                 style={[StyleSheet.absoluteFillObject, { borderRadius: 8 }]}
