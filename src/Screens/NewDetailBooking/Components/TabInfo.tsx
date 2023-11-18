@@ -4,22 +4,18 @@ import Text from "@Components/Text";
 import {
   BASE_COLOR,
   BLACK,
-  BLUE_FB,
   BORDER_COLOR,
   GREY,
-  RED,
+  PRICE_ORANGE,
   WHITE,
 } from "@Constant/Color";
 import { _moderateScale } from "@Constant/Scale";
 import { styleElement } from "@Constant/StyleElement";
 import moment from "moment";
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
-import ItemService from "./ItemService";
 import { Booking } from "@typings/booking";
-import { formatMonney } from "@Constant/Utils";
 import useBookingStatuses from "../useBookingStatuses";
-import { sum } from "lodash";
 import Services from "./Services";
 
 type Props = {
@@ -44,9 +40,10 @@ const TabInfo = ({ booking }: Props) => {
             const isCancelled = booking.status === "CANCEL";
             const isActive = activeStatusIndex >= index;
             const color =
-              (!isCancelled && isActive) ||
-              (isCancelled && item.status === "CANCEL")
+              !isCancelled && isActive
                 ? BASE_COLOR
+                : isCancelled && item.status === "CANCEL"
+                ? PRICE_ORANGE
                 : GREY;
 
             return (
@@ -63,7 +60,7 @@ const TabInfo = ({ booking }: Props) => {
                 {!!item.time && isActive && (
                   <Text style={styles.timeStatus} weight="regular">
                     {moment(item?.time).format("LT")}-
-                    {moment(item?.time).format("DD/MM")}
+                    {moment(item?.time).format("DD/MM/YYYY")}
                   </Text>
                 )}
               </Row>

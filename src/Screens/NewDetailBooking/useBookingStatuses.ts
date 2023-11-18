@@ -12,7 +12,7 @@ export default function useBookingStatuses(booking: Booking) {
       //   },
       {
         id: 1,
-        name: "Check-in",
+        name: "Check-In",
         status: "WAIT_CONSULTATION",
         time: booking.checkInAt,
       },
@@ -42,13 +42,13 @@ export default function useBookingStatuses(booking: Booking) {
       },
       {
         id: 6,
-        name: "Check-out",
+        name: "Check-Out",
         status: "WAS_CHECK_OUT",
         time: booking.checkOutAt,
       },
       {
         id: 7,
-        name: "Huỷ",
+        name: "Huỷ đặt lịch hẹn",
         status: "CANCEL",
         time: booking.cancelAt,
       },

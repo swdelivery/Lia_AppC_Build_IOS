@@ -51,7 +51,7 @@ export default function Services({ booking }: Props) {
         <Voucher booking={booking} />
         <Row justifyContent="space-between">
           <Text weight="bold">Tạm tính:</Text>
-          <Text color={BLUE_FB} weight="bold">
+          <Text color={"#0053BD"} weight="bold">
             {`${formatMonney(Math.max(totalAmount - discountAmount, 0))} VNĐ`}
           </Text>
         </Row>
