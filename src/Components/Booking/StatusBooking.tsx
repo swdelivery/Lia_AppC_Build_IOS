@@ -1,52 +1,69 @@
-import { StyleSheet, View } from 'react-native'
-import React from 'react'
-import Row from '@Components/Row'
-import Text from '@Components/Text'
+import { StyleSheet } from "react-native";
+import React from "react";
+import Row from "@Components/Row";
+import Text from "@Components/Text";
+import Column from "@Components/Column";
+import { BookingStatus } from "@typings/booking";
+import { BLUE_FB, GREEN_SUCCESS } from "@Constant/Color";
 
+const STATUS: Record<BookingStatus, { name: string; color: string }> = {
+  WAIT: {
+    name: "Chưa Check in",
+    color: "red",
+  },
+  WAIT_CONSULTATION: {
+    name: "Đang chờ",
+    color: "orange",
+  },
+  IS_CONSULTING: {
+    name: "Đang tư vấn",
+    color: "orange",
+  },
+  WAS_CONSULTED: {
+    name: "Hoàn thành tư vấn",
+    color: "orange",
+  },
+  IN_PROGRESS: {
+    name: "Đang điều trị",
+    color: BLUE_FB,
+  },
+  COMPLETE_PROGRESS: {
+    name: "Hoàn thành điều trị",
+    color: GREEN_SUCCESS,
+  },
+  WAS_CHECK_OUT: {
+    name: "Đã check-out",
+    color: GREEN_SUCCESS,
+  },
+  CANCEL: {
+    name: "Đã hủy",
+    color: "red",
+  },
+};
 
 type Props = {
-    status: string;
-    // other props
-}
+  status: BookingStatus;
+  // other props
+};
 
 const StatusBooking = ({ status }: Props) => {
+  return (
+    <Row gap={8}>
+      <Column style={styles.dot} backgroundColor={STATUS[status]?.color} />
+      <Text weight="bold" color={STATUS[status]?.color}>
+        {STATUS[status]?.name}
+      </Text>
+    </Row>
+  );
+};
 
-    const _renderTextStatusBooking = (status: string) => {
-        switch (status) {
-            case "WAITING":
-                return `Chưa Check in`
-
-            default:
-                return ``
-        }
-    }
-    const _renderColor = (status: string) => {
-        switch (status) {
-            case "WAITING":
-                return `red`
-
-            default:
-                return ``
-        }
-    }
-
-    return (
-        <View>
-            <Row gap={8}>
-                <View style={[styles.dot, { backgroundColor: _renderColor(status) }]} />
-                <Text weight='bold' color={_renderColor(status)}>{_renderTextStatusBooking(status)}</Text>
-            </Row>
-        </View>
-    )
-}
-
-export default StatusBooking
+export default StatusBooking;
 
 const styles = StyleSheet.create({
-    dot: {
-        width: 8,
-        height: 8,
-        borderRadius: 4,
-        top:1.5
-    }
-})
+  dot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    top: 1.5,
+  },
+});

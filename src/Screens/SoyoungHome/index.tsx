@@ -22,6 +22,7 @@ import { styleElement } from "../../Constant/StyleElement";
 import { FONT_WEIGHTS } from "@Components/Text";
 import SoYoungMaterial from "@Screens/SoYoungMaterial";
 import SoYoungPractitioner from "@Screens/SoYoungPractitioner";
+import { AfterTimeoutFragment } from "@Components/AfterTimeoutFragment";
 
 const STACKS = [
   {
@@ -48,7 +49,6 @@ const STACKS = [
 
 const SoyoungHome = () => {
   const scrollableTabViewRef = useRef();
-  const [rootTime, setRootTime] = useState(Date.now());
   const { top } = useSafeAreaInsets();
 
   const heightExpandServiceGr = useSharedValue(0);
@@ -77,38 +77,36 @@ const SoyoungHome = () => {
           }}
         />
       </View>
-
-      <ScrollableTabView
-        title={<View />}
-        titleArgs={{
-          interpolateHeight: {
-            inputRange: [0, 160 + top],
-            outputRange: [0, 55 + top],
-            extrapolate: "clamp",
-          },
-        }}
-        mappingProps={{
-          rootTime: rootTime,
-        }}
-        stacks={STACKS}
-        tabWrapStyle={styleElement.flex}
-        tabInnerStyle={styles.tabInnerStyle}
-        tabActiveOpacity={1}
-        tabsStyle={styles.tabsStyle}
-        tabStyle={styles.tabStyle}
-        tabUnderlineStyle={styles.tabUnderlineStyle}
-        textStyle={styles.textStyle}
-        ref={(it) => (scrollableTabViewRef.current = it)}
-        textActiveStyle={styles.textActiveStyle}
-        header={<Banner />}
-        firstIndex={0}
-        useScroll={true}
-        toTabsOnTab={true}
-        oneTabHidden={true}
-        enableCachePage={true}
-        tabsEnableAnimatedUnderlineWidth={40}
-        tabsEnableAnimated={true}
-      />
+      <AfterTimeoutFragment>
+        <ScrollableTabView
+          title={<View />}
+          titleArgs={{
+            interpolateHeight: {
+              inputRange: [0, 160 + top],
+              outputRange: [0, 55 + top],
+              extrapolate: "clamp",
+            },
+          }}
+          stacks={STACKS}
+          tabWrapStyle={styleElement.flex}
+          tabInnerStyle={styles.tabInnerStyle}
+          tabActiveOpacity={1}
+          tabsStyle={styles.tabsStyle}
+          tabStyle={styles.tabStyle}
+          tabUnderlineStyle={styles.tabUnderlineStyle}
+          textStyle={styles.textStyle}
+          ref={(it) => (scrollableTabViewRef.current = it)}
+          textActiveStyle={styles.textActiveStyle}
+          header={<Banner />}
+          firstIndex={0}
+          useScroll={true}
+          toTabsOnTab={true}
+          oneTabHidden={true}
+          enableCachePage={true}
+          tabsEnableAnimatedUnderlineWidth={40}
+          tabsEnableAnimated={true}
+        />
+      </AfterTimeoutFragment>
     </Screen>
   );
 };

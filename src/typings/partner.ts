@@ -6,3 +6,8 @@ export type Partner = {
   fileAvatar: FileAvatar;
   id: string;
 };
+
+export type PartnerPhone = {
+  nationCode: string;
+  phoneNumber: string;
+};

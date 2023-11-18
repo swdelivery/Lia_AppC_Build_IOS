@@ -9,135 +9,135 @@ import moment from 'moment'
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
 import ItemService from './ItemService'
+import { Booking } from "@typings/booking";
 
-const TabPayment = () => {
-
-    const Card = ({ title, price, bgColor }) => {
-        return (
-            <View style={[styleElement.flex, styles.box, { backgroundColor: bgColor }]}>
-                <View gap={8} style={styleElement.centerChild}>
-                    <Text weight='bold' color={WHITE}>
-                        {title}
-                    </Text>
-                    <Text weight='bold' color={WHITE}>
-                        {price}
-                    </Text>
-                </View>
-            </View>
-        )
-    }
-
-    const _renderPaymentFor = (key) => {
-        switch (key) {
-            case "DEPOSIT":
-                return (
-                    <Text  >Cọc</Text>
-                )
-            case "ORDER":
-                return (
-                    <Text >Thanh toán</Text>
-                )
-
-            default:
-                break;
-        }
-    }
-
+type Props = {
+  booking: Booking;
+};
+const TabPayment = ({ booking }: Props) => {
+  const Card = ({ title, price, bgColor }) => {
     return (
-        <View style={styles.container}>
-
-            <View style={{ paddingTop: _moderateScale(8 * 2) }}>
-                <Column gap={8 * 2}>
-                    <Row gap={8 * 2} paddingHorizontal={8 * 2}>
-                        <Card title={'Tổng'} price={'41.000.000 VNĐ'} bgColor={'#56A0FF'} />
-                        <Card title={'Cọc'} price={'0 VNĐ'} bgColor={'#FFBC46'} />
-                    </Row>
-                    <Row gap={8 * 2} paddingHorizontal={8 * 2}>
-                        <Card title={'Đã trả'} price={'30.000.000 VNĐ'} bgColor={'#10780E'} />
-                        <Card title={'Hoàn tiền'} price={'0 VNĐ'} bgColor={'#FF7895'} />
-                    </Row>
-
-                    <View style={{ paddingHorizontal: 8 * 2 }}>
-                        <Card title={'Còn lại'} price={'11.000.000 VNĐ'} bgColor={'#A745F2'} />
-                    </View>
-                </Column>
-
-            </View>
-
-            <View style={styles.title}>
-                <Text weight='bold' color={BLACK} >Danh sách dịch vụ</Text>
-            </View>
-            {
-                [1, 2]?.map((item, index) => {
-                    return (
-                        <ItemService key={index} />
-                    )
-                })
-            }
-
-            <Row style={styles.bill}>
-                <Text weight='bold'>
-                    Ưu đãi:
-                </Text>
-                <Text color={RED} weight='bold'>
-                    -1.000.000 VNĐ
-                </Text>
-            </Row>
-
-            <Row style={styles.bill}>
-                <Text weight='bold'>
-                    Thanh toán
-                </Text>
-            </Row>
-
-            {
-                [1, 2, 3]?.length > 0 ?
-                    <View style={{ paddingHorizontal: 8 * 2 }}>
-                        <View style={styles.topRowTable}>
-                            <View style={styles.topRowTable__child}>
-                                <Text style={styles.titleTable}>Thời gian</Text>
-                            </View>
-                            <View style={styles.topRowTable__child}>
-                                <Text style={styles.titleTable}>Số tiền</Text>
-                            </View>
-                            <View style={styles.topRowTable__child}>
-                                <Text style={styles.titleTable}>Hình thức</Text>
-                            </View>
-                        </View>
-                        {
-                            [1, 2, 3]?.map((item, index) => {
-                                return (
-                                    <View key={index} style={styles.bodyRowTable}>
-                                        <View style={styles.bodyRowTable__child}>
-                                            <Text style={[styles.textTable]}>{moment().format('LT')} - {moment().format('DD/MM')}</Text>
-                                        </View>
-                                        <View style={styles.bodyRowTable__child}>
-                                            <Text style={styles.textTable}>{formatMonney(1200000)}</Text>
-                                            <Text style={styles.textTable}>VNĐ</Text>
-                                            {
-                                                false ?
-                                                    <Text style={[styles.textTable, { color: RED }]}>(Hoàn tiền)</Text>
-                                                    : <></>
-                                            }
-                                        </View>
-                                        <View style={styles.bodyRowTable__child}>
-                                            {
-                                                _renderPaymentFor("ORDER")
-                                            }
-                                        </View>
-                                    </View>
-                                )
-                            })
-                        }
-                    </View>
-                    :
-                    <></>
-            }
-
-            <View style={{ height: 200 }} />
+      <View
+        style={[styleElement.flex, styles.box, { backgroundColor: bgColor }]}
+      >
+        <View gap={8} style={styleElement.centerChild}>
+          <Text weight="bold" color={WHITE}>
+            {title}
+          </Text>
+          <Text weight="bold" color={WHITE}>
+            {price}
+          </Text>
         </View>
-    )
-}
+      </View>
+    );
+  };
+
+  const _renderPaymentFor = (key) => {
+    switch (key) {
+      case "DEPOSIT":
+        return <Text>Cọc</Text>;
+      case "ORDER":
+        return <Text>Thanh toán</Text>;
+
+      default:
+        break;
+    }
+  };
+
+  return (
+    <View style={styles.container}>
+      <View style={{ paddingTop: _moderateScale(8 * 2) }}>
+        <Column gap={8 * 2}>
+          <Row gap={8 * 2} paddingHorizontal={8 * 2}>
+            <Card title={"Tổng"} price={"41.000.000 VNĐ"} bgColor={"#56A0FF"} />
+            <Card title={"Cọc"} price={"0 VNĐ"} bgColor={"#FFBC46"} />
+          </Row>
+          <Row gap={8 * 2} paddingHorizontal={8 * 2}>
+            <Card
+              title={"Đã trả"}
+              price={"30.000.000 VNĐ"}
+              bgColor={"#10780E"}
+            />
+            <Card title={"Hoàn tiền"} price={"0 VNĐ"} bgColor={"#FF7895"} />
+          </Row>
+
+          <View style={{ paddingHorizontal: 8 * 2 }}>
+            <Card
+              title={"Còn lại"}
+              price={"11.000.000 VNĐ"}
+              bgColor={"#A745F2"}
+            />
+          </View>
+        </Column>
+      </View>
+
+      <View style={styles.title}>
+        <Text weight="bold" color={BLACK}>
+          Danh sách dịch vụ
+        </Text>
+      </View>
+      {booking.servicesNeedCare.map((item, index) => {
+        return <ItemService key={item._id} item={item} />;
+      })}
+
+      <Row style={styles.bill}>
+        <Text weight="bold">Ưu đãi:</Text>
+        <Text color={RED} weight="bold">
+          -1.000.000 VNĐ
+        </Text>
+      </Row>
+
+      <Row style={styles.bill}>
+        <Text weight="bold">Thanh toán</Text>
+      </Row>
+
+      {[1, 2, 3]?.length > 0 ? (
+        <View style={{ paddingHorizontal: 8 * 2 }}>
+          <View style={styles.topRowTable}>
+            <View style={styles.topRowTable__child}>
+              <Text style={styles.titleTable}>Thời gian</Text>
+            </View>
+            <View style={styles.topRowTable__child}>
+              <Text style={styles.titleTable}>Số tiền</Text>
+            </View>
+            <View style={styles.topRowTable__child}>
+              <Text style={styles.titleTable}>Hình thức</Text>
+            </View>
+          </View>
+          {[1, 2, 3]?.map((item, index) => {
+            return (
+              <View key={index} style={styles.bodyRowTable}>
+                <View style={styles.bodyRowTable__child}>
+                  <Text style={[styles.textTable]}>
+                    {moment().format("LT")} - {moment().format("DD/MM")}
+                  </Text>
+                </View>
+                <View style={styles.bodyRowTable__child}>
+                  <Text style={styles.textTable}>{formatMonney(1200000)}</Text>
+                  <Text style={styles.textTable}>VNĐ</Text>
+                  {false ? (
+                    <Text style={[styles.textTable, { color: RED }]}>
+                      (Hoàn tiền)
+                    </Text>
+                  ) : (
+                    <></>
+                  )}
+                </View>
+                <View style={styles.bodyRowTable__child}>
+                  {_renderPaymentFor("ORDER")}
+                </View>
+              </View>
+            );
+          })}
+        </View>
+      ) : (
+        <></>
+      )}
+
+      <View style={{ height: 200 }} />
+    </View>
+  );
+};
 
 export default TabPayment
 

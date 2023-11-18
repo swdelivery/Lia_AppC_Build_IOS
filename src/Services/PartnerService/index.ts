@@ -14,6 +14,7 @@ import { ConfigFile } from "@typings/configFile";
 import { ApiResponse } from "@typings/api";
 import { Review } from "@typings/review";
 import { Diary } from "@typings/diary";
+import { Booking } from "@typings/booking";
 
 const axios = createAxios(URL_FOR_PARTNER);
 
@@ -162,6 +163,15 @@ const takeVoucher = (payload: any) => {
   return axios.post("/partner-coupon", payload).then(({ data }) => data.data);
 };
 
+const getInsuranceList = (payload: any): Promise<any> =>
+  axios.get("/insurance/all", payload).then(({ data }) => data.data);
+
+const getInsuranceDetails = (id: string) =>
+  axios.get("/insurance/" + id).then(({ data }) => data.data);
+
+const getBookingList = (payload: any): Promise<ApiResponse<Booking[]>> =>
+  axios.get("/booking", payload).then(({ data }) => data);
+
 export default {
   getServiceGroup,
   getServices,
@@ -179,4 +189,9 @@ export default {
   getVouchers,
   getPublicVouchers,
   takeVoucher,
+
+  getInsuranceList,
+  getInsuranceDetails,
+
+  getBookingList,
 };

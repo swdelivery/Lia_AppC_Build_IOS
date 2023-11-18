@@ -4,6 +4,7 @@ import { Service } from "@typings/serviceGroup";
 import { Branch } from "@typings/branch";
 import { Doctor } from "@typings/doctor";
 import { Practitioner } from "@typings/practitioner";
+import { Booking } from "@typings/booking";
 
 type valueof<T> = T[keyof T];
 type Screens = valueof<typeof ScreenKey>;
@@ -19,6 +20,7 @@ type ScreenParams = {
   [ScreenKey.DETAIL_DOCTOR]: { doctor: Doctor };
   [ScreenKey.DETAIL_SERVICE]: { service: Service };
   [ScreenKey.DETAIL_PRACTITIONER]: { practitioner: Practitioner };
+  [ScreenKey.DETAIL_BOOKING]: { booking: Booking };
 };
 
 export type RootStackParamsList = {

@@ -23,7 +23,8 @@ const setupAxios = (instance: AxiosInstance) => {
           keychain.setTokens(token, newRefreshToken);
 
           // 2) Change Authorization header
-          axios.defaults.headers.common.Authorization = token;
+          // axios.defaults.headers.common.Authorization = token;
+          axios.defaults.headers.common.token = token;
         }
         // 3) return originalRequest object with Axios.
         return axios(originalRequest);
@@ -36,14 +37,12 @@ const setupAxios = (instance: AxiosInstance) => {
     config.headers = {
       ...config.headers,
     };
-    if (
-      !config.headers.Authorization ||
-      typeof config.headers.Authorization !== "string"
-    ) {
+    if (!config.headers.token || typeof config.headers.token !== "string") {
       if (accessToken) {
         config.headers.token = accessToken;
       }
     }
+    config.headers.Token = accessToken;
 
     if (!config.headers["Content-Type"]) {
       config.headers["Content-Type"] = "application/json";

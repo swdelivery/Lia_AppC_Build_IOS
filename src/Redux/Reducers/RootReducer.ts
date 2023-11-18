@@ -33,6 +33,7 @@ import practitioner from "../practitioner/reducers";
 import booking from "../booking/reducers";
 import user from "../user/reducers";
 import voucher from "../voucher/reducers";
+import insurance from "../insurance/reducers";
 import { resetable } from "@Redux/resettableReducer";
 import modal from "../modal/reducers";
 
@@ -70,6 +71,7 @@ const rootReducer = combineReducers({
   practitioner,
   booking,
   voucher,
+  insurance,
   user: resetable(user),
   modal,
 });

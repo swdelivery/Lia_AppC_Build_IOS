@@ -3,77 +3,72 @@ import Screen from "@Components/Screen";
 import { FONT_WEIGHTS } from "@Components/Text";
 import { _width } from "@Constant/Scale";
 import ScrollableTabView from "@itenl/react-native-scrollable-tabview";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { StatusBar, StyleSheet, View } from "react-native";
 import { isAndroid } from "src/utils/platform";
-import HorizontalImage from "./Components/HorizontalImage";
+import Banner from "./Components/Banner";
 import TabImages from "./Components/TabImages";
 import TabInfo from "./Components/TabInfo";
 import TabPayment from "./Components/TabPayment";
+import { useNavigationParams } from "src/Hooks/useNavigation";
+import ScreenKey from "@Navigation/ScreenKey";
 
-const NewDetailBooking = (props) => {
+const STACKS = [
+  {
+    screen: TabInfo,
+    tabLabel: "Thông tin",
+  },
+  {
+    screen: TabImages,
+    tabLabel: "Hình ảnh",
+  },
+  {
+    screen: TabPayment,
+    tabLabel: "Thanh toán",
+  },
+];
 
-    const [infoMaterial, setInfoMaterial] = useState(null);
-    const scrollableTabViewRef = useRef();
-    const [rootTime, setRootTime] = useState(Date.now());
+type ScreenK = typeof ScreenKey.DETAIL_BOOKING;
 
+const NewDetailBooking = () => {
+  const [rootTime, setRootTime] = useState(Date.now());
+  const { booking } = useNavigationParams<ScreenK>();
 
-    const Banner = () => {
-        return (
-            <HorizontalImage />
-        );
-    };
+  return (
+    <Screen safeBottom={isAndroid}>
+      <StatusBar barStyle={"light-content"} />
+      <Header title={"Chi tiết lịch hẹn"} />
 
-    const STACKS = [
-        {
-            screen: TabInfo,
-            tabLabel: "Dịch vụ",
-        },
-        {
-            screen: TabImages,
-            tabLabel: "Hình ảnh",
-        },
-        {
-            screen: TabPayment,
-            tabLabel: "Thanh toán",
-        },
-    ];
-
-    return (
-        <Screen safeBottom={isAndroid}>
-            <StatusBar barStyle={"light-content"} />
-            <Header title={"Chi tiết dịch vụ"} />
-
-            <ScrollableTabView
-                title={<View />}
-                titleArgs={{
-                    interpolateHeight: {
-                        inputRange: [0, 0],
-                        outputRange: [0, 0],
-                        extrapolate: "clamp",
-                    },
-                }}
-                mappingProps={{
-                    rootTime: rootTime,
-                }}
-                stacks={STACKS}
-                ref={(it) => (scrollableTabViewRef.current = it)}
-                header={<Banner />}
-                tabsStyle={styles.tabsStyle}
-                tabStyle={styles.tabStyle}
-                tabsEnableAnimated={true}
-                tabInnerStyle={styles.tabInnerStyle}
-                tabActiveOpacity={1}
-                tabUnderlineStyle={styles.tabUnderlineStyle}
-                textStyle={styles.textStyle}
-                textActiveStyle={styles.textActiveStyle}
-                firstIndex={0}
-                toTabsOnTab={true}
-                oneTabHidden={true}
-                enableCachePage={true}
-            />
-        </Screen>
-    );
+      <ScrollableTabView
+        title={<View />}
+        titleArgs={{
+          interpolateHeight: {
+            inputRange: [0, 0],
+            outputRange: [0, 0],
+            extrapolate: "clamp",
+          },
+        }}
+        mappingProps={{
+          rootTime: rootTime,
+          booking,
+        }}
+        stacks={STACKS}
+        header={<Banner booking={booking} />}
+        tabsStyle={styles.tabsStyle}
+        tabStyle={styles.tabStyle}
+        tabsEnableAnimated={true}
+        tabInnerStyle={styles.tabInnerStyle}
+        tabActiveOpacity={1}
+        tabUnderlineStyle={styles.tabUnderlineStyle}
+        textStyle={styles.textStyle}
+        textActiveStyle={styles.textActiveStyle}
+        firstIndex={0}
+        toTabsOnTab={true}
+        oneTabHidden={true}
+        enableCachePage={true}
+      />
+    </Screen>
+  );
 };
 
 export default NewDetailBooking;

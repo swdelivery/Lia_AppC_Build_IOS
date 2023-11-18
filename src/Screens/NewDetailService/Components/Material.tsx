@@ -8,12 +8,12 @@ import {
 import Text from "@Components/Text";
 import Column from "@Components/Column";
 import Row from "@Components/Row";
-import { stylesFont } from "@Constant/Font";
 import { IconEyeBase } from "@Components/Icon/Icon";
 import { sizeIcon } from "@Constant/Icon";
 import { navigation } from "rootNavigation";
 import ScreenKey from "@Navigation/ScreenKey";
 import { Service } from "@typings/serviceGroup";
+import { GREY } from "@Constant/Color";
 
 type Props = {
   service: Service;
@@ -51,12 +51,12 @@ const Material = ({ service }: Props) => {
         >
           {service?.materialArr?.map((item, index) => {
             return (
-              <TouchableOpacity onPress={_handleGoDetailMaterial(item)}>
+              <TouchableOpacity
+                key={item._id}
+                onPress={_handleGoDetailMaterial(item)}
+              >
                 <Row gap={16} justifyContent="space-between">
-                  <Text
-                    numberOfLines={1}
-                    style={[styles.box__textLeft, stylesFont.fontNolanBold]}
-                  >
+                  <Text weight="bold" numberOfLines={1} color={GREY}>
                     {item?.name}
                   </Text>
 
@@ -77,12 +77,6 @@ const styles = StyleSheet.create({
   box__textRight: {
     flex: 1,
     textAlign: "right",
-  },
-  box__textLeft: {
-    fontSize: _moderateScale(14),
-    color: "grey",
-    fontWeight: "bold",
-
   },
   box__header: {
     width: "100%",

@@ -7,43 +7,53 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getStateActionSheetBottom } from '@Redux/modal/selectors'
 import ActionSheetBottom from '@Components/ModalBottom/ActionSheetBottom'
 import { openActionSheetBottom } from '@Redux/modal/actions'
+import LinearGradient from "react-native-linear-gradient";
+import { BASE_COLOR } from "@Constant/Color";
 
 const NewListBookings = () => {
-    const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-    const { showActionSheetBottom } = useSelector(getStateActionSheetBottom)
+  const { showActionSheetBottom } = useSelector(getStateActionSheetBottom);
 
-    console.log({ showActionSheetBottom });
+  console.log({ showActionSheetBottom });
 
-    const _handleOnCloseActionSheetBottom = () => {
-        dispatch(openActionSheetBottom({
-            flag: false,
-            data: {}
-        }))
-    }
+  const _handleOnCloseActionSheetBottom = () => {
+    dispatch(
+      openActionSheetBottom({
+        flag: false,
+        data: {},
+      })
+    );
+  };
 
-    const _handleConfirm = (data) => {
-        console.log({ data });
-    }
+  const _handleConfirm = (data) => {
+    console.log({ data });
+  };
 
-    return (
-        <Screen>
-            <ActionSheetBottom
-                onConfirm={_handleConfirm}
-                indexRed={1}
-                options={[
-                    { name: 'Chỉnh sửa lịch hẹn', type: 'edit' },
-                    { name: 'Huỷ lịch hẹn', type: 'cancel' },
-                ]}
-                onClose={_handleOnCloseActionSheetBottom}
-                visible={showActionSheetBottom?.flag} />
+  return (
+    <Screen>
+      <LinearGradient
+        colors={[BASE_COLOR, "#fff"]}
+        style={StyleSheet.absoluteFillObject}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 0, y: 1 }}
+      />
+      <Header bg={"transparent"} title={"Danh sách đặt hẹn"} />
+      <ListBookings />
+      <ActionSheetBottom
+        onConfirm={_handleConfirm}
+        indexRed={1}
+        options={[
+          { name: "Chỉnh sửa lịch hẹn", type: "edit" },
+          { name: "Huỷ lịch hẹn", type: "cancel" },
+        ]}
+        onClose={_handleOnCloseActionSheetBottom}
+        visible={showActionSheetBottom?.flag}
+      />
+    </Screen>
+  );
+};
 
-            <Header title={'Danh sách đặt hẹn'} />
-            <ListBookings />
-        </Screen>
-    )
-}
+export default NewListBookings;
 
-export default NewListBookings
-
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});

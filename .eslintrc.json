@@ -1,5 +1,6 @@
 {
-  "plugins": ["react", "react-native"],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint", "import", "react", "react-native"],
   "env": {
     "react-native/react-native": true
   },

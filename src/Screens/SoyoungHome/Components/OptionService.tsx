@@ -50,7 +50,11 @@ const OptionService = () => {
             })}
             style={styles.itemContainer}
           >
-            <Image style={styles.item__option} avatar={item?.fileAvatar} />
+            <Image
+              style={styles.item__option}
+              avatar={item?.fileAvatar}
+              placeholderColors={["white", "white"]}
+            />
             <Text weight="bold" size={12}>
               {item.name}
             </Text>

@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import React, { useEffect } from "react";
+import { ScrollView, StatusBar, StyleSheet, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { _moderateScale, _width, _widthScale } from "../../Constant/Scale";
 import Feedback from "./Components/Feedback";
@@ -15,8 +15,6 @@ import Spacer from "@Components/Spacer";
 import ListBottomService from "@Components/ListBottomService/ListBottomService";
 import BottomAction from "./Components/BottomAction";
 import BeautyInsurance from "./Components/BeautyInsurance";
-import BeautyInsurancePopup from "./Components/BeautyInsurancePopup";
-import useVisible from "src/Hooks/useVisible";
 import { useServiceDetailsContext, withServiceDetailsContext } from "./context";
 import { AfterTimeoutFragment } from "@Components/AfterTimeoutFragment";
 import useServiceReviews from "./useServiceReviews";
@@ -36,10 +34,9 @@ const DetailService = () => {
   const { service } = useServiceDetailsContext();
   const { data: reviews, meta: reviewsMeta } = useServiceReviews(service);
   const recomendServices = useRecomendServices(service);
-  const beautyInsurancePopup = useVisible(false);
   const { secondColor, primaryColor, getColors } = useImageColors();
 
-  const { navigate } = useNavigate()
+  const { navigate } = useNavigate();
 
   useEffect(() => {
     if (service?.representationFileArr?.length) {
@@ -58,9 +55,9 @@ const DetailService = () => {
     };
   });
 
-
   return (
     <Screen safeBottom safeTop style={styles.container}>
+      <StatusBar barStyle="dark-content" />
       <Header />
       <AfterTimeoutFragment placeholder={<Placeholder />}>
         <ScrollView style={styles.content}>
@@ -84,7 +81,9 @@ const DetailService = () => {
           </View>
           <InfoBranch service={service} />
           <Material service={service} />
-          <BeautyInsurance onViewMore={navigate(ScreenKey.LIST_BEAUTY_INSURANCE)} />
+          <BeautyInsurance
+            onViewMore={navigate(ScreenKey.LIST_BEAUTY_INSURANCE)}
+          />
           {/* <Tutorial /> */}
           <MainInfoService service={service} />
           <HorizontalServicesV2
@@ -98,10 +97,6 @@ const DetailService = () => {
           <ListBottomService services={recomendServices} />
         </ScrollView>
         <BottomAction service={service} />
-        <BeautyInsurancePopup
-          visible={beautyInsurancePopup.visible}
-          onClose={beautyInsurancePopup.hide}
-        />
       </AfterTimeoutFragment>
     </Screen>
   );
