@@ -1,38 +1,28 @@
-import { FlatList, StyleSheet, Text, View } from 'react-native'
-import React, { memo } from 'react'
-import { _width } from '@Constant/Scale'
-import { URL_ORIGINAL } from '@Constant/Url';
-import Image from '@Components/Image';
+import { StyleSheet, View } from "react-native";
+import React from "react";
+import { _width } from "@Constant/Scale";
+import Image from "@Components/Image";
+import { Insurance } from "@typings/insurance";
 
-const HorizontalListImage = memo((props) => {
+type Props = {
+  insurance: Insurance;
+};
 
-    const _renderItemImage = ({ item, index }) => {
-        return (
-            <Image
-                style={styles.image}
-                avatar={null} />
-        )
-    }
+const HorizontalListImage = ({ insurance }: Props) => {
+  return (
+    <View>
+      <Image auto style={styles.image} avatar={insurance.avatar} />
+    </View>
+  );
+};
 
-    return (
-        <View>
-            <FlatList
-                horizontal
-                pagingEnabled={true}
-                data={[1, 2, 3]}
-                renderItem={_renderItemImage}
-            />
-        </View>
-    )
-})
-
-export default HorizontalListImage
+export default HorizontalListImage;
 
 const styles = StyleSheet.create({
-    image: {
-        width: _width,
-        height: _width / 2,
-        borderWidth: .5,
-        borderColor: 'rgba(0,0,0,.3)'
-    }
-})
+  image: {
+    width: _width,
+    height: _width / 2,
+    borderWidth: 0.5,
+    borderColor: "rgba(0,0,0,.3)",
+  },
+});

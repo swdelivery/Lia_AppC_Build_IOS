@@ -48,11 +48,8 @@ const STACKS = [
 ];
 
 const SoyoungHome = () => {
-  const scrollableTabViewRef = useRef();
   const { top } = useSafeAreaInsets();
-
   const heightExpandServiceGr = useSharedValue(0);
-
   const [expandServiceGr, setExpandServiceGr] = useState(true);
 
   useEffect(() => {
@@ -95,7 +92,6 @@ const SoyoungHome = () => {
           tabStyle={styles.tabStyle}
           tabUnderlineStyle={styles.tabUnderlineStyle}
           textStyle={styles.textStyle}
-          ref={(it) => (scrollableTabViewRef.current = it)}
           textActiveStyle={styles.textActiveStyle}
           header={<Banner />}
           firstIndex={0}

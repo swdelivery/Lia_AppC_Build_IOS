@@ -15,6 +15,7 @@ import { ApiResponse } from "@typings/api";
 import { Review } from "@typings/review";
 import { Diary } from "@typings/diary";
 import { Booking } from "@typings/booking";
+import { Insurance } from "@typings/insurance";
 
 const axios = createAxios(URL_FOR_PARTNER);
 
@@ -163,8 +164,16 @@ const takeVoucher = (payload: any) => {
   return axios.post("/partner-coupon", payload).then(({ data }) => data.data);
 };
 
-const getInsuranceList = (payload: any): Promise<any> =>
-  axios.get("/insurance/all", payload).then(({ data }) => data.data);
+const getInsuranceList = (): Promise<ApiResponse<Insurance[]>> =>
+  axios
+    .get("/insurance/all", {
+      headers: {
+        // FIXME: use this token to get data for now
+        token:
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTQ5YTRmZTFlOTZhNDAwMWVhZTNiMzYiLCJlbXBsb3llZUNvZGUiOiJFTFVFMTE2QlhZTFEiLCJlbXBsb3llZUlkIjoiNjU0OWE0ZmYxZTk2YTQwMDFlYWUzYjM5IiwibmFtZSI6InJvb3Qgcm9vdCIsInVzZXJOYW1lIjoicm9vdCIsInVzZXJUeXBlIjoicm9vdCIsImJyYW5jaENvZGVBcnIiOlsiQjAxIiwiVEJDIl0sImFwcE5hbWUiOiJCSV9BUFAiLCJpYXQiOjE3MDAxMjM2NzksImV4cCI6MTcwMDcyODQ3OX0.BKjNpWbDB6sRM3W_obKldHqVwHyI8WolGJpQGHDwNPQ",
+      },
+    })
+    .then(({ data }) => data);
 
 const getInsuranceDetails = (id: string) =>
   axios.get("/insurance/" + id).then(({ data }) => data.data);

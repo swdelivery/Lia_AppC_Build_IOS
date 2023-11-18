@@ -32,6 +32,10 @@ export type FileAvatar = {
   slug: string;
   __v: number;
   id: string;
+  dimensions: {
+    width: number;
+    height: number;
+  };
 } & Timestamp;
 
 export type FileUpload = {

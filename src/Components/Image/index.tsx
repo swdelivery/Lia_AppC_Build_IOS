@@ -1,30 +1,23 @@
 import FastImage from "@Components/FastImage";
-import Icon from "@Components/Icon";
-import { BASE_COLOR, SECOND_COLOR, THIRD_COLOR } from "@Constant/Color";
-import { URL_AVATAR_DEFAULT } from "@Constant/Url";
+import { BASE_COLOR, SECOND_COLOR } from "@Constant/Color";
 import { FileAvatar } from "@typings/common";
 import React, { useMemo } from "react";
-import {
-  ImageStyle,
-  StyleProp,
-  StyleSheet,
-  View,
-  ViewStyle,
-} from "react-native";
+import { StyleProp, StyleSheet, View } from "react-native";
+import { ImageStyle } from "react-native-fast-image";
 import LinearGradient from "react-native-linear-gradient";
 import { getImageAvataUrl } from "src/utils/avatar";
 
 type Props = {
   auto?: boolean;
   avatar?: FileAvatar;
-  style?: StyleProp<ViewStyle>;
+  style?: StyleProp<ImageStyle>;
   placeholderComponent?: React.ReactNode;
   placeholderColors?: string[];
 };
 
 export default function Image({
   avatar,
-  auto,
+  auto = false,
   style,
   placeholderColors = [BASE_COLOR, SECOND_COLOR],
 }: Props) {
@@ -32,11 +25,28 @@ export default function Image({
     return getImageAvataUrl(avatar, "");
   }, [avatar]);
 
+  const autoStyle = useMemo(() => {
+    if (!avatar || !auto) {
+      return undefined;
+    }
+    const ratio = avatar.dimensions.height / avatar.dimensions.width;
+    let { width, height } = StyleSheet.flatten(style);
+    if (width && typeof width === "number") {
+      height = width * ratio;
+    } else if (height && typeof height === "number") {
+      width = height / ratio;
+    }
+    return {
+      width,
+      height,
+    };
+  }, [avatar, auto, style]);
+
   return (
-    <View style={[styles.container, style]}>
+    <View>
       <FastImage
         auto={auto}
-        style={StyleSheet.absoluteFillObject}
+        style={[style, autoStyle]}
         uri={uri}
         placeholderComponent={<DefaultPlaceholder colors={placeholderColors} />}
       />

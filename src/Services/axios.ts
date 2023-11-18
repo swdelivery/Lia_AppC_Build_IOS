@@ -42,8 +42,6 @@ const setupAxios = (instance: AxiosInstance) => {
         config.headers.token = accessToken;
       }
     }
-    config.headers.Token = accessToken;
-
     if (!config.headers["Content-Type"]) {
       config.headers["Content-Type"] = "application/json";
     }

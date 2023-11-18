@@ -2,7 +2,7 @@ import Header from "@Components/NewHeader/Header";
 import Screen from "@Components/Screen";
 import { _moderateScale } from "@Constant/Scale";
 import React, { useEffect } from "react";
-import { FlatList } from "react-native";
+import { FlatList, StyleSheet } from "react-native";
 import ItemBeautyInsurance from "./Components/ItemBeautyInsurance";
 import useListFilter from "src/Hooks/useListFilter";
 import { getInsuranceListState } from "@Redux/insurance/selectors";
@@ -10,6 +10,9 @@ import {
   getInsuranceList,
   loadMoreInsuranceList,
 } from "@Redux/insurance/actions";
+import { RenderItemProps } from "@typings/common";
+import { Insurance } from "@typings/insurance";
+import useItemExtractor from "src/Hooks/useItemExtractor";
 
 const ListBeautyInsurance = () => {
   const { data, getData } = useListFilter(
@@ -22,21 +25,27 @@ const ListBeautyInsurance = () => {
     getData();
   }, []);
 
-  const _renderItem = () => {
-    return <ItemBeautyInsurance />;
+  const _renderItem = ({ item }: RenderItemProps<Insurance>) => {
+    return <ItemBeautyInsurance item={item} />;
   };
+
+  const { keyExtractor } = useItemExtractor<Insurance>((item) => item._id);
 
   return (
     <Screen>
-      <Header title={"Danh sách bảo hiểm"} />
+      <Header title={"Danh sách bảo hiểm"} barStyle="light-content" />
       <FlatList
-        data={[1, 2, 3, 4, 5]}
+        data={data}
         renderItem={_renderItem}
-        keyExtractor={({ item, index }) => item?._id}
-        contentContainerStyle={{ paddingBottom: 100 }}
+        keyExtractor={keyExtractor}
+        contentContainerStyle={styles.contentContainer}
       />
     </Screen>
   );
 };
 
 export default ListBeautyInsurance;
+
+const styles = StyleSheet.create({
+  contentContainer: { paddingBottom: 100 },
+});

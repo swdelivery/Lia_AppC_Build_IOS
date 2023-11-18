@@ -1,18 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import { getStatusBarHeight } from 'react-native-status-bar-height'
-import { IconBackWhite, IconRightArrow } from '../../Components/Icon/Icon'
-import { BASE_COLOR, WHITE } from '../../Constant/Color'
-import { stylesFont } from '../../Constant/Font'
+import { StyleSheet, Text, View } from "react-native";
+import { BASE_COLOR } from "../../Constant/Color";
 import { _moderateScale, _width, _widthScale } from '../../Constant/Scale'
-
-
-import Collapsible from 'react-native-collapsible'
-import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
-import { navigation } from '../../../rootNavigation'
-import { sizeIcon } from '../../Constant/Icon'
-import { getQuestionAnswer } from '../../Redux/Action/InfoAction'
-
+import { useSharedValue } from "react-native-reanimated";
 import { isEmpty } from 'lodash-es'
 import { Dimensions, Image } from 'react-native'
 import RenderHtml from 'react-native-render-html';
