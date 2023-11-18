@@ -3,7 +3,7 @@ import Screen from "@Components/Screen";
 import { FONT_WEIGHTS } from "@Components/Text";
 import { _width } from "@Constant/Scale";
 import ScrollableTabView from "@itenl/react-native-scrollable-tabview";
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { StatusBar, StyleSheet, View } from "react-native";
 import { isAndroid } from "src/utils/platform";
 import Banner from "./Components/Banner";
@@ -12,6 +12,9 @@ import TabInfo from "./Components/TabInfo";
 import TabPayment from "./Components/TabPayment";
 import { useNavigationParams } from "src/Hooks/useNavigation";
 import ScreenKey from "@Navigation/ScreenKey";
+import { useDispatch, useSelector } from "react-redux";
+import { getBookingDetails } from "@Redux/user/actions";
+import { getBookingDetailsState } from "@Redux/user/selectors";
 
 const STACKS = [
   {
@@ -31,8 +34,14 @@ const STACKS = [
 type ScreenK = typeof ScreenKey.DETAIL_BOOKING;
 
 const NewDetailBooking = () => {
-  const [rootTime, setRootTime] = useState(Date.now());
+  const dispatch = useDispatch();
   const { booking } = useNavigationParams<ScreenK>();
+  const { data: bbooking } = useSelector(getBookingDetailsState);
+  const data = bbooking ?? booking;
+
+  useEffect(() => {
+    dispatch(getBookingDetails.request(booking._id));
+  }, [booking]);
 
   return (
     <Screen safeBottom={isAndroid}>
@@ -49,11 +58,10 @@ const NewDetailBooking = () => {
           },
         }}
         mappingProps={{
-          rootTime: rootTime,
-          booking,
+          booking: data,
         }}
         stacks={STACKS}
-        header={<Banner booking={booking} />}
+        header={<Banner booking={data} />}
         tabsStyle={styles.tabsStyle}
         tabStyle={styles.tabStyle}
         tabsEnableAnimated={true}

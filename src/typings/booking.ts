@@ -2,6 +2,7 @@ import { Branch } from "./branch";
 import { Timestamp } from "./common";
 import { PartnerPhone } from "./partner";
 import { Service } from "./serviceGroup";
+import { MyVoucher, Voucher } from "./voucher";
 
 export type BookingDate = {
   hour: number;
@@ -35,8 +36,6 @@ export type Booking = {
   depositIdArr: any;
   currentDepositId: string;
   orderId: string;
-  startProgressAt: string;
-  completeProgressAt: string;
   description: string;
   partnerCouponIdArr: string[];
   needPickUp: boolean;
@@ -49,7 +48,7 @@ export type Booking = {
   treatmentDetailIdArr: string[];
   isFirstBooking: boolean;
   isNoAppointment: boolean;
-  status: "WAIT";
+  status: BookingStatus;
   isConfirmReferral: boolean;
   isActive: boolean;
   userCreate: string;
@@ -85,6 +84,14 @@ export type Booking = {
   };
   appointmentDateFinal: AppointmentDate;
   partnerPhone: PartnerPhone;
+  checkInAt: string;
+  startConsultationAt: string;
+  completeConsultationAt: string;
+  startProgressAt: string;
+  completeProgressAt: string;
+  checkOutAt: string;
+  cancelAt: string;
+  partnerCoupons: MyVoucher[];
 } & Timestamp;
 
 export type TimeForBooking = {
