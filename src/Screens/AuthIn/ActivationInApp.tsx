@@ -86,6 +86,7 @@ const ActivationInApp = (props: any) => {
         await confirmCode(code);
         setActiveCode("");
       } catch (error) {
+        setIsWrongOTP(true);
         alertCustomNotAction(`Lỗi`, `OTP sai`);
       }
     },
