@@ -19,7 +19,7 @@ type Props = {
 const Banner = ({ booking }: Props) => {
   const service = useMemo(() => {
     return booking.servicesNeedCare[0];
-  }, [booking]);
+  }, [booking]);  
 
   const appointmentDate = useMemo(() => {
     const aptDate = booking.appointmentDateFinal;

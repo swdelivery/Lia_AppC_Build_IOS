@@ -43,7 +43,7 @@ export default function Image({
   }, [avatar, auto, style]);
 
   return (
-    <View>
+    <View style={style}>
       <FastImage
         auto={auto}
         style={[style, autoStyle]}

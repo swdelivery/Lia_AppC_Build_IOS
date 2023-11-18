@@ -14,7 +14,7 @@ export type Voucher = {
   couponType: string;
   name: string;
   code: string;
-  discountType: string;
+  discountType: "percent" | "fixed";
   discountAmount: number;
   discountFor: string;
   userCreate: string;

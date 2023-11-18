@@ -6,93 +6,124 @@ import { _moderateScale } from '@Constant/Scale'
 import { styleElement } from '@Constant/StyleElement'
 import { formatMonney } from '@Constant/Utils'
 import moment from 'moment'
-import React from 'react'
-import { StyleSheet, View } from 'react-native'
-import ItemService from './ItemService'
+import React, { useEffect } from "react";
+import { StyleSheet, View } from "react-native";
 import { Booking } from "@typings/booking";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getBookingDeposits,
+  getOrderDetails,
+  getOrderPayments,
+  getPaymentRequest,
+} from "@Redux/user/actions";
+import {
+  getOrderDetailsState,
+  getOrderPaymentState,
+} from "@Redux/user/selectors";
+import Services from "./Services";
+import ItemService from "./ItemService";
+import Voucher from "./Voucher";
+
+const PAYMENT_FOR = {
+  WALLET: "Ví",
+  DEPOSIT: "Cọc",
+  ORDER: "Thanh toán",
+};
+
+const PAYMENT_METHODS = {
+  CASH: "Tiền mặt",
+  CARDTRANSFER: "Chuyển khoản",
+  WALLETTRANSFER: "Ví",
+};
 
 type Props = {
   booking: Booking;
 };
+
 const TabPayment = ({ booking }: Props) => {
-  const Card = ({ title, price, bgColor }) => {
-    return (
-      <View
-        style={[styleElement.flex, styles.box, { backgroundColor: bgColor }]}
-      >
-        <View gap={8} style={styleElement.centerChild}>
-          <Text weight="bold" color={WHITE}>
-            {title}
-          </Text>
-          <Text weight="bold" color={WHITE}>
-            {price}
-          </Text>
-        </View>
-      </View>
-    );
-  };
+  const dispatch = useDispatch();
+  const { data: orderPayments } = useSelector(getOrderPaymentState);
+  const { data: orderDetails } = useSelector(getOrderDetailsState);
 
-  const _renderPaymentFor = (key) => {
-    switch (key) {
-      case "DEPOSIT":
-        return <Text>Cọc</Text>;
-      case "ORDER":
-        return <Text>Thanh toán</Text>;
+  // useEffect(() => {
+  //   dispatch(
+  //     getPaymentRequest.request({
+  //       bookingId: booking._id,
+  //     })
+  //   );
+  //   dispatch(getBookingDeposits.request(booking._id));
+  // }, [booking._id]);
 
-      default:
-        break;
+  useEffect(() => {
+    console.log({ orderId: booking.orderId });
+    if (booking.orderId) {
+      dispatch(getOrderDetails.request(booking.orderId));
+      dispatch(getOrderPayments.request(booking.orderId));
     }
-  };
+  }, [booking.orderId]);
+
+  console.log({ orderDetails });
 
   return (
     <View style={styles.container}>
-      <View style={{ paddingTop: _moderateScale(8 * 2) }}>
-        <Column gap={8 * 2}>
-          <Row gap={8 * 2} paddingHorizontal={8 * 2}>
-            <Card title={"Tổng"} price={"41.000.000 VNĐ"} bgColor={"#56A0FF"} />
-            <Card title={"Cọc"} price={"0 VNĐ"} bgColor={"#FFBC46"} />
-          </Row>
-          <Row gap={8 * 2} paddingHorizontal={8 * 2}>
-            <Card
-              title={"Đã trả"}
-              price={"30.000.000 VNĐ"}
-              bgColor={"#10780E"}
-            />
-            <Card title={"Hoàn tiền"} price={"0 VNĐ"} bgColor={"#FF7895"} />
-          </Row>
+      <Column gap={8 * 2} paddingTop={16} marginBottom={16}>
+        <Row gap={8 * 2} paddingHorizontal={8 * 2}>
+          <Card
+            title={"Tổng"}
+            price={formatMonney(orderDetails?.totalAmount) + " VNĐ"}
+            bgColor={"#56A0FF"}
+          />
+          <Card
+            title={"Cọc"}
+            price={
+              formatMonney(
+                orderDetails?.totalAmountDeposit -
+                  orderDetails?.totalRefundDeposit
+              ) + " VNĐ"
+            }
+            bgColor={"#FFBC46"}
+          />
+        </Row>
+        <Row gap={8 * 2} paddingHorizontal={8 * 2}>
+          <Card
+            title={"Đã trả"}
+            price={formatMonney(orderDetails?.totalAmountPayment) + " VNĐ"}
+            bgColor={"#10780E"}
+          />
+          <Card
+            title={"Hoàn tiền"}
+            price={formatMonney(orderDetails?.totalRefundPayment) + " VNĐ"}
+            bgColor={"#FF7895"}
+          />
+        </Row>
 
-          <View style={{ paddingHorizontal: 8 * 2 }}>
-            <Card
-              title={"Còn lại"}
-              price={"11.000.000 VNĐ"}
-              bgColor={"#A745F2"}
-            />
-          </View>
-        </Column>
-      </View>
+        <Row gap={8 * 2} paddingHorizontal={8 * 2}>
+          <Card
+            title={"Còn lại"}
+            price={formatMonney(orderDetails?.remainingAmount) + " VNĐ"}
+            bgColor={"#A745F2"}
+          />
+        </Row>
+      </Column>
 
       <View style={styles.title}>
         <Text weight="bold" color={BLACK}>
           Danh sách dịch vụ
         </Text>
       </View>
-      {booking.servicesNeedCare.map((item, index) => {
-        return <ItemService key={item._id} item={item} />;
+      {(orderDetails?.services || []).map((item, index) => {
+        return <ItemService key={item.service._id} item={item.service} />;
       })}
 
-      <Row style={styles.bill}>
-        <Text weight="bold">Ưu đãi:</Text>
-        <Text color={RED} weight="bold">
-          -1.000.000 VNĐ
-        </Text>
-      </Row>
+      <Column paddingHorizontal={16} paddingTop={16}>
+        <Voucher booking={booking} />
+      </Column>
 
-      <Row style={styles.bill}>
-        <Text weight="bold">Thanh toán</Text>
-      </Row>
-
-      {[1, 2, 3]?.length > 0 ? (
-        <View style={{ paddingHorizontal: 8 * 2 }}>
+      {orderPayments?.length > 0 && (
+        <Column paddingHorizontal={16}>
+          <Row paddingVertical={16}>
+            <Text weight="bold">Thanh toán</Text>
+          </Row>
           <View style={styles.topRowTable}>
             <View style={styles.topRowTable__child}>
               <Text style={styles.titleTable}>Thời gian</Text>
@@ -104,120 +135,132 @@ const TabPayment = ({ booking }: Props) => {
               <Text style={styles.titleTable}>Hình thức</Text>
             </View>
           </View>
-          {[1, 2, 3]?.map((item, index) => {
+          {orderPayments.map((item, index) => {
             return (
               <View key={index} style={styles.bodyRowTable}>
                 <View style={styles.bodyRowTable__child}>
                   <Text style={[styles.textTable]}>
-                    {moment().format("LT")} - {moment().format("DD/MM")}
+                    {moment(item.created).format("LT")} -{" "}
+                    {moment(item.created).format("DD/MM/YYYY")}
                   </Text>
                 </View>
                 <View style={styles.bodyRowTable__child}>
-                  <Text style={styles.textTable}>{formatMonney(1200000)}</Text>
-                  <Text style={styles.textTable}>VNĐ</Text>
-                  {false ? (
-                    <Text style={[styles.textTable, { color: RED }]}>
+                  <Text style={styles.textTable}>
+                    {formatMonney(item.amount)}
+                  </Text>
+                  <Text style={styles.textTable}>{item.currencyCode}</Text>
+                  {item.isRefund && (
+                    <Text color={RED} style={styles.textTable}>
                       (Hoàn tiền)
                     </Text>
-                  ) : (
-                    <></>
                   )}
                 </View>
                 <View style={styles.bodyRowTable__child}>
-                  {_renderPaymentFor("ORDER")}
+                  <Text>{PAYMENT_METHODS[item.methodCode]}</Text>
                 </View>
               </View>
             );
           })}
-        </View>
-      ) : (
-        <></>
+        </Column>
       )}
-
-      <View style={{ height: 200 }} />
     </View>
   );
 };
 
-export default TabPayment
+const Card = ({ title, price, bgColor }) => {
+  return (
+    <Column style={[styleElement.flex, styles.box]} backgroundColor={bgColor}>
+      <Column gap={8} style={styleElement.centerChild}>
+        <Text weight="bold" color={WHITE}>
+          {title}
+        </Text>
+        <Text weight="bold" color={WHITE}>
+          {price}
+        </Text>
+      </Column>
+    </Column>
+  );
+};
 
+export default TabPayment;
 
 const styles = StyleSheet.create({
-    bodyRowTable__child: {
-        flex: 1,
-        borderWidth: 0.5,
-        borderColor: BG_GREY_OPACITY_5,
-        padding: _moderateScale(4),
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    bodyRowTable: {
-        flex: 1,
-        flexDirection: 'row'
-    },
-    topRowTable__child: {
-        flex: 1,
-        borderWidth: 0.5,
-        borderColor: BG_GREY_OPACITY_5,
-        alignItems: 'center',
-        padding: _moderateScale(4)
-    },
-    topRowTable: {
-        flex: 1,
-        flexDirection: 'row',
-        marginTop: _moderateScale(0)
-    },
-    bill: {
-        padding: _moderateScale(8 * 2),
-        justifyContent: 'space-between'
-    },
-    textTable: {
-        // color: GREY,
-        textAlign: 'center'
-    },
-    titleTable: {
-        // color: GREY,
-    },
-    box: {
-        height: _moderateScale(8 * 10),
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 8
-    },
-    avatarPartner: {
-        width: '100%',
-        height: _moderateScale(8 * 25),
-        borderRadius: 8
-    },
-    timeStatus: {
-        color: BLACK,
-        fontStyle: 'italic'
-    },
-    dotNumber: {
-        width: _moderateScale(8 * 3),
-        height: _moderateScale(8 * 3),
-        borderRadius: _moderateScale(8 * 3 / 2),
-        backgroundColor: GREY,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    mainBill: {
-        padding: _moderateScale(8 * 2),
-    },
-    itemService: {
-        padding: _moderateScale(8 * 2),
-        borderBottomWidth: 1,
-        borderBottomColor: BORDER_COLOR
-    },
-    avatarService: {
-        width: _moderateScale(8 * 8),
-        height: _moderateScale(8 * 8),
-        borderRadius: 8
-    },
-    title: {
-        padding: _moderateScale(8 * 2),
-        paddingBottom: 0,
-    },
-    container: {
-    }
-})
+  bodyRowTable__child: {
+    flex: 1,
+    borderWidth: 0.5,
+    borderColor: BG_GREY_OPACITY_5,
+    padding: _moderateScale(4),
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  bodyRowTable: {
+    flex: 1,
+    flexDirection: "row",
+  },
+  topRowTable__child: {
+    flex: 1,
+    borderWidth: 0.5,
+    borderColor: BG_GREY_OPACITY_5,
+    alignItems: "center",
+    padding: _moderateScale(4),
+  },
+  topRowTable: {
+    flex: 1,
+    flexDirection: "row",
+    marginTop: _moderateScale(0),
+  },
+  bill: {
+    padding: _moderateScale(8 * 2),
+    justifyContent: "space-between",
+  },
+  textTable: {
+    // color: GREY,
+    textAlign: "center",
+  },
+  titleTable: {
+    // color: GREY,
+  },
+  box: {
+    height: _moderateScale(8 * 10),
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 8,
+  },
+  avatarPartner: {
+    width: "100%",
+    height: _moderateScale(8 * 25),
+    borderRadius: 8,
+  },
+  timeStatus: {
+    color: BLACK,
+    fontStyle: "italic",
+  },
+  dotNumber: {
+    width: _moderateScale(8 * 3),
+    height: _moderateScale(8 * 3),
+    borderRadius: _moderateScale((8 * 3) / 2),
+    backgroundColor: GREY,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  mainBill: {
+    padding: _moderateScale(8 * 2),
+  },
+  itemService: {
+    padding: _moderateScale(8 * 2),
+    borderBottomWidth: 1,
+    borderBottomColor: BORDER_COLOR,
+  },
+  avatarService: {
+    width: _moderateScale(8 * 8),
+    height: _moderateScale(8 * 8),
+    borderRadius: 8,
+  },
+  title: {
+    padding: _moderateScale(8 * 2),
+    paddingBottom: 0,
+  },
+  container: {
+    paddingBottom: 60,
+  },
+});

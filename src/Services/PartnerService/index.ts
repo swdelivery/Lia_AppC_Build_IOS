@@ -7,6 +7,7 @@ import {
   GetDoctorListPayload,
   GetReviewsPayload,
   GetServicesPayload,
+  GetTreatmentDetailsPayload,
 } from "./types";
 import { Doctor } from "@typings/doctor";
 import { Practitioner } from "@typings/practitioner";
@@ -16,6 +17,8 @@ import { Review } from "@typings/review";
 import { Diary } from "@typings/diary";
 import { Booking } from "@typings/booking";
 import { Insurance } from "@typings/insurance";
+import { ServiceTreatment } from "@typings/treatment";
+import { PaymentRequest } from "@typings/payment";
 
 const axios = createAxios(URL_FOR_PARTNER);
 
@@ -124,12 +127,15 @@ const getMyCoupons = (
   page = 1,
   pageSize = configs.apiPageSize
 ): Promise<any> => {
-  const params = encodeParams({
-    ...payload,
-    limit: pageSize,
-    page,
-  });
-  return axios.get("/partner-coupon?" + params).then(({ data }) => data);
+  return axios
+    .get("/partner-coupon", {
+      params: {
+        ...payload,
+        limit: pageSize,
+        page,
+      },
+    })
+    .then(({ data }) => data);
 };
 
 const getVouchers = (
@@ -137,13 +143,16 @@ const getVouchers = (
   page = 1,
   pageSize = configs.apiPageSize
 ): Promise<any> => {
-  const params = encodeParams({
-    ...payload,
-    isShowExpired: false,
-    limit: pageSize,
-    page,
-  });
-  return axios.get("/coupon?" + params).then(({ data }) => data);
+  return axios
+    .get("/coupon", {
+      params: {
+        ...payload,
+        isShowExpired: false,
+        limit: pageSize,
+        page,
+      },
+    })
+    .then(({ data }) => data);
 };
 
 const getPublicVouchers = (
@@ -151,13 +160,16 @@ const getPublicVouchers = (
   page = 1,
   pageSize = configs.apiPageSize
 ): Promise<any> => {
-  const params = encodeParams({
-    ...payload,
-    isShowExpired: false,
-    limit: pageSize,
-    page,
-  });
-  return axios.get("/coupon/public?" + params).then(({ data }) => data);
+  return axios
+    .get("/coupon/public", {
+      params: {
+        ...payload,
+        isShowExpired: false,
+        limit: pageSize,
+        page,
+      },
+    })
+    .then(({ data }) => data);
 };
 
 const takeVoucher = (payload: any) => {
@@ -181,26 +193,82 @@ const getInsuranceDetails = (id: string) =>
 const getBookingList = (payload: any): Promise<ApiResponse<Booking[]>> =>
   axios.get("/booking", payload).then(({ data }) => data);
 
+const getBookingDetails = (id: string): Promise<Booking> =>
+  axios.get("/booking/" + id).then(({ data }) => data.data);
+
+const getTreatmentDetails = (
+  payload: GetTreatmentDetailsPayload
+): Promise<ServiceTreatment[]> =>
+  axios
+    .get("/treatment-detail", {
+      params: {
+        condition: {
+          ...payload,
+        },
+        limit: 1000,
+      },
+    })
+    .then(({ data }) => data.data);
+
+const getPaymentRequest = (
+  payload: GetTreatmentDetailsPayload
+): Promise<PaymentRequest[]> =>
+  axios
+    .get("/payment-request", {
+      params: {
+        condition: {
+          ...payload,
+        },
+        sort: {
+          created: -1,
+        },
+        limit: 100,
+        page: 1,
+      },
+    })
+    .then(({ data }) => data.data);
+
+const getBookingDeposits = (bookingId: string) =>
+  axios.get(`/booking/${bookingId}/deposits`).then(({ data }) => data.data);
+
+const getOrderDetails = (orderId: string) =>
+  axios.get(`/order/${orderId}`).then(({ data }) => data.data);
+
+const getOrderPayments = (orderId: string) =>
+  axios.get(`/order/${orderId}/payments`).then(({ data }) => data.data);
+
 export default {
   getServiceGroup,
   getServices,
   getServiceDetails,
   getBranchList,
   getBranchById,
+
   getDoctorList,
   getDoctorDetails,
+
   getPractitioners,
   getPractitionerDetails,
+
   getReviewList,
   getDiaryList,
+
   getConfigFileByCode,
+
+  // Coupon
   getMyCoupons,
   getVouchers,
   getPublicVouchers,
   takeVoucher,
-
+  // Insurance
   getInsuranceList,
   getInsuranceDetails,
-
+  // Booking
   getBookingList,
+  getBookingDetails,
+  getTreatmentDetails,
+  getPaymentRequest,
+  getBookingDeposits,
+  getOrderDetails,
+  getOrderPayments,
 };

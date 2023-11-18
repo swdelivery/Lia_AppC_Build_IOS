@@ -20,3 +20,7 @@ export type GetDiaryPayload = {
 export type GetServicesPayload = {
   codeGroup: Condition;
 };
+
+export type GetTreatmentDetailsPayload = {
+  bookingId: Condition;
+};

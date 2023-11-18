@@ -2,7 +2,7 @@ import Column from '@Components/Column'
 import Image from "@Components/Image";
 import Row from "@Components/Row";
 import Text from "@Components/Text";
-import { BASE_COLOR, BORDER_COLOR, PRICE_ORANGE } from "@Constant/Color";
+import { BASE_COLOR, BORDER_INPUT_TEXT, PRICE_ORANGE } from "@Constant/Color";
 import { _moderateScale } from "@Constant/Scale";
 import { styleElement } from "@Constant/StyleElement";
 import { formatMonney } from "@Constant/Utils";
@@ -27,7 +27,11 @@ const ItemService = ({ item }: Props) => {
       <Row alignItems={"stretch"} gap={8 * 2}>
         <Image
           style={styles.avatarService}
-          avatar={item.representationFileArr[0]}
+          avatar={
+            item.representationFileArr
+              ? item.representationFileArr[0]
+              : undefined
+          }
         />
         <Column flex={1} justifyContent="space-between">
           <Row gap={8 * 4}>
@@ -67,7 +71,7 @@ const styles = StyleSheet.create({
   itemService: {
     padding: _moderateScale(8 * 2),
     borderBottomWidth: 1,
-    borderBottomColor: BORDER_COLOR,
+    borderBottomColor: BORDER_INPUT_TEXT,
   },
   avatarService: {
     width: _moderateScale(8 * 8),

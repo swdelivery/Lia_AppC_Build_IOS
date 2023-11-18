@@ -74,7 +74,7 @@ const CardBooking = ({ item }: Props) => {
             size={14}
             weight="bold"
           >
-            {service.name}
+            {service?.name}
           </Text>
           <Text numberOfLines={1} color={BLACK} size={14} weight="regular">
             {item.branch.name}

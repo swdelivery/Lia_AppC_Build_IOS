@@ -18,142 +18,59 @@ import { StyleSheet, View } from "react-native";
 import ItemService from "./ItemService";
 import { Booking } from "@typings/booking";
 import { formatMonney } from "@Constant/Utils";
+import useBookingStatuses from "../useBookingStatuses";
+import { sum } from "lodash";
+import Services from "./Services";
 
 type Props = {
   booking: Booking;
 };
 
 const TabInfo = ({ booking }: Props) => {
-  const [listService, setListService] = useState([1, 2]);
-  const [listStatus, setListStatus] = useState([
-    {
-      _id: "2",
-      name: "CheckIn",
-      status: "WAIT_CONSULTATION",
-      time: moment(),
-    },
-    {
-      _id: "3",
-      name: "Bắt đầu tư vấn",
-      status: "IS_CONSULTING",
-      time: moment(),
-    },
-    {
-      _id: "4",
-      name: "Hoàn thành tư vấn",
-      status: "WAS_CONSULTED",
-      time: moment(),
-    },
-    {
-      _id: "5",
-      name: "Bắt đầu điều trị",
-      status: "IN_PROGRESS",
-    },
-    {
-      _id: "6",
-      name: "Hoàn thành điều trị",
-      status: "COMPLETE_PROGRESS",
-    },
-    {
-      _id: "5",
-      name: "CheckOut",
-      status: "WAS_CHECK_OUT",
-    },
-    {
-      _id: "6",
-      name: "Huỷ",
-      status: "CANCEL",
-    },
-  ]);
+  const statuses = useBookingStatuses(booking);
 
-  const totalAmount = useMemo(() => {
-    let total = 0;
-    booking.servicesNeedCare?.map((item) => {
-      total += item.price;
-    });
-    return total;
-  }, [booking]);
+  const activeStatusIndex = useMemo(() => {
+    return statuses.findIndex((item) => item.status === booking.status);
+  }, [booking, statuses]);
 
   return (
     <View style={styles.container}>
-      <View style={styles.title}>
-        <Text weight="bold" color={BLACK}>
-          Danh sách dịch vụ
-        </Text>
-      </View>
-      {booking.servicesNeedCare &&
-        booking.servicesNeedCare?.map((item, index) => {
-          return <ItemService key={item._id} item={item} />;
-        })}
-      <Column gap={8 * 2} style={styles.mainBill}>
-        <Row style={styles.bill}>
-          <Text weight="bold">Ưu đãi:</Text>
-          <Text color={RED} weight="bold">
-            0 VNĐ
-          </Text>
-        </Row>
-        <Row style={styles.bill}>
-          <Text weight="bold">Tạm tính:</Text>
-          <Text color={BLUE_FB} weight="bold">
-            {`${formatMonney(totalAmount)} VNĐ`}
-          </Text>
-        </Row>
-      </Column>
+      <Services booking={booking} />
 
       <View style={styles.mainBill}>
         <Text weight="bold">Trạng thái đặt hẹn</Text>
         <Column marginTop={8 * 2} gap={8 * 2}>
-          {listStatus?.map((item, index) => {
-            if (item?.time) {
-              return (
-                <View>
-                  <Row gap={8}>
-                    <View
-                      style={[
-                        styles.dotNumber,
-                        { backgroundColor: BASE_COLOR },
-                      ]}
-                    >
-                      <Text weight="bold" color={WHITE}>
-                        {index + 1}
-                      </Text>
-                    </View>
-                    <Text
-                      style={styleElement.flex}
-                      weight="bold"
-                      color={BASE_COLOR}
-                    >
-                      {item?.name}
-                    </Text>
+          {statuses?.map((item, index) => {
+            const isCancelled = booking.status === "CANCEL";
+            const isActive = activeStatusIndex >= index;
+            const color =
+              (!isCancelled && isActive) ||
+              (isCancelled && item.status === "CANCEL")
+                ? BASE_COLOR
+                : GREY;
 
-                    <Text style={styles.timeStatus} weight="regular">
-                      {moment(item?.time).format("LT")}-
-                      {moment(item?.time).format("DD/MM")}
-                    </Text>
-                  </Row>
-                </View>
-              );
-            } else {
-              return (
-                <View>
-                  <Row gap={8}>
-                    <View style={styles.dotNumber}>
-                      <Text weight="bold" color={WHITE}>
-                        {index + 1}
-                      </Text>
-                    </View>
-                    <Text weight="bold" color={GREY}>
-                      {item?.name}
-                    </Text>
-                  </Row>
-                </View>
-              );
-            }
+            return (
+              <Row gap={8} key={item.id}>
+                <Column style={styles.dotNumber} backgroundColor={color}>
+                  <Text weight="bold" color={WHITE}>
+                    {index + 1}
+                  </Text>
+                </Column>
+                <Text style={styleElement.flex} weight="bold" color={color}>
+                  {item?.name}
+                </Text>
+
+                {!!item.time && isActive && (
+                  <Text style={styles.timeStatus} weight="regular">
+                    {moment(item?.time).format("LT")}-
+                    {moment(item?.time).format("DD/MM")}
+                  </Text>
+                )}
+              </Row>
+            );
           })}
         </Column>
       </View>
-
-      <View style={{ height: 100 }} />
     </View>
   );
 };
@@ -169,7 +86,6 @@ const styles = StyleSheet.create({
     width: _moderateScale(8 * 3),
     height: _moderateScale(8 * 3),
     borderRadius: _moderateScale((8 * 3) / 2),
-    backgroundColor: GREY,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -193,5 +109,7 @@ const styles = StyleSheet.create({
     padding: _moderateScale(8 * 2),
     paddingBottom: 0,
   },
-  container: {},
+  container: {
+    paddingBottom: 60,
+  },
 });
