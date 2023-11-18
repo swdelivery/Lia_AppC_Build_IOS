@@ -1,10 +1,11 @@
 import { createReducer } from "@Redux/helper";
 import { Handler } from "@Redux/types";
-import { CLEAR_DOCTOR, CLEAR_PRACTITIONER, OPEN_MODAL_ADD_SERVICE_TO_BOOKING, SELECT_BRANCH, SELECT_DATE, SELECT_DOCTOR, SELECT_PRACTITIONER, SELECT_TIME } from "../types";
+import { CLEAR_COUPON, CLEAR_DOCTOR, CLEAR_PRACTITIONER, OPEN_MODAL_ADD_SERVICE_TO_BOOKING, REMOVE_SERVICE, SELECT_BRANCH, SELECT_COUPON, SELECT_DATE, SELECT_DOCTOR, SELECT_PRACTITIONER, SELECT_SERVICE, SELECT_TIME } from "../types";
 import { Branch } from "@typings/branch";
 import { Doctor } from "@typings/doctor";
 import { Practitioner } from "@typings/practitioner";
 import moment from "moment";
+import { Service } from "@typings/serviceGroup";
 
 
 export type State = {
@@ -15,6 +16,8 @@ export type State = {
   dataPractitioner: Practitioner;
   dataDate: any;
   dataTime: any;
+  dataServices: Service[];
+  dataCoupon: any;
 
   isShowModalAddServiceToBooking: {
     flag: false,
@@ -32,6 +35,8 @@ const INITIAL_STATE: State = {
     hour: "09",
     minute: "00"
   },
+  dataServices: [],
+  dataCoupon: null,
 
   isShowModalAddServiceToBooking: {
     flag: false,
@@ -81,6 +86,17 @@ const selectTime: Handler<State> = (state, { payload }) => ({
   ...state,
   dataTime: payload,
 });
+const selectService: Handler<State> = (state, { payload }) => ({
+  ...state,
+  dataServices: [
+    ...state.dataServices,
+    payload
+  ],
+});
+const selectCoupon: Handler<State> = (state, { payload }) => ({
+  ...state,
+  dataCoupon: payload,
+});
 
 // CLEAR
 const clearDoctor: Handler<State> = (state, { payload }) => ({
@@ -91,6 +107,18 @@ const clearPractitioner: Handler<State> = (state, { payload }) => ({
   ...state,
   dataPractitioner: INITIAL_STATE.dataPractitioner,
 });
+const clearCoupon: Handler<State> = (state, { payload }) => ({
+  ...state,
+  dataCoupon: INITIAL_STATE.dataCoupon,
+});
+
+// REMOVE
+const removeService: Handler<State> = (state, { payload }) => ({
+  ...state,
+  dataServices: [
+    ...state.dataServices.filter(item => item?.code !== payload?.code),
+  ],
+});
 
 export default createReducer(INITIAL_STATE, {
   [OPEN_MODAL_ADD_SERVICE_TO_BOOKING]: openModalAddServiceToBooking,
@@ -99,6 +127,10 @@ export default createReducer(INITIAL_STATE, {
   [SELECT_PRACTITIONER]: selectPractitioner,
   [SELECT_DATE]: selectDate,
   [SELECT_TIME]: selectTime,
+  [SELECT_COUPON]: selectCoupon,
+  [SELECT_SERVICE]: selectService,
+  [REMOVE_SERVICE]: removeService,
   [CLEAR_DOCTOR]: clearDoctor,
   [CLEAR_PRACTITIONER]: clearPractitioner,
+  [CLEAR_COUPON]: clearCoupon,
 });

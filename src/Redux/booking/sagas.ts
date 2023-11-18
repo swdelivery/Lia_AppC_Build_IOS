@@ -5,7 +5,7 @@ import PartnerService from "src/Services/PartnerService";
 import configs from "src/configs";
 import * as actions from "./actions";
 import {
-  GET_BRANCH_LIST_FOR_BOOKING, GET_DOCTOR_LIST_BY_BRANCH_CODE, GET_PRACTITIONER_LIST_BY_BRANCH_CODE, GetDoctorListByBranchCodeParams, GetPractitionerListByBranchCodeParams
+  GET_BRANCH_LIST_FOR_BOOKING, GET_DOCTOR_LIST_BY_BRANCH_CODE, GET_LIST_SERVICE_FILTER, GET_PRACTITIONER_LIST_BY_BRANCH_CODE, GetDoctorListByBranchCodeParams, GetPractitionerListByBranchCodeParams
 } from "./types";
 import { Doctor } from "@typings/doctor";
 import { Practitioner } from "@typings/practitioner";
@@ -63,8 +63,22 @@ function* getPractitionerListByBranchCode({ payload }: BaseAction<GetPractitione
   }
 }
 
+function* getListServiceFilter({ payload }: BaseAction<any>) {
+  try {
+    const data = yield call(PartnerService.getServicesFilter, payload);
+    yield put(
+      actions.getListServiceFilter.success({
+        data,
+      })
+    );
+  } catch (error: any) {
+    yield put(actions.getListServiceFilter.failure(error.message));
+  }
+}
+
 export default function* sagas() {
   yield all([takeLatest(GET_BRANCH_LIST_FOR_BOOKING.REQUEST, getBranchListForBooking)]);
   yield all([takeLatest(GET_DOCTOR_LIST_BY_BRANCH_CODE.REQUEST, getDoctorListByBranchCode)]);
   yield all([takeLatest(GET_PRACTITIONER_LIST_BY_BRANCH_CODE.REQUEST, getPractitionerListByBranchCode)]);
+  yield all([takeLatest(GET_LIST_SERVICE_FILTER.REQUEST, getListServiceFilter)]);
 }

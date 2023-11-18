@@ -42,6 +42,18 @@ const getServices = (
   return axios.get(`/service?${query}`).then(({ data }) => data.data);
 };
 
+const getServicesFilter = (
+  payload: any,
+) => {
+  const query = encodeParams({
+    ...payload,
+    sort: {
+      orderNumber: -1,
+    },
+  });
+  return axios.get(`/service/filter-booking?${query}`).then(({ data }) => data.data);
+};
+
 const getServiceDetails = (serviceId: string): Promise<any> =>
   axios.get(`/service/${serviceId}`).then(({ data }) => data.data);
 
@@ -194,10 +206,12 @@ const getInsuranceDetails = (id: string) =>
 const getBookingList = (payload: any): Promise<ApiResponse<Booking[]>> =>
   axios.get("/booking", payload).then(({ data }) => data);
 
+
 export default {
   getServiceGroup,
   getServices,
   getServiceDetails,
+  getServicesFilter,
   getBranchList,
   getBranchById,
   getDoctorList,
@@ -216,4 +230,5 @@ export default {
   getInsuranceDetails,
 
   getBookingList,
+
 };

@@ -10,71 +10,59 @@ import ListServices from './Components/ListServices';
 import { getAllServiceGroup } from '@Redux/Action/ServiceGroup';
 import { useDispatch, useSelector } from 'react-redux';
 import Text from '@Components/Text';
-import { getDataCreateBookingState } from '@Redux/booking/selectors';
+import { getDataCreateBookingState, getServiceListFilterState } from '@Redux/booking/selectors';
 import ModalConfirmService from './Components/ModalConfirmService';
-import { openModalAddServiceToBooking } from '@Redux/booking/actions';
+import { getListServiceFilter, openModalAddServiceToBooking } from '@Redux/booking/actions';
 import LinearGradient from 'react-native-linear-gradient';
 import { sizeText } from '@Constant/Text';
 import { navigation } from 'rootNavigation';
+import { formatMonney } from '@Constant/Utils';
 
 const NewPickerServiceBooking = () => {
     const dispatch = useDispatch()
     const [routes, setRoutes] = useState([]);
     const [index, setIndex] = useState(0);
 
-    const { dataBranch, dataDoctor } = useSelector(getDataCreateBookingState)
-
-    const listServiceGroup = useSelector(state => state.serviceGroupReducer?.listServiceGroup)
+    const { dataBranch, dataDoctor, dataPractitioner, dataServices } = useSelector(getDataCreateBookingState)
+    const { data: dataListService } = useSelector(getServiceListFilterState)
 
     const { isShowModalAddServiceToBooking } = useSelector(getDataCreateBookingState)
 
-    console.log({ isShowModalAddServiceToBooking });
-
-
     useEffect(() => {
-
         if (dataDoctor?.code) {
-            Alert.alert(dataDoctor?.code)
-        } else {
-            if (dataBranch?.code) {
-                Alert.alert(dataBranch?.code)
+            dispatch(getListServiceFilter.request({
+                treatmentDoctorCode: dataDoctor?.code
+            }))
+        } else if (dataPractitioner?.code) {
+            dispatch(getListServiceFilter.request({
+                practitionerCode: dataPractitioner?.code
+            }))
+        } else if (dataBranch?.code) {
+            dispatch(getListServiceFilter.request({
+                branchCode: dataBranch?.code
+            }))
+        }
+    }, [dataBranch?.code, dataDoctor?.code, dataPractitioner?.code])
+
+    useEffect(() => {
+        let listServiceTemp = dataListService
+
+        let newArray = [...new Set(listServiceTemp.flatMap(service => service.codeGroup))]
+            .map(codeGroup => ({
+                codeGroup,
+                listService: listServiceTemp.filter(service => service.codeGroup.includes(codeGroup))
+            }));
+
+        newArray = newArray?.map(item => {
+            return {
+                ...item,
+                key: item?.codeGroup,
+                name: item?.codeGroup,
+                code: item?.codeGroup
             }
-        }
-
-    }, [dataBranch?.code, dataDoctor?.code])
-
-    useEffect(() => {
-
-        var condition = {
-            condition: {
-                parentCode: {
-                    equal: null
-                }
-            },
-            "sort": {
-                "orderNumber": -1
-            },
-            "limit": 100,
-            "page": 1
-        }
-
-        dispatch(getAllServiceGroup(condition))
-
-    }, [])
-
-    useEffect(() => {
-        if (listServiceGroup?.length > 0) {
-            console.log({ listServiceGroup });
-            let tempListGR = [...listServiceGroup].map(item => {
-                return {
-                    ...item,
-                    key: item?.code,
-                }
-            })
-            setRoutes([{ key: 'all', name: 'Tất cả', code: 'ALL' }, ...tempListGR])
-        }
-    }, [listServiceGroup])
-
+        })
+        setRoutes([{ key: 'all', name: 'Tất cả', code: 'ALL', listService: dataListService }, ...newArray])
+    }, [dataListService])
 
     const _hideModalConfirmService = useCallback(() => {
         dispatch(openModalAddServiceToBooking(false))
@@ -128,7 +116,7 @@ const NewPickerServiceBooking = () => {
     }
     const renderScene = ({ route }) => {
         return (
-            <ListServices currGrChoice={``} route={route} />
+            <ListServices route={route} />
         )
     };
 
@@ -148,22 +136,25 @@ const NewPickerServiceBooking = () => {
                     />
                     : <></>
             }
-            <View style={styles.bottomAction}>
-                <TouchableOpacity
-                    onPress={_handleConfirmOrder}
-                    style={styles.btnAction}>
-                    <LinearGradient
-                        style={[StyleSheet.absoluteFillObject, { borderRadius: 8, }]}
-                        start={{ x: 0, y: 0 }}
-                        end={{ x: 0, y: 1 }}
-                        colors={["#01AB84", "#186A57"]}
-                    />
-                    <Text style={[sizeText.normal_bold, { color: WHITE }]}>
-                        Xác nhận
-                    </Text>
-                </TouchableOpacity>
-            </View>
-
+            {
+                dataServices?.length > 0 ?
+                    <View style={styles.bottomAction}>
+                        <TouchableOpacity
+                            onPress={_handleConfirmOrder}
+                            style={styles.btnAction}>
+                            <LinearGradient
+                                style={[StyleSheet.absoluteFillObject, { borderRadius: 8, }]}
+                                start={{ x: 0, y: 0 }}
+                                end={{ x: 0, y: 1 }}
+                                colors={["#01AB84", "#186A57"]}
+                            />
+                            <Text style={[sizeText.normal_bold, { color: WHITE }]}>
+                                Xác nhận ({`${formatMonney(dataServices?.reduce((sum, { price }) => sum + price, 0))}`} VNĐ)
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                    : <></>
+            }
         </Screen>
     )
 }

@@ -8,3 +8,4 @@ export const getDataBranchPickedState = (state: AppState) => state.booking.datac
 export const getDataDoctorPickedState = (state: AppState) => state.booking.datacreatebooking;
 
 export const getDataCreateBookingState = (state: AppState) => state.booking.datacreatebooking;
+export const getServiceListFilterState = (state: AppState) => state.booking.listservice;

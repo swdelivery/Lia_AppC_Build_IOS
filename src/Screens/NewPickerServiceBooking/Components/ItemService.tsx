@@ -1,36 +1,41 @@
-import { StyleSheet, TouchableOpacity, View } from 'react-native'
-import React, { useCallback } from 'react'
-import Text from '@Components/Text'
-import { _moderateScale, _width, _widthScale } from '@Constant/Scale'
-import Image from '@Components/Image'
-import { BASE_COLOR, BORDER_COLOR, GREY_FOR_TITLE, PRICE_ORANGE, WHITE } from '@Constant/Color'
 import Column from '@Components/Column'
+import Icon from '@Components/Icon'
+import Image from '@Components/Image'
 import CountStar2 from '@Components/NewCountStar/CountStar'
 import Row from '@Components/Row'
-import Icon from '@Components/Icon'
+import Text from '@Components/Text'
+import { BASE_COLOR, BORDER_COLOR, GREY, GREY_FOR_TITLE, PRICE_ORANGE, WHITE } from '@Constant/Color'
+import { _moderateScale, _width, _widthScale } from '@Constant/Scale'
 import { formatMonney } from '@Constant/Utils'
-import { useDispatch } from 'react-redux'
-import { openModalAddServiceToBooking } from '@Redux/booking/actions'
+import { removeService, selectService } from '@Redux/booking/actions'
+import { getDataCreateBookingState } from '@Redux/booking/selectors'
+import React, { useCallback } from 'react'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
+import { useDispatch, useSelector } from 'react-redux'
 
 const ITEM_WIDTH = _width / 2 - _widthScale(8 * 2)
 
 const ItemService = (props) => {
     const dispatch = useDispatch()
     const { data } = props
+    const { dataServices } = useSelector(getDataCreateBookingState)
 
     const _handleOpenModalAddService = useCallback(() => {
-        dispatch(openModalAddServiceToBooking({
-            flag: true,
-            data: data
-        }))
+        // dispatch(openModalAddServiceToBooking({
+        //     flag: true,
+        //     data: data
+        // }))
+        dispatch(selectService(data))
+    }, [data])
+
+    const _handleRemoveService = useCallback(() => {
+        dispatch(removeService(data))
     }, [data])
 
     return (
         <View style={styles.container}>
             <View style={styles.item}>
-
                 <Image style={styles.avatar} avatar={data?.representationFileArr[0]} />
-
                 <View style={styles.item__body}>
                     <View style={{ padding: 8 }}>
                         <Column gap={0}>
@@ -53,17 +58,24 @@ const ItemService = (props) => {
                                 </Row>
                             </Row>
                         </Column>
-
-                        <TouchableOpacity
-                            onPress={_handleOpenModalAddService}
-                            style={styles.item__body__btnAdd}>
-                            <Text color={WHITE} weight='bold'>
-                                Thêm
-                            </Text>
-                        </TouchableOpacity>
-
-
-
+                        {
+                            dataServices?.find(item => item?.code == data?.code) ?
+                                <TouchableOpacity
+                                    onPress={_handleRemoveService}
+                                    style={[styles.item__body__btnAdd, { backgroundColor: GREY }]}>
+                                    <Text color={WHITE} weight='bold'>
+                                        Đã Thêm
+                                    </Text>
+                                </TouchableOpacity>
+                                :
+                                <TouchableOpacity
+                                    onPress={_handleOpenModalAddService}
+                                    style={styles.item__body__btnAdd}>
+                                    <Text color={WHITE} weight='bold'>
+                                        Thêm
+                                    </Text>
+                                </TouchableOpacity>
+                        }
                     </View>
                 </View>
             </View>
