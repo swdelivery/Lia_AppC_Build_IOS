@@ -5,6 +5,7 @@ import { BASE_COLOR, GREY, WHITE } from "@Constant/Color";
 import { _moderateScale, _widthScale } from "@Constant/Scale";
 import { styleElement } from "@Constant/StyleElement";
 import { formatMonney } from "@Constant/Utils";
+import ScreenKey from "@Navigation/ScreenKey";
 import { clearCoupon, selectCoupon } from "@Redux/booking/actions";
 import { getDataCreateBookingState } from "@Redux/booking/selectors";
 import { MyVoucher } from "@typings/voucher";
@@ -12,6 +13,7 @@ import moment from "moment";
 import React, { useCallback } from "react";
 import { Alert, StyleSheet, TouchableOpacity, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "src/Hooks/useNavigation";
 
 type Props = {
   data: any;
@@ -20,6 +22,7 @@ type Props = {
 export default function CardVoucher({ data }: Props) {
 
   const dispatch = useDispatch()
+  const { navigate } = useNavigate()
 
   const { dataCoupon, dataServices } = useSelector(getDataCreateBookingState)
 
@@ -40,8 +43,14 @@ export default function CardVoucher({ data }: Props) {
     dispatch(clearCoupon(data))
   }, [data])
 
+
+
   return (
-    <TouchableOpacity activeOpacity={1} style={styles.voucherBox}>
+    <TouchableOpacity
+      onPress={navigate(ScreenKey.DETAIL_LIA_VOUCHER, {
+        data: { ...data?.coupon, isTaked: true },
+      })}
+      activeOpacity={.5} style={styles.voucherBox} >
       <View style={[styles.voucherBox__left, shadow]}>
         <Image avatar={data?.coupon?.couponImg} style={styles.avatarVoucher} />
         <Column flex={1} marginLeft={8}>
@@ -60,6 +69,7 @@ export default function CardVoucher({ data }: Props) {
         {
           dataCoupon?.coupon?.code == data?.coupon?.code ?
             <TouchableOpacity
+              hitSlop={styleElement.hitslopSm}
               onPress={_handleClearCoupon}
               style={[styles.voucherBox__right__btn, { backgroundColor: GREY }]}
             >
@@ -69,6 +79,7 @@ export default function CardVoucher({ data }: Props) {
             </TouchableOpacity>
             :
             <TouchableOpacity
+              hitSlop={styleElement.hitslopSm}
               onPress={_handleSelectCoupon}
               style={styles.voucherBox__right__btn}
             >
@@ -79,7 +90,7 @@ export default function CardVoucher({ data }: Props) {
         }
 
       </View>
-    </TouchableOpacity>
+    </TouchableOpacity >
   );
 }
 

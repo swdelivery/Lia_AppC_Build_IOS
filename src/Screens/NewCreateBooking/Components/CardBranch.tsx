@@ -10,6 +10,8 @@ import Column from '@Components/Column'
 import { Branch } from '@typings/branch'
 import { useDispatch } from 'react-redux'
 import { selectBranch } from '@Redux/booking/actions'
+import ScreenKey from '@Navigation/ScreenKey'
+import { useNavigate } from 'src/Hooks/useNavigation'
 
 
 
@@ -18,6 +20,8 @@ type Props = {
     onClose: () => void;
 };
 const CardBranch = ({ data, onClose }: Props) => {
+
+    const { navigate } = useNavigate();
 
     const dispatch = useDispatch()
 
@@ -40,7 +44,7 @@ const CardBranch = ({ data, onClose }: Props) => {
                     <Text style={{ flex: 1 }} weight='bold'>
                         {data?.name}
                     </Text>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={navigate(ScreenKey.DETAIL_BRAND, { branch: data })}>
                         <Row>
                             <Text style={{ fontStyle: 'italic' }} color={BASE_COLOR} size={12}>
                                 Chi tiết

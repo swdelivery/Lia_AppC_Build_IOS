@@ -11,6 +11,9 @@ import { Doctor } from '@typings/doctor'
 import { useDispatch } from 'react-redux'
 import { clearDoctor, clearPractitioner, selectDoctor, selectPractitioner } from '@Redux/booking/actions'
 import { Alert } from 'react-native'
+import { useNavigate } from 'src/Hooks/useNavigation'
+import ScreenKey from '@Navigation/ScreenKey'
+import useDoctorDetailsNavigation from 'src/Hooks/navigation/useDoctorDetailsNavigation'
 
 
 type Props = {
@@ -19,6 +22,10 @@ type Props = {
 };
 
 const CardDoctor = ({ data, onClose }: Props) => {
+
+    const handleNavigateDetailDoctor = useDoctorDetailsNavigation();
+
+    const { navigate } = useNavigate()
 
     const dispatch = useDispatch()
 
@@ -35,6 +42,14 @@ const CardDoctor = ({ data, onClose }: Props) => {
         }
     }
 
+    const _handleGoDetail = useCallback(() => {
+        if (data?.identification == 'doctor') {
+            handleNavigateDetailDoctor(data);
+        } else if (data?.identification == 'practitioner') {
+            navigate(ScreenKey.DETAIL_PRACTITIONER, { practitioner: data })();
+        }
+    }, [data])
+
     return (
         <TouchableOpacity
             onPress={_handleChoiceDoctor}
@@ -49,7 +64,7 @@ const CardDoctor = ({ data, onClose }: Props) => {
                     <Text style={{ flex: 1 }} weight='bold'>
                         {data?.name}
                     </Text>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={_handleGoDetail}>
                         <Row>
                             <Text style={{ fontStyle: 'italic' }} color={BASE_COLOR} size={12}>
                                 Chi tiết

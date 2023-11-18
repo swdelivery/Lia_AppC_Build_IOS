@@ -16,6 +16,8 @@ import { IconCancelGrey } from '../../../Components/Icon/Icon'
 import { BASE_COLOR, BORDER_COLOR, PRICE_ORANGE, WHITE } from '../../../Constant/Color'
 import { sizeIcon } from '../../../Constant/Icon'
 import { _height, _heightScale, _moderateScale, _width } from '../../../Constant/Scale'
+import { useNavigate } from 'src/Hooks/useNavigation'
+import ScreenKey from '@Navigation/ScreenKey'
 
 const HEIGHT_MODAL = _heightScale(600)
 
@@ -26,6 +28,8 @@ type Props = {
 }
 
 const ModalListBeautyInsurance = memo(({ visible, onClose }: Props) => {
+
+    const { navigate } = useNavigate()
 
     const dispatch = useDispatch()
 
@@ -88,19 +92,23 @@ const ModalListBeautyInsurance = memo(({ visible, onClose }: Props) => {
                 borderBottomWidth={1}
                 borderBottomColor={BORDER_COLOR}>
                 <Row gap={8 * 2}>
-                    <Column gap={4} flex={1}>
-                        <Text weight='bold' color={BASE_COLOR}>
-                            {data?.name}
-                        </Text>
-                        <Text >
-                            {data?.description}
-                        </Text>
-                        <Text color={PRICE_ORANGE} weight='bold'>
-                            {formatMonney(data?.price)} VNĐ
-                        </Text>
-                    </Column>
+                    <TouchableOpacity style={{ flex: 1 }} onPress={navigate(ScreenKey.DETAIL_BEAUTY_INSURANCE, {
+                        insurance: data,
+                    })}>
+                        <Column gap={4} flex={1}>
+                            <Text weight='bold' color={BASE_COLOR}>
+                                {data?.name}
+                            </Text>
+                            <Text >
+                                {data?.description}
+                            </Text>
+                            <Text color={PRICE_ORANGE} weight='bold'>
+                                {formatMonney(data?.price)} VNĐ
+                            </Text>
+                        </Column>
+                    </TouchableOpacity>
                     <Column>
-                        <TouchableOpacity onPress={_handleAddInsurance}>
+                        <TouchableOpacity hitSlop={styleElement.hitslopMd} onPress={_handleAddInsurance}>
                             <SquareTick isTicked={isTicked} />
                         </TouchableOpacity>
                     </Column>

@@ -14,7 +14,7 @@ import CardDoctor from './CardDoctor'
 import { getDoctorListForBookingState, getPractitionerListForBookingState } from '@Redux/booking/selectors'
 import Text from '@Components/Text'
 
-const HEIGHT_MODAL = _heightScale(450)
+const HEIGHT_MODAL = _heightScale(650)
 
 const ModalListDoctor = memo((props) => {
 

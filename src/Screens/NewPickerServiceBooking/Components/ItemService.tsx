@@ -7,15 +7,22 @@ import Text from '@Components/Text'
 import { BASE_COLOR, BORDER_COLOR, GREY, GREY_FOR_TITLE, PRICE_ORANGE, WHITE } from '@Constant/Color'
 import { _moderateScale, _width, _widthScale } from '@Constant/Scale'
 import { formatMonney } from '@Constant/Utils'
+import ScreenKey from '@Navigation/ScreenKey'
 import { removeService, selectService } from '@Redux/booking/actions'
 import { getDataCreateBookingState } from '@Redux/booking/selectors'
 import React, { useCallback, useMemo } from 'react'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
+import useServiceDetailsNavigation from 'src/Hooks/navigation/useServiceDetailsNavigation'
+import { useNavigate } from 'src/Hooks/useNavigation'
 
 const ITEM_WIDTH = _width / 2 - _widthScale(8 * 2)
 
 const ItemService = (props) => {
+
+    const { navigate } = useNavigate()
+    const handleGoDetailService = useServiceDetailsNavigation();
+
     const dispatch = useDispatch()
     const { data } = props
     const { dataServices } = useSelector(getDataCreateBookingState)
@@ -36,9 +43,16 @@ const ItemService = (props) => {
         return !!dataServices?.find(item => item?.code == data?.code)
     }, [dataServices, data])
 
+    const _handleGoDetailService = useCallback(() => {
+        handleGoDetailService(data)
+    }, [data]);
+
+
+
     return (
         <View style={styles.container}>
-            <View style={styles.item}>
+            <TouchableOpacity onPress={_handleGoDetailService}
+                style={styles.item}>
                 <Image style={styles.avatar} avatar={data?.representationFileArr[0]} />
                 <View style={styles.item__body}>
                     <View style={{ padding: 8 }}>
@@ -82,7 +96,7 @@ const ItemService = (props) => {
                         }
                     </View>
                 </View>
-            </View>
+            </TouchableOpacity>
         </View>
     )
 }
@@ -96,7 +110,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: 8,
         borderRadius: 4,
-        height: _moderateScale(8 * 3),
+        height: _moderateScale(8 * 3.5),
         backgroundColor: BASE_COLOR
     },
     item__body: {

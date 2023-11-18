@@ -25,11 +25,12 @@ const BottomAction = ({ branch }: Props) => {
     // navigation.navigate(ScreenKey.CREATE_BOOKING, {
     //   //   choiceBranch: currentBranch,
     // });
-    navigation.navigate(ScreenKey.BOOKING_FOR_BRANCH, {
-      infoBranch: branch,
-      branchCode: branch?.code,
-      refCode: "",
-    });
+    // navigation.navigate(ScreenKey.BOOKING_FOR_BRANCH, {
+    //   infoBranch: branch,
+    //   branchCode: branch?.code,
+    //   refCode: "",
+    // });
+    navigation.navigate(ScreenKey.CREATE_BOOKING)
   }, [branch]);
 
   const handlePhonePress = useCallback(() => {

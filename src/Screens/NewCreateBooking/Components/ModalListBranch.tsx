@@ -12,7 +12,7 @@ import CardBranch from './CardBranch'
 import Column from '@Components/Column'
 import { getBranchListForBookingState } from '@Redux/booking/selectors'
 
-const HEIGHT_MODAL = _heightScale(450)
+const HEIGHT_MODAL = _heightScale(650)
 
 const ModalListBranch = memo((props) => {
 

@@ -5,10 +5,12 @@ import Text from '@Components/Text'
 import { BORDER_COLOR, PRICE_ORANGE } from '@Constant/Color'
 import { styleElement } from '@Constant/StyleElement'
 import { formatMonney } from '@Constant/Utils'
+import ScreenKey from '@Navigation/ScreenKey'
 import { getDataCreateBookingState } from '@Redux/booking/selectors'
 import React from 'react'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { useSelector } from 'react-redux'
+import { useNavigate } from 'src/Hooks/useNavigation'
 
 
 type Props = {
@@ -17,11 +19,16 @@ type Props = {
 
 const ListBeautyInsurance = ({ onPress }: Props) => {
 
+    const { navigate } = useNavigate()
+
     const { dataInsurance } = useSelector(getDataCreateBookingState)
 
     const ItemInsurance = ({ data }) => {
         return (
-            <TouchableOpacity>
+            <TouchableOpacity
+                onPress={navigate(ScreenKey.DETAIL_BEAUTY_INSURANCE, {
+                    insurance: data,
+                })}>
                 <Column
                     gap={4}
                     borderRadius={8}

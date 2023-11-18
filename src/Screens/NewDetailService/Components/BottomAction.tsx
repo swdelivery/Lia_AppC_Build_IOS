@@ -8,17 +8,24 @@ import useRequireLoginCallback from "src/Hooks/useRequireLoginAction";
 import Row from "@Components/Row";
 import Text from "@Components/Text";
 import { Service } from "@typings/serviceGroup";
+import { useNavigate } from "src/Hooks/useNavigation";
+import ScreenKey from "@Navigation/ScreenKey";
 
 type Props = {
   service?: Service;
 };
 
 const BottomAction = ({ service }: Props) => {
-  const handleBooking = useRequireLoginCallback(() => {}, [service]);
 
-  const handlePhonePress = useCallback(() => {}, [service]);
+  const { navigate } = useNavigate()
 
-  const handleChatPress = useRequireLoginCallback(() => {}, []);
+  const handleBooking = useRequireLoginCallback(() => {
+    navigate(ScreenKey.CREATE_BOOKING)();
+  }, [service]);
+
+  const handlePhonePress = useCallback(() => { }, [service]);
+
+  const handleChatPress = useRequireLoginCallback(() => { }, []);
 
   return (
     <View style={styles.container}>
