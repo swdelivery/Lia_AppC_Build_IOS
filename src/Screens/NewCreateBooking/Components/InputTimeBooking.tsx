@@ -1,24 +1,24 @@
-import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
-import React, { memo, useCallback, useEffect, useState } from 'react'
-import { _moderateScale, _width, _widthScale } from '@Constant/Scale'
+import { IconCalendarBase } from '@Components/Icon/Icon'
+import Row from '@Components/Row'
 import Text from '@Components/Text'
 import { BASE_COLOR, BLACK, BORDER_COLOR, GREY, RED, WHITE } from '@Constant/Color'
-import Row from '@Components/Row'
-import { IconCalendarBase } from '@Components/Icon/Icon'
 import { sizeIcon } from '@Constant/Icon'
-import moment from 'moment'
+import { _moderateScale, _width, _widthScale } from '@Constant/Scale'
 import { styleElement } from '@Constant/StyleElement'
-import LinearGradient from 'react-native-linear-gradient'
-import { useDispatch, useSelector } from 'react-redux'
 import { selectDate, selectTime } from '@Redux/booking/actions'
 import { getDataCreateBookingState } from '@Redux/booking/selectors'
-import { Alert } from 'react-native'
+import { TimeForBooking } from '@typings/booking'
+import moment from 'moment'
+import React, { memo, useCallback, useEffect, useState } from 'react'
+import { Alert, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
+import LinearGradient from 'react-native-linear-gradient'
+import { useDispatch, useSelector } from 'react-redux'
 
 
 type Props = {
     setShowModalDatePicker: any
     setShowModalTimePicker: any
-    listTimeForBooking: any
+    listTimeForBooking: TimeForBooking[]
 };
 
 
@@ -43,7 +43,6 @@ const InputTimeBooking = memo((
         let find = list7Days.find(item => {
             return _isSameDate(item, dataDate)
         })
-        console.log({ find });
         if (!find) {
             setList7Days(Array.from(new Array(7), (x, i) => moment(dataDate).add(i, 'days')))
         }
@@ -71,7 +70,6 @@ const InputTimeBooking = memo((
 
     const _renderVietnameseDays = (date) => {
         let numberDate = moment(date).format('d');
-
         if (Number(numberDate) === 0) {
             return `CN`
         } else {
@@ -201,7 +199,6 @@ const InputTimeBooking = memo((
             <ScrollView showsHorizontalScrollIndicator={false} style={{ marginTop: 8 }} contentContainerStyle={{ gap: 8 }} horizontal>
                 {
                     listTimeForBooking?.slice(5, 10)?.map((item, index) => {
-
                         if (item?.time?.hour == dataTime?.hour && item?.time?.minute == dataTime?.minute) {
                             return (
                                 <TouchableOpacity

@@ -14,9 +14,6 @@ import { Alert, StyleSheet, TouchableOpacity, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
 type Props = {
-  item: MyVoucher;
-  onDetails: (item: MyVoucher) => void;
-  onUseCoupon: (item: MyVoucher) => void;
   data: any;
 };
 

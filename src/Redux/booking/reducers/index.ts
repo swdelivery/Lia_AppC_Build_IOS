@@ -4,6 +4,7 @@ import listbranch from "./listbranch";
 import listdoctor from "./listdoctor";
 import listpractitioner from "./listpractitioner";
 import listservice from "./listservice";
+import response from "./response";
 
 
 export default combineReducers({
@@ -11,5 +12,6 @@ export default combineReducers({
   listbranch,
   listdoctor,
   listpractitioner,
-  listservice
+  listservice,
+  response
 });

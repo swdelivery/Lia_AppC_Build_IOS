@@ -12,16 +12,16 @@ import Collapsible from 'react-native-collapsible'
 
 const Bill = () => {
 
-    const { dataCoupon, dataServices } = useSelector(getDataCreateBookingState)
+    const { dataCoupon, dataServices, dataInsurance } = useSelector(getDataCreateBookingState)
 
 
     const [originPrice, setOriginPrice] = useState(null)
     const [discountAmount, setDiscountAmount] = useState(null)
 
     useEffect(() => {
-        let price = dataServices?.reduce((sum, { price }) => sum + price, 0);
+        let price = [...dataServices, ...dataInsurance]?.reduce((sum, { price }) => sum + price, 0);
         setOriginPrice(price)
-    }, [dataServices])
+    }, [dataServices, dataInsurance])
 
     useEffect(() => {
         if (dataCoupon?._id && originPrice) {

@@ -189,6 +189,10 @@ const takeVoucher = (payload: any) => {
   return axios.post("/partner-coupon", payload).then(({ data }) => data.data);
 };
 
+const createPartnerBooking = (payload: any) => {
+  return axios.post("/booking", payload).then(({ data }) => data);
+};
+
 const getInsuranceList = (): Promise<ApiResponse<Insurance[]>> =>
   axios
     .get("/insurance/all", {
@@ -225,6 +229,7 @@ export default {
   getVouchers,
   getPublicVouchers,
   takeVoucher,
+  createPartnerBooking,
 
   getInsuranceList,
   getInsuranceDetails,

@@ -1,20 +1,21 @@
-import React, { memo, useEffect, useState } from 'react'
-import { Alert, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
+import Column from '@Components/Column'
+import Row from '@Components/Row'
+import SquareTick from '@Components/SquareTick/SquareTick'
+import Text from '@Components/Text'
+import { styleElement } from '@Constant/StyleElement'
+import { formatMonney } from '@Constant/Utils'
+import { selectInsurance } from '@Redux/booking/actions'
+import { getDataCreateBookingState } from '@Redux/booking/selectors'
+import { getInsuranceListState } from '@Redux/insurance/selectors'
+import React, { memo, useCallback, useEffect } from 'react'
+import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
+import LinearGradient from 'react-native-linear-gradient'
 import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
-import { useSelector } from 'react-redux'
-import { BtnHistory, IconCancelGrey, IconTick } from '../../../Components/Icon/Icon'
-import { BASE_COLOR, BORDER_COLOR, GREY_FOR_TITLE, PRICE_ORANGE, WHITE } from '../../../Constant/Color'
-import { stylesFont } from '../../../Constant/Font'
+import { useDispatch, useSelector } from 'react-redux'
+import { IconCancelGrey } from '../../../Components/Icon/Icon'
+import { BASE_COLOR, BORDER_COLOR, PRICE_ORANGE, WHITE } from '../../../Constant/Color'
 import { sizeIcon } from '../../../Constant/Icon'
 import { _height, _heightScale, _moderateScale, _width } from '../../../Constant/Scale'
-import { styleElement } from '@Constant/StyleElement'
-import CardBranch from './CardBranch'
-import Column from '@Components/Column'
-import CardDoctor from './CardDoctor'
-import Text from '@Components/Text'
-import Row from '@Components/Row'
-import CircleTick from '@Components/CircleTick/CircleTick'
-import SquareTick from '@Components/SquareTick/SquareTick'
 
 const HEIGHT_MODAL = _heightScale(600)
 
@@ -26,8 +27,13 @@ type Props = {
 
 const ModalListBeautyInsurance = memo(({ visible, onClose }: Props) => {
 
+    const dispatch = useDispatch()
+
     const opacityBackDrop = useSharedValue(0);
     const tranYModal = useSharedValue(0);
+
+    const { data: dataListInsurance } = useSelector(getInsuranceListState);
+    const { dataInsurance } = useSelector(getDataCreateBookingState);
 
     useEffect(() => {
         if (visible) {
@@ -36,6 +42,10 @@ const ModalListBeautyInsurance = memo(({ visible, onClose }: Props) => {
         } else {
         }
     }, [visible])
+
+    useEffect(() => {
+
+    }, [])
 
 
     const animTranY = useAnimatedStyle(() => {
@@ -67,6 +77,11 @@ const ModalListBeautyInsurance = memo(({ visible, onClose }: Props) => {
     }
 
     const ItemInsurance = ({ data, isTicked }) => {
+
+        const _handleAddInsurance = useCallback(() => {
+            dispatch(selectInsurance(data))
+        }, [data])
+
         return (
             <Column
                 padding={8 * 2}
@@ -75,18 +90,19 @@ const ModalListBeautyInsurance = memo(({ visible, onClose }: Props) => {
                 <Row gap={8 * 2}>
                     <Column gap={4} flex={1}>
                         <Text weight='bold' color={BASE_COLOR}>
-                            Bảo hiểm làm đẹp cá nhân
+                            {data?.name}
                         </Text>
                         <Text >
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
+                            {data?.description}
                         </Text>
                         <Text color={PRICE_ORANGE} weight='bold'>
-                            500.000 VNĐ
+                            {formatMonney(data?.price)} VNĐ
                         </Text>
-
                     </Column>
                     <Column>
-                        <SquareTick isTicked={isTicked} />
+                        <TouchableOpacity onPress={_handleAddInsurance}>
+                            <SquareTick isTicked={isTicked} />
+                        </TouchableOpacity>
                     </Column>
                 </Row>
             </Column>
@@ -124,11 +140,11 @@ const ModalListBeautyInsurance = memo(({ visible, onClose }: Props) => {
                 <ScrollView>
                     <Column >
                         {
-                            [1, 2, 3, 4, 5, 6]?.map((item, index) => {
+                            dataListInsurance?.map((item, index) => {
                                 return (
                                     <ItemInsurance
                                         data={item}
-                                        isTicked={index % 2 == 0 ? true : false}
+                                        isTicked={dataInsurance?.find(itemFind => itemFind?._id == item?._id)}
                                         key={index} />
                                 )
                             })
@@ -136,6 +152,21 @@ const ModalListBeautyInsurance = memo(({ visible, onClose }: Props) => {
                     </Column>
                     <View style={{ height: 100 }} />
                 </ScrollView>
+                <View style={styles.bottomAction}>
+                    <TouchableOpacity
+                        onPress={_handleHideModal}
+                        style={styles.btnAction}>
+                        <LinearGradient
+                            style={[StyleSheet.absoluteFillObject, { borderRadius: 8, }]}
+                            start={{ x: 0, y: 0 }}
+                            end={{ x: 0, y: 1 }}
+                            colors={["#01AB84", "#186A57"]}
+                        />
+                        <Text color={WHITE} size={16} weight='bold'>
+                            Xác nhận ({`${formatMonney(dataInsurance?.reduce((sum, { price }) => sum + price, 0))}`} VNĐ)
+                        </Text>
+                    </TouchableOpacity>
+                </View>
             </Animated.View>
         </View>
 
@@ -146,6 +177,20 @@ const ModalListBeautyInsurance = memo(({ visible, onClose }: Props) => {
 export default ModalListBeautyInsurance
 
 const styles = StyleSheet.create({
+    btnAction: {
+        marginHorizontal: _moderateScale(8 * 2),
+        height: _moderateScale(8 * 5),
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    bottomAction: {
+        height: _moderateScale(8 * 7),
+        borderTopWidth: 1,
+        borderTopColor: BORDER_COLOR,
+        width: _width,
+        justifyContent: 'center',
+        // alignItems:'center'
+    },
     cancelBtn: {
         position: 'absolute',
         right: _moderateScale(8 * 3),

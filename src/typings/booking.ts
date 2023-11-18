@@ -86,3 +86,13 @@ export type Booking = {
   appointmentDateFinal: AppointmentDate;
   partnerPhone: PartnerPhone;
 } & Timestamp;
+
+export type TimeForBooking = {
+  _id: string,
+  from: string,
+  to: string,
+  time: {
+    hour: string,
+    minute: string
+  }
+}

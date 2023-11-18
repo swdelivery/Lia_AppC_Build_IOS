@@ -1,33 +1,35 @@
 import Column from "@Components/Column";
+import NewDatePicker from "@Components/NewDatePicker/NewDatePicker";
 import Screen from "@Components/Screen";
+import TimePicker from "@Components/TimePicker/TimePicker";
+import { WHITE } from "@Constant/Color";
+import { _heightScale } from "@Constant/Scale";
+import { clearDoctor, clearPractitioner, getBranchListForBooking, getDoctorListByBranchCode, getPractitionerListByBranchCode, selectDate } from "@Redux/booking/actions";
+import { getDataCreateBookingState } from "@Redux/booking/selectors";
+import { getInsuranceList, loadMoreInsuranceList } from "@Redux/insurance/actions";
+import { getInsuranceListState } from "@Redux/insurance/selectors";
+import { TimeForBooking } from "@typings/booking";
+import moment from "moment";
 import React, { useCallback, useEffect, useState } from "react";
 import { KeyboardAvoidingView, Platform, StatusBar, StyleSheet, View } from "react-native";
 import Animated, { useAnimatedScrollHandler, useSharedValue } from "react-native-reanimated";
+import { useDispatch, useSelector } from "react-redux";
+import useListFilter from "src/Hooks/useListFilter";
+import useVisible from "src/Hooks/useVisible";
+import ActionBottom from "./Components/ActionBottom";
+import Bill from "./Components/Bill";
 import CoverImage from "./Components/CoverImage";
-import { _heightScale, _moderateScale } from "@Constant/Scale";
-import { WHITE } from "@Constant/Color";
-import InputRefCode from "./Components/InputRefCode";
+import Header from "./Components/Header";
 import InputPicker from "./Components/InputPicker";
+import InputTimeBooking from "./Components/InputTimeBooking";
+import ListBeautyInsurance from "./Components/ListBeautyInsurance";
+import ListVoucher from "./Components/ListVoucher";
+import ModalListBeautyInsurance from "./Components/ModalListBeautyInsurance";
 import ModalListBranch from "./Components/ModalListBranch";
 import ModalListDoctor from "./Components/ModalListDoctor";
-import InputTimeBooking from "./Components/InputTimeBooking";
-import moment from "moment";
-import NewDatePicker from "@Components/NewDatePicker/NewDatePicker";
-import TimePicker from "@Components/TimePicker/TimePicker";
-import PickService from "./Components/PickService";
-import ListVoucher from "./Components/ListVoucher";
-import Bill from "./Components/Bill";
 import Notes from "./Components/Notes";
-import ActionBottom from "./Components/ActionBottom";
-import Header from "./Components/Header";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import ListBeautyInsurance from "./Components/ListBeautyInsurance";
-import ModalListBeautyInsurance from "./Components/ModalListBeautyInsurance";
-import useVisible from "src/Hooks/useVisible";
-import { useDispatch, useSelector } from "react-redux";
-import { clearDoctor, clearPractitioner, getBranchListForBooking, getDoctorListByBranchCode, getPractitionerListByBranchCode, selectDate } from "@Redux/booking/actions";
-import { getDataCreateBookingState } from "@Redux/booking/selectors";
-import Collapsible from "react-native-collapsible";
+import PickService from "./Components/PickService";
+
 
 const NewCreateBooking = () => {
 
@@ -44,7 +46,7 @@ const NewCreateBooking = () => {
 
     const insurancePicker = useVisible();
 
-    const [listTimeForBooking, setListTimeForBooking] = useState([
+    const [listTimeForBooking, setListTimeForBooking] = useState<TimeForBooking[]>([
         { _id: '2', from: '09:00', to: '10:00', time: { hour: '09', minute: '00' } },
         { _id: '3', from: '10:00', to: '11:00', time: { hour: '10', minute: '00' } },
         { _id: '4', from: '11:00', to: '12:00', time: { hour: '11', minute: '00' } },
@@ -57,7 +59,14 @@ const NewCreateBooking = () => {
         { _id: '11', from: '18:00', to: '19:00', time: { hour: '18', minute: '00' } },
     ])
 
+    const { getData } = useListFilter(
+        getInsuranceListState,
+        getInsuranceList,
+        loadMoreInsuranceList
+    );
+
     useEffect(() => {
+        getData();
         dispatch(getBranchListForBooking.request())
     }, [])
 
@@ -75,7 +84,7 @@ const NewCreateBooking = () => {
     }, [dataBranch?.code])
 
     const _handleConfirmPickDate = useCallback((date) => {
-        dispatch(selectDate(date))
+        dispatch(selectDate(moment(date)))
     }, [])
 
 
@@ -110,11 +119,14 @@ const NewCreateBooking = () => {
                 >
                     <View style={{ backgroundColor: WHITE }}>
                         <Column style={{ marginTop: 8 * 4 }} gap={32}>
-                            <InputRefCode />
+                            {/* PENDING FOR WAITING BACK-END */}
+                            {/* <InputRefCode /> */}
                             <InputPicker value={dataBranch} require title={"Chọn phòng khám"} onPress={() => setShowModalListBranch(old => !old)} />
-                            <Collapsible collapsed={dataBranch?._id ? false : true}>
-                                <InputPicker value={dataPractitioner?._id ? dataPractitioner : dataDoctor} title={'Chọn bác sĩ'} onPress={() => setShowModalListDoctor(old => !old)} />
-                            </Collapsible>
+                            {
+                                dataBranch?._id ?
+                                    <InputPicker value={dataPractitioner?._id ? dataPractitioner : dataDoctor} title={'Chọn bác sĩ'} onPress={() => setShowModalListDoctor(old => !old)} />
+                                    : <></>
+                            }
                             <InputTimeBooking
                                 setShowModalDatePicker={setShowModalDatePicker}
                                 setShowModalTimePicker={setShowModalTimePicker}

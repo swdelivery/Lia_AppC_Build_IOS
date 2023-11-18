@@ -9,7 +9,7 @@ import { _moderateScale, _width, _widthScale } from '@Constant/Scale'
 import { formatMonney } from '@Constant/Utils'
 import { removeService, selectService } from '@Redux/booking/actions'
 import { getDataCreateBookingState } from '@Redux/booking/selectors'
-import React, { useCallback } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -32,6 +32,10 @@ const ItemService = (props) => {
         dispatch(removeService(data))
     }, [data])
 
+    const isSelected = useMemo(() => {
+        return !!dataServices?.find(item => item?.code == data?.code)
+    }, [dataServices, data])
+
     return (
         <View style={styles.container}>
             <View style={styles.item}>
@@ -45,7 +49,7 @@ const ItemService = (props) => {
 
                             <CountStar2 size={12} count={data?.reviewCount} rating={5} />
 
-                            <Row style={{}}>
+                            <Row>
                                 <Text style={{ flex: 1 }} color={PRICE_ORANGE} weight='bold' size={14} >
                                     {formatMonney(data?.price)} VNĐ
                                 </Text>
@@ -59,7 +63,7 @@ const ItemService = (props) => {
                             </Row>
                         </Column>
                         {
-                            dataServices?.find(item => item?.code == data?.code) ?
+                            isSelected ?
                                 <TouchableOpacity
                                     onPress={_handleRemoveService}
                                     style={[styles.item__body__btnAdd, { backgroundColor: GREY }]}>

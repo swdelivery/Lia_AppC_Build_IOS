@@ -5,10 +5,11 @@ import PartnerService from "src/Services/PartnerService";
 import configs from "src/configs";
 import * as actions from "./actions";
 import {
-  GET_BRANCH_LIST_FOR_BOOKING, GET_DOCTOR_LIST_BY_BRANCH_CODE, GET_LIST_SERVICE_FILTER, GET_PRACTITIONER_LIST_BY_BRANCH_CODE, GetDoctorListByBranchCodeParams, GetPractitionerListByBranchCodeParams
+  GET_BRANCH_LIST_FOR_BOOKING, GET_DOCTOR_LIST_BY_BRANCH_CODE, GET_LIST_SERVICE_FILTER, GET_PRACTITIONER_LIST_BY_BRANCH_CODE, GetDoctorListByBranchCodeParams, GetPractitionerListByBranchCodeParams, CREAT_PARTNER_BOOKING
 } from "./types";
 import { Doctor } from "@typings/doctor";
 import { Practitioner } from "@typings/practitioner";
+import { Alert } from "react-native";
 
 
 
@@ -76,9 +77,25 @@ function* getListServiceFilter({ payload }: BaseAction<any>) {
   }
 }
 
+function* createPartnerBooking({ payload }: BaseAction<any>) {
+  try {
+    const data = yield call(PartnerService.createPartnerBooking, payload);
+    yield put(
+      actions.createPartnerBooking.success({
+        data,
+      })
+    );
+  } catch (error: any) {
+    Alert.alert(error?.message)
+
+    yield put(actions.createPartnerBooking.failure(error));
+  }
+}
+
 export default function* sagas() {
   yield all([takeLatest(GET_BRANCH_LIST_FOR_BOOKING.REQUEST, getBranchListForBooking)]);
   yield all([takeLatest(GET_DOCTOR_LIST_BY_BRANCH_CODE.REQUEST, getDoctorListByBranchCode)]);
   yield all([takeLatest(GET_PRACTITIONER_LIST_BY_BRANCH_CODE.REQUEST, getPractitionerListByBranchCode)]);
   yield all([takeLatest(GET_LIST_SERVICE_FILTER.REQUEST, getListServiceFilter)]);
+  yield all([takeLatest(CREAT_PARTNER_BOOKING.REQUEST, createPartnerBooking)]);
 }
