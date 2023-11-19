@@ -18,18 +18,18 @@ type ScreenParams = {
     routeName: string;
     nationCode: string;
   };
-  [ScreenKey.DETAIL_BRAND]: { branch: Branch };
-  [ScreenKey.DETAIL_DOCTOR]: { doctor: Doctor };
-  [ScreenKey.DETAIL_SERVICE]: { service: Service };
-  [ScreenKey.DETAIL_PRACTITIONER]: { practitioner: Practitioner };
-  [ScreenKey.DETAIL_BOOKING]: { booking: Booking };
-  [ScreenKey.DETAIL_BEAUTY_INSURANCE]: { insurance: Insurance };
   [ScreenKey.GET_OTP_NEW_PASS]: {
     phoneNumber: string;
     fullPhone: string;
     routeName: string;
     nationCode: string;
   };
+  [ScreenKey.DETAIL_BRAND]: { branch: Branch };
+  [ScreenKey.DETAIL_DOCTOR]: { doctor: Doctor };
+  [ScreenKey.DETAIL_SERVICE]: { service: Service };
+  [ScreenKey.DETAIL_PRACTITIONER]: { practitioner: Practitioner };
+  [ScreenKey.DETAIL_BOOKING]: { booking: Booking };
+  [ScreenKey.DETAIL_BEAUTY_INSURANCE]: { insurance: Insurance };
 };
 
 export type RootStackParamsList = {

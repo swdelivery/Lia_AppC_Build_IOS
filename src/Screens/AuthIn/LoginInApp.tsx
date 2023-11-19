@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
+import { Alert, Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useDispatch } from "react-redux";
 import * as Color from "../../Constant/Color";
@@ -21,12 +21,10 @@ import Header from "./components/Header";
 import Row from "@Components/Row";
 import PasswordInput from "@Components/PasswordInput";
 import Column from "@Components/Column";
-import { useNavigate } from "src/Hooks/useNavigation";
 import PhoneInput from "@Components/PhoneInput";
 import { isValidPhoneNumber } from "react-phone-number-input";
 
 const Login = (props) => {
-  const { navigate } = useNavigate();
   const [phoneNumber, setphoneNumber] = useState("");
   const [password, setPassword] = useState("");
 
@@ -88,7 +86,7 @@ const Login = (props) => {
 
   const fetchData = async () => {
     if (!phoneNumber || !password) {
-      return alert("Nhập đầy đủ thông tin");
+      return Alert.alert("Nhập đầy đủ thông tin");
     }
 
     dispatch(
@@ -126,7 +124,7 @@ const Login = (props) => {
           />
         </Column>
 
-        <View style={{ paddingHorizontal: _moderateScale(8 * 2) }}>
+        <Column paddingHorizontal={_moderateScale(8 * 2)} gap={16}>
           <PhoneInput
             content={phoneNumber}
             countryCallingCode={countryCallingCode}
@@ -136,44 +134,7 @@ const Login = (props) => {
             onChangeText={setphoneNumber}
             onSelectionCallingCode={setCountryCallingCode}
           />
-          {/* <View>
-            {phoneNumber ? (
-              <View style={styles.labelContainer}>
-                <Text size={14} color={Color.GREY}>
-                  Số điện thoại đã đăng kí
-                </Text>
-              </View>
-            ) : (
-              <></>
-            )}
-            <Row
-              paddingVertical={_moderateScale(8 * 2)}
-              paddingHorizontal={10}
-              borderRadius={_moderateScale(8)}
-              borderColor={
-                errorPhoneNumber
-                  ? Color.ERROR_COLOR
-                  : phoneNumber
-                  ? Color.BORDER_INPUT_TEXT_FOCUSED
-                  : Color.BORDER_INPUT_TEXT
-              }
-              borderWidth={1}
-            >
-              <TextInput
-                value={phoneNumber}
-                keyboardType={"number-pad"}
-                onChangeText={setphoneNumber}
-                style={styles.input_text}
-                placeholder={"Số điện thoại đã đăng kí"}
-                placeholderTextColor={"grey"}
-                onBlur={validatePhoneNumber}
-              />
-            </Row>
-            <Text style={[{ ...stylesFont.fontNolan }, styles.error_text]}>
-              {errorPhoneNumber}
-            </Text>
-          </View> */}
-          <View style={{ height: _moderateScale(8 * 2) }} />
+
           <PasswordInput
             content={password}
             label="Nhập mật khẩu"
@@ -200,12 +161,7 @@ const Login = (props) => {
               },
             ]}
           >
-            <Text
-              style={[
-                stylesFont.fontNolanBold,
-                { fontSize: _moderateScale(16), color: Color.WHITE },
-              ]}
-            >
+            <Text weight="bold" size={_moderateScale(16)} color={Color.WHITE}>
               Đăng nhập
             </Text>
           </TouchableOpacity>
@@ -240,7 +196,7 @@ const Login = (props) => {
             </Text>
           </TouchableOpacity>
           <View style={{ height: _moderateScale(8 * 2) }} />
-        </View>
+        </Column>
         <Column
           flex={1}
           justifyContent="flex-end"

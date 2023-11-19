@@ -44,7 +44,7 @@ const ModalRequireLogin = (props) => {
   const handleLoginPress = useCallback(() => {
     closeModal();
     navigation.navigate(ScreenKey?.LOGIN_IN_APP, {
-      routeName: ScreenKey?.HOME,
+      routeName: isShowRequireLoginRedux?.currRouteName,
     });
   }, []);
 
@@ -139,7 +139,7 @@ const ModalRequireLogin = (props) => {
               onPress={() => {
                 closeModal();
                 navigation.navigate(ScreenKey.REGISTER_IN_APP, {
-                  routeName: ScreenKey.HOME,
+                  routeName: isShowRequireLoginRedux?.currRouteName,
                 });
               }}
               style={[
