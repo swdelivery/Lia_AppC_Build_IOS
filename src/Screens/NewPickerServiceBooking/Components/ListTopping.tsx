@@ -1,14 +1,14 @@
-import { StyleSheet, TouchableOpacity, View } from 'react-native'
-import React, { useState } from 'react'
-import Text from '@Components/Text'
-import { _moderateScale } from '@Constant/Scale'
-import { BASE_COLOR, BORDER_COLOR, WHITE } from '@Constant/Color'
-import Row from '@Components/Row'
-import { IconBackWhite, IconRightArrow } from '@Components/Icon/Icon'
-import { sizeIcon } from '@Constant/Icon'
-import Collapsible from 'react-native-collapsible'
-import RenderHTML from '@Components/RenderHTML/RenderHTML'
 import CircleTick from '@Components/CircleTick/CircleTick'
+import { IconBackWhite } from '@Components/Icon/Icon'
+import RenderHTML from '@Components/RenderHTML/RenderHTML'
+import Row from '@Components/Row'
+import Text from '@Components/Text'
+import { BASE_COLOR, BORDER_COLOR, WHITE } from '@Constant/Color'
+import { sizeIcon } from '@Constant/Icon'
+import { _moderateScale } from '@Constant/Scale'
+import React, { useState } from 'react'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
+import Collapsible from 'react-native-collapsible'
 
 const ListTopping = (props) => {
 
@@ -64,7 +64,6 @@ const ItemTopping = (props) => {
 
                 </Row>
 
-
             </TouchableOpacity>
             <Collapsible collapsed={isCollapsed}>
                 {
@@ -79,9 +78,8 @@ const ItemTopping = (props) => {
                                         <RenderHTML data={item?.content} />
                                     </View>
                                     <View>
-                                        <CircleTick isTicked={index % 2 == 0 ? true : false} />
+                                        <CircleTick isTicked={false} />
                                     </View>
-
                                 </Row>
                             </View>
                         )

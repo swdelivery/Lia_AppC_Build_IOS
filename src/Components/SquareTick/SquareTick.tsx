@@ -15,13 +15,9 @@ const SquareTick = ({ isTicked }: Props) => {
         <>
             {
                 isTicked ?
-                    <TouchableOpacity>
-                        <IconIsChecked style={sizeIcon.lg}/>
-                    </TouchableOpacity>
+                    <IconIsChecked style={sizeIcon.lg} />
                     :
-                    <TouchableOpacity>
-                        <IconNotChecked style={sizeIcon.lg}/>
-                    </TouchableOpacity>
+                    <IconNotChecked style={sizeIcon.lg} />
             }
         </>
     )

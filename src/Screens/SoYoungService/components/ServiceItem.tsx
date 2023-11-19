@@ -15,6 +15,10 @@ import { styleElement } from "@Constant/StyleElement";
 import Icon from "@Components/Icon";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import ContentLoader, { Rect } from "react-content-loader/native";
+import { SERVICE_BANNER_RATIO } from "@Constant/image";
+
+const IMAGE_WIDTH = _width / 2 - 8 - 8 / 2;
+const IMAGE_HEIGHT = IMAGE_WIDTH * SERVICE_BANNER_RATIO;
 
 type Props = {
   item: Service;
@@ -91,7 +95,7 @@ export function Placeholder() {
 const styles = StyleSheet.create({
   card: {
     width: _width / 2 - 4,
-    height: _width / 2,
+    marginBottom: 8,
   },
   container: {
     // flex: 1,
@@ -99,7 +103,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#F5F9FA",
   },
   content: {
-    height: 180,
+    height: IMAGE_HEIGHT + 62,
     marginLeft: 8,
     backgroundColor: "white",
     borderBottomLeftRadius: 8,
@@ -107,8 +111,8 @@ const styles = StyleSheet.create({
     ...styleElement.shadow,
   },
   image: {
-    width: "100%",
-    height: 120,
+    width: IMAGE_WIDTH,
+    height: IMAGE_HEIGHT,
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
   },

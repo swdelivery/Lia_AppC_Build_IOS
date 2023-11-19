@@ -77,7 +77,7 @@ const CardBooking = ({ item }: Props) => {
             {service?.name}
           </Text>
           <Text numberOfLines={1} color={BLACK} size={14} weight="regular">
-            {item.branch.name}
+            {item?.branch?.name}
           </Text>
           <StatusBooking status={item.status} />
         </Column>
@@ -97,7 +97,7 @@ const CardBooking = ({ item }: Props) => {
         </Row>
         <Row gap={8}>
           <IconLocation width={8 * 2} height={8 * 2} />
-          <Text>{item.branch.address}</Text>
+          <Text>{item?.branch?.address}</Text>
         </Row>
       </Column>
     </TouchableOpacity>

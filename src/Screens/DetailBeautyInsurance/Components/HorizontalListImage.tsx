@@ -21,7 +21,6 @@ export default HorizontalListImage;
 const styles = StyleSheet.create({
   image: {
     width: _width,
-    height: _width / 2,
     borderWidth: 0.5,
     borderColor: "rgba(0,0,0,.3)",
   },

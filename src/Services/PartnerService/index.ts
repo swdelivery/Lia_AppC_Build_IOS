@@ -5,6 +5,7 @@ import configs from "src/configs";
 import {
   GetDiaryPayload,
   GetDoctorListPayload,
+  GetPractitionerListPayload,
   GetReviewsPayload,
   GetServicesPayload,
   GetTreatmentDetailsPayload,
@@ -42,6 +43,18 @@ const getServices = (
     page,
   });
   return axios.get(`/service?${query}`).then(({ data }) => data.data);
+};
+
+const getServicesFilter = (payload: any) => {
+  const query = encodeParams({
+    ...payload,
+    sort: {
+      orderNumber: -1,
+    },
+  });
+  return axios
+    .get(`/service/filter-booking?${query}`)
+    .then(({ data }) => data.data);
 };
 
 const getServiceDetails = (serviceId: string): Promise<any> =>
@@ -83,8 +96,20 @@ const getDoctorList = (
 const getDoctorDetails = (doctorId: string): Promise<Doctor> =>
   axios.get(`treatment-doctor/${doctorId}`).then(({ data }) => data.data);
 
-const getPractitioners = () =>
-  axios.get("practitioner").then(({ data }) => data.data);
+// const getPractitioners = () =>
+//   axios.get("practitioner").then(({ data }) => data.data);
+const getPractitioners = (
+  payload: GetPractitionerListPayload,
+  page = 1,
+  pageSize = configs.apiPageSize
+): Promise<ApiResponse<Practitioner[]>> => {
+  const params = encodeParams({
+    ...(payload ? { condition: payload } : {}),
+    limit: pageSize,
+    page,
+  });
+  return axios.get(`/practitioner?${params}`).then(({ data }) => data.data);
+};
 
 const getPractitionerDetails = (
   practitionerId: string
@@ -176,6 +201,10 @@ const takeVoucher = (payload: any) => {
   return axios.post("/partner-coupon", payload).then(({ data }) => data.data);
 };
 
+const createPartnerBooking = (payload: any) => {
+  return axios.post("/booking", payload).then(({ data }) => data);
+};
+
 const getInsuranceList = (): Promise<ApiResponse<Insurance[]>> =>
   axios
     .get("/insurance/all", {
@@ -241,6 +270,7 @@ export default {
   getServiceGroup,
   getServices,
   getServiceDetails,
+  getServicesFilter,
   getBranchList,
   getBranchById,
 
@@ -260,11 +290,14 @@ export default {
   getVouchers,
   getPublicVouchers,
   takeVoucher,
+
   // Insurance
   getInsuranceList,
   getInsuranceDetails,
   // Booking
+  createPartnerBooking,
   getBookingList,
+
   getBookingDetails,
   getTreatmentDetails,
   getPaymentRequest,

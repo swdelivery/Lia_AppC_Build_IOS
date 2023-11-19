@@ -1,138 +1,266 @@
 import Column from "@Components/Column";
+import NewDatePicker from "@Components/NewDatePicker/NewDatePicker";
 import Screen from "@Components/Screen";
-import React, { useCallback, useState } from "react";
-import { KeyboardAvoidingView, Platform, StatusBar, StyleSheet, View } from "react-native";
-import Animated, { useAnimatedScrollHandler, useSharedValue } from "react-native-reanimated";
-import CoverImage from "./Components/CoverImage";
-import { _heightScale, _moderateScale } from "@Constant/Scale";
+import TimePicker from "@Components/TimePicker/TimePicker";
 import { WHITE } from "@Constant/Color";
-import InputRefCode from "./Components/InputRefCode";
+import { _heightScale } from "@Constant/Scale";
+import {
+  clearDoctor,
+  clearPractitioner,
+  getBranchListForBooking,
+  getDoctorListByBranchCode,
+  getPractitionerListByBranchCode,
+  selectBranch,
+  selectDate,
+  selectDoctor,
+  selectPractitioner,
+} from "@Redux/booking/actions";
+import { getDataCreateBookingState } from "@Redux/booking/selectors";
+import {
+  getInsuranceList,
+  loadMoreInsuranceList,
+} from "@Redux/insurance/actions";
+import { getInsuranceListState } from "@Redux/insurance/selectors";
+import { TimeForBooking } from "@typings/booking";
+import moment from "moment";
+import React, { useCallback, useEffect, useState } from "react";
+import {
+  KeyboardAvoidingView,
+  Platform,
+  StatusBar,
+  StyleSheet,
+  View,
+} from "react-native";
+import Animated, {
+  useAnimatedScrollHandler,
+  useSharedValue,
+} from "react-native-reanimated";
+import { useDispatch, useSelector } from "react-redux";
+import useListFilter from "src/Hooks/useListFilter";
+import useVisible from "src/Hooks/useVisible";
+import ActionBottom from "./Components/ActionBottom";
+import Bill from "./Components/Bill";
+import CoverImage from "./Components/CoverImage";
+import Header from "./Components/Header";
 import InputPicker from "./Components/InputPicker";
+import InputTimeBooking from "./Components/InputTimeBooking";
+import ListBeautyInsurance from "./Components/ListBeautyInsurance";
+import ListVoucher from "./Components/ListVoucher";
+import ModalListBeautyInsurance from "./Components/ModalListBeautyInsurance";
 import ModalListBranch from "./Components/ModalListBranch";
 import ModalListDoctor from "./Components/ModalListDoctor";
-import InputTimeBooking from "./Components/InputTimeBooking";
-import moment from "moment";
-import NewDatePicker from "@Components/NewDatePicker/NewDatePicker";
-import TimePicker from "@Components/TimePicker/TimePicker";
-import PickService from "./Components/PickService";
-import ListVoucher from "./Components/ListVoucher";
-import Bill from "./Components/Bill";
 import Notes from "./Components/Notes";
-import ActionBottom from "./Components/ActionBottom";
-import Header from "./Components/Header";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import ListBeautyInsurance from "./Components/ListBeautyInsurance";
-import ModalListBeautyInsurance from "./Components/ModalListBeautyInsurance";
-import useVisible from "src/Hooks/useVisible";
+import PickService from "./Components/PickService";
+import ScreenKey from "@Navigation/ScreenKey";
+import { useNavigationParams } from "src/Hooks/useNavigation";
+import { getBranchList } from "@Redux/branch/actions";
+import { AfterTimeoutFragment } from "@Components/AfterTimeoutFragment";
+
+const listTimeForBooking: TimeForBooking[] = [
+  {
+    _id: "2",
+    from: "09:00",
+    to: "10:00",
+    time: { hour: "09", minute: "00" },
+  },
+  {
+    _id: "3",
+    from: "10:00",
+    to: "11:00",
+    time: { hour: "10", minute: "00" },
+  },
+  {
+    _id: "4",
+    from: "11:00",
+    to: "12:00",
+    time: { hour: "11", minute: "00" },
+  },
+  {
+    _id: "5",
+    from: "12:00",
+    to: "13:00",
+    time: { hour: "12", minute: "00" },
+  },
+  {
+    _id: "6",
+    from: "13:00",
+    to: "14:00",
+    time: { hour: "13", minute: "00" },
+  },
+  {
+    _id: "7",
+    from: "14:00",
+    to: "15:00",
+    time: { hour: "14", minute: "00" },
+  },
+  {
+    _id: "8",
+    from: "15:00",
+    to: "16:00",
+    time: { hour: "15", minute: "00" },
+  },
+  {
+    _id: "9",
+    from: "16:00",
+    to: "17:00",
+    time: { hour: "16", minute: "00" },
+  },
+  {
+    _id: "10",
+    from: "17:00",
+    to: "18:00",
+    time: { hour: "17", minute: "00" },
+  },
+  {
+    _id: "11",
+    from: "18:00",
+    to: "19:00",
+    time: { hour: "18", minute: "00" },
+  },
+];
+
+type ScreenK = typeof ScreenKey.CREATE_BOOKING;
 
 const NewCreateBooking = () => {
+  const dispatch = useDispatch();
+  const { doctor, branch, practitioner } = useNavigationParams<ScreenK>();
+  const scrollY = useSharedValue(0);
+  const { dataBranch, dataDoctor, dataPractitioner } = useSelector(
+    getDataCreateBookingState
+  );
 
-    const scrollY = useSharedValue(0);
-    const [showModalListBranch, setShowModalListBranch] = useState(false)
-    const [showModalListDoctor, setShowModalListDoctor] = useState(false)
+  const listBranchPicker = useVisible();
+  const listDoctorPicker = useVisible();
+  const datePicker = useVisible();
+  const timePicker = useVisible();
+  const insurancePicker = useVisible();
 
-    const [list7Days, setList7Days] = useState(Array.from(new Array(7), (x, i) => moment().add(i, 'days')))
-    const [currPickDate, setCurrPickDate] = useState(moment())
-    const [showModalDatePicker, setShowModalDatePicker] = useState(false)
-    const [showModalTimePicker, setShowModalTimePicker] = useState(false)
-    const [showModalPickBeautyInsurance, setShowModalPickBeautyInsurance] = useState(false)
+  useEffect(() => {
+    if (branch) {
+      dispatch(selectBranch(branch));
+    }
+  }, [branch]);
 
-    const insurancePicker = useVisible();
+  useEffect(() => {
+    if (doctor) {
+      dispatch(selectDoctor(doctor));
+    }
+  }, [doctor]);
 
-    const [listTimeForBooking, setListTimeForBooking] = useState([
-        { _id: '2', from: '09:00', to: '10:00' },
-        { _id: '3', from: '10:00', to: '11:00' },
-        { _id: '4', from: '11:00', to: '12:00' },
-        { _id: '5', from: '12:00', to: '13:00' },
-        { _id: '6', from: '13:00', to: '14:00' },
-        { _id: '7', from: '14:00', to: '15:00' },
-        { _id: '8', from: '15:00', to: '16:00' },
-        { _id: '9', from: '16:00', to: '17:00' },
-        { _id: '10', from: '17:00', to: '18:00' },
-        { _id: '11', from: '18:00', to: '19:00' },
-    ])
-    const [currPickTime, setCurrPickTime] = useState(null)
+  useEffect(() => {
+    if (practitioner) {
+      dispatch(selectPractitioner(practitioner));
+    }
+  }, [practitioner]);
 
-    const [refCodeValue, setRefCodeValue] = useState(null)
+  useEffect(() => {
+    if (dataBranch?.code) {
+      if (dataDoctor && dataDoctor?.branchCode !== dataBranch?.code) {
+        dispatch(clearDoctor());
+      }
+      if (
+        dataPractitioner &&
+        dataPractitioner?.branchCode !== dataBranch?.code
+      ) {
+        dispatch(clearPractitioner());
+      }
+    }
+  }, [dataBranch?.code]);
 
+  const _handleConfirmPickDate = useCallback((date) => {
+    dispatch(selectDate(moment(date)));
+  }, []);
 
-    const _handleShowModalPickBeautyInsurance = useCallback(() => {
-        setShowModalPickBeautyInsurance(old => !old)
-    }, [])
+  const scrollHandler = useAnimatedScrollHandler({
+    onScroll: (event, ctx) => {
+      scrollY.value = event.contentOffset.y;
+    },
+  });
 
-    const scrollHandler = useAnimatedScrollHandler({
-        onScroll: (event, ctx) => {
-            scrollY.value = event.contentOffset.y;
-        },
-    });
+  return (
+    <Screen safeBottom>
+      <StatusBar barStyle={"dark-content"} />
+      <Header scrollY={scrollY} title={"Đặt hẹn"} />
+      <CoverImage scrollY={scrollY} />
+      <AfterTimeoutFragment>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          style={{ flex: 1 }}
+        >
+          <Animated.ScrollView
+            scrollEventThrottle={16}
+            onScroll={scrollHandler}
+            contentContainerStyle={styles.contentContainer}
+            keyboardShouldPersistTaps="never"
+            keyboardDismissMode={"on-drag"}
+          >
+            <Column backgroundColor={WHITE}>
+              <Column marginTop={8 * 4} gap={32}>
+                {/* PENDING FOR WAITING BACK-END */}
+                {/* <InputRefCode /> */}
+                <InputPicker
+                  value={dataBranch}
+                  require
+                  title={"Chọn phòng khám"}
+                  onPress={listBranchPicker.show}
+                />
+                {dataBranch?._id ? (
+                  <InputPicker
+                    value={
+                      dataPractitioner?._id ? dataPractitioner : dataDoctor
+                    }
+                    title={"Chọn bác sĩ"}
+                    onPress={listDoctorPicker.show}
+                  />
+                ) : (
+                  <></>
+                )}
+                <InputTimeBooking
+                  setShowModalDatePicker={datePicker.show}
+                  setShowModalTimePicker={timePicker.show}
+                  listTimeForBooking={listTimeForBooking}
+                />
+                <PickService />
+                <ListBeautyInsurance onPress={insurancePicker.show} />
+                <ListVoucher />
+                <Bill />
+                <Notes />
+              </Column>
+            </Column>
+          </Animated.ScrollView>
+        </KeyboardAvoidingView>
+        <ActionBottom />
+      </AfterTimeoutFragment>
+      <ModalListBranch
+        visible={listBranchPicker.visible}
+        onClose={listBranchPicker.hide}
+      />
+      <ModalListDoctor
+        visible={listDoctorPicker.visible}
+        onClose={listDoctorPicker.hide}
+        branchCode={dataBranch?.code}
+      />
+      <NewDatePicker
+        onConfirm={_handleConfirmPickDate}
+        minDate={moment()}
+        visible={datePicker.visible}
+        onClose={datePicker.hide}
+      />
+      <TimePicker isShow={timePicker.visible} onHideModal={timePicker.hide} />
+      <ModalListBeautyInsurance
+        visible={insurancePicker.visible}
+        onClose={insurancePicker.hide}
+      />
+    </Screen>
+  );
+};
 
-
-    return (
-
-
-        <Screen safeBottom>
-            <StatusBar barStyle={"dark-content"} />
-            <ModalListBranch isShow={showModalListBranch} onHideModal={() => setShowModalListBranch(false)} />
-            <ModalListDoctor isShow={showModalListDoctor} onHideModal={() => setShowModalListDoctor(false)} />
-            <NewDatePicker minDate={moment()} visible={showModalDatePicker} onClose={() => setShowModalDatePicker(false)} />
-            <TimePicker isShow={showModalTimePicker} onHideModal={() => setShowModalTimePicker(false)} />
-            <ModalListBeautyInsurance visible={insurancePicker.visible} onClose={insurancePicker.hide} />
-
-            <Header scrollY={scrollY} title={'Đặt hẹn'} />
-            <CoverImage scrollY={scrollY} />
-
-            <KeyboardAvoidingView
-                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-                style={{ flex: 1 }}>
-                <Animated.ScrollView
-                    scrollEventThrottle={16}
-                    onScroll={scrollHandler}
-                    contentContainerStyle={styles.contentContainer}
-                >
-                    <View style={{ backgroundColor: WHITE }}>
-                        <Column style={{ marginTop: 8 * 4 }} gap={32}>
-                            <InputRefCode
-                                value={refCodeValue}
-                            // onChange={}
-                            />
-                            <InputPicker require title={"Chọn phòng khám"} onPress={() => setShowModalListBranch(old => !old)} />
-                            <InputPicker title={'Chọn bác sĩ'} onPress={() => setShowModalListDoctor(old => !old)} />
-                            <InputTimeBooking
-                                setShowModalDatePicker={setShowModalDatePicker}
-                                setShowModalTimePicker={setShowModalTimePicker}
-                                setCurrPickDate={setCurrPickDate}
-                                currPickDate={currPickDate}
-                                list7Days={list7Days}
-                                listTimeForBooking={listTimeForBooking}
-                                setCurrPickTime={setCurrPickTime}
-                                currPickTime={currPickTime}
-                            />
-                            <PickService />
-                            <ListBeautyInsurance
-                                onPress={insurancePicker.show}
-                            />
-                            <ListVoucher />
-                            <Bill />
-                            <Notes />
-
-                        </Column>
-                    </View>
-
-                    <View style={{ height: 100 }} />
-                </Animated.ScrollView>
-            </KeyboardAvoidingView>
-            <ActionBottom />
-
-        </Screen>
-
-    )
-}
-
-export default NewCreateBooking
+export default NewCreateBooking;
 
 const styles = StyleSheet.create({
-    contentContainer: {
-        paddingTop: _heightScale(170),
-        backgroundColor: "transparent",
-    },
-})
+  contentContainer: {
+    paddingTop: _heightScale(170),
+    backgroundColor: "transparent",
+    paddingBottom: 100,
+  },
+});

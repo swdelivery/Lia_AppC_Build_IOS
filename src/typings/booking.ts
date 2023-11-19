@@ -93,3 +93,13 @@ export type Booking = {
   cancelAt: string;
   partnerCoupons: MyVoucher[];
 } & Timestamp;
+
+export type TimeForBooking = {
+  _id: string,
+  from: string,
+  to: string,
+  time: {
+    hour: string,
+    minute: string
+  }
+}

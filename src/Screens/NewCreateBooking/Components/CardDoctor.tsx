@@ -1,5 +1,5 @@
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import React, { useCallback } from 'react'
 import { IconDoctorBase, IconHospital, IconLocationBase, IconPhoneBase, IconPhoneWhite, IconRightArrow } from '@Components/Icon/Icon'
 import { sizeIcon } from '@Constant/Icon'
 import Row from '@Components/Row'
@@ -7,10 +7,53 @@ import Text from '@Components/Text'
 import { _moderateScale } from '@Constant/Scale'
 import { BASE_COLOR, WHITE } from '@Constant/Color'
 import Column from '@Components/Column'
+import { Doctor } from '@typings/doctor'
+import { useDispatch } from 'react-redux'
+import { clearDoctor, clearPractitioner, selectDoctor, selectPractitioner } from '@Redux/booking/actions'
+import { Alert } from 'react-native'
+import { useNavigate } from 'src/Hooks/useNavigation'
+import ScreenKey from '@Navigation/ScreenKey'
+import useDoctorDetailsNavigation from 'src/Hooks/navigation/useDoctorDetailsNavigation'
 
-const CardDoctor = () => {
+
+type Props = {
+    data: Doctor;
+    onClose: () => void;
+};
+
+const CardDoctor = ({ data, onClose }: Props) => {
+
+    const handleNavigateDetailDoctor = useDoctorDetailsNavigation();
+
+    const { navigate } = useNavigate()
+
+    const dispatch = useDispatch()
+
+    const _handleChoiceDoctor = () => {
+        console.log({ data });
+        if (data?.identification == 'doctor') {
+            dispatch(selectDoctor(data))
+            dispatch(clearPractitioner())
+            onClose()
+        } else if (data?.identification == 'practitioner') {
+            dispatch(selectPractitioner(data))
+            dispatch(clearDoctor())
+            onClose()
+        }
+    }
+
+    const _handleGoDetail = useCallback(() => {
+        if (data?.identification == 'doctor') {
+            handleNavigateDetailDoctor(data);
+        } else if (data?.identification == 'practitioner') {
+            navigate(ScreenKey.DETAIL_PRACTITIONER, { practitioner: data })();
+        }
+    }, [data])
+
     return (
-        <TouchableOpacity activeOpacity={.8} style={[styles.container, shadow]}>
+        <TouchableOpacity
+            onPress={_handleChoiceDoctor}
+            activeOpacity={.8} style={[styles.container, shadow]}>
             <Column gap={16}>
                 <Row gap={16}>
                     <View style={{
@@ -19,9 +62,9 @@ const CardDoctor = () => {
                         <IconDoctorBase style={sizeIcon.lg} />
                     </View>
                     <Text style={{ flex: 1 }} weight='bold'>
-                        BS. Tran Thi Hong Ngoc
+                        {data?.name}
                     </Text>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={_handleGoDetail}>
                         <Row>
                             <Text style={{ fontStyle: 'italic' }} color={BASE_COLOR} size={12}>
                                 Chi tiết
@@ -40,7 +83,7 @@ const CardDoctor = () => {
                         <IconHospital style={sizeIcon.md} />
                     </View>
                     <Text style={{ flex: 1 }}>
-                        434 Đường Cao Thắng, P.12 , Quận 10
+                        {data?.branch?.address}
                     </Text>
                 </Row>
 

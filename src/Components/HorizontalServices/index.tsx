@@ -13,6 +13,7 @@ import Image from "@Components/Image";
 import { first } from "lodash";
 import useServiceDetailsNavigation from "src/Hooks/navigation/useServiceDetailsNavigation";
 import { Service } from "@typings/serviceGroup";
+import { SERVICE_BANNER_RATIO } from "@Constant/image";
 
 type Props = {
   title?: string;
@@ -110,7 +111,7 @@ const styles = StyleSheet.create({
   },
   serviceImage: {
     width: 100,
-    height: 75,
+    height: 100 * SERVICE_BANNER_RATIO,
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
   },

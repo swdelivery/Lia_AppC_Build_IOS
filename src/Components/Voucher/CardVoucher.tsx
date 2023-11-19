@@ -1,49 +1,96 @@
 import Column from "@Components/Column";
+import Image from "@Components/Image";
 import Text from "@Components/Text";
-import { BASE_COLOR, WHITE } from "@Constant/Color";
+import { BASE_COLOR, GREY, WHITE } from "@Constant/Color";
 import { _moderateScale, _widthScale } from "@Constant/Scale";
 import { styleElement } from "@Constant/StyleElement";
-import { sizeText } from "@Constant/Text";
+import { formatMonney } from "@Constant/Utils";
+import ScreenKey from "@Navigation/ScreenKey";
+import { clearCoupon, selectCoupon } from "@Redux/booking/actions";
+import { getDataCreateBookingState } from "@Redux/booking/selectors";
 import { MyVoucher } from "@typings/voucher";
 import moment from "moment";
-import React from "react";
-import { View, StyleSheet, TouchableOpacity, Image } from "react-native";
-import useCallbackItem from "src/Hooks/useCallbackItem";
+import React, { useCallback } from "react";
+import { Alert, StyleSheet, TouchableOpacity, View } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "src/Hooks/useNavigation";
 
 type Props = {
-  item: MyVoucher;
-  onDetails: (item: MyVoucher) => void;
-  onUseCoupon: (item: MyVoucher) => void;
+  data: any;
 };
 
-export default function CardVoucher({  }: Props) {
+export default function CardVoucher({ data }: Props) {
+
+  const dispatch = useDispatch()
+  const { navigate } = useNavigate()
+
+  const { dataCoupon, dataServices } = useSelector(getDataCreateBookingState)
+
+  const _handleSelectCoupon = useCallback(() => {
+    let totalPriceSerive = dataServices?.reduce((sum, { price }) => sum + price, 0);
+
+    if (totalPriceSerive == 0) {
+      return Alert.alert(`Hãy chọn dịch vụ trước`)
+    }
+
+    if (totalPriceSerive < data?.coupon?.minRequiredOrderAmount) {
+      return Alert.alert(`Bạn cần đạt giá trị đơn hàng tối thiểu ${formatMonney(data?.coupon?.minRequiredOrderAmount)} để sử dụng Voucher này`)
+    }
+    dispatch(selectCoupon(data))
+  }, [data, dataServices])
+
+  const _handleClearCoupon = useCallback(() => {
+    dispatch(clearCoupon(data))
+  }, [data])
+
+
 
   return (
-    <TouchableOpacity activeOpacity={1} style={styles.voucherBox}>
-      <View style={[styles.voucherBox__left,shadow]}>
-        <Image source={{uri:`https://quangcaoytuong.vn/userfiles/users/5d85354d9c2a5a9251814a206bb09b7bdda23272629db699ed2cf6918f11b3a6/voucher-1-quang-cao-y-tuong.jpeg`}} style={styles.avatarVoucher}  />
+    <TouchableOpacity
+      onPress={navigate(ScreenKey.DETAIL_LIA_VOUCHER, {
+        data: { ...data?.coupon, isTaked: true },
+      })}
+      activeOpacity={.5} style={styles.voucherBox} >
+      <View style={[styles.voucherBox__left, shadow]}>
+        <Image avatar={data?.coupon?.couponImg} style={styles.avatarVoucher} />
         <Column flex={1} marginLeft={8}>
-          <Text numberOfLines={1} weight='medium' size={12}>LiA VC</Text>
-          <Text  numberOfLines={2} weight="bold" size={12}>
-            Giảm 10% cho đơn hàng từ 1tr trở lên
+          <Text numberOfLines={1} weight='medium' size={12}>{data?.coupon?.name}</Text>
+          <Text numberOfLines={2} weight='medium' size={10}>
+            {data?.coupon?.description}
           </Text>
-          <Text numberOfLines={2}  weight='regular' size={12}>
+          <Text numberOfLines={2} weight='regular' size={10}>
             Hiệu lực đến:{" "}
-            {moment().format("DD/MM/YYYY")}
+            {moment(data?.coupon?.expiredAt).format("DD/MM/YYYY")}
           </Text>
         </Column>
       </View>
       <View style={styles.dashLine} />
-      <View style={[styles.voucherBox__right,shadow]}>
-        <TouchableOpacity
-          style={styles.voucherBox__right__btn}
-        >
-          <Text color={WHITE} size={12} weight="bold">
-            Sử dụng
-          </Text>
-        </TouchableOpacity>
+      <View style={[styles.voucherBox__right, shadow]}>
+        {
+          dataCoupon?.coupon?.code == data?.coupon?.code ?
+            <TouchableOpacity
+              hitSlop={styleElement.hitslopSm}
+              onPress={_handleClearCoupon}
+              style={[styles.voucherBox__right__btn, { backgroundColor: GREY }]}
+            >
+              <Text color={WHITE} size={12} weight="bold">
+                Huỷ
+              </Text>
+            </TouchableOpacity>
+            :
+            <TouchableOpacity
+              hitSlop={styleElement.hitslopSm}
+              onPress={_handleSelectCoupon}
+              style={styles.voucherBox__right__btn}
+            >
+              <Text color={WHITE} size={12} weight="bold">
+                Sử dụng
+              </Text>
+            </TouchableOpacity>
+        }
+
       </View>
-    </TouchableOpacity>
+    </TouchableOpacity >
   );
 }
 
@@ -51,13 +98,13 @@ const styles = StyleSheet.create({
   voucherBox__right__btn: {
     width: _moderateScale(8 * 8),
     height: _moderateScale(8 * 3),
-    borderRadius:4,
+    borderRadius: 4,
     ...styleElement.centerChild,
     backgroundColor: BASE_COLOR,
   },
   avatarVoucher: {
-    width: _moderateScale(8 * 7),
-    height: _moderateScale(8 * 7),
+    width: _moderateScale(8 * 6),
+    height: _moderateScale(8 * 6),
     borderRadius: _moderateScale(8),
   },
   dashLine: {
@@ -90,7 +137,7 @@ const styles = StyleSheet.create({
     // height: _moderateScale(8 * 10),
     alignSelf: "center",
     flexDirection: "row",
-    margin:4
+    margin: 4
   },
   container: {
     flex: 1,
@@ -103,13 +150,13 @@ const styles = StyleSheet.create({
 
 
 const shadow = {
-    shadowColor: "#000",
-    shadowOffset: {
-        width: 0,
-        height: 0,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 1,
+  shadowColor: "#000",
+  shadowOffset: {
+    width: 0,
+    height: 0,
+  },
+  shadowOpacity: 0.2,
+  shadowRadius: 1,
 
-    elevation: 2
+  elevation: 2
 }

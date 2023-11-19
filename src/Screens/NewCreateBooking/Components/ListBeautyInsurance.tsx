@@ -1,12 +1,16 @@
-import { StyleSheet, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import Column from '@Components/Column'
+import { IconPlusBase } from '@Components/Icon/Icon'
 import Row from '@Components/Row'
 import Text from '@Components/Text'
-import { BASE_COLOR, BORDER_COLOR, PRICE_ORANGE } from '@Constant/Color'
-import { _moderateScale } from '@Constant/Scale'
-import { IconPlusBase, IconPlusGrey } from '@Components/Icon/Icon'
+import { BORDER_COLOR, PRICE_ORANGE } from '@Constant/Color'
 import { styleElement } from '@Constant/StyleElement'
-import Column from '@Components/Column'
+import { formatMonney } from '@Constant/Utils'
+import ScreenKey from '@Navigation/ScreenKey'
+import { getDataCreateBookingState } from '@Redux/booking/selectors'
+import React from 'react'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'src/Hooks/useNavigation'
 
 
 type Props = {
@@ -15,9 +19,16 @@ type Props = {
 
 const ListBeautyInsurance = ({ onPress }: Props) => {
 
-    const ItemInsurance = () => {
+    const { navigate } = useNavigate()
+
+    const { dataInsurance } = useSelector(getDataCreateBookingState)
+
+    const ItemInsurance = ({ data }) => {
         return (
-            <TouchableOpacity>
+            <TouchableOpacity
+                onPress={navigate(ScreenKey.DETAIL_BEAUTY_INSURANCE, {
+                    insurance: data,
+                })}>
                 <Column
                     gap={4}
                     borderRadius={8}
@@ -27,15 +38,15 @@ const ListBeautyInsurance = ({ onPress }: Props) => {
                     marginTop={8 * 2}
                     marginHorizontal={8 * 2} >
                     <Row justifyContent='space-between'>
-                        <Text weight='bold'>
-                            Bảo hiểm làm đẹp cá nhân
+                        <Text style={{ flex: 1 }} weight='bold'>
+                            {data?.name}
                         </Text>
                         <Text weight='bold' color={PRICE_ORANGE}>
-                            500.000 VNĐ
+                            {formatMonney(data?.price)} VNĐ
                         </Text>
                     </Row>
-                    <Text>
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
+                    <Text numberOfLines={3}>
+                        {data?.description}
                     </Text>
                 </Column>
             </TouchableOpacity>
@@ -54,9 +65,9 @@ const ListBeautyInsurance = ({ onPress }: Props) => {
                 </TouchableOpacity>
             </Row>
             {
-                [1, 2]?.map((item, index) => {
+                dataInsurance?.map((item, index) => {
                     return (
-                        <ItemInsurance key={index} />
+                        <ItemInsurance data={item} key={index} />
                     )
                 })
             }

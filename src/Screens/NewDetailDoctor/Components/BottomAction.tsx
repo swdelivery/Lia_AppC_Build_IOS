@@ -1,8 +1,6 @@
 import { Alert, Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import React, { memo, useMemo } from "react";
 import { _moderateScale, _width } from "../../../Constant/Scale";
-import { getBottomSpace } from "react-native-iphone-x-helper";
-import { navigation } from "rootNavigation";
 import ScreenKey from "@Navigation/ScreenKey";
 import { partnerConversationStartChat } from "@Redux/Action/DoctorAction";
 import { FROM_GROUP_CHAT_ID } from "@Constant/Flag";
@@ -12,16 +10,19 @@ import useRequireLoginCallback from "src/Hooks/useRequireLoginAction";
 import Row from "@Components/Row";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Column from "@Components/Column";
+import { useNavigate } from "src/Hooks/useNavigation";
 
 type Props = {
   doctor: Doctor;
 };
 const BottomAction = ({ doctor }: Props) => {
   const { bottom } = useSafeAreaInsets();
+  const { navigation } = useNavigate();
 
   const handleBooking = useRequireLoginCallback(() => {
     navigation.navigate(ScreenKey.CREATE_BOOKING, {
-      choiceDoctor: doctor,
+      doctor,
+      branch: doctor.branch,
     });
   }, []);
 

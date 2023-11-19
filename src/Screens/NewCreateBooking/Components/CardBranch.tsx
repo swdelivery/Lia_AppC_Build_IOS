@@ -1,5 +1,5 @@
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import React, { useCallback } from 'react'
 import { IconHospital, IconLocationBase, IconPhoneBase, IconPhoneWhite, IconRightArrow } from '@Components/Icon/Icon'
 import { sizeIcon } from '@Constant/Icon'
 import Row from '@Components/Row'
@@ -7,10 +7,33 @@ import Text from '@Components/Text'
 import { _moderateScale } from '@Constant/Scale'
 import { BASE_COLOR, WHITE } from '@Constant/Color'
 import Column from '@Components/Column'
+import { Branch } from '@typings/branch'
+import { useDispatch } from 'react-redux'
+import { selectBranch } from '@Redux/booking/actions'
+import ScreenKey from '@Navigation/ScreenKey'
+import { useNavigate } from 'src/Hooks/useNavigation'
 
-const CardBranch = () => {
+
+
+type Props = {
+    data: Branch;
+    onClose: () => void;
+};
+const CardBranch = ({ data, onClose }: Props) => {
+
+    const { navigate } = useNavigate();
+
+    const dispatch = useDispatch()
+
+    const _handleChoiceBranch = useCallback(() => {
+        dispatch(selectBranch(data))
+        onClose()
+    }, [data]);
+
     return (
-        <TouchableOpacity activeOpacity={.8} style={[styles.container, shadow]}>
+        <TouchableOpacity
+            onPress={_handleChoiceBranch}
+            activeOpacity={.8} style={[styles.container, shadow]}>
             <Column gap={16}>
                 <Row gap={16}>
                     <View style={{
@@ -19,9 +42,9 @@ const CardBranch = () => {
                         <IconHospital style={sizeIcon.lg} />
                     </View>
                     <Text style={{ flex: 1 }} weight='bold'>
-                        Chi nhánh 3/2
+                        {data?.name}
                     </Text>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={navigate(ScreenKey.DETAIL_BRAND, { branch: data })}>
                         <Row>
                             <Text style={{ fontStyle: 'italic' }} color={BASE_COLOR} size={12}>
                                 Chi tiết
@@ -40,7 +63,7 @@ const CardBranch = () => {
                         <IconPhoneBase style={sizeIcon.md} />
                     </View>
                     <Text style={{ flex: 1 }}>
-                        0961096963
+                        {data?.phone}
                     </Text>
                 </Row>
 
@@ -51,7 +74,7 @@ const CardBranch = () => {
                         <IconLocationBase style={sizeIcon.md} />
                     </View>
                     <Text style={{ flex: 1 }}>
-                        434 Đường Cao Thắng, P.12 , Quận 10
+                        {data?.address}
                     </Text>
                 </Row>
             </Column>
