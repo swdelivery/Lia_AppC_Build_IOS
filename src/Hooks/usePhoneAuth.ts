@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useRef } from "react";
 import auth, { FirebaseAuthTypes } from "@react-native-firebase/auth";
 import useSavedCallback from "./useSavedCallback";
+import { alertCustomNotAction } from "@Constant/Utils";
+import { useNavigate } from "./useNavigation";
 
 export default function usePhoneAuth(
   phone: string,
@@ -9,6 +11,7 @@ export default function usePhoneAuth(
     token: FirebaseAuthTypes.IdTokenResult
   ) => void
 ) {
+  const { navigation } = useNavigate();
   const confirmation = useRef<FirebaseAuthTypes.ConfirmationResult>();
   const savedCallback = useSavedCallback(callback);
 
@@ -16,7 +19,7 @@ export default function usePhoneAuth(
     const subcriber = auth().onAuthStateChanged(async (user) => {
       if (user) {
         console.log("onAuthStateChanged", user);
-        
+
         const token = await user.getIdTokenResult();
         savedCallback.current(user, token);
       }
@@ -35,10 +38,18 @@ export default function usePhoneAuth(
   }, [phone]);
 
   const signInWithPhoneNumber = useCallback(async (phoneNumber: string) => {
-    confirmation.current = await auth().signInWithPhoneNumber(
-      phoneNumber,
-      true
-    );
+    try {
+      confirmation.current = await auth().signInWithPhoneNumber(
+        phoneNumber,
+        true
+      );
+    } catch (error) {
+      alertCustomNotAction(
+        `Thông báo`,
+        `lỗi hệ thồng, vui lòng liên hệ để được hỗ trợ`
+      );
+      navigation.goBack();
+    }
   }, []);
 
   const confirmCode = useCallback(async (code: string) => {

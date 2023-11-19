@@ -107,9 +107,9 @@ const RegisterInApp = (props) => {
       let newFormatPhone = phoneNumber;
 
       if (newFormatPhone.charAt(0) == "0") {
-        newFormatPhone = `+84${newFormatPhone.substring(1)}`;
+        newFormatPhone = `+${countryCallingCode}${newFormatPhone.substring(1)}`;
       } else {
-        newFormatPhone = `+84${newFormatPhone}`;
+        newFormatPhone = `+${countryCallingCode}${newFormatPhone}`;
       }
 
       navigation.navigate(ScreenKey.ACTIVATION_IN_APP, {

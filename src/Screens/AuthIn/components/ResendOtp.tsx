@@ -1,7 +1,7 @@
 import React, { forwardRef, useImperativeHandle, useState } from "react";
 import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
 import { stylesFont } from "../../../Constant/Font";
-import { BLUE_FB, GREY } from "../../../Constant/Color";
+import { BLUE_FB, GREEN_2, GREY } from "../../../Constant/Color";
 import { _moderateScale } from "../../../Constant/Scale";
 import { useInterval } from "@r0b0t3d/react-native-hooks";
 
@@ -47,13 +47,13 @@ const styles = StyleSheet.create({
     ...stylesFont.fontNolan,
     alignSelf: "center",
     textDecorationLine: "underline",
-    color: GREY,
+    color: GREEN_2,
     fontSize: _moderateScale(15),
   },
   resendAfter: {
     ...stylesFont.fontNolan,
     alignSelf: "center",
-    color: GREY,
+    color: GREEN_2,
     fontSize: _moderateScale(15),
   },
   counter: { ...stylesFont.fontNolanBold, color: BLUE_FB },

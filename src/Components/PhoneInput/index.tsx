@@ -14,8 +14,12 @@ import EyeOn from "../../SGV/eyeOn.svg";
 import EyeOff from "../../SGV/eyeOff.svg";
 import Row from "@Components/Row";
 import { stylesFont } from "../../Constant/Font";
-import CountryPicker from 'react-native-country-picker-modal' 
-import { Country, CountryCode, CallingCode} from "react-native-country-picker-modal/lib/types";
+import CountryPicker from "react-native-country-picker-modal";
+import {
+  Country,
+  CountryCode,
+  CallingCode,
+} from "react-native-country-picker-modal/lib/types";
 
 type Props = ViewStyle & {
   label: string;
@@ -25,6 +29,7 @@ type Props = ViewStyle & {
   onBlur: () => void;
   onChangeText: (string) => void;
   onSelectionCallingCode: (string) => void;
+  marginTop?: number;
 };
 
 export default function PhoneInput({
@@ -34,19 +39,19 @@ export default function PhoneInput({
   countryCallingCode,
   onBlur,
   onChangeText,
-  onSelectionCallingCode
+  onSelectionCallingCode,
+  marginTop,
 }: Props) {
+  const [countryCode, setCountryCode] = useState<CountryCode>("VN");
+  const [country, setCountry] = useState<Country>(null);
 
-    const [countryCode, setCountryCode] = useState<CountryCode>('VN')
-    const [country, setCountry] = useState<Country>(null)
-
-    const onSelect = (country: Country) => {
-        setCountryCode(country.cca2)
-        setCountry(country)
-        onSelectionCallingCode(country.callingCode[0])
-      }
+  const onSelect = (country: Country) => {
+    setCountryCode(country.cca2);
+    setCountry(country);
+    onSelectionCallingCode(country.callingCode[0]);
+  };
   return (
-    <View>
+    <View style={{ marginTop: marginTop }}>
       {content ? (
         <View style={styles.labelContainer}>
           <Text size={14} color={Color.GREY}>
@@ -60,7 +65,7 @@ export default function PhoneInput({
         paddingVertical={_moderateScale(8 * 2)}
         borderRadius={_moderateScale(8)}
         borderColor={
-            errorMessage
+          errorMessage
             ? Color.ERROR_COLOR
             : content
             ? Color.BORDER_INPUT_TEXT_FOCUSED
@@ -69,8 +74,8 @@ export default function PhoneInput({
         borderWidth={1}
         paddingHorizontal={10}
       >
-        <View style={{height: _moderateScale(8*3)}}>
-            <CountryPicker
+        <View style={{ height: _moderateScale(8 * 3) }}>
+          <CountryPicker
             withFilter={true}
             withFlag={true}
             withEmoji={true}
@@ -80,7 +85,7 @@ export default function PhoneInput({
             countryCode={countryCode}
             onSelect={onSelect}
             visible={false}
-            />
+          />
         </View>
         <Text>+{countryCallingCode}</Text>
         <TextInput
@@ -130,6 +135,6 @@ const styles = StyleSheet.create({
     paddingVertical: 0,
     flex: 1,
     color: Color.BLACK,
-    marginLeft: 5
+    marginLeft: 5,
   },
 });

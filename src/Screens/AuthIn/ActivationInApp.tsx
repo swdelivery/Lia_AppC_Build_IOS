@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
-import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
+import React, { useState, useCallback, useRef } from "react";
+import { StyleSheet } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useDispatch } from "react-redux";
 import * as Color from "../../Constant/Color";
@@ -15,11 +15,8 @@ import _ from "lodash";
 import ScreenKey from "../../Navigation/ScreenKey";
 import OTPInputView from "@twotalltotems/react-native-otp-input";
 import auth, { FirebaseAuthTypes } from "@react-native-firebase/auth";
-import StatusBarCustom from "../../Components/StatusBar/StatusBarCustom";
 import { alertCustomNotAction } from "../../Constant/Utils";
 import { verifyAccount } from "../../Redux/Action/AuthAction";
-import { styleElement } from "../../Constant/StyleElement";
-import { sizeIcon } from "../../Constant/Icon";
 import usePhoneAuth from "../../Hooks/usePhoneAuth";
 import ResendOtp from "./components/ResendOtp";
 import { delay } from "../../utils/common";
@@ -35,8 +32,9 @@ const ActivationInApp = (props: any) => {
   const [activeCode, setActiveCode] = useState("");
   const resentCount = useRef(0);
   const resendRef = useRef<any>();
-  const { fullPhone, phoneNumber, password, routeName } =
+  const { fullPhone, phoneNumber, password, routeName, nationCode } =
     useNavigationParams<ScreenK>();
+  const [isWrongOTP, setIsWrongOTP] = useState(false);
 
   const handleUserLogin = useCallback(
     async (
@@ -48,11 +46,11 @@ const ActivationInApp = (props: any) => {
           idToken: token.token,
           phone: {
             phoneNumber: props?.route?.params?.fullPhone,
-            nationCode: "+84",
+            nationCode: nationCode,
           },
         });
         if (resultVerifyAccount?.isAxiosError) {
-          return navigation.navigate(ScreenKey.LOGIN_IN_APP);
+          return navigation.navigate(ScreenKey.LOGIN_IN_APP, {});
         }
 
         auth().signOut();
@@ -61,7 +59,7 @@ const ActivationInApp = (props: any) => {
             {
               phone: {
                 phoneNumber: fullPhone,
-                nationCode: "+84",
+                nationCode: nationCode,
               },
               password: password,
               appName: "CS_APP",
@@ -85,6 +83,7 @@ const ActivationInApp = (props: any) => {
         await confirmCode(code);
         setActiveCode("");
       } catch (error) {
+        setIsWrongOTP(true);
         alertCustomNotAction(`Lỗi`, `OTP sai`);
       }
     },
@@ -109,7 +108,7 @@ const ActivationInApp = (props: any) => {
     let result = await forceVerifyAccount({
       phone: {
         phoneNumber: props?.route?.params?.fullPhone,
-        nationCode: "+84",
+        nationCode: nationCode,
       },
     });
     if (result?.isAxiosError) return;
@@ -119,7 +118,7 @@ const ActivationInApp = (props: any) => {
         {
           phone: {
             phoneNumber: props?.route?.params?.fullPhone,
-            nationCode: "+84",
+            nationCode: nationCode,
           },
           password: props?.route?.params?.password,
           appName: "CS_APP",
@@ -130,56 +129,52 @@ const ActivationInApp = (props: any) => {
   }, [verifyPhoneNumber]);
 
   return (
-    <>
-      <Screen safeTop style={styles.container}>
-        <StatusBarCustom bgColor={"white"} barStyle={"dark-content"} />
-        <Header title="Xác thực OTP" onBack={navigation.goBack} />
-        <KeyboardAwareScrollView
-          bounces={false}
-          contentContainerStyle={{
-            flexGrow: 1,
+    <Screen safeTop style={styles.container}>
+      <Header title="Xác thực OTP" onBack={navigation.goBack} />
+      <KeyboardAwareScrollView
+        bounces={false}
+        contentContainerStyle={{
+          flexGrow: 1,
+        }}
+      >
+        <Text
+          style={{
+            ...stylesFont.fontNolan500,
+            fontSize: _moderateScale(12),
+            color: Color.GREY,
+            alignSelf: "center",
+            marginTop: _moderateScale(8 * 4),
           }}
         >
-          <Text
-            style={{
-              ...stylesFont.fontNolan500,
-              fontSize: _moderateScale(12),
-              color: Color.GREY,
-              alignSelf: "center",
-              marginTop: _moderateScale(8 * 4),
-            }}
-          >
-            Mã xác thực OTP đã được gửi đến số điện thoại
-          </Text>
-          <Text
-            style={{
-              ...stylesFont.fontNolanBold,
-              fontSize: _moderateScale(16),
-              color: Color.BLACK_OPACITY_7,
-              alignSelf: "center",
-              marginTop: _moderateScale(8 * 1),
-            }}
-          >
-            {props?.route?.params?.fullPhone}
-          </Text>
-          <OTPInputView
-            style={{ width: "80%", height: 100, alignSelf: "center" }}
-            pinCount={6}
-            code={activeCode}
-            codeInputFieldStyle={[
-              styles.underlineStyleBase,
-              { fontSize: _moderateScale(22), color: Color.BASE_COLOR },
-              stylesFont.fontNolanBold,
-            ]}
-            codeInputHighlightStyle={styles.underlineStyleHighLighted}
-            onCodeFilled={confirmVerificationCode}
-            onCodeChanged={setActiveCode}
-            autoFocusOnLoad={true}
-          />
-          <ResendOtp ref={resendRef} onResend={_reSendOTP} />
-        </KeyboardAwareScrollView>
-      </Screen>
-    </>
+          Mã xác thực OTP đã được gửi đến số điện thoại
+        </Text>
+        <Text
+          style={{
+            ...stylesFont.fontNolanBold,
+            fontSize: _moderateScale(16),
+            color: Color.BLACK_OPACITY_7,
+            alignSelf: "center",
+            marginTop: _moderateScale(8 * 1),
+          }}
+        >
+          {props?.route?.params?.fullPhone}
+        </Text>
+        <OTPInputView
+          style={{ width: "80%", height: 100, alignSelf: "center" }}
+          pinCount={6}
+          code={activeCode}
+          codeInputFieldStyle={
+            isWrongOTP
+              ? styles.underlineStyleBaseError
+              : styles.underlineStyleBase
+          }
+          onCodeFilled={confirmVerificationCode}
+          onCodeChanged={setActiveCode}
+          autoFocusOnLoad={true}
+        />
+        <ResendOtp ref={resendRef} onResend={_reSendOTP} />
+      </KeyboardAwareScrollView>
+    </Screen>
   );
 };
 
@@ -189,18 +184,31 @@ const styles = StyleSheet.create({
     height: 45,
   },
 
+  content: {
+    flexGrow: 1,
+    paddingBottom: 30,
+  },
+
   underlineStyleBase: {
+    ...stylesFont.fontNolan,
     width: _moderateScale(8 * 5),
     height: 45,
-    borderWidth: 0,
-    borderBottomWidth: 3,
-    borderBottomColor: Color.BASE_COLOR,
+    borderWidth: 1,
+    fontSize: _moderateScale(22),
+    color: Color.BLACK,
+  },
+  underlineStyleBaseError: {
+    ...stylesFont.fontNolan,
+    width: _moderateScale(8 * 5),
+    height: 45,
+    borderWidth: 1,
+    borderColor: Color.ERROR_COLOR,
+    fontSize: _moderateScale(22),
+    color: Color.BLACK,
   },
 
   underlineStyleHighLighted: {
-    borderWidth: 0,
-    borderBottomWidth: 3,
-    borderBottomColor: Color.BASE_COLOR,
+    borderWidth: 1,
   },
   container: {
     flex: 1,
@@ -218,7 +226,6 @@ const styles = StyleSheet.create({
     minWidth: 45,
     borderColor: Color.BASE_COLOR,
     color: Color.GREY,
-    borderBottomWidth: 3,
     fontSize: _moderateScale(32),
     textAlign: "center",
   },

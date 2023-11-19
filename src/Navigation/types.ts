@@ -16,6 +16,13 @@ type ScreenParams = {
     fullPhone: string;
     password: string;
     routeName: string;
+    nationCode: string;
+  };
+  [ScreenKey.GET_OTP_NEW_PASS]: {
+    phoneNumber: string;
+    fullPhone: string;
+    routeName: string;
+    nationCode: string;
   };
   [ScreenKey.DETAIL_BRAND]: { branch: Branch };
   [ScreenKey.DETAIL_DOCTOR]: { doctor: Doctor };
