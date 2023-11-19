@@ -1,9 +1,7 @@
 import { createReducer } from "@Redux/helper";
 import { Handler } from "@Redux/types";
-import { GET_BRANCH_LIST_FOR_BOOKING, GET_LIST_SERVICE_FILTER, OPEN_MODAL_ADD_SERVICE_TO_BOOKING } from "../types";
-import { Branch } from "@typings/branch";
+import { GET_LIST_SERVICE_FILTER } from "../types";
 import { Service } from "@typings/serviceGroup";
-
 
 export type State = {
   isLoading: boolean;
@@ -18,6 +16,7 @@ const INITIAL_STATE: State = {
 const request: Handler<State> = (state) => ({
   ...state,
   isLoading: true,
+  data: [],
 });
 
 const failure: Handler<State> = (state) => ({
@@ -28,7 +27,7 @@ const failure: Handler<State> = (state) => ({
 const success: Handler<State> = (state, { payload }) => ({
   ...state,
   isLoading: false,
-  data: payload.data,
+  data: payload,
 });
 
 

@@ -9,5 +9,3 @@ export const getDataDoctorPickedState = (state: AppState) => state.booking.datac
 
 export const getDataCreateBookingState = (state: AppState) => state.booking.datacreatebooking;
 export const getServiceListFilterState = (state: AppState) => state.booking.listservice;
-
-export const getResBookingState = (state: AppState) => state.booking.response;

@@ -31,7 +31,7 @@ const Voucher = () => {
   }
 
   return (
-    <Fade visible={!!voucher}>
+    <Fade visible={!!voucher} initialScale={1}>
       <TouchableOpacity
         onPress={navigate(ScreenKey.LIA_VOUCHER)}
         style={{ alignSelf: "center" }}

@@ -21,7 +21,6 @@ import Header from "./Components/Header";
 import ScreenKey from "@Navigation/ScreenKey";
 import { useNavigationParams } from "src/Hooks/useNavigation";
 import Screen from "@Components/Screen";
-import { WHITE } from "@Constant/Color";
 import StickyBackground from "@Components/StickyBackground";
 import useApi from "src/Hooks/services/useApi";
 import PartnerService from "src/Services/PartnerService";

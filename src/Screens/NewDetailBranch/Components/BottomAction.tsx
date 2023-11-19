@@ -4,33 +4,25 @@ import { _moderateScale, _width } from "../../../Constant/Scale";
 import IconCalendar from "../../../SGV/calendar.svg";
 import IconChatWhite from "../../../SGV/chatWhite.svg";
 import IconPhoneWhite from "../../../SGV/phoneWhite.svg";
-import { useDispatch } from "react-redux";
 import useRequireLoginCallback from "src/Hooks/useRequireLoginAction";
-import { useNavigation } from "@react-navigation/native";
 import ScreenKey from "@Navigation/ScreenKey";
 import Row from "@Components/Row";
 import linking from "src/utils/linking";
 import Text from "@Components/Text";
 import { Branch } from "@typings/branch";
+import { useNavigate } from "src/Hooks/useNavigation";
 
 type Props = {
   branch: Branch;
 };
 
 const BottomAction = ({ branch }: Props) => {
-  const dispatch = useDispatch();
-  const navigation = useNavigation();
+  const { navigation } = useNavigate();
 
   const handleBooking = useRequireLoginCallback(() => {
-    // navigation.navigate(ScreenKey.CREATE_BOOKING, {
-    //   //   choiceBranch: currentBranch,
-    // });
-    // navigation.navigate(ScreenKey.BOOKING_FOR_BRANCH, {
-    //   infoBranch: branch,
-    //   branchCode: branch?.code,
-    //   refCode: "",
-    // });
-    navigation.navigate(ScreenKey.CREATE_BOOKING)
+    navigation.navigate(ScreenKey.CREATE_BOOKING, {
+      branch,
+    });
   }, [branch]);
 
   const handlePhonePress = useCallback(() => {

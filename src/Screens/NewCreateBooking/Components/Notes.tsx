@@ -8,47 +8,49 @@ import { StyleSheet, TextInput, View } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 
 const Notes = () => {
+  const dispatch = useDispatch();
 
-    const dispatch = useDispatch()
+  const { dataDescription } = useSelector(getDataCreateBookingState);
 
-    const { dataDescription } = useSelector(getDataCreateBookingState)
+  const _handleChangeText = useCallback((content) => {
+    dispatch(selectDescription(content));
+  }, []);
 
-    const _handleChangeText = useCallback((content) => {
-        dispatch(selectDescription(content))
-    }, [])
+  return (
+    <View style={styles.container}>
+      <Text size={14} weight="bold">
+        Ghi chú
+      </Text>
+      <View style={styles.inputContainer}>
+        <TextInput
+          onChangeText={_handleChangeText}
+          value={dataDescription}
+          placeholder={"vd: Tôi muốn xử lí da dư"}
+          multiline
+          scrollEnabled={false}
+          style={{
+            flex: 1,
+            fontSize: _moderateScale(14),
+          }}
+        />
+      </View>
+    </View>
+  );
+};
 
-    return (
-        <View style={styles.container}>
-            <Text size={14} weight='bold'>Ghi chú </Text>
-            <View style={{
-                minHeight: _moderateScale(8 * 10),
-                borderWidth: 1,
-                borderColor: BORDER_COLOR,
-                marginTop: _moderateScale(8),
-                borderRadius: _moderateScale(8),
-                padding: _moderateScale(8),
-                paddingHorizontal: _moderateScale(8 * 1.5),
-            }}>
-                <TextInput
-                    onChangeText={(content) => {
-                        _handleChangeText(content)
-                    }}
-                    value={dataDescription}
-                    placeholder={'vd: Tôi muốn xử lí da dư'}
-                    multiline
-                    style={{
-                        flex: 1,
-                        fontSize: _moderateScale(14)
-                    }} />
-            </View>
-        </View>
-    )
-}
-
-export default Notes
+export default Notes;
 
 const styles = StyleSheet.create({
-    container: {
-        paddingHorizontal: _moderateScale(8 * 2)
-    }
-})
+  container: {
+    paddingHorizontal: _moderateScale(8 * 2),
+  },
+  inputContainer: {
+    minHeight: _moderateScale(8 * 10),
+    borderWidth: 1,
+    borderColor: BORDER_COLOR,
+    marginTop: _moderateScale(8),
+    borderRadius: _moderateScale(8),
+    padding: _moderateScale(8),
+    paddingHorizontal: _moderateScale(8 * 1.5),
+  },
+});

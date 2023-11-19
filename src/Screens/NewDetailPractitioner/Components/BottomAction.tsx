@@ -1,7 +1,6 @@
 import { Alert, Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { _moderateScale, _width } from "../../../Constant/Scale";
-import { navigation } from "rootNavigation";
 import ScreenKey from "@Navigation/ScreenKey";
 import { partnerConversationStartChat } from "@Redux/Action/DoctorAction";
 import { FROM_GROUP_CHAT_ID } from "@Constant/Flag";
@@ -9,14 +8,18 @@ import Text from "@Components/Text";
 import useRequireLoginCallback from "src/Hooks/useRequireLoginAction";
 import Row from "@Components/Row";
 import { Practitioner } from "@typings/practitioner";
+import { useNavigate } from "src/Hooks/useNavigation";
 
 type Props = {
   practitioner: Practitioner;
 };
 const BottomAction = ({ practitioner }: Props) => {
+  const { navigation } = useNavigate();
+
   const handleBooking = useRequireLoginCallback(() => {
     navigation.navigate(ScreenKey.CREATE_BOOKING, {
-      choiceDoctor: practitioner,
+      practitioner,
+      branch: practitioner.branch,
     });
   }, []);
 

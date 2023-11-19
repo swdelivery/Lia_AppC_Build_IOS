@@ -23,6 +23,12 @@ type ScreenParams = {
   [ScreenKey.DETAIL_PRACTITIONER]: { practitioner: Practitioner };
   [ScreenKey.DETAIL_BOOKING]: { booking: Booking };
   [ScreenKey.DETAIL_BEAUTY_INSURANCE]: { insurance: Insurance };
+
+  [ScreenKey.CREATE_BOOKING]: {
+    branch?: Branch;
+    doctor?: Doctor;
+    practitioner?: Practitioner;
+  };
 };
 
 export type RootStackParamsList = {

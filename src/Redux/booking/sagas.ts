@@ -5,13 +5,22 @@ import PartnerService from "src/Services/PartnerService";
 import configs from "src/configs";
 import * as actions from "./actions";
 import {
-  GET_BRANCH_LIST_FOR_BOOKING, GET_DOCTOR_LIST_BY_BRANCH_CODE, GET_LIST_SERVICE_FILTER, GET_PRACTITIONER_LIST_BY_BRANCH_CODE, GetDoctorListByBranchCodeParams, GetPractitionerListByBranchCodeParams, CREAT_PARTNER_BOOKING
+  GET_BRANCH_LIST_FOR_BOOKING,
+  GET_DOCTOR_LIST_BY_BRANCH_CODE,
+  GET_LIST_SERVICE_FILTER,
+  GET_PRACTITIONER_LIST_BY_BRANCH_CODE,
+  GetDoctorListByBranchCodeParams,
+  GetPractitionerListByBranchCodeParams,
+  CREAT_PARTNER_BOOKING,
+  GetListServiceForBookingParams,
 } from "./types";
 import { Doctor } from "@typings/doctor";
 import { Practitioner } from "@typings/practitioner";
 import { Alert } from "react-native";
-
-
+import { Service } from "@typings/serviceGroup";
+import { pickBy } from "lodash";
+import { navigation } from "rootNavigation";
+import ScreenKey from "@Navigation/ScreenKey";
 
 function* getBranchListForBooking({ payload }: BaseAction<any>) {
   try {
@@ -22,7 +31,7 @@ function* getBranchListForBooking({ payload }: BaseAction<any>) {
         paging: {
           page: 1,
           canLoadMore: data.length === configs.apiPageSize,
-        }
+        },
       })
     );
   } catch (error: any) {
@@ -30,16 +39,20 @@ function* getBranchListForBooking({ payload }: BaseAction<any>) {
   }
 }
 
-function* getDoctorListByBranchCode({ payload }: BaseAction<GetDoctorListByBranchCodeParams>) {
+function* getDoctorListByBranchCode({
+  payload,
+}: BaseAction<GetDoctorListByBranchCodeParams>) {
   try {
-    const data: Doctor[] = yield call(PartnerService.getDoctorList, { branchCode: { equal: payload.branchCode } });
+    const data: Doctor[] = yield call(PartnerService.getDoctorList, {
+      branchCode: { equal: payload.branchCode },
+    });
     yield put(
       actions.getDoctorListByBranchCode.success({
         data,
         paging: {
           page: 1,
           canLoadMore: data.length === configs.apiPageSize,
-        }
+        },
       })
     );
   } catch (error: any) {
@@ -47,16 +60,20 @@ function* getDoctorListByBranchCode({ payload }: BaseAction<GetDoctorListByBranc
   }
 }
 
-function* getPractitionerListByBranchCode({ payload }: BaseAction<GetPractitionerListByBranchCodeParams>) {
+function* getPractitionerListByBranchCode({
+  payload,
+}: BaseAction<GetPractitionerListByBranchCodeParams>) {
   try {
-    const data: Practitioner[] = yield call(PartnerService.getPractitioners, { branchCode: { equal: payload.branchCode } });
+    const data: Practitioner[] = yield call(PartnerService.getPractitioners, {
+      branchCode: { equal: payload.branchCode },
+    });
     yield put(
       actions.getPractitionerListByBranchCode.success({
         data,
         paging: {
           page: 1,
           canLoadMore: data.length === configs.apiPageSize,
-        }
+        },
       })
     );
   } catch (error: any) {
@@ -64,14 +81,15 @@ function* getPractitionerListByBranchCode({ payload }: BaseAction<GetPractitione
   }
 }
 
-function* getListServiceFilter({ payload }: BaseAction<any>) {
+function* getListServiceFilter({
+  payload,
+}: BaseAction<GetListServiceForBookingParams>) {
   try {
-    const data = yield call(PartnerService.getServicesFilter, payload);
-    yield put(
-      actions.getListServiceFilter.success({
-        data,
-      })
+    const data: Service[] = yield call(
+      PartnerService.getServicesFilter,
+      pickBy(payload, (i) => i != undefined)
     );
+    yield put(actions.getListServiceFilter.success(data));
   } catch (error: any) {
     yield put(actions.getListServiceFilter.failure(error.message));
   }
@@ -85,17 +103,34 @@ function* createPartnerBooking({ payload }: BaseAction<any>) {
         data,
       })
     );
+    Alert.alert(data?.message);
+    yield put(actions.clearDataCreateBooking());
+    navigation.goBack();
+    navigation.navigate(ScreenKey.LIST_BOOKING);
   } catch (error: any) {
-    Alert.alert(error?.message)
-
+    Alert.alert(error?.message);
     yield put(actions.createPartnerBooking.failure(error));
   }
 }
 
 export default function* sagas() {
-  yield all([takeLatest(GET_BRANCH_LIST_FOR_BOOKING.REQUEST, getBranchListForBooking)]);
-  yield all([takeLatest(GET_DOCTOR_LIST_BY_BRANCH_CODE.REQUEST, getDoctorListByBranchCode)]);
-  yield all([takeLatest(GET_PRACTITIONER_LIST_BY_BRANCH_CODE.REQUEST, getPractitionerListByBranchCode)]);
-  yield all([takeLatest(GET_LIST_SERVICE_FILTER.REQUEST, getListServiceFilter)]);
+  yield all([
+    takeLatest(GET_BRANCH_LIST_FOR_BOOKING.REQUEST, getBranchListForBooking),
+  ]);
+  yield all([
+    takeLatest(
+      GET_DOCTOR_LIST_BY_BRANCH_CODE.REQUEST,
+      getDoctorListByBranchCode
+    ),
+  ]);
+  yield all([
+    takeLatest(
+      GET_PRACTITIONER_LIST_BY_BRANCH_CODE.REQUEST,
+      getPractitionerListByBranchCode
+    ),
+  ]);
+  yield all([
+    takeLatest(GET_LIST_SERVICE_FILTER.REQUEST, getListServiceFilter),
+  ]);
   yield all([takeLatest(CREAT_PARTNER_BOOKING.REQUEST, createPartnerBooking)]);
 }

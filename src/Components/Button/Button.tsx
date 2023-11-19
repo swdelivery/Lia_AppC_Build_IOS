@@ -1,7 +1,6 @@
 import React, { useMemo } from "react";
 import {
   StyleSheet,
-  Text,
   View,
   TouchableOpacity,
   ColorValue,
@@ -17,6 +16,8 @@ import * as Color from "../../Constant/Color";
 import { stylesFont } from "../../Constant/Font";
 import useDebounceCallback from "../../Hooks/useDebounceCallback";
 import LinearGradient from "react-native-linear-gradient";
+import Text from "@Components/Text";
+import Column from "@Components/Column";
 
 type Props = {
   onPress: () => void;
@@ -25,6 +26,12 @@ type Props = {
   titleColor?: ColorValue;
   height?: number;
   containerStyle?: StyleProp<ViewStyle>;
+};
+
+type GradientProps = {
+  colors?: string[];
+  start?: { x: number; y: number };
+  end?: { x: number; y: number };
 };
 
 const ButtonPrimary = (props) => {
@@ -58,21 +65,14 @@ const ButtonOutline = (props) => {
     <TouchableOpacity
       onPress={props.pressAction ? () => props.pressAction() : null}
     >
-      <View
-        style={[
-          styles.buttonOutline,
-          { height: props.height ? props.height : _moderateScale(48) },
-        ]}
+      <Column
+        style={styles.buttonOutline}
+        height={props.height ? props.height : _moderateScale(48)}
       >
-        <Text
-          style={[
-            stylesFont.fontNolanBold,
-            { color: Color.BASE_COLOR, fontSize: _moderateScale(18) },
-          ]}
-        >
+        <Text weight="bold" color={Color.BASE_COLOR} size={_moderateScale(18)}>
           {props.text ? props.text : ""}
         </Text>
-      </View>
+      </Column>
     </TouchableOpacity>
   );
 };
@@ -84,7 +84,10 @@ const Gradient = ({
   titleColor = Color.WHITE,
   height = 48,
   containerStyle,
-}: Props) => {
+  colors = [Color.BASE_COLOR, "#8c104e", "#db0505"],
+  start = { x: 0, y: 1 },
+  end = { x: 1, y: 1 },
+}: Props & GradientProps) => {
   const handlePress = useDebounceCallback(onPress);
 
   const titleStyle = useMemo(() => {
@@ -106,13 +109,14 @@ const Gradient = ({
       style={[styles.gradientContainer, mContainerStyle, containerStyle]}
     >
       <LinearGradient
-        start={{ x: 0, y: 1 }}
-        end={{ x: 1, y: 1 }}
-        locations={[0, 0.6, 1]}
-        colors={[Color.BASE_COLOR, "#8c104e", "#db0505"]}
+        start={start}
+        end={end}
+        colors={colors}
         style={styles.gradient}
       >
-        <Text style={[stylesFont.fontNolanBold, titleStyle]}>{title}</Text>
+        <Text weight={"bold"} style={[stylesFont.fontNolanBold, titleStyle]}>
+          {title}
+        </Text>
       </LinearGradient>
     </TouchableOpacity>
   );

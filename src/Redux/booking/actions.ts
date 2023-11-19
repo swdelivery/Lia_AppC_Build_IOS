@@ -1,5 +1,29 @@
 import { generateActionsGroup } from "@Redux/helper";
-import { OPEN_MODAL_ADD_SERVICE_TO_BOOKING, GET_BRANCH_LIST_FOR_BOOKING, GET_DOCTOR_LIST_BY_BRANCH_CODE, GetDoctorListByBranchCodeParams, SELECT_BRANCH, SELECT_DOCTOR, CLEAR_DOCTOR, GetPractitionerListByBranchCodeParams, GET_PRACTITIONER_LIST_BY_BRANCH_CODE, SELECT_PRACTITIONER, CLEAR_PRACTITIONER, SELECT_DATE, SELECT_TIME, GET_LIST_SERVICE_FILTER, SELECT_SERVICE, REMOVE_SERVICE, SELECT_COUPON, CLEAR_COUPON, SELECT_INSURANCE, SELECT_DESCRIPTION, CREAT_PARTNER_BOOKING, CLEAR_RESPONSE, CLEAR_DATA_CREATE_BOOKING } from "./types";
+import {
+  OPEN_MODAL_ADD_SERVICE_TO_BOOKING,
+  GET_BRANCH_LIST_FOR_BOOKING,
+  GET_DOCTOR_LIST_BY_BRANCH_CODE,
+  GetDoctorListByBranchCodeParams,
+  SELECT_BRANCH,
+  SELECT_DOCTOR,
+  CLEAR_DOCTOR,
+  GetPractitionerListByBranchCodeParams,
+  GET_PRACTITIONER_LIST_BY_BRANCH_CODE,
+  SELECT_PRACTITIONER,
+  CLEAR_PRACTITIONER,
+  SELECT_DATE,
+  SELECT_TIME,
+  GET_LIST_SERVICE_FILTER,
+  SELECT_SERVICES,
+  REMOVE_SERVICE,
+  SELECT_COUPON,
+  CLEAR_COUPON,
+  SELECT_INSURANCE,
+  SELECT_DESCRIPTION,
+  CREAT_PARTNER_BOOKING,
+  CLEAR_DATA_CREATE_BOOKING,
+  GetListServiceForBookingParams,
+} from "./types";
 import { Service } from "@typings/serviceGroup";
 import { Review } from "@typings/review";
 import { DataPagingPayload } from "@typings/api";
@@ -22,11 +46,12 @@ export const getPractitionerListByBranchCode = generateActionsGroup<
   DataPagingPayload<Practitioner[]>
 >(GET_PRACTITIONER_LIST_BY_BRANCH_CODE);
 
-export const getListServiceFilter = generateActionsGroup(GET_LIST_SERVICE_FILTER);
+export const getListServiceFilter = generateActionsGroup<
+  GetListServiceForBookingParams,
+  Service[]
+>(GET_LIST_SERVICE_FILTER);
 
 export const createPartnerBooking = generateActionsGroup(CREAT_PARTNER_BOOKING);
-
-
 
 export const openModalAddServiceToBooking = (data) => ({
   type: OPEN_MODAL_ADD_SERVICE_TO_BOOKING,
@@ -54,8 +79,8 @@ export const selectTime = (data) => ({
   type: SELECT_TIME,
   payload: data,
 });
-export const selectService = (data) => ({
-  type: SELECT_SERVICE,
+export const selectServices = (data: Service[]) => ({
+  type: SELECT_SERVICES,
   payload: data,
 });
 export const removeService = (data) => ({
@@ -85,9 +110,6 @@ export const clearPractitioner = () => ({
 export const clearCoupon = (data) => ({
   type: CLEAR_COUPON,
   payload: data,
-});
-export const clearResponse = () => ({
-  type: CLEAR_RESPONSE,
 });
 export const clearDataCreateBooking = () => ({
   type: CLEAR_DATA_CREATE_BOOKING,

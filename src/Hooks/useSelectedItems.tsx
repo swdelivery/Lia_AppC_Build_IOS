@@ -1,12 +1,25 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 export default function useSelectedItems<T>(
   origin: T[],
-  options?: { keyExtractor?: (item: T) => string | number }
+  options?: {
+    keyExtractor?: (item: T) => string | number;
+    initialSelectedItems?: T[];
+  }
 ) {
   const [selectedItems, setSelectedItems] = useState<
     Record<number | string, T>
   >({});
+
+  useEffect(() => {
+    if (options?.initialSelectedItems) {
+      const result = {};
+      options?.initialSelectedItems.forEach((item) => {
+        result[itemKey(item)] = item;
+      });
+      setSelectedItems({ ...result });
+    }
+  }, [options?.initialSelectedItems]);
 
   const itemKey = useCallback(
     (item: T) => {
@@ -21,8 +34,6 @@ export default function useSelectedItems<T>(
 
   const toggleItem = useCallback(
     (item: T) => {
-      console.log("heheheh");
-
       const isSelected = !!selectedItems[itemKey(item)];
       if (isSelected) {
         delete selectedItems[itemKey(item)];
