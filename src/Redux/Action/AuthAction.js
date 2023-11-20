@@ -1,19 +1,20 @@
-import AsyncStorage from '@react-native-community/async-storage';
-import Axios from 'axios';
-import { Platform, Alert } from 'react-native';
-import * as DeviceInfo from 'react-native-device-info';
-import SocketInstance from '../../../SocketInstance';
-import { URL_ORIGINAL, URL_FOR_PARTNER } from '../../Constant/Url';
+import AsyncStorage from "@react-native-community/async-storage";
+import Axios from "axios";
+import { Platform, Alert } from "react-native";
+import * as DeviceInfo from "react-native-device-info";
+import SocketInstance from "../../../SocketInstance";
+import { URL_ORIGINAL, URL_FOR_PARTNER } from "../../Constant/Url";
 // CALL API
-import { handleApi } from '../../Services/utils';
-import * as ActionType from '../Constants/ActionType';
+import { handleApi } from "../../Services/utils";
+import * as ActionType from "../Constants/ActionType";
 import Store from "../store";
-import { useLogStyle, setLogStyle } from './LogConfig';
-import isArray from 'lodash/isArray'
-import { navigation } from '../../../rootNavigation';
-import ScreenKey from '../../Navigation/ScreenKey'
-import { alertCustomNotAction } from '../../Constant/Utils';
+import { useLogStyle, setLogStyle } from "./LogConfig";
+import isArray from "lodash/isArray";
+import { navigation } from "../../../rootNavigation";
+import ScreenKey from "../../Navigation/ScreenKey";
+import { alertCustomNotAction } from "../../Constant/Utils";
 import keychain from "src/utils/keychain";
+import Toast from "react-native-toast-message";
 
 const _checkInfoDevice = async () => {
   let nameDevice = await DeviceInfo.getDeviceName().then((name) => {
@@ -82,6 +83,10 @@ export const partnerAccountRegister = (data) => {
         setLogStyle("green"),
         { partnerAccountRegister: res }
       );
+      Toast.show({
+        text1: "Tạo tài khoản thành công",
+        type: "success",
+      });
       // _checkSuccess(res)
       return res;
     })
@@ -159,7 +164,7 @@ const createNewTokenFcm = (data) => {
 
 export const checkRefreshToken = async () => {
   let tokenSTR = keychain.getTokens().accessToken;
-    console.log({tokenSTR});
+  console.log({ tokenSTR });
   if (!tokenSTR) {
     Store.dispatch({
       type: ActionType.CHECK_AUTH_PROCESSING,
@@ -296,6 +301,10 @@ export const login = (props) => {
               payload: { data: res.data.data },
             });
             dispatch({ type: ActionType.LOADING_DONE, payload: null });
+            Toast.show({
+              text1: "Đăng nhập thành công",
+              type: "success",
+            });
             SocketInstance.getInstance();
             dispatch({
               type: ActionType.LOGIN_SUCCESS,
@@ -333,32 +342,32 @@ export const login = (props) => {
           });
         }
         if (err?.message == "Network Error") {
-          return Alert.alert("Lỗi", "Không có kết nối mạng", [
-            { text: "OK", onPress: () => console.log("OK Pressed") },
-          ]);
+          return Toast.show({
+            text1: "Không có kết nối mạng",
+            type: "error",
+          });
         }
         if (err?.response?.data?.message) {
           if (err?.response?.data?.data?.modules) {
             if (isArray(err?.response?.data?.data?.actions)) {
-              return Alert.alert(
-                "Lỗi",
-                `${err?.response?.data?.message} {${
+              return Toast.show({
+                text1: `${err?.response?.data?.message} {${
                   err?.response?.data?.data?.modules
                 }- ${err?.response?.data?.data?.actions?.map((item) => item)}}`,
-                [{ text: "OK", onPress: () => console.log("OK Pressed") }]
-              );
+                type: "error",
+              });
             }
 
-            return Alert.alert(
-              "Lỗi",
-              `${err?.response?.data?.message} {${err?.response?.data?.data?.modules}- ${err?.response?.data?.data?.actions}}`,
-              [{ text: "OK", onPress: () => console.log("OK Pressed") }]
-            );
+            return Toast.show({
+              text1: `${err?.response?.data?.message} {${err?.response?.data?.data?.modules}- ${err?.response?.data?.data?.actions}}`,
+              type: "error",
+            });
           }
 
-          return Alert.alert("Lỗi", `${err?.response?.data?.message}`, [
-            { text: "OK", onPress: () => console.log("OK Pressed") },
-          ]);
+          return Toast.show({
+            text1: `${err?.response?.data?.message}`,
+            type: "error",
+          });
         }
       });
   };
@@ -383,7 +392,6 @@ export const loginInApp = (props, routeNameForGoback) => {
 
         Axios.get(`${URL_FOR_PARTNER}/partners/profile`)
           .then(async (res) => {
-            
             let fcmTokenSTR = await AsyncStorage.getItem("fcmToken");
             console.log({ fcmTokenSTR });
 
@@ -421,7 +429,11 @@ export const loginInApp = (props, routeNameForGoback) => {
             dispatch({ type: ActionType.LOADING_DONE, payload: null });
             SocketInstance.getInstance();
             // dispatch({ type: ActionType.LOGIN_SUCCESS, payload: { flag: true } })
-            alertCustomNotAction(`Thông báo`, `Đăng nhập thành công`);
+            // alertCustomNotAction(`Thông báo`, `Đăng nhập thành công`);
+            Toast.show({
+              text1: "Đăng nhập thành công",
+              type: "success",
+            });
             if (routeNameForGoback) {
               navigation.navigate(routeNameForGoback);
             } else {
@@ -466,32 +478,32 @@ export const loginInApp = (props, routeNameForGoback) => {
           });
         }
         if (err?.message == "Network Error") {
-          return Alert.alert("Lỗi", "Không có kết nối mạng", [
-            { text: "OK", onPress: () => console.log("OK Pressed") },
-          ]);
+          return Toast.show({
+            text1: "Không có kết nối mạng",
+            type: "error",
+          });
         }
         if (err?.response?.data?.message) {
           if (err?.response?.data?.data?.modules) {
             if (isArray(err?.response?.data?.data?.actions)) {
-              return Alert.alert(
-                "Lỗi",
-                `${err?.response?.data?.message} {${
+              return Toast.show({
+                text1: `${err?.response?.data?.message} {${
                   err?.response?.data?.data?.modules
                 }- ${err?.response?.data?.data?.actions?.map((item) => item)}}`,
-                [{ text: "OK", onPress: () => console.log("OK Pressed") }]
-              );
+                type: "error",
+              });
             }
 
-            return Alert.alert(
-              "Lỗi",
-              `${err?.response?.data?.message} {${err?.response?.data?.data?.modules}- ${err?.response?.data?.data?.actions}}`,
-              [{ text: "OK", onPress: () => console.log("OK Pressed") }]
-            );
+            return Toast.show({
+              text1: `${err?.response?.data?.message} {${err?.response?.data?.data?.modules}- ${err?.response?.data?.data?.actions}}`,
+              type: "error",
+            });
           }
 
-          return Alert.alert("Lỗi", `${err?.response?.data?.message}`, [
-            { text: "OK", onPress: () => console.log("OK Pressed") },
-          ]);
+          return Toast.show({
+            text1: `${err?.response?.data?.message}`,
+            type: "error",
+          });
         }
       });
   };
@@ -519,37 +531,38 @@ export const register = (data) => {
 
 const _checkError = (err) => {
   if (err?.message == "Network Error") {
-    return Alert.alert("Lỗi", "Không có kết nối mạng", [
-      { text: "OK", onPress: () => console.log("OK Pressed") },
-    ]);
+    return Toast.show({
+      text1: "Không có kết nối mạng",
+      type: "error",
+    });
   }
   if (err?.response?.data?.message) {
     if (err?.response?.data?.data?.modules) {
       if (isArray(err?.response?.data?.data?.actions)) {
-        return Alert.alert(
-          "Lỗi",
-          `${err?.response?.data?.message} {${
+        return Toast.show({
+          text1: `${err?.response?.data?.message} {${
             err?.response?.data?.data?.modules
           }- ${err?.response?.data?.data?.actions?.map((item) => item)}}`,
-          [{ text: "OK", onPress: () => console.log("OK Pressed") }]
-        );
+          type: "error",
+        });
       }
 
-      return Alert.alert(
-        "Lỗi",
-        `${err?.response?.data?.message} {${err?.response?.data?.data?.modules}- ${err?.response?.data?.data?.actions}}`,
-        [{ text: "OK", onPress: () => console.log("OK Pressed") }]
-      );
+      return Toast.show({
+        text1: `${err?.response?.data?.message} {${err?.response?.data?.data?.modules}- ${err?.response?.data?.data?.actions}}`,
+        type: "error",
+      });
     }
 
-    return Alert.alert("Lỗi", `${err?.response?.data?.message}`, [
-      { text: "OK", onPress: () => console.log("OK Pressed") },
-    ]);
+    return Toast.show({
+      text1: `${err?.response?.data?.message}`,
+      type: "error",
+    });
   }
 
-  return Alert.alert("Lỗi", `Có lỗi xảy ra, vui lòng thử lại`, [
-    { text: "OK", onPress: () => console.log("OK Pressed") },
-  ]);
+  return Toast.show({
+    text1: `Có lỗi xảy ra, vui lòng thử lại`,
+    type: "error",
+  });
 };
 
 const _checkSuccess = (succ) => {
