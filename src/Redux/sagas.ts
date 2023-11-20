@@ -11,5 +11,6 @@ export function* rootSaga() {
     fork(require("./user/sagas").default),
     fork(require("./insurance/sagas").default),
     fork(require("./voucher/sagas").default),
+    fork(require("./modal/sagas").default),
   ]);
 }

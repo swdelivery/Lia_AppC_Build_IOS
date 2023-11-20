@@ -205,6 +205,8 @@ import DetailMaterial from "@Screens/DetailMaterial";
 import ListBeautyInsurance from "@Screens/ListBeautyInsurance";
 import DetailBeautyInsurance from "@Screens/DetailBeautyInsurance";
 import messaging from "@react-native-firebase/messaging";
+import ActionSheetIcon from "@Components/ModalBottom/ActionSheetIcon";
+import { getStateActionSheetIcon } from "@Redux/modal/selectors";
 
 const rootStack = createStackNavigator();
 
@@ -228,6 +230,8 @@ const AppWrapper = (props) => {
   const isShowBagedDiaryRedux = useSelector(
     (state) => state.notificationReducer.isShowBagedDiary
   );
+
+  const { showActionSheetIcon } = useSelector(getStateActionSheetIcon)
 
   const [x, setX] = useState(currChattingRedux);
 
@@ -1264,6 +1268,7 @@ const AppWrapper = (props) => {
       {/* <ModalRequireAvatar /> */}
 
       <ModalRequireLogin />
+      <ActionSheetIcon />
 
       {/* {
                 loadingRedux ?
