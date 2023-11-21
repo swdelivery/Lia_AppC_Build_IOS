@@ -1,8 +1,8 @@
 import React from "react";
-import { Text, View } from "react-native";
 import * as Color from "../../Constant/Color";
 import Row from "@Components/Row";
 import { _moderateScale } from "@Constant/Scale";
+import Text from "@Components/Text";
 
 const toastConfig = {
   success: (internalState) => (
@@ -13,7 +13,7 @@ const toastConfig = {
       width={"80%"}
       justifyContent="center"
     >
-      <Text style={{ color: Color.WHITE, fontSize: 14 }}>
+      <Text color={Color.WHITE} size={_moderateScale(14)}>
         {internalState.text1}
       </Text>
     </Row>
@@ -26,7 +26,7 @@ const toastConfig = {
       width={"80%"}
       justifyContent="center"
     >
-      <Text style={{ color: Color.WHITE, fontSize: 14 }}>
+      <Text color={Color.WHITE} size={_moderateScale(14)}>
         {internalState.text1}
       </Text>
     </Row>
@@ -39,7 +39,7 @@ const toastConfig = {
       width={"80%"}
       justifyContent="center"
     >
-      <Text style={{ color: Color.BLACK, fontSize: 14 }}>
+      <Text color={Color.BLACK} size={_moderateScale(14)}>
         {internalState.text1}
       </Text>
     </Row>
