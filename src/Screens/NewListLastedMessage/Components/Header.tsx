@@ -1,10 +1,7 @@
 import { StyleSheet, TextInput, TouchableOpacity, View } from 'react-native'
-import React, { useCallback, useEffect } from 'react'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import React, { useCallback, useEffect } from "react";
 import Row from '@Components/Row'
-import Column from '@Components/Column'
-import Text from '@Components/Text'
-import Image from '@Components/Image'
+import Column from "@Components/Column";
 import { _moderateScale } from '@Constant/Scale'
 import { BORDER_COLOR, GREY } from '@Constant/Color'
 import { IconFindGrey } from '@Components/Icon/Icon'
@@ -16,71 +13,76 @@ import { getStateActionSheetIcon } from '@Redux/modal/selectors'
 import { isEmpty } from 'lodash'
 import { useNavigate } from 'src/Hooks/useNavigation'
 import ScreenKey from '@Navigation/ScreenKey'
+import { getInfoUserReducer } from "@Redux/Selectors";
+import Avatar from "@Components/Avatar";
 
 const Header = () => {
-  const dispatch = useDispatch()
-  const { top } = useSafeAreaInsets()
-  const { navigate } = useNavigate()
+  const dispatch = useDispatch();
+  const { navigate } = useNavigate();
+  const { infoUser } = useSelector(getInfoUserReducer);
 
-  const { dataChoice } = useSelector(getStateActionSheetIcon)
+  const { dataChoice } = useSelector(getStateActionSheetIcon);
 
   const _handlePressOptions = useCallback(() => {
-    dispatch(openActionSheetIcon({
-      flag: true,
-      data: [
-        { name: "Đặt lịch hẹn", type: "booking" },
-        { name: "Gương thần", type: "faceAI" },
-      ]
-    }))
-  }, [])
+    dispatch(
+      openActionSheetIcon({
+        flag: true,
+        data: [
+          { name: "Đặt lịch hẹn", type: "booking" },
+          { name: "Gương thần", type: "faceAI" },
+        ],
+      })
+    );
+  }, []);
 
   useEffect(() => {
     if (!isEmpty(dataChoice)) {
       switch (dataChoice.type) {
-        case 'booking':
-          return navigate(ScreenKey.CREATE_BOOKING)
-        case 'faceAI':
-          return navigate(ScreenKey.FACE_AI)
+        case "booking":
+          return navigate(ScreenKey.CREATE_BOOKING);
+        case "faceAI":
+          return navigate(ScreenKey.FACE_AI);
         default:
           break;
       }
     }
-  }, [dataChoice])
+  }, [dataChoice]);
 
   return (
-    <View>
-      <View style={{ height: top }} />
-      <Row paddingVertical={_moderateScale(8 * 2)}
-        borderBottomWidth={1}
-        borderBottomColor={BORDER_COLOR}
-        gap={_moderateScale(8 * 2)}
-        paddingHorizontal={_moderateScale(8 * 2)}>
-        <Column >
-          <TouchableOpacity>
-            <Image style={styles.avatar} avatar={null} />
-          </TouchableOpacity>
-        </Column>
-        <Column flex={1}>
-          <Row gap={_moderateScale(8)} style={styles.textInputStyle}>
-            <IconFindGrey style={sizeIcon.llg} />
-            <TextInput
-              placeholder='Tìm kiếm'
-              style={styles.textInputStyle__input} />
-          </Row>
-        </Column>
-        <TouchableOpacity
-          hitSlop={styleElement.hitslopSm}
-          onPress={_handlePressOptions}>
-          <Column gap={4}>
-            <View style={styles.dot} />
-            <View style={styles.dot} />
-            <View style={styles.dot} />
-          </Column>
+    <Row
+      paddingVertical={_moderateScale(8 * 2)}
+      borderBottomWidth={1}
+      borderBottomColor={BORDER_COLOR}
+      gap={_moderateScale(8 * 2)}
+      paddingHorizontal={_moderateScale(8 * 2)}
+    >
+      <Column>
+        <TouchableOpacity>
+          <Avatar style={styles.avatar} avatar={infoUser.fileAvatar} />
         </TouchableOpacity>
-      </Row>
-    </View>
-  )
-}
+      </Column>
+      <Column flex={1}>
+        <Row gap={_moderateScale(8)} style={styles.textInputStyle}>
+          <IconFindGrey style={sizeIcon.llg} />
+          <TextInput
+            placeholder="Tìm kiếm"
+            style={styles.textInputStyle__input}
+          />
+        </Row>
+      </Column>
+      <TouchableOpacity
+        hitSlop={styleElement.hitslopSm}
+        onPress={_handlePressOptions}
+      >
+        <Column gap={4}>
+          <View style={styles.dot} />
+          <View style={styles.dot} />
+          <View style={styles.dot} />
+        </Column>
+      </TouchableOpacity>
+    </Row>
+  );
+};
 
 export default Header
 

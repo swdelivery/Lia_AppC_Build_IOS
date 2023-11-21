@@ -5,6 +5,7 @@ import configs from "src/configs";
 import {
   GetDiaryPayload,
   GetDoctorListPayload,
+  GetPartnerConversationsPayload,
   GetPractitionerListPayload,
   GetReviewsPayload,
   GetServicesPayload,
@@ -266,6 +267,20 @@ const getOrderDetails = (orderId: string) =>
 const getOrderPayments = (orderId: string) =>
   axios.get(`/order/${orderId}/payments`).then(({ data }) => data.data);
 
+const getPartnerConversations = (
+  params: GetPartnerConversationsPayload,
+  page = 1,
+  pageSize = configs.apiPageSize
+) => {
+  return axios
+    .get(
+      "/partner-conversation" +
+        "?" +
+        encodeParams({ ...params, limit: pageSize, page })
+    )
+    .then(({ data }) => data.data);
+};
+
 export default {
   getServiceGroup,
   getServices,
@@ -304,4 +319,7 @@ export default {
   getBookingDeposits,
   getOrderDetails,
   getOrderPayments,
+
+  // Conversations
+  getPartnerConversations,
 };

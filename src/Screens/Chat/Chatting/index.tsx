@@ -1,12 +1,9 @@
 import _isEmpty from "lodash/isEmpty";
 import React, { memo, useEffect, useRef, useState } from "react";
-import { KeyboardAvoidingView, Platform, StyleSheet, View } from "react-native";
-import { getBottomSpace } from "react-native-iphone-x-helper";
+import { KeyboardAvoidingView, StyleSheet } from "react-native";
 // REDUX
 import { useDispatch } from "react-redux";
 import { navigation } from "../../../../rootNavigation";
-import StatusBarCustom from "../../../Components/StatusBar/StatusBarCustom";
-import { WHITE } from "../../../Constant/Color";
 import { FROM_GROUP_CHAT_ID } from "../../../Constant/Flag";
 import GlobalStore from "../../../Constant/GlobalStore";
 import { _heightScale } from "../../../Constant/Scale";
@@ -24,20 +21,8 @@ import ListMessages from "./ListMessages";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Screen from "@Components/Screen";
 
-const Chatting = memo((props) => {
-  const dispatch = useDispatch();
-
+const Chatting = (props) => {
   const clientRef = useRef("client");
-  const stringeeCall2Ref = useRef("stringeeCall2");
-
-  const [clientId, setClientId] = useState(null);
-
-  const [hasReceivedLocalStream, setHasReceivedLocalStream] = useState(false);
-  const [hasReceivedRemoteStream, setHasReceivedRemoteStream] = useState(false);
-
-  const [callId, setCallId] = useState(null);
-
-  const [showBtnAnswer, setShowBtnAnswer] = useState(false);
 
   const { top, bottom } = useSafeAreaInsets();
 
@@ -102,179 +87,24 @@ const Chatting = memo((props) => {
     }
   };
 
-  // The client connects to Stringee server
-  const _clientDidConnect = ({ userId }) => {
-    console.log("_clientDidConnect: " + userId);
-    alert("Connect THanh Cong" + userId);
-  };
-
-  // The client disconnects from Stringee server
-  const _clientDidDisConnect = () => {
-    console.log("_clientDidDisConnect");
-  };
-
-  // The client fails to connects to Stringee server
-  const _clientDidFailWithError = () => {
-    console.log("_clientDidFailWithError");
-  };
-
-  // Access token is expired. A new access token is required to connect to Stringee server
-  const _clientRequestAccessToken = () => {
-    console.log("_clientRequestAccessToken");
-    // this.refs.client.connect('NEW_YOUR_ACCESS_TOKEN');
-  };
-
-  // IncomingCall event
-  const _callIncomingCall = ({
-    callId,
-    from,
-    to,
-    fromAlias,
-    toAlias,
-    callType,
-    isVideoCall,
-  }) => {
-    console.log("_callIncomingCall: " + callId);
-  };
-
-  // IncomingCall2 event
-  const _callIncomingCall2 = ({
-    callId,
-    from,
-    to,
-    fromAlias,
-    toAlias,
-    callType,
-    isVideoCall,
-  }) => {
-    console.log("_callIncomingCall2: " + callId);
-    // alert('co nguoi goi')
-    setShowBtnAnswer(true);
-    stringeeCall2Ref?.current?.initAnswer(callId, (status, code, message) => {
-      setCallId(callId);
-      console.log(message);
-      if (status) {
-        // stringeeCall2Ref?.current?.answer(callId, (status, code, message) => {
-        //     if (status) {
-        //     } else {
-        //     }
-        // })
-      } else {
-        console.log("Fail");
-      }
-    });
-  };
-
-  // Receive custom message
-  const _clientReceiveCustomMessage = ({ data }) => {
-    console.log("_clientReceiveCustomMessage: " + data);
-  };
-
-  // STRINGEE CALL 2
-
-  // Invoked when the call signaling state changes
-  const _callDidChangeSignalingState = ({
-    callId,
-    code,
-    reason,
-    sipCode,
-    sipReason,
-  }) => {
-    console.log("_callDidChangeSignalingState:");
-    console.log({ callId, code, reason, sipCode, sipReason });
-  };
-
-  // Invoked when the call media state changes
-  const _callDidChangeMediaState = ({ callId, code, description }) => {
-    console.log("_callDidChangeMediaState: " + code);
-  };
-
-  // Invoked when the local stream is available
-  const _callDidReceiveLocalStream = ({ callId }) => {
-    console.log("_callDidReceiveLocalStream: " + callId);
-    // alert("_callDidReceiveLocalStream:" + callId)
-    setHasReceivedLocalStream(true);
-  };
-  // Invoked when the remote stream is available
-  const _callDidReceiveRemoteStream = ({ callId }) => {
-    console.log("_callDidReceiveRemoteStream: " + callId);
-    // alert("_callDidReceiveRemoteStream:" + callId)
-    setHasReceivedRemoteStream(true);
-    navigation.navigate(ScreenKey.VIDEO_CALL, {
-      callId: callId,
-      optionCall: stringeeCall2Ref?.current,
-    });
-  };
-
-  // Invoked when receives a DMTF
-  const _didReceiveDtmfDigit = ({ callId, dtmf }) => {
-    console.log("_didReceiveDtmfDigit");
-  };
-
-  // Invoked when receives info from other clients
-  const _didReceiveCallInfo = ({ callId, data }) => {
-    console.log("_didReceiveCallInfo: " + data);
-  };
-
-  // Invoked when the call is handled on another device
-  const _didHandleOnAnotherDevice = ({ callId, code, description }) => {
-    console.log("_didHandleOnAnotherDevice: " + code);
-  };
-
-  // Invoked when audio device has change
-  const _didAudioDeviceChange = ({
-    selectedAudioDevice,
-    availableAudioDevices,
-  }) => {
-    console.log(
-      "_didHandleOnAnotherDevice: selectedAudioDevice - " +
-        selectedAudioDevice +
-        " availableAudioDevices - " +
-        availableAudioDevices
-    );
-  };
-
-  const myObj = {
-    // from: 'p_61174b7872004500139c4182', // callee
-    // to: 'p_6144154b46366b00124ea51e', // caller
-    from: "p_6144154b46366b00124ea51e", // caller
-    to: "p_61174b7872004500139c4182", // callee
-    isVideoCall: true, // Cuộc gọi là video call hoặc voice call
-    videoResolution: "HD", // chất lượng hình ảnh 'NORMAL' hoặc 'HD'. Mặc định là 'NORMAL'.
-  };
-
-  const parameters = JSON.stringify(myObj);
-
   return (
     <KeyboardAvoidingView
       keyboardVerticalOffset={-bottom}
       behavior="padding"
-      style={{
-        flexGrow: 1,
-      }}
+      style={styles.content}
     >
-      <Screen
-        safeTop
-        safeBottom
-        // style={[
-        //   styles.container,
-        //   { paddingBottom: bottom, paddingTop: Platform.OS == "ios" ? 0 : top },
-        // ]}
-      >
+      <Screen safeBottom>
         <Header />
         <ListMessages />
         <InputChat />
       </Screen>
     </KeyboardAvoidingView>
   );
-});
+};
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#E3E9F1",
-    // // backgroundColor:'#EAEAEE'
-    // backgroundColor:Color.WHITE
+  content: {
+    flexGrow: 1,
   },
 });
 

@@ -1,9 +1,8 @@
 import FastImage from "@Components/FastImage";
-import Icon from "@Components/Icon";
-import { GREY } from "@Constant/Color";
 import { FileAvatar } from "@typings/common";
 import React, { useMemo } from "react";
-import { View, StyleSheet, ImageStyle } from "react-native";
+import { ImageStyle } from "react-native";
+import { DoctorIcon } from "src/SGV";
 import { getImageAvataUrl } from "src/utils/avatar";
 
 type Props = {
@@ -29,23 +28,9 @@ export default function Avatar({ avatar, size = 24, style, circle }: Props) {
   return (
     <FastImage
       uri={uri}
+      // @ts-ignore
       style={[containerStyle, style]}
-      placeholderComponent={
-        <View style={[styles.container, containerStyle, style]}>
-          <Icon name="account" color="white" size={(size * 2) / 3} />
-        </View>
-      }
+      placeholderComponent={<DoctorIcon width={size} height={size} />}
     />
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: GREY,
-  },
-  placeholder: {
-    backgroundColor: GREY,
-  },
-});

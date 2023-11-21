@@ -34,6 +34,7 @@ import booking from "../booking/reducers";
 import user from "../user/reducers";
 import voucher from "../voucher/reducers";
 import insurance from "../insurance/reducers";
+import chat from "../chat/reducers";
 import { resetable } from "@Redux/resettableReducer";
 import modal from "../modal/reducers";
 
@@ -72,6 +73,7 @@ const rootReducer = combineReducers({
   booking,
   voucher,
   insurance,
+  chat,
   user: resetable(user),
   modal,
 });
