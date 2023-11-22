@@ -1,45 +1,31 @@
 import { isEmpty } from "lodash";
-import React, { memo, useCallback, useEffect, useRef, useState } from "react";
-import {
-  ActivityIndicator,
-  AppState,
-  FlatList,
-  StyleSheet,
-  Text,
-} from "react-native";
-import ImageView from "react-native-image-viewing";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { FlatList, StyleSheet } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import SocketInstance from "../../../../../SocketInstance";
 import ModalShowListUserHasSeenMessage from "../../../../Components/Message/ModalShowListUserHasSeenMessage";
 import ModalRemoveMessage from "../../../../Components/Message/ModalRemoveMessage";
-import { URL_ORIGINAL } from "../../../../Constant/Url";
-import * as ActionType from "../../../../Redux/Constants/ActionType";
-import Store from "../../../../Redux/store";
-// CALL API
 import {
   _getMoreMessageByLastedId,
   _getNewestMessageByFirstMessageId,
 } from "../../../../Services/api";
-import { handleApi } from "../../../../Services/utils";
-import {
-  CSS_USER_SEEN_MESSAGE,
-  CSS_PARTNER_SEEN_MESSAGE,
-} from "../../../../Sockets/type";
-import EachMessage from "../EachMessage";
-
-import {
-  getAfterDataPartnerMessage,
-  getDataPartnerMessage,
-} from "../../../../Redux/Action/MessageActionV2";
-import ItemServiceReview from "../ItemServiceReview";
+import { CSS_PARTNER_SEEN_MESSAGE } from "../../../../Sockets/type";
+import EachMessage from "./messages/EachMessage";
+import ItemServiceReview from "./messages/ItemServiceReview";
 import ItemTemplateService from "../ItemTemplateService";
 import ItemTemplateNews from "../ItemTemplateNews";
 import ItemNavigateBooking from "../ItemNavigateBooking";
 import ItemNavigateCTV from "../ItemNavigateCTV";
 import ItemNavigateSpinWheel from "../ItemNavigateSpinWheel";
-import { Conversation } from "@typings/chat";
-import { getConversationMessages } from "@Redux/chat/actions";
+import { Conversation, Message } from "@typings/chat";
+import {
+  getConversationMessages,
+  loadMoreConversationMessagesHistory,
+} from "@Redux/chat/actions";
 import { getMessagesState } from "@Redux/chat/selectors";
+import { RenderItemProps } from "@typings/common";
+import { LoadingView } from "@Components/Loading/LoadingView";
+import Fade from "@Components/Fade";
 
 type Props = {
   conversation: Conversation;
@@ -47,13 +33,11 @@ type Props = {
 
 const ListMessages = ({ conversation }: Props) => {
   const dispatch = useDispatch();
-  const currListMessageRedux = useSelector(
-    (state) => state?.messageReducer?.currRoomChatting
-  );
-  const infoCurrRoomChattingRedux = useSelector(
-    (state) => state?.messageReducer?.currRoomChatting?.infoCurrRoomChatting
-  );
-  const { data: messages } = useSelector(getMessagesState);
+  const {
+    data: messages,
+    isLoading,
+    isLoadingMore,
+  } = useSelector(getMessagesState);
 
   const [isShowModalListUserHasSeenMessage, setIsModalListUserHasSeenMessage] =
     useState(false);
@@ -61,54 +45,18 @@ const ListMessages = ({ conversation }: Props) => {
     useState(false);
   const [currFocusMessage, setCurrFocusMessage] = useState({});
   const [currMessageForRemove, setCurrMessageForRemove] = useState({});
-  const [flagLoadmoreMessage, setFlagLoadmoreMessage] = useState(false);
-  const [flagReachedEnd, setFlagReachedEnd] = useState(false);
-  const [
-    onEndReachedCalledDuringMomentum,
-    setOnEndReachedCalledDuringMomentum,
-  ] = useState(false);
-  const [listImagesSeeCurr, setListImagesSeeCurr] = useState([]);
-  const [showListImagesSee, setShowListImagesSee] = useState(false);
-  const [indexCurrImageView, setIndexCurrImageView] = useState(0);
-  const [isLoadingMoreMessage, setIsLoadingMoreMessage] = useState(false);
-
-  const appState = useRef(AppState.currentState);
-  const [appStateVisible, setAppStateVisible] = useState("");
-
-  const VideoRef = useRef();
+  const isEndReachedCalledDuringMomentum = useRef(false);
 
   useEffect(() => {
     dispatch(getConversationMessages.request(conversation._id));
   }, [conversation._id]);
 
-  // useEffect(() => {
-  //   (async () => {
-  //     if (appStateVisible == "active") {
-  //       let resultGetBeforeDataPartnerMessage = await getDataPartnerMessage({
-  //         condition: {
-  //           conversationId: infoCurrRoomChattingRedux?._id,
-  //           before: currListMessageRedux?.messages[0]?._id,
-  //         },
-  //         limit: 20,
-  //         page: 1,
-  //       });
+  useEffect(() => {
+    if (!isLoadingMore) {
+      isEndReachedCalledDuringMomentum.current = false;
+    }
+  }, [isLoadingMore]);
 
-  //       Store.dispatch({
-  //         type: ActionType.GET_NEWEST_MESSAGE,
-  //         payload: {
-  //           data: resultGetBeforeDataPartnerMessage?.data?.data,
-  //         },
-  //       });
-  //     }
-  //   })();
-  // }, [appStateVisible]);
-
-  const _setCurrFocusMessage = useCallback((item) => {
-    setCurrFocusMessage(item);
-  }, []);
-  const _setCurrMessageForRemove = useCallback((item) => {
-    setCurrMessageForRemove(item);
-  }, []);
   const _setIsModalListUserHasSeenMessage = useCallback((flag) => {
     setIsModalListUserHasSeenMessage(flag);
   }, []);
@@ -117,100 +65,44 @@ const ListMessages = ({ conversation }: Props) => {
   }, []);
 
   useEffect(() => {
-    if (isEmpty(currListMessageRedux?.messages)) return;
-    if (currListMessageRedux?.messages[0]?.isPartnerSeen == true) return;
+    if (isEmpty(messages)) return;
+    if (messages[0]?.isPartnerSeen == true) return;
 
     let data = {
-      conversationId: infoCurrRoomChattingRedux?._id,
-      messageIds: [currListMessageRedux?.messages[0]?._id],
+      conversationId: conversation._id,
+      messageIds: [messages[0]?._id],
     };
     SocketInstance?.socketConn?.emit(CSS_PARTNER_SEEN_MESSAGE, data);
-  }, [currListMessageRedux?.messages]);
+  }, [messages, conversation]);
 
-  const _onLoadMoreMessages = async () => {
-    return;
-    setIsLoadingMoreMessage(true);
-    if (flagReachedEnd) return setFlagLoadmoreMessage(false);
-
-    setFlagLoadmoreMessage(true);
-
-    let resultGetAfterDataPartnerMessage = await getAfterDataPartnerMessage({
-      condition: {
-        conversationId: infoCurrRoomChattingRedux?._id,
-        after:
-          currListMessageRedux?.messages[
-            currListMessageRedux?.messages?.length - 1
-          ]?._id,
-      },
-      // sort: {
-      //     created: -1
-      // },
-      limit: 20,
-      page: 1,
-    });
-    console.log({ resultGetAfterDataPartnerMessage });
-
-    if (resultGetAfterDataPartnerMessage.isAxiosError) {
-      setFlagLoadmoreMessage(false);
-      return;
-    }
-
-    if (isEmpty(resultGetAfterDataPartnerMessage?.data?.data)) {
-      setFlagReachedEnd(true);
-      return setFlagLoadmoreMessage(false);
-    }
-
-    Store.dispatch({
-      type: ActionType.GET_MORE_MESSAGE,
-      payload: {
-        data: resultGetAfterDataPartnerMessage?.data?.data,
-      },
-    });
-
-    setIsLoadingMoreMessage(false);
-  };
-
-  const _setListImagesSeeCurr = useCallback((item, index) => {
-    setListImagesSeeCurr(item);
-    setShowListImagesSee(true);
-    setIndexCurrImageView(index);
+  const onLoadMoreMessages = useCallback(async () => {
+    dispatch(loadMoreConversationMessagesHistory.request());
   }, []);
 
-  const _renderMessage = ({ item, index }) => {
-    if (item?.type == "template") {
-      // return (
-      //     <ItemServiceReview item={item} index={index}/>
-      // )
-      switch (item?.template?.type) {
-        case "SERVICE_REVIEW":
-        case "REVIEW_DETAIL":
-        case "TREATMENT_DETAIL":
-          return <ItemServiceReview item={item} index={index} />;
-
-        case "SERVICE":
-          return <ItemTemplateService item={item} index={index} />;
-        case "NEWS":
-          return <ItemTemplateNews item={item} index={index} />;
-        case "BOOKING":
-          return <ItemNavigateBooking item={item} index={index} />;
-        case "COLLABORATOR":
-          return <ItemNavigateCTV item={item} index={index} />;
-        case "SPIN_WHEEL":
-          return <ItemNavigateSpinWheel item={item} index={index} />;
-
-        default:
-          break;
+  const handleListEndReached = useCallback(() => {
+    if (!isLoading && !isLoadingMore) {
+      if (!isEndReachedCalledDuringMomentum.current) {
+        onLoadMoreMessages();
+        isEndReachedCalledDuringMomentum.current = true;
       }
     }
+  }, [isLoading, isLoadingMore]);
+
+  const handleScrollBegin = useCallback(() => {
+    isEndReachedCalledDuringMomentum.current = false;
+  }, []);
+
+  const _renderMessage = ({ item, index }: RenderItemProps<Message>) => {
     return (
       <EachMessage
-        setListImagesSeeCurr={_setListImagesSeeCurr}
-        setCurrFocusMessage={_setCurrFocusMessage}
-        setCurrMessageForRemove={_setCurrMessageForRemove}
+        setCurrFocusMessage={setCurrFocusMessage}
+        setCurrMessageForRemove={setCurrMessageForRemove}
         setIsModalListUserHasSeenMessage={_setIsModalListUserHasSeenMessage}
         setIsShowModalRemoveMessage={_setIsShowModalRemoveMessage}
         index={index}
         item={item}
+        previousMessage={messages[index - 1]}
+        nextMessage={messages[index + 1]}
         // isOnline={
         //     !isEmpty(listUserOnlineRedux) && listUserOnlineRedux.find(itemFind => itemFind == item.senderId)
         // }
@@ -223,38 +115,28 @@ const ListMessages = ({ conversation }: Props) => {
     []
   );
 
-  const _renderListFooter = () => {
-    if (flagLoadmoreMessage) {
-      return <ActivityIndicator style={{ color: "#000" }} />;
-    } else {
-      return <></>;
-    }
-  };
-
-  console.log({ messages });
-
   return (
     <>
       <FlatList
-        onMomentumScrollBegin={() => {
-          setOnEndReachedCalledDuringMomentum(false);
-        }}
         inverted
-        onEndReachedThreshold={0.01}
         style={styles.content}
         contentContainerStyle={styles.contentContainer}
         data={messages}
         renderItem={_renderMessage}
         keyExtractor={_awesomeChildListKeyExtractor}
-        onEndReached={() => {
-          if (!isLoadingMoreMessage) {
-            if (!onEndReachedCalledDuringMomentum) {
-              _onLoadMoreMessages();
-              setOnEndReachedCalledDuringMomentum(true);
-            }
-          }
-        }}
-        ListFooterComponent={_renderListFooter}
+        onMomentumScrollBegin={handleScrollBegin}
+        onEndReached={handleListEndReached}
+        onEndReachedThreshold={0.2}
+        ListHeaderComponent={
+          <Fade visible={isLoading}>
+            <LoadingView height={40} />
+          </Fade>
+        }
+        ListFooterComponent={
+          <Fade visible={isLoadingMore}>
+            <LoadingView height={60} />
+          </Fade>
+        }
       />
       <ModalShowListUserHasSeenMessage
         data={currFocusMessage}
@@ -269,19 +151,6 @@ const ListMessages = ({ conversation }: Props) => {
         closeModalRemoveMessage={() => setIsShowModalRemoveMessage(false)}
         isShowModalRemoveMessage={isShowModalRemoveMessage}
       />
-
-      <ImageView
-        images={listImagesSeeCurr?.map((item) => {
-          return {
-            uri: `${URL_ORIGINAL}${item.link}`,
-          };
-        })}
-        onRequestClose={() => {
-          setShowListImagesSee(false);
-        }}
-        imageIndex={indexCurrImageView}
-        visible={showListImagesSee}
-      />
     </>
   );
 };
@@ -290,5 +159,5 @@ export default ListMessages;
 
 const styles = StyleSheet.create({
   content: { backgroundColor: "#EEF2F1" },
-  contentContainer: { flexGrow: 1 },
+  contentContainer: { flexGrow: 1, paddingBottom: 60 },
 });

@@ -39,3 +39,8 @@ export type GetPartnerConversationsPayload = {
   };
   search?: string;
 };
+
+export type StartChatPayload = {
+  type: "treatment";
+  doctorId: string;
+};

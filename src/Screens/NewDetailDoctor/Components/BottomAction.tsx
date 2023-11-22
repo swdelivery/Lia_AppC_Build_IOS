@@ -1,9 +1,7 @@
 import { Alert, Image, StyleSheet, TouchableOpacity, View } from "react-native";
-import React, { memo, useMemo } from "react";
+import React from "react";
 import { _moderateScale, _width } from "../../../Constant/Scale";
 import ScreenKey from "@Navigation/ScreenKey";
-import { partnerConversationStartChat } from "@Redux/Action/DoctorAction";
-import { FROM_GROUP_CHAT_ID } from "@Constant/Flag";
 import { Doctor } from "@typings/doctor";
 import Text from "@Components/Text";
 import useRequireLoginCallback from "src/Hooks/useRequireLoginAction";
@@ -11,11 +9,14 @@ import Row from "@Components/Row";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Column from "@Components/Column";
 import { useNavigate } from "src/Hooks/useNavigation";
+import { useDispatch } from "react-redux";
+import { startChat } from "@Redux/chat/actions";
 
 type Props = {
   doctor: Doctor;
 };
 const BottomAction = ({ doctor }: Props) => {
+  const dispatch = useDispatch();
   const { bottom } = useSafeAreaInsets();
   const { navigation } = useNavigate();
 
@@ -27,15 +28,12 @@ const BottomAction = ({ doctor }: Props) => {
   }, []);
 
   const handleStartChat = useRequireLoginCallback(async () => {
-    let result = await partnerConversationStartChat({
-      type: "treatment",
-      doctorId: doctor?.userId,
-    });
-    if (result?.isAxiosError) return;
-    navigation.navigate(ScreenKey.CHATTING, {
-      propsData: { _id: result?.data?.data?._id },
-      flag: FROM_GROUP_CHAT_ID,
-    });
+    dispatch(
+      startChat.request({
+        type: "treatment",
+        doctorId: doctor?.userId,
+      })
+    );
   }, []);
 
   return (

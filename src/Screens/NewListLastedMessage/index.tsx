@@ -38,7 +38,6 @@ const NewListLastedMessage = () => {
   const handleOpenChat = useCallback((item: Conversation) => {
     navigation.navigate(ScreenKey.CHATTING, {
       conversation: item,
-      propsData: item,
       flag: FROM_GROUP_CHAT_ID,
     });
   }, []);

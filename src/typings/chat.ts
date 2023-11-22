@@ -10,6 +10,11 @@ export type AssignedUser = {
   userId: string;
 };
 
+export type TemplateData = {
+  type: "SERVICE_REVIEW" | "REVIEW_DETAIL" | "TREATMENT_DETAIL";
+  data: any;
+};
+
 export type Message = {
   type: string;
   content: string;
@@ -29,6 +34,9 @@ export type Message = {
   id: string;
   receiverUserIdArr: string[];
   viewerUserIdArr: string[];
+
+  isSystemNotification: boolean;
+  template: TemplateData;
 } & Timestamp;
 
 export type Conversation = {

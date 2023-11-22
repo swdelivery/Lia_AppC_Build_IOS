@@ -69,7 +69,12 @@ export default function IconButton({
       {...props}
     >
       {children}
-      {isLoading && <LoadingView style={StyleSheet.absoluteFill} />}
+      {isLoading && (
+        <LoadingView
+          style={StyleSheet.absoluteFill}
+          backgroundColor="transparent"
+        />
+      )}
     </Pressable>
   );
 }

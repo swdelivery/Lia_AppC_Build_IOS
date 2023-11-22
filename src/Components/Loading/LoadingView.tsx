@@ -58,7 +58,9 @@ export const LoadingView = ({
   ...props
 }: Props) => (
   <Column
-    style={[styles.container, style]}
+    style={style}
+    justifyContent="center"
+    alignItems="center"
     backgroundColor={backgroundColor}
     height={height}
     pointerEvents="none"

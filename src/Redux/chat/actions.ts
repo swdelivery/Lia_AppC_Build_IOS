@@ -5,6 +5,9 @@ import {
   GET_PARTNER_CONVERSATIONS,
   LOAD_MORE_CONVERSATION_MESSAGES_HISTORY,
   LOAD_MORE_PARTNER_CONVERSATIONS,
+  OPEN_TREATMENT_DETAILS,
+  START_CHAT,
+  StartChatParams,
 } from "./types";
 import { DataPagingPayload } from "@typings/api";
 import { Conversation, Message } from "@typings/chat";
@@ -24,11 +27,20 @@ export const getConversationDetails = generateActionsGroup<
   Conversation
 >(GET_CONVERSATION_DETAILS);
 
-export const getConversationMessages = generateActionsGroup<string, Message[]>(
-  GET_CONVERSATION_MESSAGES
-);
+export const getConversationMessages = generateActionsGroup<
+  string,
+  DataPagingPayload<Message[]>
+>(GET_CONVERSATION_MESSAGES);
 
 export const loadMoreConversationMessagesHistory = generateActionsGroup<
-  string,
-  Message[]
+  void,
+  DataPagingPayload<Message[]>
 >(LOAD_MORE_CONVERSATION_MESSAGES_HISTORY);
+
+export const openTreatmentDetails = generateActionsGroup<string, void>(
+  OPEN_TREATMENT_DETAILS
+);
+
+export const startChat = generateActionsGroup<StartChatParams, void>(
+  START_CHAT
+);

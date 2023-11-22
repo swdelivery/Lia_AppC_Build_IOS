@@ -20,6 +20,12 @@ export const LOAD_MORE_CONVERSATION_MESSAGES_HISTORY = generateActionTypes(
   "@chat/load-more-conversation-messages"
 );
 
+export const OPEN_TREATMENT_DETAILS = generateActionTypes(
+  "@chat/open-treatment-details"
+);
+
+export const START_CHAT = generateActionTypes("@chat/start-chat");
+
 export type GetPartnerConversationsParams = {
   condition: {
     latestMessageTime: {
@@ -28,4 +34,9 @@ export type GetPartnerConversationsParams = {
     };
   };
   search?: string;
+};
+
+export type StartChatParams = {
+  type: "treatment";
+  doctorId: string;
 };

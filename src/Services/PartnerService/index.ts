@@ -10,6 +10,7 @@ import {
   GetReviewsPayload,
   GetServicesPayload,
   GetTreatmentDetailsPayload,
+  StartChatPayload,
 } from "./types";
 import { Doctor } from "@typings/doctor";
 import { Practitioner } from "@typings/practitioner";
@@ -240,6 +241,9 @@ const getTreatmentDetails = (
     })
     .then(({ data }) => data.data);
 
+const getTreatmentDetailsById = (id: string): Promise<ServiceTreatment[]> =>
+  axios.get("/treatment-detail/" + id).then(({ data }) => data.data);
+
 const getPaymentRequest = (
   payload: GetTreatmentDetailsPayload
 ): Promise<PaymentRequest[]> =>
@@ -295,6 +299,11 @@ const getConversationMessages = (payload: any) =>
     })
     .then(({ data }) => data.data);
 
+const startChat = (payload: StartChatPayload) =>
+  axios
+    .post("/partner-conversation/start-chat", payload)
+    .then(({ data }) => data.data);
+
 export default {
   getServiceGroup,
   getServices,
@@ -329,6 +338,7 @@ export default {
 
   getBookingDetails,
   getTreatmentDetails,
+  getTreatmentDetailsById,
   getPaymentRequest,
   getBookingDeposits,
   getOrderDetails,
@@ -338,4 +348,5 @@ export default {
   getPartnerConversations,
   getConversationDetails,
   getConversationMessages,
+  startChat,
 };

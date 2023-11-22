@@ -1,32 +1,21 @@
 import BootSplash from "react-native-bootsplash";
-import NetInfo, { useNetInfo } from "@react-native-community/netinfo";
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import { useNetInfo } from "@react-native-community/netinfo";
 import { NavigationContainer } from "@react-navigation/native";
 import {
   createStackNavigator,
   TransitionPresets,
 } from "@react-navigation/stack";
 import React, { useEffect, useState } from "react";
-import { Alert, Linking, Platform, StatusBar, View } from "react-native";
+import { Platform } from "react-native";
 // import RNBootSplash from "react-native-bootsplash";
-import { getStatusBarHeight } from "react-native-iphone-x-helper";
 import { useDispatch, useSelector } from "react-redux";
 import { navigationRef, navigation } from "../../rootNavigation";
-import Loading from "../Components/Loading/Loading";
 import ModalCreateGroupChat from "../Components/Message/CreateGroupChat";
 // MODAL
 // COMPONENT
-import NotiNetworkErr from "../Components/Notification/NetworkErr";
-import SignalNetwork from "../Components/Notification/SignalNetwork";
-import ModalCreateNewFeed from "../Components/Timeline/CreateNewFeed";
-import ModalUpdateNewFeed from "../Components/Timeline/UpdateNewFeed";
-import { BASE_COLOR } from "../Constant/Color";
 import { _heightScale } from "../Constant/Scale";
 import ScreenKey from "./ScreenKey";
-import {
-  getAllUsersInApp,
-  getListDoctorForPartner,
-} from "../Redux/Action/MembersAction";
+import { getListDoctorForPartner } from "../Redux/Action/MembersAction";
 import * as ActionType from "../Redux/Constants/ActionType";
 import Store from "../Redux/store";
 import Login from "../Screens/Auth/Login";
@@ -48,11 +37,9 @@ import CommentPostFromNotifi from "../Screens/Timeline/CommentPostFromNotifi";
 import MainTab from "./TabNavigator/MainTab";
 import DetailService from "../Screens/NewDetailService/index";
 // import DetailServiceScreen from '../Screens/DetailService/index'
-import QRCode from "../Screens/QRCode/index";
 import ScanQRCode from "../Screens/QRCode/OpenCamera";
 import Affiliate from "../Screens/Affiliate/index";
 import HealthRecord from "../Screens/HealthRecord/index";
-import TreatmentRecord from "../Screens/TreatmentRecord/index";
 import EditProfile from "../Screens/EditProfile/index";
 import PickServiceToBooking from "../Screens/NewPickerServiceBooking/index";
 // import PickServiceToBooking from "../Screens/Booking/bookingForBranch/PickServiceToBooking";
@@ -67,11 +54,9 @@ import ListOrderService from "../Screens/ListOrderService";
 import VideoRequest from "../Screens/VideoRequest";
 import NotifiRightTab from "../Components/NotifiRight/TabRightNotifi";
 import ModalNoti from "../Components/Notification/ModalNoti";
-import ListBranch from "../Screens/ListBranch";
 import DetailBrand from "../Screens/NewDetailBranch/index";
 // import DetailBrand from '../Screens/DetailBrand/index'
 import FakeModal from "../Screens/DemoFakeModal/index";
-import ListDoctor from "../Screens/ListDoctor";
 // import DetailDoctor from '../Screens/DetailDoctor/index'
 import DetailDoctor from "../Screens/NewDetailDoctor";
 import DetailPractitioner from "../Screens/NewDetailPractitioner/index";
@@ -81,8 +66,6 @@ import LoseWeight from "../Screens/LoseWeight/index";
 import ListProduct from "../Screens/ListProduct";
 import DetailProduct from "../Screens/DetailProduct/index";
 import DiaryOfTreatment from "../Screens/DiaryOfTreatment";
-import ListDiary from "../Screens/ListDiaryOfPartner";
-import ListDiaryOfPartnerChild from "../Screens/ListDiaryOfPartnerChild";
 import PurchaseDepositRequest from "../Screens/PurchaseDepositRequest/index";
 
 import DetailNewFeed from "../Screens/DetailNewFeed";
@@ -119,7 +102,6 @@ import ListNews from "../Screens/ListNews/index";
 import QAService from "../Screens/QAService/index";
 import ServiceMaterial from "../Screens/ServiceMaterial/index";
 
-import PickTreatmentDiary from "../Screens/ListDiaryOfPartner/Components/PickTreatmentToDiary";
 import CreateDiaryDaily from "../Screens/ListDiaryOfPartnerChild/Components/CreatedDiaryForm";
 import UpdateDiaryDaily from "../Screens/ListDiaryOfPartnerChild/Components/UpdateDiaryForm";
 
@@ -135,12 +117,8 @@ import FillPhoneToGetNewPass from "../Screens/AuthIn/FillPhoneToGetNewPass";
 import GetOtpNewPass from "../Screens/AuthIn/GetOtpNewPass";
 import store from "../Redux/store";
 import ModalRequireLogin from "../Components/Notification/ModalRequireLogin";
-import Axios from "axios";
-import { useLogStyle, setLogStyle } from "../Redux/Action/LogConfig";
-import SocketInstance from "../../SocketInstance";
 
 import VideoCall from "../Screens/VideoCall/VideoCall";
-import ReceiveVideoCall from "../Screens/ReceiveVideoCall/ReceiveVideoCall";
 import HistoryLiaTicket from "../Screens/Affiliate/HistoryLiATicket";
 import SettingApp from "../Screens/SettingApp/SettingApp";
 import MyPersonalPage from "../Screens/MyPersonalPage/MyPersonalPage";
@@ -153,7 +131,6 @@ import QRScreen from "../Screens/QRCode/index";
 import Mission from "../Screens/Mission";
 import { getTreatmentDiaryIncompleteDaily } from "../Redux/Action/Diary";
 import FeedBackBranch from "../Screens/DetailBrand/FeedBackBranch";
-import ModalRequireAvatar from "../Components/Notification/ModalRequireAvatar";
 import FeedBackDoctor from "../Screens/DetailDoctor/FeedBackDoctor";
 import FeedBackService from "../Screens/DetailService/FeedBackService";
 // import CreateBooking from "../Screens/CreateBooking/CreateBooking";
@@ -166,7 +143,6 @@ import CreateBookingFlashSale from "../Screens/CreateBooking/CreateBookingFlashS
 import DetailServiceFlashSale from "../Screens/DetailService/DetailServiceFlashSale";
 import DetailEncyclopedia from "../Screens/DetailNews/DetailEncyclopedia";
 import ListServiceByKey from "../Screens/ListServiceByKey/ListServiceByKey";
-import linking from "../../linking";
 import VerificationCTV from "../Screens/VerificationCTV/VerificationCTV";
 // import dynamicLinks from '@react-native-firebase/dynamic-links';
 import ShareToSocial from "../Screens/DetailService/ShareToSocial";

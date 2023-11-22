@@ -1,18 +1,24 @@
-import { all, call, put, takeLatest } from "redux-saga/effects";
+import { all, call, put, takeLatest, takeLeading } from "redux-saga/effects";
 import {
   GET_CONVERSATION_DETAILS,
   GET_CONVERSATION_MESSAGES,
   GET_PARTNER_CONVERSATIONS,
   GetPartnerConversationsParams,
+  LOAD_MORE_CONVERSATION_MESSAGES_HISTORY,
   LOAD_MORE_PARTNER_CONVERSATIONS,
+  OPEN_TREATMENT_DETAILS,
+  START_CHAT,
+  StartChatParams,
 } from "./types";
 import * as actions from "./actions";
 import { BaseAction } from "@Redux/types";
 import { Conversation } from "@typings/chat";
 import { selectState } from "@Redux/helper";
-import { getPartnerConversationsState } from "./selectors";
+import { getMessagesState, getPartnerConversationsState } from "./selectors";
 import PartnerService from "src/Services/PartnerService";
 import configs from "src/configs";
+import { navigation } from "rootNavigation";
+import ScreenKey from "@Navigation/ScreenKey";
 
 function* getPartnerConversations({
   payload,
@@ -78,9 +84,69 @@ function* getConversationMessages({ payload }: BaseAction<string>) {
       conversationId: payload,
       // before: currListMessageRedux?.messages[0]?._id,
     });
-    yield put(actions.getConversationMessages.success(data));
+    yield put(
+      actions.getConversationMessages.success({
+        data,
+        paging: {
+          canLoadMore: data.length === configs.apiPageSize,
+          after: data[data.length - 1]?._id,
+        },
+      })
+    );
   } catch (error: any) {
     yield put(actions.getConversationMessages.failure(error.message));
+  }
+}
+
+function* loadMoreConversationMessagesHistory() {
+  try {
+    const { paging, conversationId } = yield* selectState(getMessagesState);
+    if (!paging || !paging.canLoadMore) {
+      throw new Error("Empty");
+    }
+    const data = yield call(PartnerService.getConversationMessages, {
+      conversationId,
+      after: paging.after,
+    });
+    yield put(
+      actions.loadMoreConversationMessagesHistory.success({
+        data,
+        paging: {
+          canLoadMore: data.length === configs.apiPageSize,
+          after: data[data.length - 1]?._id,
+        },
+      })
+    );
+  } catch (error: any) {
+    yield put(
+      actions.loadMoreConversationMessagesHistory.failure(error.message)
+    );
+  }
+}
+
+function* openTreatmentDetails({ payload }: BaseAction<string>) {
+  try {
+    const data = yield call(PartnerService.getTreatmentDetailsById, payload);
+    if (data) {
+      navigation.navigate(ScreenKey.DIARY_OF_TREATMENT, {
+        treatmentDetail: data,
+      });
+    }
+    yield put(actions.openTreatmentDetails.success());
+  } catch (error: any) {
+    yield put(actions.openTreatmentDetails.failure(error.message));
+  }
+}
+
+function* startChat({ payload }: BaseAction<StartChatParams>) {
+  try {
+    const data = yield call(PartnerService.startChat, payload);
+    yield put(actions.startChat.success(data));
+    navigation.navigate(ScreenKey.CHATTING, {
+      conversation: data,
+    });
+  } catch (error: any) {
+    yield put(actions.startChat.failure(error.message));
   }
 }
 
@@ -93,5 +159,11 @@ export default function* chatSagas() {
     ),
     takeLatest(GET_CONVERSATION_DETAILS.REQUEST, getConversationDetails),
     takeLatest(GET_CONVERSATION_MESSAGES.REQUEST, getConversationMessages),
+    takeLeading(
+      LOAD_MORE_CONVERSATION_MESSAGES_HISTORY.REQUEST,
+      loadMoreConversationMessagesHistory
+    ),
+    takeLatest(OPEN_TREATMENT_DETAILS.REQUEST, openTreatmentDetails),
+    takeLatest(START_CHAT.REQUEST, startChat),
   ]);
 }

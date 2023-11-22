@@ -63,6 +63,7 @@ import Animated, {
 } from "react-native-reanimated";
 import BottomSheet from "@Components/BottomSheet";
 import useAnimatedVisible from "src/Hooks/useAnimatedVisible";
+import { useTimeout } from "@r0b0t3d/react-native-hooks";
 
 type Props = {
   onImagePicker: () => void;
@@ -78,30 +79,19 @@ const InputChat = ({ onImagePicker }: Props) => {
   const [isTyping, setIsTyping] = useState(false);
   const [listUserIsTyping, setListUserIsTyping] = useState([]);
   const [loadingSendMessage, setLoadingSendMessage] = useState(false);
-  const [isDialogVisible, setDialogVisible] = useState(false);
-  const [listVideoForUpload, setListVideoForUpload] = useState([]);
 
   const [listSgMsg, setListSgMsg] = useState([]);
 
   const [isShowlistSgMsg, setIsShowListSgMsg] = useState(false);
 
-  const ActionSheetRef = useRef();
+  console.log({ listSgMsg });
 
-  useEffect(() => {}, []);
-
-  // useEffect(() => {
-  //   if (isShowlistSgMsg) {
-  //     Animated.timing(animatedArrow, {
-  //       toValue: 1,
-  //       duration: 500,
-  //     }).start();
-  //   } else {
-  //     Animated.timing(animatedArrow, {
-  //       toValue: 0,
-  //       duration: 500,
-  //     }).start();
-  //   }
-  // }, [isShowlistSgMsg]);
+  useTimeout(
+    () => {
+      setIsTyping(false);
+    },
+    isTyping ? 3000 : -1
+  );
 
   useEffect(() => {
     if (isTyping == true) {
@@ -131,29 +121,30 @@ const InputChat = ({ onImagePicker }: Props) => {
         SOCKET: `----SSC_USER_TYPING---`,
         data,
       });
-
-      if (data?.conversationId == conversation?._id) {
-        if (data.data.isTyping == false) {
-          let tempListUserIsTyping = [...listUserIsTyping];
-          _remove(
-            tempListUserIsTyping,
-            (item) => item.userId === data.data.userId
-          );
-          setListUserIsTyping(tempListUserIsTyping);
-        } else {
-          if (data.data.userId == infoUser?._id) return;
-          let tempListUserIsTyping = [...listUserIsTyping]?.filter(
-            (item) => item?.userId !== data?.data?.userId
-          );
-          setListUserIsTyping([data.data, ...tempListUserIsTyping]);
+      setListUserIsTyping((prev) => {
+        if (data?.conversationId == conversation?._id) {
+          if (data.data.isTyping == false) {
+            let tempListUserIsTyping = [...prev];
+            _remove(
+              tempListUserIsTyping,
+              (item) => item.userId === data.data.userId
+            );
+            return tempListUserIsTyping;
+          } else {
+            if (data.data.userId == infoUser?._id) return;
+            let tempListUserIsTyping = [...prev]?.filter(
+              (item) => item?.userId !== data?.data?.userId
+            );
+            return [data.data, ...tempListUserIsTyping];
+          }
         }
-      }
+      });
     });
 
     return () => {
       SocketInstance.socketConn?.off(SSC_USER_TYPING);
     };
-  }, [conversation, listUserIsTyping]);
+  }, [conversation]);
 
   useEffect(() => {
     if (conversation?._id) {
@@ -204,16 +195,12 @@ const InputChat = ({ onImagePicker }: Props) => {
     }
   };
 
-  const _changeCurrTextMessage = (e) => {
-    if (e.length > 0) {
-      setIsTyping(true);
-    } else {
-      setIsTyping(false);
-    }
+  const _changeCurrTextMessage = useCallback((e) => {
+    setIsTyping(e.length > 0);
     setCurrTextMessage(e);
-  };
+  }, []);
 
-  const _sendMessage = () => {
+  const _sendMessage = useCallback(() => {
     // ====== NEW =======
     if (isEmpty(currTextMessage.trim())) {
       return;
@@ -233,31 +220,23 @@ const InputChat = ({ onImagePicker }: Props) => {
       },
     };
 
-    console.log("tuccccccccccccccccccccccccccccccccccccccccccccccc", data);
-
     setIsTyping(false);
     setCurrTextMessage("");
     SocketInstance.socketConn?.emit(CSS_SEND_MESSAGE, data);
     setTimeout(() => {
       setLoadingSendMessage(false);
     }, 300);
-  };
-  const _onFocusTextInput = () => {
-    // setIsTyping(true)
-  };
-  const _outFocusTextInput = () => {
-    setIsTyping(false);
-  };
+  }, [currTextMessage]);
 
   const pickDocument = async () => {
     try {
-      const res: any = await DocumentPicker.pick({
+      const res = await DocumentPicker.pick({
         type: [DocumentPicker.types.allFiles],
       });
       let listDocuments = {
-        uri: res.uri,
-        type: res.type,
-        name: res.name,
+        uri: res[0].uri,
+        type: res[0].type,
+        name: res[0].name,
       };
       let resultUploadDocumentMessage = await uploadModuleDocument({
         moduleName: "chatMessage",
@@ -329,68 +308,6 @@ const InputChat = ({ onImagePicker }: Props) => {
     SocketInstance.socketConn?.emit(CSS_SEND_MESSAGE, data);
   }, []);
 
-  // const pickVideoDocument = async () => {
-  //     try {
-  //         const res = await DocumentPicker.pick({
-  //             type: [DocumentPicker.types.images],
-  //         });
-  //         console.log(
-  //             res.uri,
-  //             res.type, // mime type
-  //             res.name,
-  //             res.size
-  //         );
-
-  //         let listDocuments = {
-  //             uri: res.uri,
-  //             type: res.type,
-  //             name: res.name,
-  //         };
-
-  //         let resultUploadDocumentMessage = await handleApi(_uploadModuleDocument({
-  //             moduleName: 'chatMessage',
-  //             files: [listDocuments]
-  //         }))
-  //         if (resultUploadDocumentMessage.error) return
-
-  //         let listIdDocumentHasUpload = resultUploadDocumentMessage.data.map(item => item._id);
-  //         let data = {
-  //             room: currChattingRedux?.code,
-  //             message: {
-  //                 type: "document",
-  //                 documents: listIdDocumentHasUpload
-  //             }
-  //         };
-  //         SocketInstance.socketConn.emit(CSS_SEND_MESSAGE, data)
-
-  //     } catch (err) {
-  //         if (DocumentPicker.isCancel(err)) {
-  //             // User cancelled the picker, exit any dialogs or menus and move on
-  //         } else {
-  //             throw err;
-  //         }
-  //     }
-  // }
-
-  // const _showActionSheet = () => {
-  //     ActionSheetIOS.showActionSheetWithOptions(
-  //         {
-  //             options: ["Huỷ", "Chụp ảnh", 'Video', "Chọn từ thư viện"],
-  //             // destructiveButtonIndex: 2,
-  //             cancelButtonIndex: 0,
-  //             userInterfaceStyle: 'dark'
-  //         },
-  //         buttonIndex => {
-  //             if (buttonIndex === 0) {
-  //                 // cancel action
-  //             } else if (buttonIndex === 1) {
-  //                 pickCamera()
-  //             } else if (buttonIndex === 2) {
-  //                 pickMultiple()
-  //             }
-  //         })
-  // }
-
   const moreActionsAnimatedStyle = useAnimatedStyle(() => {
     return {
       height: moreActionsHeight.value,
@@ -433,8 +350,6 @@ const InputChat = ({ onImagePicker }: Props) => {
           paddingVertical={2}
         >
           <TextInput
-            onFocus={_onFocusTextInput}
-            onBlur={_outFocusTextInput}
             multiline
             {...textInputProps}
             style={styles.input}
