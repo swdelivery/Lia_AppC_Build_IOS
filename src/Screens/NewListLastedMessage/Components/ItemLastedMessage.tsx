@@ -5,7 +5,7 @@ import { _moderateScale } from "@Constant/Scale";
 import Row from "@Components/Row";
 import Column from "@Components/Column";
 import { WHITE } from "@Constant/Color";
-import { LastMessage } from "@typings/chat";
+import { Conversation } from "@typings/chat";
 import ContentLoader, { Circle, Rect } from "react-content-loader/native";
 import Avatar from "@Components/Avatar";
 import { useSelector } from "react-redux";
@@ -14,8 +14,8 @@ import moment from "moment";
 import useCallbackItem from "src/Hooks/useCallbackItem";
 
 type Props = {
-  item: LastMessage;
-  onPress: (item: LastMessage) => void;
+  item: Conversation;
+  onPress: (item: Conversation) => void;
 };
 
 const ItemLastedMessage = ({ item, onPress }: Props) => {

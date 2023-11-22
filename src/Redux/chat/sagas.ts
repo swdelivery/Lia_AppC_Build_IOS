@@ -1,12 +1,14 @@
 import { all, call, put, takeLatest } from "redux-saga/effects";
 import {
+  GET_CONVERSATION_DETAILS,
+  GET_CONVERSATION_MESSAGES,
   GET_PARTNER_CONVERSATIONS,
   GetPartnerConversationsParams,
   LOAD_MORE_PARTNER_CONVERSATIONS,
 } from "./types";
 import * as actions from "./actions";
 import { BaseAction } from "@Redux/types";
-import { LastMessage } from "@typings/chat";
+import { Conversation } from "@typings/chat";
 import { selectState } from "@Redux/helper";
 import { getPartnerConversationsState } from "./selectors";
 import PartnerService from "src/Services/PartnerService";
@@ -16,7 +18,7 @@ function* getPartnerConversations({
   payload,
 }: BaseAction<GetPartnerConversationsParams>) {
   try {
-    const data: LastMessage[] = yield call(
+    const data: Conversation[] = yield call(
       PartnerService.getPartnerConversations,
       payload
     );
@@ -61,6 +63,27 @@ function* loadMorePartnerConversations({
   }
 }
 
+function* getConversationDetails({ payload }: BaseAction<Conversation>) {
+  try {
+    const data = yield call(PartnerService.getConversationDetails, payload._id);
+    yield put(actions.getConversationDetails.success(data));
+  } catch (error: any) {
+    yield put(actions.getConversationDetails.failure(error.message));
+  }
+}
+
+function* getConversationMessages({ payload }: BaseAction<string>) {
+  try {
+    const data = yield call(PartnerService.getConversationMessages, {
+      conversationId: payload,
+      // before: currListMessageRedux?.messages[0]?._id,
+    });
+    yield put(actions.getConversationMessages.success(data));
+  } catch (error: any) {
+    yield put(actions.getConversationMessages.failure(error.message));
+  }
+}
+
 export default function* chatSagas() {
   yield all([
     takeLatest(GET_PARTNER_CONVERSATIONS.REQUEST, getPartnerConversations),
@@ -68,5 +91,7 @@ export default function* chatSagas() {
       LOAD_MORE_PARTNER_CONVERSATIONS.REQUEST,
       loadMorePartnerConversations
     ),
+    takeLatest(GET_CONVERSATION_DETAILS.REQUEST, getConversationDetails),
+    takeLatest(GET_CONVERSATION_MESSAGES.REQUEST, getConversationMessages),
   ]);
 }

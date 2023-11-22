@@ -27,6 +27,7 @@ import store from "../../Redux/store";
 import * as ActionType from "../../Redux/Constants/ActionType";
 import { getInfoUserReducer } from "../../Redux/Selectors";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { FONT_WEIGHTS } from "@Components/Text";
 
 const Tab = createMaterialTopTabNavigator();
 const Stack = createStackNavigator();
@@ -51,6 +52,7 @@ const MainTab = (props) => {
           borderColor: BG_GREY_OPACITY_3,
           margin: 0,
           paddingBottom: bottom,
+          width: _width,
         },
         tabBarIndicatorStyle: {
           backgroundColor: BASE_COLOR,
@@ -60,8 +62,7 @@ const MainTab = (props) => {
         },
         tabBarLabelStyle: {
           fontSize: _moderateScale(12),
-          fontFamily:
-            Platform.OS == "ios" ? "NolanNext" : "Kastelov-NolanNext-Regular",
+          fontFamily: FONT_WEIGHTS["regular"],
           textTransform: "capitalize",
           margin: 0,
           padding: 0,

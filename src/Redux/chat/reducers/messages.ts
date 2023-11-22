@@ -1,15 +1,15 @@
-import {
-  GET_PARTNER_CONVERSATIONS,
-  LOAD_MORE_PARTNER_CONVERSATIONS,
-} from "../types";
-import { Conversation } from "@typings/chat";
 import { createReducer } from "@Redux/helper";
 import { Handler, PagingInfo } from "@Redux/types";
+import {
+  GET_CONVERSATION_MESSAGES,
+  LOAD_MORE_PARTNER_CONVERSATIONS,
+} from "../types";
+import { Message } from "@typings/chat";
 
 export type State = {
   isLoading: boolean;
   isLoadingMore: boolean;
-  data: Conversation[];
+  data: Message[];
   total: number;
   paging?: PagingInfo;
 };
@@ -34,7 +34,7 @@ const failure: Handler<State> = (state) => ({
 const success: Handler<State> = (state, { payload }) => ({
   ...state,
   isLoading: false,
-  ...payload,
+  data: payload,
 });
 
 const loadMoreRequest: Handler<State> = (state) => ({
@@ -55,9 +55,9 @@ const loadMoreSuccess: Handler<State> = (state, { payload }) => ({
 });
 
 export default createReducer(INITIAL_STATE, {
-  [GET_PARTNER_CONVERSATIONS.REQUEST]: request,
-  [GET_PARTNER_CONVERSATIONS.FAILURE]: failure,
-  [GET_PARTNER_CONVERSATIONS.SUCCESS]: success,
+  [GET_CONVERSATION_MESSAGES.REQUEST]: request,
+  [GET_CONVERSATION_MESSAGES.FAILURE]: failure,
+  [GET_CONVERSATION_MESSAGES.SUCCESS]: success,
 
   [LOAD_MORE_PARTNER_CONVERSATIONS.REQUEST]: loadMoreRequest,
   [LOAD_MORE_PARTNER_CONVERSATIONS.FAILURE]: loadMoreFailure,

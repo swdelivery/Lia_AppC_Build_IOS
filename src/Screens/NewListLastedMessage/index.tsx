@@ -17,7 +17,7 @@ import { getPartnerConversationsState } from "@Redux/chat/selectors";
 import { useFocused, useNavigate } from "src/Hooks/useNavigation";
 import HeaderList from "./Components/HeaderList";
 import { RenderItemProps } from "@typings/common";
-import { LastMessage } from "@typings/chat";
+import { Conversation } from "@typings/chat";
 import useItemExtractor from "src/Hooks/useItemExtractor";
 import PlaceholderSkeletons from "@Components/PlaceholderSkeletons";
 import ScreenKey from "@Navigation/ScreenKey";
@@ -35,18 +35,19 @@ const NewListLastedMessage = () => {
     getData();
   });
 
-  const handleOpenChat = useCallback((item: LastMessage) => {
+  const handleOpenChat = useCallback((item: Conversation) => {
     navigation.navigate(ScreenKey.CHATTING, {
+      conversation: item,
       propsData: item,
       flag: FROM_GROUP_CHAT_ID,
     });
   }, []);
 
-  const _renderItem = ({ item, index }: RenderItemProps<LastMessage>) => {
+  const _renderItem = ({ item, index }: RenderItemProps<Conversation>) => {
     return <ItemLastedMessage item={item} onPress={handleOpenChat} />;
   };
 
-  const { keyExtractor } = useItemExtractor<LastMessage>((item) => item._id);
+  const { keyExtractor } = useItemExtractor<Conversation>((item) => item._id);
 
   return (
     <Screen safeTop style={styles.container}>

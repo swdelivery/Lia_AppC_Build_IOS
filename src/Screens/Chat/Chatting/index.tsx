@@ -1,91 +1,44 @@
 import _isEmpty from "lodash/isEmpty";
-import React, { memo, useEffect, useRef, useState } from "react";
+import React, { useCallback } from "react";
 import { KeyboardAvoidingView, StyleSheet } from "react-native";
-// REDUX
-import { useDispatch } from "react-redux";
-import { navigation } from "../../../../rootNavigation";
-import { FROM_GROUP_CHAT_ID } from "../../../Constant/Flag";
-import GlobalStore from "../../../Constant/GlobalStore";
 import { _heightScale } from "../../../Constant/Scale";
-import ScreenKey from "../../../Navigation/ScreenKey";
-import {
-  getConversationByIdForPartner,
-  getDataPartnerMessage,
-} from "../../../Redux/Action/MessageActionV2";
-import { getStringeeToken } from "../../../Redux/Action/StringeeAction";
-import * as ActionType from "../../../Redux/Constants/ActionType";
-import Store from "../../../Redux/store";
-import Header from "./Header";
-import InputChat from "./InputChat";
-import ListMessages from "./ListMessages";
+import Header from "./components/Header";
+import InputChat from "./components/InputChat";
+import ListMessages from "./components/ListMessages";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Screen from "@Components/Screen";
+import ScreenKey from "@Navigation/ScreenKey";
+import { useFocused, useNavigationParams } from "src/Hooks/useNavigation";
+import { useDispatch } from "react-redux";
+import { getConversationDetails } from "@Redux/chat/actions";
+import useVisible from "src/Hooks/useVisible";
+import MediaPicker from "./components/MediaPicker";
+import SocketInstance from "SocketInstance";
+import { CSS_SEND_MESSAGE } from "src/Sockets/type";
 
-const Chatting = (props) => {
-  const clientRef = useRef("client");
+type ScreenK = typeof ScreenKey.CHATTING;
 
-  const { top, bottom } = useSafeAreaInsets();
+const Chatting = () => {
+  const dispatch = useDispatch();
+  const { bottom } = useSafeAreaInsets();
+  const { conversation } = useNavigationParams<ScreenK>();
+  const imageActions = useVisible();
 
-  useEffect(() => {
-    // _getStringeeToken()
+  useFocused(() => {
+    dispatch(getConversationDetails.request(conversation));
+  });
 
-    if (props?.route?.params?.flag == FROM_GROUP_CHAT_ID) {
-      fetchAPIGroupChatByCode(props.route.params.propsData._id);
-    }
+  const handleMessage = useCallback(
+    (message: any) => {
+      let data = {
+        conversationId: conversation?._id,
+        message,
+      };
 
-    return () => {
-      Store.dispatch({
-        type: ActionType.CLEAR_DATA_CURR_CHATTING,
-        payload: null,
-      });
-      GlobalStore.xyzc = null;
-    };
-  }, []);
-
-  const _getStringeeToken = async () => {
-    let result = await getStringeeToken();
-    // console.log();
-    if (result?.isAxiosError) return;
-    // console.log({ clientRef });
-
-    await clientRef?.current?.connect(result?.data?.data?.token);
-    console.log({ clientId: clientRef?.current?.getId() });
-    setClientId(clientRef?.current?.getId());
-  };
-
-  const fetchAPIGroupChatByCode = async (conversationId) => {
-    if (!_isEmpty(conversationId)) {
-      let resultGetConversationByIdForPartner =
-        await getConversationByIdForPartner(conversationId);
-      if (resultGetConversationByIdForPartner.isAxiosError) return;
-
-      Store.dispatch({
-        type: ActionType.SAVE_INFO_CURR_CHATTING,
-        payload: {
-          data: resultGetConversationByIdForPartner?.data?.data,
-        },
-      });
-
-      let resultGetDataPartnerMessage = await getDataPartnerMessage({
-        condition: {
-          conversationId: conversationId,
-        },
-        // sort: {
-        //     created: -1
-        // },
-        limit: 20,
-        page: 1,
-      });
-      if (resultGetDataPartnerMessage.isAxiosError) return;
-
-      Store.dispatch({
-        type: ActionType.SAVE_LIST_MESSAGE_CURR_CHATTING,
-        payload: {
-          data: resultGetDataPartnerMessage?.data?.data,
-        },
-      });
-    }
-  };
+      SocketInstance.socketConn?.emit(CSS_SEND_MESSAGE, data);
+    },
+    [conversation]
+  );
 
   return (
     <KeyboardAvoidingView
@@ -94,10 +47,15 @@ const Chatting = (props) => {
       style={styles.content}
     >
       <Screen safeBottom>
-        <Header />
-        <ListMessages />
-        <InputChat />
+        <Header conversation={conversation} />
+        <ListMessages conversation={conversation} />
+        <InputChat onImagePicker={imageActions.show} />
       </Screen>
+      <MediaPicker
+        visible={imageActions.visible}
+        onClose={imageActions.hide}
+        onMessage={handleMessage}
+      />
     </KeyboardAvoidingView>
   );
 };

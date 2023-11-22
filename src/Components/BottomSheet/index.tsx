@@ -1,25 +1,47 @@
 import { styleElement } from "@Constant/StyleElement";
-import React, { ReactNode, useCallback, useEffect } from "react";
+import React, {
+  ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+} from "react";
 import {
   LayoutChangeEvent,
+  Pressable,
+  StyleProp,
   StyleSheet,
   TouchableOpacity,
   View,
+  ViewStyle,
 } from "react-native";
 import Animated, {
   SharedValue,
   runOnJS,
   useAnimatedStyle,
   useSharedValue,
+  withSpring,
   withTiming,
 } from "react-native-reanimated";
 import { IconCancelGrey } from "../../Components/Icon/Icon";
-import { BORDER_COLOR, WHITE } from "../../Constant/Color";
+import {
+  BASE_COLOR,
+  BORDER_COLOR,
+  BORDER_INPUT_TEXT,
+  ERROR_COLOR,
+  WHITE,
+} from "../../Constant/Color";
 import { sizeIcon } from "../../Constant/Icon";
 import { _height, _moderateScale, _width } from "../../Constant/Scale";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Row from "@Components/Row";
 import Text from "@Components/Text";
+import Column from "@Components/Column";
+import IconButton from "@Components/IconButton";
+import {
+  BottomSheetContext,
+  useBottomSheetContext,
+} from "./useBottomSheetContext";
 
 type Props = {
   visible?: boolean;
@@ -31,13 +53,13 @@ type Props = {
 const BottomSheet = ({ visible, onClose, children }: Props) => {
   const opacityBackDrop = useSharedValue(0);
   const tranYModal = useSharedValue(0);
-  const contentHeight = useSharedValue(0);
+  const contentHeight = useRef(0);
   const { bottom } = useSafeAreaInsets();
+  const currentCallback = useRef<any>();
 
   useEffect(() => {
     if (visible) {
-      tranYModal.value = withTiming(-contentHeight.value, { duration: 200 });
-      opacityBackDrop.value = withTiming(1, { duration: 300 });
+      expand();
     } else {
     }
   }, [visible]);
@@ -45,8 +67,6 @@ const BottomSheet = ({ visible, onClose, children }: Props) => {
   const animTranY = useAnimatedStyle(() => {
     return {
       transform: [{ translateY: tranYModal.value }],
-      height: contentHeight.value,
-      paddingBottom: bottom,
     };
   });
 
@@ -54,14 +74,36 @@ const BottomSheet = ({ visible, onClose, children }: Props) => {
     return { opacity: opacityBackDrop.value };
   });
 
-  const handleHideModal = useCallback(() => {
-    tranYModal.value = withTiming(0, { duration: 200 }, (fnd) => {
-      if (fnd) {
-        runOnJS(onClose)();
-      }
+  const handleClose = useCallback(() => {
+    if (onClose) {
+      onClose();
+    }
+    if (currentCallback.current) {
+      currentCallback.current();
+    }
+  }, [onClose]);
+
+  const expand = useCallback(() => {
+    tranYModal.value = withSpring(0, {
+      overshootClamping: true,
     });
-    opacityBackDrop.value = withTiming(0, { duration: 200 });
+    opacityBackDrop.value = withTiming(1, { duration: 300 });
   }, []);
+
+  const collapse = useCallback(() => {
+    tranYModal.value = withSpring(
+      contentHeight.current,
+      {
+        overshootClamping: true,
+      },
+      (fnd) => {
+        if (fnd) {
+          runOnJS(handleClose)();
+        }
+      }
+    );
+    opacityBackDrop.value = withTiming(0, { duration: 300 });
+  }, [handleClose]);
 
   const handleLayout = useCallback(
     ({
@@ -69,9 +111,26 @@ const BottomSheet = ({ visible, onClose, children }: Props) => {
         layout: { height },
       },
     }: LayoutChangeEvent) => {
-      contentHeight.value = height;
+      contentHeight.current = height;
+      tranYModal.value = height;
+      expand();
     },
     []
+  );
+
+  const closeWithCallback = useCallback(
+    (callback?: any) => () => {
+      currentCallback.current = callback;
+      collapse();
+    },
+    [collapse]
+  );
+
+  const context = useMemo(
+    () => ({
+      close: closeWithCallback,
+    }),
+    [closeWithCallback]
   );
 
   if (!visible) {
@@ -79,36 +138,89 @@ const BottomSheet = ({ visible, onClose, children }: Props) => {
   }
 
   return (
-    <View style={styles.container}>
-      <Animated.View style={[styles.bg, animOpacityBackDrop]}>
-        <TouchableOpacity
-          onPress={handleHideModal}
-          style={[StyleSheet.absoluteFillObject]}
-        />
-      </Animated.View>
-
-      <Animated.View style={[styles.mainModal, animTranY]}>
-        <View onLayout={handleLayout}>
+    <BottomSheetContext.Provider value={context}>
+      <View style={styles.container}>
+        <Animated.View style={[styles.bg, animOpacityBackDrop]}>
           <TouchableOpacity
-            hitSlop={styleElement.hitslopSm}
-            onPress={handleHideModal}
-            style={styles.cancelBtn}
-          >
-            <IconCancelGrey style={sizeIcon.sm} />
-          </TouchableOpacity>
-          {children}
-        </View>
-      </Animated.View>
-    </View>
+            onPress={collapse}
+            style={[StyleSheet.absoluteFillObject]}
+          />
+        </Animated.View>
+
+        <Animated.View
+          style={[styles.mainModal, animTranY]}
+          onLayout={handleLayout}
+        >
+          <Column marginBottom={bottom}>
+            <Row height={30} justifyContent="center">
+              <View style={styles.indicator} />
+              <IconButton
+                hitSlop={styleElement.hitslopSm}
+                onPress={collapse}
+                containerStyle={styles.cancelBtn}
+                size={30}
+              >
+                <IconCancelGrey style={sizeIcon.xxs} />
+              </IconButton>
+            </Row>
+            {children}
+          </Column>
+        </Animated.View>
+      </View>
+    </BottomSheetContext.Provider>
   );
 };
 
-function MenuItem({ icon, title }: { icon: ReactNode; title: string }) {
+function MenuItem({
+  icon,
+  title,
+  onPress,
+  type = "positive",
+  center = false,
+  triggerAfterAnimation = false,
+}: {
+  icon?: ReactNode;
+  title: string;
+  onPress?: () => void;
+  type?: "negative" | "positive";
+  center?: boolean;
+  triggerAfterAnimation?: boolean;
+}) {
+  const { close } = useBottomSheetContext();
+
+  const handlePress = useCallback(() => {
+    if (triggerAfterAnimation) {
+      close(onPress)();
+    } else {
+      close()();
+      if (onPress) {
+        onPress();
+      }
+    }
+  }, [triggerAfterAnimation, onPress, close]);
+
+  const containerStyle: StyleProp<ViewStyle> = useMemo(() => {
+    return {
+      alignItems: center ? "center" : "flex-start",
+      borderBottomWidth: type === "positive" ? 1 : 0,
+    };
+  }, [center, type]);
+
   return (
-    <Row>
-      {icon}
-      <Text>{title}</Text>
-    </Row>
+    <Pressable
+      onPress={handlePress}
+      style={[styles.itemContainer, containerStyle]}
+    >
+      <Row>
+        {icon}
+        <Text
+          weight="bold"
+          color={type === "positive" ? BASE_COLOR : ERROR_COLOR}
+        >
+          {title}
+        </Text>
+      </Row>
+    </Pressable>
   );
 }
 
@@ -119,9 +231,7 @@ export default BottomSheet;
 const styles = StyleSheet.create({
   cancelBtn: {
     position: "absolute",
-    right: _moderateScale(8 * 3),
-    zIndex: 100,
-    top: _moderateScale(8 * 2),
+    right: 16,
   },
   option: {
     height: 80,
@@ -138,17 +248,28 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 0,
     paddingBottom: _moderateScale(8 * 2),
     position: "absolute",
+    bottom: 0,
   },
   container: {
-    width: _width,
-    height: _height,
-    position: "absolute",
-    zIndex: 100,
-    bottom: 0,
+    ...StyleSheet.absoluteFillObject,
+    zIndex: 10,
   },
   bg: {
     width: _width,
     height: _height,
     backgroundColor: "rgba(0,0,0,.7)",
+  },
+  indicator: {
+    width: 120,
+    height: 3,
+    borderRadius: 2,
+    backgroundColor: BORDER_INPUT_TEXT,
+  },
+  itemContainer: {
+    height: 50,
+    borderBottomWidth: 1,
+    borderColor: BORDER_COLOR,
+    paddingHorizontal: 20,
+    justifyContent: "center",
   },
 });

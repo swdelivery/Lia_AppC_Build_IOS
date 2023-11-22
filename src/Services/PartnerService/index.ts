@@ -281,6 +281,20 @@ const getPartnerConversations = (
     .then(({ data }) => data.data);
 };
 
+const getConversationDetails = (id: string) => {
+  return axios.get(`/partner-conversation/` + id).then(({ data }) => data.data);
+};
+
+const getConversationMessages = (payload: any) =>
+  axios
+    .get("/partner-message", {
+      params: {
+        condition: payload,
+        limit: configs.apiPageSize,
+      },
+    })
+    .then(({ data }) => data.data);
+
 export default {
   getServiceGroup,
   getServices,
@@ -322,4 +336,6 @@ export default {
 
   // Conversations
   getPartnerConversations,
+  getConversationDetails,
+  getConversationMessages,
 };

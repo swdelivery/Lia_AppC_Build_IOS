@@ -31,7 +31,7 @@ export type Message = {
   viewerUserIdArr: string[];
 } & Timestamp;
 
-export type LastMessage = {
+export type Conversation = {
   __v: 0;
   _id: string;
   assignedUsers: AssignedUser[];

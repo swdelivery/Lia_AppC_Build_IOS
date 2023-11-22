@@ -3,3 +3,7 @@ export { default as ServiceIcon } from "./service.svg";
 export { default as ClockIcon } from "./oclock.svg";
 export { default as DoctorIcon } from "./doctor.svg";
 export { default as OptionDotsVerticalIcon } from "./optionDots.svg";
+export { default as ChatGptIcon } from "./chatgpt.svg";
+export { default as SendIcon } from "./send.svg";
+export { default as ImageIcon } from "./image.svg";
+export { default as UploadIcon } from "./upload.svg";

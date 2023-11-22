@@ -72,6 +72,7 @@ const PATTERN_CHART = [
 
 // NEW COLOR
 const BASE_COLOR = "#4A9F80";
+const BASE_COLOR_LIGHT = "#01AB84";
 const BG_GREY_OPACITY_5 = "rgba(229,229,229,.5)";
 const SECOND_COLOR = "#7d3da8";
 const THIRD_COLOR = "#F4B986";
@@ -95,6 +96,7 @@ const ERROR_COLOR = "#EB4303";
 export {
   BG_CLEAR,
   BASE_COLOR,
+  BASE_COLOR_LIGHT,
   WHITE,
   GREY,
   MAIN_OPACITY_8,
