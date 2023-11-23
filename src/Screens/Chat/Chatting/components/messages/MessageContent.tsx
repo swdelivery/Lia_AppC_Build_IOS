@@ -8,6 +8,14 @@ import VideoMessage from "./VideoMessage";
 import { StyleSheet } from "react-native";
 import moment from "moment";
 import ServiceReviewMessage from "./ServiceReviewMessage";
+import TemplateService from "./TemplateService";
+import ItemTemplateNews from "../../ItemTemplateNews";
+import TemplateNews from "./TemplateNews";
+import ItemNavigateBooking from "../../ItemNavigateBooking";
+import TemplateBooking from "./TemplateBooking";
+import ItemNavigateCTV from "../../ItemNavigateCTV";
+import TemplateAffiliate from "./TemplateAffiliate";
+import TemplateOnlyAction from "./TemplateOnlyAction";
 
 type Props = {
   item: Message;
@@ -25,16 +33,14 @@ export default function MessageContent({ item, isMyMessage = false }: Props) {
         case "TREATMENT_DETAIL":
           return <ServiceReviewMessage item={item} />;
 
-        // case "SERVICE":
-        //   return <ItemTemplateService item={item} index={index} />;
-        // case "NEWS":
-        //   return <ItemTemplateNews item={item} index={index} />;
-        // case "BOOKING":
-        //   return <ItemNavigateBooking item={item} index={index} />;
-        // case "COLLABORATOR":
-        //   return <ItemNavigateCTV item={item} index={index} />;
-        // case "SPIN_WHEEL":
-        //   return <ItemNavigateSpinWheel item={item} index={index} />;
+        case "SERVICE":
+          return <TemplateService item={item} />;
+        case "NEWS":
+          return <TemplateNews item={item} />;
+        case "BOOKING":
+        case "COLLABORATOR":
+        case "SPIN_WHEEL":
+          return <TemplateOnlyAction item={item} />;
 
         default:
           return null;

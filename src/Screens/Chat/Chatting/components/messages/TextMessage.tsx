@@ -15,6 +15,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     marginVertical: 5,
     fontFamily: FONT_WEIGHTS["regular"],
-    fontSize: 12,
+    fontSize: 14,
   },
 });
