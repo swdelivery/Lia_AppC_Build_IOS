@@ -3,18 +3,13 @@ import React from "react";
 import ImageMessage from "./ImageMessage";
 import TextMessage from "./TextMessage";
 import Text from "@Components/Text";
-import { GREY, RECEIVER_BG, SENDER_BG } from "@Constant/Color";
+import { GREY } from "@Constant/Color";
 import VideoMessage from "./VideoMessage";
 import { StyleSheet } from "react-native";
 import moment from "moment";
-import ServiceReviewMessage from "./ServiceReviewMessage";
+import TemplateReviewMessage from "./TemplateReviewMessage";
 import TemplateService from "./TemplateService";
-import ItemTemplateNews from "../../ItemTemplateNews";
 import TemplateNews from "./TemplateNews";
-import ItemNavigateBooking from "../../ItemNavigateBooking";
-import TemplateBooking from "./TemplateBooking";
-import ItemNavigateCTV from "../../ItemNavigateCTV";
-import TemplateAffiliate from "./TemplateAffiliate";
 import TemplateOnlyAction from "./TemplateOnlyAction";
 
 type Props = {
@@ -31,7 +26,7 @@ export default function MessageContent({ item, isMyMessage = false }: Props) {
         case "SERVICE_REVIEW":
         case "REVIEW_DETAIL":
         case "TREATMENT_DETAIL":
-          return <ServiceReviewMessage item={item} />;
+          return <TemplateReviewMessage item={item} />;
         case "SERVICE":
           return <TemplateService item={item} />;
         case "NEWS":

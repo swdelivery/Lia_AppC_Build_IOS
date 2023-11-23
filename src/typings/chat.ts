@@ -11,7 +11,15 @@ export type AssignedUser = {
 };
 
 export type TemplateData = {
-  type: "SERVICE_REVIEW" | "REVIEW_DETAIL" | "TREATMENT_DETAIL";
+  type:
+    | "SERVICE_REVIEW"
+    | "REVIEW_DETAIL"
+    | "TREATMENT_DETAIL"
+    | "SERVICE"
+    | "NEWS"
+    | "BOOKING"
+    | "COLLABORATOR"
+    | "SPIN_WHEEL";
   data: any;
 };
 

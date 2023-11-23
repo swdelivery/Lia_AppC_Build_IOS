@@ -18,7 +18,7 @@ import { useNavigate } from "src/Hooks/useNavigation";
 
 type Props = { item: Message };
 
-export default function ServiceReviewMessage({ item }: Props) {
+export default function TemplateReviewMessage({ item }: Props) {
   const { navigation } = useNavigate();
   const dispatch = useDispatch();
 

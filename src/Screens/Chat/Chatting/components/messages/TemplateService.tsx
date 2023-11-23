@@ -6,8 +6,7 @@ import { BG_GREY_OPACITY_5, BLUE_FB, BORDER_COLOR, GREY_FOR_TITLE, PRICE_ORANGE,
 import Text from '@Components/Text';
 import Column from '@Components/Column';
 import Image from '@Components/Image';
-import { formatMonney } from '@Constant/Utils';
-import moment from 'moment';
+import { formatMonney } from "@Constant/Utils";
 import { useNavigate } from 'src/Hooks/useNavigation';
 import ScreenKey from '@Navigation/ScreenKey';
 import { styleElement } from '@Constant/StyleElement';
