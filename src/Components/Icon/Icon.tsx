@@ -73,6 +73,7 @@ export { default as IconPlusBase } from "../../SGV/plusBase.svg";
 export { default as IconChat } from "../../SGV/chat.svg";
 export { default as IconBooking } from "../../SGV/booking.svg";
 export { default as IconMirrorr } from "../../SGV/mirror.svg";
+export { default as IconEmpty } from "../../SGV/empty.svg";
 
 export const IconSetting = (props) => {
   return <SVGSetting width={props?.width} height={props?.height} />;

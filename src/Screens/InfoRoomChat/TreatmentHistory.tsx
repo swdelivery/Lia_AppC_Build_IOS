@@ -1,5 +1,5 @@
 import React, { memo, useEffect, useState } from 'react';
-import { StyleSheet, View, RefreshControl, Text,ScrollView } from 'react-native';
+import { StyleSheet, View, RefreshControl, ScrollView } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { BG_BEAUTY } from '../../Constant/Color';
 import { getTreatmentDetailForPartner } from '../../Redux/Action/TreatmentAction';
@@ -7,6 +7,10 @@ import ItemTreatmentDetail from './Components/ItemTreatmentDetail';
 import { _moderateScale } from '../../Constant/Scale';
 import _isEmpty from 'lodash/isEmpty'
 import { stylesFont } from '../../Constant/Font';
+import { IconEmpty } from '@Components/Icon/Icon';
+import Column from '@Components/Column';
+import Text from '@Components/Text';
+import Screen from '@Components/Screen';
 
 const TreatmentHistory = memo((props) => {
 
@@ -21,9 +25,9 @@ const TreatmentHistory = memo((props) => {
 
     const _getListTreatmentDetail = async () => {
         let resultGetTreatmentDetailForPartner = await getTreatmentDetailForPartner({
-            condition:{
-                status:{
-                    in:["PENDING", "COMPLETE"]
+            condition: {
+                status: {
+                    in: ["PENDING", "COMPLETE"]
                 }
             },
             limit: 1000
@@ -40,10 +44,10 @@ const TreatmentHistory = memo((props) => {
     }
 
     return (
-        <View style={[styles.container]}>
+        <Screen style={[styles.container]}>
             <ScrollView
                 showsVerticalScrollIndicator={false}
-                contentContainerStyle={{ flexGrow: 1 }}
+                contentContainerStyle={{ flexGrow: 1, marginTop: 8 * 2 }}
                 style={{ paddingHorizontal: _moderateScale(8 * 2) }}
                 refreshControl={
                     <RefreshControl
@@ -53,31 +57,31 @@ const TreatmentHistory = memo((props) => {
             >
                 {
                     !_isEmpty(listTreamentDetail) ?
-                        <>
-                            <View style={{ height: _moderateScale(16) }} />
+                        <Column gap={8 * 2}>
                             {
                                 listTreamentDetail?.map((item, index) => {
                                     return (
-                                        <ItemTreatmentDetail bgWhite key={index} data={item} />
+                                        <ItemTreatmentDetail key={index} data={item} />
                                     )
                                 })
                             }
-                        </>
+                        </Column>
                         :
-                        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                            <Text style={[stylesFont.fontNolan500, { fontSize: _moderateScale(14) }]}>
-                                Chưa có dữ liệu
-                            </Text>
+                        <View style={{ flex: 1, alignItems: 'center' }}>
+                            <Column marginTop={8 * 10} gap={8 * 2} alignItems='center'>
+                                <IconEmpty width={8 * 10} height={8 * 10} />
+                                <Text fontStyle='italic'>
+                                    Bạn chưa có lịch sử điều trị
+                                </Text>
+                            </Column>
                         </View>
                 }
 
-
-
-                <View style={{height:_moderateScale(8*10)}}/>
+                <View style={{ height: _moderateScale(8 * 10) }} />
 
             </ScrollView>
 
-        </View>
+        </Screen>
     );
 });
 

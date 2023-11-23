@@ -32,7 +32,6 @@ export default function MessageContent({ item, isMyMessage = false }: Props) {
         case "REVIEW_DETAIL":
         case "TREATMENT_DETAIL":
           return <ServiceReviewMessage item={item} />;
-
         case "SERVICE":
           return <TemplateService item={item} />;
         case "NEWS":
