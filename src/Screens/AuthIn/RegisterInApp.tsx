@@ -70,24 +70,6 @@ const RegisterInApp = (props) => {
 
   const _handleRegister = useCallback(
     async (nationCode) => {
-      if (
-        !name.trim() ||
-        !phoneNumber.trim() ||
-        !password.trim() ||
-        !password2.trim()
-      ) {
-        return alertCustomNotAction(
-          `Lỗi`,
-          `Vui lòng nhập đầy đủ các trường cần thiết`
-        );
-      }
-      if (password?.length < 6) {
-        return alertCustomNotAction(`Lỗi`, `Mật khẩu phải ít nhất 6 kí tự`);
-      }
-      if (password !== password2) {
-        return alertCustomNotAction(`Lỗi`, `Mật khẩu xác nhận không đúng`);
-      }
-
       let dataPost: any = {
         name: name,
         phone: {

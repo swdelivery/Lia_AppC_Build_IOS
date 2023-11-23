@@ -909,6 +909,7 @@ const InputChat = memo((props) => {
             {...textInputProps}
             style={styles.input}
             placeholder={"Aa"}
+            placeholderTextColor={Color.GREY}
           />
         </View>
         <View>
@@ -944,6 +945,7 @@ const styles = StyleSheet.create({
     fontSize: _widthScale(16),
     paddingHorizontal: _widthScale(16),
     margin: 0,
+    color: Color.BLACK,
   },
   content: {
     minHeight: 1000,

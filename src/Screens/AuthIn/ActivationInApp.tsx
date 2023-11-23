@@ -24,6 +24,7 @@ import { useNavigationParams } from "src/Hooks/useNavigation";
 import Screen from "@Components/Screen";
 import Text from "@Components/Text";
 import Header from "./components/Header";
+import Toast from "react-native-toast-message";
 
 type ScreenK = typeof ScreenKey.ACTIVATION_IN_APP;
 
@@ -84,7 +85,10 @@ const ActivationInApp = (props: any) => {
         setActiveCode("");
       } catch (error) {
         setIsWrongOTP(true);
-        alertCustomNotAction(`Lỗi`, `OTP sai`);
+        Toast.show({
+          text1: "Mã OTP không chính xác",
+          type: "error",
+        });
       }
     },
     [confirmCode]

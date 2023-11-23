@@ -205,6 +205,8 @@ import DetailMaterial from "@Screens/DetailMaterial";
 import ListBeautyInsurance from "@Screens/ListBeautyInsurance";
 import DetailBeautyInsurance from "@Screens/DetailBeautyInsurance";
 import messaging from "@react-native-firebase/messaging";
+import Toast from "react-native-toast-message";
+import toastConfig from "@Components/BottomToast";
 
 const rootStack = createStackNavigator();
 
@@ -1279,6 +1281,7 @@ const AppWrapper = (props) => {
                     : <></>
 
             } */}
+      <Toast config={toastConfig} position="bottom" bottomOffset={60} />
     </>
   );
 };
