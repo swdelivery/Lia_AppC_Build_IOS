@@ -26,6 +26,7 @@ import { getMessagesState } from "@Redux/chat/selectors";
 import { RenderItemProps } from "@typings/common";
 import { LoadingView } from "@Components/Loading/LoadingView";
 import Fade from "@Components/Fade";
+import MediaPicker from "./MediaPicker";
 
 type Props = {
   conversation: Conversation;

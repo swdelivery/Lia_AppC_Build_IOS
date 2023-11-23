@@ -38,5 +38,6 @@ export type GetPartnerConversationsParams = {
 
 export type StartChatParams = {
   type: "treatment";
-  doctorId: string;
+  doctorId?: string;
+  practitionerId?: string;
 };

@@ -7,6 +7,8 @@ import { delay } from "src/utils/common";
 import DialogConfirmInput from "@Components/Dialog/ConfirmTextInput";
 import useVisible from "src/Hooks/useVisible";
 import { LoadingModal } from "@Components/Loading/LoadingView";
+import withPortal from "@Components/withPortal";
+import { useNavigate } from "src/Hooks/useNavigation";
 
 type Props = {
   visible: boolean;
@@ -14,7 +16,7 @@ type Props = {
   onMessage: (message: any) => void;
 };
 
-export default function MediaPicker({ visible, onClose, onMessage }: Props) {
+function MediaPicker({ visible, onClose, onMessage }: Props) {
   const listVideoForUpload = useRef<any[]>([]);
   const confirmVideo = useVisible();
   const uploading = useVisible();
@@ -176,6 +178,4 @@ export default function MediaPicker({ visible, onClose, onMessage }: Props) {
   );
 }
 
-const styles = StyleSheet.create({
-  //
-});
+export default withPortal(MediaPicker);

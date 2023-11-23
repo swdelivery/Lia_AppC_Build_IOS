@@ -12,7 +12,6 @@ import { useFocused, useNavigationParams } from "src/Hooks/useNavigation";
 import { useDispatch } from "react-redux";
 import { getConversationDetails } from "@Redux/chat/actions";
 import useVisible from "src/Hooks/useVisible";
-import MediaPicker from "./components/MediaPicker";
 import SocketInstance from "SocketInstance";
 import { CSS_SEND_MESSAGE } from "src/Sockets/type";
 
@@ -28,18 +27,6 @@ const Chatting = () => {
     dispatch(getConversationDetails.request(conversation));
   });
 
-  const handleMessage = useCallback(
-    (message: any) => {
-      let data = {
-        conversationId: conversation?._id,
-        message,
-      };
-
-      SocketInstance.socketConn?.emit(CSS_SEND_MESSAGE, data);
-    },
-    [conversation]
-  );
-
   return (
     <KeyboardAvoidingView
       keyboardVerticalOffset={-bottom}
@@ -49,13 +36,8 @@ const Chatting = () => {
       <Screen safeBottom>
         <Header conversation={conversation} />
         <ListMessages conversation={conversation} />
-        <InputChat onImagePicker={imageActions.show} />
+        <InputChat />
       </Screen>
-      <MediaPicker
-        visible={imageActions.visible}
-        onClose={imageActions.hide}
-        onMessage={handleMessage}
-      />
     </KeyboardAvoidingView>
   );
 };

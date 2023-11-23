@@ -1,5 +1,5 @@
 import { isEmpty, remove as _remove } from "lodash";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   StyleSheet,
   TextInput,
@@ -7,12 +7,9 @@ import {
   LayoutAnimation,
   Alert,
 } from "react-native";
-import ActionSheet from "react-native-actionsheet";
 import DocumentPicker from "react-native-document-picker";
-import ImagePicker from "react-native-image-crop-picker";
 import { useSelector } from "react-redux";
 import SocketInstance from "../../../../../SocketInstance";
-
 import * as Color from "../../../../Constant/Color";
 import {
   _heightScale,
@@ -20,20 +17,14 @@ import {
   _width,
   _widthScale,
 } from "../../../../Constant/Scale";
-import * as ActionType from "../../../../Redux/Constants/ActionType";
-import store from "../../../../Redux/store";
 import { useMentions } from "react-native-controlled-mentions/dist";
-// CALL API
 import { _uploadModule, _uploadModuleDocument } from "../../../../Services/api";
 import {
   CSS_SEND_MESSAGE,
   SSC_USER_TYPING,
   CSS_PARTNER_TYPING,
 } from "../../../../Sockets/type";
-import {
-  uploadModule,
-  uploadModuleDocument,
-} from "../../../../Redux/Action/BookingAction";
+import { uploadModuleDocument } from "../../../../Redux/Action/BookingAction";
 import { getConfigData } from "../../../../Redux/Action/OrtherAction";
 import moment from "moment";
 import Typing from "./Typing";
@@ -61,31 +52,26 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from "react-native-reanimated";
-import BottomSheet from "@Components/BottomSheet";
-import useAnimatedVisible from "src/Hooks/useAnimatedVisible";
 import { useTimeout } from "@r0b0t3d/react-native-hooks";
+import MediaPicker from "./MediaPicker";
 
 type Props = {
-  onImagePicker: () => void;
+  //
 };
 
-const InputChat = ({ onImagePicker }: Props) => {
+const InputChat = ({}: Props) => {
   const { infoUser } = useSelector(getInfoUserReducer);
   const { data: conversation } = useSelector(getConversationState);
   const moreActions = useVisible();
+  const imageActions = useVisible();
   const moreActionsHeight = useSharedValue(0);
 
   const [currTextMessage, setCurrTextMessage] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [listUserIsTyping, setListUserIsTyping] = useState([]);
   const [loadingSendMessage, setLoadingSendMessage] = useState(false);
-
   const [listSgMsg, setListSgMsg] = useState([]);
-
   const [isShowlistSgMsg, setIsShowListSgMsg] = useState(false);
-
-  console.log({ listSgMsg });
-
   useTimeout(
     () => {
       setIsTyping(false);
@@ -227,6 +213,18 @@ const InputChat = ({ onImagePicker }: Props) => {
       setLoadingSendMessage(false);
     }, 300);
   }, [currTextMessage]);
+
+  const handleMessage = useCallback(
+    (message: any) => {
+      let data = {
+        conversationId: conversation?._id,
+        message,
+      };
+
+      SocketInstance.socketConn?.emit(CSS_SEND_MESSAGE, data);
+    },
+    [conversation]
+  );
 
   const pickDocument = async () => {
     try {
@@ -393,7 +391,7 @@ const InputChat = ({ onImagePicker }: Props) => {
               size={40}
               backgroundColor={Color.BASE_COLOR_LIGHT}
               borderRadius={5}
-              onPress={onImagePicker}
+              onPress={imageActions.show}
             >
               <ImageIcon />
             </IconButton>
@@ -412,6 +410,12 @@ const InputChat = ({ onImagePicker }: Props) => {
           </Column>
         </Row>
       </Animated.View>
+
+      <MediaPicker
+        visible={imageActions.visible}
+        onClose={imageActions.hide}
+        onMessage={handleMessage}
+      />
     </View>
   );
 };

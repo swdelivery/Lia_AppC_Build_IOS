@@ -28,7 +28,7 @@ const BottomAction = ({ practitioner }: Props) => {
     dispatch(
       startChat.request({
         type: "treatment",
-        doctorId: practitioner?.userId,
+        practitionerId: practitioner?.userId,
       })
     );
   }, []);
