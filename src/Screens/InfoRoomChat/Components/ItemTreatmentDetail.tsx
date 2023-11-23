@@ -262,7 +262,7 @@ const ItemTreatmentDetail = memo((props) => {
                         }
                     </Column>
                     {
-                        !review?._id ?
+                        review?._id ?
                             <TouchableOpacity
                                 onPress={() => {
                                     navigation.navigate(ScreenKey.MODAL_SERVICE_REVIEW, {
