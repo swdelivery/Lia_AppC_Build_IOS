@@ -3,7 +3,7 @@ import React, { useMemo } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { BASE_COLOR, WHITE } from "@Constant/Color";
 import { _moderateScale } from "@Constant/Scale";
-import { IconBackWhite } from "@Components/Icon/Icon";
+import { IconBackGrey, IconBackWhite } from "@Components/Icon/Icon";
 import Text from "@Components/Text";
 import { useNavigate } from "src/Hooks/useNavigation";
 import { styleElement } from "@Constant/StyleElement";
@@ -38,9 +38,17 @@ const Header = ({
       <StatusBar translucent barStyle={barStyle || "light-content"} />
       <View style={styles.header__box}>
         <View style={styleElement.flex}>
-          <TouchableOpacity onPress={navigation.goBack}>
-            <IconBackWhite />
-          </TouchableOpacity>
+          {
+            bg == WHITE ?
+              <TouchableOpacity onPress={navigation.goBack}>
+                <IconBackGrey />
+              </TouchableOpacity>
+              :
+              <TouchableOpacity onPress={navigation.goBack}>
+                <IconBackWhite />
+              </TouchableOpacity>
+          }
+
         </View>
         <Column flex={4} alignItems="center">
           <Text weight="bold" size={16} color={titleColor}>

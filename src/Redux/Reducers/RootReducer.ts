@@ -36,6 +36,7 @@ import voucher from "../voucher/reducers";
 import insurance from "../insurance/reducers";
 import { resetable } from "@Redux/resettableReducer";
 import modal from "../modal/reducers";
+import resultcanningeyes from "../resultcanningeyes/reducers";
 
 const rootReducer = combineReducers({
   newsReducer,
@@ -74,6 +75,7 @@ const rootReducer = combineReducers({
   insurance,
   user: resetable(user),
   modal,
+  resultcanningeyes
 });
 
 // const rootReducer = (state, action) => {

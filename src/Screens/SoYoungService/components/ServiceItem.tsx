@@ -106,8 +106,7 @@ const styles = StyleSheet.create({
     height: IMAGE_HEIGHT + 62,
     marginLeft: 8,
     backgroundColor: "white",
-    borderBottomLeftRadius: 8,
-    borderBottomRightRadius: 8,
+    borderRadius: 8,
     ...styleElement.shadow,
   },
   image: {
