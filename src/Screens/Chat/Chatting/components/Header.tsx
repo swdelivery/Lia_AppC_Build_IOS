@@ -120,7 +120,7 @@ function DoctorInfo({ conversation }: { conversation: any }) {
   if (mainDoctor) {
     return (
       <>
-        <Avatar size={35} circle />
+        <Avatar avatar={mainDoctor?.profile?.fileAvatar} size={35} circle />
         <Text
           weight="bold"
           size={16}

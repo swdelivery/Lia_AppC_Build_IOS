@@ -22,6 +22,9 @@ const ItemLastedMessage = ({ item, onPress }: Props) => {
   const trigger = useCallbackItem(item);
   const { infoUser } = useSelector(getInfoUserReducer);
 
+  console.log({ infoUser });
+
+
   const assignedUser = useMemo(() => {
     return item.assignedUsers[0];
   }, [item]);
@@ -41,26 +44,32 @@ const ItemLastedMessage = ({ item, onPress }: Props) => {
           avatar={assignedUser?.profile?.fileAvatar}
         />
         <Column gap={_moderateScale(4)} flex={1}>
-          <Text weight={isSeen ? "regular" : "bold"}>{assignedUser?.name}</Text>
+          <Text weight={item.latestMessage?.isPartnerSeen ? "regular" : "bold"}>{assignedUser?.name}</Text>
           <Text
             size={12}
-            weight={isSeen ? "regular" : "bold"}
+            weight={item.latestMessage?.isPartnerSeen ? "regular" : "bold"}
             numberOfLines={1}
           >
             {item.latestMessage?.content}
           </Text>
         </Column>
         <Column gap={_moderateScale(4)} alignItems="flex-end">
-          <Text weight="bold" size={12}>
+          <Text weight={item.latestMessage?.isPartnerSeen ? "regular" : "bold"} size={12}>
             {item.latestMessage?.created
               ? moment(item.latestMessage?.created).fromNow()
               : ""}
           </Text>
-          <View style={styles.countBox}>
-            <Text weight="bold" size={12} color={WHITE}>
-              +5
-            </Text>
-          </View>
+          {
+            !item.latestMessage?.isPartnerSeen ?
+              <View style={styles.countBox}>
+                <Text weight="bold" size={12} color={WHITE}>
+                  Mới
+                </Text>
+              </View>
+              :
+              <View style={styles.countBoxBlank} />
+          }
+
         </Column>
       </Row>
     </Pressable>
@@ -84,6 +93,10 @@ export function Placeholder() {
 export default ItemLastedMessage;
 
 const styles = StyleSheet.create({
+  countBoxBlank: {
+    width: _moderateScale(8 * 5),
+    height: _moderateScale(8 * 2),
+  },
   countBox: {
     width: _moderateScale(8 * 5),
     height: _moderateScale(8 * 2),

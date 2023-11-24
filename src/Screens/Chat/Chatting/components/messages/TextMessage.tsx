@@ -1,4 +1,5 @@
 import Text, { FONT_WEIGHTS } from "@Components/Text";
+import { BLACK } from "@Constant/Color";
 import { Message } from "@typings/chat";
 import React from "react";
 import { View, StyleSheet } from "react-native";
@@ -16,5 +17,8 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     fontFamily: FONT_WEIGHTS["regular"],
     fontSize: 14,
+    color: BLACK,
+    minWidth: 50,
+    maxWidth: 230
   },
 });

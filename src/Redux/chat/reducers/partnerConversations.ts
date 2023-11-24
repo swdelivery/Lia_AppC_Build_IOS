@@ -5,6 +5,7 @@ import {
 import { Conversation } from "@typings/chat";
 import { createReducer } from "@Redux/helper";
 import { Handler, PagingInfo } from "@Redux/types";
+import { GET_NEW_MESSAGE, UPDATE_VIEWER_MESSAGE } from "@Redux/Constants/ActionType";
 
 export type State = {
   isLoading: boolean;
@@ -54,6 +55,30 @@ const loadMoreSuccess: Handler<State> = (state, { payload }) => ({
   paging: payload.paging,
 });
 
+const handleNewMessage: Handler<State> = (state, { payload }) => {
+  let dataTemp = [...state?.data]
+  let indexFinded = state.data.findIndex(item => item?._id == payload?.data?.conversation?._id)
+  if (indexFinded !== -1) {
+    dataTemp[indexFinded] = payload?.data?.conversation
+  };
+  return {
+    ...state,
+    data: dataTemp
+  }
+};
+
+// const handleUpdateViewerMessage: Handler<State> = (state, { payload }) => {
+//   let dataTemp = [...state?.data]
+//   let indexFinded = dataTemp.findIndex(item => item?._id == payload?.data?.conversationId)
+//   if (indexFinded !== -1) {
+//     dataTemp[indexFinded].latestMessage = payload?.data?.data?.messages[0]
+//   };
+//   return {
+//     ...state,
+//     data: dataTemp
+//   }
+// };
+
 export default createReducer(INITIAL_STATE, {
   [GET_PARTNER_CONVERSATIONS.REQUEST]: request,
   [GET_PARTNER_CONVERSATIONS.FAILURE]: failure,
@@ -62,4 +87,7 @@ export default createReducer(INITIAL_STATE, {
   [LOAD_MORE_PARTNER_CONVERSATIONS.REQUEST]: loadMoreRequest,
   [LOAD_MORE_PARTNER_CONVERSATIONS.FAILURE]: loadMoreFailure,
   [LOAD_MORE_PARTNER_CONVERSATIONS.SUCCESS]: loadMoreSuccess,
+
+  [GET_NEW_MESSAGE]: handleNewMessage,
+  // [UPDATE_VIEWER_MESSAGE]: handleUpdateViewerMessage,
 });

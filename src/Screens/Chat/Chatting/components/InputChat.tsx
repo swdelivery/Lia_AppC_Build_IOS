@@ -59,7 +59,7 @@ type Props = {
   //
 };
 
-const InputChat = ({}: Props) => {
+const InputChat = ({ }: Props) => {
   const { infoUser } = useSelector(getInfoUserReducer);
   const { data: conversation } = useSelector(getConversationState);
   const moreActions = useVisible();

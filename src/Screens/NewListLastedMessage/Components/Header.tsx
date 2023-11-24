@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
   },
   textInputStyle: {
     width: '100%',
-    height: _moderateScale(8 * 4),
+    height: _moderateScale(8 * 5),
     borderWidth: 1,
     paddingHorizontal: _moderateScale(8),
     borderRadius: 4,

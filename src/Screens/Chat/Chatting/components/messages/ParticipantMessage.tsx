@@ -63,7 +63,7 @@ export default function ParticipantMessage({
     return (
       <>
         <Avatar
-          avatar={item.senderChat?.profile?.fileAvatar}
+          avatar={user?.profile?.fileAvatar}
           size={30}
           circle
         />
@@ -92,8 +92,8 @@ export default function ParticipantMessage({
           <Column
             backgroundColor={
               item.type !== "image" &&
-              item.type !== "video" &&
-              item.type !== "document"
+                item.type !== "video" &&
+                item.type !== "document"
                 ? WHITE
                 : "transparent"
             }

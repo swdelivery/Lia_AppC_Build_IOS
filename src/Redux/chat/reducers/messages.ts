@@ -5,7 +5,7 @@ import {
   LOAD_MORE_CONVERSATION_MESSAGES_HISTORY,
 } from "../types";
 import { Message } from "@typings/chat";
-import { GET_NEW_MESSAGE } from "@Redux/Constants/ActionType";
+import { GET_NEW_MESSAGE, UPDATE_VIEWER_MESSAGE } from "@Redux/Constants/ActionType";
 
 export type State = {
   isLoading: boolean;
@@ -68,6 +68,24 @@ const handleNewMessage: Handler<State> = (state, { payload }) => {
   return state;
 };
 
+const handleUpdateViewerMessage: Handler<State> = (state, { payload }) => {
+  if (state?.conversationId == payload?.data?.conversationId) {
+    let dataTemp = [...state?.data]
+    let indexFinded = dataTemp?.findIndex(item => item?._id == payload?.data?.data?.messages[0]?._id);
+    if (indexFinded !== -1) {
+      dataTemp[indexFinded] = payload?.data?.data?.messages[0];
+    }
+    return {
+      ...state,
+      data: dataTemp
+    }
+  } else {
+    return {
+      ...state
+    }
+  }
+};
+
 export default createReducer(INITIAL_STATE, {
   [GET_CONVERSATION_MESSAGES.REQUEST]: request,
   [GET_CONVERSATION_MESSAGES.FAILURE]: failure,
@@ -78,4 +96,5 @@ export default createReducer(INITIAL_STATE, {
   [LOAD_MORE_CONVERSATION_MESSAGES_HISTORY.SUCCESS]: loadMoreSuccess,
 
   [GET_NEW_MESSAGE]: handleNewMessage,
+  [UPDATE_VIEWER_MESSAGE]: handleUpdateViewerMessage,
 });
