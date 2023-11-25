@@ -1911,9 +1911,9 @@
   integrity sha512-AHAmrkLEH5UtPaDiRqoULERHh3oNv7Dgs0bTC0hO5Z2GdNokAMPT5w8ci8aMcRemcwbtdHjxChgtjbeA38GBdA==
 
 "@react-native-community/datetimepicker@^7.6.1":
-  version "7.6.1"
-  resolved "https://registry.yarnpkg.com/@react-native-community/datetimepicker/-/datetimepicker-7.6.1.tgz#98bdee01e3df490526ee1125e438c2030becac1f"
-  integrity sha512-g66Q2Kd9Uw3eRL7kkrTsGhi+eXxNoPDRFYH6z78sZQuYjPkUQgJDDMUYgBmaBsQx/fKMtemPrCj1ulGmyi0OSw==
+  version "7.6.2"
+  resolved "https://registry.yarnpkg.com/@react-native-community/datetimepicker/-/datetimepicker-7.6.2.tgz#9bba92dc8088b54331f89bbf89134836f0d4c067"
+  integrity sha512-ogZnvCmNG/lGHhEQypqz/mPymiIWD5jv6uKczg/l/aWgiKs1RDPQH1abh+R0I26aKoXmgamJJPuXKeC5eRWtZg==
   dependencies:
     invariant "^2.2.4"
 
@@ -1935,24 +1935,24 @@
     invariant "^2.2.4"
 
 "@react-native-firebase/app@^18.6.0":
-  version "18.6.1"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/app/-/app-18.6.1.tgz#9dd741b9b4e0493a7fa037c7e5717ba0c53086e4"
-  integrity sha512-lqINQLLTCmBSeln/cSPfvuJNQuwsPY9n6QyxSRRCTjyZdEPI3EY2df7isOCp8BwuxqYmkR9YhTNw2yFI72th+w==
+  version "18.6.2"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/app/-/app-18.6.2.tgz#c6ad83c86574e4e91fcef0ac2c1a10fa95dc6ae5"
+  integrity sha512-0hZ/4itfn5kxoUZsZfrpyTh4FDh4jFU/5svYaSAldPK3+xRmi1BSSx9PVzWt7vyw1Bi5ep/oLq/6sFaoqk5FFw==
   dependencies:
     opencollective-postinstall "^2.0.3"
     superstruct "^0.6.2"
 
 "@react-native-firebase/auth@^18.6.0":
-  version "18.6.1"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/auth/-/auth-18.6.1.tgz#99fb90c0ae73edee2d2536d3bca8a3b27c1f8490"
-  integrity sha512-UkULLVtUTUvTKfCVmSAxhPPTyXAgchE9J8KGaSjMpMZnDdW0R4Cr+w4lElOFPfpFq1+i8bKjTl/8nK16QHv3dA==
+  version "18.6.2"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/auth/-/auth-18.6.2.tgz#53d6dc27c1c613887114a72d123e5fd0204085a0"
+  integrity sha512-9YWMVWorCypcnpzEEDphk6yB1twC7JHeg4rsC8N3Los5EJf23Fz2eHtFf5aRJwAtgE89RUE5OGwqaEjbBHcvSw==
   dependencies:
     plist "^3.1.0"
 
 "@react-native-firebase/messaging@^18.6.0":
-  version "18.6.1"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/messaging/-/messaging-18.6.1.tgz#e1bbdcf11f34544687ed79e35539d31b62ba375e"
-  integrity sha512-HdZ5eGBynGM2gOUxoemaVmYE0UJP2oRg8+rLPB6kncv6eCRuMvpDQY4zhQS1jken5m2/KVU9/ZxDkI2659PCug==
+  version "18.6.2"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/messaging/-/messaging-18.6.2.tgz#1a52635293e1fbd413c64289be0cfa1c8a329073"
+  integrity sha512-xGkv9tBjRaSqN6iGRC2euDiZVlraXVva4s/UQNbz5JBehTiStRP2lsRfGKiWuSWMMQgeKR0abRBgJLor8/OfwA==
 
 "@react-native-masked-view/masked-view@^0.3.0":
   version "0.3.0"
@@ -2382,9 +2382,9 @@
   integrity sha512-OvlIYQK9tNneDlS0VN54LLd5uiPCBOp7gS5Z0f1mjoJYBrtStzgmJBxONW3U6OZqdtNzZPmn9BS/7WI7BFFcFQ==
 
 "@types/node@*":
-  version "20.9.4"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.9.4.tgz#cc8f970e869c26834bdb7ed480b30ede622d74c7"
-  integrity sha512-wmyg8HUhcn6ACjsn8oKYjkN/zUzQeNtMy44weTJSM6p4MMzEOuKbA3OjJ267uPCOW7Xex9dyrNTful8XTQYoDA==
+  version "20.10.0"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.10.0.tgz#16ddf9c0a72b832ec4fcce35b8249cf149214617"
+  integrity sha512-D0WfRmU9TQ8I9PFx9Yc+EBHw+vSpIub4IDvQivcp26PtPrdMGAq5SDcpXEo/epqa/DXotVpekHiLNTg3iaKXBQ==
   dependencies:
     undici-types "~5.26.4"
 
@@ -3293,9 +3293,9 @@ cli-cursor@^3.1.0:
     restore-cursor "^3.1.0"
 
 cli-spinners@^2.5.0:
-  version "2.9.1"
-  resolved "https://registry.yarnpkg.com/cli-spinners/-/cli-spinners-2.9.1.tgz#9c0b9dad69a6d47cbb4333c14319b060ed395a35"
-  integrity sha512-jHgecW0pxkonBJdrKsqxgRX9AcG+u/5k0Q7WPDfi8AogLAdwxEkyYYNWwZ5GvVFoFx2uiY1eNcSK00fh+1+FyQ==
+  version "2.9.2"
+  resolved "https://registry.yarnpkg.com/cli-spinners/-/cli-spinners-2.9.2.tgz#1773a8f4b9c4d6ac31563df53b3fc1d79462fe41"
+  integrity sha512-ywqV+5MmyL4E7ybXgKys4DugZbX0FC6LnwrhjuykIjnK9k8OQacQ7axGKnjDXWNhns0xot3bZI5h55H8yo9cJg==
 
 cliui@^6.0.0:
   version "6.0.0"
@@ -3511,9 +3511,9 @@ cosmiconfig@^8.1.3:
     path-type "^4.0.0"
 
 country-flag-icons@^1.5.4:
-  version "1.5.7"
-  resolved "https://registry.yarnpkg.com/country-flag-icons/-/country-flag-icons-1.5.7.tgz#f1f2ddf14f3cbf01cba6746374aeba94db35d4b4"
-  integrity sha512-AdvXhMcmSp7nBSkpGfW4qR/luAdRUutJqya9PuwRbsBzuoknThfultbv7Ib6fWsHXC43Es/4QJ8gzQQdBNm75A==
+  version "1.5.9"
+  resolved "https://registry.yarnpkg.com/country-flag-icons/-/country-flag-icons-1.5.9.tgz#5ee10d9c8c1dcfb031724121b2adecdf166996cd"
+  integrity sha512-9jrjv2w7kRbqNtdtMdK2j3gmDIZzd5l9L2pZiQjF9J0mUcB+NKIGDNADTDHBEp8EQtjOkCOcciJGGSOpERdXPQ==
 
 create-jest@^29.7.0:
   version "29.7.0"
@@ -3894,15 +3894,9 @@ ee-first@1.1.1:
   integrity sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==
 
 electron-to-chromium@^1.4.535:
-<<<<<<< HEAD
-  version "1.4.592"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.592.tgz#1ffd49ba3da3da3077ea20014b066c910d50c913"
-  integrity sha512-D3NOkROIlF+d5ixnz7pAf3Lu/AuWpd6AYgI9O67GQXMXTcCP1gJQRotOq35eQy5Sb4hez33XH1YdTtILA7Udww==
-=======
-  version "1.4.590"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.590.tgz#85a428fbabb77265a4804040837ed4f2538e3300"
-  integrity sha512-hohItzsQcG7/FBsviCYMtQwUSWvVF7NVqPOnJCErWsAshsP/CR2LAXdmq276RbESNdhxiAq5/vRo1g2pxGXVww==
->>>>>>> origin/dev
+  version "1.4.594"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.594.tgz#f69f207fba80735a44a988df42f3f439115d0515"
+  integrity sha512-xT1HVAu5xFn7bDfkjGQi9dNpMqGchUkebwf1GL7cZN32NSwwlHRPMSDJ1KN6HkS0bWUtndbSQZqvpQftKG2uFQ==
 
 eme-encryption-scheme-polyfill@^2.0.1:
   version "2.1.1"
@@ -5991,9 +5985,9 @@ levn@^0.4.1:
     type-check "~0.4.0"
 
 libphonenumber-js@^1.10.48, libphonenumber-js@^1.10.49:
-  version "1.10.50"
-  resolved "https://registry.yarnpkg.com/libphonenumber-js/-/libphonenumber-js-1.10.50.tgz#d7ea406dd86f9b1056f261bdfe66c3016ed0bd2e"
-  integrity sha512-AOYOJslxKQ49mpwvpkSFcagoMtxeH1UpUHm+05pmPkenPpFbt6ofdeEvQ+ZylmQiJS99ocRWeEeEp7quVlFyVA==
+  version "1.10.51"
+  resolved "https://registry.yarnpkg.com/libphonenumber-js/-/libphonenumber-js-1.10.51.tgz#a3b8c15db2721c3e5f7fe6759e2a524712b578e6"
+  integrity sha512-vY2I+rQwrDQzoPds0JeTEpeWzbUJgqoV0O4v31PauHBb/e+1KCXKylHcDnBMgJZ9fH9mErsEbROJY3Z3JtqEmg==
 
 lines-and-columns@^1.1.6:
   version "1.2.4"
@@ -7502,9 +7496,9 @@ react-native-fs@^2.20.0:
     utf8 "^3.0.0"
 
 react-native-gesture-handler@^2.13.4:
-  version "2.13.4"
-  resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-2.13.4.tgz#6a99384330278c4488bcfc7f1814be3e0d7401fd"
-  integrity sha512-smpYOVbvWABpq2H+lmDnfOLCTH934aUPO1w2/pQXvm1j+M/vmGQmvgRDJOpXcks17HLtNNKXD6tcODf3aPqDfA==
+  version "2.14.0"
+  resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-2.14.0.tgz#d6aec0d8b2e55c67557fd6107e828c0a1a248be8"
+  integrity sha512-cOmdaqbpzjWrOLUpX3hdSjsMby5wq3PIEdMq7okJeg9DmCzanysHSrktw1cXWNc/B5MAgxAn9J7Km0/4UIqKAQ==
   dependencies:
     "@egjs/hammerjs" "^2.0.17"
     hoist-non-react-statics "^3.3.0"
@@ -7796,15 +7790,9 @@ react-native-video@^5.2.1:
     shaka-player "^2.5.9"
 
 react-native-vision-camera@^3.3.1:
-<<<<<<< HEAD
-  version "3.6.9"
-  resolved "https://registry.yarnpkg.com/react-native-vision-camera/-/react-native-vision-camera-3.6.9.tgz#4a73ab225fc95798c2009f8a5c0ffc055ff35244"
-  integrity sha512-bUTLfcidLNQLiY6WD48T4y1qqE4bQ3GKdwQ6M0a/IyJhlHOSdkXlCoCMR/TByVUQZCZP7YEBuAUxgmVhQU/Ozg==
-=======
-  version "3.6.8"
-  resolved "https://registry.yarnpkg.com/react-native-vision-camera/-/react-native-vision-camera-3.6.8.tgz#205a53bb7a3bf73e3f8e7886953ea3f6e1159d68"
-  integrity sha512-fgySMUaIOooysBt5KO2tgftq3uIgdAsCjJc26GpwSxi3SdKp636Z3j5tjzxcW530BTf/udeUstxvNGlr8zeSQQ==
->>>>>>> origin/dev
+  version "3.6.10"
+  resolved "https://registry.yarnpkg.com/react-native-vision-camera/-/react-native-vision-camera-3.6.10.tgz#e91aa67f96c82ce284b119764236b36edb7a8ea4"
+  integrity sha512-eakVB5how542IIKSOGjfULNnqYcUw8MAsNknh0CB2ehD9G+yDBUPOCLhCqcnVW0AVNUGMZemBivusQPYKl41hQ==
 
 react-native-webview@^13.6.2:
   version "13.6.3"

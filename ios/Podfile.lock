@@ -576,7 +576,7 @@ PODS:
     - React-Core
   - RNCPushNotificationIOS (1.11.0):
     - React-Core
-  - RNDateTimePicker (7.6.1):
+  - RNDateTimePicker (7.6.2):
     - React-Core
   - RNDeviceInfo (10.11.0):
     - React-Core
@@ -584,14 +584,14 @@ PODS:
     - React-Core
     - SDWebImage (~> 5.11.1)
     - SDWebImageWebPCoder (~> 0.8.4)
-  - RNFBApp (18.6.1):
+  - RNFBApp (18.6.2):
     - Firebase/CoreOnly (= 10.15.0)
     - React-Core
-  - RNFBAuth (18.6.1):
+  - RNFBAuth (18.6.2):
     - Firebase/Auth (= 10.15.0)
     - React-Core
     - RNFBApp
-  - RNFBMessaging (18.6.1):
+  - RNFBMessaging (18.6.2):
     - Firebase/Messaging (= 10.15.0)
     - FirebaseCoreExtension (= 10.15.0)
     - React-Core
@@ -600,7 +600,7 @@ PODS:
     - React-Core
   - RNFS (2.20.0):
     - React-Core
-  - RNGestureHandler (2.13.4):
+  - RNGestureHandler (2.14.0):
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
   - RNImageColors (1.5.2):
@@ -667,7 +667,7 @@ PODS:
     - SDWebImage/Core (~> 5.10)
   - SocketRocket (0.6.1)
   - TOCropViewController (2.6.1)
-  - VisionCamera (3.6.9):
+  - VisionCamera (3.6.10):
     - React
     - React-callinvoker
     - React-Core
@@ -1035,15 +1035,15 @@ SPEC CHECKSUMS:
   RNCMaskedView: f7c74478c83c4fdfc5cf4df51f80c0dd5cf125c6
   RNCPicker: 529d564911e93598cc399b56cc0769ce3675f8c8
   RNCPushNotificationIOS: 64218f3c776c03d7408284a819b2abfda1834bc8
-  RNDateTimePicker: 8fb39263b721223e095248acaf6f406d5b7f6713
+  RNDateTimePicker: fc2e4f2795877d45e84d85659bebe627eba5c931
   RNDeviceInfo: bf8a32acbcb875f568217285d1793b0e8588c974
   RNFastImage: 5c9c9fed9c076e521b3f509fe79e790418a544e8
-  RNFBApp: 69b98b7e1e340a1d002203e80effa22e390eca8a
-  RNFBAuth: 14fd981fde0fd5f98ea661e28d5e9e00abe2a172
-  RNFBMessaging: 7a6e42bb7e9c4fdc46e6ab5f5f7edff8762c370e
+  RNFBApp: ee56f4f350e7573a18e8e62a9159cd78df80d36d
+  RNFBAuth: 6e7018d89fa6faa807655202d1acb2842ad0ef23
+  RNFBMessaging: 873996a58b01eda67bf2659dcc878ebc8415e3bb
   RNFileViewer: ce7ca3ac370e18554d35d6355cffd7c30437c592
   RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
-  RNGestureHandler: 6e46dde1f87e5f018a54fe5d40cd0e0b942b49ee
+  RNGestureHandler: 32a01c29ecc9bb0b5bf7bc0a33547f61b4dc2741
   RNImageColors: 9ac05083b52d5c350e6972650ae3ba0e556466c1
   RNImageCropPicker: d9616a0cb9b72e8551ff94a7a5021fbd29050aa5
   RNInAppBrowser: e36d6935517101ccba0e875bac8ad7b0cb655364
@@ -1058,7 +1058,7 @@ SPEC CHECKSUMS:
   SDWebImageWebPCoder: 908b83b6adda48effe7667cd2b7f78c897e5111d
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   TOCropViewController: edfd4f25713d56905ad1e0b9f5be3fbe0f59c863
-  VisionCamera: 029acc7acaa948145e97ce3714b9caa4683394b2
+  VisionCamera: 68c2909157ab030cf851fb28c77ef2dbef029487
   Yoga: 4c3aa327e4a6a23eeacd71f61c81df1bcdf677d5
 
 PODFILE CHECKSUM: c19e198c159e89d9b48785f4ec66283111717124
