@@ -11,6 +11,11 @@ import { RED } from "@Constant/Color";
 import Row from "@Components/Row";
 import { styleElement } from "@Constant/StyleElement";
 import ContentLoader, { Rect } from "react-content-loader/native";
+import { SERVICE_BANNER_RATIO } from "@Constant/image";
+
+
+const IMAGE_WIDTH = _width / 2 - 8 - 8 / 2;
+const IMAGE_HEIGHT = IMAGE_WIDTH * SERVICE_BANNER_RATIO;
 
 export default function MaterialItem(props) {
   const { item } = props;
@@ -24,9 +29,9 @@ export default function MaterialItem(props) {
         onPress={navigate(ScreenKey.DETAIL_MATERIAL, { _id: item?._id })}
         style={styles.content}
       >
-        <Image style={styles.image} avatar={item?.materialFileArr[0]} />
+        <Image style={styles.image} avatar={item?.avatar} />
         <Column style={styles.info}>
-          <Text size={12} weight="bold">
+          <Text numberOfLines={1} size={12} weight="bold">
             {item?.name}
           </Text>
 
@@ -68,9 +73,8 @@ export function Placeholder() {
 
 const styles = StyleSheet.create({
   card: {
-    width: _width / 2,
-    height: _width / 2,
-    alignItems: "center",
+    width: _width / 2 - 4,
+    marginBottom: 8,
   },
   container: {
     // flex: 1,
@@ -78,11 +82,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#F5F9FA",
   },
   content: {
-    width: "90%",
-    height: _heightScale(180),
+    height: IMAGE_HEIGHT + 62,
+    marginLeft: 8,
     backgroundColor: "white",
-    borderBottomLeftRadius: 8,
-    borderBottomRightRadius: 8,
+    borderRadius: 8,
+    ...styleElement.shadow,
   },
   image: {
     width: "100%",

@@ -48,71 +48,68 @@ const ItemQA = (props) => {
         }
     })
 
-    const _customRender = (node, index, siblings, parent, defaultRenderer) =>
-    {
+    const _customRender = (node, index, siblings, parent, defaultRenderer) => {
         if (!isEmpty(node.name) && node.data !== '&nbsp;') {
 
             const w = Dimensions.get('window').width - 32
-            const h = Math.floor(Dimensions.get('window').width/16*9)
+            const h = Math.floor(Dimensions.get('window').width / 16 * 9)
 
             if (node.name == 'img') {
                 const a = node.attribs;
-                return ( <Image style={{width: w, height: h}} source={{uri: a.src}} resizeMode="contain"/> );
+                return (<Image style={{ width: w, height: h }} source={{ uri: a.src }} resizeMode="contain" />);
             }
             if (node.name == 'iframe' || node.name == "oembed") {
                 const a = node.attribs;
-                
+
                 const videoId = getVideoId(a.url);
-                const iframeMarkup = 'https://www.youtube.com/embed/'+videoId+'?rel=0&autoplay=0&showinfo=0&controls=0';
-                    
-      
+                const iframeMarkup = 'https://www.youtube.com/embed/' + videoId + '?rel=0&autoplay=0&showinfo=0&controls=0';
+
+
                 return (
-                  <View key={index} style={{width:w, height: h, backgroundColor: BG_BEAUTY}}>
-                    <WebView
-                            style={{width:'100%'}}
+                    <View key={index} style={{ width: w, height: h, backgroundColor: BG_BEAUTY }}>
+                        <WebView
+                            style={{ width: '100%' }}
                             javaScriptEnabled={true}
-                            source={{uri: iframeMarkup}}
-                    />
-                  </View>
-                ); 
-              } 
+                            source={{ uri: iframeMarkup }}
+                        />
+                    </View>
+                );
+            }
         }
 
-        if(node?.data && node?.data !== '&nbsp;') 
-         {
+        if (node?.data && node?.data !== '&nbsp;') {
             arrParent = []
             styleIdex = []
             var arr = getParentName(node)
 
-            var tmpStyleCom = arr.filter(item=> item.name !== 'span' && item.name !== 'p')
+            var tmpStyleCom = arr.filter(item => item.name !== 'span' && item.name !== 'p')
             var sty = {}
             var cssTmp = {}
-            tmpStyleCom.map(css=>{
+            tmpStyleCom.map(css => {
                 sty = styleToComponent(css.name, sty)
             })
 
-            if(styleIdex.length>0)
-            {
+            if (styleIdex.length > 0) {
                 var tmpCss = arr[styleIdex[0]]?.attr?.style.split(';')
-                tmpCss.map(css=>{
-                    cssTmp = {...cssTmp, ...styleTo(css)}
+                tmpCss.map(css => {
+                    cssTmp = { ...cssTmp, ...styleTo(css) }
                 })
             }
 
-            return <Text style={{...cssTmp,...sty}}>
-                {node?.data.replace('&nbsp;','')}
+            return <Text style={{ ...cssTmp, ...sty }}>
+                {node?.data.replace('&nbsp;', '')}
             </Text>
 
-         }  
-    } 
+        }
+    }
 
     const getVideoId = (url) => {
         const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
         const match = url?.match(regExp);
-    
+
         return (match && match[2].length === 11)
-          ? match[2]
-          : null;
+            ? match[2]
+            : null;
     }
 
     const getParentName = (node) => {
@@ -121,9 +118,8 @@ const ItemQA = (props) => {
                 name: node?.parent?.name,
                 attr: node?.parent?.attribs
             })
-            if(!isEmpty(node?.parent?.attribs))
-            {
-                styleIdex.push(arrParent.length-1)
+            if (!isEmpty(node?.parent?.attribs)) {
+                styleIdex.push(arrParent.length - 1)
             }
             return getParentName(node.parent); // <- recursive call
         }
@@ -132,9 +128,8 @@ const ItemQA = (props) => {
                 name: node?.name,
                 attr: node?.attribs
             })
-            if(!isEmpty(node?.parent?.attribs))
-            {
-                styleIdex.push(arrParent.length-1)
+            if (!isEmpty(node?.parent?.attribs)) {
+                styleIdex.push(arrParent.length - 1)
             }
             // return node.name;
         }
@@ -142,14 +137,14 @@ const ItemQA = (props) => {
 
     }
 
-    const _renderParameterDescription = (htmlContent) =>{
-        console.log({htmlContent})
+    const _renderParameterDescription = (htmlContent) => {
+        console.log({ htmlContent })
         return (
-            !isEmpty(htmlContent)?<HTMLView
-              value={htmlContent}
-              renderNode={_customRender} 
-            />:<></>
-          );
+            !isEmpty(htmlContent) ? <HTMLView
+                value={htmlContent}
+                renderNode={_customRender}
+            /> : <></>
+        );
     }
 
     return (
@@ -168,7 +163,7 @@ const ItemQA = (props) => {
                 flexDirection: 'row'
             }}>
                 <Text style={[stylesFont.fontNolanBold, { flex: 1, color: BASE_COLOR }]}>
-                    {props?.indexX + 1}. Tôi muốn đăng kí CTV thì phải làm thế nào?
+                    {props?.indexX + 1}. {props?.data?.question}?
                 </Text>
 
                 <Animated.View style={animIcon}>
@@ -181,7 +176,7 @@ const ItemQA = (props) => {
                     {/* <Text style={[stylesFont.fontNolan500, { fontSize: _moderateScale(14) }]}>
                         Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled g industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambledstandard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled g industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambledstandard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled g industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled
                     </Text> */}
-                     {_renderParameterDescription(props?.data?.answer)}
+                    {_renderParameterDescription(props?.data?.answer)}
                 </View>
             </Collapsible>
         </TouchableOpacity>
@@ -227,9 +222,9 @@ const QANewAffiliate = () => {
                 <View style={styles.header__box}>
                     <View style={{ flex: 1 }}>
                         <TouchableOpacity
-                         onPress={()=>{
-                            navigation.goBack()
-                        }}
+                            onPress={() => {
+                                navigation.goBack()
+                            }}
                         >
                             <IconBackWhite />
                         </TouchableOpacity>

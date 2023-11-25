@@ -42,7 +42,7 @@ export default function ServiceItem({ item }: Props) {
       <View style={styles.content}>
         <Image style={styles.image} avatar={item.representationFileArr[0]} />
         <Column style={styles.info}>
-          <Text size={12} weight="bold">
+          <Text numberOfLines={2} size={12} weight="bold">
             {item?.name}
           </Text>
           <CountStar2
@@ -103,11 +103,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#F5F9FA",
   },
   content: {
-    height: IMAGE_HEIGHT + 62,
+    // height: IMAGE_HEIGHT + 62,
     marginLeft: 8,
     backgroundColor: "white",
     borderRadius: 8,
     ...styleElement.shadow,
+    height: 'auto'
   },
   image: {
     width: IMAGE_WIDTH,
@@ -116,7 +117,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 8,
   },
   info: {
-    padding: 4,
+    padding: 8,
   },
   placeholderRow: {
     height: PLACEHOLDER_HEIGHT,
