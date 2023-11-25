@@ -1,36 +1,27 @@
+import { createReducer } from "@Redux/helper";
 import * as ActionType from "../Constants/ActionType";
+import { UserProfile } from "@typings/user";
 
 type State = {
-  infoUser: any;
+  infoUser: UserProfile;
 };
 
 let initialState: State = {
   infoUser: null,
 };
 
-const InfoUserReducer = (state = initialState, action: any) => {
-  switch (action.type) {
-    case ActionType.CLEAR_INFO_USER:
-      return {
-        ...state,
-        infoUser: {},
-      };
-    case ActionType.SAVE_INFO_USER:
-      return {
-        ...state,
-        infoUser: action.payload.data,
-      };
-    case ActionType.EMPLOYEE_UPDATE_AVATAR:
-      let tempInfouser = { ...state.infoUser };
-      tempInfouser.profile["fileAvatar"] = action.payload.data;
-
-      return {
-        ...state,
-        infoUser: tempInfouser,
-      };
-    default:
-      return state;
-  }
-};
-
-export default InfoUserReducer;
+export default createReducer(initialState, {
+  [ActionType.CLEAR_INFO_USER]: () => initialState,
+  [ActionType.SAVE_INFO_USER]: (state, { payload }) => {
+    return {
+      ...state,
+      infoUser: payload.data,
+    };
+  },
+  [ActionType.EMPLOYEE_UPDATE_AVATAR]: (state, { payload }) => {
+    return {
+      ...state,
+      infoUser: { ...state.infoUser, fileAvatar: payload.data },
+    };
+  },
+});

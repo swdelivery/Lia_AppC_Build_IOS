@@ -66,10 +66,13 @@ import SVGPlusGrey from "../../SGV/plusGrey.svg";
 import { _moderateScale } from "../../Constant/Scale";
 import { SvgProps } from "react-native-svg";
 
-
 export { default as IconOclock } from "../../SGV/oclock.svg";
 export { default as IconLocation } from "../../SGV/locationBase.svg";
 export { default as IconPlusBase } from "../../SGV/plusBase.svg";
+export { default as IconChat } from "../../SGV/chat.svg";
+export { default as IconBooking } from "../../SGV/booking.svg";
+export { default as IconMirrorr } from "../../SGV/mirror.svg";
+export { default as IconEmpty } from "../../SGV/empty.svg";
 export { default as IconArrowRightRed } from "../../SGV/arrowRightRed.svg";
 export { default as IconBagFat } from "../../SGV/bongmat.svg";
 export { default as IconCurvedArrow } from "../../SGV/curvedArr.svg";

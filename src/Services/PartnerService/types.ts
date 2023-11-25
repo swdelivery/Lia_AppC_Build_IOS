@@ -28,3 +28,19 @@ export type GetServicesPayload = {
 export type GetTreatmentDetailsPayload = {
   bookingId: Condition;
 };
+
+export type GetPartnerConversationsPayload = {
+  condition: {
+    latestMessageTime: {
+      from: string;
+      to: string;
+    };
+    after?: string;
+  };
+  search?: string;
+};
+
+export type StartChatPayload = {
+  type: "treatment";
+  doctorId: string;
+};

@@ -62,11 +62,11 @@ export default function useListFilter<
   );
 
   const loadMoreData = useCallback(() => {
-    if (loadMoreActionsGroup) {
+    if (loadMoreActionsGroup && !isLoading && !isLoadingMore) {
       // @ts-ignore
       dispatch(loadMoreActionsGroup.request(lastFilter.current));
     }
-  }, []);
+  }, [isLoading, isLoadingMore]);
 
   const refreshData = useCallback(() => {
     // @ts-ignore

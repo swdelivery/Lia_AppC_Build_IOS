@@ -1,5 +1,5 @@
 import React, { useRef, useState, memo, useEffect } from 'react';
-import { Animated, Image, StyleSheet, Text, TextInput, TouchableOpacity, View, Linking, Alert, ScrollView, LayoutAnimation } from 'react-native';
+import { Animated, Image, StyleSheet, Text, TextInput, TouchableOpacity, View, Linking, Alert, ScrollView, LayoutAnimation, Platform, KeyboardAvoidingView } from 'react-native';
 import { GREY, WHITE, BASE_COLOR, RED, BG_GREY_OPACITY_5, BLACK, BLACK_OPACITY_8, BLUE_FB, FIFTH_COLOR, GREEN_SUCCESS, BG_GREY_OPACITY_2 } from '../../Constant/Color';
 import { stylesFont } from '../../Constant/Font';
 import { sizeIcon, sizeLogo } from '../../Constant/Icon';
@@ -21,10 +21,11 @@ import { createReviewTreatment, getReviewByTreatmentDetailForPartner, getPrepare
 import { randomStringFixLengthCode } from '../../Constant/Utils';
 import StatusBarCustom from '../../Components/StatusBar/StatusBarCustom';
 import ModalCongrats from './ModalCongrats';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const index = memo((props) => {
 
-
+    const { top, bottom } = useSafeAreaInsets()
 
     const [reaction, setReaction] = useState('VERY_GOOD')
     const [indexCountStar, setIndexCountStar] = useState(5)
@@ -71,37 +72,37 @@ const index = memo((props) => {
                     serviceReview: {
                         comment: "",
                         rating: 5,
-                        isSelected:false
+                        isSelected: false
                     },
                     securityReview: {
                         comment: "",
                         rating: 5,
-                        isSelected:false
+                        isSelected: false
                     },
                     receptionReview: {
                         comment: "",
                         rating: 5,
-                        isSelected:false
+                        isSelected: false
                     },
                     consultantReview: {
                         comment: "",
                         rating: 5,
-                        isSelected:false
+                        isSelected: false
                     },
                     staffReview: {
                         comment: "",
                         rating: 5,
-                        isSelected:false
+                        isSelected: false
                     },
                     csReview: {
                         comment: "",
                         rating: 5,
-                        isSelected:false
+                        isSelected: false
                     },
                     branchReview: {
                         comment: "",
                         rating: 5,
-                        isSelected:false
+                        isSelected: false
                     },
                 })
             }
@@ -126,37 +127,37 @@ const index = memo((props) => {
                         serviceReview: {
                             comment: "",
                             rating: 5,
-                            isSelected:false
+                            isSelected: false
                         },
                         securityReview: {
                             comment: "",
                             rating: 5,
-                            isSelected:false
+                            isSelected: false
                         },
                         receptionReview: {
                             comment: "",
                             rating: 5,
-                            isSelected:false
+                            isSelected: false
                         },
                         consultantReview: {
                             comment: "",
                             rating: 5,
-                            isSelected:false
+                            isSelected: false
                         },
                         staffReview: {
                             comment: "",
                             rating: 5,
-                            isSelected:false
+                            isSelected: false
                         },
                         csReview: {
                             comment: "",
                             rating: 5,
-                            isSelected:false
+                            isSelected: false
                         },
                         branchReview: {
                             comment: "",
                             rating: 5,
-                            isSelected:false
+                            isSelected: false
                         },
                     })
                 }
@@ -332,7 +333,7 @@ const index = memo((props) => {
             });
         }
 
-    //    return setShowModalCongrats(true)
+        //    return setShowModalCongrats(true)
 
         // return console.log({ dataForFetchTemp });
 
@@ -346,7 +347,7 @@ const index = memo((props) => {
     }
 
     const _handleSetReaction = (starCount) => {
-        console.log({starCount});
+        console.log({ starCount });
         switch (starCount) {
             case 1:
                 setReaction("VERY_BAD")
@@ -363,7 +364,7 @@ const index = memo((props) => {
             case 5:
                 setReaction("VERY_GOOD")
                 break;
-        
+
             default:
                 break;
         }
@@ -409,61 +410,77 @@ const index = memo((props) => {
 
     return (
         <View style={{ flex: 1, backgroundColor: WHITE }}>
+            <KeyboardAvoidingView
+                behavior={Platform.OS === "ios" ? "padding" : "height"}
+                style={{ flex: 1 }}>
+                <View style={{ height: top }} />
 
-          
-            <StatusBarCustom barStyle={'dark-content'} bgColor={WHITE} />
-            <View style={{ width: "100%", paddingVertical: _moderateScale(8 * 2), borderBottomWidth: _moderateScale(0.5), borderBottomColor: BG_GREY_OPACITY_5 }}>
-                <View style={[styleElement.rowAliCenter]}>
-                    <TouchableOpacity
-                        hitSlop={styleElement.hitslopSm}
-                        onPress={() => {
-                            navigation.goBack()
-                        }}
-                        style={{ paddingHorizontal: _moderateScale(8 * 2) }}>
-                        <Image
-                            style={[sizeIcon.lg]}
-                            source={require('../../Icon/cancel.png')} />
-                    </TouchableOpacity>
-                    <Text style={[stylesFont.fontNolan500, { fontSize: _moderateScale(16), color: BLACK }]}>
-                        ĐÁNH GIÁ DỊCH VỤ
-                    </Text>
+                {/* <StatusBarCustom barStyle={'dark-content'} bgColor={WHITE} /> */}
+                <View style={{ width: "100%", paddingVertical: _moderateScale(8 * 2), borderBottomWidth: _moderateScale(0.5), borderBottomColor: BG_GREY_OPACITY_5 }}>
+                    <View style={[styleElement.rowAliCenter]}>
+                        <TouchableOpacity
+                            hitSlop={styleElement.hitslopSm}
+                            onPress={() => {
+                                navigation.goBack()
+                            }}
+                            style={{ paddingHorizontal: _moderateScale(8 * 2) }}>
+                            <Image
+                                style={[sizeIcon.lg]}
+                                source={require('../../Icon/cancel.png')} />
+                        </TouchableOpacity>
+                        <Text style={[stylesFont.fontNolan500, { fontSize: _moderateScale(16), color: BLACK }]}>
+                            ĐÁNH GIÁ DỊCH VỤ
+                        </Text>
+                    </View>
                 </View>
-            </View>
-
-
-            <KeyboardAwareScrollView>
-
-
-            {
-                    props?.route?.params?.data?.template?.data?.interacted  || props?.route?.params?.data?.hasReview? 
-                    <View style={{
-                        position:'absolute',
-                        left:0,
-                        right:0,
-                        bottom:0,
-                        top:0,
-                        zIndex:100
-                    }}/>
-                    :
-                    <></>
-                }
-
-                <Text style={[stylesFont.fontNolan500, styles.title]}>
-                    {`Cảm nhận của bạn về \n dịch vụ này?`}
-                </Text>
-                <Text style={[stylesFont.fontNolan500, styles.title_2,{marginHorizontal:_moderateScale(16)}]}>
-                Trang Beauty sẽ tặng bạn những phần quà hấp dẫn sau khi đánh giá
-                </Text>
 
                 {
-                    renderGif(indexCountStar)
+                    props?.route?.params?.data?.template?.data?.interacted || props?.route?.params?.data?.hasReview ?
+                        <View style={{
+                            position: 'absolute',
+                            left: 0,
+                            right: 0,
+                            bottom: 0,
+                            top: 0,
+                            zIndex: 100
+                        }} />
+                        :
+                        <></>
                 }
 
-                <View style={[styleElement.rowAliCenter, { justifyContent: 'center', marginVertical: _moderateScale(0), borderRadius: _moderateScale(32), backgroundColor: 'white', marginHorizontal: _moderateScale(8 * 5) }, shadow]}>
-                   
+                <ScrollView>
+
+                    <Text style={[stylesFont.fontNolan500, styles.title]}>
+                        Cảm nhận của bạn về dịch vụ như thế nào?
+                    </Text>
+                    <Text style={[stylesFont.fontNolan500, styles.title_2, { marginHorizontal: _moderateScale(16) }]}>
+                        Ý kiến của bạn sẽ giúp chúng tôi tiếp tục cải thiện  và cung cấp trải nghiệm dịch vụ tốt nhất có thể.
+                    </Text>
+
                     {
-                        [1, 2, 3, 4, 5]?.map((item, index) => {
-                            if (index + 1 > indexCountStar) {
+                        renderGif(indexCountStar)
+                    }
+
+                    <View style={[styleElement.rowAliCenter, { justifyContent: 'center', marginVertical: _moderateScale(0), borderRadius: _moderateScale(32), backgroundColor: 'white', marginHorizontal: _moderateScale(8 * 5) }, shadow]}>
+
+                        {
+                            [1, 2, 3, 4, 5]?.map((item, index) => {
+                                if (index + 1 > indexCountStar) {
+                                    return (
+                                        <TouchableOpacity
+                                            key={index}
+                                            onPress={() => {
+                                                _handleSetReaction(index + 1)
+                                                setIndexCountStar(index + 1)
+                                                _handleSetStar(index + 1)
+                                            }}
+                                            style={styles.btnStar}>
+                                            <Image
+                                                style={[sizeIcon.xlllg]}
+                                                source={require('../../Icon/i_star.png')} />
+                                        </TouchableOpacity>
+                                    )
+                                }
                                 return (
                                     <TouchableOpacity
                                         key={index}
@@ -475,139 +492,126 @@ const index = memo((props) => {
                                         style={styles.btnStar}>
                                         <Image
                                             style={[sizeIcon.xlllg]}
-                                            source={require('../../Icon/i_star.png')} />
+                                            source={require('../../Icon/a_star.png')} />
                                     </TouchableOpacity>
                                 )
-                            }
-                            return (
-                                <TouchableOpacity
-                                    key={index}
-                                    onPress={() => {
-                                        _handleSetReaction(index + 1)
-                                        setIndexCountStar(index + 1)
-                                        _handleSetStar(index + 1)
-                                    }}
-                                    style={styles.btnStar}>
-                                    <Image
-                                        style={[sizeIcon.xlllg]}
-                                        source={require('../../Icon/a_star.png')} />
-                                </TouchableOpacity>
-                            )
-                        })
-                    }
-                </View>
+                            })
+                        }
+                    </View>
 
-                {
-                    true ?
-                        <View style={{ marginBottom: _moderateScale(8 * 2), marginTop: _moderateScale(8 * 2) }}>
-                            <Text style={[stylesFont.fontNolan500, { fontSize: _moderateScale(16), marginLeft: _moderateScale(8 * 3) }]}>
-                            Bạn <Text style={{ ...stylesFont.fontNolanBold }}>KHÔNG</Text> hài lòng về điều gì?
-                            </Text>
-                            <View style={[styleElement.rowAliCenter, { flexDirection: 'row', flexWrap: 'wrap', paddingHorizontal: _moderateScale(8 * 3), marginTop: _moderateScale(8) }]}>
-                                {
-                                    listItem.map((item, index) => {
+                    {
+                        true ?
+                            <View style={{ marginBottom: _moderateScale(8 * 2), marginTop: _moderateScale(8 * 2) }}>
+                                <Text style={[stylesFont.fontNolan500, { fontSize: _moderateScale(16), alignSelf: 'center', marginTop: 8 }]}>
+                                    Điều gì khiến bạn <Text style={{ ...stylesFont.fontNolanBold, color: RED }}>KHÔNG</Text> hài lòng?
+                                </Text>
+                                <View style={[styleElement.rowAliCenter, { flexDirection: 'row', flexWrap: 'wrap', paddingHorizontal: _moderateScale(8 * 2), marginTop: _moderateScale(8 * 2) }]}>
+                                    {
+                                        listItem.map((item, index) => {
 
-                                        if (listItemNotGood?.find(itemFind => itemFind?.code == item?.code)) {
+                                            if (listItemNotGood?.find(itemFind => itemFind?.code == item?.code)) {
+                                                return (
+                                                    <TouchableOpacity
+                                                        key={item?._id}
+                                                        onPress={() => {
+                                                            setListItemNotGood(old => [...old].filter(itemFilter => itemFilter?.code !== item?.code))
+                                                        }}
+                                                        style={[{
+                                                            // width: "30%",
+                                                            paddingHorizontal: _moderateScale(8 * 2),
+                                                            borderWidth: _moderateScale(1),
+                                                            borderRadius: _moderateScale(4),
+                                                            justifyContent: 'center',
+                                                            alignItems: 'center',
+                                                            paddingVertical: _moderateScale(4),
+                                                            borderColor: RED,
+                                                            backgroundColor: RED,
+                                                            marginBottom: _moderateScale(8 * 1),
+                                                        }, { marginHorizontal: _moderateScale(8) }]}>
+                                                        <Text style={[stylesFont.fontNolanBold, { color: WHITE }]}>
+                                                            {item?.name}
+                                                        </Text>
+                                                    </TouchableOpacity>
+                                                )
+                                            }
+
                                             return (
                                                 <TouchableOpacity
                                                     key={item?._id}
                                                     onPress={() => {
-                                                        setListItemNotGood(old => [...old].filter(itemFilter => itemFilter?.code !== item?.code))
+                                                        setListItemNotGood(old => [...old, item])
+                                                        // _handleSetStarSpecific(item) 
                                                     }}
                                                     style={[{
                                                         // width: "30%",
                                                         paddingHorizontal: _moderateScale(8 * 2),
                                                         borderWidth: _moderateScale(1),
-                                                        borderRadius: _moderateScale(8),
+                                                        borderRadius: _moderateScale(4),
                                                         justifyContent: 'center',
                                                         alignItems: 'center',
                                                         paddingVertical: _moderateScale(4),
-                                                        borderColor: RED,
-                                                        backgroundColor: RED,
+                                                        borderColor: BASE_COLOR,
                                                         marginBottom: _moderateScale(8 * 1),
+
                                                     }, { marginHorizontal: _moderateScale(8) }]}>
-                                                    <Text style={[stylesFont.fontNolanBold, { color: WHITE }]}>
+                                                    <Text style={[stylesFont.fontNolan500, { color: BLACK }]}>
                                                         {item?.name}
                                                     </Text>
                                                 </TouchableOpacity>
                                             )
-                                        }
-
-                                        return (
-                                            <TouchableOpacity
-                                                key={item?._id}
-                                                onPress={() => {
-                                                    setListItemNotGood(old => [...old, item])
-                                                    // _handleSetStarSpecific(item) 
-                                                }}
-                                                style={[{
-                                                    // width: "30%",
-                                                    paddingHorizontal: _moderateScale(8 * 2),
-                                                    borderWidth: _moderateScale(1),
-                                                    borderRadius: _moderateScale(8),
-                                                    justifyContent: 'center',
-                                                    alignItems: 'center',
-                                                    paddingVertical: _moderateScale(4),
-                                                    borderColor: BASE_COLOR,
-                                                    marginBottom: _moderateScale(8 * 1),
-
-                                                }, { marginHorizontal: _moderateScale(8) }]}>
-                                                <Text style={[stylesFont.fontNolan500, { color: BASE_COLOR }]}>
-                                                    {item?.name}
-                                                </Text>
-                                            </TouchableOpacity>
-                                        )
-                                    })
-                                }
+                                        })
+                                    }
+                                </View>
                             </View>
+                            : <></>
+                    }
+
+                    <View style={{ paddingHorizontal: _moderateScale(8 * 3) }}>
+                        <Text style={[stylesFont.fontNolan500, { fontSize: _moderateScale(16), alignSelf: 'center' }]}>
+                            Chia sẽ thêm với chúng tôi nhé!
+                        </Text>
+                        <View style={{
+                            minHeight: _moderateScale(8 * 12),
+                            // backgroundColor: FIFTH_COLOR,
+                            marginTop: _moderateScale(8),
+                            borderRadius: _moderateScale(4),
+                            padding: _moderateScale(8),
+                            paddingHorizontal: _moderateScale(8 * 2),
+                            borderWidth: 1,
+                            borderColor: BASE_COLOR
+                        }}>
+                            <TextInput
+                                value={description}
+                                onChangeText={(e) => _handleOnchangeText(e)}
+                                placeholder={'Ý kiến của bạn sẽ giúp chúng tôi tiếp tục cải thiện  và cung cấp trải nghiệm dịch vụ tốt nhất có thể.'}
+                                multiline
+                                style={{
+                                    flex: 1,
+                                    fontSize: _moderateScale(14)
+                                }} />
                         </View>
-                        : <></>
+                    </View>
+
+                </ScrollView>
+                <View style={{ flex: 1 }} />
+                {
+                    props?.route?.params?.data?.template?.data?.interacted || props?.route?.params?.data?.hasReview ?
+                        <>
+                        </>
+                        :
+                        <View style={{}}>
+                            <TouchableOpacity
+                                onPress={_handleConfirmFeedBack}
+                                style={[styles.btnConfirm, { marginBottom: bottom }]}>
+                                <Text style={[stylesFont.fontNolanBold, { fontSize: _moderateScale(16), color: WHITE }]}>
+                                    Gửi đánh giá
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
                 }
 
-                <View style={{ paddingHorizontal: _moderateScale(8 * 3) }}>
-                    <Text style={[stylesFont.fontNolan500, { fontSize: _moderateScale(18), color: BASE_COLOR }]}>
-                        Nội dung
-                    </Text>
-                    <View style={{
-                        minHeight: _moderateScale(8 * 10),
-                        backgroundColor: FIFTH_COLOR,
-                        marginTop: _moderateScale(8),
-                        borderRadius: _moderateScale(8),
-                        padding: _moderateScale(8),
-                        paddingHorizontal: _moderateScale(8 * 2),
-                    }}>
-                        <TextInput
-                            value={description}
-                            onChangeText={(e) => _handleOnchangeText(e)}
-                            placeholder={'Nhập nội dung bình luận'}
-                            multiline
-                            style={{
-                                flex: 1,
-                                fontSize: _moderateScale(16)
-                            }} />
-                    </View>
-                </View>
 
-                <View style={{ height: 100 }} />
-            </KeyboardAwareScrollView>
-            {
-                props?.route?.params?.data?.template?.data?.interacted || props?.route?.params?.data?.hasReview? 
-                <>
-                </>
-                :
-                <View style={{}}>
-                <TouchableOpacity
-                    onPress={_handleConfirmFeedBack}
-                    style={styles.btnConfirm}>
-                    <Text style={[stylesFont.fontNolanBold, { fontSize: _moderateScale(16), color: WHITE }]}>
-                        Gửi đánh giá
-                    </Text>
-                </TouchableOpacity>
-            </View>
-            }
-           
-
-
+            </KeyboardAvoidingView>
         </View>
     );
 });
@@ -623,7 +627,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: getBottomSpace() + _moderateScale(8 * 2),
-        backgroundColor: GREEN_SUCCESS,
+        backgroundColor: BASE_COLOR,
         height: _moderateScale(8 * 5),
         borderRadius: _moderateScale(8)
     },
@@ -651,10 +655,11 @@ const styles = StyleSheet.create({
         fontSize: _moderateScale(14),
         color: GREY,
         alignSelf: 'center',
-        textAlign: 'center'
+        textAlign: 'center',
+        fontStyle: 'italic'
     },
     title: {
-        fontSize: _moderateScale(20),
+        fontSize: _moderateScale(16),
         color: BLACK_OPACITY_8,
         alignSelf: 'center',
         textAlign: 'center',

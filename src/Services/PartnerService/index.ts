@@ -5,10 +5,12 @@ import configs from "src/configs";
 import {
   GetDiaryPayload,
   GetDoctorListPayload,
+  GetPartnerConversationsPayload,
   GetPractitionerListPayload,
   GetReviewsPayload,
   GetServicesPayload,
   GetTreatmentDetailsPayload,
+  StartChatPayload,
 } from "./types";
 import { Doctor } from "@typings/doctor";
 import { Practitioner } from "@typings/practitioner";
@@ -239,6 +241,9 @@ const getTreatmentDetails = (
     })
     .then(({ data }) => data.data);
 
+const getTreatmentDetailsById = (id: string): Promise<ServiceTreatment[]> =>
+  axios.get("/treatment-detail/" + id).then(({ data }) => data.data);
+
 const getPaymentRequest = (
   payload: GetTreatmentDetailsPayload
 ): Promise<PaymentRequest[]> =>
@@ -265,6 +270,39 @@ const getOrderDetails = (orderId: string) =>
 
 const getOrderPayments = (orderId: string) =>
   axios.get(`/order/${orderId}/payments`).then(({ data }) => data.data);
+
+const getPartnerConversations = (
+  params: GetPartnerConversationsPayload,
+  page = 1,
+  pageSize = configs.apiPageSize
+) => {
+  return axios
+    .get(
+      "/partner-conversation" +
+        "?" +
+        encodeParams({ ...params, limit: pageSize, page })
+    )
+    .then(({ data }) => data.data);
+};
+
+const getConversationDetails = (id: string) => {
+  return axios.get(`/partner-conversation/` + id).then(({ data }) => data.data);
+};
+
+const getConversationMessages = (payload: any) =>
+  axios
+    .get("/partner-message", {
+      params: {
+        condition: payload,
+        limit: configs.apiPageSize,
+      },
+    })
+    .then(({ data }) => data.data);
+
+const startChat = (payload: StartChatPayload) =>
+  axios
+    .post("/partner-conversation/start-chat", payload)
+    .then(({ data }) => data.data);
 
 export default {
   getServiceGroup,
@@ -300,8 +338,15 @@ export default {
 
   getBookingDetails,
   getTreatmentDetails,
+  getTreatmentDetailsById,
   getPaymentRequest,
   getBookingDeposits,
   getOrderDetails,
   getOrderPayments,
+
+  // Conversations
+  getPartnerConversations,
+  getConversationDetails,
+  getConversationMessages,
+  startChat,
 };

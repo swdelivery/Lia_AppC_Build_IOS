@@ -2,19 +2,20 @@ import { Alert, Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { _moderateScale, _width } from "../../../Constant/Scale";
 import ScreenKey from "@Navigation/ScreenKey";
-import { partnerConversationStartChat } from "@Redux/Action/DoctorAction";
-import { FROM_GROUP_CHAT_ID } from "@Constant/Flag";
 import Text from "@Components/Text";
 import useRequireLoginCallback from "src/Hooks/useRequireLoginAction";
 import Row from "@Components/Row";
 import { Practitioner } from "@typings/practitioner";
 import { useNavigate } from "src/Hooks/useNavigation";
+import { useDispatch } from "react-redux";
+import { startChat } from "@Redux/chat/actions";
 
 type Props = {
   practitioner: Practitioner;
 };
 const BottomAction = ({ practitioner }: Props) => {
   const { navigation } = useNavigate();
+  const dispatch = useDispatch();
 
   const handleBooking = useRequireLoginCallback(() => {
     navigation.navigate(ScreenKey.CREATE_BOOKING, {
@@ -24,15 +25,12 @@ const BottomAction = ({ practitioner }: Props) => {
   }, []);
 
   const handleStartChat = useRequireLoginCallback(async () => {
-    let result = await partnerConversationStartChat({
-      type: "treatment",
-      doctorId: practitioner?.userId,
-    });
-    if (result?.isAxiosError) return;
-    navigation.navigate(ScreenKey.CHATTING, {
-      propsData: { _id: result?.data?.data?._id },
-      flag: FROM_GROUP_CHAT_ID,
-    });
+    dispatch(
+      startChat.request({
+        type: "treatment",
+        practitionerId: practitioner?.userId,
+      })
+    );
   }, []);
 
   return (
