@@ -78,7 +78,7 @@
     "react-native-pager-view": "^6.2.2",
     "react-native-parsed-text": "^0.0.22",
     "react-native-permissions": "^3.10.1",
-    "react-native-portalize": "r0b0t3d/react-native-portalize",
+    "react-native-portalize": "r0b0t3d/react-native-portalize#master",
     "react-native-push-notification": "^8.1.1",
     "react-native-qrcode-svg": "^6.2.0",
     "react-native-reanimated": "^3.5.4",
