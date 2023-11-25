@@ -352,6 +352,7 @@ const InputChat = ({ }: Props) => {
             {...textInputProps}
             style={styles.input}
             placeholder={"Vui lòng nhập tin nhắn"}
+            placeholderTextColor={Color.GREY}
           />
         </Column>
         <IconButton

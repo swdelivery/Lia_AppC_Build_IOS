@@ -19,6 +19,11 @@ import LeftCircle from './Components/LeftCircle';
 import { convertImageCoordsToDeviceCoords } from "src/utils/common";
 import useImagePicker from "./useImagePicker";
 import DeviceInfo from "react-native-device-info";
+import { CameraRoll } from '@react-native-camera-roll/camera-roll';
+import ImageEditor from "@react-native-community/image-editor";
+import Svg, { Polygon, Path, Rect } from 'react-native-svg';
+import ImagePicker from 'react-native-image-crop-picker';
+import { isEmpty } from 'lodash';
 
 const EYE_INDICATOR_SIZE = 10;
 
@@ -101,7 +106,7 @@ const FaceAI = () => {
   }, [startDotLeftEye]);
 
   useEffect(() => {
-    if (startTextRightEye == "done") {
+    if (startCirlRightEye == "done") {
       setTimeout(() => {
         scaleImage.value = withTiming(
           1,
@@ -120,12 +125,12 @@ const FaceAI = () => {
             }
           }
         );
-      }, 1000);
+      }, 0);
     }
-  }, [startTextRightEye]);
+  }, [startCirlRightEye]);
 
   useEffect(() => {
-    if (startTextLeftEye == "done") {
+    if (startCirlLeftEye == "done") {
       setTimeout(() => {
         scaleImage.value = withTiming(
           1,
@@ -149,11 +154,11 @@ const FaceAI = () => {
         setStartResultLeftEye(true);
 
         setTimeout(() => {
-          navigation.navigate(ScreenKey.RESULT_AI_SCAN_EYES);
-        }, 6000);
+          navigation.replace(ScreenKey.RESULT_AI_SCAN_EYES, { scanningResult, imageScan });
+        }, 3000);
       }, 1000);
     }
-  }, [startTextLeftEye]);
+  }, [startCirlLeftEye]);
 
   useEffect(() => {
     if (startZoomLeftEye == "doing") {
@@ -210,7 +215,7 @@ const FaceAI = () => {
         valueLeftX,
         valueLeftY,
       });
-
+      // return navigation.replace(ScreenKey.RESULT_AI_SCAN_EYES, { scanningResult: result?.data?.data, imageScan: photo?.path });
       setShowBackDropOpacity("doing");
 
       setPosRightEyeX(valueRightX);
@@ -221,10 +226,6 @@ const FaceAI = () => {
 
       setScanningResult(result?.data?.data);
 
-      // setPosRightEyeX(valueLeftX)
-      // leftsetPosEyeY(valueLeftY)
-
-      // setResultEyeScan(result?.data?.data)
     } else {
       Alert.alert("Hình chưa hợp lệ!");
       setImageScan(null);
@@ -233,8 +234,12 @@ const FaceAI = () => {
 
   const _handleTakePhoto = async () => {
     const photo = await refCamera.current.takePhoto({});
+    // await CameraRoll.save(`file://${photo.path}`, {
+    //   type: 'photo',
+    // })
     processImage(photo);
   };
+
 
   // ANIMATED
   const animScaleImage = useAnimatedStyle(() => {
@@ -253,8 +258,11 @@ const FaceAI = () => {
     };
   });
 
+
+
   return (
     <View style={{ flex: 1 }}>
+
       {/* <View
         style={{
           width: EYE_INDICATOR_SIZE,
@@ -318,7 +326,7 @@ const FaceAI = () => {
       <LeftEyeResult startRightResult={startResultLeftEye} />
 
       {imageScan ? (
-        <View>
+        <View style={{ width: _width, height: _height, position: 'absolute', zIndex: -1 }}>
           <Animated.View style={animScaleImage}>
             {Platform.OS == "ios" ? (
               <Image

@@ -13,5 +13,6 @@ export function* rootSaga() {
     fork(require("./voucher/sagas").default),
     fork(require("./modal/sagas").default),
     fork(require("./chat/sagas").default),
+    fork(require("./resultcanningeyes/sagas").default),
   ]);
 }

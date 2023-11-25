@@ -20,11 +20,11 @@ import {
   verifyAccount,
 } from "@Redux/Action/AuthAction";
 import { navigation } from "../../../rootNavigation";
-import { alertCustomNotAction } from "@Constant/Utils";
 import Column from "@Components/Column";
 import PasswordInput from "@Components/PasswordInput";
 import Spacer from "@Components/Spacer";
 import { delay } from "src/utils/common";
+import Toast from "react-native-toast-message";
 
 type ScreenK = typeof ScreenKey.GET_OTP_NEW_PASS;
 
@@ -68,7 +68,10 @@ const GetOtpNewPass = (props: any) => {
         setActiveCode("");
       } catch (error) {
         setIsWrongOTP(true);
-        alertCustomNotAction(`Lỗi`, `OTP sai`);
+        Toast.show({
+          text1: "Mã OTP không chính xác",
+          type: "error",
+        });
       }
     },
     [confirmCode]

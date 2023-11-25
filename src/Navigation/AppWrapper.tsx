@@ -17,6 +17,8 @@ import AsyncStorage from "@react-native-community/async-storage";
 import messaging from "@react-native-firebase/messaging";
 import ActionSheetIcon from "@Components/ModalBottom/ActionSheetIcon";
 import RootNavigator from "./RootNavigator";
+import Toast from "react-native-toast-message";
+import toastConfig from "@Components/BottomToast";
 
 const AppWrapper = (props) => {
   const reduxAuth = useSelector((state) => state.authReducer);
@@ -246,6 +248,7 @@ const AppWrapper = (props) => {
 
       <ModalRequireLogin />
       <ActionSheetIcon />
+      <Toast config={toastConfig} position="bottom" bottomOffset={60} />
     </>
   );
 };

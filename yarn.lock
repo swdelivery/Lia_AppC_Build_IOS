@@ -1729,6 +1729,11 @@
   resolved "https://registry.yarnpkg.com/@r0b0t3d/react-native-hooks/-/react-native-hooks-1.0.5.tgz#d0bceb114a88f734d5e75500d04333eb21c28bd6"
   integrity sha512-pC1pfzlB5mK/N0nd1Cw+GwTuTt9aFE0wkMwNTWrgpDpSBgPXzJK5mA8eHyBjB/6+AC7a7rrHKxI6DaJascFUOg==
 
+"@react-native-camera-roll/camera-roll@^6.0.2":
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/@react-native-camera-roll/camera-roll/-/camera-roll-6.0.2.tgz#0caac34ddb9ea539d126d49eb2035a48d07d4656"
+  integrity sha512-8sL4IdE/fNrNMMfUOEnmAR7TJpPy6yQh2vabKUX5HCHCIh2/vxiuo5rp3c8rW4pD3OPW+Hz1iIstBGEMPWtlUg==
+
 "@react-native-community/async-storage@1.12.1":
   version "1.12.1"
   resolved "https://registry.yarnpkg.com/@react-native-community/async-storage/-/async-storage-1.12.1.tgz#25f821b4f6b13abe005ad67e47c6f1cee9f27b24"
@@ -1911,6 +1916,11 @@
   integrity sha512-g66Q2Kd9Uw3eRL7kkrTsGhi+eXxNoPDRFYH6z78sZQuYjPkUQgJDDMUYgBmaBsQx/fKMtemPrCj1ulGmyi0OSw==
   dependencies:
     invariant "^2.2.4"
+
+"@react-native-community/image-editor@^2.3.0":
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/@react-native-community/image-editor/-/image-editor-2.3.0.tgz#8ac6c3691fd2c762d2abeb84c01a3b201bac3b1e"
+  integrity sha512-+UJY8WkTkfSkjoU5blQnEI7tTg11jJLoM+YojjiQpEopUaRlYQU4SZ9Zd6F6wWfvc9bjvIeMY6FlKuESK/q4fQ==
 
 "@react-native-community/netinfo@^9.4.1":
   version "9.5.0"
@@ -3884,9 +3894,15 @@ ee-first@1.1.1:
   integrity sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==
 
 electron-to-chromium@^1.4.535:
+<<<<<<< HEAD
   version "1.4.592"
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.592.tgz#1ffd49ba3da3da3077ea20014b066c910d50c913"
   integrity sha512-D3NOkROIlF+d5ixnz7pAf3Lu/AuWpd6AYgI9O67GQXMXTcCP1gJQRotOq35eQy5Sb4hez33XH1YdTtILA7Udww==
+=======
+  version "1.4.590"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.590.tgz#85a428fbabb77265a4804040837ed4f2538e3300"
+  integrity sha512-hohItzsQcG7/FBsviCYMtQwUSWvVF7NVqPOnJCErWsAshsP/CR2LAXdmq276RbESNdhxiAq5/vRo1g2pxGXVww==
+>>>>>>> origin/dev
 
 eme-encryption-scheme-polyfill@^2.0.1:
   version "2.1.1"
@@ -7746,6 +7762,11 @@ react-native-tab-view@^3.5.2:
   dependencies:
     use-latest-callback "^0.1.5"
 
+react-native-toast-message@^2.1.7:
+  version "2.1.7"
+  resolved "https://registry.yarnpkg.com/react-native-toast-message/-/react-native-toast-message-2.1.7.tgz#480ead6ea23e884f50ba467c818337d6830341e5"
+  integrity sha512-5zX3T5buVpg4bn9KZYVZ2VUQiLQZ1FHSM2AFQHVpgeKMYb+Gq+jt7wjhfPqhuMkJElQr7XNrnRw/rBCdD+7Q9w==
+
 react-native-vector-icons@^10.0.1:
   version "10.0.2"
   resolved "https://registry.yarnpkg.com/react-native-vector-icons/-/react-native-vector-icons-10.0.2.tgz#44724e0787fb13899efce3510698d1ff69aceefb"
@@ -7775,9 +7796,15 @@ react-native-video@^5.2.1:
     shaka-player "^2.5.9"
 
 react-native-vision-camera@^3.3.1:
+<<<<<<< HEAD
   version "3.6.9"
   resolved "https://registry.yarnpkg.com/react-native-vision-camera/-/react-native-vision-camera-3.6.9.tgz#4a73ab225fc95798c2009f8a5c0ffc055ff35244"
   integrity sha512-bUTLfcidLNQLiY6WD48T4y1qqE4bQ3GKdwQ6M0a/IyJhlHOSdkXlCoCMR/TByVUQZCZP7YEBuAUxgmVhQU/Ozg==
+=======
+  version "3.6.8"
+  resolved "https://registry.yarnpkg.com/react-native-vision-camera/-/react-native-vision-camera-3.6.8.tgz#205a53bb7a3bf73e3f8e7886953ea3f6e1159d68"
+  integrity sha512-fgySMUaIOooysBt5KO2tgftq3uIgdAsCjJc26GpwSxi3SdKp636Z3j5tjzxcW530BTf/udeUstxvNGlr8zeSQQ==
+>>>>>>> origin/dev
 
 react-native-webview@^13.6.2:
   version "13.6.3"

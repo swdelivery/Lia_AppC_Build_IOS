@@ -26,31 +26,30 @@ const RightEffectDotEye = memo((props) => {
 
     const _handleStopAnimEyeDot = () => {
         props?.setStartDotRightEye('done')
-        // props?._startCircleAnim()
     }
 
 
     useEffect(() => {
 
         if (props?.startDotRightEye == 'doing') {
-            tranXDot1.value = withTiming(-30*2, { duration: DURATION_DOT })
-            tranYDot1.value = withTiming(8*2, { duration: DURATION_DOT })
+            tranXDot1.value = withTiming(-30 * 2, { duration: DURATION_DOT })
+            tranYDot1.value = withTiming(8 * 2, { duration: DURATION_DOT })
             _startScaleDot1()
 
-            tranXDot2.value = withTiming(30*2, { duration: DURATION_DOT })
+            tranXDot2.value = withTiming(30 * 2, { duration: DURATION_DOT })
             tranYDot2.value = withTiming(0, { duration: DURATION_DOT })
             setTimeout(() => {
                 _startScaleDot2()
             }, 100);
 
             tranXDot3.value = withTiming(0, { duration: DURATION_DOT })
-            tranYDot3.value = withTiming(-20*2, { duration: DURATION_DOT })
+            tranYDot3.value = withTiming(-20 * 2, { duration: DURATION_DOT })
             setTimeout(() => {
                 _startScaleDot3()
             }, 250);
 
             tranXDot4.value = withTiming(0, { duration: DURATION_DOT })
-            tranYDot4.value = withTiming(20*2, { duration: DURATION_DOT })
+            tranYDot4.value = withTiming(20 * 2, { duration: DURATION_DOT })
             setTimeout(() => {
                 _startScaleDot4()
             }, 170);
@@ -172,51 +171,49 @@ const RightEffectDotEye = memo((props) => {
 
             {
                 props?.startDotRightEye == 'doing' ?
-                        <View style={[{
-                            width: 160,
-                            height: 160,
-                            borderRadius: 16,
-                            // borderWidth: 1,
-                            position: 'absolute',
-                            zIndex: 10,
-                            top: _height / 2 - 80,
-                            left: _width / 2 - 80,
-                            justifyContent: 'center',
-                            alignItems: 'center'
-                        }]}>
-                            <Animated.View style={[{
-                                width: _moderateScale(8*2),
-                                height: _moderateScale(8*2),
-                                backgroundColor: 'white',
-                                // backgroundColor: '#9EE5F6',
-                                borderRadius: _moderateScale(4*2),
-                                position: 'absolute'
-                            }, animDot1]} />
+                    <View style={[{
+                        width: 160,
+                        height: 160,
+                        borderRadius: 16,
+                        position: 'absolute',
+                        zIndex: 10,
+                        top: _height / 2 - 80,
+                        left: _width / 2 - 80,
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                    }]}>
+                        <Animated.View style={[{
+                            width: _moderateScale(8 * 2),
+                            height: _moderateScale(8 * 2),
+                            backgroundColor: 'white',
+                            borderRadius: _moderateScale(4 * 2),
+                            position: 'absolute'
+                        }, animDot1]} />
 
-                            <Animated.View style={[{
-                                width: _moderateScale(8*2),
-                                height: _moderateScale(8*2),
-                                backgroundColor: 'white',
-                                borderRadius: _moderateScale(4*2),
-                                position: 'absolute'
-                            }, animDot2]} />
+                        <Animated.View style={[{
+                            width: _moderateScale(8 * 2),
+                            height: _moderateScale(8 * 2),
+                            backgroundColor: 'white',
+                            borderRadius: _moderateScale(4 * 2),
+                            position: 'absolute'
+                        }, animDot2]} />
 
-                            <Animated.View style={[{
-                                width: _moderateScale(8*2),
-                                height: _moderateScale(8*2),
-                                backgroundColor: 'white',
-                                borderRadius: _moderateScale(4*2),
-                                position: 'absolute'
-                            }, animDot3]} />
+                        <Animated.View style={[{
+                            width: _moderateScale(8 * 2),
+                            height: _moderateScale(8 * 2),
+                            backgroundColor: 'white',
+                            borderRadius: _moderateScale(4 * 2),
+                            position: 'absolute'
+                        }, animDot3]} />
 
-                            <Animated.View style={[{
-                                width: _moderateScale(8*2),
-                                height: _moderateScale(8*2),
-                                backgroundColor: 'white',
-                                borderRadius: _moderateScale(4*2),
-                                position: 'absolute'
-                            }, animDot4]} />
-                        </View>
+                        <Animated.View style={[{
+                            width: _moderateScale(8 * 2),
+                            height: _moderateScale(8 * 2),
+                            backgroundColor: 'white',
+                            borderRadius: _moderateScale(4 * 2),
+                            position: 'absolute'
+                        }, animDot4]} />
+                    </View>
                     :
                     <></>
             }

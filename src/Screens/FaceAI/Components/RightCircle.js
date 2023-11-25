@@ -5,13 +5,7 @@ import { _height, _width, _widthScale } from '../../../Constant/Scale'
 
 const RightCircle = memo((props) => {
 
-    const rotateFlag1 = useSharedValue(0);
-    const rotateFlag2 = useSharedValue(0);
-
     const opacityCircle = useSharedValue(0);
-
-    const opacityCircle1 = useSharedValue(0);
-    const opacityCircle2 = useSharedValue(0);
 
     const rotateCircle1 = useSharedValue(0)
     const rotateCircle2 = useSharedValue(0)
@@ -20,98 +14,44 @@ const RightCircle = memo((props) => {
     const rotateCircle5 = useSharedValue(0)
     const rotateCircle6 = useSharedValue(0)
 
-    // useEffect(() => {
-    //     if (props?.startCirlRightEye == 'doing') {
-    //         _startCircleAnim()
-    //     }
-    // }, [props?.startCirlRightEye])
+
     useEffect(() => {
         if (props?.startCirlRightEye == 'doing') {
             _startMultiCircle()
         }
     }, [props?.startCirlRightEye])
 
-    useEffect(() => {
-        if (props?.startTextRightEye == 'done') {
-            opacityCircle.value = withTiming(0, { duration: 1000 }, (fns)=>{
-                if(fns){
-                    opacityCircle1.value = withTiming(0, {
-                        duration: 300
-                    })
-                    opacityCircle2.value = withTiming(0, {
-                        duration: 300
-                    }, (fns) => {
-                        if (fns) {
-                            runOnJS(_handleDoneAnim)()
-                        }
-                    })
-                }
-            })
-            
-        }
-    }, [props?.startTextRightEye])
-
     const _handleDoneAnim = () => {
         props?.setStartCirlRightEye('done')
     }
 
-    const _startCircleAnim = () => {
-        opacityCircle1.value = withTiming(1, {
-            duration: 300
-        })
-        opacityCircle2.value = withTiming(1, {
-            duration: 300
-        })
-        rotateFlag1.value = withTiming(1, {
-            duration: 2000
-        }, (isFinished) => {
-            if (isFinished) {
-                rotateFlag1.value = 0
-            }
-        })
-        rotateFlag2.value = withTiming(1, {
-            duration: 2000
-        }, (isFinished) => {
-            if (isFinished) {
-                rotateFlag2.value = 0
-                runOnJS(_startCircleAnim)()
-            }
-        })
-    }
-
     const _startMultiCircle = () => {
         opacityCircle.value = withTiming(1, { duration: 1000 })
-        rotateCircle1.value = withTiming(5, { duration: 10000 })
-        rotateCircle2.value = withTiming(1, { duration: 10000 })
-        rotateCircle3.value = withTiming(1, { duration: 10000 })
-        rotateCircle4.value = withTiming(5, { duration: 10000 })
-        rotateCircle5.value = withTiming(3, { duration: 10000 })
-        rotateCircle6.value = withTiming(1, { duration: 10000 })
-        // rotateCircle1.value = withRepeat(withTiming(1,{duration:10000}), -1,false,()=>{},'never');
+        rotateCircle1.value = withTiming(2, { duration: 5000 })
+        rotateCircle2.value = withTiming(.5, { duration: 5000 })
+        rotateCircle3.value = withTiming(.5, { duration: 5000 })
+        rotateCircle4.value = withTiming(2, { duration: 5000 })
+        rotateCircle5.value = withTiming(1, { duration: 5000 })
+        rotateCircle6.value = withTiming(.5, { duration: 5000 })
+        setTimeout(() => {
+            opacityCircle.value = withTiming(0, { duration: 1000 }, (fns) => {
+                if (fns) {
+                    // opacityCircle1.value = withTiming(0, {
+                    //     duration: 300
+                    // })
+                    // opacityCircle2.value = withTiming(0, {
+                    //     duration: 300
+                    // }, (fns) => {
+                    //     if (fns) {
+                    //         runOnJS(_handleDoneAnim)()
+                    //     }
+                    // })
+                    runOnJS(_handleDoneAnim)()
+                }
+            })
+        }, 4000);
     }
 
-
-    // const animCircle1 = useAnimatedStyle(() => {
-
-    //     const interpolateRotate = interpolate(rotateFlag1.value, [0, 1], ['0', '360'], {});
-
-    //     return {
-    //         transform: [{
-    //             rotate: `${interpolateRotate}deg`
-    //         }],
-    //         opacity: opacityCircle1.value
-    //     }
-    // })
-    // const animCircle2 = useAnimatedStyle(() => {
-
-    //     const interpolateRotate = interpolate(rotateFlag2.value, [0, 1], ['0', '360'], {});
-    //     return {
-    //         transform: [{
-    //             rotate: `-${interpolateRotate}deg`
-    //         }],
-    //         opacity: opacityCircle2.value
-    //     }
-    // })
 
     const animCircle1 = useAnimatedStyle(() => {
         const interpolateRotate = interpolate(rotateCircle1.value, [0, 1], ['0', '360'], {});
@@ -159,12 +99,10 @@ const RightCircle = memo((props) => {
         <>
             {
                 props?.startCirlRightEye == 'doing' ?
-                    // true ?
                     <Animated.View style={[{
                         width: 160,
                         height: 160,
                         borderRadius: 16,
-                        // borderWidth: 1,
                         position: 'absolute',
                         zIndex: 10,
                         top: _height / 2 - 80,
@@ -178,7 +116,7 @@ const RightCircle = memo((props) => {
                                 width: _widthScale(230),
                                 height: _widthScale(230),
                                 position: 'absolute',
-                                zIndex: 1
+                                zIndex: 11
                             }, animCircle1]}
                             source={require('../../../Image/circle/5.png')}
                         />
@@ -187,7 +125,7 @@ const RightCircle = memo((props) => {
                                 width: _widthScale(230),
                                 height: _widthScale(230),
                                 position: 'absolute',
-                                zIndex: 1
+                                zIndex: 11
                             }, animCircle2]}
                             source={require('../../../Image/circle/4.png')}
                         />
@@ -196,7 +134,7 @@ const RightCircle = memo((props) => {
                                 width: _widthScale(260),
                                 height: _widthScale(260),
                                 position: 'absolute',
-                                zIndex: 1
+                                zIndex: 11
                             }, animCircle3]}
                             source={require('../../../Image/circle/1.png')}
                         />
@@ -205,7 +143,7 @@ const RightCircle = memo((props) => {
                                 width: _widthScale(260),
                                 height: _widthScale(260),
                                 position: 'absolute',
-                                zIndex: 1
+                                zIndex: 11
                             }, animCircle4]}
                             source={require('../../../Image/circle/2.png')}
                         />
@@ -214,7 +152,7 @@ const RightCircle = memo((props) => {
                                 width: _widthScale(280),
                                 height: _widthScale(280),
                                 position: 'absolute',
-                                zIndex: 1
+                                zIndex: 11
                             }, animCircle5]}
                             source={require('../../../Image/circle/3.png')}
                         />
@@ -223,27 +161,10 @@ const RightCircle = memo((props) => {
                                 width: _widthScale(280),
                                 height: _widthScale(280),
                                 position: 'absolute',
-                                zIndex: 1
+                                zIndex: 11
                             }, animCircle6]}
                             source={require('../../../Image/circle/6.png')}
                         />
-
-
-                        {/* <Animated.Image
-                            source={require('../../../Image/circle.png')}
-                            style={[{
-                                width: _widthScale(200),
-                                height: _widthScale(200),
-                                position: 'absolute'
-                            }, animCircle1]} /> 
-
-                        <Animated.Image
-                            source={require('../../../Image/circle.png')}
-                            style={[{
-                                width: _widthScale(250),
-                                height: _widthScale(250),
-                                position: 'absolute'
-                            }, animCircle2]} /> */}
                     </Animated.View>
                     :
                     <></>

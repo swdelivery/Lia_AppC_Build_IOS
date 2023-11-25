@@ -19,7 +19,7 @@ const LeftEffectTextEye = memo((props) => {
 
 
     const _handleEnd = () => {
-        props?.setStartTextLeftEye('done')
+        // props?.setStartTextLeftEye('done')
     }
 
     useEffect(() => {
@@ -163,7 +163,7 @@ const LeftEffectTextEye = memo((props) => {
                                 Bọng mỡ
                             </Text>
                             <View style={{ height: _moderateScale(4) }} />
-                            <Text style={{width:_moderateScale(8*8), fontSize: _moderateScale(12), fontWeight: 'bold', color: '#9fe0ed', letterSpacing: 2 }}>
+                            <Text style={{ width: _moderateScale(8 * 8), fontSize: _moderateScale(12), fontWeight: 'bold', color: '#9fe0ed', letterSpacing: 2 }}>
                                 {
                                     _codeResultScanning(props?.scanningResult?.left?.eye_bag_type)
                                 }

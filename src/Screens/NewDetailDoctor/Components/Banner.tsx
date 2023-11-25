@@ -31,7 +31,7 @@ const Banner = ({ doctor }: Props) => {
         equal: doctor._id,
       },
     });
-  }, [doctor._id]);
+  }, [doctor?._id]);
 
   return (
     <View style={[styles.banner, shadow]}>
