@@ -70,6 +70,9 @@ import { SvgProps } from "react-native-svg";
 export { default as IconOclock } from "../../SGV/oclock.svg";
 export { default as IconLocation } from "../../SGV/locationBase.svg";
 export { default as IconPlusBase } from "../../SGV/plusBase.svg";
+export { default as IconArrowRightRed } from "../../SGV/arrowRightRed.svg";
+export { default as IconBagFat } from "../../SGV/bongmat.svg";
+export { default as IconCurvedArrow } from "../../SGV/curvedArr.svg";
 
 export const IconSetting = (props) => {
   return <SVGSetting width={props?.width} height={props?.height} />;
