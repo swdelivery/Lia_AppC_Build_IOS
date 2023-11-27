@@ -195,7 +195,7 @@ const InputChat = ({ }: Props) => {
     setLoadingSendMessage(true);
 
     let flagChatGPT = currTextMessage.includes("{@}[ChatGPT](1)");
-    let customText = currTextMessage.replace("/{@}[ChatGPT](1)/g", "");
+    let customText = currTextMessage.replace("{@}[ChatGPT](1)", "");
     let customType = flagChatGPT ? "chatgpt" : "text";
 
     let data = {
