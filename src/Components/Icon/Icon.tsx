@@ -76,9 +76,35 @@ export { default as IconEmpty } from "../../SGV/empty.svg";
 export { default as IconArrowRightRed } from "../../SGV/arrowRightRed.svg";
 export { default as IconBagFat } from "../../SGV/bongmat.svg";
 export { default as IconCurvedArrow } from "../../SGV/curvedArr.svg";
+export { default as IconDiary } from "../../SGV/diary.svg";
+export { default as IconHeart } from "../../SGV/heart.svg";
+export { default as IconHome } from "../../SGV/home.svg";
+export { default as IconHandHeart } from "../../SGV/handHeart.svg";
+export { default as IconProfileBooking } from "../../SGV/profile_booking.svg";
+export { default as IconProfileHistory } from "../../SGV/profile_history.svg";
+export { default as IconProfileMedical } from "../../SGV/profile_medical.svg";
+export { default as IconProfilePayment } from "../../SGV/profile_payment.svg";
+export { default as IconProfileCare } from "../../SGV/profile_care.svg";
+export { default as IconProfileCoin } from "../../SGV/profile_coin.svg";
+export { default as IconProfileShield } from "../../SGV/profile_shield.svg";
+export { default as IconProfileStar } from "../../SGV/profile_star.svg";
+export { default as IconProfileWallet } from "../../SGV/profile_wallet.svg";
+export { default as IconProfileVoucher } from "../../SGV/profile_voucher.svg";
+export { default as IconProfilePayLater } from "../../SGV/profile_payLater.svg";
+export { default as IconProfileInsurance } from "../../SGV/profile_insurance.svg";
+export { default as IconProfileHandHeartIn } from "../../SGV/profile_handHeartIn.svg";
+export { default as IconProfileEducation } from "../../SGV/profile_education.svg";
+export { default as IconProfileFindJob } from "../../SGV/profile_findJob.svg";
+export { default as IconProfileLoveCare } from "../../SGV/profile_loveCare.svg";
+export { default as IconProfilePolicy } from "../../SGV/profile_policy.svg";
+export { default as IconProfileProtect } from "../../SGV/profile_protect.svg";
+export { default as IconProfilePartnerShip } from "../../SGV/profile_partnership.svg";
 
 export const IconSetting = (props) => {
-  return <SVGSetting width={props?.width} height={props?.height} />;
+  return <SVGSetting width={props?.style?.width ? props?.style?.width : _moderateScale(8 * 4)}
+    height={
+      props?.style?.height ? props?.style?.height : _moderateScale(8 * 4)
+    } />;
 };
 
 export const IconPhoneWhite = (props) => {
@@ -87,7 +113,12 @@ export const IconPhoneWhite = (props) => {
 
 export const IconRightWhite = (props) => {
   return (
-    <SVGRightWhite width={props?.style?.width} height={props?.style?.height} />
+    <SVGRightWhite
+      width={props?.style?.width ? props?.style?.width : _moderateScale(8 * 4)}
+      height={
+        props?.style?.height ? props?.style?.height : _moderateScale(8 * 4)
+      }
+    />
   );
 };
 
