@@ -532,7 +532,7 @@
 				PRODUCT_NAME = LiaAppC;
 				PROVISIONING_PROFILE = "981936b2-ee26-4b2e-a9ef-af0127ae9357";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AdHoc com.liaappc 1700893084";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AdHoc com.liaappc";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
