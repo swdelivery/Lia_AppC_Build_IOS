@@ -9,11 +9,13 @@ import Avatar from '@Components/Avatar'
 import { useSelector } from 'react-redux'
 import Text from '@Components/Text'
 import BtnLevelCode from './BtnLevelCode'
+import { useNavigate } from 'src/Hooks/useNavigation'
+import ScreenKey from '@Navigation/ScreenKey'
 
 const Banner = () => {
 
   const infoUser = useSelector(state => state?.infoUserReducer?.infoUser)
-
+  const { navigate } = useNavigate()
   const { top } = useSafeAreaInsets()
 
   const _renderLevelCode = (levelCode) => {
@@ -42,23 +44,27 @@ const Banner = () => {
   return (
     <View style={styles.container}>
       <Column marginTop={top}>
-        <TouchableOpacity style={styles.btnSetting}>
+        <TouchableOpacity
+          onPress={navigate(ScreenKey.SETTING_APP)}
+          style={styles.btnSetting}>
           <IconSetting />
         </TouchableOpacity>
-        <Row
-          paddingHorizontal={8 * 2}
-          gap={8 * 2}>
-          <Avatar style={styles.avatar} avatar={infoUser?.fileAvatar} size={8 * 10} circle />
-          <Column gap={4}>
-            <Text weight='bold' size={16} color={WHITE}>
-              {infoUser?.name}
-            </Text>
-            <Text weight='regular' size={16} color={WHITE}>
-              {infoUser?.phone[0]?.fullPhoneNumber}
-            </Text>
-            {_renderLevelCode(infoUser?.levelCode)}
-          </Column>
-        </Row >
+        <TouchableOpacity onPress={navigate(ScreenKey.EDIT_PROFILE)}>
+          <Row
+            paddingHorizontal={8 * 2}
+            gap={8 * 2}>
+            <Avatar style={styles.avatar} avatar={infoUser?.fileAvatar} size={8 * 10} circle />
+            <Column gap={4}>
+              <Text weight='bold' size={16} color={WHITE}>
+                {infoUser?.name}
+              </Text>
+              <Text weight='regular' size={16} color={WHITE}>
+                {infoUser?.phone[0]?.fullPhoneNumber}
+              </Text>
+              {_renderLevelCode(infoUser?.levelCode)}
+            </Column>
+          </Row >
+        </TouchableOpacity>
       </Column>
     </View>
   )

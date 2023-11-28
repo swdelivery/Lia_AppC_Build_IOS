@@ -167,6 +167,7 @@ import DetailMaterial from "@Screens/DetailMaterial";
 import ListBeautyInsurance from "@Screens/ListBeautyInsurance";
 import DetailBeautyInsurance from "@Screens/DetailBeautyInsurance";
 import withHost from "@Components/withHost";
+import NewUpdateInfoUser from "@Screens/NewUpdateInfoUser";
 
 const rootStack = createStackNavigator();
 
@@ -478,7 +479,7 @@ const RootNavigator = () => {
           <rootStack.Screen
             options={{ ...TransitionPresets.SlideFromRightIOS }}
             name={ScreenKey.EDIT_PROFILE}
-            component={EditProfile}
+            component={NewUpdateInfoUser}
           />
           {/* <rootStack.Screen options={{ ...TransitionPresets.SlideFromRightIOS }} name={ScreenKey.PICK_TREATMENT_TO_BOOKING} component={PickTreatmentDiary} /> */}
 

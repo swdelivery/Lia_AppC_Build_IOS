@@ -99,6 +99,15 @@ export { default as IconProfileLoveCare } from "../../SGV/profile_loveCare.svg";
 export { default as IconProfilePolicy } from "../../SGV/profile_policy.svg";
 export { default as IconProfileProtect } from "../../SGV/profile_protect.svg";
 export { default as IconProfilePartnerShip } from "../../SGV/profile_partnership.svg";
+export { default as IconProfilePerson } from "../../SGV/profile_person.svg";
+export { default as IconProfilePhone } from "../../SGV/profile_phone.svg";
+export { default as IconProfileMail } from "../../SGV/profile_mail.svg";
+export { default as IconProfileLocation } from "../../SGV/profile_location.svg";
+export { default as IconProfileBirthday } from "../../SGV/profile_birthday.svg";
+export { default as IconProfileGender } from "../../SGV/profile_gender.svg";
+export { default as IconProfilePassport } from "../../SGV/profile_passport.svg";
+export { default as IconProfileCard } from "../../SGV/profile_card.svg";
+export { default as IconProfileFlag } from "../../SGV/profile_flag.svg";
 
 export const IconSetting = (props) => {
   return <SVGSetting width={props?.style?.width ? props?.style?.width : _moderateScale(8 * 4)}
