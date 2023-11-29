@@ -7,7 +7,7 @@ import Text from "@Components/Text";
 import { styleElement } from "@Constant/StyleElement";
 import Row from "@Components/Row";
 import CountStar2 from "@Components/NewCountStar/CountStar";
-import Certificate from "@Components/Certificate/Certificate";
+import Certificate, { Certificates } from "@Components/Certificate/Certificate";
 import Icon from "@Components/Icon";
 import { RED } from "@Constant/Color";
 import HorizontalServices from "@Components/HorizontalServices";
@@ -15,6 +15,7 @@ import { Branch } from "@typings/branch";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Avatar from "@Components/Avatar";
 import ContentLoader, { Circle, Rect } from "react-content-loader/native";
+import Column from "@Components/Column";
 
 type Props = {
   item: Branch;
@@ -33,11 +34,11 @@ export default function BranchItem({ item }: Props) {
       onPress={handlePress}
       style={[styles.card, styleElement.shadow]}
     >
-      <View style={styles.upperView}>
+      <Row paddingBottom={12} alignItems="flex-start" gap={8}>
         <Avatar size={48} avatar={item.avatar} circle />
         <View style={styleElement.flex}>
-          <Row justifyContent="space-between">
-            <Text numberOfLines={1} weight="bold">
+          <Row justifyContent="space-between" gap={4}>
+            <Text numberOfLines={2} weight="bold" flex={1}>
               {item?.name}
             </Text>
 
@@ -56,18 +57,9 @@ export default function BranchItem({ item }: Props) {
             </Text>
           </Row>
 
-          <Row marginTop={4} flexWrap={"wrap"} gap={4} marginBottom={8}>
-            {item?.branchFileArr.length > 0 &&
-              item.branchFileArr.map((item, index) => (
-                <Certificate
-                  key={item._id}
-                  item={item}
-                  backgroundColor={index % 2 === 0 ? "#414378" : "#151617"}
-                />
-              ))}
-          </Row>
+          <Certificates scrollEnabled data={item.branchFileArr} />
         </View>
-      </View>
+      </Row>
       {item.branchServices.length > 0 && (
         <HorizontalServices items={item.branchServices} />
       )}
@@ -156,7 +148,6 @@ const styles = StyleSheet.create({
     paddingTop: 8 * 2,
     backgroundColor: "#F5F9FA",
   },
-  upperView: { flexDirection: "row", gap: 8 },
   placeholderItem: {
     height: PLACEHOLDER_HEIGHT,
     borderWidth: 0,

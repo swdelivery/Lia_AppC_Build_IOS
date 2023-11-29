@@ -303,8 +303,10 @@ const InputChat = ({ }: Props) => {
         content: "Tóm tắt lại cuộc trò chuyện",
       },
     };
+    console.log({ data });
+
     SocketInstance.socketConn?.emit(CSS_SEND_MESSAGE, data);
-  }, []);
+  }, [conversation]);
 
   const moreActionsAnimatedStyle = useAnimatedStyle(() => {
     return {

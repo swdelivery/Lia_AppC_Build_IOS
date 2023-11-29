@@ -11,12 +11,6 @@ import {
 } from "../../../../Services/api";
 import { CSS_PARTNER_SEEN_MESSAGE } from "../../../../Sockets/type";
 import EachMessage from "./messages/EachMessage";
-import ItemServiceReview from "./messages/ItemServiceReview";
-import ItemTemplateService from "../ItemTemplateService";
-import ItemTemplateNews from "../ItemTemplateNews";
-import ItemNavigateBooking from "../ItemNavigateBooking";
-import ItemNavigateCTV from "../ItemNavigateCTV";
-import ItemNavigateSpinWheel from "../ItemNavigateSpinWheel";
 import { Conversation, Message } from "@typings/chat";
 import {
   getConversationMessages,
@@ -26,7 +20,6 @@ import { getMessagesState } from "@Redux/chat/selectors";
 import { RenderItemProps } from "@typings/common";
 import { LoadingView } from "@Components/Loading/LoadingView";
 import Fade from "@Components/Fade";
-import MediaPicker from "./MediaPicker";
 
 type Props = {
   conversation: Conversation;

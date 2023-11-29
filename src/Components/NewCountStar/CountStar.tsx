@@ -13,15 +13,11 @@ type Props = {
 };
 
 const CountStar2 = ({
-  rating,
-  count,
+  rating = 0,
+  count = 0,
   size = 14,
   lightContent = false,
 }: Props) => {
-  if (!rating && !count) {
-    return null;
-  }
-
   const iconSize = size + 4;
   return (
     <Row gap={4}>
@@ -52,11 +48,9 @@ const CountStar2 = ({
           size={iconSize}
         />
       </Row>
-      {!!count && (
-        <Text color={lightContent ? "white" : "black"} size={size}>
-          {`(${count})`}
-        </Text>
-      )}
+      <Text color={lightContent ? "white" : "black"} size={size}>
+        {`(${count})`}
+      </Text>
     </Row>
   );
 };

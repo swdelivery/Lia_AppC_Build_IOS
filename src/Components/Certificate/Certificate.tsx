@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 import React, { useMemo } from "react";
 import Text from "@Components/Text";
 import Icon from "@Components/Icon";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import EnhancedImageViewing from "react-native-image-viewing/dist/ImageViewing";
 import { FileUpload } from "@typings/common";
 import { getImageAvataUrl } from "src/utils/avatar";
@@ -51,12 +51,42 @@ const Certificate = ({ item, backgroundColor = "#414378" }: Props) => {
   );
 };
 
-export function Certificates({ data }: { data: FileUpload[] }) {
+export function Certificates({
+  data,
+  scrollEnabled = false,
+}: {
+  data: FileUpload[];
+  scrollEnabled?: boolean;
+}) {
+  function renderContent() {
+    return data.map((item, idx) => {
+      return (
+        <Certificate
+          item={item}
+          key={item._id}
+          backgroundColor={idx % 2 === 0 ? "#414378" : "#151617"}
+        />
+      );
+    });
+  }
+
+  console.log({ scrollEnabled });
+
+  if (scrollEnabled) {
+    return (
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.horizontal}
+      >
+        {renderContent()}
+      </ScrollView>
+    );
+  }
+
   return (
     <Row flexWrap="wrap" gap={4} top={4}>
-      {data.map((item) => {
-        return <Certificate item={item} key={item._id} />;
-      })}
+      {renderContent()}
     </Row>
   );
 }
@@ -86,5 +116,9 @@ const styles = StyleSheet.create({
     width: 8 * 2,
     height: 8 * 2,
     resizeMode: "contain",
+  },
+  horizontal: {
+    gap: 4,
+    paddingTop: 4,
   },
 });

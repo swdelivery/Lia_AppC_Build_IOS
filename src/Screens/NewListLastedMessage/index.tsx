@@ -32,7 +32,7 @@ const NewListLastedMessage = () => {
   );
 
   useFocused(() => {
-    getData();
+    refreshData();
   });
 
   const handleOpenChat = useCallback((item: Conversation) => {

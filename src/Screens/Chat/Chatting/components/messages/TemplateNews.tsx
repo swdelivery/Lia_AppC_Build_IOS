@@ -2,15 +2,17 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { Message } from '@typings/chat';
 import { _moderateScale, _widthScale } from '@Constant/Scale';
-import { BG_GREY_OPACITY_5, BLUE_FB, BORDER_COLOR, GREY_FOR_TITLE, PRICE_ORANGE, WHITE } from '@Constant/Color';
+import {
+  BG_GREY_OPACITY_5,
+  BORDER_COLOR,
+  GREY_FOR_TITLE,
+  WHITE,
+} from "@Constant/Color";
 import Text from '@Components/Text';
 import Column from '@Components/Column';
-import Image from '@Components/Image';
-import { formatMonney } from '@Constant/Utils';
-import moment from 'moment';
+import Image from "@Components/Image";
 import { useNavigate } from 'src/Hooks/useNavigation';
-import ScreenKey from '@Navigation/ScreenKey';
-import { styleElement } from '@Constant/StyleElement';
+import ScreenKey from "@Navigation/ScreenKey";
 
 type Props = { item: Message };
 
