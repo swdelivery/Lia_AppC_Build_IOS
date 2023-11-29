@@ -24,6 +24,7 @@ type Props = {
   keyboardType?: any
   error?: string
   setError?: (item) => void
+  maxLength?: number
 };
 
 
@@ -37,7 +38,8 @@ const Input = ({ title,
   notEditable,
   keyboardType = 'default',
   error,
-  setError
+  setError,
+  maxLength = null
 }: Props) => {
 
   const [onFocused, setOnFocused] = useState(false)
@@ -142,6 +144,7 @@ const Input = ({ title,
             {icon}
           </View>
           <TextInput
+            maxLength={maxLength ? maxLength : null}
             selectTextOnFocus
             editable={notEditable ? false : true}
             value={value}
@@ -178,7 +181,7 @@ const styles = StyleSheet.create({
     flex: 1,
     height: _moderateScale(8 * 7),
     paddingHorizontal: _moderateScale(4),
-    ...stylesFont.fontNolanBold,
+    // ...stylesFont.fontNolanBold,
     fontSize: _moderateScale(14)
   },
   icon: {

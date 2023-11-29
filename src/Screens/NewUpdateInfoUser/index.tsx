@@ -190,6 +190,7 @@ const NewUpdateInfoUser = () => {
 
           <Column gap={8 * 4} paddingHorizontal={8 * 2}>
             <Input
+              maxLength={20}
               error={errorName}
               setError={setErrorName}
               title="Họ và tên"

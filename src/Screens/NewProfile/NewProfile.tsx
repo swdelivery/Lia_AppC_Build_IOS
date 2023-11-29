@@ -55,8 +55,8 @@ const NewProfile = () => {
               type={'column'}
               title={"Phụng sự"}
               data={[
-                { name: 'Chính sách và quy định chung', icon: <IconProfilePolicy /> },
-                { name: 'Chính sách bảo mật', icon: <IconProfileProtect /> },
+                { flag: 'policy', name: 'Chính sách và quy định chung', icon: <IconProfilePolicy /> },
+                { flag: 'protect', name: 'Chính sách bảo mật', icon: <IconProfileProtect /> },
                 { name: 'Liên hệ hợp tác', icon: <IconProfilePartnerShip /> },
               ]}
             />

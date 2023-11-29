@@ -2,11 +2,13 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import Column from '@Components/Column'
 import Text from '@Components/Text'
-import { WHITE } from '@Constant/Color'
+import { GREY_FOR_TITLE, WHITE } from '@Constant/Color'
 import HorizontalLine from '@Components/Line/HorizontalLine'
-import { _width } from '@Constant/Scale'
+import { _moderateScale, _width } from '@Constant/Scale'
 import Row from '@Components/Row'
 import { IconProfileBooking, IconProfileCare, IconProfileCoin, IconProfileHistory, IconProfileMedical, IconProfilePayment, IconProfileShield, IconProfileStar } from '@Components/Icon/Icon'
+import { useNavigate } from 'src/Hooks/useNavigation'
+import ScreenKey from '@Navigation/ScreenKey'
 
 const WIDTH_BOX = _width - 8 * 4;
 
@@ -36,7 +38,8 @@ const Menu = ({ title, data, type }: Props) => {
                     <BtnIcon
                       horizontal={false}
                       name={item?.name}
-                      icon={item?.icon} />
+                      icon={item?.icon}
+                      type={item?.type} />
                   )
                 })
               }
@@ -50,7 +53,8 @@ const Menu = ({ title, data, type }: Props) => {
                       lasted={index + 1 == data?.length}
                       horizontal={true}
                       name={item?.name}
-                      icon={item?.icon} />
+                      icon={item?.icon}
+                      flag={item?.flag} />
                   )
                 })
               }
@@ -63,17 +67,32 @@ const Menu = ({ title, data, type }: Props) => {
   )
 }
 
-const BtnIcon = ({ name = '', icon = null, horizontal = false, lasted = null }) => {
+const BtnIcon = ({ name = '', icon = null, horizontal = false, lasted = null, flag = null }) => {
+
+  const { navigate } = useNavigate()
+
+  const _handleOnpress = () => {
+    console.log({ flag });
+    switch (flag) {
+      case 'policy':
+        return navigate(ScreenKey.SCREEN_HTML, { title: name, code: "CSBH" })()
+      case 'protect':
+        return navigate(ScreenKey.SCREEN_HTML, { title: name, code: "CSBM" })()
+      default:
+        break;
+    }
+  }
 
   if (horizontal) {
     return (
-      <TouchableOpacity>
+      <TouchableOpacity
+        onPress={_handleOnpress}>
         <Row padding={8 * 2} gap={8 * 2}>
           <View>
             {icon}
           </View>
           <View >
-            <Text size={12}>
+            <Text color={GREY_FOR_TITLE} size={_moderateScale(13)}>
               {name}
             </Text>
           </View>
@@ -85,12 +104,14 @@ const BtnIcon = ({ name = '', icon = null, horizontal = false, lasted = null }) 
     )
   } else {
     return (
-      <TouchableOpacity style={styles.btn}>
+      <TouchableOpacity
+        onPress={_handleOnpress}
+        style={styles.btn}>
         <View style={styles.btn_icon}>
           {icon}
         </View>
         <View style={styles.btn_text}>
-          <Text style={{ textAlign: 'center' }} size={12}>
+          <Text color={GREY_FOR_TITLE} style={{ textAlign: 'center' }} size={_moderateScale(13)}>
             {name}
           </Text>
         </View>

@@ -11,6 +11,7 @@ import Text from '@Components/Text'
 import BtnLevelCode from './BtnLevelCode'
 import { useNavigate } from 'src/Hooks/useNavigation'
 import ScreenKey from '@Navigation/ScreenKey'
+import { sizeIcon } from '@Constant/Icon'
 
 const Banner = () => {
 
@@ -47,7 +48,7 @@ const Banner = () => {
         <TouchableOpacity
           onPress={navigate(ScreenKey.SETTING_APP)}
           style={styles.btnSetting}>
-          <IconSetting />
+          <IconSetting style={sizeIcon.llg} />
         </TouchableOpacity>
         <TouchableOpacity onPress={navigate(ScreenKey.EDIT_PROFILE)}>
           <Row

@@ -168,6 +168,8 @@ import ListBeautyInsurance from "@Screens/ListBeautyInsurance";
 import DetailBeautyInsurance from "@Screens/DetailBeautyInsurance";
 import withHost from "@Components/withHost";
 import NewUpdateInfoUser from "@Screens/NewUpdateInfoUser";
+import NewSettingApp from "src/NewSettingApp";
+import ScreenHTML from "@Screens/ScreenHTML";
 
 const rootStack = createStackNavigator();
 
@@ -687,7 +689,7 @@ const RootNavigator = () => {
           <rootStack.Screen
             options={{ ...TransitionPresets.SlideFromRightIOS }}
             name={ScreenKey.SETTING_APP}
-            component={SettingApp}
+            component={NewSettingApp}
           />
 
           <rootStack.Screen
@@ -915,6 +917,13 @@ const RootNavigator = () => {
             options={{ ...TransitionPresets.SlideFromRightIOS }}
             name={ScreenKey.DETAIL_BEAUTY_INSURANCE}
             component={DetailBeautyInsurance}
+          />
+
+          {/* SCREEN FOR RENDER HTML */}
+          <rootStack.Screen
+            options={{ ...TransitionPresets.SlideFromRightIOS }}
+            name={ScreenKey.SCREEN_HTML}
+            component={ScreenHTML}
           />
 
           <rootStack.Screen

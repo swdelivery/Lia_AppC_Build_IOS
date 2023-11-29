@@ -4,7 +4,7 @@ import { TouchableOpacity } from 'react-native'
 import Text from '@Components/Text'
 import { IconDiary, IconHandHeart, IconHeart, IconHome } from '@Components/Icon/Icon'
 import Row from '@Components/Row'
-import { WHITE } from '@Constant/Color'
+import { GREY_FOR_TITLE, WHITE } from '@Constant/Color'
 
 
 const MainList = () => {
@@ -28,7 +28,7 @@ const BtnIcon = ({ icon = null, text = '' }) => {
       <View style={styles.btn__icon}>
         {icon}
       </View>
-      <Text size={13} style={styles.btn__text} weight='bold'>
+      <Text color={GREY_FOR_TITLE} size={13} style={styles.btn__text} weight='bold'>
         {text}
       </Text>
     </TouchableOpacity>
