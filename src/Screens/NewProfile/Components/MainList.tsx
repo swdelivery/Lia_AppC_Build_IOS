@@ -5,6 +5,8 @@ import Text from '@Components/Text'
 import { IconDiary, IconHandHeart, IconHeart, IconHome } from '@Components/Icon/Icon'
 import Row from '@Components/Row'
 import { GREY_FOR_TITLE, WHITE } from '@Constant/Color'
+import { useNavigate } from 'src/Hooks/useNavigation'
+import ScreenKey from '@Navigation/ScreenKey'
 
 
 const MainList = () => {
@@ -12,7 +14,7 @@ const MainList = () => {
     <View style={styles.container}>
       <Row gap={8 * 2} justifyContent='space-between'>
         <BtnIcon text={'Nhật ký'} icon={<IconDiary />} />
-        <BtnIcon text={'Sức khoẻ'} icon={<IconHeart />} />
+        <BtnIcon flag={'health-record'} text={'Sức khoẻ'} icon={<IconHeart width={8 * 3.5} height={8 * 3.5} />} />
         <BtnIcon text={'Người thân'} icon={<IconHome />} />
         <BtnIcon text={'Tri ân'} icon={<IconHandHeart />} />
       </Row>
@@ -22,9 +24,26 @@ const MainList = () => {
 
 export default MainList
 
-const BtnIcon = ({ icon = null, text = '' }) => {
+const BtnIcon = ({ icon = null, text = '', flag = null }) => {
+
+  const { navigate } = useNavigate()
+
+  const _handlePress = () => {
+    switch (flag) {
+      case 'health-record':
+        return navigate(ScreenKey.HEALTH_RECORD)()
+
+      default:
+        break;
+    }
+    console.log({ flag });
+
+  }
+
   return (
-    <TouchableOpacity style={[styles.btn, shadow]}>
+    <TouchableOpacity
+      onPress={_handlePress}
+      style={[styles.btn, shadow]}>
       <View style={styles.btn__icon}>
         {icon}
       </View>

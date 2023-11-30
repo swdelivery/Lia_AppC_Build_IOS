@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
     flex: 1,
     height: _moderateScale(8 * 7),
     paddingHorizontal: _moderateScale(4),
-    // ...stylesFont.fontNolanBold,
+    ...stylesFont.fontNolan,
     fontSize: _moderateScale(14)
   },
   icon: {

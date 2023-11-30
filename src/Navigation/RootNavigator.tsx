@@ -170,6 +170,7 @@ import withHost from "@Components/withHost";
 import NewUpdateInfoUser from "@Screens/NewUpdateInfoUser";
 import NewSettingApp from "src/NewSettingApp";
 import ScreenHTML from "@Screens/ScreenHTML";
+import NewHealthRecord from "@Screens/NewHealthRecord";
 
 const rootStack = createStackNavigator();
 
@@ -227,7 +228,7 @@ const RootNavigator = () => {
           <rootStack.Screen
             options={{ ...TransitionPresets.SlideFromRightIOS }}
             name={ScreenKey.HEALTH_RECORD}
-            component={HealthRecord}
+            component={NewHealthRecord}
           />
           {/* <rootStack.Screen options={{ ...TransitionPresets.SlideFromRightIOS }} name={ScreenKey.TREATMENT_RECORD} component={TreatmentRecord} /> */}
 

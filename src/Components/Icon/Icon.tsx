@@ -109,6 +109,10 @@ export { default as IconProfilePassport } from "../../SGV/profile_passport.svg";
 export { default as IconProfileCard } from "../../SGV/profile_card.svg";
 export { default as IconProfileFlag } from "../../SGV/profile_flag.svg";
 export { default as IconRightArrowBase } from "../../SGV/rightArrowBase.svg";
+export { default as IconBlood } from "../../SGV/blood.svg";
+export { default as IconTall } from "../../SGV/tall.svg";
+export { default as IconWeight } from "../../SGV/weight.svg";
+export { default as IconCheckList } from "../../SGV/checklist.svg";
 
 export const IconSetting = (props) => {
   return <SVGSetting width={props?.style?.width ? props?.style?.width : _moderateScale(8 * 4)}

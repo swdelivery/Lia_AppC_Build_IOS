@@ -12,7 +12,7 @@ type Props = {
   disable?: any
 };
 
-const ActionButton = ({ title, onpress, disable }: Props) => {
+const ActionButton = ({ title, onpress, disable = () => { } }: Props) => {
 
   const isDisabled = disable();
 

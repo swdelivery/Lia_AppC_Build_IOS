@@ -28,11 +28,61 @@ type Props = {
   containerStyle?: StyleProp<ViewStyle>;
 };
 
+type CustomProps = {
+  title?: string;
+  titleSize?: number;
+  onPress: () => void;
+  disabled?: boolean;
+  height?: number;
+  containerStyle?: StyleProp<ViewStyle>;
+  styleText?: StyleProp<ViewStyle>;
+  bgColor?: any;
+  colorText?: any
+}
+
 type GradientProps = {
   colors?: string[];
   start?: { x: number; y: number };
   end?: { x: number; y: number };
 };
+
+const Custom = ({
+  title,
+  titleSize = 16,
+  onPress,
+  disabled,
+  height,
+  containerStyle,
+  styleText,
+  bgColor,
+  colorText }: CustomProps) => {
+  return (
+    <TouchableOpacity
+      disabled={disabled}
+      onPress={onPress ? () => onPress() : null}
+    >
+      <View
+        style={[
+          styles.customButton,
+          { height: height ? height : _moderateScale(48) },
+          disabled && { opacity: 0.5 },
+          { backgroundColor: bgColor && bgColor },
+          containerStyle
+        ]}
+      >
+        <Text
+          style={[
+            stylesFont.fontNolanBold,
+            { color: colorText ? colorText : "#fff", fontSize: titleSize ? titleSize : _moderateScale(18) },
+            styleText
+          ]}
+        >
+          {title ? title : ""}
+        </Text>
+      </View>
+    </TouchableOpacity>
+  )
+}
 
 const ButtonPrimary = (props) => {
   return (
@@ -45,12 +95,14 @@ const ButtonPrimary = (props) => {
           styles.button,
           { height: props.height ? props.height : _moderateScale(48) },
           props?.disabled && { opacity: 0.5 },
+          props?.style
         ]}
       >
         <Text
           style={[
             stylesFont.fontNolanBold,
             { color: "#fff", fontSize: _moderateScale(18) },
+            props?.styleText
           ]}
         >
           {props.text ? props.text : ""}
@@ -123,6 +175,14 @@ const Gradient = ({
 };
 
 const styles = StyleSheet.create({
+  customButton: {
+    width: "100%",
+    backgroundColor: Color.BASE_COLOR,
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    borderRadius: 8,
+  },
   button: {
     width: "100%",
     backgroundColor: Color.BASE_COLOR,
@@ -156,5 +216,5 @@ const styles = StyleSheet.create({
   },
 });
 
-const Button = { ButtonPrimary, ButtonOutline, Gradient };
+const Button = { ButtonPrimary, ButtonOutline, Gradient, Custom };
 export default Button;
