@@ -1,5 +1,4 @@
 import Button from "@Components/Button/Button";
-import { IconCancelGrey } from "@Components/Icon/Icon";
 import Row from "@Components/Row";
 import Text from "@Components/Text";
 import {
@@ -7,16 +6,14 @@ import {
   BORDER_COLOR,
   WHITE
 } from "@Constant/Color";
-import { sizeIcon } from "@Constant/Icon";
 import {
   _height,
   _heightScale,
   _moderateScale,
   _width,
 } from "@Constant/Scale";
-import { styleElement } from "@Constant/StyleElement";
 import React, { memo, useEffect, useRef, useState } from "react";
-import { ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import Animated, {
   Extrapolation,
   interpolate,
@@ -111,7 +108,7 @@ const ModalScrollPicker = memo(({ visible, onClose, onConfirm, title, unit, data
   // FUNCTION FOR INTEGER
   const handleMomentumScrollEndInteger = (event) => {
     const offsetY = event.nativeEvent.contentOffset.y;
-    const index = Math.floor(offsetY / WIDTH_ITEM);
+    const index = Math.ceil(offsetY / WIDTH_ITEM);
     setValueInteger(listValueInteger[index + 1])
   };
   const scrollHandlerInteger = useAnimatedScrollHandler({
@@ -125,7 +122,7 @@ const ModalScrollPicker = memo(({ visible, onClose, onConfirm, title, unit, data
   // FUNCTION FOR DECIMAL
   const handleMomentumScrollEndDecimal = (event) => {
     const offsetY = event.nativeEvent.contentOffset.y;
-    const index = Math.floor(offsetY / WIDTH_ITEM);
+    const index = Math.ceil(offsetY / WIDTH_ITEM);
     setValueDecimal(listValueDecimal[index + 1])
   };
   const scrollHandlerDecimal = useAnimatedScrollHandler({

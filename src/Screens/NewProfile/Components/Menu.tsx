@@ -1,14 +1,13 @@
-import { StyleSheet, TouchableOpacity, View } from 'react-native'
-import React, { useState } from 'react'
 import Column from '@Components/Column'
+import HorizontalLine from '@Components/Line/HorizontalLine'
+import Row from '@Components/Row'
 import Text from '@Components/Text'
 import { GREY_FOR_TITLE, WHITE } from '@Constant/Color'
-import HorizontalLine from '@Components/Line/HorizontalLine'
 import { _moderateScale, _width } from '@Constant/Scale'
-import Row from '@Components/Row'
-import { IconProfileBooking, IconProfileCare, IconProfileCoin, IconProfileHistory, IconProfileMedical, IconProfilePayment, IconProfileShield, IconProfileStar } from '@Components/Icon/Icon'
-import { useNavigate } from 'src/Hooks/useNavigation'
 import ScreenKey from '@Navigation/ScreenKey'
+import React from 'react'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
+import { useNavigate } from 'src/Hooks/useNavigation'
 
 const WIDTH_BOX = _width - 8 * 4;
 
@@ -39,7 +38,7 @@ const Menu = ({ title, data, type }: Props) => {
                       horizontal={false}
                       name={item?.name}
                       icon={item?.icon}
-                      type={item?.type} />
+                      flag={item?.flag} />
                   )
                 })
               }
@@ -72,8 +71,9 @@ const BtnIcon = ({ name = '', icon = null, horizontal = false, lasted = null, fl
   const { navigate } = useNavigate()
 
   const _handleOnpress = () => {
-    console.log({ flag });
     switch (flag) {
+      case 'list-booking':
+        return navigate(ScreenKey.LIST_BOOKING)()
       case 'policy':
         return navigate(ScreenKey.SCREEN_HTML, { title: name, code: "CSBH" })()
       case 'protect':

@@ -171,6 +171,8 @@ import NewUpdateInfoUser from "@Screens/NewUpdateInfoUser";
 import NewSettingApp from "src/NewSettingApp";
 import ScreenHTML from "@Screens/ScreenHTML";
 import NewHealthRecord from "@Screens/NewHealthRecord";
+import ListRelativesProfile from "@Screens/ListRelativesProfile";
+import RelativesInfo from "@Screens/ListRelativesProfile/RelativesInfo";
 
 const rootStack = createStackNavigator();
 
@@ -925,6 +927,18 @@ const RootNavigator = () => {
             options={{ ...TransitionPresets.SlideFromRightIOS }}
             name={ScreenKey.SCREEN_HTML}
             component={ScreenHTML}
+          />
+
+          {/* RELATIVES PROFILE */}
+          <rootStack.Screen
+            options={{ ...TransitionPresets.SlideFromRightIOS }}
+            name={ScreenKey.LIST_RELATIVES_PROFILE}
+            component={ListRelativesProfile}
+          />
+          <rootStack.Screen
+            options={{ ...TransitionPresets.SlideFromRightIOS }}
+            name={ScreenKey.RELATIVES_INFO}
+            component={RelativesInfo}
           />
 
           <rootStack.Screen

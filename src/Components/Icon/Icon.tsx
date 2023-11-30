@@ -113,6 +113,7 @@ export { default as IconBlood } from "../../SGV/blood.svg";
 export { default as IconTall } from "../../SGV/tall.svg";
 export { default as IconWeight } from "../../SGV/weight.svg";
 export { default as IconCheckList } from "../../SGV/checklist.svg";
+export { default as IconTrashRed } from "../../SGV/trashRed.svg";
 
 export const IconSetting = (props) => {
   return <SVGSetting width={props?.style?.width ? props?.style?.width : _moderateScale(8 * 4)}

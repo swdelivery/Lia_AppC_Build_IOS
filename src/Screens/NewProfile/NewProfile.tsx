@@ -1,12 +1,11 @@
-import { ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import Screen from '@Components/Screen'
-import Banner from './Components/Banner'
-import Separator from '@Components/Separator/Separator'
-import MainList from './Components/MainList'
 import Column from '@Components/Column'
+import { IconProfileBooking, IconProfileCare, IconProfileCoin, IconProfileEducation, IconProfileFindJob, IconProfileHandHeartIn, IconProfileHistory, IconProfileInsurance, IconProfileLoveCare, IconProfileMedical, IconProfilePartnerShip, IconProfilePayLater, IconProfilePayment, IconProfilePolicy, IconProfileProtect, IconProfileShield, IconProfileStar, IconProfileVoucher, IconProfileWallet } from '@Components/Icon/Icon'
+import Screen from '@Components/Screen'
+import React from 'react'
+import { ScrollView, StatusBar, StyleSheet, View } from 'react-native'
+import Banner from './Components/Banner'
+import MainList from './Components/MainList'
 import Menu from './Components/Menu'
-import { IconBooking, IconProfileBooking, IconProfileCare, IconProfileCoin, IconProfileEducation, IconProfileFindJob, IconProfileHandHeartIn, IconProfileHistory, IconProfileInsurance, IconProfileLoveCare, IconProfileMedical, IconProfilePartnerShip, IconProfilePayLater, IconProfilePayment, IconProfilePolicy, IconProfileProtect, IconProfileShield, IconProfileStar, IconProfileVoucher, IconProfileWallet } from '@Components/Icon/Icon'
 
 const NewProfile = () => {
   return (
@@ -21,7 +20,7 @@ const NewProfile = () => {
               type={'row'}
               title={"Đơn hàng của tôi"}
               data={[
-                { name: 'Lịch hẹn', icon: <IconProfileBooking /> },
+                { flag: 'list-booking', name: 'Lịch hẹn', icon: <IconProfileBooking /> },
                 { name: 'Lịch sử điều trị', icon: <IconProfileHistory /> },
                 { name: 'Đơn thuốc', icon: <IconProfileMedical /> },
                 { name: 'Thanh toán', icon: <IconProfilePayment /> },

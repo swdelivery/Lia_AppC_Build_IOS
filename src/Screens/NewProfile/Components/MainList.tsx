@@ -15,7 +15,7 @@ const MainList = () => {
       <Row gap={8 * 2} justifyContent='space-between'>
         <BtnIcon text={'Nhật ký'} icon={<IconDiary />} />
         <BtnIcon flag={'health-record'} text={'Sức khoẻ'} icon={<IconHeart width={8 * 3.5} height={8 * 3.5} />} />
-        <BtnIcon text={'Người thân'} icon={<IconHome />} />
+        <BtnIcon flag={'relatives-profile'} text={'Người thân'} icon={<IconHome />} />
         <BtnIcon text={'Tri ân'} icon={<IconHandHeart />} />
       </Row>
     </View>
@@ -32,12 +32,12 @@ const BtnIcon = ({ icon = null, text = '', flag = null }) => {
     switch (flag) {
       case 'health-record':
         return navigate(ScreenKey.HEALTH_RECORD)()
+      case 'relatives-profile':
+        return navigate(ScreenKey.LIST_RELATIVES_PROFILE)()
 
       default:
         break;
     }
-    console.log({ flag });
-
   }
 
   return (

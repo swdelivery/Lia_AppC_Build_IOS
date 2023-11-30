@@ -38,6 +38,7 @@ import chat from "../chat/reducers";
 import { resetable } from "@Redux/resettableReducer";
 import modal from "../modal/reducers";
 import resultcanningeyes from "../resultcanningeyes/reducers";
+import relatives from "../relatives/reducers";
 
 const rootReducer = combineReducers({
   newsReducer,
@@ -77,7 +78,8 @@ const rootReducer = combineReducers({
   chat,
   user: resetable(user),
   modal,
-  resultcanningeyes
+  resultcanningeyes,
+  relatives
 });
 
 // const rootReducer = (state, action) => {
