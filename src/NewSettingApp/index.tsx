@@ -14,7 +14,7 @@ import { checkNotifications } from "react-native-permissions";
 import { openSettings, RESULTS } from "react-native-permissions";
 import Row from '@Components/Row'
 import { IconArrowDown, IconArrowRightRed, IconRightArrow, IconRightArrowBase, IconRightWhite } from '@Components/Icon/Icon'
-import { BORDER_COLOR, WHITE } from '@Constant/Color'
+import { BASE_COLOR, BORDER_COLOR, WHITE } from '@Constant/Color'
 import useConfirmation from 'src/Hooks/useConfirmation'
 import { removeAccount } from '@Redux/Action/ProfileAction'
 import store from '@Redux/store'
@@ -25,6 +25,8 @@ import keychain from "src/utils/keychain";
 import SocketInstance from "../../SocketInstance";
 import { useNavigate } from 'src/Hooks/useNavigation'
 import { useSelector } from 'react-redux'
+import Button from '@Components/Button/Button'
+import ScreenKey from '@Navigation/ScreenKey'
 
 const NewSettingApp = () => {
   const infoUserRedux = useSelector((state) => state.infoUserReducer?.infoUser);
@@ -144,7 +146,7 @@ const NewSettingApp = () => {
     SocketInstance.instance = null;
     SocketInstance.socketConn.disconnect();
     SocketInstance.socketConn = null;
-    navigate("MainTab")();
+    navigate(ScreenKey.HOME)();
   };
 
   return (
@@ -192,6 +194,14 @@ const NewSettingApp = () => {
 
         </Column>
 
+        <TouchableOpacity
+          style={styles.btnLogout}
+          onPress={_handleLogOut}>
+          <Text weight='bold' color={BASE_COLOR}>
+            Đăng xuất
+          </Text>
+        </TouchableOpacity>
+
       </ScrollView>
     </Screen>
   )
@@ -200,6 +210,17 @@ const NewSettingApp = () => {
 export default NewSettingApp
 
 const styles = StyleSheet.create({
+  btnLogout: {
+    marginHorizontal: 8 * 2,
+    height: 8 * 6,
+    backgroundColor: WHITE,
+    borderRadius: 8,
+    borderWidth: 2,
+    borderColor: BASE_COLOR,
+    marginTop: 8 * 4,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
   btnDeleteAccount: {
     marginHorizontal: 8 * 2,
     padding: 8 * 2,

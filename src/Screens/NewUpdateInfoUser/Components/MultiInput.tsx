@@ -238,12 +238,12 @@ const styles = StyleSheet.create({
   input__underLine: {
     width: _moderateScale(8 * 3),
     height: 1,
-    backgroundColor: BLACK,
+    backgroundColor: GREY,
     position: 'absolute',
     bottom: _moderateScale(8 * 2),
   },
   input: {
-    ...stylesFont.fontNolanBold,
+    ...stylesFont.fontNolan,
     textAlign: 'center',
     width: _moderateScale(8 * 3),
     height: _moderateScale(8 * 7)

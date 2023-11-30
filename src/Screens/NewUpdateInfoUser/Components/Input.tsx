@@ -120,7 +120,7 @@ const Input = ({ title,
             {icon}
           </View>
           <Column paddingHorizontal={_moderateScale(4)} justifyContent='center' height={_moderateScale(8 * 7)}>
-            <Text size={_moderateScale(14)} weight='bold'>
+            <Text size={_moderateScale(14)} >
               {value}
             </Text>
           </Column>

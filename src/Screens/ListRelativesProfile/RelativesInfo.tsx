@@ -294,7 +294,7 @@ const RelativesInfo = (props) => {
               error={errorBirthday}
               number
               setError={setErrorBirthday}
-              title="Ngày tháng năm sinh"
+              title="Ngày tháng năm sinh (vd: 01/01/2000)"
               icon={<IconProfileBirthday width={8 * 2} height={8 * 2} />} />
 
             <Input

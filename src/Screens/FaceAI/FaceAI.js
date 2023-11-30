@@ -191,12 +191,12 @@ const FaceAI = () => {
     let result = await scanningEyes(photo);
     console.log({ message: result?.data?.message });
     if (result?.data?.message == "SUCCESS") {
-      console.log("DONE" + result?.data?.data?.right?.coordinate_eye_origi);
+      // console.log("DONE" + result?.data?.data?.right?.coordinate_eye_origi);
       const { left, right, width, height } = result?.data?.data;
 
-      console.log({ x: result?.data?.data?.right?.coordinate_eye_origi[0] });
-      console.log({ y: result?.data?.data?.right?.coordinate_eye_origi[1] });
-      console.log({ _width, _height });
+      // console.log({ x: result?.data?.data?.right?.coordinate_eye_origi[0] });
+      // console.log({ y: result?.data?.data?.right?.coordinate_eye_origi[1] });
+      // console.log({ _width, _height });
 
       let [valueRightX, valueRightY] = convertImageCoordsToDeviceCoords(
         right?.coordinate_eye_origi,
@@ -209,12 +209,12 @@ const FaceAI = () => {
         height
       );
 
-      console.log({
-        valueRightX,
-        valueRightY,
-        valueLeftX,
-        valueLeftY,
-      });
+      // console.log({
+      //   valueRightX,
+      //   valueRightY,
+      //   valueLeftX,
+      //   valueLeftY,
+      // });
       // return navigation.replace(ScreenKey.RESULT_AI_SCAN_EYES, { scanningResult: result?.data?.data, imageScan: photo?.path });
       setShowBackDropOpacity("doing");
 

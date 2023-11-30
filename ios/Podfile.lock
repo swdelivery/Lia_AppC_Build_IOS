@@ -436,7 +436,8 @@ PODS:
     - React-Core
   - react-native-netinfo (9.5.0):
     - React-Core
-  - react-native-pager-view (6.2.2):
+  - react-native-pager-view (6.2.3):
+    - RCT-Folly (= 2021.07.22.00)
     - React-Core
   - react-native-render-html (6.3.4):
     - React-Core
@@ -572,26 +573,26 @@ PODS:
     - React-Core
   - RNCMaskedView (0.3.0):
     - React-Core
-  - RNCPicker (2.5.1):
+  - RNCPicker (2.6.1):
     - React-Core
   - RNCPushNotificationIOS (1.11.0):
     - React-Core
   - RNDateTimePicker (7.6.2):
     - React-Core
-  - RNDeviceInfo (10.11.0):
+  - RNDeviceInfo (10.12.0):
     - React-Core
   - RNFastImage (8.6.3):
     - React-Core
     - SDWebImage (~> 5.11.1)
     - SDWebImageWebPCoder (~> 0.8.4)
-  - RNFBApp (18.6.2):
+  - RNFBApp (18.7.1):
     - Firebase/CoreOnly (= 10.15.0)
     - React-Core
-  - RNFBAuth (18.6.2):
+  - RNFBAuth (18.7.1):
     - Firebase/Auth (= 10.15.0)
     - React-Core
     - RNFBApp
-  - RNFBMessaging (18.6.2):
+  - RNFBMessaging (18.7.1):
     - Firebase/Messaging (= 10.15.0)
     - FirebaseCoreExtension (= 10.15.0)
     - React-Core
@@ -620,35 +621,10 @@ PODS:
     - React-Core
   - RNReactNativeHapticFeedback (2.2.0):
     - React-Core
-  - RNReanimated (3.5.4):
-    - DoubleConversion
-    - FBLazyVector
-    - glog
-    - hermes-engine
-    - RCT-Folly
-    - RCTRequired
-    - RCTTypeSafety
-    - React-callinvoker
+  - RNReanimated (3.6.0):
+    - RCT-Folly (= 2021.07.22.00)
     - React-Core
-    - React-Core/DevSupport
-    - React-Core/RCTWebSocket
-    - React-CoreModules
-    - React-cxxreact
-    - React-hermes
-    - React-jsi
-    - React-jsiexecutor
-    - React-jsinspector
-    - React-RCTActionSheet
-    - React-RCTAnimation
-    - React-RCTAppDelegate
-    - React-RCTBlob
-    - React-RCTImage
-    - React-RCTLinking
-    - React-RCTNetwork
-    - React-RCTSettings
-    - React-RCTText
     - ReactCommon/turbomodule/core
-    - Yoga
   - RNScreens (3.27.0):
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
@@ -667,7 +643,7 @@ PODS:
     - SDWebImage/Core (~> 5.10)
   - SocketRocket (0.6.1)
   - TOCropViewController (2.6.1)
-  - VisionCamera (3.6.10):
+  - VisionCamera (3.6.12):
     - React
     - React-callinvoker
     - React-Core
@@ -1004,7 +980,7 @@ SPEC CHECKSUMS:
   react-native-image-editor: 9361a215c3991cafbe5e7f28cbbad6e72c9c2705
   react-native-mmkv: e97c0c79403fb94577e5d902ab1ebd42b0715b43
   react-native-netinfo: 48c5f79a84fbc3ba1d28a8b0d04adeda72885fa8
-  react-native-pager-view: 02a5c4962530f7efc10dd51ee9cdabeff5e6c631
+  react-native-pager-view: e26d35e382d86950c936f8917e3beb9188115ccc
   react-native-render-html: 984dfe2294163d04bf5fe25d7c9f122e60e05ebe
   react-native-safe-area-context: 2cd91d532de12acdb0a9cbc8d43ac72a8e4c897c
   react-native-version-check: 6cd36aad4e30b8e3216747e3b4ddeb09e0647af8
@@ -1033,14 +1009,14 @@ SPEC CHECKSUMS:
   RNCAsyncStorage: b03032fdbdb725bea0bd9e5ec5a7272865ae7398
   RNCClipboard: 41d8d918092ae8e676f18adada19104fa3e68495
   RNCMaskedView: f7c74478c83c4fdfc5cf4df51f80c0dd5cf125c6
-  RNCPicker: 529d564911e93598cc399b56cc0769ce3675f8c8
+  RNCPicker: b18aaf30df596e9b1738e7c1f9ee55402a229dca
   RNCPushNotificationIOS: 64218f3c776c03d7408284a819b2abfda1834bc8
   RNDateTimePicker: fc2e4f2795877d45e84d85659bebe627eba5c931
-  RNDeviceInfo: bf8a32acbcb875f568217285d1793b0e8588c974
+  RNDeviceInfo: db5c64a060e66e5db3102d041ebe3ef307a85120
   RNFastImage: 5c9c9fed9c076e521b3f509fe79e790418a544e8
-  RNFBApp: ee56f4f350e7573a18e8e62a9159cd78df80d36d
-  RNFBAuth: 6e7018d89fa6faa807655202d1acb2842ad0ef23
-  RNFBMessaging: 873996a58b01eda67bf2659dcc878ebc8415e3bb
+  RNFBApp: 8536f80dd2305a016cedcaa82a4aed842f83b464
+  RNFBAuth: db22f1838639d3bd3cfba22e4b122fe55dc3b54c
+  RNFBMessaging: a389b667737890ec6ca813c8d37b3b1417cbd835
   RNFileViewer: ce7ca3ac370e18554d35d6355cffd7c30437c592
   RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
   RNGestureHandler: 32a01c29ecc9bb0b5bf7bc0a33547f61b4dc2741
@@ -1049,7 +1025,7 @@ SPEC CHECKSUMS:
   RNInAppBrowser: e36d6935517101ccba0e875bac8ad7b0cb655364
   RNPermissions: cc7be5dfa4c04a3fdbd26a5868916b3056c102a4
   RNReactNativeHapticFeedback: ec56a5f81c3941206fd85625fa669ffc7b4545f9
-  RNReanimated: ab2e96c6d5591c3dfbb38a464f54c8d17fb34a87
+  RNReanimated: 1dcf7602777a195cf34f1dcd658037a80a2c8af1
   RNScreens: 3c2d122f5e08c192e254c510b212306da97d2581
   RNShare: 32e97adc8d8c97d4a26bcdd3c45516882184f8b6
   RNSVG: d00c8f91c3cbf6d476451313a18f04d220d4f396
@@ -1058,7 +1034,7 @@ SPEC CHECKSUMS:
   SDWebImageWebPCoder: 908b83b6adda48effe7667cd2b7f78c897e5111d
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   TOCropViewController: edfd4f25713d56905ad1e0b9f5be3fbe0f59c863
-  VisionCamera: 68c2909157ab030cf851fb28c77ef2dbef029487
+  VisionCamera: 4072a150c532927587d6f628f292f1c80ee21a98
   Yoga: 4c3aa327e4a6a23eeacd71f61c81df1bcdf677d5
 
 PODFILE CHECKSUM: c19e198c159e89d9b48785f4ec66283111717124

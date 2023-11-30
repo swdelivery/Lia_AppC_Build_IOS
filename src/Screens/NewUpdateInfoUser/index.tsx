@@ -1,6 +1,6 @@
 import ActionButton from '@Components/ActionButton/ActionButton'
 import Column from '@Components/Column'
-import { IconProfileBirthday, IconProfileCard, IconProfileFlag, IconProfileGender, IconProfileLocation, IconProfileMail, IconProfilePassport, IconProfilePerson, IconProfilePhone } from '@Components/Icon/Icon'
+import { IconFacebook, IconInstagram, IconProfileBirthday, IconProfileCard, IconProfileFlag, IconProfileGender, IconProfileLocation, IconProfileMail, IconProfilePassport, IconProfilePerson, IconProfilePhone, IconZalo } from '@Components/Icon/Icon'
 import ModalPickSingleNotSearch from '@Components/ModalPickSingleNotSearch/ModalPickSingleNotSearch'
 import Header from '@Components/NewHeader/Header'
 import Screen from '@Components/Screen'
@@ -15,6 +15,10 @@ import EditAvatar from './Components/EditAvatar'
 import Input from './Components/Input'
 import MultiInput from './Components/MultiInput'
 import useConfirmation from 'src/Hooks/useConfirmation'
+import Text from '@Components/Text'
+import ActionSheetBottom from '@Components/ModalBottom/ActionSheetBottom'
+import ImagePicker from "react-native-image-crop-picker"
+import { uploadModule } from '@Redux/Action/BookingAction'
 
 const NewUpdateInfoUser = () => {
 
@@ -25,6 +29,7 @@ const NewUpdateInfoUser = () => {
   const infoUser = useSelector(state => state?.infoUserReducer?.infoUser)
 
   const genderPicker = useVisible();
+  const cameraPicker = useVisible()
 
   const [valueName, setValueName] = useState('')
   const [errorName, setErrorName] = useState(null)
@@ -43,6 +48,10 @@ const NewUpdateInfoUser = () => {
   const [valueJob, setValueJob] = useState('')
   const [valueNationality, setValueNationality] = useState('')
   const [valueEthnicity, setValueEthnicity] = useState('')
+
+  const [valueFacebook, setValueFacebook] = useState('')
+  const [valueZalo, setValueZalo] = useState('')
+  const [valueInstagram, setValueInstagram] = useState('')
 
   useEffect(() => {
     if (infoUser?._id) {
@@ -65,6 +74,9 @@ const NewUpdateInfoUser = () => {
       setValueJob(infoUser?.profession)
       setValueNationality(infoUser?.nationality)
       setValueEthnicity(infoUser?.ethnicity)
+      setValueFacebook(infoUser?.facebook)
+      setValueZalo(infoUser?.zalo)
+      setValueInstagram(infoUser?.instagram)
     }
   }, [infoUser])
 
@@ -147,6 +159,21 @@ const NewUpdateInfoUser = () => {
     } else {
       dataFetch['ethnicity'] = ""
     }
+    if (!isEmpty(valueFacebook)) {
+      dataFetch['facebook'] = valueFacebook
+    } else {
+      dataFetch['facebook'] = ""
+    }
+    if (!isEmpty(valueZalo)) {
+      dataFetch['zalo'] = valueZalo
+    } else {
+      dataFetch['zalo'] = ""
+    }
+    if (!isEmpty(valueInstagram)) {
+      dataFetch['instagram'] = valueInstagram
+    } else {
+      dataFetch['instagram'] = ""
+    }
 
     showConfirmation(
       'Xác nhận',
@@ -164,6 +191,79 @@ const NewUpdateInfoUser = () => {
     } else {
       return true
     }
+  }
+
+  const _handleConfirmBottomSheet = (data) => {
+    if (data?.type == 'gallery') {
+      _handlePickGallery()
+    }
+    if (data?.type == 'camera') {
+      _handlePickCamera()
+    }
+  }
+
+
+  const _handlePickGallery = () => {
+    ImagePicker.openPicker({
+      width: 500,
+      height: 500,
+      cropping: true,
+      multiple: false,
+      mediaType: "photo",
+      compressImageQuality: 1,
+    }).then(async (image) => {
+      let newImage = {
+        uri: image.path,
+        width: image.width,
+        height: image.height,
+        mime: image.mime,
+        type: image.mime,
+        name: `${image.modificationDate}_${0}`,
+        isLocal: true,
+      };
+      if (!isEmpty(newImage)) {
+        let listImages = [newImage];
+        let resultUploadImage = await uploadModule({
+          moduleName: "partner",
+          files: listImages,
+        });
+        if (resultUploadImage.isAxiosError) return;
+        let listIdImageHasUpload = resultUploadImage?.data?.data.map(
+          (item) => item._id
+        );
+        dispatch(updateProfilePartner({ fileAvatar: listIdImageHasUpload[0] }));
+      }
+    });
+  };
+
+  const _handlePickCamera = () => {
+    ImagePicker.openCamera({
+      mediaType: 'photo',
+      width: 500,
+      height: 500,
+      cropping: true,
+      multiple: false,
+    }).then(async (image) => {
+      let newImage = {
+        uri: image.path,
+        width: image.width,
+        height: image.height,
+        mime: image.mime,
+        type: image.mime,
+        name: `${image.modificationDate}_${0}`,
+        isLocal: true
+      }
+      if (!isEmpty(newImage)) {
+        let listImages = [newImage]
+        let resultUploadImage = await uploadModule({
+          moduleName: 'partner',
+          files: listImages
+        })
+        if (resultUploadImage.isAxiosError) return
+        let listIdImageHasUpload = resultUploadImage?.data?.data.map(item => item._id);
+        dispatch(updateProfilePartner({ fileAvatar: listIdImageHasUpload[0] }));
+      }
+    }).catch(e => { });
   }
 
   return (
@@ -186,7 +286,8 @@ const NewUpdateInfoUser = () => {
         style={{ flex: 1 }}
       >
         <ScrollView style={{ flex: 1 }}>
-          <EditAvatar />
+          <EditAvatar
+            cameraPicker={cameraPicker} />
 
           <Column gap={8 * 4} paddingHorizontal={8 * 2}>
             <Input
@@ -227,12 +328,12 @@ const NewUpdateInfoUser = () => {
               error={errorBirthday}
               number
               setError={setErrorBirthday}
-              title="Ngày tháng năm sinh"
+              title="Ngày tháng năm sinh (vd: 01/01/2000)"
               icon={<IconProfileBirthday width={8 * 2} height={8 * 2} />} />
 
             <Input title="Giới tính"
               enablePress
-              value={valueGender == 'male' ? "Nam" : "Nữ"}
+              value={valueGender ? (valueGender == 'male' ? "Nam" : "Nữ") : null}
               onPress={genderPicker.show}
               icon={<IconProfileGender width={8 * 2} height={8 * 2} />} />
 
@@ -256,6 +357,26 @@ const NewUpdateInfoUser = () => {
               value={valueEthnicity}
               onChangeText={setValueEthnicity}
               icon={<IconProfileFlag width={8 * 2} height={8 * 2} />} />
+
+            <Text weight='bold'>
+              Mạng xã hội
+            </Text>
+
+            <Input title="Facebook"
+              value={valueFacebook}
+              onChangeText={setValueFacebook}
+              icon={<IconFacebook width={8 * 2} height={8 * 2} />} />
+
+            <Input title="Zalo"
+              value={valueZalo}
+              onChangeText={setValueZalo}
+              icon={<IconZalo width={8 * 2} height={8 * 2} />} />
+
+            <Input title="Instagram"
+              value={valueInstagram}
+              onChangeText={setValueInstagram}
+              icon={<IconInstagram width={8 * 2} height={8 * 2} />} />
+
           </Column>
 
           <View style={{ height: 200 }} />
@@ -266,6 +387,18 @@ const NewUpdateInfoUser = () => {
         disable={_handleCheckDisable}
         onpress={_handleConfirm}
         title={'Cập nhật thông tin'} />
+
+      <ActionSheetBottom
+        onConfirm={_handleConfirmBottomSheet}
+        indexRed={2}
+        options={[
+          { name: "Mở camera", type: "camera" },
+          { name: "Chọn ảnh từ thư viện", type: "gallery" },
+          { name: "Đóng", type: "cancel" },
+        ]}
+        onClose={cameraPicker.hide}
+        visible={cameraPicker?.visible}
+      />
 
     </Screen>
   )
