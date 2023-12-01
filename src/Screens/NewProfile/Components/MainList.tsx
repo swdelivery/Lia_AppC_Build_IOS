@@ -69,7 +69,7 @@ const BtnIcon = ({ icon = null, text = '', flag = null }) => {
 const styles = StyleSheet.create({
   btn__icon: {
     position: 'absolute',
-    top: 8 * 3
+    top: 8 * 2.5
   },
   btn__text: {
     position: 'absolute',
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
   btn: {
     alignItems: 'center',
     flex: 1,
-    height: 8 * 12,
+    height: 8 * 11,
     backgroundColor: WHITE,
     justifyContent: 'center',
     borderRadius: 8

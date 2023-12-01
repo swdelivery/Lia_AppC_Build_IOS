@@ -24,13 +24,19 @@ const Menu = ({ title, data, type }: Props) => {
     <View
       style={styles.container}>
       <Column>
-        <Text margin={8 * 2} weight='bold'>
+        <Text
+          margin={8 * 2}
+          marginVertical={8}
+          weight='bold'>
           {title}
         </Text>
         <HorizontalLine />
         {
           type == 'row' ?
-            <Row flexWrap='wrap'>
+            <Row
+              paddingVertical={8}
+              alignItems='flex-start'
+              flexWrap='wrap'>
               {
                 data?.map((item, index) => {
                   return (
@@ -135,17 +141,21 @@ export default Menu
 
 const styles = StyleSheet.create({
   btn_text: {
-    position: 'absolute',
-    top: 8 * 7
+    // position: 'absolute',
+    // top: 8 * 6
+    marginTop: 8
   },
   btn_icon: {
-    position: 'absolute',
-    top: 8 * 2.5
+    marginTop: 8
+    // position: 'absolute',
+    // top: 8 * 1.5
   },
   btn: {
     width: WIDTH_BOX / 4,
-    height: WIDTH_BOX / 4,
+    // minHeight: WIDTH_BOX / 5,
     alignItems: 'center',
+    paddingVertical: 4
+    // borderWidth: 1
   },
   container: {
     marginHorizontal: 8 * 2,

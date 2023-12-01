@@ -52,7 +52,7 @@ const NewProfile = () => {
             />
             <Menu
               type={'column'}
-              title={"Phụng sự"}
+              title={"Khác"}
               data={[
                 { flag: 'policy', name: 'Chính sách và quy định chung', icon: <IconProfilePolicy /> },
                 { flag: 'protect', name: 'Chính sách bảo mật', icon: <IconProfileProtect /> },
