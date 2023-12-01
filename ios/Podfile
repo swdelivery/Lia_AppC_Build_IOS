@@ -10,7 +10,9 @@ end
 node_require('react-native/scripts/react_native_pods.rb')
 node_require('react-native-permissions/scripts/setup.rb')
 
-platform :ios, min_ios_version_supported
+minimum_target = '13.0'
+
+platform :ios, minimum_target
 prepare_react_native_project!
 
 # ⬇️ uncomment wanted permissions
@@ -43,7 +45,6 @@ def __apply_Xcode_14_3_RC_post_install_workaround(installer)
   installer.pods_project.targets.each do |target|
     target.build_configurations.each do |config|
       current_target = config.build_settings['IPHONEOS_DEPLOYMENT_TARGET']
-      minimum_target = '13.0'
       if current_target.to_f < minimum_target.to_f
         config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = minimum_target
       end
@@ -103,6 +104,7 @@ target 'LiaAppC' do
       :mac_catalyst_enabled => false
     )
     __apply_Xcode_12_5_M1_post_install_workaround(installer)
+    __apply_Xcode_14_3_RC_post_install_workaround(installer)
     
     installer.pods_project.build_configurations.each do |config|
       config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64 i386"

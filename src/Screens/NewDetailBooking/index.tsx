@@ -1,4 +1,3 @@
-import Header from "@Components/NewHeader/Header";
 import Screen from "@Components/Screen";
 import { FONT_WEIGHTS } from "@Components/Text";
 import { _width } from "@Constant/Scale";
@@ -15,6 +14,7 @@ import ScreenKey from "@Navigation/ScreenKey";
 import { useDispatch, useSelector } from "react-redux";
 import { getBookingDetails } from "@Redux/user/actions";
 import { getBookingDetailsState } from "@Redux/user/selectors";
+import LiAHeader from "@Components/Header/LiAHeader";
 
 const STACKS = [
   {
@@ -46,7 +46,7 @@ const NewDetailBooking = () => {
   return (
     <Screen safeBottom={isAndroid}>
       <StatusBar barStyle={"light-content"} />
-      <Header title={"Chi tiết lịch hẹn"} />
+      <LiAHeader safeTop title={"Chi tiết lịch hẹn"} />
 
       <ScrollableTabView
         title={<View />}
@@ -82,41 +82,40 @@ const NewDetailBooking = () => {
 export default NewDetailBooking;
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: "white",
-    },
-    tabsStyle: {
-        height: 8 * 5,
-        backgroundColor: "white",
-        borderBottomColor: "grey",
-        // borderBottomWidth: 1,
-    },
-    tabStyle: {
-        backgroundColor: "white",
-        width: _width / 4.25,
-    },
-    textStyle: {
-        color: "black",
-        fontWeight: "500",
-        fontSize: 14,
-        fontFamily: FONT_WEIGHTS["bold"],
-    },
-    tabUnderlineStyle: {
-        backgroundColor: "#4BA888",
-        top: 8 * 4,
-        height: 3,
-    },
-    searchContainer: {
-        position: "absolute",
-        zIndex: 1,
-        alignItems: "center",
-        width: _width,
-    },
-    tabInnerStyle: { width: "100%" },
-    textActiveStyle: {
-        color: "#4BA888",
-        fontWeight: "bold",
-    },
-
+  container: {
+    flex: 1,
+    backgroundColor: "white",
+  },
+  tabsStyle: {
+    height: 8 * 5,
+    backgroundColor: "white",
+    borderBottomColor: "grey",
+    // borderBottomWidth: 1,
+  },
+  tabStyle: {
+    backgroundColor: "white",
+    width: _width / 4.25,
+  },
+  textStyle: {
+    color: "black",
+    fontWeight: "500",
+    fontSize: 14,
+    fontFamily: FONT_WEIGHTS["bold"],
+  },
+  tabUnderlineStyle: {
+    backgroundColor: "#4BA888",
+    top: 8 * 4,
+    height: 3,
+  },
+  searchContainer: {
+    position: "absolute",
+    zIndex: 1,
+    alignItems: "center",
+    width: _width,
+  },
+  tabInnerStyle: { width: "100%" },
+  textActiveStyle: {
+    color: "#4BA888",
+    fontWeight: "bold",
+  },
 });

@@ -63,6 +63,14 @@ const ActionBottom = () => {
       dataFetch["serviceNeedCareCodeArr"] = dataServices?.map(
         (item) => item.code
       );
+      dataFetch["services"] = dataServices?.map(
+        (item) => {
+          return {
+            "serviceCode": item?.code,//bắt buộc
+            "options": []
+          }
+        }
+      );
     }
     dataFetch["partnerPhone"] = {
       nationCode: infoUserRedux?.infoUser?.phone[0]?.nationCode,

@@ -1,4 +1,3 @@
-import Header from "@Components/NewHeader/Header";
 import Screen from "@Components/Screen";
 import { _moderateScale } from "@Constant/Scale";
 import React, { useEffect } from "react";
@@ -13,6 +12,7 @@ import {
 import { RenderItemProps } from "@typings/common";
 import { Insurance } from "@typings/insurance";
 import useItemExtractor from "src/Hooks/useItemExtractor";
+import LiAHeader from "@Components/Header/LiAHeader";
 
 const ListBeautyInsurance = () => {
   const { data, getData } = useListFilter(
@@ -33,7 +33,11 @@ const ListBeautyInsurance = () => {
 
   return (
     <Screen>
-      <Header title={"Danh sách bảo hiểm"} barStyle="light-content" />
+      <LiAHeader
+        safeTop
+        title={"Danh sách bảo hiểm"}
+        barStyle="light-content"
+      />
       <FlatList
         data={data}
         renderItem={_renderItem}

@@ -279,8 +279,8 @@ const getPartnerConversations = (
   return axios
     .get(
       "/partner-conversation" +
-        "?" +
-        encodeParams({ ...params, limit: pageSize, page })
+      "?" +
+      encodeParams({ ...params, limit: pageSize, page })
     )
     .then(({ data }) => data.data);
 };
@@ -303,6 +303,27 @@ const startChat = (payload: StartChatPayload) =>
   axios
     .post("/partner-conversation/start-chat", payload)
     .then(({ data }) => data.data);
+
+
+
+const createPartnerRelative = (payload: any) => {
+  return axios.post("/partner-relative", payload).then(({ data }) => data);
+};
+
+const updatePartnerRelative = (payload: any) => {
+  return axios.put(`/partner-relative/${payload?._id}`, payload?.data).then(({ data }) => data);
+};
+
+const deletePartnerRelative = (payload: any) => {
+  return axios.delete(`/partner-relative/${payload?._id}`, {}).then(({ data }) => data);
+};
+
+const getListPartnerRelative = (payload: any) => {
+  const query = encodeParams({
+    ...payload,
+  });
+  return axios.get(`/partner-relative/list?${query}`, payload).then(({ data }) => data);
+};
 
 export default {
   getServiceGroup,
@@ -349,4 +370,10 @@ export default {
   getConversationDetails,
   getConversationMessages,
   startChat,
+
+  // Relative
+  createPartnerRelative,
+  updatePartnerRelative,
+  deletePartnerRelative,
+  getListPartnerRelative,
 };

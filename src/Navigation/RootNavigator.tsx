@@ -167,6 +167,12 @@ import DetailMaterial from "@Screens/DetailMaterial";
 import ListBeautyInsurance from "@Screens/ListBeautyInsurance";
 import DetailBeautyInsurance from "@Screens/DetailBeautyInsurance";
 import withHost from "@Components/withHost";
+import NewUpdateInfoUser from "@Screens/NewUpdateInfoUser";
+import NewSettingApp from "src/NewSettingApp";
+import ScreenHTML from "@Screens/ScreenHTML";
+import NewHealthRecord from "@Screens/NewHealthRecord";
+import ListRelativesProfile from "@Screens/ListRelativesProfile";
+import RelativesInfo from "@Screens/ListRelativesProfile/RelativesInfo";
 
 const rootStack = createStackNavigator();
 
@@ -224,7 +230,7 @@ const RootNavigator = () => {
           <rootStack.Screen
             options={{ ...TransitionPresets.SlideFromRightIOS }}
             name={ScreenKey.HEALTH_RECORD}
-            component={HealthRecord}
+            component={NewHealthRecord}
           />
           {/* <rootStack.Screen options={{ ...TransitionPresets.SlideFromRightIOS }} name={ScreenKey.TREATMENT_RECORD} component={TreatmentRecord} /> */}
 
@@ -478,7 +484,7 @@ const RootNavigator = () => {
           <rootStack.Screen
             options={{ ...TransitionPresets.SlideFromRightIOS }}
             name={ScreenKey.EDIT_PROFILE}
-            component={EditProfile}
+            component={NewUpdateInfoUser}
           />
           {/* <rootStack.Screen options={{ ...TransitionPresets.SlideFromRightIOS }} name={ScreenKey.PICK_TREATMENT_TO_BOOKING} component={PickTreatmentDiary} /> */}
 
@@ -686,7 +692,7 @@ const RootNavigator = () => {
           <rootStack.Screen
             options={{ ...TransitionPresets.SlideFromRightIOS }}
             name={ScreenKey.SETTING_APP}
-            component={SettingApp}
+            component={NewSettingApp}
           />
 
           <rootStack.Screen
@@ -914,6 +920,25 @@ const RootNavigator = () => {
             options={{ ...TransitionPresets.SlideFromRightIOS }}
             name={ScreenKey.DETAIL_BEAUTY_INSURANCE}
             component={DetailBeautyInsurance}
+          />
+
+          {/* SCREEN FOR RENDER HTML */}
+          <rootStack.Screen
+            options={{ ...TransitionPresets.SlideFromRightIOS }}
+            name={ScreenKey.SCREEN_HTML}
+            component={ScreenHTML}
+          />
+
+          {/* RELATIVES PROFILE */}
+          <rootStack.Screen
+            options={{ ...TransitionPresets.SlideFromRightIOS }}
+            name={ScreenKey.LIST_RELATIVES_PROFILE}
+            component={ListRelativesProfile}
+          />
+          <rootStack.Screen
+            options={{ ...TransitionPresets.SlideFromRightIOS }}
+            name={ScreenKey.RELATIVES_INFO}
+            component={RelativesInfo}
           />
 
           <rootStack.Screen

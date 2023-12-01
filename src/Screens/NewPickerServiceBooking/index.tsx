@@ -20,7 +20,7 @@ import Tabs from "./Components/Tabs";
 import useSelectedItems from "src/Hooks/useSelectedItems";
 import ItemService from "./Components/ItemService";
 import Button from "@Components/Button/Button";
-import Header from "@Components/NewHeader/Header";
+import LiAHeader from "@Components/Header/LiAHeader";
 
 const NewPickerServiceBooking = () => {
   const dispatch = useDispatch();
@@ -109,7 +109,7 @@ const NewPickerServiceBooking = () => {
         isShow={isShowModalAddServiceToBooking?.flag}
         hideModal={_hideModalConfirmService}
       />
-      <Header title="Chọn dịch vụ" />
+      <LiAHeader safeTop title="Chọn dịch vụ" />
       {routes?.length > 0 && (
         <Tabs tabs={routes} index={index} onTabChange={setIndex} />
       )}

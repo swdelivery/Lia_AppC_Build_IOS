@@ -2,9 +2,9 @@ import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { BORDER_COLOR } from '@Constant/Color'
 
-const HorizontalLine = () => {
+const HorizontalLine = ({ style = {} }) => {
   return (
-    <View style={styles.line}>
+    <View style={[styles.line, style]}>
 
     </View>
   )
