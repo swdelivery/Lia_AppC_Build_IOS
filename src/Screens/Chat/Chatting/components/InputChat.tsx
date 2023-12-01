@@ -195,7 +195,7 @@ const InputChat = ({ }: Props) => {
     setLoadingSendMessage(true);
 
     let flagChatGPT = currTextMessage.includes("{@}[ChatGPT](1)");
-    let customText = currTextMessage.replace("/{@}[ChatGPT](1)/g", "");
+    let customText = currTextMessage.replace("{@}[ChatGPT](1)", "");
     let customType = flagChatGPT ? "chatgpt" : "text";
 
     let data = {
@@ -303,8 +303,10 @@ const InputChat = ({ }: Props) => {
         content: "Tóm tắt lại cuộc trò chuyện",
       },
     };
+    console.log({ data });
+
     SocketInstance.socketConn?.emit(CSS_SEND_MESSAGE, data);
-  }, []);
+  }, [conversation]);
 
   const moreActionsAnimatedStyle = useAnimatedStyle(() => {
     return {

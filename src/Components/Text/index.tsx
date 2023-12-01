@@ -36,6 +36,7 @@ export type TextProps = RNTextProps & {
   right?: number;
   removePadding?: boolean;
   fontStyle?: "normal" | "italic";
+  flex?: number;
   textDecorationLine?:
     | "none"
     | "underline"
@@ -55,6 +56,7 @@ const Text = ({
   removePadding = false,
   textDecorationLine = "none",
   fontStyle,
+  flex,
   ...props
 }: TextProps) => {
   // @ts-ignore
@@ -75,6 +77,7 @@ const Text = ({
       marginBottom: bottom || undefined,
       textDecorationLine,
       fontStyle,
+      flex,
       ...(removePadding
         ? {
             height: fontSize,
@@ -93,6 +96,7 @@ const Text = ({
     removePadding,
     textDecorationLine,
     fontStyle,
+    flex,
   ]);
 
   return (

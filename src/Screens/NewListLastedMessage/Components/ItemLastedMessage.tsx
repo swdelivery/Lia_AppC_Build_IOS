@@ -22,9 +22,6 @@ const ItemLastedMessage = ({ item, onPress }: Props) => {
   const trigger = useCallbackItem(item);
   const { infoUser } = useSelector(getInfoUserReducer);
 
-  console.log({ infoUser });
-
-
   const assignedUser = useMemo(() => {
     return item.assignedUsers[0];
   }, [item]);
