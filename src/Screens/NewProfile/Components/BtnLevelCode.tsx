@@ -5,6 +5,8 @@ import { BORDER_COLOR, BRONZE, WHITE } from '@Constant/Color'
 import { IconRightArrow, IconRightWhite } from '@Components/Icon/Icon'
 import Row from '@Components/Row'
 import { sizeIcon } from '@Constant/Icon'
+import { useNavigate } from 'src/Hooks/useNavigation'
+import ScreenKey from '@Navigation/ScreenKey'
 
 
 type Props = {
@@ -13,8 +15,12 @@ type Props = {
 };
 
 const BtnLevelCode = ({ name, bgColor }: Props) => {
+
+  const { navigate } = useNavigate()
+
   return (
     <TouchableOpacity
+      onPress={navigate(ScreenKey.NEW_AFFILIATE)}
       style={[styles.btnLevelCode, { backgroundColor: bgColor }]}>
       <Row gap={8}>
         <Text size={12} weight='bold' color={WHITE}>

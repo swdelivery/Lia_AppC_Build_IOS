@@ -72,6 +72,16 @@ const BtnIcon = ({ name = '', icon = null, horizontal = false, lasted = null, fl
 
   const _handleOnpress = () => {
     switch (flag) {
+      case 'lia-voucher':
+        return navigate(ScreenKey.LIA_VOUCHER)()
+      case 'lia-wallet':
+        return navigate(ScreenKey.INFO_WALLET_NEW_AFFILIATE)()
+      case 'payment':
+        return navigate(ScreenKey.PURCHASE_DEPOSIT_REQUEST)()
+      case 'list-medicine':
+        return navigate(ScreenKey.LIST_MEDICINE)()
+      case 'treatment-history':
+        return navigate(ScreenKey.LIST_ALL_HISTORY_TREATMENT)()
       case 'list-booking':
         return navigate(ScreenKey.LIST_BOOKING)()
       case 'policy':

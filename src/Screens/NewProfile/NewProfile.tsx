@@ -21,9 +21,9 @@ const NewProfile = () => {
               title={"Đơn hàng của tôi"}
               data={[
                 { flag: 'list-booking', name: 'Lịch hẹn', icon: <IconProfileBooking /> },
-                { name: 'Lịch sử điều trị', icon: <IconProfileHistory /> },
-                { name: 'Đơn thuốc', icon: <IconProfileMedical /> },
-                { name: 'Thanh toán', icon: <IconProfilePayment /> },
+                { flag: 'treatment-history', name: 'Lịch sử điều trị', icon: <IconProfileHistory /> },
+                { flag: 'list-medicine', name: 'Đơn thuốc', icon: <IconProfileMedical /> },
+                { flag: 'payment', name: 'Thanh toán', icon: <IconProfilePayment /> },
                 { name: 'Chăm sóc', icon: <IconProfileCare /> },
                 { name: 'Hoàn tiền', icon: <IconProfileCoin /> },
                 { name: 'Bảo hành', icon: <IconProfileShield /> },
@@ -34,8 +34,8 @@ const NewProfile = () => {
               type={'row'}
               title={"Tiện ích của tôi"}
               data={[
-                { name: 'Ví Lia', icon: <IconProfileWallet /> },
-                { name: 'Kho Voucher', icon: <IconProfileVoucher /> },
+                { flag: 'lia-wallet', name: 'Ví Lia', icon: <IconProfileWallet /> },
+                { flag: 'lia-voucher', name: 'Kho Voucher', icon: <IconProfileVoucher /> },
                 { name: 'LPay Later', icon: <IconProfilePayLater /> },
                 { name: 'Bảo hiểm', icon: <IconProfileInsurance /> },
               ]}

@@ -13,10 +13,10 @@ const MainList = () => {
   return (
     <View style={styles.container}>
       <Row gap={8 * 2} justifyContent='space-between'>
-        <BtnIcon text={'Nhật ký'} icon={<IconDiary />} />
+        <BtnIcon flag={'diary'} text={'Nhật ký'} icon={<IconDiary />} />
         <BtnIcon flag={'health-record'} text={'Sức khoẻ'} icon={<IconHeart width={8 * 3.5} height={8 * 3.5} />} />
         <BtnIcon flag={'relatives-profile'} text={'Người thân'} icon={<IconHome />} />
-        <BtnIcon text={'Tri ân'} icon={<IconHandHeart />} />
+        <BtnIcon flag={'affiliate'} text={'Tri ân'} icon={<IconHandHeart />} />
       </Row>
     </View>
   )
@@ -30,6 +30,10 @@ const BtnIcon = ({ icon = null, text = '', flag = null }) => {
 
   const _handlePress = () => {
     switch (flag) {
+      case 'affiliate':
+        return navigate(ScreenKey.NEW_AFFILIATE)()
+      case 'diary':
+        return navigate(ScreenKey.LIST_PARTNER_DIARY)()
       case 'health-record':
         return navigate(ScreenKey.HEALTH_RECORD)()
       case 'relatives-profile':
