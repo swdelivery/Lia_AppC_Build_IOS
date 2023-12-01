@@ -59,7 +59,7 @@ const NewProfile = () => {
                 { name: 'Liên hệ hợp tác', icon: <IconProfilePartnerShip /> },
               ]}
             />
-            <View style={{ height: 100 }} />
+            {/* <View style={{ height: 100 }} /> */}
           </Column>
         </View>
       </ScrollView>
@@ -71,6 +71,7 @@ export default NewProfile
 
 const styles = StyleSheet.create({
   body: {
-    backgroundColor: "#E8F4F1"
+    backgroundColor: "#E8F4F1",
+    paddingBottom: 100
   }
 })

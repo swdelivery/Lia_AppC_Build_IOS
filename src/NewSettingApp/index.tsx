@@ -161,24 +161,24 @@ const NewSettingApp = () => {
 
         <Column gap={8}>
           <CardSetting
-            enabled={perNotifi == RESULTS.GRANTED ? true : false}
+            enabled={perNotifi == RESULTS.GRANTED}
             title={'Thông báo'}
             description={'Thông báo tin nhắn mới và các sự kiện ưu đãi'} />
 
           <CardSetting
-            enabled={perMicro == RESULTS.GRANTED ? true : false}
+            enabled={perMicro == RESULTS.GRANTED}
             title={'Micro'}
             description={'Micro phone được sử dụng để đàm thoại với bác sĩ'} />
 
           <CardSetting
             handleOn={_handleOnGallery}
-            enabled={perGallery == RESULTS.GRANTED ? true : false}
+            enabled={perGallery == RESULTS.GRANTED}
             title={'Thư viện ảnh'}
             description={'Thông báo tin nhắn mới và các sự kiện ưu đãi'} />
 
           <CardSetting
             handleOn={_handleOnCamera}
-            enabled={perCamera == RESULTS.GRANTED ? true : false}
+            enabled={perCamera == RESULTS.GRANTED}
             title={'Camera'}
             description={'Camera được sử dụng để quét QR code, nhắn tin bằng hình ảnh và tải ảnh hậu phẫu'} />
 
