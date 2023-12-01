@@ -66,6 +66,7 @@ import SVGPlusGrey from "../../SGV/plusGrey.svg";
 import { _moderateScale } from "../../Constant/Scale";
 import { SvgProps } from "react-native-svg";
 
+export { default as BackIcon } from "../../SGV/back.svg";
 export { default as IconOclock } from "../../SGV/oclock.svg";
 export { default as IconLocation } from "../../SGV/locationBase.svg";
 export { default as IconPlusBase } from "../../SGV/plusBase.svg";

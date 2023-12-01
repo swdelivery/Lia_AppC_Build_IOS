@@ -2,56 +2,62 @@ import ActionButton from '@Components/ActionButton/ActionButton'
 import Column from '@Components/Column'
 import { IconFacebook, IconInstagram, IconProfileBirthday, IconProfileCard, IconProfileFlag, IconProfileGender, IconProfileLocation, IconProfileMail, IconProfilePassport, IconProfilePerson, IconProfilePhone, IconZalo } from '@Components/Icon/Icon'
 import ModalPickSingleNotSearch from '@Components/ModalPickSingleNotSearch/ModalPickSingleNotSearch'
-import Header from '@Components/NewHeader/Header'
 import Screen from '@Components/Screen'
 import { updateProfilePartner } from '@Redux/Action/ProfileAction'
 import { isEmpty } from 'lodash'
 import moment from 'moment'
-import React, { useEffect, useState } from 'react'
-import { Alert, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, View } from 'react-native'
-import { useDispatch, useSelector } from 'react-redux'
-import useVisible from 'src/Hooks/useVisible'
-import EditAvatar from './Components/EditAvatar'
-import Input from './Components/Input'
-import MultiInput from './Components/MultiInput'
-import useConfirmation from 'src/Hooks/useConfirmation'
-import Text from '@Components/Text'
-import ActionSheetBottom from '@Components/ModalBottom/ActionSheetBottom'
-import ImagePicker from "react-native-image-crop-picker"
-import { uploadModule } from '@Redux/Action/BookingAction'
+import React, { useEffect, useMemo, useState } from "react";
+import {
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  View,
+} from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import useVisible from "src/Hooks/useVisible";
+import EditAvatar from "./Components/EditAvatar";
+import Input from "./Components/Input";
+import MultiInput from "./Components/MultiInput";
+import useConfirmation from "src/Hooks/useConfirmation";
+import Text from "@Components/Text";
+import ActionSheetBottom from "@Components/ModalBottom/ActionSheetBottom";
+import ImagePicker from "react-native-image-crop-picker";
+import { uploadModule } from "@Redux/Action/BookingAction";
+import LiAHeader from "@Components/Header/LiAHeader";
 
 const NewUpdateInfoUser = () => {
-
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const { showConfirmation } = useConfirmation();
 
-  const infoUser = useSelector(state => state?.infoUserReducer?.infoUser)
+  const infoUser = useSelector((state) => state?.infoUserReducer?.infoUser);
 
   const genderPicker = useVisible();
-  const cameraPicker = useVisible()
+  const cameraPicker = useVisible();
 
-  const [valueName, setValueName] = useState('')
-  const [errorName, setErrorName] = useState(null)
-  const [valuePhone, setValuePhone] = useState('')
-  const [valueEmail, setValueEmail] = useState('')
-  const [errorEmail, setErrorEmail] = useState(null)
-  const [valueAddress, setValueAddress] = useState('')
+  const [valueName, setValueName] = useState("");
+  const [errorName, setErrorName] = useState(null);
+  const [valuePhone, setValuePhone] = useState("");
+  const [valueEmail, setValueEmail] = useState("");
+  const [errorEmail, setErrorEmail] = useState(null);
+  const [valueAddress, setValueAddress] = useState("");
   const [valueBirthday, setValueBirthday] = useState({
     day: null,
     month: null,
-    year: null
-  })
-  const [errorBirthday, setErrorBirthday] = useState(null)
-  const [valueGender, setValueGender] = useState(null)
-  const [valueCMND, setValueCMND] = useState('')
-  const [valueJob, setValueJob] = useState('')
-  const [valueNationality, setValueNationality] = useState('')
-  const [valueEthnicity, setValueEthnicity] = useState('')
+    year: null,
+  });
+  const [errorBirthday, setErrorBirthday] = useState(null);
+  const [valueGender, setValueGender] = useState(null);
+  const [valueCMND, setValueCMND] = useState("");
+  const [valueJob, setValueJob] = useState("");
+  const [valueNationality, setValueNationality] = useState("");
+  const [valueEthnicity, setValueEthnicity] = useState("");
 
-  const [valueFacebook, setValueFacebook] = useState('')
-  const [valueZalo, setValueZalo] = useState('')
-  const [valueInstagram, setValueInstagram] = useState('')
+  const [valueFacebook, setValueFacebook] = useState("");
+  const [valueZalo, setValueZalo] = useState("");
+  const [valueInstagram, setValueInstagram] = useState("");
 
   useEffect(() => {
     if (infoUser?._id) {
@@ -59,26 +65,32 @@ const NewUpdateInfoUser = () => {
       setValueName(infoUser?.name);
       setValuePhone(infoUser?.phone[0]?.fullPhoneNumber);
       setValueEmail(infoUser?.email[0]);
-      setValueAddress(!isEmpty(infoUser?.address) ? infoUser?.address[0]?.fullAddress : '')
-      setValueBirthday(infoUser?.birthday?.length > 0 ? {
-        day: moment(infoUser?.birthday).date().toString(),
-        month: (moment(infoUser?.birthday).month() + 1).toString(),
-        year: moment(infoUser?.birthday).year().toString()
-      } : {
-        day: null,
-        month: null,
-        year: null
-      })
-      setValueGender(infoUser?.gender)
-      setValueCMND(infoUser?.idCard?.idNumber)
-      setValueJob(infoUser?.profession)
-      setValueNationality(infoUser?.nationality)
-      setValueEthnicity(infoUser?.ethnicity)
-      setValueFacebook(infoUser?.facebook)
-      setValueZalo(infoUser?.zalo)
-      setValueInstagram(infoUser?.instagram)
+      setValueAddress(
+        !isEmpty(infoUser?.address) ? infoUser?.address[0]?.fullAddress : ""
+      );
+      setValueBirthday(
+        infoUser?.birthday?.length > 0
+          ? {
+              day: moment(infoUser?.birthday).date().toString(),
+              month: (moment(infoUser?.birthday).month() + 1).toString(),
+              year: moment(infoUser?.birthday).year().toString(),
+            }
+          : {
+              day: null,
+              month: null,
+              year: null,
+            }
+      );
+      setValueGender(infoUser?.gender);
+      setValueCMND(infoUser?.idCard?.idNumber);
+      setValueJob(infoUser?.profession);
+      setValueNationality(infoUser?.nationality);
+      setValueEthnicity(infoUser?.ethnicity);
+      setValueFacebook(infoUser?.facebook);
+      setValueZalo(infoUser?.zalo);
+      setValueInstagram(infoUser?.instagram);
     }
-  }, [infoUser])
+  }, [infoUser]);
 
   const _handleConfirm = () => {
     console.log({
@@ -91,117 +103,118 @@ const NewUpdateInfoUser = () => {
       valueCMND,
       valueJob,
       valueNationality,
-      valueEthnicity
+      valueEthnicity,
     });
 
     if (isEmpty(valueName)) {
-      return Alert.alert('Vui lòng nhập các trường bắt buộc')
+      return Alert.alert("Vui lòng nhập các trường bắt buộc");
     }
 
     let dataFetch = {};
 
     if (!isEmpty(valueName)) {
-      dataFetch['name'] = valueName
+      dataFetch["name"] = valueName;
     }
     if (!isEmpty(valueEmail)) {
-      dataFetch['email'] = [valueEmail]
+      dataFetch["email"] = [valueEmail];
     } else {
-      dataFetch['email'] = []
+      dataFetch["email"] = [];
     }
     if (!isEmpty(valueGender)) {
-      dataFetch['gender'] = valueGender
+      dataFetch["gender"] = valueGender;
     }
     if (!isEmpty(valueAddress)) {
-      dataFetch['address'] = [{
-        nationId: "",
-        cityId: "",
-        districtId: "",
-        wardId: "",
-        street: "",
-        fullAddress: valueAddress
-      }]
+      dataFetch["address"] = [
+        {
+          nationId: "",
+          cityId: "",
+          districtId: "",
+          wardId: "",
+          street: "",
+          fullAddress: valueAddress,
+        },
+      ];
     } else {
-      dataFetch['address'] = [{
-        nationId: "",
-        cityId: "",
-        districtId: "",
-        wardId: "",
-        street: "",
-        fullAddress: ""
-      }]
+      dataFetch["address"] = [
+        {
+          nationId: "",
+          cityId: "",
+          districtId: "",
+          wardId: "",
+          street: "",
+          fullAddress: "",
+        },
+      ];
     }
     if (!isEmpty(valueCMND)) {
-      dataFetch['idCard'] = {
+      dataFetch["idCard"] = {
         idNumber: valueCMND,
-        createdAt: moment()
-      }
+        createdAt: moment(),
+      };
     } else {
-      dataFetch['idCard'] = {
+      dataFetch["idCard"] = {
         idNumber: "",
-        createdAt: moment()
-      }
+        createdAt: moment(),
+      };
     }
     if (!isEmpty(valueBirthday?.year)) {
-      dataFetch['birthday'] = moment(`${valueBirthday?.year}-${valueBirthday?.month}-${valueBirthday?.day}`)
+      dataFetch["birthday"] = moment(
+        `${valueBirthday?.year}-${valueBirthday?.month}-${valueBirthday?.day}`
+      );
     }
     if (!isEmpty(valueJob)) {
-      dataFetch['profession'] = valueJob
+      dataFetch["profession"] = valueJob;
     } else {
-      dataFetch['profession'] = ""
+      dataFetch["profession"] = "";
     }
     if (!isEmpty(valueNationality)) {
-      dataFetch['nationality'] = valueNationality
+      dataFetch["nationality"] = valueNationality;
     } else {
-      dataFetch['nationality'] = ""
+      dataFetch["nationality"] = "";
     }
     if (!isEmpty(valueEthnicity)) {
-      dataFetch['ethnicity'] = valueEthnicity
+      dataFetch["ethnicity"] = valueEthnicity;
     } else {
-      dataFetch['ethnicity'] = ""
+      dataFetch["ethnicity"] = "";
     }
     if (!isEmpty(valueFacebook)) {
-      dataFetch['facebook'] = valueFacebook
+      dataFetch["facebook"] = valueFacebook;
     } else {
-      dataFetch['facebook'] = ""
+      dataFetch["facebook"] = "";
     }
     if (!isEmpty(valueZalo)) {
-      dataFetch['zalo'] = valueZalo
+      dataFetch["zalo"] = valueZalo;
     } else {
-      dataFetch['zalo'] = ""
+      dataFetch["zalo"] = "";
     }
     if (!isEmpty(valueInstagram)) {
-      dataFetch['instagram'] = valueInstagram
+      dataFetch["instagram"] = valueInstagram;
     } else {
-      dataFetch['instagram'] = ""
+      dataFetch["instagram"] = "";
     }
 
-    showConfirmation(
-      'Xác nhận',
-      'Xác nhận cập nhật thông tin cá nhân?',
-      () => {
-        dispatch(updateProfilePartner(dataFetch))
-      }
-    );
-    // 
-  }
+    showConfirmation("Xác nhận", "Xác nhận cập nhật thông tin cá nhân?", () => {
+      dispatch(updateProfilePartner(dataFetch));
+    });
+    //
+  };
 
-  const _handleCheckDisable = () => {
+  const isDisabled = useMemo(() => {
     if (isEmpty(errorName) && isEmpty(errorEmail) && isEmpty(errorBirthday)) {
-      return false
+      return false;
     } else {
-      return true
+      return true;
     }
-  }
+  }, [errorName, errorEmail, errorBirthday]);
 
   const _handleConfirmBottomSheet = (data) => {
-    if (data?.type == 'gallery') {
-      _handlePickGallery()
+    if (data?.type == "gallery") {
+      _handlePickGallery();
     }
-    if (data?.type == 'camera') {
-      _handlePickCamera()
+    if (data?.type == "camera") {
+      _handlePickCamera();
     }
-  }
-
+  };
 
   const _handlePickGallery = () => {
     ImagePicker.openPicker({
@@ -238,56 +251,61 @@ const NewUpdateInfoUser = () => {
 
   const _handlePickCamera = () => {
     ImagePicker.openCamera({
-      mediaType: 'photo',
+      mediaType: "photo",
       width: 500,
       height: 500,
       cropping: true,
       multiple: false,
-    }).then(async (image) => {
-      let newImage = {
-        uri: image.path,
-        width: image.width,
-        height: image.height,
-        mime: image.mime,
-        type: image.mime,
-        name: `${image.modificationDate}_${0}`,
-        isLocal: true
-      }
-      if (!isEmpty(newImage)) {
-        let listImages = [newImage]
-        let resultUploadImage = await uploadModule({
-          moduleName: 'partner',
-          files: listImages
-        })
-        if (resultUploadImage.isAxiosError) return
-        let listIdImageHasUpload = resultUploadImage?.data?.data.map(item => item._id);
-        dispatch(updateProfilePartner({ fileAvatar: listIdImageHasUpload[0] }));
-      }
-    }).catch(e => { });
-  }
+    })
+      .then(async (image) => {
+        let newImage = {
+          uri: image.path,
+          width: image.width,
+          height: image.height,
+          mime: image.mime,
+          type: image.mime,
+          name: `${image.modificationDate}_${0}`,
+          isLocal: true,
+        };
+        if (!isEmpty(newImage)) {
+          let listImages = [newImage];
+          let resultUploadImage = await uploadModule({
+            moduleName: "partner",
+            files: listImages,
+          });
+          if (resultUploadImage.isAxiosError) return;
+          let listIdImageHasUpload = resultUploadImage?.data?.data.map(
+            (item) => item._id
+          );
+          dispatch(
+            updateProfilePartner({ fileAvatar: listIdImageHasUpload[0] })
+          );
+        }
+      })
+      .catch((e) => {});
+  };
 
   return (
-
     <Screen safeBottom>
-
       <ModalPickSingleNotSearch
         hide={genderPicker.hide}
         onSelect={(item) => {
-          setValueGender(item?.value)
+          setValueGender(item?.value);
         }}
         data={[
-          { name: 'Nữ', value: 'female' },
-          { name: 'Nam', value: 'male' },
-        ]} show={genderPicker.visible} />
+          { name: "Nữ", value: "female" },
+          { name: "Nam", value: "male" },
+        ]}
+        show={genderPicker.visible}
+      />
 
-      <Header title={"Thông tin cá nhân"} />
+      <LiAHeader safeTop title={"Thông tin cá nhân"} />
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={{ flex: 1 }}
       >
         <ScrollView style={{ flex: 1 }}>
-          <EditAvatar
-            cameraPicker={cameraPicker} />
+          <EditAvatar cameraPicker={cameraPicker} />
 
           <Column gap={8 * 4} paddingHorizontal={8 * 2}>
             <Input
@@ -298,7 +316,8 @@ const NewUpdateInfoUser = () => {
               require
               value={valueName}
               onChangeText={setValueName}
-              icon={<IconProfilePerson width={8 * 2} height={8 * 2} />} />
+              icon={<IconProfilePerson width={8 * 2} height={8 * 2} />}
+            />
 
             <Input
               notEditable
@@ -312,15 +331,18 @@ const NewUpdateInfoUser = () => {
               error={errorEmail}
               setError={setErrorEmail}
               title="Email"
-              keyboardType={'email-address'}
+              keyboardType={"email-address"}
               value={valueEmail}
               onChangeText={setValueEmail}
-              icon={<IconProfileMail width={8 * 2} height={8 * 2} />} />
+              icon={<IconProfileMail width={8 * 2} height={8 * 2} />}
+            />
 
-            <Input title="Địa chỉ"
+            <Input
+              title="Địa chỉ"
               value={valueAddress}
               onChangeText={setValueAddress}
-              icon={<IconProfileLocation width={8 * 2} height={8 * 2} />} />
+              icon={<IconProfileLocation width={8 * 2} height={8 * 2} />}
+            />
 
             <MultiInput
               value={valueBirthday}
@@ -329,54 +351,70 @@ const NewUpdateInfoUser = () => {
               number
               setError={setErrorBirthday}
               title="Ngày tháng năm sinh (vd: 01/01/2000)"
-              icon={<IconProfileBirthday width={8 * 2} height={8 * 2} />} />
+              icon={<IconProfileBirthday width={8 * 2} height={8 * 2} />}
+            />
 
-            <Input title="Giới tính"
+            <Input
+              title="Giới tính"
               enablePress
-              value={valueGender ? (valueGender == 'male' ? "Nam" : "Nữ") : null}
+              value={
+                valueGender ? (valueGender == "male" ? "Nam" : "Nữ") : null
+              }
               onPress={genderPicker.show}
-              icon={<IconProfileGender width={8 * 2} height={8 * 2} />} />
+              icon={<IconProfileGender width={8 * 2} height={8 * 2} />}
+            />
 
-            <Input title="CMND/CCCD"
+            <Input
+              title="CMND/CCCD"
               value={valueCMND}
-              keyboardType={'number-pad'}
+              keyboardType={"number-pad"}
               onChangeText={setValueCMND}
-              icon={<IconProfileCard width={8 * 2} height={8 * 2} />} />
+              icon={<IconProfileCard width={8 * 2} height={8 * 2} />}
+            />
 
-            <Input title="Nghề nghiệp"
+            <Input
+              title="Nghề nghiệp"
               value={valueJob}
               onChangeText={setValueJob}
-              icon={<IconProfilePerson width={8 * 2} height={8 * 2} />} />
+              icon={<IconProfilePerson width={8 * 2} height={8 * 2} />}
+            />
 
-            <Input title="Quốc tịch"
+            <Input
+              title="Quốc tịch"
               value={valueNationality}
               onChangeText={setValueNationality}
-              icon={<IconProfilePassport width={8 * 2} height={8 * 2} />} />
+              icon={<IconProfilePassport width={8 * 2} height={8 * 2} />}
+            />
 
-            <Input title="Dân tộc"
+            <Input
+              title="Dân tộc"
               value={valueEthnicity}
               onChangeText={setValueEthnicity}
-              icon={<IconProfileFlag width={8 * 2} height={8 * 2} />} />
+              icon={<IconProfileFlag width={8 * 2} height={8 * 2} />}
+            />
 
-            <Text weight='bold'>
-              Mạng xã hội
-            </Text>
+            <Text weight="bold">Mạng xã hội</Text>
 
-            <Input title="Facebook"
+            <Input
+              title="Facebook"
               value={valueFacebook}
               onChangeText={setValueFacebook}
-              icon={<IconFacebook width={8 * 2} height={8 * 2} />} />
+              icon={<IconFacebook width={8 * 2} height={8 * 2} />}
+            />
 
-            <Input title="Zalo"
+            <Input
+              title="Zalo"
               value={valueZalo}
               onChangeText={setValueZalo}
-              icon={<IconZalo width={8 * 2} height={8 * 2} />} />
+              icon={<IconZalo width={8 * 2} height={8 * 2} />}
+            />
 
-            <Input title="Instagram"
+            <Input
+              title="Instagram"
               value={valueInstagram}
               onChangeText={setValueInstagram}
-              icon={<IconInstagram width={8 * 2} height={8 * 2} />} />
-
+              icon={<IconInstagram width={8 * 2} height={8 * 2} />}
+            />
           </Column>
 
           <View style={{ height: 200 }} />
@@ -384,9 +422,10 @@ const NewUpdateInfoUser = () => {
       </KeyboardAvoidingView>
 
       <ActionButton
-        disable={_handleCheckDisable}
-        onpress={_handleConfirm}
-        title={'Cập nhật thông tin'} />
+        disabled={isDisabled}
+        onPress={_handleConfirm}
+        title={"Cập nhật thông tin"}
+      />
 
       <ActionSheetBottom
         onConfirm={_handleConfirmBottomSheet}
@@ -399,10 +438,9 @@ const NewUpdateInfoUser = () => {
         onClose={cameraPicker.hide}
         visible={cameraPicker?.visible}
       />
-
     </Screen>
-  )
-}
+  );
+};
 
 export default NewUpdateInfoUser
 

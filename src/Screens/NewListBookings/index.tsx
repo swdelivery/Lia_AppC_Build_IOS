@@ -1,14 +1,14 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import Screen from '@Components/Screen'
-import Header from '@Components/NewHeader/Header'
-import ListBookings from './ListBookings'
-import { useDispatch, useSelector } from 'react-redux'
-import { getStateActionSheetBottom } from '@Redux/modal/selectors'
-import ActionSheetBottom from '@Components/ModalBottom/ActionSheetBottom'
-import { openActionSheetBottom } from '@Redux/modal/actions'
+import { StyleSheet, Text, View } from "react-native";
+import React from "react";
+import Screen from "@Components/Screen";
+import ListBookings from "./ListBookings";
+import { useDispatch, useSelector } from "react-redux";
+import { getStateActionSheetBottom } from "@Redux/modal/selectors";
+import ActionSheetBottom from "@Components/ModalBottom/ActionSheetBottom";
+import { openActionSheetBottom } from "@Redux/modal/actions";
 import LinearGradient from "react-native-linear-gradient";
 import { BASE_COLOR } from "@Constant/Color";
+import LiAHeader from "@Components/Header/LiAHeader";
 
 const NewListBookings = () => {
   const dispatch = useDispatch();
@@ -38,7 +38,7 @@ const NewListBookings = () => {
         start={{ x: 0, y: 0 }}
         end={{ x: 0, y: 1 }}
       />
-      <Header bg={"transparent"} title={"Danh sách đặt hẹn"} />
+      <LiAHeader safeTop bg={"transparent"} title={"Danh sách đặt hẹn"} />
       <ListBookings />
       <ActionSheetBottom
         onConfirm={_handleConfirm}

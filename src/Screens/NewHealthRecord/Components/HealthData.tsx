@@ -20,41 +20,39 @@ const HealthData = ({
   setCholesteron
 }) => {
   return (
-    <Column
-      marginTop={8 * 3}
-      gap={8 * 2}
-      marginHorizontal={8 * 2}>
-      <TitleIcon
-        title={'Dữ liệu sức khoẻ'}
-        icon={<IconHeart />} />
-      <Row
-        gap={8 * 2}>
+    <Column marginTop={8 * 3} gap={8 * 2} marginHorizontal={8 * 2}>
+      <TitleIcon title={"Dữ liệu sức khỏe"} icon={<IconHeart />} />
+      <Row gap={8 * 2}>
         <Item
           value={bloodPressure}
           onchangeText={setBloodPressure}
-          name='Huyết áp'
-          unit="(mmHg)" />
+          name="Huyết áp"
+          unit="(mmHg)"
+        />
 
         <Item
           value={bloodSugar}
           onchangeText={setBloodSugar}
-          name='Đường huyết'
-          unit="(mg/dL)" />
+          name="Đường huyết"
+          unit="(mg/dL)"
+        />
 
         <Item
           value={axitUric}
           onchangeText={setAxitUric}
-          name='Axit Uric'
-          unit="(mg/dL)" />
+          name="Axit Uric"
+          unit="(mg/dL)"
+        />
 
         <Item
           value={cholesteron}
           onchangeText={setCholesteron}
-          name='Cholesterol'
-          unit="(mg/dL)" />
+          name="Cholesterol"
+          unit="(mg/dL)"
+        />
       </Row>
     </Column>
-  )
+  );
 }
 
 export default HealthData

@@ -11,48 +11,47 @@ import Checkbox from '@Components/Checkbox'
 import SquareTick from '@Components/SquareTick/SquareTick'
 import { getConfigData } from '@Redux/Action/OrtherAction'
 
-const CheckList = ({ anamnesis, setAnamnesis }) => {
-
-  const [data, setData] = useState([])
+const CheckList = ({ anamnesis = [], setAnamnesis }) => {
+  const [data, setData] = useState([]);
 
   useEffect(() => {
-    _getDataConfig()
-  }, [])
+    _getDataConfig();
+  }, []);
   const _getDataConfig = async () => {
     var result = await getConfigData("TSBSK");
-    if (result?.isAxiosError) return
-    setData(result?.value)
-  }
+    if (result?.isAxiosError) return;
+    setData(result?.value);
+  };
 
   const _handleChoice = (item) => {
-    let arrayTemp = [...anamnesis]
+    let arrayTemp = [...anamnesis];
     const index = arrayTemp.indexOf(item);
     if (index !== -1) {
       arrayTemp.splice(index, 1);
     } else {
       arrayTemp.push(item);
     }
-    setAnamnesis(arrayTemp)
-  }
+    setAnamnesis(arrayTemp);
+  };
 
   const EachItem = ({ item, index }) => {
     return (
-      <TouchableOpacity
-        onPress={() => _handleChoice(item)}>
+      <TouchableOpacity onPress={() => _handleChoice(item)}>
         <Row
           gap={8 * 2}
           borderTopWidth={0.5}
           borderTopColor={BORDER_COLOR}
           marginHorizontal={8 * 2}
-          paddingVertical={8 * 2}>
-          <SquareTick isTicked={anamnesis.find(itemFind => itemFind == item)} />
-          <Text>
-            {item}
-          </Text>
+          paddingVertical={8 * 2}
+        >
+          <SquareTick
+            isTicked={anamnesis.find((itemFind) => itemFind == item)}
+          />
+          <Text>{item}</Text>
         </Row>
       </TouchableOpacity>
-    )
-  }
+    );
+  };
 
   return (
     <View>
@@ -60,32 +59,26 @@ const CheckList = ({ anamnesis, setAnamnesis }) => {
         padding={8 * 2}
         backgroundColor={WHITE}
         borderRadius={4}
-        marginHorizontal={8 * 2}>
+        marginHorizontal={8 * 2}
+      >
         <Row gap={8 * 2}>
           <IconCheckList />
-          <Text flex={1} weight='bold'>
+          <Text flex={1} weight="bold">
             Tiền sử bệnh
           </Text>
-          <View style={{ transform: [{ rotate: '90deg' }] }}>
+          <View style={{ transform: [{ rotate: "90deg" }] }}>
             <IconRightArrowBase />
           </View>
         </Row>
-      </Column >
-      <Column
-        backgroundColor={WHITE}
-        borderRadius={4}
-        marginHorizontal={8 * 2}>
-        {
-          data?.map((item, index) => {
-            return (
-              <EachItem item={item} index={index} />
-            )
-          })
-        }
+      </Column>
+      <Column backgroundColor={WHITE} borderRadius={4} marginHorizontal={8 * 2}>
+        {data?.map((item, index) => {
+          return <EachItem item={item} index={index} />;
+        })}
       </Column>
     </View>
-  )
-}
+  );
+};
 
 export default CheckList
 

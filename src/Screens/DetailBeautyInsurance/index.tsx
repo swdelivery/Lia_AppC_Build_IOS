@@ -1,4 +1,3 @@
-import Header from "@Components/NewHeader/Header";
 import Screen from "@Components/Screen";
 import { FONT_WEIGHTS } from "@Components/Text";
 import { _width } from "@Constant/Scale";
@@ -13,6 +12,7 @@ import InsuranceClaim from "./InsuranceClaim";
 import Rules from "./Rules";
 import ScreenKey from "@Navigation/ScreenKey";
 import { useNavigationParams } from "src/Hooks/useNavigation";
+import LiAHeader from "@Components/Header/LiAHeader";
 
 type ScreenK = typeof ScreenKey.DETAIL_BEAUTY_INSURANCE;
 
@@ -46,7 +46,7 @@ const DetailBeautyInsurance = (props) => {
   return (
     <Screen safeBottom={isAndroid}>
       <StatusBar barStyle={"light-content"} />
-      <Header title={"Bảo hiểm làm đẹp"} />
+      <LiAHeader safeTop title={"Bảo hiểm làm đẹp"} />
 
       <ScrollableTabView
         title={<View />}
@@ -118,5 +118,4 @@ const styles = StyleSheet.create({
     color: "#4BA888",
     fontWeight: "bold",
   },
-
 });

@@ -46,8 +46,8 @@ const ListOptions = memo((props) => {
     }
 
     return (
-        <>
-            {/* <View style={{ paddingHorizontal: _moderateScale(8 * 2), marginTop:_moderateScale(8*2) }}>
+      <>
+        {/* <View style={{ paddingHorizontal: _moderateScale(8 * 2), marginTop:_moderateScale(8*2) }}>
                 <Text style={[stylesFont.fontNolanBold, {
                     fontSize: _moderateScale(16),
                     color: BLACK_OPACITY_8, marginLeft: _moderateScale(8 * 2)
@@ -56,38 +56,92 @@ const ListOptions = memo((props) => {
                 </Text>
             </View> */}
 
-            <View style={[{ flexDirection: 'row', justifyContent: 'space-evenly', paddingHorizontal: _moderateScale(8 * 2), marginTop: _moderateScale(8 * 1) }]}>
-                <TouchableOpacity style={[]} onPress={() => navigation.navigate(ScreenKey.LIST_BRANCH)}>
-                    <Image style={styles.btnOptionNew} source={require('../../NewIcon/btnBookingBranch.png')} />
-                    <Text style={{ position: 'absolute', alignSelf: 'center', bottom: _moderateScale(8 * 2), ...stylesFont.fontNolan500, fontSize: _moderateScale(14), color: BASE_COLOR }}>
-                        P. Khám
-                    </Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={[]} onPress={() => navigation.navigate(ScreenKey.LIST_DOCTOR)}>
-                    <Image style={styles.btnOptionNew} source={require('../../NewIcon/btnBookingDoctor.png')} />
-                    <Text style={{ position: 'absolute', alignSelf: 'center', bottom: _moderateScale(8 * 2), ...stylesFont.fontNolan500, fontSize: _moderateScale(14), color: BASE_COLOR }}>
-                        Bác sĩ
-                    </Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={[]} onPress={() => {
-                    if (!infoUserRedux?._id) {
-                        store.dispatch({
-                            type: ActionType.SHOW_MODAL_REQUIRE_LOGIN,
-                            payload: {
-                                flag: true,
-                                currRouteName: props?.route?.name
-                            }
-                        })
-                        return
-                    }
-                    navigation.navigate(ScreenKey.VIDEO_REQUEST)
-                }}>
-                    <Image style={styles.btnOptionNew} source={require('../../NewIcon/btnBookingVideoCall.png')} />
-                    <Text style={{ position: 'absolute', alignSelf: 'center', bottom: _moderateScale(8 * 2), ...stylesFont.fontNolan500, fontSize: _moderateScale(14), color: BASE_COLOR }}>
-                        Video Call
-                    </Text>
-                </TouchableOpacity>
-                {/* <TouchableOpacity style={[]} onPress={() => {
+        <View
+          style={[
+            {
+              flexDirection: "row",
+              justifyContent: "space-evenly",
+              paddingHorizontal: _moderateScale(8 * 2),
+              marginTop: _moderateScale(8 * 1),
+            },
+          ]}
+        >
+          <TouchableOpacity
+            style={[]}
+            onPress={() => navigation.navigate(ScreenKey.LIST_BRANCH)}
+          >
+            <Image
+              style={styles.btnOptionNew}
+              source={require("../../NewIcon/btnBookingBranch.png")}
+            />
+            <Text
+              style={{
+                position: "absolute",
+                alignSelf: "center",
+                bottom: _moderateScale(8 * 2),
+                ...stylesFont.fontNolan500,
+                fontSize: _moderateScale(14),
+                color: BASE_COLOR,
+              }}
+            >
+              P. Khám
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[]}
+            onPress={() => navigation.navigate(ScreenKey.LIST_DOCTOR)}
+          >
+            <Image
+              style={styles.btnOptionNew}
+              source={require("../../NewIcon/btnBookingDoctor.png")}
+            />
+            <Text
+              style={{
+                position: "absolute",
+                alignSelf: "center",
+                bottom: _moderateScale(8 * 2),
+                ...stylesFont.fontNolan500,
+                fontSize: _moderateScale(14),
+                color: BASE_COLOR,
+              }}
+            >
+              Bác sĩ
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[]}
+            onPress={() => {
+              if (!infoUserRedux?._id) {
+                store.dispatch({
+                  type: ActionType.SHOW_MODAL_REQUIRE_LOGIN,
+                  payload: {
+                    flag: true,
+                    currRouteName: props?.route?.name,
+                  },
+                });
+                return;
+              }
+              navigation.navigate(ScreenKey.VIDEO_REQUEST);
+            }}
+          >
+            <Image
+              style={styles.btnOptionNew}
+              source={require("../../NewIcon/btnBookingVideoCall.png")}
+            />
+            <Text
+              style={{
+                position: "absolute",
+                alignSelf: "center",
+                bottom: _moderateScale(8 * 2),
+                ...stylesFont.fontNolan500,
+                fontSize: _moderateScale(14),
+                color: BASE_COLOR,
+              }}
+            >
+              Video Call
+            </Text>
+          </TouchableOpacity>
+          {/* <TouchableOpacity style={[]} onPress={() => {
                     if (!infoUserRedux?._id) {
                         return navigation.navigate(ScreenKey?.LOGIN_IN_APP, { routeName: props?.route?.name })
                     }
@@ -111,59 +165,114 @@ const ListOptions = memo((props) => {
                         Hồ sơ
                     </Text>
                 </TouchableOpacity> */}
-            </View>
+        </View>
 
-            <View style={[{ flexDirection: 'row', justifyContent: 'space-evenly', paddingHorizontal: _moderateScale(8 * 2), marginTop: _moderateScale(8 * 1) }]}>
-                <View style={{ opacity: 1 }}>
-                    <TouchableOpacity style={[]} onPress={() => {
+        <View
+          style={[
+            {
+              flexDirection: "row",
+              justifyContent: "space-evenly",
+              paddingHorizontal: _moderateScale(8 * 2),
+              marginTop: _moderateScale(8 * 1),
+            },
+          ]}
+        >
+          <View style={{ opacity: 1 }}>
+            <TouchableOpacity
+              style={[]}
+              onPress={() => {
+                // return AlertIOS
 
-                        // return AlertIOS
+                if (!infoUserRedux?._id) {
+                  store.dispatch({
+                    type: ActionType.SHOW_MODAL_REQUIRE_LOGIN,
+                    payload: {
+                      flag: true,
+                      currRouteName: props?.route?.name,
+                    },
+                  });
+                  return;
+                }
+                navigation.navigate(ScreenKey.AFFILIATE);
+                // navigation.navigate(ScreenKey.WHEEL_SPIN)
+              }}
+            >
+              <Image
+                style={styles.btnOptionNew}
+                source={require("../../NewIcon/btnBookingCTV.png")}
+              />
+              <Text
+                style={{
+                  position: "absolute",
+                  alignSelf: "center",
+                  bottom: _moderateScale(8 * 2),
+                  ...stylesFont.fontNolan500,
+                  fontSize: _moderateScale(14),
+                  color: BASE_COLOR,
+                }}
+              >
+                Cộng tác
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <View style={{ opacity: 0.5 }}>
+            <TouchableOpacity
+              style={[]}
+              onPress={() => {
+                return alertCustomNotAction(
+                  `Thông báo`,
+                  `Tính năng sẽ sớm được ra mắt`
+                );
+                // _handleCheckLoseWeight()
+              }}
+            >
+              <Image
+                style={styles.btnOptionNew}
+                source={require("../../NewIcon/btnBookingHeal.png")}
+              />
+              <Text
+                style={{
+                  position: "absolute",
+                  alignSelf: "center",
+                  bottom: _moderateScale(8 * 2),
+                  ...stylesFont.fontNolan500,
+                  fontSize: _moderateScale(14),
+                  color: BASE_COLOR,
+                }}
+              >
+                Sức khỏe
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <View style={{ opacity: 0.5 }}>
+            <TouchableOpacity
+              style={[]}
+              onPress={() => {
+                // return alertCustomNotAction(`Thông báo`, `Tính năng sẽ sớm được ra mắt`)
+                navigation.navigate(ScreenKey.LIST_SP_SOCIAL);
+              }}
+            >
+              <Image
+                style={styles.btnOptionNew}
+                source={require("../../NewIcon/btnBookingHelp.png")}
+              />
+              <Text
+                style={{
+                  position: "absolute",
+                  alignSelf: "center",
+                  bottom: _moderateScale(8 * 2),
+                  ...stylesFont.fontNolan500,
+                  fontSize: _moderateScale(14),
+                  color: BASE_COLOR,
+                }}
+              >
+                Dự án XH
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
 
-                        if (!infoUserRedux?._id) {
-                            store.dispatch({
-                                type: ActionType.SHOW_MODAL_REQUIRE_LOGIN,
-                                payload: {
-                                    flag: true,
-                                    currRouteName: props?.route?.name
-                                }
-                            }) 
-                            return
-                        }
-                        navigation.navigate(ScreenKey.AFFILIATE)
-                        // navigation.navigate(ScreenKey.WHEEL_SPIN)
-                    }}>
-                        <Image style={styles.btnOptionNew} source={require('../../NewIcon/btnBookingCTV.png')} />
-                        <Text style={{ position: 'absolute', alignSelf: 'center', bottom: _moderateScale(8 * 2), ...stylesFont.fontNolan500, fontSize: _moderateScale(14), color: BASE_COLOR }}>
-                            Cộng tác
-                    </Text>
-                    </TouchableOpacity>
-                </View>
-                <View style={{ opacity: 0.5 }}>
-                    <TouchableOpacity style={[]} onPress={() => {
-                        return alertCustomNotAction(`Thông báo`, `Tính năng sẽ sớm được ra mắt`)
-                        // _handleCheckLoseWeight()
-                    }}>
-                        <Image style={styles.btnOptionNew} source={require('../../NewIcon/btnBookingHeal.png')} />
-                        <Text style={{ position: 'absolute', alignSelf: 'center', bottom: _moderateScale(8 * 2), ...stylesFont.fontNolan500, fontSize: _moderateScale(14), color: BASE_COLOR }}>
-                            Sức khoẻ
-                    </Text>
-                    </TouchableOpacity>
-                </View>
-                <View style={{ opacity: 0.5 }}>
-                    <TouchableOpacity style={[]} onPress={() => {
-                        // return alertCustomNotAction(`Thông báo`, `Tính năng sẽ sớm được ra mắt`)
-                        navigation.navigate(ScreenKey.LIST_SP_SOCIAL)
-                    }}>
-                        <Image style={styles.btnOptionNew} source={require('../../NewIcon/btnBookingHelp.png')} />
-                        <Text style={{ position: 'absolute', alignSelf: 'center', bottom: _moderateScale(8 * 2), ...stylesFont.fontNolan500, fontSize: _moderateScale(14), color: BASE_COLOR }}>
-                            Dự án XH
-                    </Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
-
-
-            {/* <TouchableOpacity
+        {/* <TouchableOpacity
                     onPress={() => navigation.navigate(ScreenKey.QR_CODE)}
                     style={[shadow, styles.btnOptions]}>
                     <View style={{ height: _moderateScale(8 * 7), alignItems: 'center', justifyContent: 'center' }}>
@@ -189,7 +298,7 @@ const ListOptions = memo((props) => {
                             </Text>
                 </TouchableOpacity> */}
 
-            {/* <View style={{ flexDirection: 'row', paddingHorizontal: _moderateScale(8 * 3), justifyContent: 'space-between', marginTop: _moderateScale(8 * 2) }}>
+        {/* <View style={{ flexDirection: 'row', paddingHorizontal: _moderateScale(8 * 3), justifyContent: 'space-between', marginTop: _moderateScale(8 * 2) }}>
                 <TouchableOpacity
                     onPress={() => { navigation.navigate(ScreenKey.AFFILIATE) }}
                     style={[shadow, styles.btnOptions]}>
@@ -229,7 +338,7 @@ const ListOptions = memo((props) => {
                             </Text>
                 </TouchableOpacity>
             </View> */}
-        </>
+      </>
     );
 });
 

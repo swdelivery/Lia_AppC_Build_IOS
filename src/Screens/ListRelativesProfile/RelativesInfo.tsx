@@ -1,56 +1,69 @@
-import ActionButton from '@Components/ActionButton/ActionButton'
-import Column from '@Components/Column'
-import { IconProfileBirthday, IconProfileGender, IconProfileMail, IconProfilePerson, IconProfilePhone } from '@Components/Icon/Icon'
-import Input from '@Components/Input/Input'
-import MultiInput from '@Components/Input/MultiInput'
-import ActionSheetBottom from '@Components/ModalBottom/ActionSheetBottom'
-import ModalPickSingleNotSearch from '@Components/ModalPickSingleNotSearch/ModalPickSingleNotSearch'
-import Header from '@Components/NewHeader/Header'
-import Screen from '@Components/Screen'
-import { uploadModule } from '@Redux/Action/BookingAction'
-import { createPartnerRelative, updatePartnerRelative } from '@Redux/relatives/actions'
-import { isEmpty } from 'lodash'
-import moment from 'moment'
-import React, { useEffect, useState } from 'react'
-import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, View } from 'react-native'
-import ImagePicker from "react-native-image-crop-picker"
-import { useDispatch, useSelector } from 'react-redux'
-import useConfirmation from 'src/Hooks/useConfirmation'
-import useVisible from 'src/Hooks/useVisible'
-import EditAvatar from './Components/EditAvatar'
+import ActionButton from "@Components/ActionButton/ActionButton";
+import Column from "@Components/Column";
+import {
+  IconProfileBirthday,
+  IconProfileGender,
+  IconProfileMail,
+  IconProfilePerson,
+  IconProfilePhone,
+} from "@Components/Icon/Icon";
+import Input from "@Components/Input/Input";
+import MultiInput from "@Components/Input/MultiInput";
+import ActionSheetBottom from "@Components/ModalBottom/ActionSheetBottom";
+import ModalPickSingleNotSearch from "@Components/ModalPickSingleNotSearch/ModalPickSingleNotSearch";
+import Screen from "@Components/Screen";
+import { uploadModule } from "@Redux/Action/BookingAction";
+import {
+  createPartnerRelative,
+  updatePartnerRelative,
+} from "@Redux/relatives/actions";
+import { isEmpty } from "lodash";
+import moment from "moment";
+import React, { useEffect, useMemo, useState } from "react";
+import {
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  View,
+} from "react-native";
+import ImagePicker from "react-native-image-crop-picker";
+import { useDispatch, useSelector } from "react-redux";
+import useConfirmation from "src/Hooks/useConfirmation";
+import useVisible from "src/Hooks/useVisible";
+import EditAvatar from "./Components/EditAvatar";
+import LiAHeader from "@Components/Header/LiAHeader";
 
 const RelativesInfo = (props) => {
-
-  const { params } = props?.route
+  const { params } = props?.route;
 
   const genderPicker = useVisible();
   const ownerPicker = useVisible();
-  const cameraPicker = useVisible()
+  const cameraPicker = useVisible();
 
-
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const { showConfirmation } = useConfirmation();
 
-  const infoUser = useSelector(state => state?.infoUserReducer?.infoUser)
+  const infoUser = useSelector((state) => state?.infoUserReducer?.infoUser);
 
   const [avatarId, setAvatarId] = useState(null);
-  const [avatarTemp, setAvatarTemp] = useState(null)
+  const [avatarTemp, setAvatarTemp] = useState(null);
 
-  const [valueName, setValueName] = useState('')
-  const [errorName, setErrorName] = useState(null)
-  const [valueNickname, setValueNickname] = useState('')
-  const [valuePhone, setValuePhone] = useState('')
-  const [errorPhone, setErrorPhone] = useState('')
-  const [valueEmail, setValueEmail] = useState('')
-  const [errorEmail, setErrorEmail] = useState(null)
+  const [valueName, setValueName] = useState("");
+  const [errorName, setErrorName] = useState(null);
+  const [valueNickname, setValueNickname] = useState("");
+  const [valuePhone, setValuePhone] = useState("");
+  const [errorPhone, setErrorPhone] = useState("");
+  const [valueEmail, setValueEmail] = useState("");
+  const [errorEmail, setErrorEmail] = useState(null);
   const [valueBirthday, setValueBirthday] = useState({
     day: null,
     month: null,
-    year: null
-  })
-  const [errorBirthday, setErrorBirthday] = useState(null)
-  const [valueGender, setValueGender] = useState(null)
-  const [valueOwner, setValueOwner] = useState(null)
+    year: null,
+  });
+  const [errorBirthday, setErrorBirthday] = useState(null);
+  const [valueGender, setValueGender] = useState(null);
+  const [valueOwner, setValueOwner] = useState(null);
 
   useEffect(() => {
     if (params?.infoRelative?._id) {
@@ -62,114 +75,123 @@ const RelativesInfo = (props) => {
         relation,
         birthday,
         avatar,
-        gender
-      } = params?.infoRelative
+        gender,
+      } = params?.infoRelative;
 
       if (!isEmpty(fullName)) {
-        setValueName(fullName)
+        setValueName(fullName);
       }
       if (!isEmpty(preferredName)) {
-        setValueNickname(preferredName)
+        setValueNickname(preferredName);
       }
       if (!isEmpty(phoneNumber)) {
-        setValuePhone(phoneNumber)
+        setValuePhone(phoneNumber);
       }
       if (!isEmpty(email)) {
-        setValueEmail(email)
+        setValueEmail(email);
       }
       if (!isEmpty(relation)) {
-        setValueOwner(relation)
+        setValueOwner(relation);
       }
       if (!isEmpty(gender)) {
-        setValueGender(gender)
+        setValueGender(gender);
       }
       if (birthday?.length > 0) {
         setValueBirthday({
           day: moment(birthday).date().toString(),
           month: (moment(birthday).month() + 1).toString(),
-          year: moment(birthday).year().toString()
-        })
+          year: moment(birthday).year().toString(),
+        });
       }
       if (!isEmpty(avatar?._id)) {
-        setAvatarId(avatar?._id)
-        setAvatarTemp(avatar)
+        setAvatarId(avatar?._id);
+        setAvatarTemp(avatar);
       }
     }
+  }, [params]);
 
-  }, [params])
-
-  const _handleCheckDisable = () => {
-    if (!isEmpty(valueName) &&
+  const isDisabled = useMemo(() => {
+    if (
+      !isEmpty(valueName) &&
       !isEmpty(valuePhone) &&
       !isEmpty(valueOwner) &&
       isEmpty(errorName) &&
       isEmpty(errorPhone) &&
       isEmpty(errorBirthday) &&
-      isEmpty(errorEmail)) {
-      return false
+      isEmpty(errorEmail)
+    ) {
+      return false;
+    } else {
+      return true;
     }
-    else { return true }
-  }
-  const _handleConfirm = () => {
+  }, [
+    valueName,
+    valuePhone,
+    valueOwner,
+    errorName,
+    errorPhone,
+    errorBirthday,
+    errorEmail,
+  ]);
 
+  const _handleConfirm = () => {
     let dataFetch = {};
     if (!isEmpty(valueName)) {
-      dataFetch['fullName'] = valueName
+      dataFetch["fullName"] = valueName;
     }
     if (!isEmpty(valueNickname)) {
-      dataFetch['preferredName'] = valueNickname
+      dataFetch["preferredName"] = valueNickname;
     }
     if (!isEmpty(valuePhone)) {
-      dataFetch['phoneNumber'] = valuePhone
+      dataFetch["phoneNumber"] = valuePhone;
     }
     if (!isEmpty(valueEmail)) {
-      dataFetch['email'] = valueEmail
+      dataFetch["email"] = valueEmail;
     }
     if (!isEmpty(valueOwner)) {
-      dataFetch['relation'] = valueOwner
+      dataFetch["relation"] = valueOwner;
     }
     if (!isEmpty(valueBirthday?.year)) {
-      dataFetch['birthday'] = moment(`${valueBirthday?.year}-${valueBirthday?.month}-${valueBirthday?.day}`)
+      dataFetch["birthday"] = moment(
+        `${valueBirthday?.year}-${valueBirthday?.month}-${valueBirthday?.day}`
+      );
     }
     if (!isEmpty(valueGender)) {
-      dataFetch['gender'] = valueGender
+      dataFetch["gender"] = valueGender;
     }
     if (!isEmpty(avatarId)) {
-      dataFetch['avatarId'] = avatarId
+      dataFetch["avatarId"] = avatarId;
     }
 
     if (params?.infoRelative?._id) {
       showConfirmation(
-        'Xác nhận',
-        'Xác nhận cập nhật hồ sơ người thân?',
+        "Xác nhận",
+        "Xác nhận cập nhật hồ sơ người thân?",
         () => {
-          dispatch(updatePartnerRelative.request({
-            _id: params?.infoRelative?._id,
-            data: dataFetch
-          }))
+          dispatch(
+            updatePartnerRelative.request({
+              _id: params?.infoRelative?._id,
+              data: dataFetch,
+            })
+          );
         }
       );
     } else {
-      showConfirmation(
-        'Xác nhận',
-        'Xác nhận lưu hồ sơ người thân?',
-        () => {
-          dataFetch['partnerId'] = infoUser?._id
-          dispatch(createPartnerRelative.request(dataFetch))
-        }
-      );
+      showConfirmation("Xác nhận", "Xác nhận lưu hồ sơ người thân?", () => {
+        dataFetch["partnerId"] = infoUser?._id;
+        dispatch(createPartnerRelative.request(dataFetch));
+      });
     }
-  }
+  };
 
   const _handleConfirmBottomSheet = (data) => {
-    if (data?.type == 'gallery') {
-      _handlePickGallery()
+    if (data?.type == "gallery") {
+      _handlePickGallery();
     }
-    if (data?.type == 'camera') {
-      _handlePickCamera()
+    if (data?.type == "camera") {
+      _handlePickCamera();
     }
-  }
-
+  };
 
   const _handlePickGallery = () => {
     ImagePicker.openPicker({
@@ -199,46 +221,50 @@ const RelativesInfo = (props) => {
         let listIdImageHasUpload = resultUploadImage?.data?.data.map(
           (item) => item._id
         );
-        setAvatarId(listIdImageHasUpload[0])
-        setAvatarTemp(resultUploadImage?.data?.data[0])
+        setAvatarId(listIdImageHasUpload[0]);
+        setAvatarTemp(resultUploadImage?.data?.data[0]);
       }
     });
   };
 
   const _handlePickCamera = () => {
     ImagePicker.openCamera({
-      mediaType: 'photo',
+      mediaType: "photo",
       width: 500,
       height: 500,
       cropping: true,
       multiple: false,
-    }).then(async (image) => {
-      let newImage = {
-        uri: image.path,
-        width: image.width,
-        height: image.height,
-        mime: image.mime,
-        type: image.mime,
-        name: `${image.modificationDate}_${0}`,
-        isLocal: true
-      }
-      if (!isEmpty(newImage)) {
-        let listImages = [newImage]
-        let resultUploadImage = await uploadModule({
-          moduleName: 'partner',
-          files: listImages
-        })
-        if (resultUploadImage.isAxiosError) return
-        let listIdImageHasUpload = resultUploadImage?.data?.data.map(item => item._id);
-        setAvatarId(listIdImageHasUpload[0])
-        setAvatarTemp(resultUploadImage?.data?.data[0])
-      }
-    }).catch(e => { });
-  }
+    })
+      .then(async (image) => {
+        let newImage = {
+          uri: image.path,
+          width: image.width,
+          height: image.height,
+          mime: image.mime,
+          type: image.mime,
+          name: `${image.modificationDate}_${0}`,
+          isLocal: true,
+        };
+        if (!isEmpty(newImage)) {
+          let listImages = [newImage];
+          let resultUploadImage = await uploadModule({
+            moduleName: "partner",
+            files: listImages,
+          });
+          if (resultUploadImage.isAxiosError) return;
+          let listIdImageHasUpload = resultUploadImage?.data?.data.map(
+            (item) => item._id
+          );
+          setAvatarId(listIdImageHasUpload[0]);
+          setAvatarTemp(resultUploadImage?.data?.data[0]);
+        }
+      })
+      .catch((e) => {});
+  };
 
   return (
     <Screen safeBottom>
-      <Header title="Thông tin người thân" />
+      <LiAHeader safeTop title="Thông tin người thân" />
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={{ flex: 1 }}
@@ -261,24 +287,28 @@ const RelativesInfo = (props) => {
               require
               value={valueName}
               onChangeText={setValueName}
-              icon={<IconProfilePerson width={8 * 2} height={8 * 2} />} />
+              icon={<IconProfilePerson width={8 * 2} height={8 * 2} />}
+            />
 
-            <Input title="Tên thân mật"
+            <Input
+              title="Tên thân mật"
               value={valueNickname}
               onChangeText={setValueNickname}
-              icon={<IconProfilePerson width={8 * 2} height={8 * 2} />} />
+              icon={<IconProfilePerson width={8 * 2} height={8 * 2} />}
+            />
 
             <Input
               maxLength={10}
               title="Số điện thoại"
               require
-              keyboardType={'number-pad'}
+              keyboardType={"number-pad"}
               typeInput="phone-number"
               error={errorPhone}
               setError={setErrorPhone}
               value={valuePhone}
               onChangeText={setValuePhone}
-              icon={<IconProfilePhone width={8 * 2} height={8 * 2} />} />
+              icon={<IconProfilePhone width={8 * 2} height={8 * 2} />}
+            />
 
             <Input
               title="Đây là hồ sơ của"
@@ -286,7 +316,8 @@ const RelativesInfo = (props) => {
               enablePress
               value={valueOwner}
               onPress={ownerPicker.show}
-              icon={<IconProfileGender width={8 * 2} height={8 * 2} />} />
+              icon={<IconProfileGender width={8 * 2} height={8 * 2} />}
+            />
 
             <MultiInput
               value={valueBirthday}
@@ -295,58 +326,67 @@ const RelativesInfo = (props) => {
               number
               setError={setErrorBirthday}
               title="Ngày tháng năm sinh (vd: 01/01/2000)"
-              icon={<IconProfileBirthday width={8 * 2} height={8 * 2} />} />
+              icon={<IconProfileBirthday width={8 * 2} height={8 * 2} />}
+            />
 
             <Input
               title="Giới tính"
               enablePress
-              value={valueGender ? (valueGender == 'male' ? "Nam" : "Nữ") : null}
+              value={
+                valueGender ? (valueGender == "male" ? "Nam" : "Nữ") : null
+              }
               onPress={genderPicker.show}
-              icon={<IconProfileGender width={8 * 2} height={8 * 2} />} />
+              icon={<IconProfileGender width={8 * 2} height={8 * 2} />}
+            />
 
             <Input
               error={errorEmail}
               setError={setErrorEmail}
               title="Email"
-              keyboardType={'email-address'}
+              keyboardType={"email-address"}
               value={valueEmail}
               onChangeText={setValueEmail}
-              icon={<IconProfileMail width={8 * 2} height={8 * 2} />} />
-
+              icon={<IconProfileMail width={8 * 2} height={8 * 2} />}
+            />
           </Column>
           <View style={{ height: 200 }} />
         </ScrollView>
       </KeyboardAvoidingView>
 
       <ActionButton
-        disable={_handleCheckDisable}
-        onpress={_handleConfirm}
-        title={'Lưu hồ sơ người thân'} />
+        onPress={_handleConfirm}
+        title={"Lưu hồ sơ người thân"}
+        disabled={isDisabled}
+      />
 
       <ModalPickSingleNotSearch
         hide={genderPicker.hide}
         onSelect={(item) => {
-          setValueGender(item?.value)
+          setValueGender(item?.value);
         }}
         data={[
-          { name: 'Nữ', value: 'female' },
-          { name: 'Nam', value: 'male' },
-        ]} show={genderPicker.visible} />
+          { name: "Nữ", value: "female" },
+          { name: "Nam", value: "male" },
+        ]}
+        show={genderPicker.visible}
+      />
 
       <ModalPickSingleNotSearch
         hide={ownerPicker.hide}
         onSelect={(item) => {
-          setValueOwner(item?.value)
+          setValueOwner(item?.value);
         }}
         data={[
-          { name: 'Bố', value: 'Bố' },
-          { name: 'Mẹ', value: 'Mẹ' },
-          { name: 'Chồng', value: 'Chồng' },
-          { name: 'Vợ', value: 'Vợ' },
-          { name: 'Con', value: 'Con' },
-          { name: 'Anh/Chị/Em', value: 'Anh/Chị/Em' },
-          { name: 'Bạn bè', value: 'Bạn bè' },
-        ]} show={ownerPicker.visible} />
+          { name: "Bố", value: "Bố" },
+          { name: "Mẹ", value: "Mẹ" },
+          { name: "Chồng", value: "Chồng" },
+          { name: "Vợ", value: "Vợ" },
+          { name: "Con", value: "Con" },
+          { name: "Anh/Chị/Em", value: "Anh/Chị/Em" },
+          { name: "Bạn bè", value: "Bạn bè" },
+        ]}
+        show={ownerPicker.visible}
+      />
 
       <ActionSheetBottom
         onConfirm={_handleConfirmBottomSheet}
@@ -359,11 +399,10 @@ const RelativesInfo = (props) => {
         onClose={cameraPicker.hide}
         visible={cameraPicker?.visible}
       />
-
     </Screen>
-  )
-}
+  );
+};
 
-export default RelativesInfo
+export default RelativesInfo;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});

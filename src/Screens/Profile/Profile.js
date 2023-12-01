@@ -978,7 +978,7 @@ const Profile = (props) => {
                   marginTop: _moderateScale(4),
                 }}
               >
-                Sức khoẻ
+                Sức khỏe
               </Text>
             </TouchableOpacity>
 

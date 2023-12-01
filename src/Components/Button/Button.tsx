@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { ReactNode, useMemo } from "react";
 import {
   StyleSheet,
   View,
@@ -20,12 +20,18 @@ import Text from "@Components/Text";
 import Column from "@Components/Column";
 
 type Props = {
+  disabled?: boolean;
   onPress: () => void;
-  title: string;
+  title?: string;
   titleSize?: number;
   titleColor?: ColorValue;
+  backgroundColor?: ColorValue;
   height?: number;
+  width?: number;
+  flex?: number;
+  marginHorizontal?: number;
   containerStyle?: StyleProp<ViewStyle>;
+  children?: ReactNode;
 };
 
 type CustomProps = {
@@ -37,13 +43,18 @@ type CustomProps = {
   containerStyle?: StyleProp<ViewStyle>;
   styleText?: StyleProp<ViewStyle>;
   bgColor?: any;
-  colorText?: any
-}
+  colorText?: any;
+};
 
 type GradientProps = {
   colors?: string[];
   start?: { x: number; y: number };
   end?: { x: number; y: number };
+  horizontal?: boolean;
+};
+
+type OutlineProps = {
+  borderColor?: ColorValue;
 };
 
 const Custom = ({
@@ -55,7 +66,8 @@ const Custom = ({
   containerStyle,
   styleText,
   bgColor,
-  colorText }: CustomProps) => {
+  colorText,
+}: CustomProps) => {
   return (
     <TouchableOpacity
       disabled={disabled}
@@ -67,22 +79,25 @@ const Custom = ({
           { height: height ? height : _moderateScale(48) },
           disabled && { opacity: 0.5 },
           { backgroundColor: bgColor && bgColor },
-          containerStyle
+          containerStyle,
         ]}
       >
         <Text
           style={[
             stylesFont.fontNolanBold,
-            { color: colorText ? colorText : "#fff", fontSize: titleSize ? titleSize : _moderateScale(18) },
-            styleText
+            {
+              color: colorText ? colorText : "#fff",
+              fontSize: titleSize ? titleSize : _moderateScale(18),
+            },
+            styleText,
           ]}
         >
           {title ? title : ""}
         </Text>
       </View>
     </TouchableOpacity>
-  )
-}
+  );
+};
 
 const ButtonPrimary = (props) => {
   return (
@@ -95,14 +110,14 @@ const ButtonPrimary = (props) => {
           styles.button,
           { height: props.height ? props.height : _moderateScale(48) },
           props?.disabled && { opacity: 0.5 },
-          props?.style
+          props?.style,
         ]}
       >
         <Text
           style={[
             stylesFont.fontNolanBold,
             { color: "#fff", fontSize: _moderateScale(18) },
-            props?.styleText
+            props?.styleText,
           ]}
         >
           {props.text ? props.text : ""}
@@ -129,52 +144,89 @@ const ButtonOutline = (props) => {
   );
 };
 
-const Gradient = ({
-  onPress,
+const Base = ({
+  disabled,
   title,
-  titleSize = 16,
-  titleColor = Color.WHITE,
+  titleColor,
+  titleSize,
   height = 48,
+  width,
+  backgroundColor = Color.BASE_COLOR,
   containerStyle,
-  colors = [Color.BASE_COLOR, "#8c104e", "#db0505"],
-  start = { x: 0, y: 1 },
-  end = { x: 1, y: 1 },
-}: Props & GradientProps) => {
-  const handlePress = useDebounceCallback(onPress);
-
-  const titleStyle = useMemo(() => {
-    return {
-      fontSize: titleSize,
-      color: titleColor,
-    };
-  }, [titleSize, titleColor]);
+  flex,
+  marginHorizontal,
+  onPress,
+  children,
+}: Props) => {
+  const handlePress = useDebounceCallback(onPress, [onPress]);
 
   const mContainerStyle = useMemo(() => {
     return {
       height,
+      width,
+      backgroundColor,
+      flex,
+      marginHorizontal,
+      opacity: disabled ? 0.5 : 1,
     };
-  }, [height]);
+  }, [height, backgroundColor, width, flex, marginHorizontal]);
 
   return (
     <TouchableOpacity
+      disabled={disabled}
+      style={[styles.buttonContainer, mContainerStyle, containerStyle]}
       onPress={handlePress}
-      style={[styles.gradientContainer, mContainerStyle, containerStyle]}
     >
-      <LinearGradient
-        start={start}
-        end={end}
-        colors={colors}
-        style={styles.gradient}
-      >
-        <Text weight={"bold"} style={[stylesFont.fontNolanBold, titleStyle]}>
+      {children}
+      {!!title && (
+        <Text color={titleColor} size={titleSize} weight="bold">
           {title}
         </Text>
-      </LinearGradient>
+      )}
     </TouchableOpacity>
   );
 };
 
+const Outline = ({
+  borderColor = Color.BORDER_COLOR,
+  containerStyle,
+  ...props
+}: Props & OutlineProps) => {
+  const mContainerStyle = useMemo(() => {
+    return {
+      borderColor,
+      borderWidth: 1,
+    };
+  }, [borderColor]);
+
+  return <Base containerStyle={[containerStyle, mContainerStyle]} {...props} />;
+};
+
+const Gradient = ({
+  colors = ["#01AB84", "#186A57"],
+  horizontal = false,
+  titleColor = "white",
+  ...props
+}: Props & GradientProps) => {
+  return (
+    <Base {...props} titleColor={titleColor}>
+      <LinearGradient
+        start={horizontal ? { x: 0, y: 1 } : { x: 1, y: 0 }}
+        end={horizontal ? { x: 1, y: 1 } : { x: 1, y: 1 }}
+        colors={colors}
+        style={styles.gradient}
+      ></LinearGradient>
+    </Base>
+  );
+};
+
 const styles = StyleSheet.create({
+  buttonContainer: {
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 8,
+    overflow: "hidden",
+  },
   customButton: {
     width: "100%",
     backgroundColor: Color.BASE_COLOR,
@@ -209,12 +261,15 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   gradient: {
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: Color.SECOND_COLOR,
-    flex: 1,
+    ...StyleSheet.absoluteFillObject,
   },
 });
 
-const Button = { ButtonPrimary, ButtonOutline, Gradient, Custom };
+const Button = {
+  ButtonPrimary,
+  ButtonOutline,
+  Gradient,
+  Outline,
+  Custom,
+};
 export default Button;

@@ -12,14 +12,22 @@ import ScreenKey from '@Navigation/ScreenKey'
 const MainList = () => {
   return (
     <View style={styles.container}>
-      <Row gap={8 * 2} justifyContent='space-between'>
-        <BtnIcon flag={'diary'} text={'Nhật ký'} icon={<IconDiary />} />
-        <BtnIcon flag={'health-record'} text={'Sức khoẻ'} icon={<IconHeart width={8 * 3.5} height={8 * 3.5} />} />
-        <BtnIcon flag={'relatives-profile'} text={'Người thân'} icon={<IconHome />} />
-        <BtnIcon flag={'affiliate'} text={'Tri ân'} icon={<IconHandHeart />} />
+      <Row gap={8 * 2} justifyContent="space-between">
+        <BtnIcon flag={"diary"} text={"Nhật ký"} icon={<IconDiary />} />
+        <BtnIcon
+          flag={"health-record"}
+          text={"Sức khỏe"}
+          icon={<IconHeart width={8 * 3.5} height={8 * 3.5} />}
+        />
+        <BtnIcon
+          flag={"relatives-profile"}
+          text={"Người thân"}
+          icon={<IconHome />}
+        />
+        <BtnIcon flag={"affiliate"} text={"Tri ân"} icon={<IconHandHeart />} />
       </Row>
     </View>
-  )
+  );
 }
 
 export default MainList

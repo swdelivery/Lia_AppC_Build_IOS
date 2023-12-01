@@ -1,21 +1,14 @@
-import Header from "@Components/NewHeader/Header";
 import Screen from "@Components/Screen";
-import ScreenKey from "@Navigation/ScreenKey";
-import { getBranchDetails } from "@Redux/branch/actions";
-import { getBranchDetailsState } from "@Redux/branch/selectors";
-import React, { useCallback, useRef, useState } from "react";
-import { Alert, StatusBar, StyleSheet, View } from "react-native";
-import Animated, {
-    useAnimatedScrollHandler,
-    useSharedValue,
+import React, { useRef, useState } from "react";
+import { StatusBar, StyleSheet, View } from "react-native";
+import {
+  useAnimatedScrollHandler,
+  useSharedValue,
 } from "react-native-reanimated";
-import { useDispatch, useSelector } from "react-redux";
-import { useFocused, useNavigationParams } from "src/Hooks/useNavigation";
+import { useFocused } from "src/Hooks/useNavigation";
 import HorizontalListImage from "./Components/HorizontalListImage";
 import MainInfo from "./Components/MainInfo";
 import ScrollableTabView from "@itenl/react-native-scrollable-tabview";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { styleElement } from "@Constant/StyleElement";
 import { _width } from "@Constant/Scale";
 import { FONT_WEIGHTS } from "@Components/Text";
 import Parameter from "./Parameter";
@@ -23,6 +16,7 @@ import Introduce from "./Introduce";
 import Instruct from "./Instruct";
 import { getDetailMaterial } from "@Redux/Action/Material";
 import { isAndroid } from "src/utils/platform";
+import LiAHeader from "@Components/Header/LiAHeader";
 
 const DetailMaterial = (props) => {
   const scrollY = useSharedValue(0);
@@ -80,7 +74,7 @@ const DetailMaterial = (props) => {
   return (
     <Screen safeBottom={isAndroid}>
       <StatusBar barStyle={"light-content"} />
-      <Header title={"Thông tin vật liệu"} />
+      <LiAHeader safeTop title={"Thông tin vật liệu"} />
 
       <ScrollableTabView
         title={<View />}
@@ -117,41 +111,40 @@ const DetailMaterial = (props) => {
 export default DetailMaterial;
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: "white",
-    },
-    tabsStyle: {
-        height: 8 * 5,
-        backgroundColor: "white",
-        borderBottomColor: "grey",
-        // borderBottomWidth: 1,
-    },
-    tabStyle: {
-        backgroundColor: "white",
-        width: _width / 4.25,
-    },
-    textStyle: {
-        color: "black",
-        fontWeight: "500",
-        fontSize: 14,
-        fontFamily: FONT_WEIGHTS["bold"],
-    },
-    tabUnderlineStyle: {
-        backgroundColor: "#4BA888",
-        top: 8 * 4,
-        height: 3,
-    },
-    searchContainer: {
-        position: "absolute",
-        zIndex: 1,
-        alignItems: "center",
-        width: _width,
-    },
-    tabInnerStyle: { width: "100%" },
-    textActiveStyle: {
-        color: "#4BA888",
-        fontWeight: "bold",
-    },
-
+  container: {
+    flex: 1,
+    backgroundColor: "white",
+  },
+  tabsStyle: {
+    height: 8 * 5,
+    backgroundColor: "white",
+    borderBottomColor: "grey",
+    // borderBottomWidth: 1,
+  },
+  tabStyle: {
+    backgroundColor: "white",
+    width: _width / 4.25,
+  },
+  textStyle: {
+    color: "black",
+    fontWeight: "500",
+    fontSize: 14,
+    fontFamily: FONT_WEIGHTS["bold"],
+  },
+  tabUnderlineStyle: {
+    backgroundColor: "#4BA888",
+    top: 8 * 4,
+    height: 3,
+  },
+  searchContainer: {
+    position: "absolute",
+    zIndex: 1,
+    alignItems: "center",
+    width: _width,
+  },
+  tabInnerStyle: { width: "100%" },
+  textActiveStyle: {
+    color: "#4BA888",
+    fontWeight: "bold",
+  },
 });

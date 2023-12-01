@@ -1,10 +1,14 @@
-import { Platform, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import Screen from '@Components/Screen'
-import Header from '@Components/NewHeader/Header'
-import Column from '@Components/Column'
-import Text from '@Components/Text'
-import CardSetting from './Components/CardSetting'
+import {
+  Platform,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
+import React, { useEffect, useState } from "react";
+import Screen from "@Components/Screen";
+import Column from "@Components/Column";
+import Text from "@Components/Text";
+import CardSetting from "./Components/CardSetting";
 import {
   Permission,
   PERMISSION_TYPE,
@@ -12,21 +16,21 @@ import {
 } from "../PermissionConfig/PermissionConfig";
 import { checkNotifications } from "react-native-permissions";
 import { openSettings, RESULTS } from "react-native-permissions";
-import Row from '@Components/Row'
-import { IconArrowDown, IconArrowRightRed, IconRightArrow, IconRightArrowBase, IconRightWhite } from '@Components/Icon/Icon'
-import { BASE_COLOR, BORDER_COLOR, WHITE } from '@Constant/Color'
-import useConfirmation from 'src/Hooks/useConfirmation'
-import { removeAccount } from '@Redux/Action/ProfileAction'
-import store from '@Redux/store'
+import Row from "@Components/Row";
+import { IconRightArrowBase } from "@Components/Icon/Icon";
+import { BASE_COLOR, BORDER_COLOR, WHITE } from "@Constant/Color";
+import useConfirmation from "src/Hooks/useConfirmation";
+import { removeAccount } from "@Redux/Action/ProfileAction";
+import store from "@Redux/store";
 import * as ActionType from "../Redux/Constants/ActionType";
 import AsyncStorage from "@react-native-community/async-storage";
-import { partnerAccountLogout } from '@Redux/Action/AuthAction'
+import { partnerAccountLogout } from "@Redux/Action/AuthAction";
 import keychain from "src/utils/keychain";
 import SocketInstance from "../../SocketInstance";
-import { useNavigate } from 'src/Hooks/useNavigation'
-import { useSelector } from 'react-redux'
-import Button from '@Components/Button/Button'
-import ScreenKey from '@Navigation/ScreenKey'
+import { useNavigate } from "src/Hooks/useNavigation";
+import { useSelector } from "react-redux";
+import ScreenKey from "@Navigation/ScreenKey";
+import LiAHeader from "@Components/Header/LiAHeader";
 
 const NewSettingApp = () => {
   const infoUserRedux = useSelector((state) => state.infoUserReducer?.infoUser);
@@ -38,11 +42,10 @@ const NewSettingApp = () => {
 
   const { showConfirmation } = useConfirmation();
 
-  const { navigate } = useNavigate()
+  const { navigate } = useNavigate();
 
   useEffect(() => {
     _checkPer();
-
   }, []);
 
   console.log({
@@ -51,7 +54,6 @@ const NewSettingApp = () => {
     perCamera,
     perNotifi,
   });
-
 
   const _checkPer = async () => {
     let resultPerMicro = await Permission.checkPermission(
@@ -91,16 +93,14 @@ const NewSettingApp = () => {
       return;
     }
     openSettings();
-  }
+  };
   const _handleOnGallery = async () => {
     openSettings();
     if (perGallery == RESULTS.BLOCKED) {
       return openSettings();
     }
     let result = await Permission.requestPermission(
-      REQUEST_PERMISSION_TYPE[PERMISSION_TYPE.gallery][
-      Platform.OS
-      ]
+      REQUEST_PERMISSION_TYPE[PERMISSION_TYPE.gallery][Platform.OS]
     );
     if (result == RESULTS.GRANTED) {
       return setPerGallery(result);
@@ -108,20 +108,19 @@ const NewSettingApp = () => {
     if (result == RESULTS.BLOCKED) {
       return;
     }
-
-  }
+  };
 
   const _handleDeleteAccount = () => {
     showConfirmation(
-      'Bạn có chắn chắn muốn xoá tài khoản?',
-      'Tài khoản của bạn sẽ bị xoá vĩnh viễn. \n Thông tin đơn hàng và các thông tin khác cũng sẽ bị xoá.',
+      "Bạn có chắn chắn muốn xoá tài khoản?",
+      "Tài khoản của bạn sẽ bị xoá vĩnh viễn. \n Thông tin đơn hàng và các thông tin khác cũng sẽ bị xoá.",
       async () => {
         let result = await removeAccount(infoUserRedux?._id);
         if (result?.isAxiosError) return;
         _handleLogOut();
       }
     );
-  }
+  };
 
   const _handleLogOut = async () => {
     store.dispatch({
@@ -151,63 +150,60 @@ const NewSettingApp = () => {
 
   return (
     <Screen style={styles.container}>
-      <Header title={"Cài đặt"} />
+      <LiAHeader safeTop title={"Cài đặt"} />
       <ScrollView>
         <Column margin={8 * 2}>
-          <Text weight='bold'>
-            Yêu cầu quyền truy cập
-          </Text>
+          <Text weight="bold">Yêu cầu quyền truy cập</Text>
         </Column>
 
         <Column gap={8}>
           <CardSetting
             enabled={perNotifi == RESULTS.GRANTED}
-            title={'Thông báo'}
-            description={'Thông báo tin nhắn mới và các sự kiện ưu đãi'} />
+            title={"Thông báo"}
+            description={"Thông báo tin nhắn mới và các sự kiện ưu đãi"}
+          />
 
           <CardSetting
             enabled={perMicro == RESULTS.GRANTED}
-            title={'Micro'}
-            description={'Micro phone được sử dụng để đàm thoại với bác sĩ'} />
+            title={"Micro"}
+            description={"Micro phone được sử dụng để đàm thoại với bác sĩ"}
+          />
 
           <CardSetting
             handleOn={_handleOnGallery}
             enabled={perGallery == RESULTS.GRANTED}
-            title={'Thư viện ảnh'}
-            description={'Thông báo tin nhắn mới và các sự kiện ưu đãi'} />
+            title={"Thư viện ảnh"}
+            description={"Thông báo tin nhắn mới và các sự kiện ưu đãi"}
+          />
 
           <CardSetting
             handleOn={_handleOnCamera}
             enabled={perCamera == RESULTS.GRANTED}
-            title={'Camera'}
-            description={'Camera được sử dụng để quét QR code, nhắn tin bằng hình ảnh và tải ảnh hậu phẫu'} />
+            title={"Camera"}
+            description={
+              "Camera được sử dụng để quét QR code, nhắn tin bằng hình ảnh và tải ảnh hậu phẫu"
+            }
+          />
 
-          <TouchableOpacity
-            onPress={_handleDeleteAccount}>
-            <Row justifyContent='space-between' style={styles.btnDeleteAccount}>
-              <Text>
-                Yêu cầu xoá tài khoản
-              </Text>
+          <TouchableOpacity onPress={_handleDeleteAccount}>
+            <Row justifyContent="space-between" style={styles.btnDeleteAccount}>
+              <Text>Yêu cầu xoá tài khoản</Text>
               <IconRightArrowBase />
             </Row>
           </TouchableOpacity>
-
         </Column>
 
-        <TouchableOpacity
-          style={styles.btnLogout}
-          onPress={_handleLogOut}>
-          <Text weight='bold' color={BASE_COLOR}>
+        <TouchableOpacity style={styles.btnLogout} onPress={_handleLogOut}>
+          <Text weight="bold" color={BASE_COLOR}>
             Đăng xuất
           </Text>
         </TouchableOpacity>
-
       </ScrollView>
     </Screen>
-  )
-}
+  );
+};
 
-export default NewSettingApp
+export default NewSettingApp;
 
 const styles = StyleSheet.create({
   btnLogout: {
@@ -218,8 +214,8 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: BASE_COLOR,
     marginTop: 8 * 4,
-    justifyContent: 'center',
-    alignItems: 'center'
+    justifyContent: "center",
+    alignItems: "center",
   },
   btnDeleteAccount: {
     marginHorizontal: 8 * 2,
@@ -227,9 +223,9 @@ const styles = StyleSheet.create({
     backgroundColor: WHITE,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: BORDER_COLOR
+    borderColor: BORDER_COLOR,
   },
   container: {
-    backgroundColor: '#F1FCF9'
-  }
-})
+    backgroundColor: "#F1FCF9",
+  },
+});
