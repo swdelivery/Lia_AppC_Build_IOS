@@ -173,6 +173,7 @@ import ScreenHTML from "@Screens/ScreenHTML";
 import NewHealthRecord from "@Screens/NewHealthRecord";
 import ListRelativesProfile from "@Screens/ListRelativesProfile";
 import RelativesInfo from "@Screens/ListRelativesProfile/RelativesInfo";
+import AIChatting from "@Screens/Chat/AIChatting";
 
 const rootStack = createStackNavigator();
 
@@ -238,6 +239,11 @@ const RootNavigator = () => {
             options={{ ...TransitionPresets.SlideFromRightIOS }}
             name={ScreenKey.CHATTING}
             component={Chatting}
+          />
+          <rootStack.Screen
+            options={{ ...TransitionPresets.SlideFromRightIOS }}
+            name={ScreenKey.AI_CHATTING}
+            component={AIChatting}
           />
           <rootStack.Screen
             options={{ ...TransitionPresets.SlideFromRightIOS }}
