@@ -96,14 +96,14 @@ function Fade({
         runOnJS(handleClose)();
       }
     });
-
+  // return children
   return (
     <>
       {visible && (
         <Animated.View
           style={style}
-          entering={entering}
-          exiting={exiting}
+          // entering={entering}
+          // exiting={exiting}
           {...rest}
         >
           {children}
