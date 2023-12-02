@@ -54,56 +54,55 @@ function Fade({
   const entering = new Keyframe({
     0: {
       opacity: 0.3,
-      transform: [
-        {
-          scale: initialScale,
-        },
-      ],
+      // transform: [
+      //   {
+      //     scale: initialScale,
+      //   },
+      // ],
     },
     100: {
       opacity: 1,
-      transform: [
-        {
-          scale: 1,
-        },
-      ],
+      // transform: [
+      //   {
+      //     scale: 1,
+      //   },
+      // ],
     },
   }).duration(duration);
 
   const exiting = new Keyframe({
     0: {
       opacity: 1,
-      transform: [
-        {
-          scale: 1,
-        },
-      ],
+      // transform: [
+      //   {
+      //     scale: 1,
+      //   },
+      // ],
     },
     100: {
       opacity: 0.3,
-      transform: [
-        {
-          scale: initialScale,
-        },
-      ],
+      // transform: [
+      //   {
+      //     scale: initialScale,
+      //   },
+      // ],
     },
   })
     .duration(duration)
     .withCallback((finished: boolean) => {
-      'worklet';
-
+      "worklet";
       if (finished) {
         runOnJS(handleClose)();
       }
     });
-  // return children
+
   return (
     <>
       {visible && (
         <Animated.View
           style={style}
-          // entering={entering}
-          // exiting={exiting}
+          entering={entering}
+          exiting={exiting}
           {...rest}
         >
           {children}
