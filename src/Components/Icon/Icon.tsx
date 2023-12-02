@@ -118,6 +118,8 @@ export { default as IconTrashRed } from "../../SGV/trashRed.svg";
 export { default as IconFacebook } from "../../SGV/facebook.svg";
 export { default as IconInstagram } from "../../SGV/instagram.svg";
 export { default as IconZalo } from "../../SGV/zalo.svg";
+export { default as IconAI } from "../../SGV/iconAI.svg";
+export { default as IconAIWhite } from "../../SGV/iconAIWhite.svg";
 
 export const IconSetting = (props) => {
   return <SVGSetting width={props?.style?.width ? props?.style?.width : _moderateScale(8 * 4)}

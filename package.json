@@ -81,7 +81,7 @@
     "react-native-portalize": "r0b0t3d/react-native-portalize#master",
     "react-native-push-notification": "^8.1.1",
     "react-native-qrcode-svg": "^6.2.0",
-    "react-native-reanimated": "^3.5.4",
+    "react-native-reanimated": "^3.6.1",
     "react-native-redash": "^18.1.0",
     "react-native-render-html": "^6.3.4",
     "react-native-safe-area-context": "^4.7.4",

@@ -325,6 +325,17 @@ const getListPartnerRelative = (payload: any) => {
   return axios.get(`/partner-relative/list?${query}`, payload).then(({ data }) => data);
 };
 
+const createAIMessage = (payload: any) => {
+  return axios.post(`/partner-chatgpt-messages/send-message`, payload).then(({ data }) => data);
+};
+
+const getListAIMessages = (payload: any) => {
+  const query = encodeParams({
+    ...payload,
+  });
+  return axios.get(`/partner-chatgpt-messages?${query}`, {}).then(({ data }) => data);
+};
+
 export default {
   getServiceGroup,
   getServices,
@@ -376,4 +387,8 @@ export default {
   updatePartnerRelative,
   deletePartnerRelative,
   getListPartnerRelative,
+
+  // AI chatting
+  createAIMessage,
+  getListAIMessages
 };

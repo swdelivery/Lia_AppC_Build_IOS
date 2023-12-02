@@ -12,6 +12,7 @@ import BtnLevelCode from './BtnLevelCode'
 import { useNavigate } from 'src/Hooks/useNavigation'
 import ScreenKey from '@Navigation/ScreenKey'
 import { sizeIcon } from '@Constant/Icon'
+import { styleElement } from '@Constant/StyleElement'
 
 const Banner = () => {
 
@@ -46,6 +47,7 @@ const Banner = () => {
     <View style={styles.container}>
       <Column marginTop={top}>
         <TouchableOpacity
+          hitSlop={styleElement.hitslopSm}
           onPress={navigate(ScreenKey.SETTING_APP)}
           style={styles.btnSetting}>
           <IconSetting style={sizeIcon.llg} />
@@ -54,12 +56,12 @@ const Banner = () => {
           <Row
             paddingHorizontal={8 * 2}
             gap={8 * 2}>
-            <Avatar style={styles.avatar} avatar={infoUser?.fileAvatar} size={8 * 10} circle />
+            <Avatar style={styles.avatar} avatar={infoUser?.fileAvatar} size={8 * 8} circle />
             <Column gap={4}>
-              <Text weight='bold' size={16} color={WHITE}>
+              <Text weight='bold' size={14} color={WHITE}>
                 {infoUser?.name}
               </Text>
-              <Text weight='regular' size={16} color={WHITE}>
+              <Text weight='regular' size={14} color={WHITE}>
                 {infoUser?.phone[0]?.fullPhoneNumber}
               </Text>
               {_renderLevelCode(infoUser?.levelCode)}
@@ -79,8 +81,12 @@ const styles = StyleSheet.create({
     borderColor: WHITE
   },
   btnSetting: {
-    alignSelf: 'flex-end',
-    marginRight: 8 * 2
+    // alignSelf: 'flex-end',
+    // marginRight: 8 * 2
+    position: 'absolute',
+    top: 8,
+    right: 8 * 3,
+    zIndex: 1
   },
   container: {
     backgroundColor: BASE_COLOR,
