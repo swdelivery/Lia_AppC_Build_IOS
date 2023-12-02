@@ -105,7 +105,7 @@ PODS:
   - libwebp/sharpyuv (1.3.2)
   - libwebp/webp (1.3.2):
     - libwebp/sharpyuv
-  - lottie-ios (4.3.3)
+  - lottie-ios (4.3.4)
   - lottie-react-native (6.4.1):
     - lottie-ios (~> 4.3.3)
     - React-Core
@@ -621,7 +621,7 @@ PODS:
     - React-Core
   - RNReactNativeHapticFeedback (2.2.0):
     - React-Core
-  - RNReanimated (3.6.0):
+  - RNReanimated (3.6.1):
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
     - ReactCommon/turbomodule/core
@@ -952,7 +952,7 @@ SPEC CHECKSUMS:
   hermes-engine: 9180d43df05c1ed658a87cc733dc3044cf90c00a
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   libwebp: 1786c9f4ff8a279e4dac1e8f385004d5fc253009
-  lottie-ios: 25e7b2675dad5c3ddad369ac9baab03560c5bfdd
+  lottie-ios: 3d98679b41fa6fd6aff2352b3953dbd3df8a397e
   lottie-react-native: a2ae9c27c273b060b2affff2957bc0ff7fdca353
   MMKV: f21593c0af4b3f2a0ceb8f820f28bb639ea22bb7
   MMKVCore: 31b4cb83f8266467eef20a35b6d78e409a11060d
@@ -1025,7 +1025,7 @@ SPEC CHECKSUMS:
   RNInAppBrowser: e36d6935517101ccba0e875bac8ad7b0cb655364
   RNPermissions: cc7be5dfa4c04a3fdbd26a5868916b3056c102a4
   RNReactNativeHapticFeedback: ec56a5f81c3941206fd85625fa669ffc7b4545f9
-  RNReanimated: 1dcf7602777a195cf34f1dcd658037a80a2c8af1
+  RNReanimated: fdbaa9c964bbab7fac50c90862b6cc5f041679b9
   RNScreens: 3c2d122f5e08c192e254c510b212306da97d2581
   RNShare: 32e97adc8d8c97d4a26bcdd3c45516882184f8b6
   RNSVG: d00c8f91c3cbf6d476451313a18f04d220d4f396
@@ -1037,6 +1037,10 @@ SPEC CHECKSUMS:
   VisionCamera: 4072a150c532927587d6f628f292f1c80ee21a98
   Yoga: 4c3aa327e4a6a23eeacd71f61c81df1bcdf677d5
 
+<<<<<<< HEAD
 PODFILE CHECKSUM: b63c61909854799a17e305b6f201a004f062d830
+=======
+PODFILE CHECKSUM: 77106b6cb25de7a74863b775cf10597e0ce7bdae
+>>>>>>> b374c5c (reverse pre podfile)
 
 COCOAPODS: 1.13.0

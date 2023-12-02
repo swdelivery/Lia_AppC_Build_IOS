@@ -10,9 +10,10 @@ end
 node_require('react-native/scripts/react_native_pods.rb')
 node_require('react-native-permissions/scripts/setup.rb')
 
-minimum_target = '13.0'
+platform :ios, min_ios_version_supported
+# minimum_target = '13.0'
 
-platform :ios, minimum_target
+# platform :ios, minimum_target
 prepare_react_native_project!
 
 # ⬇️ uncomment wanted permissions
@@ -46,6 +47,7 @@ def __apply_Xcode_14_3_RC_post_install_workaround(installer)
     target.build_configurations.each do |config|
       minimum_target = '13.0'
       current_target = config.build_settings['IPHONEOS_DEPLOYMENT_TARGET']
+      minimum_target = '13.0'
       if current_target.to_f < minimum_target.to_f
         config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = minimum_target
       end
