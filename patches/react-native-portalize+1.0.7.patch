@@ -1,0 +1,27 @@
+diff --git a/node_modules/react-native-portalize/package.json b/node_modules/react-native-portalize/package.json
+index 04850df..2250864 100644
+--- a/node_modules/react-native-portalize/package.json
++++ b/node_modules/react-native-portalize/package.json
+@@ -2,8 +2,7 @@
+   "name": "react-native-portalize",
+   "version": "1.0.7",
+   "description": "Render anything on top of the rest",
+-  "main": "lib/index.js",
+-  "types": "./lib/index.d.ts",
++  "main": "src/index",
+   "scripts": {
+     "build": "rm -rf ./lib/* && yarn lint && tsc",
+     "prepare": "yarn build",
+diff --git a/node_modules/react-native-portalize/src/Host.tsx b/node_modules/react-native-portalize/src/Host.tsx
+index a103663..b733b69 100644
+--- a/node_modules/react-native-portalize/src/Host.tsx
++++ b/node_modules/react-native-portalize/src/Host.tsx
+@@ -19,7 +19,7 @@ export const Context = React.createContext<IProvider | null>(null);
+ 
+ export const Host = ({ children, style }: IHostProps): JSX.Element => {
+   const managerRef = React.useRef<IManagerHandles>(null);
+-  const queue = useRef<{
++  const queue = React.useRef<{
+     type: 'mount' | 'update' | 'unmount';
+     key: string;
+     children?: React.ReactNode;

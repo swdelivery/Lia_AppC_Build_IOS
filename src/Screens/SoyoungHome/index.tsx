@@ -23,6 +23,7 @@ import { FONT_WEIGHTS } from "@Components/Text";
 import SoYoungMaterial from "@Screens/SoYoungMaterial";
 import SoYoungPractitioner from "@Screens/SoYoungPractitioner";
 import { AfterTimeoutFragment } from "@Components/AfterTimeoutFragment";
+import { FocusAwareStatusBar } from "@Components/StatusBar";
 
 const STACKS = [
   {
@@ -62,7 +63,7 @@ const SoyoungHome = () => {
 
   return (
     <Screen style={styles.container}>
-      <StatusBar
+      <FocusAwareStatusBar
         barStyle="dark-content"
         backgroundColor={"transparent"}
         translucent

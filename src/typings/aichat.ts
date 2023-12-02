@@ -13,8 +13,11 @@ export type AIMessage = {
   content: string;
   sendDate: string;
   created: string;
-  updated: string
-  partner: any
+  updated: string;
+  partner: any;
+
+  // Local props
+  isTemp: boolean;
 } & Timestamp;
 
 export type Meta = {

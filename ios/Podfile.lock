@@ -51,7 +51,7 @@ PODS:
     - nanopb (< 2.30910.0, >= 2.30908.0)
   - fmt (6.2.1)
   - glog (0.3.5)
-  - GoogleDataTransport (9.2.5):
+  - GoogleDataTransport (9.3.0):
     - GoogleUtilities/Environment (~> 7.7)
     - nanopb (< 2.30910.0, >= 2.30908.0)
     - PromisesObjC (< 3.0, >= 1.2)
@@ -586,15 +586,15 @@ PODS:
     - SDWebImage (~> 5.11.1)
     - SDWebImageWebPCoder (~> 0.8.4)
   - RNFBApp (18.7.1):
-    - Firebase/CoreOnly (= 10.15.0)
+    - Firebase/CoreOnly (= 10.18.0)
     - React-Core
   - RNFBAuth (18.7.1):
-    - Firebase/Auth (= 10.15.0)
+    - Firebase/Auth (= 10.18.0)
     - React-Core
     - RNFBApp
   - RNFBMessaging (18.7.1):
-    - Firebase/Messaging (= 10.15.0)
-    - FirebaseCoreExtension (= 10.15.0)
+    - Firebase/Messaging (= 10.18.0)
+    - FirebaseCoreExtension (= 10.18.0)
     - React-Core
     - RNFBApp
   - RNFileViewer (2.1.5):
@@ -946,7 +946,7 @@ SPEC CHECKSUMS:
   FirebaseMessaging: 9bc34a98d2e0237e1b121915120d4d48ddcf301e
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: 04b94705f318337d7ead9e6d17c019bd9b1f6b1b
-  GoogleDataTransport: 54dee9d48d14580407f8f5fbf2f496e92437a2f2
+  GoogleDataTransport: 57c22343ab29bc686febbf7cbb13bad167c2d8fe
   GoogleUtilities: 0759d1a57ebb953965c2dfe0ba4c82e95ccc2e34
   GTMSessionFetcher: 41b9ef0b4c08a6db4b7eb51a21ae5183ec99a2c8
   hermes-engine: 9180d43df05c1ed658a87cc733dc3044cf90c00a
@@ -1014,9 +1014,9 @@ SPEC CHECKSUMS:
   RNDateTimePicker: fc2e4f2795877d45e84d85659bebe627eba5c931
   RNDeviceInfo: db5c64a060e66e5db3102d041ebe3ef307a85120
   RNFastImage: 5c9c9fed9c076e521b3f509fe79e790418a544e8
-  RNFBApp: 8536f80dd2305a016cedcaa82a4aed842f83b464
-  RNFBAuth: db22f1838639d3bd3cfba22e4b122fe55dc3b54c
-  RNFBMessaging: a389b667737890ec6ca813c8d37b3b1417cbd835
+  RNFBApp: faf815f60546ca522eb9ef09d21dfd3fc70d3e27
+  RNFBAuth: 57a133db67b7d37d84c7d15a41c9a665489290e8
+  RNFBMessaging: dac12b09a0838563518ab59988d8a0051648eb3d
   RNFileViewer: ce7ca3ac370e18554d35d6355cffd7c30437c592
   RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
   RNGestureHandler: 32a01c29ecc9bb0b5bf7bc0a33547f61b4dc2741
@@ -1037,6 +1037,6 @@ SPEC CHECKSUMS:
   VisionCamera: 4072a150c532927587d6f628f292f1c80ee21a98
   Yoga: 4c3aa327e4a6a23eeacd71f61c81df1bcdf677d5
 
-PODFILE CHECKSUM: 78090864b5e542e42ed0432e827766d91d518f37
+PODFILE CHECKSUM: b63c61909854799a17e305b6f201a004f062d830
 
 COCOAPODS: 1.13.0

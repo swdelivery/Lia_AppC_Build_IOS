@@ -48,13 +48,13 @@ const loadMoreSuccess: Handler<State> = (state, { payload }) => {
 }
 
 const createMessageRequest: Handler<State> = (state, { payload }) => {
-  let messageSendTemp = {
+  let messageSendTemp: any = {
     _id: randomStringFixLengthCode(5),
     isTemp: true,
-    role: 'user',
+    role: "user",
     created: moment(),
-    content: payload?.content
-  }
+    content: payload?.content,
+  };
   let messageRepTemp = {
     _id: randomStringFixLengthCode(5),
     isTemp: true,
@@ -77,8 +77,6 @@ const createMessageSuccess: Handler<State> = (state, { payload }) => {
     data: dataTemp
   }
 }
-
-
 
 export default createReducer(INITIAL_STATE, {
   [GET_LIST_AI_MESSAGES.REQUEST]: request,
