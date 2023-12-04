@@ -15,6 +15,7 @@ import PartnerDiary from "@Components/PartnerDiary";
 import { Doctor } from "@typings/doctor";
 import useApiPaging from "src/Hooks/services/useApiPaging";
 import PartnerService from "src/Services/PartnerService";
+import { Diamond1Icon, ThumbsUpIcon } from "src/SGV";
 
 type Props = {
   doctor: Doctor;
@@ -83,13 +84,26 @@ const Banner = ({ doctor }: Props) => {
           </View>
         </View>
       </Column>
-      <Column right={8} gap={8} top={8} left={0}>
-        <Row left={16} gap={4}>
-          <Image
+      <Column marginRight={8} gap={4} marginTop={8}>
+        <Row marginLeft={16} gap={4}>
+          <Column
             style={styles.iconLike}
-            source={require("../../../Image/like.png")}
-          />
-          <Text weight="bold">Chuyên dự án: {doctor?.specialization}</Text>
+            alignItems="center"
+            justifyContent="center"
+          >
+            <ThumbsUpIcon />
+          </Column>
+          <Text>Chuyên khoa: {doctor?.specialization}</Text>
+        </Row>
+        <Row marginLeft={16} gap={4} marginBottom={8}>
+          <Column
+            style={styles.iconLike}
+            alignItems="center"
+            justifyContent="center"
+          >
+            <Diamond1Icon />
+          </Column>
+          <Text>Dịch vụ: {doctor?.service}</Text>
         </Row>
         {doctor?.doctorServices?.length > 0 && (
           <HorizontalServices items={doctor.doctorServices} />
@@ -97,8 +111,8 @@ const Banner = ({ doctor }: Props) => {
       </Column>
 
       {diaries.length > 0 && (
-        <Column right={8} gap={8} top={16} left={0}>
-          <Row left={16} gap={4}>
+        <Column marginRight={8} gap={8} marginTop={16}>
+          <Row marginLeft={16} gap={4}>
             <Image
               style={styles.iconLike}
               source={require("../../../Image/diamon.png")}

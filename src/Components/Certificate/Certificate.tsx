@@ -8,6 +8,7 @@ import { FileUpload } from "@typings/common";
 import { getImageAvataUrl } from "src/utils/avatar";
 import useVisible from "src/Hooks/useVisible";
 import Row from "@Components/Row";
+import { Diamond1Icon } from "src/SGV";
 
 type Props = {
   item: FileUpload;
@@ -36,8 +37,8 @@ const Certificate = ({ item, backgroundColor = "#414378" }: Props) => {
       style={[styles.container, containerStyle]}
       onPress={imageViewer.show}
     >
-      <Icon name="diamond" color="#F8E6D0" size={12} style={styles.icon} />
-      <Text color={"#F8E6D0"} weight="bold" size={10} left={4}>
+      <Diamond1Icon width={10} height={10} />
+      <Text color={"#F8E6D0"} weight="bold" size={10} left={4} bottom={2}>
         {item.name}
       </Text>
 
@@ -96,7 +97,7 @@ export default Certificate;
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 8,
-    paddingVertical: 4,
+    paddingVertical: 2,
     borderRadius: 4,
     flexDirection: "row",
     alignItems: "center",
