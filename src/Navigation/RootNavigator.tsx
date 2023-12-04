@@ -174,6 +174,7 @@ import NewHealthRecord from "@Screens/NewHealthRecord";
 import ListRelativesProfile from "@Screens/ListRelativesProfile";
 import RelativesInfo from "@Screens/ListRelativesProfile/RelativesInfo";
 import AIChatting from "@Screens/Chat/AIChatting";
+import DetailPost from "@Screens/Social/DetailPost";
 
 const rootStack = createStackNavigator();
 
@@ -345,10 +346,15 @@ const RootNavigator = () => {
             name={ScreenKey.DETAIL_BRAND}
             component={DetailBrand}
           />
-          <rootStack.Screen
+          {/* <rootStack.Screen
             options={{ ...TransitionPresets.SlideFromRightIOS }}
             name={ScreenKey.DETAIL_NEW_FEED}
             component={DetailNewFeed}
+          /> */}
+          <rootStack.Screen
+            options={{ ...TransitionPresets.SlideFromRightIOS }}
+            name={ScreenKey.DETAIL_POST}
+            component={DetailPost}
           />
           <rootStack.Screen
             options={{ ...TransitionPresets.SlideFromRightIOS }}

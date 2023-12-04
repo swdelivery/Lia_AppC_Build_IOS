@@ -40,6 +40,7 @@ import modal from "../modal/reducers";
 import resultcanningeyes from "../resultcanningeyes/reducers";
 import relatives from "../relatives/reducers";
 import aichat from "../aichat/reducers";
+import newfeeds from "../newfeeds/reducers";
 
 const rootReducer = combineReducers({
   newsReducer,
@@ -81,7 +82,8 @@ const rootReducer = combineReducers({
   modal,
   resultcanningeyes,
   relatives,
-  aichat
+  aichat,
+  newfeeds
 });
 
 // const rootReducer = (state, action) => {

@@ -5,6 +5,7 @@ import TimelineTabView from '../../../Screens/NewFeed/index';
 import ScreenKey from '../../ScreenKey';
 import DetailNewFeed from '../../../Screens/DetailNewFeed'
 import MyPersonalPage from '../../../Screens/MyPersonalPage/MyPersonalPage';
+import Social from '@Screens/Social';
 
 const Tab = createMaterialTopTabNavigator();
 const Stack = createStackNavigator();
@@ -13,19 +14,19 @@ const rootStack = createStackNavigator();
 
 
 const TimelineTab = () => {
-    return (
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-          ...TransitionPresets.ModalSlideFromBottomIOS,
-        }}
-      >
-        <Stack.Screen name={ScreenKey.TIMELINE} component={TimelineTabView} />
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+        ...TransitionPresets.ModalSlideFromBottomIOS,
+      }}
+    >
+      <Stack.Screen name={ScreenKey.TIMELINE} component={Social} />
 
-        {/* <rootStack.Screen options={{ ...TransitionPresets.SlideFromRightIOS }} name={ScreenKey.DETAIL_NEW_FEED} component={DetailNewFeed} /> */}
-        {/* <rootStack.Screen options={{ ...TransitionPresets.SlideFromRightIOS }} name={ScreenKey.MY_PERSONAL_PAGE} component={MyPersonalPage} /> */}
-      </Stack.Navigator>
-    );
+      {/* <rootStack.Screen options={{ ...TransitionPresets.SlideFromRightIOS }} name={ScreenKey.DETAIL_NEW_FEED} component={DetailNewFeed} /> */}
+      {/* <rootStack.Screen options={{ ...TransitionPresets.SlideFromRightIOS }} name={ScreenKey.MY_PERSONAL_PAGE} component={MyPersonalPage} /> */}
+    </Stack.Navigator>
+  );
 }
 
 export default TimelineTab 

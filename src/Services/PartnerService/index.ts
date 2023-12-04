@@ -336,6 +336,24 @@ const getListAIMessages = (payload: any) => {
   return axios.get(`/partner-chatgpt-messages?${query}`, {}).then(({ data }) => data);
 };
 
+const getListPosts = (payload: any) => {
+  const query = encodeParams({
+    ...payload,
+  });
+  return axios.get(`/partner-post?${query}`, {}).then(({ data }) => data);
+};
+
+const getMorePosts = (payload: any) => {
+  const query = encodeParams({
+    ...payload,
+  });
+  return axios.get(`/partner-post?${query}`, {}).then(({ data }) => data);
+};
+
+const getPartnerDiary = (payload: any) => {
+  return axios.get(`/partner-diary/${payload}`, {}).then(({ data }) => data);
+};
+
 export default {
   getServiceGroup,
   getServices,
@@ -390,5 +408,10 @@ export default {
 
   // AI chatting
   createAIMessage,
-  getListAIMessages
+  getListAIMessages,
+
+  // NewFeeds
+  getListPosts,
+  getMorePosts,
+  getPartnerDiary
 };

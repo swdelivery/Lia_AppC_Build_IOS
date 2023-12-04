@@ -16,5 +16,6 @@ export function* rootSaga() {
     fork(require("./resultcanningeyes/sagas").default),
     fork(require("./relatives/sagas").default),
     fork(require("./aichat/sagas").default),
+    fork(require("./newfeeds/sagas").default),
   ]);
 }
