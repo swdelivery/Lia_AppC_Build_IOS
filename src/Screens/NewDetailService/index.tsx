@@ -59,7 +59,7 @@ const DetailService = () => {
     <Screen safeBottom safeTop style={styles.container}>
       <StatusBar barStyle="dark-content" />
       <Header />
-      <AfterTimeoutFragment placeholder={<Placeholder />}>
+      <AfterTimeoutFragment placeholder={<Placeholder />} timeout={1000}>
         <ScrollView style={styles.content}>
           <HorizonListImage service={service} getColors={getColors} />
           <View style={styles.body}>

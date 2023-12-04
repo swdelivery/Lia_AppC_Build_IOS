@@ -53,7 +53,9 @@ const HorizonListImage = ({ service, getColors }: Props) => {
 export default withCarouselContext(HorizonListImage);
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    height: _width * SERVICE_BANNER_RATIO,
+  },
   image: {
     width: _width,
     height: _width * SERVICE_BANNER_RATIO,

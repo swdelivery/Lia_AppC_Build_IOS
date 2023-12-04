@@ -40,6 +40,8 @@ const styles = StyleSheet.create({
     borderRadius: _moderateScale(8 * 2),
     backgroundColor: "#F7F7F7",
     marginLeft: _moderateScale(8 * 2),
+    flex: 1,
+    paddingHorizontal: 16,
   },
   header: {
     width: _width,

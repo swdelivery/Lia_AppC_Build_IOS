@@ -174,6 +174,7 @@ import NewHealthRecord from "@Screens/NewHealthRecord";
 import ListRelativesProfile from "@Screens/ListRelativesProfile";
 import RelativesInfo from "@Screens/ListRelativesProfile/RelativesInfo";
 import AIChatting from "@Screens/Chat/AIChatting";
+import DoctorList from "@Screens/DoctorList";
 
 const rootStack = createStackNavigator();
 
@@ -945,6 +946,11 @@ const RootNavigator = () => {
             options={{ ...TransitionPresets.SlideFromRightIOS }}
             name={ScreenKey.RELATIVES_INFO}
             component={RelativesInfo}
+          />
+          <rootStack.Screen
+            options={{ ...TransitionPresets.SlideFromRightIOS }}
+            name={ScreenKey.DOCTOR_LIST}
+            component={DoctorList}
           />
 
           <rootStack.Screen

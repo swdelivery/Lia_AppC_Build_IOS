@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { StyleSheet } from "react-native";
+import { Pressable, StyleSheet } from "react-native";
 import { _height, _width } from "../../Constant/Scale";
 import DoctorItem, {
   Placeholder,
@@ -12,8 +12,13 @@ import { getDoctorList, loadMoreDoctorList } from "@Redux/doctor/actions";
 import ListEmpty from "@Components/ListEmpty";
 import { FlatList } from "react-native-gesture-handler";
 import { RenderItemProps } from "@typings/common";
+import Text from "@Components/Text";
+import Column from "@Components/Column";
+import { useNavigate } from "src/Hooks/useNavigation";
+import ScreenKey from "@Navigation/ScreenKey";
 
 const SoYoungDoctor = () => {
+  const { navigate } = useNavigate();
   const { data, isLoading, getData } = useListFilter(
     getDoctorListState,
     getDoctorList,
@@ -29,21 +34,35 @@ const SoYoungDoctor = () => {
   }
 
   return (
-    <FlatList
-      contentContainerStyle={styles.container}
-      scrollEnabled={false}
-      data={data}
-      renderItem={renderItem}
-      ListEmptyComponent={
-        isLoading ? (
-          <PlaceholderSkeletons count={5} itemHeight={PLACEHOLDER_HEIGHT}>
-            <Placeholder />
-          </PlaceholderSkeletons>
-        ) : (
-          <ListEmpty isLoading={isLoading} title="Không tìm thấy bác sĩ" />
-        )
-      }
-    />
+    <>
+      <Column backgroundColor={"#F5F9FA"} paddingHorizontal={8} paddingTop={8}>
+        <Pressable
+          style={styles.viewAll}
+          onPress={navigate(ScreenKey.DOCTOR_LIST)}
+        >
+          <Text
+            size={10}
+            fontStyle="italic"
+            textDecorationLine="underline"
+          >{`Xem tất cả >>`}</Text>
+        </Pressable>
+      </Column>
+      <FlatList
+        contentContainerStyle={styles.container}
+        scrollEnabled={false}
+        data={data}
+        renderItem={renderItem}
+        ListEmptyComponent={
+          isLoading ? (
+            <PlaceholderSkeletons count={5} itemHeight={PLACEHOLDER_HEIGHT}>
+              <Placeholder />
+            </PlaceholderSkeletons>
+          ) : (
+            <ListEmpty isLoading={isLoading} title="Không tìm thấy bác sĩ" />
+          )
+        }
+      />
+    </>
   );
 };
 
@@ -82,5 +101,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#F5F9FA",
     paddingBottom: 30,
     minHeight: _height,
+  },
+  viewAll: {
+    alignSelf: "flex-end",
   },
 });

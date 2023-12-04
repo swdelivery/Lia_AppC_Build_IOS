@@ -74,8 +74,6 @@ const NewSettingApp = () => {
     [microPermission, checkMicrophonePermission]
   );
 
-  console.log({ perNotifi });
-
   const handleNotifcationUpdate = useCallback((value: boolean) => {
     openSettings();
   }, []);
