@@ -16,6 +16,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { useNavigate } from "src/Hooks/useNavigation";
 import ContentLoader, { Circle, Rect } from "react-content-loader/native";
 import Column from "@Components/Column";
+import { LocationIcon } from "src/SGV";
 
 type Props = {
   item: Doctor;
@@ -42,14 +43,12 @@ export default function DoctorItem({ item }: Props) {
               <Text numberOfLines={1} weight="bold">
                 {item?.name}
               </Text>
-              <Row gap={8}>
-                <CountStar2 rating={4} count={item?.reviewCount} size={10} />
-                <Text size={10}>|</Text>
-                <Row gap={4} marginTop={2}>
-                  <Icon name="account-multiple" size={14} color="grey" />
-                  <Text size={10}>({item?.countPartner})</Text>
-                </Row>
-              </Row>
+              <CountStar2
+                rating={4}
+                count={item?.reviewCount}
+                size={12}
+                countPartner={item?.countPartner}
+              />
             </Column>
 
             <TouchableOpacity style={styles.consultButton}>
@@ -60,7 +59,7 @@ export default function DoctorItem({ item }: Props) {
           </Row>
 
           <Row gap={4} marginTop={2}>
-            <Icon name="map-marker" color={RED} size={14} />
+            <LocationIcon />
             <Text size={12} color={"grey"}>
               {item?.branch?.name}
             </Text>

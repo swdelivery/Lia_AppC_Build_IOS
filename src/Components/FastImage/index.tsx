@@ -10,6 +10,10 @@ import {
   NativeSyntheticEvent,
 } from "react-native";
 import Fade from "@Components/Fade";
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+} from "react-native-reanimated";
 
 export interface Props extends Omit<ImageProps, "source"> {
   auto?: boolean;
@@ -35,7 +39,7 @@ function Image({
     () => StyleSheet.flatten(style) || {},
     [style]
   );
-  const [autoStyle, setAutoStyle] = useState<ViewStyle>({
+  const autoStyle = useSharedValue<ViewStyle>({
     width: containerStyle.width,
     height: containerStyle.height,
   });
@@ -50,22 +54,21 @@ function Image({
           // Auto height
           const newHeight = containerStyle.width / ratio;
           console.log({ newHeight });
-
-          setAutoStyle({
+          autoStyle.value = {
             width: containerStyle.width,
             height: newHeight,
             // @ts-ignore
             flex: null,
-          });
+          };
         } else if (containerStyle.height) {
           // Auto width
           const newWidth = containerStyle.height * ratio;
-          setAutoStyle({
+          autoStyle.value = {
             height: containerStyle.height,
             width: newWidth,
             // @ts-ignore
             flex: null,
-          });
+          };
         }
       }
       setReady(true);
@@ -86,8 +89,12 @@ function Image({
     [uri]
   );
 
+  const mAutoStyle = useAnimatedStyle(() => {
+    return autoStyle.value;
+  }, []);
+
   return (
-    <View style={[styles.container, style, autoStyle]}>
+    <Animated.View style={[styles.container, style, mAutoStyle]}>
       <RNImage
         // @ts-ignore
         source={normalisedSource}
@@ -95,19 +102,21 @@ function Image({
         onLoad={handleLoad}
         {...props}
       />
-      {!placeholderComponent && placeholder && !isReady && (
-        <RNImage
-          source={placeholder}
-          style={styles.placeholder}
-          resizeMode="contain"
-          {...props}
-        />
+      {!placeholderComponent && placeholder && (
+        <Fade visible={!isReady} style={styles.placeholder}>
+          <RNImage
+            source={placeholder}
+            style={styles.placeholder}
+            resizeMode="contain"
+            {...props}
+          />
+        </Fade>
       )}
 
       {!!placeholderComponent && (
         <Fade visible={!isReady}>{placeholderComponent}</Fade>
       )}
-    </View>
+    </Animated.View>
   );
 }
 

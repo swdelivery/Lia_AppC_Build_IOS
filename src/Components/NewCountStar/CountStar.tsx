@@ -2,12 +2,14 @@ import React from "react";
 import Row from "@Components/Row";
 import Text from "@Components/Text";
 import Icon from "@Components/Icon";
-import { GREEN_SUCCESS, GREY, MAIN_BG, TITLE_GREY } from "@Constant/Color";
+import { GREEN_SUCCESS, TITLE_GREY } from "@Constant/Color";
+import { PersonsIcon } from "src/SGV";
 
 type Props = {
   rating: number;
   count?: number;
-  size?: 10 | 14 | 16;
+  countPartner?: number;
+  size?: 10 | 12 | 14 | 16;
   larger?: boolean;
   lightContent?: boolean;
 };
@@ -15,6 +17,7 @@ type Props = {
 const CountStar2 = ({
   rating = 0,
   count = 0,
+  countPartner,
   size = 14,
   lightContent = false,
 }: Props) => {
@@ -51,6 +54,15 @@ const CountStar2 = ({
       <Text color={lightContent ? "white" : "black"} size={size}>
         {`(${count})`}
       </Text>
+      {countPartner !== undefined && (
+        <>
+          <Text left={4} right={4}>
+            |
+          </Text>
+          <PersonsIcon />
+          <Text left={0} size={size}>{`(${countPartner})`}</Text>
+        </>
+      )}
     </Row>
   );
 };

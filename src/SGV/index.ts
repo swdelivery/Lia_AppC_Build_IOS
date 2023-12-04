@@ -8,4 +8,6 @@ export { default as SendIcon } from "./send.svg";
 export { default as ImageIcon } from "./image.svg";
 export { default as UploadIcon } from "./upload.svg";
 export { default as ThumbsUpIcon } from "./thumbsup.svg";
+export { default as PersonsIcon } from "./persons.svg";
+export { default as LocationIcon } from "./location.svg";
 export { default as Diamond1Icon } from "./diamond_1.svg";
