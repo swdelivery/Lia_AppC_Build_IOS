@@ -1,22 +1,25 @@
-import FastImage, {
-  FastImageProps,
-  OnLoadEvent,
-  Source,
-} from 'react-native-fast-image';
-import React, {ReactNode, useState, useCallback, useMemo} from 'react';
-import {View, StyleSheet, ViewStyle} from 'react-native';
+import React, { ReactNode, useState, useCallback, useMemo } from "react";
+import {
+  View,
+  StyleSheet,
+  ViewStyle,
+  Image as RNImage,
+  ImageProps,
+  ImageSourcePropType,
+  ImageLoadEventData,
+  NativeSyntheticEvent,
+} from "react-native";
 import Fade from "@Components/Fade";
 
-export type {Source};
-export interface ImageProps extends FastImageProps {
+export interface Props extends Omit<ImageProps, "source"> {
   auto?: boolean;
-  placeholder?: Source | number;
+  placeholder?: ImageSourcePropType;
   placeholderComponent?: ReactNode;
   onReady?: () => void;
   uri?: string;
 }
 
-const DEFAULT_SOURCE = require('../../Image/logo.png');
+const DEFAULT_SOURCE = require("../../Image/logo.png");
 
 function Image({
   auto = false,
@@ -27,7 +30,7 @@ function Image({
   onReady,
   uri,
   ...props
-}: ImageProps) {
+}: Props) {
   const containerStyle: any = useMemo(
     () => StyleSheet.flatten(style) || {},
     [style]
@@ -39,9 +42,9 @@ function Image({
   const [isReady, setReady] = useState(false);
 
   const handleLoad = useCallback(
-    (evt: OnLoadEvent) => {
+    (evt: NativeSyntheticEvent<ImageLoadEventData>) => {
       if (auto) {
-        const { width, height } = evt.nativeEvent;
+        const { width, height } = evt.nativeEvent.source;
         const ratio = width / height;
         if (containerStyle.width) {
           // Auto height
@@ -85,7 +88,7 @@ function Image({
 
   return (
     <View style={[styles.container, style, autoStyle]}>
-      <FastImage
+      <RNImage
         // @ts-ignore
         source={normalisedSource}
         style={StyleSheet.absoluteFill}
@@ -93,7 +96,7 @@ function Image({
         {...props}
       />
       {!placeholderComponent && placeholder && !isReady && (
-        <FastImage
+        <RNImage
           source={placeholder}
           style={styles.placeholder}
           resizeMode="contain"
@@ -112,7 +115,7 @@ export default React.memo(Image);
 
 const styles = StyleSheet.create({
   container: {
-    overflow: 'hidden',
+    overflow: "hidden",
   },
   placeholder: {
     ...StyleSheet.absoluteFillObject,

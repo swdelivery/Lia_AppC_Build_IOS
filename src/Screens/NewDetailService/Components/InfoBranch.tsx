@@ -26,7 +26,7 @@ const InfoBranch = ({ service }: Props) => {
   const handleDoctorPress = useDoctorDetailsNavigation();
 
   const branch = useMemo(() => {
-    return service?.branchServices[0]?.branch;
+    return (service?.branchServices || [])[0]?.branch;
   }, [service]);
 
   const _handleGoDetailBranch = useCallback(() => {
