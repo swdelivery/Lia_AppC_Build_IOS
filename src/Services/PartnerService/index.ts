@@ -25,6 +25,12 @@ import { PaymentRequest } from "@typings/payment";
 
 const axios = createAxios(URL_FOR_PARTNER);
 
+const partnerLogout = (payload: any) => {
+  return axios
+    .post("partner-account/logout", payload)
+    .then(({ data }) => data.data);
+};
+
 const getServiceGroup = (payload: any) => {
   return axios
     .get("service-group", { params: payload })
@@ -337,6 +343,8 @@ const getListAIMessages = (payload: any) => {
 };
 
 export default {
+  partnerLogout,
+
   getServiceGroup,
   getServices,
   getServiceDetails,
@@ -390,5 +398,5 @@ export default {
 
   // AI chatting
   createAIMessage,
-  getListAIMessages
+  getListAIMessages,
 };

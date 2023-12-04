@@ -17,6 +17,7 @@ import { MyVoucher } from "@typings/voucher";
 import { Booking } from "@typings/booking";
 import { ServiceTreatment } from "@typings/treatment";
 import { Order, PaymentRequest } from "@typings/payment";
+import { LOG_OUT } from "@Redux/Constants/ActionType";
 
 export const getMyCoupons = generateActionsGroup<
   void,
@@ -63,3 +64,7 @@ export const getOrderDetails = generateActionsGroup<string, Order>(
 export const getOrderPayments = generateActionsGroup<string, any>(
   GET_ORDER_PAYMENTS
 );
+
+export const logOut = () => ({
+  type: LOG_OUT,
+});
