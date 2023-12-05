@@ -31,11 +31,9 @@ export default PartnerFeedback;
 
 const styles = StyleSheet.create({
   container: {
-    width: _widthScale(360),
     minHeight: 150,
     borderRadius: _moderateScale(8),
     backgroundColor: "white",
-    alignSelf: "center",
     marginTop: _moderateScale(8),
     paddingHorizontal: _moderateScale(8 * 2),
   },

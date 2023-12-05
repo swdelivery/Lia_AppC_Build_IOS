@@ -4,6 +4,7 @@ import { Branch } from "@typings/branch";
 import HorizontalDoctors from "@Components/HorizontalDoctors";
 import useApiPaging from "src/Hooks/services/useApiPaging";
 import PartnerService from "src/Services/PartnerService";
+import Fade from "@Components/Fade";
 
 type Props = {
   branch: Branch;
@@ -15,18 +16,22 @@ const ListDoctor = ({ branch }: Props) => {
     if (!branch) {
       return;
     }
-    getData({
-      branchCode: {
-        equal: branch.code,
-      },
+    requestAnimationFrame(() => {
+      getData({
+        branchCode: {
+          equal: branch.code,
+        },
+      });
     });
   }, [branch.code]);
 
   return (
-    <HorizontalDoctors
-      items={data}
-      title="Đội ngũ Bác sĩ nhiều năm kinh nghiệm"
-    />
+    <Fade visible={data.length > 0}>
+      <HorizontalDoctors
+        items={data}
+        title="Đội ngũ Bác sĩ nhiều năm kinh nghiệm"
+      />
+    </Fade>
   );
 };
 

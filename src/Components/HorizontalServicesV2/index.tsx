@@ -91,6 +91,7 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
   },
   container: {
+    paddingHorizontal: 16,
     borderRadius: _moderateScale(8),
     backgroundColor: "white",
     marginTop: _moderateScale(0),

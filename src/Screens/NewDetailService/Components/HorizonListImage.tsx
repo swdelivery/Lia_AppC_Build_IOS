@@ -54,7 +54,7 @@ const HorizonListImage = ({ images, getColors, containerStyle }: Props) => {
         keyExtractor={keyExtractor}
         onPageChange={handlePageChange}
       />
-      {images.length > 0 && (
+      {images.length > 1 && (
         <PaginationIndicator
           containerStyle={styles.indicatorContainer}
           indicatorConfigs={{

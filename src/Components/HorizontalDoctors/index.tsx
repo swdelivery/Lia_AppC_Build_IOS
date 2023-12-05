@@ -30,7 +30,7 @@ export default function HorizontalDoctors({
           left={_moderateScale(8 * 2)}
           bottom={8}
         >
-          Đội ngũ Bác sĩ nhiều năm kinh nghiệm
+          Đội ngũ bác sĩ nhiều năm kinh nghiệm
         </Text>
       )}
       <View>

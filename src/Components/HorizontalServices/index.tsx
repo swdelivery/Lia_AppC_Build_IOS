@@ -1,5 +1,5 @@
 import { StyleProp, StyleSheet, View } from "react-native";
-import React from "react";
+import React, { useMemo } from "react";
 import { _moderateScale, _widthScale } from "../../Constant/Scale";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import CountStar2 from "@Components/NewCountStar/CountStar";
@@ -14,6 +14,7 @@ import { first } from "lodash";
 import useServiceDetailsNavigation from "src/Hooks/navigation/useServiceDetailsNavigation";
 import { Service } from "@typings/serviceGroup";
 import { SERVICE_BANNER_RATIO } from "@Constant/image";
+import HorizontalServicesV2 from "@Components/HorizontalServicesV2";
 
 type Props = {
   title?: string;
@@ -22,6 +23,10 @@ type Props = {
 };
 const HorizontalServices = ({ items, title, containerStyle }: Props) => {
   const handlePress = useServiceDetailsNavigation();
+
+  const data = useMemo(() => {
+    return items.map((item) => item.service).filter((item) => item);
+  }, [items]);
 
   function renderItem(item: BranchService, index: number) {
     if (!item || !item.service) {
@@ -33,23 +38,28 @@ const HorizontalServices = ({ items, title, containerStyle }: Props) => {
   }
 
   return (
-    <View style={[styles.container, containerStyle]}>
-      {!!title && (
-        <Text left={16} weight="bold">
-          {title}
-        </Text>
-      )}
-      <View>
-        <ScrollView
-          horizontal
-          showsVerticalScrollIndicator={false}
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.contentContainer}
-        >
-          {items.map(renderItem)}
-        </ScrollView>
-      </View>
-    </View>
+    <HorizontalServicesV2
+      items={data}
+      title={title}
+      containerStyle={containerStyle}
+    />
+    // <View style={[styles.container, containerStyle]}>
+    //   {!!title && (
+    //     <Text left={16} weight="bold">
+    //       {title}
+    //     </Text>
+    //   )}
+    //   <View>
+    //     <ScrollView
+    //       horizontal
+    //       showsVerticalScrollIndicator={false}
+    //       showsHorizontalScrollIndicator={false}
+    //       contentContainerStyle={styles.contentContainer}
+    //     >
+    //       {items.map(renderItem)}
+    //     </ScrollView>
+    //   </View>
+    // </View>
   );
 };
 

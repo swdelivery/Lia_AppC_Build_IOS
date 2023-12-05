@@ -84,6 +84,7 @@ export default DetailBranch;
 const styles = StyleSheet.create({
   contentContainer: {
     paddingTop: _width * SERVICE_BANNER_RATIO,
+    paddingBottom: 60,
     backgroundColor: "transparent",
   },
   coverImage: {

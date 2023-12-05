@@ -1,5 +1,5 @@
 import { StyleSheet, TouchableOpacity, View } from "react-native";
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import { _heightScale, _moderateScale, _width } from "../../../Constant/Scale";
 import { navigation } from "../../../../rootNavigation";
 import IconBackWhite from "../../../SGV/backWhite.svg";
@@ -33,12 +33,16 @@ const Header = ({ scrollY, title }: Props) => {
     };
   });
 
+  const handleBack = useCallback(() => {
+    requestAnimationFrame(navigation.goBack);
+  }, []);
+
   return (
     <View style={[styles.header, containerStyle]}>
       <Animated.View style={[styles.background, animatedStyle]} />
       <TouchableOpacity
         style={styles.backBtn}
-        onPress={navigation.goBack}
+        onPress={handleBack}
         hitSlop={{ top: 12, left: 12, right: 12, bottom: 12 }}
       >
         <IconBackBlack width={24} height={24} />

@@ -4,6 +4,7 @@ import { Branch } from "@typings/branch";
 import PartnerDiary from "@Components/PartnerDiary";
 import PartnerService from "src/Services/PartnerService";
 import useApiPaging from "src/Hooks/services/useApiPaging";
+import Fade from "@Components/Fade";
 
 type Props = {
   branch: Branch;
@@ -14,15 +15,21 @@ const ListDiary = ({ branch }: Props) => {
 
   useEffect(() => {
     if (branch) {
-      getData({
-        branchCode: {
-          equal: branch.code,
-        },
+      requestAnimationFrame(() => {
+        getData({
+          branchCode: {
+            equal: branch.code,
+          },
+        });
       });
     }
   }, [branch]);
 
-  return <PartnerDiary items={data} title="Nhật ký từ khách hàng" />;
+  return (
+    <Fade visible={data.length > 0}>
+      <PartnerDiary items={data} title="Nhật ký từ khách hàng" />
+    </Fade>
+  );
 };
 
 export default ListDiary;

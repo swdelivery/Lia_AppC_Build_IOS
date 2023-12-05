@@ -25,6 +25,8 @@ const BannerInfo = ({ branch }: Props) => {
     []
   );
 
+  console.log({ branch });
+
   const handleOpenMap = useCallback(() => {
     if (branch.address) {
       linking.openMap(branch.address);
@@ -50,7 +52,7 @@ const BannerInfo = ({ branch }: Props) => {
           Mở cửa
         </Text>
         <Text size={12} weight="bold" color="white">
-          8:00 - 18:00
+          {branch.openTime}
         </Text>
       </Row>
       <Pressable onPress={handleOpenMap}>
