@@ -65,7 +65,10 @@ const DetailService = () => {
       <Header />
       <AfterTimeoutFragment placeholder={<Placeholder />} timeout={1000}>
         <ScrollView style={styles.content}>
-          <HorizonListImage service={service} getColors={getColors} />
+          <HorizonListImage
+            images={service?.representationFileArr ?? []}
+            getColors={getColors}
+          />
           <View style={styles.body}>
             <Animated.View style={[styles.bodyBg2, animatedStyle]} />
             <LinearGradient

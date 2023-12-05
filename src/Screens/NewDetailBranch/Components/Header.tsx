@@ -44,7 +44,13 @@ const Header = ({ scrollY, title }: Props) => {
         <IconBackBlack width={24} height={24} />
       </TouchableOpacity>
       <Animated.View style={[styleElement.flex, animatedStyle]}>
-        <Text color={"black"} size={16} weight="bold" left={8}>
+        <Text
+          color={"black"}
+          size={16}
+          weight="bold"
+          left={8}
+          numberOfLines={2}
+        >
           {title}
         </Text>
       </Animated.View>

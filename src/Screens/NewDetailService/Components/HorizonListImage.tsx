@@ -1,36 +1,42 @@
-import { StyleSheet } from "react-native";
+import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import React, { useCallback, useEffect, useMemo } from "react";
 import { _width } from "../../../Constant/Scale";
 import useItemExtractor from "../../../Hooks/useItemExtractor";
-import { Service } from "@typings/serviceGroup";
 import Image from "@Components/Image";
 import { FileAvatar } from "@typings/common";
 import { SERVICE_BANNER_RATIO } from "@Constant/image";
-import Carousel, { withCarouselContext } from "@r0b0t3d/react-native-carousel";
+import Carousel, {
+  PaginationIndicator,
+  withCarouselContext,
+} from "@r0b0t3d/react-native-carousel";
 import { getImageAvataUrl } from "src/utils/avatar";
+import {
+  BASE_COLOR,
+  BG_GREY_OPACITY_5,
+  BLUE,
+  GREY,
+  SECOND_COLOR,
+} from "@Constant/Color";
 
 type Props = {
-  service: Service;
-  getColors: (url: string) => void;
+  containerStyle?: StyleProp<ViewStyle>;
+  images: FileAvatar[];
+  getColors?: (url: string) => void;
 };
 
-const HorizonListImage = ({ service, getColors }: Props) => {
-  const data = useMemo(() => {
-    return service?.representationFileArr || [];
-  }, [service]);
-
+const HorizonListImage = ({ images, getColors, containerStyle }: Props) => {
   useEffect(() => {
     handlePageChange(0);
   }, []);
 
   const handlePageChange = useCallback(
     (index: number) => {
-      if (data[index]) {
-        const url = getImageAvataUrl(data[index]);
+      if (images[index] && getColors) {
+        const url = getImageAvataUrl(images[index]);
         getColors(url);
       }
     },
-    [data, getColors]
+    [images, getColors]
   );
 
   const _renderItem = ({ item }) => {
@@ -40,13 +46,27 @@ const HorizonListImage = ({ service, getColors }: Props) => {
   const { keyExtractor } = useItemExtractor<FileAvatar>((item) => item._id);
 
   return (
-    <Carousel
-      style={styles.container}
-      renderItem={_renderItem}
-      data={data}
-      keyExtractor={keyExtractor}
-      onPageChange={handlePageChange}
-    />
+    <View>
+      <Carousel
+        style={[styles.container, containerStyle]}
+        renderItem={_renderItem}
+        data={images}
+        keyExtractor={keyExtractor}
+        onPageChange={handlePageChange}
+      />
+      {images.length > 0 && (
+        <PaginationIndicator
+          containerStyle={styles.indicatorContainer}
+          indicatorConfigs={{
+            indicatorWidth: 10,
+            indicatorColor: BLUE,
+            indicatorSelectedColor: SECOND_COLOR,
+            indicatorSelectedWidth: 18,
+            spaceBetween: 4,
+          }}
+        />
+      )}
+    </View>
   );
 };
 
@@ -59,5 +79,15 @@ const styles = StyleSheet.create({
   image: {
     width: _width,
     height: _width * SERVICE_BANNER_RATIO,
+  },
+  indicatorContainer: {
+    position: "absolute",
+    alignSelf: "center",
+    bottom: 8,
+  },
+  indicator: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
   },
 });
