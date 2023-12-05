@@ -57,7 +57,11 @@ const DetailService = () => {
 
   return (
     <Screen safeBottom safeTop style={styles.container}>
-      <StatusBar barStyle="dark-content" />
+      <StatusBar
+        barStyle="dark-content"
+        translucent
+        backgroundColor={"transparent"}
+      />
       <Header />
       <AfterTimeoutFragment placeholder={<Placeholder />} timeout={1000}>
         <ScrollView style={styles.content}>

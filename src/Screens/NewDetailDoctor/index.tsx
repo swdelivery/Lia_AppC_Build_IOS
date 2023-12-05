@@ -27,6 +27,7 @@ import PartnerService from "src/Services/PartnerService";
 import { AfterTimeoutFragment } from "@Components/AfterTimeoutFragment";
 import ListBottomService from "@Components/ListBottomService/ListBottomService";
 import Placeholder from "./Components/Placeholder";
+import { StatusBar } from "@Components/StatusBar";
 
 type ScreenK = typeof ScreenKey.DETAIL_DOCTOR;
 
@@ -67,6 +68,7 @@ const DetailDoctor = () => {
           style={styles.container}
           source={require("../../Image/bgGreen.png")}
         >
+          <StatusBar barStyle="dark-content" />
           <Header scrollY={scrollY} doctor={data} />
           <Animated.ScrollView
             scrollEventThrottle={16}

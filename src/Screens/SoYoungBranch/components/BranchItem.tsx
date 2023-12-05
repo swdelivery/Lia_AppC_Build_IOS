@@ -62,7 +62,7 @@ export default function BranchItem({ item }: Props) {
             </Text>
           </Row>
 
-          <Certificates scrollEnabled data={item.branchFileArr} />
+          <Certificates data={item.branchFileArr} />
         </View>
       </Row>
       {item.branchServices.length > 0 && (

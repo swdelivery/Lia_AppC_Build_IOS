@@ -39,7 +39,11 @@ const DetailBranch = () => {
 
   return (
     <Screen safeBottom>
-      <StatusBar barStyle={"dark-content"} />
+      <StatusBar
+        barStyle={"dark-content"}
+        backgroundColor={"transparent"}
+        translucent
+      />
       <Header scrollY={scrollY} title={data?.name} />
       <AfterTimeoutFragment placeholder={<Placeholder />}>
         <CoverImage scrollY={scrollY} branch={data} />

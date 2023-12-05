@@ -26,6 +26,7 @@ import useApi from "src/Hooks/services/useApi";
 import PartnerService from "src/Services/PartnerService";
 import ListBottomService from "@Components/ListBottomService/ListBottomService";
 import Placeholder from "@Screens/NewDetailDoctor/Components/Placeholder";
+import { StatusBar } from "@Components/StatusBar";
 
 type ScreenK = typeof ScreenKey.DETAIL_PRACTITIONER;
 
@@ -66,6 +67,7 @@ const DetailPractitioner = () => {
           style={styles.container}
           source={require("../../Image/bgGreen.png")}
         >
+          <StatusBar barStyle="dark-content" />
           <Header scrollY={scrollY} practitioner={data} />
           <Animated.ScrollView
             scrollEventThrottle={16}

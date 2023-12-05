@@ -1,5 +1,4 @@
 import React, { memo, useMemo } from "react";
-import PropTypes from "prop-types";
 import {
   StatusBar,
   Platform,
@@ -10,7 +9,6 @@ import {
 } from "react-native";
 import { BASE_COLOR } from "../../Constant/Color";
 import { _heightScale } from "../../Constant/Scale";
-import { getStatusBarHeight } from "react-native-iphone-x-helper";
 import LinearGradient from "react-native-linear-gradient";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 

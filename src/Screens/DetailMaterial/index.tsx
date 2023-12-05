@@ -1,6 +1,6 @@
 import Screen from "@Components/Screen";
 import React, { useRef, useState } from "react";
-import { StatusBar, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import {
   useAnimatedScrollHandler,
   useSharedValue,
@@ -17,6 +17,7 @@ import Instruct from "./Instruct";
 import { getDetailMaterial } from "@Redux/Action/Material";
 import { isAndroid } from "src/utils/platform";
 import LiAHeader from "@Components/Header/LiAHeader";
+import { StatusBar } from "@Components/StatusBar";
 
 const DetailMaterial = (props) => {
   const scrollY = useSharedValue(0);

@@ -17,17 +17,21 @@ import Column from "@Components/Column";
 import { useNavigate } from "src/Hooks/useNavigation";
 import ScreenKey from "@Navigation/ScreenKey";
 
-const SoYoungDoctor = () => {
+const SoYoungDoctor = ({ tabIndex, isFocused }: any) => {
   const { navigate } = useNavigate();
-  const { data, isLoading, getData } = useListFilter(
+  const { data, isLoading, refreshData } = useListFilter(
     getDoctorListState,
     getDoctorList,
     loadMoreDoctorList
   );
 
   useEffect(() => {
-    getData();
-  }, []);
+    if (tabIndex === 2 && isFocused) {
+      requestAnimationFrame(() => {
+        refreshData();
+      });
+    }
+  }, [tabIndex, isFocused]);
 
   function renderItem({ item }: RenderItemProps<any>) {
     return <DoctorItem item={item} />;

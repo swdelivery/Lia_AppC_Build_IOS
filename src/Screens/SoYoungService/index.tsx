@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import { _width } from "../../Constant/Scale";
 import ServiceItem, {
@@ -6,7 +6,6 @@ import ServiceItem, {
   Placeholder,
 } from "./components/ServiceItem";
 import { useDispatch, useSelector } from "react-redux";
-import { useFocused } from "src/Hooks/useNavigation";
 import { getServices } from "@Redux/service/actions";
 import { getServiceListState } from "@Redux/service/selectors";
 import { FlatList } from "react-native";
@@ -15,13 +14,17 @@ import { Service } from "@typings/serviceGroup";
 import useItemExtractor from "src/Hooks/useItemExtractor";
 import PlaceholderSkeletons from "@Components/PlaceholderSkeletons";
 
-const SoYoungService = () => {
+const SoYoungService = ({ tabIndex, isFocused }: any) => {
   const dispatch = useDispatch();
   const { isLoading, data } = useSelector(getServiceListState);
 
-  useFocused(() => {
-    dispatch(getServices.request());
-  });
+  useEffect(() => {
+    if (tabIndex === 0 && isFocused) {
+      requestAnimationFrame(() => {
+        dispatch(getServices.request());
+      });
+    }
+  }, [tabIndex, isFocused]);
 
   function renderItem({ item }: RenderItemProps<Service>) {
     return <ServiceItem item={item} />;

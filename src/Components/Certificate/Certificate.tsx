@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { ColorValue, StyleSheet } from "react-native";
 import React, { useMemo } from "react";
 import Text from "@Components/Text";
 import Icon from "@Components/Icon";
@@ -12,15 +12,22 @@ import { Diamond1Icon } from "src/SGV";
 
 type Props = {
   item: FileUpload;
-  backgroundColor?: string;
+  backgroundColor?: ColorValue;
+  borderColor?: ColorValue;
 };
 
-const Certificate = ({ item, backgroundColor = "#414378" }: Props) => {
+const Certificate = ({
+  item,
+  backgroundColor = "#414378",
+  borderColor,
+}: Props) => {
   const imageViewer = useVisible();
 
   const containerStyle = useMemo(() => {
     return {
       backgroundColor,
+      borderColor: borderColor || backgroundColor,
+      borderWidth: 1,
     };
   }, [backgroundColor]);
 
@@ -55,9 +62,11 @@ const Certificate = ({ item, backgroundColor = "#414378" }: Props) => {
 export function Certificates({
   data,
   scrollEnabled = false,
+  borderColor,
 }: {
   data: FileUpload[];
   scrollEnabled?: boolean;
+  borderColor?: ColorValue;
 }) {
   function renderContent() {
     return data.map((item, idx) => {
@@ -66,12 +75,11 @@ export function Certificates({
           item={item}
           key={item._id}
           backgroundColor={idx % 2 === 0 ? "#414378" : "#151617"}
+          borderColor={borderColor}
         />
       );
     });
   }
-
-  console.log({ scrollEnabled });
 
   if (scrollEnabled) {
     return (

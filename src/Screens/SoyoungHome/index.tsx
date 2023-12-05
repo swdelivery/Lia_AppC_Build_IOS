@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { View, StyleSheet, Platform, StatusBar } from "react-native";
 import Banner from "./Components/Banner";
 import Search from "./Components/Search";
@@ -24,6 +24,7 @@ import SoYoungMaterial from "@Screens/SoYoungMaterial";
 import SoYoungPractitioner from "@Screens/SoYoungPractitioner";
 import { AfterTimeoutFragment } from "@Components/AfterTimeoutFragment";
 import { FocusAwareStatusBar } from "@Components/StatusBar";
+import { useIsFocused } from "@react-navigation/native";
 
 const STACKS = [
   {
@@ -52,6 +53,8 @@ const SoyoungHome = () => {
   const { top } = useSafeAreaInsets();
   const heightExpandServiceGr = useSharedValue(0);
   const [expandServiceGr, setExpandServiceGr] = useState(true);
+  const [tabIndex, setTabIndex] = useState(0);
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     if (expandServiceGr) {
@@ -60,6 +63,10 @@ const SoyoungHome = () => {
       heightExpandServiceGr.value = withTiming(0, { duration: 0 });
     }
   }, [expandServiceGr]);
+
+  const handleTabViewChnaged = useCallback((index, tabLabel) => {
+    setTabIndex(index);
+  }, []);
 
   return (
     <Screen style={styles.container}>
@@ -86,6 +93,11 @@ const SoyoungHome = () => {
             },
           }}
           stacks={STACKS}
+          onTabviewChanged={handleTabViewChnaged}
+          mappingProps={{
+            tabIndex,
+            isFocused,
+          }}
           tabWrapStyle={styleElement.flex}
           tabInnerStyle={styles.tabInnerStyle}
           tabActiveOpacity={1}
