@@ -5,8 +5,12 @@ import IconBackBlack from "../../../SGV/backArrBlack.svg";
 import IconFind from "../../../SGV/find_grey.svg";
 import { navigation } from "../../../../rootNavigation";
 import Text from "@Components/Text";
+import { useNavigate } from "src/Hooks/useNavigation";
+import ScreenKey from "@Navigation/ScreenKey";
 
 const Header = () => {
+  const { navigate } = useNavigate();
+
   return (
     <View style={styles.header}>
       <TouchableOpacity
@@ -19,7 +23,10 @@ const Header = () => {
         />
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.header__input}>
+      <TouchableOpacity
+        style={styles.header__input}
+        onPress={navigate(ScreenKey.SEARCHING_HOME)}
+      >
         <IconFind
           width={_moderateScale(8 * 2)}
           height={_moderateScale(8 * 2)}

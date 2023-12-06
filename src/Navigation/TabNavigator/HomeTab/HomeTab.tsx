@@ -4,7 +4,6 @@ import {
 } from "@react-navigation/stack";
 import React from "react";
 import Home from "../../../Screens/SoyoungHome/index";
-import SearchingHome from "../../../Screens/NewSearchHome/index";
 import ScreenKey from "../../ScreenKey";
 import ListBranch from "../../../Screens/ListBranch";
 import ListDoctorIOS from "../../../Screens/ListDoctor/index copy";
@@ -29,11 +28,6 @@ const HomeTab = () => {
         options={{ ...TransitionPresets.SlideFromRightIOS }}
         name={ScreenKey.LIST_BRANCH}
         component={ListBranch}
-      />
-      <Stack.Screen
-        options={{ ...TransitionPresets.SlideFromRightIOS }}
-        name={ScreenKey.SEARCHING_HOME}
-        component={SearchingHome}
       />
       <Stack.Screen
         options={{ ...TransitionPresets.SlideFromRightIOS }}

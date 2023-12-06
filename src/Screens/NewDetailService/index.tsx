@@ -31,12 +31,11 @@ import ScreenKey from "@Navigation/ScreenKey";
 import { useNavigate } from "src/Hooks/useNavigation";
 
 const DetailService = () => {
+  const { navigate } = useNavigate();
   const { service } = useServiceDetailsContext();
   const { data: reviews, meta: reviewsMeta } = useServiceReviews(service);
   const recomendServices = useRecomendServices(service);
   const { secondColor, primaryColor, getColors } = useImageColors();
-
-  const { navigate } = useNavigate();
 
   useEffect(() => {
     if (service?.representationFileArr?.length) {

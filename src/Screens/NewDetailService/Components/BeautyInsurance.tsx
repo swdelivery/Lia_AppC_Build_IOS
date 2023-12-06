@@ -3,7 +3,7 @@ import Row from "@Components/Row";
 import Text from "@Components/Text";
 import { styleElement } from "@Constant/StyleElement";
 import React from "react";
-import { View, StyleSheet, Pressable } from "react-native";
+import { StyleSheet, Pressable } from "react-native";
 
 type Props = {
   onViewMore: () => void;

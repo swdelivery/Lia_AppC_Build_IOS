@@ -1,5 +1,5 @@
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
-import React, { useCallback, useEffect, useMemo } from "react";
+import React, { useCallback, useEffect } from "react";
 import { _width } from "../../../Constant/Scale";
 import useItemExtractor from "../../../Hooks/useItemExtractor";
 import Image from "@Components/Image";
@@ -10,13 +10,7 @@ import Carousel, {
   withCarouselContext,
 } from "@r0b0t3d/react-native-carousel";
 import { getImageAvataUrl } from "src/utils/avatar";
-import {
-  BASE_COLOR,
-  BG_GREY_OPACITY_5,
-  BLUE,
-  GREY,
-  SECOND_COLOR,
-} from "@Constant/Color";
+import { BLUE, SECOND_COLOR } from "@Constant/Color";
 
 type Props = {
   containerStyle?: StyleProp<ViewStyle>;

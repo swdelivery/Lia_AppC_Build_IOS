@@ -1,30 +1,16 @@
-import React, { useRef, useEffect, useCallback, useState, memo } from 'react';
-import { View, ScrollView, Image, Animated, Text, StyleSheet, FlatList, TouchableOpacity, TextInput, Platform, ImageBackground, Touchable, TouchableHighlight } from 'react-native';
-
-
+import React, { useRef, useEffect, useState, memo } from 'react';
+import { View, ScrollView, Image, Text, StyleSheet, TouchableOpacity, Platform } from 'react-native';
 import { _height, _moderateScale, _widthScale, _heightScale, _width } from '../../Constant/Scale';
-import { WHITE, RED, GREY, BG_GREY_OPACITY_2, BG_GREY_OPACITY_5, BASE_COLOR, SECOND_COLOR, BLACK_OPACITY_8, BLUE_FB, BLACK_OPACITY_7, BG_GREY_OPACITY_7, BG_GREY_OPACITY_9 } from '../../Constant/Color';
-import { randomStringFixLengthCode } from '../../Constant/Utils';
+import { WHITE, RED, GREY, BG_GREY_OPACITY_5, BASE_COLOR, BLACK_OPACITY_8, BG_GREY_OPACITY_9 } from '../../Constant/Color';
 import { styleElement } from '../../Constant/StyleElement';
-import { sizeIcon, sizeLogo } from '../../Constant/Icon';
+import { sizeIcon } from '../../Constant/Icon';
 import { stylesFont } from '../../Constant/Font';
-
 import ScreenKey from '../../Navigation/ScreenKey';
-import { useSelector, useDispatch } from 'react-redux';
-import store from "../../Redux/store";
-import * as ActionType from '../../Redux/Constants/ActionType'
 import StatusBarCustom from '../../Components/StatusBar/StatusBarCustom';
 import { navigation } from '../../../rootNavigation';
-import AlarmNotifi from '../../Components/AlarmNotifi/AlarmNotifi';
-import * as DeviceInfo from 'react-native-device-info';
-import { getWallet } from '../../Redux/Action/InfoAction';
-import AsyncStorage from '@react-native-community/async-storage';
-import BubbleDiaryNotUpdate from '../../Screens/BubbleDiaryNotUpdate/BubbleDiaryNotUpdate'
-import LinearGradient from 'react-native-linear-gradient';
-import { getBottomSpace } from 'react-native-iphone-x-helper';
 import { URL_ORIGINAL } from '../../Constant/Url';
-import { getAllServiceGroup, getServiceGroupv2 } from '../../Redux/Action/ServiceGroup';
-import { getAllNewsv2, getEncyclopedia } from '../../Redux/Action/News';
+import { getServiceGroupv2 } from '../../Redux/Action/ServiceGroup';
+import { getEncyclopedia } from '../../Redux/Action/News';
 import { getServicev2 } from '../../Redux/Action/Service';
 import { getListBranchV2 } from '../../Redux/Action/BranchAction';
 import { getAllDoctorv2 } from '../../Redux/Action/DoctorAction';
