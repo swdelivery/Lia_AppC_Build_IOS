@@ -69,7 +69,13 @@ export function useNavigate() {
     []
   );
 
-  return { navigate, navigation, replace };
+  const goBack = useCallback(() => {
+    requestAnimationFrame(() => {
+      navigation.goBack();
+    });
+  }, []);
+
+  return { navigate, navigation, replace, goBack };
 }
 
 export function useFocused(callback: () => void, ignoreFirst = false) {

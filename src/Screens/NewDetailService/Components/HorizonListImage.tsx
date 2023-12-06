@@ -52,7 +52,7 @@ const HorizonListImage = ({ images, getColors, containerStyle }: Props) => {
         <PaginationIndicator
           containerStyle={styles.indicatorContainer}
           indicatorConfigs={{
-            indicatorWidth: 10,
+            indicatorWidth: 8,
             indicatorColor: BLUE,
             indicatorSelectedColor: SECOND_COLOR,
             indicatorSelectedWidth: 18,
@@ -69,6 +69,7 @@ export default withCarouselContext(HorizonListImage);
 const styles = StyleSheet.create({
   container: {
     height: _width * SERVICE_BANNER_RATIO,
+    width: _width,
   },
   image: {
     width: _width,

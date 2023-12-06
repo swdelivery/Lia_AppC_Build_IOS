@@ -1,0 +1,39 @@
+diff --git a/node_modules/@r0b0t3d/react-native-carousel/src/components/PaginationIndicator.tsx b/node_modules/@r0b0t3d/react-native-carousel/src/components/PaginationIndicator.tsx
+index 04e8622..90895ee 100644
+--- a/node_modules/@r0b0t3d/react-native-carousel/src/components/PaginationIndicator.tsx
++++ b/node_modules/@r0b0t3d/react-native-carousel/src/components/PaginationIndicator.tsx
+@@ -1,7 +1,9 @@
+ /* eslint-disable @typescript-eslint/ban-ts-comment */
+-import React, { useMemo } from 'react';
++import React, { useMemo, useState } from 'react';
+ import { View, StyleSheet, ViewStyle, StyleProp } from 'react-native';
+ import Animated, {
++  runOnJS,
++  useAnimatedReaction,
+   useAnimatedStyle,
+   useDerivedValue,
+   withSpring,
+@@ -33,6 +35,14 @@ export default function PaginationIndicator({
+   indicatorConfigs,
+ }: PaginationProps) {
+   const { currentPage, totalPage } = useCarouselContext();
++  const [total, setTotal] = useState(0)
++
++  useAnimatedReaction(() => totalPage.value, (result, prev) => {
++    if (result !== prev) {
++      runOnJS(setTotal)(result)      
++    }
++  }, []);
++  
+ 
+   const configs = useMemo(() => {
+     return {
+@@ -85,7 +95,7 @@ export default function PaginationIndicator({
+ 
+   return (
+     <View style={[styles.container, containerStyle]}>
+-      {[...Array(totalPage.value).keys()].map(renderItem)}
++      {[...Array(total).keys()].map(renderItem)}
+       <Animated.View
+         style={[
+           styles.dotSelectedStyle,

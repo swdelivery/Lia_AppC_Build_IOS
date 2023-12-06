@@ -52,7 +52,7 @@ const DetailService = () => {
         { duration: 500 }
       ),
     };
-  });
+  });  
 
   return (
     <Screen safeBottom safeTop style={styles.container}>
