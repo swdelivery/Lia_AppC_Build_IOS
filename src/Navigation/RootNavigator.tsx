@@ -175,6 +175,7 @@ import ListRelativesProfile from "@Screens/ListRelativesProfile";
 import RelativesInfo from "@Screens/ListRelativesProfile/RelativesInfo";
 import AIChatting from "@Screens/Chat/AIChatting";
 import DetailPost from "@Screens/Social/DetailPost";
+import ListComments from "@Screens/Social/ListComments";
 
 const rootStack = createStackNavigator();
 
@@ -355,6 +356,13 @@ const RootNavigator = () => {
             options={{ ...TransitionPresets.SlideFromRightIOS }}
             name={ScreenKey.DETAIL_POST}
             component={DetailPost}
+          />
+          <rootStack.Screen
+            // options={Platform.OS == 'ios' ? { ...TransitionPresets.ModalPresentationIOS } : optionsModal}
+            // options={{ ...TransitionPresets.ModalPresentationIOS }}
+            options={optionsModal}
+            name={ScreenKey.LIST_COMMENTS}
+            component={ListComments}
           />
           <rootStack.Screen
             options={{ ...TransitionPresets.SlideFromRightIOS }}

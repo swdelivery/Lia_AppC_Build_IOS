@@ -10,6 +10,7 @@ export type Post = {
   videos: any;
   hiddenIdArr: any;
   hashTagCodeArr: any;
+  reaction: any;
   scope: string;
   isActive: boolean;
   isDelete: boolean;
@@ -53,6 +54,25 @@ export type PartnerDiary = {
   id: string;
 
 
+} & Timestamp;
+
+export type CommentPost = {
+  parentId: string;
+  isActive: boolean;
+  isDelete: boolean;
+  _id: string;
+  content: string;
+  postId: string;
+  partnerId: string;
+  created: string;
+  updated: string;
+  __v: number;
+  commentsCount: number;
+  partner: any;
+  id: string;
+
+  // Local
+  childComments: any;
 } & Timestamp;
 
 export type Meta = {

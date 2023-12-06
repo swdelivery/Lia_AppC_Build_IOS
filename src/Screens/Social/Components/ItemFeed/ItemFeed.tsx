@@ -26,7 +26,7 @@ const ItemFeed = ({ data }: Props) => {
       <ListImages data={data} />
       <DiaryBox data={data} />
       <CountCommentLike data={data} />
-      <CommentLike />
+      <CommentLike data={data} />
       <PreviewComment data={data} />
 
     </Column>

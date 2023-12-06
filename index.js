@@ -12,7 +12,7 @@ import App from './App';
 import { name as appName } from './app.json';
 import { checkRefreshToken } from './src/Redux/Action/AuthAction';
 import messaging from '@react-native-firebase/messaging';
-import {PermissionsAndroid} from 'react-native';
+import { PermissionsAndroid } from 'react-native';
 
 LogBox.ignoreAllLogs()
 
@@ -29,7 +29,7 @@ messaging().setBackgroundMessageHandler(async remoteMessage => {
 async function requestUserPermission() {
 
     PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS);
-    
+
     const authStatus = await messaging().requestPermission();
     const enabled =
         authStatus === messaging.AuthorizationStatus.AUTHORIZED ||

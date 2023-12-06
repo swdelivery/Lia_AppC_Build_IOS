@@ -354,6 +354,26 @@ const getPartnerDiary = (payload: any) => {
   return axios.get(`/partner-diary/${payload}`, {}).then(({ data }) => data);
 };
 
+const getCommentsPost = (payload: any) => {
+  return axios.get(`/partner-post-comment/post/${payload?._idPost}`, { params: payload?.params }).then(({ data }) => data);
+};
+
+const getMoreCommentsPost = (payload: any) => {
+  return axios.get(`/partner-post-comment/post/${payload?._idPost}`, { params: payload?.params }).then(({ data }) => data);
+};
+
+const getChildCommentsPost = (payload: any) => {
+  return axios.get(`/partner-post-comment/post/${payload?._idPost}`, { params: payload?.params }).then(({ data }) => data);
+};
+
+const createCommentPost = (payload: any) => {
+  return axios.post(`/partner-post-comment`, payload).then(({ data }) => data);
+};
+
+const createReactionPost = (payload: any) => {
+  return axios.post(`/partner-post-reaction`, payload).then(({ data }) => data);
+};
+
 export default {
   getServiceGroup,
   getServices,
@@ -413,5 +433,10 @@ export default {
   // NewFeeds
   getListPosts,
   getMorePosts,
-  getPartnerDiary
+  getPartnerDiary,
+  getCommentsPost,
+  getMoreCommentsPost,
+  getChildCommentsPost,
+  createCommentPost,
+  createReactionPost,
 };

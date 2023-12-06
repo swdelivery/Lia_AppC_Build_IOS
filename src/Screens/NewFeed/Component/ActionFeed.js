@@ -1,6 +1,6 @@
 import { isEmpty } from 'lodash-es';
 import React, { useEffect, useState } from 'react';
-import { Alert, Animated, Image, Platform, StyleSheet, Text, TouchableOpacity, View,TouchableHighlight } from 'react-native';
+import { Alert, Animated, Image, Platform, StyleSheet, Text, TouchableOpacity, View, TouchableHighlight } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { BASE_COLOR, BG_BEAUTY, BG_GREY_OPACITY_5, BLUE_FB, GREY, GREY_FOR_TITLE, ORANGE, RED, WHITE } from '../../../Constant/Color';
 import { stylesFont } from '../../../Constant/Font';
@@ -50,22 +50,21 @@ const ActionFeed = ((props) => {
         setOpen(false)
     }
 
-    _handleDetail = () =>{
+    _handleDetail = () => {
         // props?.handleDetail()
-        console.log({x: props});
+        console.log({ x: props });
         // return
-        navigation.navigate(ScreenKey.MODAL_COMMENT_POST,{idPost: props?.data?._id})
+        navigation.navigate(ScreenKey.MODAL_COMMENT_POST, { idPost: props?.data?._id })
     }
 
-    
+
 
 
 
     const handleReaction = (val) => {
-         close()
+        close()
         //Alert.alert('handleReaction')
-        if(props?.data?.reaction?.type!==val.toUpperCase())
-        {
+        if (props?.data?.reaction?.type !== val.toUpperCase()) {
             dispatch(createPostReaction({
                 postId: props?.data?._id,
                 type: val.toUpperCase()
@@ -90,8 +89,7 @@ const ActionFeed = ((props) => {
             forIos: TouchableOpacity
         };
         let CustomTouch = components['forIos'];
-        if(Platform.OS === 'android')
-        {
+        if (Platform.OS === 'android') {
             // console.log('android')
             CustomTouch = components['forAnd']
         }
@@ -99,8 +97,8 @@ const ActionFeed = ((props) => {
         return images.map((img) => {
             return (
                 <CustomTouch
-                key={img.id}
-                onPress={() => handleReaction(img?.id)}>
+                    key={img.id}
+                    onPress={() => handleReaction(img?.id)}>
                     <Animated.Image
                         source={{ uri: img.img }}
                         // source={require(img.imageActive)}
@@ -144,57 +142,57 @@ const ActionFeed = ((props) => {
 
 
     const _reactionRender = (val, index) => {
-        
+
 
         switch (val?._id) {
             case 'LIKE':
                 return <Image
-                key={index}
+                    key={index}
                     style={[sizeIcon.xs, index > 0 && styles.iconAfter,
-                        index > 0 && { left: _moderateScale(16 + 10 * (index+1)), zIndex: -(index+1) }
+                    index > 0 && { left: _moderateScale(16 + 10 * (index + 1)), zIndex: -(index + 1) }
                     ]}
                     source={require(`../../../Image/reaction/love2.png`)} />
 
             case 'LOVE':
                 return <Image
-                key={index}
+                    key={index}
                     style={[sizeIcon.xs, index > 0 && styles.iconAfter,
-                        index > 0 && { left: _moderateScale(16 + 10 * (index+1)), zIndex: -(index+1) }
+                    index > 0 && { left: _moderateScale(16 + 10 * (index + 1)), zIndex: -(index + 1) }
                     ]}
                     source={require(`../../../Image/reaction/love2.png`)} />
 
             case 'WOW':
                 return <Image key={index}
                     style={[sizeIcon.xs, index > 0 && styles.iconAfter,
-                        index > 0 && { left: _moderateScale(16 + 10 * (index+1)), zIndex: -(index+1) }
+                    index > 0 && { left: _moderateScale(16 + 10 * (index + 1)), zIndex: -(index + 1) }
                     ]}
                     source={require(`../../../Image/reaction/wow2.png`)} />
 
             case 'SAD':
                 return <Image key={index}
                     style={[sizeIcon.xs, index > 0 && styles.iconAfter,
-                        index > 0 && { left: _moderateScale(16 + 10 * (index+1)), zIndex: -(index+1) }
+                    index > 0 && { left: _moderateScale(16 + 10 * (index + 1)), zIndex: -(index + 1) }
                     ]}
                     source={require(`../../../Image/reaction/sad2.png`)} />
 
             case 'HAHA':
                 return <Image key={index}
                     style={[sizeIcon.xs, index > 0 && styles.iconAfter,
-                        index > 0 && { left: _moderateScale(16 + 10 * (index+1)), zIndex: -(index+1) }
+                    index > 0 && { left: _moderateScale(16 + 10 * (index + 1)), zIndex: -(index + 1) }
                     ]}
                     source={require(`../../../Image/reaction/haha2.png`)} />
 
             case 'YAY':
                 return <Image key={index}
                     style={[sizeIcon.xs, index > 0 && styles.iconAfter,
-                        index > 0 && { left: _moderateScale(16 + 10 * (index+1)), zIndex: -(index+1) }
+                    index > 0 && { left: _moderateScale(16 + 10 * (index + 1)), zIndex: -(index + 1) }
                     ]}
                     source={require(`../../../Image/reaction/yay2.png`)} />
 
             case 'ANGRY':
                 return <Image key={index}
                     style={[sizeIcon.xs, index > 0 && styles.iconAfter,
-                        index > 0 && { left: _moderateScale(16 + 10 * (index+1)), zIndex: -(index+1) }
+                    index > 0 && { left: _moderateScale(16 + 10 * (index + 1)), zIndex: -(index + 1) }
                     ]}
                     source={require(`../../../Image/reaction/angry2.png`)} />
 
@@ -210,97 +208,97 @@ const ActionFeed = ((props) => {
             case 'LIKE':
                 return <>
                     <Image key={index}
-                    style={[sizeIcon.xs]}
-                    source={require(`../../../NewIcon/heartRed.png`)} />
-                    <Text style={[styles.titAction,{color: RED}]}>
-                       Yêu thích
+                        style={[sizeIcon.xs]}
+                        source={require(`../../../NewIcon/heartRed.png`)} />
+                    <Text style={[styles.titAction, { color: RED }]}>
+                        Yêu thích
                     </Text>
                 </>
 
             case 'LOVE':
                 return <>
-                        <Image key={index}
+                    <Image key={index}
                         style={[sizeIcon.xs]}
                         source={require(`../../../Image/reaction/love2.png`)} />
-                        <Text style={[styles.titAction,{color: BASE_COLOR}]}>
-                            {
+                    <Text style={[styles.titAction, { color: BASE_COLOR }]}>
+                        {
                             props?.data?.reaction?.type.charAt(0).toUpperCase() + props?.data?.reaction?.type.slice(1).toLowerCase()
-                            } 
-                        </Text>
-                    </>
+                        }
+                    </Text>
+                </>
 
             case 'WOW':
                 return <>
                     <Image key={index}
-                    style={[sizeIcon.xs]}
-                    source={require(`../../../Image/reaction/wow2.png`)} />
-                    <Text style={[styles.titAction,{color: ORANGE}]}>
+                        style={[sizeIcon.xs]}
+                        source={require(`../../../Image/reaction/wow2.png`)} />
+                    <Text style={[styles.titAction, { color: ORANGE }]}>
                         {
-                        props?.data?.reaction?.type.charAt(0).toUpperCase() + props?.data?.reaction?.type.slice(1).toLowerCase()
-                        } 
+                            props?.data?.reaction?.type.charAt(0).toUpperCase() + props?.data?.reaction?.type.slice(1).toLowerCase()
+                        }
                     </Text>
                 </>
 
             case 'SAD':
-                return<>
+                return <>
                     <Image key={index}
-                    style={[sizeIcon.xs]}
-                    source={require(`../../../Image/reaction/sad2.png`)} />
-                    <Text style={[styles.titAction,{color: GREY}]}>
+                        style={[sizeIcon.xs]}
+                        source={require(`../../../Image/reaction/sad2.png`)} />
+                    <Text style={[styles.titAction, { color: GREY }]}>
                         {
-                        props?.data?.reaction?.type.charAt(0).toUpperCase() + props?.data?.reaction?.type.slice(1).toLowerCase()
-                        } 
+                            props?.data?.reaction?.type.charAt(0).toUpperCase() + props?.data?.reaction?.type.slice(1).toLowerCase()
+                        }
                     </Text>
                 </>
 
             case 'HAHA':
                 return <>
                     <Image key={index}
-                    style={[sizeIcon.xs]}
-                    source={require(`../../../Image/reaction/haha2.png`)} />
-                    <Text style={[styles.titAction,{color: BLUE_FB}]}>
+                        style={[sizeIcon.xs]}
+                        source={require(`../../../Image/reaction/haha2.png`)} />
+                    <Text style={[styles.titAction, { color: BLUE_FB }]}>
                         {
-                        props?.data?.reaction?.type.charAt(0).toUpperCase() + props?.data?.reaction?.type.slice(1).toLowerCase()
-                        } 
+                            props?.data?.reaction?.type.charAt(0).toUpperCase() + props?.data?.reaction?.type.slice(1).toLowerCase()
+                        }
                     </Text>
                 </>
 
             case 'YAY':
                 return <>
                     <Image key={index}
-                    style={[sizeIcon.xs]}
-                    source={require(`../../../Image/reaction/yay2.png`)} />
-                    <Text style={[styles.titAction,{color: ORANGE}]}>
+                        style={[sizeIcon.xs]}
+                        source={require(`../../../Image/reaction/yay2.png`)} />
+                    <Text style={[styles.titAction, { color: ORANGE }]}>
                         {
-                        props?.data?.reaction?.type.charAt(0).toUpperCase() + props?.data?.reaction?.type.slice(1).toLowerCase()
-                        } 
+                            props?.data?.reaction?.type.charAt(0).toUpperCase() + props?.data?.reaction?.type.slice(1).toLowerCase()
+                        }
                     </Text>
                 </>
             case 'ANGRY':
                 return <>
                     <Image key={index}
-                    style={[sizeIcon.xs]}
-                    source={require(`../../../Image/reaction/angry2.png`)} />
-                    <Text style={[styles.titAction,{color: RED}]}>
+                        style={[sizeIcon.xs]}
+                        source={require(`../../../Image/reaction/angry2.png`)} />
+                    <Text style={[styles.titAction, { color: RED }]}>
                         {
-                        props?.data?.reaction?.type.charAt(0).toUpperCase() + props?.data?.reaction?.type.slice(1).toLowerCase()
-                        } 
+                            props?.data?.reaction?.type.charAt(0).toUpperCase() + props?.data?.reaction?.type.slice(1).toLowerCase()
+                        }
                     </Text>
                 </>
-            
+
             default:
                 return <></>
 
         }
     }
-  
+
     return (
         <>
             <View style={[styles.curentAction]}>
                 {props?.data?.reactionCount > 0 ?
                     <>
-                       {props?.data?.reactionStatistics?.map((act, index) => {
-                            return index<4?_reactionRender(act, index ):<></>
+                        {props?.data?.reactionStatistics?.map((act, index) => {
+                            return index < 4 ? _reactionRender(act, index) : <></>
                         })}
                         {!isEmpty(props?.data?.reaction) ?
                             <Text style={[stylesFont.fontNolan,
@@ -309,16 +307,16 @@ const ActionFeed = ((props) => {
                                 // marginLeft: _moderateScale(4+8*(props?.data?.reactionStatistics.length)), fontSize: _moderateScale(13),
                             }]}>Bạn,</Text>
                             : <></>}
-                      {(!isEmpty(props?.data?.reaction) &&
-                            props?.data?.reactionCount - 1 > 0)?
+                        {(!isEmpty(props?.data?.reaction) &&
+                            props?.data?.reactionCount - 1 > 0) ?
                             <Text style={[stylesFont.fontNolan,
                             {
                                 marginLeft: _moderateScale(4), fontSize: _moderateScale(13)
                             }]}>và {!isEmpty(props?.data?.reaction) ? props?.data?.reactionCount - 1 : props?.data?.reactionCount} người khác</Text>
                             : <></>}
-                    
-                    {(isEmpty(props?.data?.reaction)  &&
-                            props?.data?.reactionCount> 0)?
+
+                        {(isEmpty(props?.data?.reaction) &&
+                            props?.data?.reactionCount > 0) ?
                             <Text style={[stylesFont.fontNolan,
                             {
                                 marginLeft: _moderateScale(8)
@@ -327,17 +325,17 @@ const ActionFeed = ((props) => {
                     </>
 
                     : <></>}
-                    <TouchableOpacity
+                <TouchableOpacity
                     onPress={_handleDetail}
-                    style={{flex:1, alignItems:'flex-end'}}>
-                        <Text style={{...stylesFont.fontNolan, fontSize:_moderateScale(13)}}>{props?.data?.commentsCount} bình luận</Text>
-                    </TouchableOpacity>
+                    style={{ flex: 1, alignItems: 'flex-end' }}>
+                    <Text style={{ ...stylesFont.fontNolan, fontSize: _moderateScale(13) }}>{props?.data?.commentsCount} bình luận</Text>
+                </TouchableOpacity>
             </View>
             <View style={[styles.actionFeed,]}>
 
                 <View style={[styles.containAction, getLikeContainerStyle()]}>
 
-                    
+
 
                 </View>
                 <View style={[styles.itemActionFeed]} >
@@ -360,24 +358,24 @@ const ActionFeed = ((props) => {
                         // onLongPress={() => openFunc()}
                         style={[styles.itemActionFeed]}>
                         {
-                            !isEmpty(props?.data?.reaction)?
-                            _reactionActionRender(props?.data?.reaction)
-                            :<>
-                            <Image
-                            style={[sizeIcon.xs]}
-                            source={require('../../../NewIcon/heartBlack.png')} />
-                            <Text style={[styles.titAction]}>
-                                Yêu thích
-                            </Text>
-                            </>
+                            !isEmpty(props?.data?.reaction) ?
+                                _reactionActionRender(props?.data?.reaction)
+                                : <>
+                                    <Image
+                                        style={[sizeIcon.xs]}
+                                        source={require('../../../NewIcon/heartBlack.png')} />
+                                    <Text style={[styles.titAction]}>
+                                        Yêu thích
+                                    </Text>
+                                </>
                         }
-                        
+
                     </TouchableOpacity>
                 </View>
 
-                <TouchableOpacity 
-                onPress={_handleDetail}
-                style={[styles.itemActionFeed]}>
+                <TouchableOpacity
+                    onPress={_handleDetail}
+                    style={[styles.itemActionFeed]}>
                     <Image
                         style={[sizeIcon.xs]}
                         source={require('../../../NewIcon/commentBlack.png')} />

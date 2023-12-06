@@ -3,21 +3,29 @@ import Row from '@Components/Row';
 import Text from '@Components/Text';
 import { WHITE } from '@Constant/Color';
 import { URL_ORIGINAL } from '@Constant/Url';
+import ScreenKey from '@Navigation/ScreenKey';
 import { getInfoUserReducer } from '@Redux/Selectors';
+import { selectPost } from '@Redux/newfeeds/actions';
 import { Post } from "@typings/newfeeds";
 import React from 'react';
 import { Image, StyleSheet, TouchableOpacity } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'src/Hooks/useNavigation';
 
 type Props = {
   data: Post
 };
 
 const CountCommentLike = ({ data }: Props) => {
-
+  const { navigate } = useNavigate()
   const { infoUser } = useSelector(getInfoUserReducer);
+  const dispatch = useDispatch()
+  const { reactionCount, commentsCount, _id } = data
 
-  const { reactionCount, commentsCount } = data
+  const _handleGoToListComments = () => {
+    dispatch(selectPost(data))
+    navigate(ScreenKey.LIST_COMMENTS, { _idPost: _id })()
+  }
 
   return (
     <Column paddingHorizontal={8 * 2}>
@@ -27,6 +35,7 @@ const CountCommentLike = ({ data }: Props) => {
           gap={8}
           paddingLeft={8}>
           <Row>
+            {/* Waiting for API */}
             {
               Array.from(new Array(reactionCount), (x, i) => i)?.map((item, index) => {
                 return (
@@ -37,10 +46,10 @@ const CountCommentLike = ({ data }: Props) => {
               })
             }
           </Row>
-          <Text>{reactionCount} Người thích bài viết này</Text>
+          <Text>{reactionCount} Lượt thích bài viết này</Text>
         </Row>
-
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={_handleGoToListComments}>
           <Text>
             {commentsCount} Lượt bình luận
           </Text>

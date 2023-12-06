@@ -1,13 +1,13 @@
 import Column from '@Components/Column'
 import { IconLikeFilled } from '@Components/Icon/Icon'
+import Image from '@Components/Image'
 import Row from '@Components/Row'
 import Text from '@Components/Text'
-import { BG_GREY_OPACITY_5, BLUE_FB, GREY_FOR_TITLE } from '@Constant/Color'
+import { GREY_FOR_TITLE } from '@Constant/Color'
 import { stylesFont } from '@Constant/Font'
-import { URL_ORIGINAL } from '@Constant/Url'
 import { Post } from "@typings/newfeeds"
 import React from 'react'
-import { Image, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, TouchableOpacity, View } from 'react-native'
 
 
 type Props = {
@@ -16,6 +16,7 @@ type Props = {
 
 const PreviewComment = ({ data }: Props) => {
   const { comments } = data
+
   if (comments?.length == 0) {
     return null
   }
@@ -31,9 +32,9 @@ const PreviewComment = ({ data }: Props) => {
             alignItems='flex-start'>
             <Image
               style={styles.containerAvatar}
-              source={{ uri: `${URL_ORIGINAL}${comments[0]?.partner?.fileAvatar?.link}` }}
+              avatar={comments[0]?.partner?.fileAvatar}
             />
-            <Column gap={4}>
+            <Column flex={1} gap={4}>
               <Column
                 minWidth={8 * 30}
                 alignSelf='flex-start'

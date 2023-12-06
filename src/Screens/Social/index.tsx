@@ -3,15 +3,15 @@ import { FocusAwareStatusBar } from '@Components/StatusBar'
 import { BG_BEAUTY } from '@Constant/Color'
 import { getListPosts, getMorePosts } from '@Redux/newfeeds/actions'
 import { getListPostsState } from '@Redux/newfeeds/selectors'
-import React, { useEffect } from 'react'
-import { FlatList, StyleSheet } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { FlatList, RefreshControl, StyleSheet } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import Header from './Components/Header'
 import ItemFeed from './Components/ItemFeed/ItemFeed'
 
 const Social = () => {
   const dispatch = useDispatch()
-  const { data: listPosts, meta } = useSelector(getListPostsState)
+  const { data: listPosts, meta, isLoading } = useSelector(getListPostsState)
 
   useEffect(() => {
     _getData()
@@ -41,6 +41,10 @@ const Social = () => {
     }
   }
 
+  const _handleRefresh = () => {
+    _getData()
+  };
+
   const _renderItem = ({ item, index }) => {
     return (
       <ItemFeed data={item} />
@@ -52,6 +56,13 @@ const Social = () => {
       <FocusAwareStatusBar barStyle="light-content" />
       <Header />
       <FlatList
+        refreshControl={
+          <RefreshControl
+            title={"Đang tải.."}
+            refreshing={isLoading}
+            onRefresh={_handleRefresh}
+          />
+        }
         contentContainerStyle={{
           gap: 8,
         }}
@@ -59,7 +70,7 @@ const Social = () => {
         renderItem={_renderItem}
         keyExtractor={(item, index) => item?._id.toString()}
         onEndReached={handleListEndReached}
-        onEndReachedThreshold={0.5}
+        onEndReachedThreshold={1}
       />
     </Screen>
   )

@@ -1,11 +1,11 @@
 import Column from '@Components/Column'
+import Image from '@Components/Image'
 import Row from '@Components/Row'
 import { WHITE } from '@Constant/Color'
 import { stylesFont } from '@Constant/Font'
-import { URL_ORIGINAL } from '@Constant/Url'
 import { Post } from "@typings/newfeeds"
 import React from 'react'
-import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 type Props = {
   data: Post
@@ -23,7 +23,7 @@ const ListImages = ({ data }: Props) => {
         <TouchableOpacity style={styles.containerImage}>
           <Image
             style={styles.image}
-            source={{ uri: `${URL_ORIGINAL}${imageBeforeTreatment[0]?.link}` }} />
+            avatar={imageBeforeTreatment[0]} />
           <View style={styles.containerText}>
             <Text style={styles.containerText__text}>
               Trước điều trị
@@ -33,7 +33,7 @@ const ListImages = ({ data }: Props) => {
         <TouchableOpacity style={styles.containerImage}>
           <Image
             style={styles.image}
-            source={{ uri: `${URL_ORIGINAL}${imageAfterTreatment[0]?.link}` }} />
+            avatar={imageAfterTreatment[0]} />
           <View style={styles.containerText}>
             <Text style={styles.containerText__text}>
               Sau điều trị
@@ -51,7 +51,7 @@ const ListImages = ({ data }: Props) => {
               <TouchableOpacity>
                 <Image
                   style={styles.otherImage}
-                  source={{ uri: `${URL_ORIGINAL}${item?.link}` }} />
+                  avatar={item} />
               </TouchableOpacity>
             )
           })
