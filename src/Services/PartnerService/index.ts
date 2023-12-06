@@ -285,8 +285,8 @@ const getPartnerConversations = (
   return axios
     .get(
       "/partner-conversation" +
-      "?" +
-      encodeParams({ ...params, limit: pageSize, page })
+        "?" +
+        encodeParams({ ...params, limit: pageSize, page })
     )
     .then(({ data }) => data.data);
 };
@@ -310,36 +310,94 @@ const startChat = (payload: StartChatPayload) =>
     .post("/partner-conversation/start-chat", payload)
     .then(({ data }) => data.data);
 
-
-
 const createPartnerRelative = (payload: any) => {
   return axios.post("/partner-relative", payload).then(({ data }) => data);
 };
 
 const updatePartnerRelative = (payload: any) => {
-  return axios.put(`/partner-relative/${payload?._id}`, payload?.data).then(({ data }) => data);
+  return axios
+    .put(`/partner-relative/${payload?._id}`, payload?.data)
+    .then(({ data }) => data);
 };
 
 const deletePartnerRelative = (payload: any) => {
-  return axios.delete(`/partner-relative/${payload?._id}`, {}).then(({ data }) => data);
+  return axios
+    .delete(`/partner-relative/${payload?._id}`, {})
+    .then(({ data }) => data);
 };
 
 const getListPartnerRelative = (payload: any) => {
   const query = encodeParams({
     ...payload,
   });
-  return axios.get(`/partner-relative/list?${query}`, payload).then(({ data }) => data);
+  return axios
+    .get(`/partner-relative/list?${query}`, payload)
+    .then(({ data }) => data);
 };
 
 const createAIMessage = (payload: any) => {
-  return axios.post(`/partner-chatgpt-messages/send-message`, payload).then(({ data }) => data);
+  return axios
+    .post(`/partner-chatgpt-messages/send-message`, payload)
+    .then(({ data }) => data);
 };
 
 const getListAIMessages = (payload: any) => {
   const query = encodeParams({
     ...payload,
   });
-  return axios.get(`/partner-chatgpt-messages?${query}`, {}).then(({ data }) => data);
+  return axios
+    .get(`/partner-chatgpt-messages?${query}`, {})
+    .then(({ data }) => data);
+};
+
+const getListPosts = (payload: any) => {
+  const query = encodeParams({
+    ...payload,
+  });
+  return axios.get(`/partner-post?${query}`, {}).then(({ data }) => data);
+};
+
+const getMorePosts = (payload: any) => {
+  const query = encodeParams({
+    ...payload,
+  });
+  return axios.get(`/partner-post?${query}`, {}).then(({ data }) => data);
+};
+
+const getPartnerDiary = (payload: any) => {
+  return axios.get(`/partner-diary/${payload}`, {}).then(({ data }) => data);
+};
+
+const getCommentsPost = (payload: any) => {
+  return axios
+    .get(`/partner-post-comment/post/${payload?._idPost}`, {
+      params: payload?.params,
+    })
+    .then(({ data }) => data);
+};
+
+const getMoreCommentsPost = (payload: any) => {
+  return axios
+    .get(`/partner-post-comment/post/${payload?._idPost}`, {
+      params: payload?.params,
+    })
+    .then(({ data }) => data);
+};
+
+const getChildCommentsPost = (payload: any) => {
+  return axios
+    .get(`/partner-post-comment/post/${payload?._idPost}`, {
+      params: payload?.params,
+    })
+    .then(({ data }) => data);
+};
+
+const createCommentPost = (payload: any) => {
+  return axios.post(`/partner-post-comment`, payload).then(({ data }) => data);
+};
+
+const createReactionPost = (payload: any) => {
+  return axios.post(`/partner-post-reaction`, payload).then(({ data }) => data);
 };
 
 export default {
@@ -399,4 +457,14 @@ export default {
   // AI chatting
   createAIMessage,
   getListAIMessages,
+
+  // NewFeeds
+  getListPosts,
+  getMorePosts,
+  getPartnerDiary,
+  getCommentsPost,
+  getMoreCommentsPost,
+  getChildCommentsPost,
+  createCommentPost,
+  createReactionPost,
 };

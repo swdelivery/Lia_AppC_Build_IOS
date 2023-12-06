@@ -174,6 +174,8 @@ import NewHealthRecord from "@Screens/NewHealthRecord";
 import ListRelativesProfile from "@Screens/ListRelativesProfile";
 import RelativesInfo from "@Screens/ListRelativesProfile/RelativesInfo";
 import AIChatting from "@Screens/Chat/AIChatting";
+import DetailPost from "@Screens/Social/DetailPost";
+import ListComments from "@Screens/Social/ListComments";
 import DoctorList from "@Screens/DoctorList";
 import SearchingHome from "@Screens/NewSearchHome/index";
 
@@ -347,10 +349,22 @@ const RootNavigator = () => {
             name={ScreenKey.DETAIL_BRAND}
             component={DetailBrand}
           />
-          <rootStack.Screen
+          {/* <rootStack.Screen
             options={{ ...TransitionPresets.SlideFromRightIOS }}
             name={ScreenKey.DETAIL_NEW_FEED}
             component={DetailNewFeed}
+          /> */}
+          <rootStack.Screen
+            options={{ ...TransitionPresets.SlideFromRightIOS }}
+            name={ScreenKey.DETAIL_POST}
+            component={DetailPost}
+          />
+          <rootStack.Screen
+            // options={Platform.OS == 'ios' ? { ...TransitionPresets.ModalPresentationIOS } : optionsModal}
+            // options={{ ...TransitionPresets.ModalPresentationIOS }}
+            options={optionsModal}
+            name={ScreenKey.LIST_COMMENTS}
+            component={ListComments}
           />
           <rootStack.Screen
             options={{ ...TransitionPresets.SlideFromRightIOS }}

@@ -120,6 +120,12 @@ export { default as IconInstagram } from "../../SGV/instagram.svg";
 export { default as IconZalo } from "../../SGV/zalo.svg";
 export { default as IconAI } from "../../SGV/iconAI.svg";
 export { default as IconAIWhite } from "../../SGV/iconAIWhite.svg";
+export { default as IconAlarmWhite } from "../../SGV/alarmWhite.svg";
+export { default as IconEarth } from "../../SGV/earth.svg";
+export { default as IconLike } from "../../SGV/social/like.svg";
+export { default as IconPostComment } from "../../SGV/social/comment.svg";
+export { default as IconLikeFilled } from "../../SGV/social/likeFilled.svg";
+
 
 export const IconSetting = (props) => {
   return <SVGSetting width={props?.style?.width ? props?.style?.width : _moderateScale(8 * 4)}
