@@ -9,8 +9,6 @@ type Props = {
 };
 
 const Feedback = ({ reviews }: Props) => {
-  console.log({ reviews });
-  
   return (
     <PartnerFeedback
       containerStyle={styles.container}
