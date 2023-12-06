@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
-import listposts from "./listposts";
-import infopost from "./infopost";
-import partnerdiary from "./partnerdiary";
-import listcomments from "./listcomments";
+import listPosts from "./listPosts";
+import infoPost from "./infoPost";
+import partnerDiary from "./partnerDiary";
+import listComments from "./listComments";
 
 export default combineReducers({
-  listposts,
-  infopost,
-  partnerdiary,
-  listcomments
+  listPosts,
+  infoPost,
+  partnerDiary,
+  listComments
 });
