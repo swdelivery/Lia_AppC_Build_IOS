@@ -14,7 +14,7 @@ import {
   FONT_NOLAN_NEXT_ANDROID_BOLD,
   FONT_NOLAN_NEXT_ANDROID_MEDIUM,
 } from "@Constant/Font";
-import { BLACK } from "@Constant/Color";
+import { BLACK, TEXT_BASE } from "@Constant/Color";
 
 const isAndroid = Platform.OS === "android";
 
@@ -70,7 +70,7 @@ const Text = ({
         ? "normal"
         : "bold",
       fontSize,
-      color: color || BLACK,
+      color: color || TEXT_BASE,
       marginTop: top || undefined,
       marginLeft: left || undefined,
       marginRight: right || undefined,

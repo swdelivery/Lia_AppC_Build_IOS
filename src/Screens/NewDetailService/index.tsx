@@ -31,12 +31,11 @@ import ScreenKey from "@Navigation/ScreenKey";
 import { useNavigate } from "src/Hooks/useNavigation";
 
 const DetailService = () => {
+  const { navigate } = useNavigate();
   const { service } = useServiceDetailsContext();
   const { data: reviews, meta: reviewsMeta } = useServiceReviews(service);
   const recomendServices = useRecomendServices(service);
   const { secondColor, primaryColor, getColors } = useImageColors();
-
-  const { navigate } = useNavigate();
 
   useEffect(() => {
     if (service?.representationFileArr?.length) {
@@ -53,15 +52,22 @@ const DetailService = () => {
         { duration: 500 }
       ),
     };
-  });
+  });  
 
   return (
     <Screen safeBottom safeTop style={styles.container}>
-      <StatusBar barStyle="dark-content" />
+      <StatusBar
+        barStyle="dark-content"
+        translucent
+        backgroundColor={"transparent"}
+      />
       <Header />
-      <AfterTimeoutFragment placeholder={<Placeholder />}>
+      <AfterTimeoutFragment placeholder={<Placeholder />} timeout={1000}>
         <ScrollView style={styles.content}>
-          <HorizonListImage service={service} getColors={getColors} />
+          <HorizonListImage
+            images={service?.representationFileArr ?? []}
+            getColors={getColors}
+          />
           <View style={styles.body}>
             <Animated.View style={[styles.bodyBg2, animatedStyle]} />
             <LinearGradient

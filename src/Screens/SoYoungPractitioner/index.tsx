@@ -13,13 +13,17 @@ import { RenderItemProps } from "@typings/common";
 import PlaceholderSkeletons from "@Components/PlaceholderSkeletons";
 import ListEmpty from "@Components/ListEmpty";
 
-const SoYoungPractitioner = memo(() => {
+const SoYoungPractitioner = memo(({ tabIndex, isFocused }: any) => {
   const dispatch = useDispatch();
   const { isLoading, data } = useSelector(getPractitionerListState);
 
   useEffect(() => {
-    dispatch(getPractitionerList.request());
-  }, []);
+    if (tabIndex === 3 && isFocused) {
+      requestAnimationFrame(() => {
+        dispatch(getPractitionerList.request());
+      });
+    }
+  }, [tabIndex, isFocused]);
 
   function renderItem({ item }: RenderItemProps<any>) {
     return <PractitionerItem item={item} />;

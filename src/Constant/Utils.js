@@ -302,7 +302,7 @@ export const formatMonney = (data, withUnit = false) => {
         .toString()
         .replace(/\B(?=(\d{3})+(?!\d))/g, ".")
     : 0;
-  return withUnit ? `₫${value}` : value;
+  return withUnit ? `${value} VNĐ` : value;
 };
 
 export const parseFloatNumber = (number, fixed = 0) => {

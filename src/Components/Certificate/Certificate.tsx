@@ -1,5 +1,5 @@
-import { StyleSheet } from "react-native";
-import React, { useMemo } from "react";
+import { ColorValue, StyleSheet } from "react-native";
+import React, { useCallback, useMemo } from "react";
 import Text from "@Components/Text";
 import Icon from "@Components/Icon";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
@@ -8,69 +8,113 @@ import { FileUpload } from "@typings/common";
 import { getImageAvataUrl } from "src/utils/avatar";
 import useVisible from "src/Hooks/useVisible";
 import Row from "@Components/Row";
+import { Diamond1Icon } from "src/SGV";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { StatusBar } from "@Components/StatusBar";
+import Column from "@Components/Column";
+import IconButton from "@Components/IconButton";
 
 type Props = {
   item: FileUpload;
-  backgroundColor?: string;
+  backgroundColor?: ColorValue;
+  borderColor?: ColorValue;
+  onPress?: () => void;
 };
 
-const Certificate = ({ item, backgroundColor = "#414378" }: Props) => {
-  const imageViewer = useVisible();
-
+const Certificate = ({
+  item,
+  backgroundColor = "#414378",
+  borderColor,
+  onPress,
+}: Props) => {
   const containerStyle = useMemo(() => {
     return {
       backgroundColor,
+      borderColor: borderColor || backgroundColor,
+      borderWidth: 1,
     };
   }, [backgroundColor]);
-
-  const images = useMemo(() => {
-    return [
-      {
-        uri: getImageAvataUrl(item.fileUpload),
-      },
-    ];
-  }, [item]);
 
   return (
     <TouchableOpacity
       style={[styles.container, containerStyle]}
-      onPress={imageViewer.show}
+      onPress={onPress}
     >
-      <Icon name="diamond" color="#F8E6D0" size={12} style={styles.icon} />
-      <Text color={"#F8E6D0"} weight="bold" size={10} left={4}>
+      <Diamond1Icon width={10} height={10} />
+      <Text color={"#F8E6D0"} weight="bold" size={10} left={4} bottom={2}>
         {item.name}
       </Text>
-
-      <EnhancedImageViewing
-        images={images}
-        onRequestClose={imageViewer.hide}
-        imageIndex={0}
-        visible={imageViewer.visible}
-      />
     </TouchableOpacity>
   );
 };
 
 export function Certificates({
   data,
-  scrollEnabled = false,
+  scrollEnabled = true,
+  borderColor,
 }: {
   data: FileUpload[];
   scrollEnabled?: boolean;
+  borderColor?: ColorValue;
 }) {
-  function renderContent() {
-    return data.map((item, idx) => {
-      return (
-        <Certificate
-          item={item}
-          key={item._id}
-          backgroundColor={idx % 2 === 0 ? "#414378" : "#151617"}
-        />
-      );
-    });
-  }
+  const imageViewer = useVisible<number>();
+  const { top } = useSafeAreaInsets();
 
-  console.log({ scrollEnabled });
+  const images = useMemo(() => {
+    return data.map((item) => ({
+      uri: getImageAvataUrl(item.fileUpload),
+    }));
+  }, [data]);
+
+  const handleCertificatePress = useCallback(
+    (idx: number) => () => {
+      imageViewer.show(idx);
+    },
+    []
+  );
+
+  console.log({ data });
+
+  function renderContent() {
+    return (
+      <>
+        {data.map((item, idx) => {
+          return (
+            <Certificate
+              item={item}
+              key={item.id ?? item._id}
+              backgroundColor={idx % 2 === 0 ? "#414378" : "#151617"}
+              borderColor={borderColor}
+              onPress={handleCertificatePress(idx)}
+            />
+          );
+        })}
+        {imageViewer.visible && <StatusBar barStyle="light-content" />}
+        <EnhancedImageViewing
+          images={images}
+          onRequestClose={imageViewer.hide}
+          imageIndex={imageViewer.selectedItem.current}
+          visible={imageViewer.visible}
+          HeaderComponent={({ imageIndex }) => (
+            <Row
+              marginTop={top}
+              justifyContent="center"
+              height={45}
+              marginHorizontal={16}
+            >
+              <Column flex={1} />
+              <Text color={"white"}>{data[imageIndex].name}</Text>
+              <Column flex={1} alignItems="flex-end">
+                <IconButton>
+                  <Icon name="close" color="white" onPress={imageViewer.hide} />
+                </IconButton>
+              </Column>
+            </Row>
+          )}
+        />
+      </>
+    );
+  }
 
   if (scrollEnabled) {
     return (
@@ -96,7 +140,7 @@ export default Certificate;
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 8,
-    paddingVertical: 4,
+    paddingVertical: 2,
     borderRadius: 4,
     flexDirection: "row",
     alignItems: "center",

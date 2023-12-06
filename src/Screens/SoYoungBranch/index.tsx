@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, useEffect } from "react";
 import { StyleSheet } from "react-native";
 import { _height, _width } from "../../Constant/Scale";
 import { RenderItemProps } from "../../typings/common";
@@ -6,7 +6,6 @@ import BranchItem, {
   PLACEHOLDER_HEIGHT,
   Placeholder,
 } from "./components/BranchItem";
-import { useFocused } from "src/Hooks/useNavigation";
 import useListFilter from "src/Hooks/useListFilter";
 import { getBranchListState } from "@Redux/branch/selectors";
 import { getBranchList, loadMoreBranchList } from "@Redux/branch/actions";
@@ -14,16 +13,20 @@ import { FlatList } from "react-native-gesture-handler";
 import PlaceholderSkeletons from "@Components/PlaceholderSkeletons";
 import ListEmpty from "@Components/ListEmpty";
 
-const SoYoungBranch = memo(() => {
-  const { isLoading, data, getData } = useListFilter(
+const SoYoungBranch = ({ tabIndex, isFocused }: any) => {
+  const { isLoading, data, getData, refreshData } = useListFilter(
     getBranchListState,
     getBranchList,
     loadMoreBranchList
   );
 
-  useFocused(() => {
-    getData();
-  });
+  useEffect(() => {
+    if (tabIndex === 1 && isFocused) {
+      requestAnimationFrame(() => {
+        refreshData();
+      });
+    }
+  }, [tabIndex, isFocused]);
 
   function renderItem({ item }: RenderItemProps<any>) {
     return <BranchItem item={item} />;
@@ -47,7 +50,7 @@ const SoYoungBranch = memo(() => {
       }
     />
   );
-});
+};
 
 export default SoYoungBranch;
 

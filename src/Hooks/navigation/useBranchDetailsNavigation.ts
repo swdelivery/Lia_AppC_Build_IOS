@@ -7,13 +7,15 @@ export default function useBranchDetailsNavigation() {
   const { navigation } = useNavigate();
 
   return useCallback((item: Branch) => {
-    // @ts-ignore
-    navigation.navigate({
-      name: ScreenKey.DETAIL_BRAND,
-      params: {
-        branch: item,
-      },
-      key: Date.now() + "",
+    requestAnimationFrame(() => {
+      // @ts-ignore
+      navigation.navigate({
+        name: ScreenKey.DETAIL_BRAND,
+        params: {
+          branch: item,
+        },
+        key: Date.now() + "",
+      });
     });
   }, []);
 }

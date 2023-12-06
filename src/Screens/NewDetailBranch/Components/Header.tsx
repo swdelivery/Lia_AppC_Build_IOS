@@ -1,18 +1,16 @@
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import React, { useMemo } from "react";
 import { _heightScale, _moderateScale, _width } from "../../../Constant/Scale";
-import { navigation } from "../../../../rootNavigation";
-import IconBackWhite from "../../../SGV/backWhite.svg";
 import Animated, {
   SharedValue,
   interpolate,
   useAnimatedStyle,
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import Icon from "@Components/Icon";
 import IconBackBlack from "../../../SGV/backArrBlack.svg";
 import Text from "@Components/Text";
 import { styleElement } from "@Constant/StyleElement";
+import { useNavigate } from "src/Hooks/useNavigation";
 
 type Props = {
   scrollY: SharedValue<number>;
@@ -20,6 +18,7 @@ type Props = {
 };
 
 const Header = ({ scrollY, title }: Props) => {
+  const { goBack } = useNavigate();
   const { top } = useSafeAreaInsets();
 
   const containerStyle = useMemo(() => {
@@ -38,13 +37,19 @@ const Header = ({ scrollY, title }: Props) => {
       <Animated.View style={[styles.background, animatedStyle]} />
       <TouchableOpacity
         style={styles.backBtn}
-        onPress={navigation.goBack}
+        onPress={goBack}
         hitSlop={{ top: 12, left: 12, right: 12, bottom: 12 }}
       >
         <IconBackBlack width={24} height={24} />
       </TouchableOpacity>
       <Animated.View style={[styleElement.flex, animatedStyle]}>
-        <Text color={"black"} size={16} weight="bold" left={8}>
+        <Text
+          color={"black"}
+          size={16}
+          weight="bold"
+          left={8}
+          numberOfLines={2}
+        >
           {title}
         </Text>
       </Animated.View>

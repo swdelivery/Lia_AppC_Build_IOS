@@ -36,6 +36,7 @@ const ONLINE = "#5FCC02";
 const BLACK_OPACITY = "rgba(0, 0, 0,.7)";
 const BLACK = "#000";
 const BACK_GROUND_BASE = "#F2F1F5";
+const TEXT_BASE = "#57565D";
 
 const BLACK_OPACITY_8 = "rgba(0, 0, 0,0.8)";
 const BLACK_OPACITY_7 = "rgba(0, 0, 0,0.7)";
@@ -100,6 +101,7 @@ const PLATINUM = "#658ACB"
 // 8c104e, db0505, 641a96
 
 export {
+  TEXT_BASE,
   BG_CLEAR,
   BASE_COLOR,
   BASE_COLOR_LIGHT,
@@ -160,5 +162,5 @@ export {
   BRONZE,
   SILVER,
   GOLD,
-  PLATINUM
+  PLATINUM,
 };

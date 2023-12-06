@@ -1,5 +1,5 @@
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import React, { useCallback } from "react";
 import Text from '@Components/Text';
 import Row from '@Components/Row';
 import { BG_GREY_OPACITY_7, BORDER_COLOR, GREEN_SUCCESS, WHITE } from '@Constant/Color';
@@ -9,13 +9,20 @@ import { _moderateScale } from '@Constant/Scale';
 
 
 type Props = {
-  title: string,
-  description: string,
-  enabled?: boolean,
-  handleOn?: () => void
+  title: string;
+  description: string;
+  enabled?: boolean;
+  onUpdate?: (value: boolean) => void;
 };
 
-const CardSetting = ({ title, description, enabled, handleOn }: Props) => {
+const CardSetting = ({ title, description, enabled, onUpdate }: Props) => {
+  const handleUpdate = useCallback(
+    (value: boolean) => () => {
+      onUpdate(value);
+    },
+    [onUpdate]
+  );
+
   return (
     <Row
       gap={8 * 3}
@@ -24,28 +31,30 @@ const CardSetting = ({ title, description, enabled, handleOn }: Props) => {
       borderColor={BORDER_COLOR}
       borderRadius={8}
       padding={8 * 2}
-      marginHorizontal={8 * 2}>
-      <Column
-        flex={1}
-        gap={8}>
-        <Text weight='bold'>{title}</Text>
+      marginHorizontal={8 * 2}
+    >
+      <Column flex={1} gap={8}>
+        <Text weight="bold">{title}</Text>
         <Text>{description}</Text>
       </Column>
-      {
-        enabled ?
-          <TouchableOpacity style={styles.btnActive}>
-            <View style={styles.btnActive__child} />
-          </TouchableOpacity>
-          :
-          <TouchableOpacity
-            onPress={handleOn}
-            style={styles.btnInActive}>
-            <View style={styles.btnInActive__child} />
-          </TouchableOpacity>
-      }
+      {enabled ? (
+        <TouchableOpacity
+          style={styles.btnActive}
+          onPress={handleUpdate(false)}
+        >
+          <View style={styles.btnActive__child} />
+        </TouchableOpacity>
+      ) : (
+        <TouchableOpacity
+          onPress={handleUpdate(true)}
+          style={styles.btnInActive}
+        >
+          <View style={styles.btnInActive__child} />
+        </TouchableOpacity>
+      )}
     </Row>
-  )
-}
+  );
+};
 
 export default CardSetting
 

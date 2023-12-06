@@ -48,7 +48,12 @@ export default function BranchItem({ item }: Props) {
               </Text>
             </TouchableOpacity>
           </Row>
-          <CountStar2 rating={item.averageRating} count={item.reviewCount} />
+          <CountStar2
+            rating={item.averageRating}
+            count={item.reviewCount}
+            countPartner={item.countPartner}
+            size={12}
+          />
 
           <Row gap={4} marginTop={2}>
             <Icon name="map-marker" color={RED} size={14} />
@@ -57,7 +62,7 @@ export default function BranchItem({ item }: Props) {
             </Text>
           </Row>
 
-          <Certificates scrollEnabled data={item.branchFileArr} />
+          <Certificates data={item.branchFileArr} />
         </View>
       </Row>
       {item.branchServices.length > 0 && (

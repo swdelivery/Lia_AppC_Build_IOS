@@ -28,7 +28,7 @@ const Feedback = ({ doctor }: Props) => {
 
   return (
     <PartnerFeedback
-      title="Đánh giá từ khách hàng"
+      title="Đánh giá từ Khách hàng"
       items={data}
       containerStyle={styles.container}
     />

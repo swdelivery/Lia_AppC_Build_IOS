@@ -1,4 +1,4 @@
-import { all, call, put, takeLatest } from "redux-saga/effects";
+import { all, call, delay, put, takeLatest } from "redux-saga/effects";
 import {
   GET_BOOKING_DEPOSITS,
   GET_BOOKING_DETAILS,
@@ -18,6 +18,12 @@ import configs from "src/configs";
 import { Booking } from "@typings/booking";
 import { BaseAction } from "@Redux/types";
 import { ServiceTreatment } from "@typings/treatment";
+import { CLEAR_STORE_REDUX, LOG_OUT } from "@Redux/Constants/ActionType";
+import { navigation } from "rootNavigation";
+import ScreenKey from "@Navigation/ScreenKey";
+import AsyncStorage from "@react-native-community/async-storage";
+import keychain from "src/utils/keychain";
+import SocketInstance from "SocketInstance";
 
 function* getMyCoupons() {
   try {
@@ -128,6 +134,31 @@ function* getOrderPayments({ payload }: BaseAction<string>) {
   }
 }
 
+function* logOut() {
+  try {
+    let fcmTokenSTR = yield AsyncStorage.getItem("fcmToken");
+    let result = yield call(PartnerService.partnerLogout, {
+      fcmToken: fcmTokenSTR,
+    });
+
+    yield AsyncStorage.removeItem("userName");
+    yield AsyncStorage.removeItem("password");
+    yield AsyncStorage.removeItem("codeAffiliateVsIdService");
+    keychain.clearTokens();
+
+    yield delay(1000);
+    yield put({
+      type: CLEAR_STORE_REDUX,
+    });
+    SocketInstance.instance = null;
+    SocketInstance.socketConn.disconnect();
+    SocketInstance.socketConn = null;
+    navigation.navigate(ScreenKey.HOME);
+  } catch (error: any) {
+    //
+  }
+}
+
 export default function* sagas() {
   yield all([
     takeLatest(GET_MY_COUPONS.REQUEST, getMyCoupons),
@@ -138,5 +169,7 @@ export default function* sagas() {
     takeLatest(GET_BOOKING_DEPOSITS.REQUEST, getBookingDeposits),
     takeLatest(GET_ORDER_DETAILS.REQUEST, getOrderDetails),
     takeLatest(GET_ORDER_PAYMENTS.REQUEST, getOrderPayments),
+
+    takeLatest(LOG_OUT, logOut),
   ]);
 }

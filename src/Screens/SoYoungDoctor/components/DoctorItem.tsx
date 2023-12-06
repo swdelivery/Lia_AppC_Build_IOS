@@ -1,5 +1,5 @@
 import Avatar from "@Components/Avatar";
-import Certificate from "@Components/Certificate/Certificate";
+import Certificate, { Certificates } from "@Components/Certificate/Certificate";
 import HorizontalServices from "@Components/HorizontalServices";
 import Icon from "@Components/Icon";
 import CountStar2 from "@Components/NewCountStar/CountStar";
@@ -16,6 +16,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { useNavigate } from "src/Hooks/useNavigation";
 import ContentLoader, { Circle, Rect } from "react-content-loader/native";
 import Column from "@Components/Column";
+import { LocationIcon } from "src/SGV";
 
 type Props = {
   item: Doctor;
@@ -34,22 +35,20 @@ export default function DoctorItem({ item }: Props) {
       onPress={handleItemPress}
       style={[styles.card, styleElement.shadow]}
     >
-      <Row alignItems="flex-start" gap={8}>
+      <Row alignItems="flex-start" gap={8} marginBottom={8}>
         <Avatar size={48} avatar={item.avatar} circle />
-        <View style={styleElement.flex}>
+        <Column style={styleElement.flex}>
           <Row justifyContent="space-between">
             <Column>
               <Text numberOfLines={1} weight="bold">
                 {item?.name}
               </Text>
-              <Row gap={8}>
-                <CountStar2 rating={4} count={item?.reviewCount} size={10} />
-                <Text size={10}>|</Text>
-                <Row gap={4} marginTop={2}>
-                  <Icon name="account-multiple" size={14} color="grey" />
-                  <Text size={10}>({item?.countPartner})</Text>
-                </Row>
-              </Row>
+              <CountStar2
+                rating={4}
+                count={item?.reviewCount}
+                size={12}
+                countPartner={item?.countPartner}
+              />
             </Column>
 
             <TouchableOpacity style={styles.consultButton}>
@@ -60,23 +59,13 @@ export default function DoctorItem({ item }: Props) {
           </Row>
 
           <Row gap={4} marginTop={2}>
-            <Icon name="map-marker" color={RED} size={14} />
+            <LocationIcon />
             <Text size={12} color={"grey"}>
               {item?.branch?.name}
             </Text>
           </Row>
-          {item?.treatmentDoctorFileArr.length > 0 && (
-            <Row marginTop={6} flexWrap={"wrap"} gap={4} marginBottom={8}>
-              {item.treatmentDoctorFileArr.map((item, i) => (
-                <Certificate
-                  key={item._id}
-                  item={item}
-                  backgroundColor={i % 2 === 0 ? "#414378" : "#151617"}
-                />
-              ))}
-            </Row>
-          )}
-        </View>
+          <Certificates data={item.treatmentDoctorFileArr} />
+        </Column>
       </Row>
       {item.doctorServices.length > 0 && (
         <HorizontalServices items={item.doctorServices} />

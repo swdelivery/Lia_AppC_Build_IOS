@@ -4,6 +4,7 @@ import { Branch } from "@typings/branch";
 import PartnerFeedback from "@Components/PartnerFeedback";
 import useApiPaging from "src/Hooks/services/useApiPaging";
 import PartnerService from "src/Services/PartnerService";
+import Fade from "@Components/Fade";
 
 type Props = {
   branch: Branch;
@@ -23,7 +24,11 @@ const Feedback = ({ branch }: Props) => {
     });
   }, [branch?.code]);
 
-  return <PartnerFeedback title="Đánh giá của khách hàng" items={data} />;
+  return (
+    <Fade visible={data.length > 0}>
+      <PartnerFeedback title="Đánh giá của khách hàng" items={data} />
+    </Fade>
+  );
 };
 
 export default Feedback;

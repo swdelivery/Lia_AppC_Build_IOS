@@ -176,6 +176,8 @@ import RelativesInfo from "@Screens/ListRelativesProfile/RelativesInfo";
 import AIChatting from "@Screens/Chat/AIChatting";
 import DetailPost from "@Screens/Social/DetailPost";
 import ListComments from "@Screens/Social/ListComments";
+import DoctorList from "@Screens/DoctorList";
+import SearchingHome from "@Screens/NewSearchHome/index";
 
 const rootStack = createStackNavigator();
 
@@ -959,6 +961,17 @@ const RootNavigator = () => {
             options={{ ...TransitionPresets.SlideFromRightIOS }}
             name={ScreenKey.RELATIVES_INFO}
             component={RelativesInfo}
+          />
+          <rootStack.Screen
+            options={{ ...TransitionPresets.SlideFromRightIOS }}
+            name={ScreenKey.DOCTOR_LIST}
+            component={DoctorList}
+          />
+
+          <rootStack.Screen
+            options={{ ...TransitionPresets.SlideFromRightIOS }}
+            name={ScreenKey.SEARCHING_HOME}
+            component={SearchingHome}
           />
 
           <rootStack.Screen

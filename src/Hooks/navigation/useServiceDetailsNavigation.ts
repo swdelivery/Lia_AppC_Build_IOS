@@ -7,13 +7,15 @@ export default function useServiceDetailsNavigation() {
   const { navigation } = useNavigate();
 
   return useCallback((item: Service) => {
-    // @ts-ignore
-    navigation.navigate({
-      name: ScreenKey.DETAIL_SERVICE,
-      params: {
-        service: item,
-      },
-      key: Date.now() + "",
+    requestAnimationFrame(() => {
+      // @ts-ignore
+      navigation.navigate({
+        name: ScreenKey.DETAIL_SERVICE,
+        params: {
+          service: item,
+        },
+        key: Date.now() + "",
+      });
     });
   }, []);
 }

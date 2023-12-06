@@ -3,7 +3,7 @@ import React, { useCallback, useMemo } from "react";
 import { _moderateScale, _width, _widthScale } from "../../../Constant/Scale";
 import CountStar2 from "../../../Components/NewCountStar/CountStar";
 import Text from "@Components/Text";
-import Certificate from "@Components/Certificate/Certificate";
+import { Certificates } from "@Components/Certificate/Certificate";
 import Row from "@Components/Row";
 import Icon from "@Components/Icon";
 import Separator from "@Components/Separator/Separator";
@@ -16,6 +16,7 @@ import { Service } from "@typings/serviceGroup";
 import { Doctor } from "@typings/doctor";
 import useBranchDetailsNavigation from "src/Hooks/navigation/useBranchDetailsNavigation";
 import useDoctorDetailsNavigation from "src/Hooks/navigation/useDoctorDetailsNavigation";
+import { Branch } from "@typings/branch";
 
 type Props = {
   service: Service;
@@ -25,16 +26,16 @@ const InfoBranch = ({ service }: Props) => {
   const handlePress = useBranchDetailsNavigation();
   const handleDoctorPress = useDoctorDetailsNavigation();
 
-  const branch = useMemo(() => {
-    return service?.branchServices[0]?.branch;
+  const branches = useMemo(() => {
+    return (service?.branchServices || []).map((item) => item.branch);
   }, [service]);
 
-  const _handleGoDetailBranch = useCallback(() => {
-    if (!branch) {
-      return;
-    }
-    handlePress(branch);
-  }, [branch]);
+  const _handleGoDetailBranch = useCallback(
+    (item: Branch) => () => {
+      handlePress(item);
+    },
+    []
+  );
 
   const _handleGoDetailDoctor = useCallback(
     (doctor: Doctor) => () => {
@@ -45,32 +46,47 @@ const InfoBranch = ({ service }: Props) => {
 
   return (
     <View style={styles.container}>
-      <Row alignItems="flex-start">
-        <Avatar style={styles.avatarBranch} avatar={branch?.avatar} />
-        <Column flex={1} marginLeft={_moderateScale(8)}>
-          <Text style={styles.name}>{branch?.name}</Text>
-          <CountStar2
-            count={service?.branchServices[0]?.branch?.reviewCount}
-            rating={5}
-            size={10}
-          />
-          {branch?.branchFileArr && (
-            <Row flexWrap="wrap" top={4} gap={4}>
-              {branch.branchFileArr.map((item) => {
-                return <Certificate item={item} key={item._id} />;
-              })}
+      <ScrollView
+        horizontal
+        scrollEnabled={branches.length > 1}
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.branchesContainer}
+      >
+        {branches.map((item) => {
+          return (
+            <Row
+              alignItems="flex-start"
+              width={branches.length > 1 ? _width * 0.8 : _width - 16 * 3}
+              backgroundColor={branches.length > 1 ? "#F7F8FA" : "white"}
+              borderRadius={8}
+              padding={branches.length > 1 ? 4 : 0}
+              key={item?._id}
+            >
+              <Avatar style={styles.avatarBranch} avatar={item?.avatar} />
+              <Column flex={1} marginLeft={_moderateScale(8)} marginBottom={8}>
+                <Text style={styles.name}>{item?.name}</Text>
+                <CountStar2
+                  count={item?.reviewCount}
+                  rating={item.averageRating}
+                  size={10}
+                />
+                <Certificates data={item?.branchFileArr} />
+              </Column>
+              <TouchableOpacity
+                onPress={_handleGoDetailBranch(item)}
+                style={styles.more}
+              >
+                <Text weight="bold" size={12} color={"white"} bottom={3}>
+                  {`Xem thêm`}
+                </Text>
+                <Icon name="chevron-right" size={14} color={"white"} />
+              </TouchableOpacity>
             </Row>
-          )}
-        </Column>
-        <TouchableOpacity onPress={_handleGoDetailBranch} style={styles.more}>
-          <Text weight="bold" size={12} color={"white"} bottom={3}>
-            {`Xem thêm`}
-          </Text>
-          <Icon name="chevron-right" size={14} color={"white"} />
-        </TouchableOpacity>
-      </Row>
+          );
+        })}
+      </ScrollView>
 
-      <Separator color="#dcdedc" top={16} bottom={16} />
+      <Separator color="#dcdedc" top={8} bottom={16} />
 
       <ScrollView showsHorizontalScrollIndicator={false} horizontal>
         {service?.doctorServices?.map((item, index) => {
@@ -150,5 +166,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     paddingVertical: 2,
     borderRadius: 8 * 2,
+  },
+  branchesContainer: {
+    gap: 8,
+    paddingBottom: 4,
   },
 });

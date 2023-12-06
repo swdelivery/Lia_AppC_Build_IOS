@@ -1,10 +1,10 @@
 import FastImage from "@Components/FastImage";
+import LinearGradient from "@Components/LinearGradient";
 import { BASE_COLOR, SECOND_COLOR } from "@Constant/Color";
 import { FileAvatar } from "@typings/common";
 import React, { useMemo } from "react";
 import { StyleProp, StyleSheet, View } from "react-native";
 import { ImageStyle } from "react-native-fast-image";
-import LinearGradient from "react-native-linear-gradient";
 import { getImageAvataUrl } from "src/utils/avatar";
 
 type Props = {
@@ -59,8 +59,8 @@ function DefaultPlaceholder({ colors }: { colors: string[] }) {
     <LinearGradient
       style={styles.placeholder}
       colors={colors}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 0, y: 1 }}
+      // start={{ x: 0, y: 0 }}
+      // end={{ x: 0, y: 1 }}
     />
   );
 }

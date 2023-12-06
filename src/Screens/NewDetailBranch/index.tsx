@@ -23,6 +23,8 @@ import Column from "@Components/Column";
 import useBranchDetails from "./useBranchDetails";
 import { AfterTimeoutFragment } from "@Components/AfterTimeoutFragment";
 import Placeholder from "./Components/Placeholder";
+import HorizonListImage from "@Screens/NewDetailService/Components/HorizonListImage";
+import { SERVICE_BANNER_RATIO } from "@Constant/image";
 
 type ScreenK = typeof ScreenKey.DETAIL_BRAND;
 
@@ -39,10 +41,13 @@ const DetailBranch = () => {
 
   return (
     <Screen safeBottom>
-      <StatusBar barStyle={"dark-content"} />
+      <StatusBar
+        barStyle={"dark-content"}
+        backgroundColor={"transparent"}
+        translucent
+      />
       <Header scrollY={scrollY} title={data?.name} />
       <AfterTimeoutFragment placeholder={<Placeholder />}>
-        <CoverImage scrollY={scrollY} branch={data} />
         <Animated.ScrollView
           scrollEventThrottle={16}
           onScroll={scrollHandler}
@@ -67,6 +72,7 @@ const DetailBranch = () => {
             {/* <QandA /> */}
           </Column>
         </Animated.ScrollView>
+        <CoverImage scrollY={scrollY} branch={data} />
         <BottomAction branch={data} />
       </AfterTimeoutFragment>
     </Screen>
@@ -77,7 +83,18 @@ export default DetailBranch;
 
 const styles = StyleSheet.create({
   contentContainer: {
-    paddingTop: 200,
+    paddingTop: _width * SERVICE_BANNER_RATIO,
+    paddingBottom: 60,
     backgroundColor: "transparent",
+  },
+  coverImage: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    width: _width,
+    height: 200,
+    borderWidth: 1,
   },
 });

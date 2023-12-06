@@ -31,6 +31,7 @@ export type Branch = {
   __v: number;
   userUpdate: string;
   address: string;
+  openTime: string;
   representationFileArr: any[];
   id: string;
   description: string;

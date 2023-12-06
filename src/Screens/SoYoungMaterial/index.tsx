@@ -2,18 +2,19 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 import { _height, _width } from "../../Constant/Scale";
 import MaterialItem from "./components/MaterialItem";
-import { useDispatch } from "react-redux";
 import { FlatList } from "react-native";
 import { getListMaterial } from "@Redux/Action/Material";
 
-const SoYoungMaterial = () => {
-  const dispatch = useDispatch();
-
+const SoYoungMaterial = ({ tabIndex, isFocused }: any) => {
   const [listMaterial, setListMaterial] = useState([]);
 
   useEffect(() => {
-    _getData();
-  }, []);
+    if (tabIndex === 4 && isFocused) {
+      requestAnimationFrame(() => {
+        _getData();
+      });
+    }
+  }, [tabIndex, isFocused]);
 
   const _getData = async () => {
     let result = await getListMaterial({});

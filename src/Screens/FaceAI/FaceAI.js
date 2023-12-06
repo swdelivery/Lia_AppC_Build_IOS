@@ -233,10 +233,10 @@ const FaceAI = () => {
   };
 
   const _handleTakePhoto = async () => {
-    // const photo = await refCamera.current.takePhoto({});
-    // await CameraRoll.save(`file://${photo.path}`, {
-    //   type: 'photo',
-    // })
+    const photo = await refCamera.current.takePhoto({});
+    await CameraRoll.save(`file://${photo.path}`, {
+      type: "photo",
+    });
     processImage(photo);
   };
 

@@ -10,6 +10,7 @@ import { Certificates } from "@Components/Certificate/Certificate";
 import { styleElement } from "@Constant/StyleElement";
 import Icon from "@Components/Icon";
 import useBranchDetailsNavigation from "src/Hooks/navigation/useBranchDetailsNavigation";
+import { LocationIcon, PersonsIcon } from "src/SGV";
 
 type Props = {
   branch: Branch;
@@ -24,14 +25,22 @@ const OverViewBranch = ({ branch }: Props) => {
   return (
     <View style={styles.container}>
       <Text weight="bold">Địa điểm công tác</Text>
-      <Row marginTop={8} gap={8}>
+      <Row marginTop={8} gap={8} alignItems="flex-start">
         <Image style={styles.avatarBranch} avatar={branch?.avatar} />
         <View style={styleElement.flex}>
           <Text style={styles.name}>{branch?.name}</Text>
           <CountStar2
             rating={branch?.averageRating}
             count={branch?.reviewCount}
+            countPartner={branch.countPartner}
+            size={12}
           />
+          <Row gap={4}>
+            <LocationIcon />
+            <Text flex={1} size={12}>
+              {branch.address}
+            </Text>
+          </Row>
           {branch?.branchFileArr && (
             <Certificates data={branch.branchFileArr} />
           )}
@@ -76,6 +85,7 @@ const styles = StyleSheet.create({
     width: _moderateScale(8 * 5),
     height: _moderateScale(8 * 5),
     borderRadius: _moderateScale((8 * 5) / 2),
+    marginTop: 4,
     resizeMode: "contain",
   },
   container: {
@@ -90,7 +100,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#4BA888",
     paddingHorizontal: 8,
-    paddingVertical: 2,
-    borderRadius: 8 * 2,
+    borderRadius: 8,
+    paddingTop: 2,
+    paddingBottom: 3,
   },
 });
