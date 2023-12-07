@@ -8,6 +8,7 @@ export const getPractitionerList = generateActionsGroup<
   DataPagingPayload<Practitioner[]>
 >(GET_PRACTITIONER_LIST);
 
-export const loadMorePractitionerList = generateActionsGroup(
-  LOAD_MORE_PRACTITIONER_LIST
-);
+export const loadMorePractitionerList = generateActionsGroup<
+  void,
+  DataPagingPayload<Practitioner[]>
+>(LOAD_MORE_PRACTITIONER_LIST);

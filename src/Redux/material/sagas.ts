@@ -1,16 +1,16 @@
 import { all, call, put, takeLatest } from "redux-saga/effects";
-import { GET_SERVICES, LOAD_MORE_SERVICES } from "./types";
+import { GET_MATERIAL_LIST, LOAD_MORE_MATERIAL_LIST } from "./types";
 import * as actions from "./actions";
 import PartnerService from "src/Services/PartnerService";
 import configs from "src/configs";
 import { selectState } from "@Redux/helper";
-import { getServiceListState } from "./selectors";
+import { getMaterialListState } from "./selectors";
 
-function* getServices() {
+function* getMaterialList() {
   try {
-    const response = yield call(PartnerService.getServices, {});
+    const response = yield call(PartnerService.getMaterial, {});
     yield put(
-      actions.getServices.success({
+      actions.getMaterialList.success({
         data: response.data,
         paging: {
           canLoadMore: response.data.length === configs.apiPageSize,
@@ -19,23 +19,23 @@ function* getServices() {
       })
     );
   } catch (error: any) {
-    yield put(actions.getServices.failure(error.message));
+    yield put(actions.getMaterialList.failure(error.message));
   }
 }
 
-function* loadMoreServices() {
+function* loadMoreMaterialList() {
   try {
-    const { paging } = yield* selectState(getServiceListState);
+    const { paging } = yield* selectState(getMaterialListState);
     if (!paging || !paging.canLoadMore) {
       throw new Error("empty");
     }
     const response = yield call(
-      PartnerService.getServices,
+      PartnerService.getMaterial,
       {},
       paging.page + 1
     );
     yield put(
-      actions.loadMoreServices.success({
+      actions.loadMoreMaterialList.success({
         data: response.data,
         paging: {
           canLoadMore: response.data.length === configs.apiPageSize,
@@ -43,14 +43,15 @@ function* loadMoreServices() {
         },
       })
     );
+    yield put(actions.loadMoreMaterialList.success());
   } catch (error: any) {
-    yield put(actions.loadMoreServices.failure(error.message));
+    yield put(actions.loadMoreMaterialList.failure(error.message));
   }
 }
 
 export default function* sagas() {
   yield all([
-    takeLatest(GET_SERVICES.REQUEST, getServices),
-    takeLatest(LOAD_MORE_SERVICES.REQUEST, loadMoreServices),
+    takeLatest(GET_MATERIAL_LIST.REQUEST, getMaterialList),
+    takeLatest(LOAD_MORE_MATERIAL_LIST.REQUEST, loadMoreMaterialList),
   ]);
 }

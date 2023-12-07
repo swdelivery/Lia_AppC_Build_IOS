@@ -178,6 +178,10 @@ import DetailPost from "@Screens/Social/DetailPost";
 import ListComments from "@Screens/Social/ListComments";
 import DoctorList from "@Screens/DoctorList";
 import SearchingHome from "@Screens/NewSearchHome/index";
+import ServiceList from "@Screens/ServiceList";
+import BranchList from "@Screens/BranchList";
+import PractitionerList from "@Screens/PractitionerList";
+import MaterialList from "@Screens/MaterialList";
 
 const rootStack = createStackNavigator();
 
@@ -966,6 +970,26 @@ const RootNavigator = () => {
             options={{ ...TransitionPresets.SlideFromRightIOS }}
             name={ScreenKey.DOCTOR_LIST}
             component={DoctorList}
+          />
+          <rootStack.Screen
+            options={{ ...TransitionPresets.SlideFromRightIOS }}
+            name={ScreenKey.PRACTITIONER_LIST}
+            component={PractitionerList}
+          />
+          <rootStack.Screen
+            options={{ ...TransitionPresets.SlideFromRightIOS }}
+            name={ScreenKey.BRANCH_LIST}
+            component={BranchList}
+          />
+          <rootStack.Screen
+            options={{ ...TransitionPresets.SlideFromRightIOS }}
+            name={ScreenKey.SERVICE_LIST}
+            component={ServiceList}
+          />
+          <rootStack.Screen
+            options={{ ...TransitionPresets.SlideFromRightIOS }}
+            name={ScreenKey.MATERIAL_LIST}
+            component={MaterialList}
           />
 
           <rootStack.Screen

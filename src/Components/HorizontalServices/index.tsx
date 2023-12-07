@@ -22,6 +22,7 @@ const HorizontalServices = ({ items, title, containerStyle }: Props) => {
         items={data}
         title={title}
         containerStyle={containerStyle}
+        paddingHorizontal={0}
       />
     </Fade>
   );

@@ -40,6 +40,7 @@ import modal from "../modal/reducers";
 import resultcanningeyes from "../resultcanningeyes/reducers";
 import relatives from "../relatives/reducers";
 import aichat from "../aichat/reducers";
+import material from "../material/reducers";
 import newfeeds from "../newfeeds/reducers";
 
 const rootReducer = combineReducers({
@@ -74,6 +75,7 @@ const rootReducer = combineReducers({
   service,
   doctor,
   practitioner,
+  material,
   booking,
   voucher,
   insurance,
@@ -83,7 +85,7 @@ const rootReducer = combineReducers({
   resultcanningeyes,
   relatives,
   aichat,
-  newfeeds
+  newfeeds,
 });
 
 // const rootReducer = (state, action) => {

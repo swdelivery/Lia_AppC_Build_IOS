@@ -1,5 +1,5 @@
 import React, { memo, useEffect } from "react";
-import { StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 import { _height, _width } from "../../Constant/Scale";
 import PractitionerItem, {
   PLACEHOLDER_HEIGHT,
@@ -12,9 +12,15 @@ import { FlatList } from "react-native-gesture-handler";
 import { RenderItemProps } from "@typings/common";
 import PlaceholderSkeletons from "@Components/PlaceholderSkeletons";
 import ListEmpty from "@Components/ListEmpty";
+import Column from "@Components/Column";
+import Text from "@Components/Text";
+import { BASE_COLOR_LIGHT } from "@Constant/Color";
+import { useNavigate } from "src/Hooks/useNavigation";
+import ScreenKey from "@Navigation/ScreenKey";
 
 const SoYoungPractitioner = memo(({ tabIndex, isFocused }: any) => {
   const dispatch = useDispatch();
+  const { navigate } = useNavigate();
   const { isLoading, data } = useSelector(getPractitionerListState);
 
   useEffect(() => {
@@ -30,21 +36,37 @@ const SoYoungPractitioner = memo(({ tabIndex, isFocused }: any) => {
   }
 
   return (
-    <FlatList
-      contentContainerStyle={styles.container}
-      scrollEnabled={false}
-      data={data}
-      renderItem={renderItem}
-      ListEmptyComponent={
-        isLoading ? (
-          <PlaceholderSkeletons count={5} itemHeight={PLACEHOLDER_HEIGHT}>
-            <Placeholder />
-          </PlaceholderSkeletons>
-        ) : (
-          <ListEmpty isLoading={isLoading} title="Không tìm thấy phòng khám" />
-        )
-      }
-    />
+    <>
+      <Column backgroundColor={"#F5F9FA"} paddingHorizontal={8} paddingTop={8}>
+        <Pressable
+          style={styles.viewAll}
+          onPress={navigate(ScreenKey.PRACTITIONER_LIST)}
+        >
+          <Text
+            color={BASE_COLOR_LIGHT}
+            fontStyle="italic"
+          >{`Xem tất cả >>`}</Text>
+        </Pressable>
+      </Column>
+      <FlatList
+        contentContainerStyle={styles.container}
+        scrollEnabled={false}
+        data={data}
+        renderItem={renderItem}
+        ListEmptyComponent={
+          isLoading ? (
+            <PlaceholderSkeletons count={5} itemHeight={PLACEHOLDER_HEIGHT}>
+              <Placeholder />
+            </PlaceholderSkeletons>
+          ) : (
+            <ListEmpty
+              isLoading={isLoading}
+              title="Không tìm thấy chuyên viên"
+            />
+          )
+        }
+      />
+    </>
   );
 });
 
@@ -77,11 +99,15 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   container: {
-    // flex: 1,
-    paddingTop: 8 * 2,
+    paddingTop: 8,
     paddingHorizontal: 8 * 1,
     backgroundColor: "#F5F9FA",
     paddingBottom: 30,
     minHeight: _height,
+  },
+  viewAll: {
+    alignItems: "flex-end",
+    borderRadius: 8,
+    paddingVertical: 4,
   },
 });

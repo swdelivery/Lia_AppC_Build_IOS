@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 import { _width } from "../../Constant/Scale";
 import ServiceItem, {
   PLACEHOLDER_HEIGHT,
@@ -13,9 +13,15 @@ import { RenderItemProps } from "@typings/common";
 import { Service } from "@typings/serviceGroup";
 import useItemExtractor from "src/Hooks/useItemExtractor";
 import PlaceholderSkeletons from "@Components/PlaceholderSkeletons";
+import Column from "@Components/Column";
+import Text from "@Components/Text";
+import { BASE_COLOR_LIGHT } from "@Constant/Color";
+import ScreenKey from "@Navigation/ScreenKey";
+import { useNavigate } from "src/Hooks/useNavigation";
 
 const SoYoungService = ({ tabIndex, isFocused }: any) => {
   const dispatch = useDispatch();
+  const { navigate } = useNavigate();
   const { isLoading, data } = useSelector(getServiceListState);
 
   useEffect(() => {
@@ -33,21 +39,34 @@ const SoYoungService = ({ tabIndex, isFocused }: any) => {
   const { keyExtractor } = useItemExtractor<Service>((item) => item._id);
 
   return (
-    <FlatList
-      contentContainerStyle={styles.container}
-      scrollEnabled={false}
-      numColumns={2}
-      data={data}
-      renderItem={renderItem}
-      keyExtractor={keyExtractor}
-      ListEmptyComponent={
-        isLoading ? (
-          <PlaceholderSkeletons count={5} itemHeight={PLACEHOLDER_HEIGHT}>
-            <Placeholder />
-          </PlaceholderSkeletons>
-        ) : null
-      }
-    />
+    <>
+      <Column backgroundColor={"#F5F9FA"} paddingHorizontal={8} paddingTop={8}>
+        <Pressable
+          style={styles.viewAll}
+          onPress={navigate(ScreenKey.SERVICE_LIST)}
+        >
+          <Text
+            color={BASE_COLOR_LIGHT}
+            fontStyle="italic"
+          >{`Xem tất cả >>`}</Text>
+        </Pressable>
+      </Column>
+      <FlatList
+        contentContainerStyle={styles.container}
+        scrollEnabled={false}
+        numColumns={2}
+        data={data}
+        renderItem={renderItem}
+        keyExtractor={keyExtractor}
+        ListEmptyComponent={
+          isLoading ? (
+            <PlaceholderSkeletons count={5} itemHeight={PLACEHOLDER_HEIGHT}>
+              <Placeholder />
+            </PlaceholderSkeletons>
+          ) : null
+        }
+      />
+    </>
   );
 };
 
@@ -55,9 +74,14 @@ export default SoYoungService;
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 12,
+    paddingTop: 8,
     paddingBottom: 60,
     paddingRight: 8,
     backgroundColor: "#F5F9FA",
+  },
+  viewAll: {
+    alignItems: "flex-end",
+    borderRadius: 8,
+    paddingVertical: 4,
   },
 });
