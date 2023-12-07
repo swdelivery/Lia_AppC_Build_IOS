@@ -73,7 +73,6 @@ export function Certificates({
     []
   );
 
-  console.log({ data });
 
   function renderContent() {
     return (
