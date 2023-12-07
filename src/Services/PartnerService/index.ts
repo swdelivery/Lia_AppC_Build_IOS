@@ -285,8 +285,8 @@ const getPartnerConversations = (
   return axios
     .get(
       "/partner-conversation" +
-        "?" +
-        encodeParams({ ...params, limit: pageSize, page })
+      "?" +
+      encodeParams({ ...params, limit: pageSize, page })
     )
     .then(({ data }) => data.data);
 };
@@ -400,6 +400,10 @@ const createReactionPost = (payload: any) => {
   return axios.post(`/partner-post-reaction`, payload).then(({ data }) => data);
 };
 
+const getWallet = (payload: any) => {
+  return axios.get(`/wallet`, {}).then(({ data }) => data);
+};
+
 export default {
   partnerLogout,
 
@@ -467,4 +471,7 @@ export default {
   getChildCommentsPost,
   createCommentPost,
   createReactionPost,
+
+  // Wallet
+  getWallet
 };

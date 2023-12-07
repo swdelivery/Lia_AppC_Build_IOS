@@ -41,6 +41,7 @@ import resultcanningeyes from "../resultcanningeyes/reducers";
 import relatives from "../relatives/reducers";
 import aichat from "../aichat/reducers";
 import newfeeds from "../newfeeds/reducers";
+import wallet from "../wallet/reducers";
 
 const rootReducer = combineReducers({
   newsReducer,
@@ -83,7 +84,8 @@ const rootReducer = combineReducers({
   resultcanningeyes,
   relatives,
   aichat,
-  newfeeds
+  newfeeds,
+  wallet
 });
 
 // const rootReducer = (state, action) => {

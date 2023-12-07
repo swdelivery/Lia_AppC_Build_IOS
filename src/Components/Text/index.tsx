@@ -38,10 +38,10 @@ export type TextProps = RNTextProps & {
   fontStyle?: "normal" | "italic";
   flex?: number;
   textDecorationLine?:
-    | "none"
-    | "underline"
-    | "line-through"
-    | "underline line-through";
+  | "none"
+  | "underline"
+  | "line-through"
+  | "underline line-through";
 };
 
 const Text = ({
@@ -67,10 +67,10 @@ const Text = ({
       fontWeight: isAndroid
         ? undefined
         : weight === "regular"
-        ? "normal"
-        : "bold",
+          ? "normal"
+          : "bold",
       fontSize,
-      color: color || TEXT_BASE,
+      color: color || BLACK,
       marginTop: top || undefined,
       marginLeft: left || undefined,
       marginRight: right || undefined,
@@ -80,9 +80,9 @@ const Text = ({
       flex,
       ...(removePadding
         ? {
-            height: fontSize,
-            lineHeight: fontSize * 1.2,
-          }
+          height: fontSize,
+          lineHeight: fontSize * 1.2,
+        }
         : {}),
     };
   }, [

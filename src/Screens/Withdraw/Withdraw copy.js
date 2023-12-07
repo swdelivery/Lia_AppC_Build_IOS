@@ -66,7 +66,7 @@ const index = memo((props) => {
 
         console.log({ dataForFetch });
         let result = await createPaymentRequestForWalletCommission(dataForFetch);
-        if(result?.isAxiosError) return
+        if (result?.isAxiosError) return
 
         setStk('')
         setMoneyForWithdraw(0)
@@ -74,10 +74,10 @@ const index = memo((props) => {
 
 
         _getWallet()
-        if(props?.route?.params?._getWallet){
+        if (props?.route?.params?._getWallet) {
             props?.route?.params?._getWallet()
         }
-        if(props?.route?.params?._getCurrentCommission){
+        if (props?.route?.params?._getCurrentCommission) {
             props?.route?.params?._getCurrentCommission()
         }
         navigation.navigate(ScreenKey.AFFILIATE)
@@ -86,7 +86,7 @@ const index = memo((props) => {
 
     return (
         <View style={styles.container}>
-            <StatusBarCustom bgColor={WHITE} barStyle={'dark-content'}/>
+            <StatusBarCustom bgColor={WHITE} barStyle={'dark-content'} />
             <View style={{ height: _moderateScale(8) }} />
             <Header title={"Chuyển tiền đến ngân hàng"} />
 
@@ -225,7 +225,7 @@ const styles = StyleSheet.create({
         borderRadius: _moderateScale(8),
         paddingHorizontal: _moderateScale(8 * 2),
         marginTop: _moderateScale(8),
-        color:BLUE_FB
+        color: BLUE_FB
     },
     btnBank: {
         backgroundColor: BG_GREY_OPACITY_2,

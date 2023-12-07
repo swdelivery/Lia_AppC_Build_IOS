@@ -1,33 +1,26 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { isEmpty } from 'lodash'
 import React, { memo, useEffect, useState } from 'react'
-import { _moderateScale } from '../../../Constant/Scale'
-import { IconIsChecked, IconNotChecked, IconPartnerShip, IconPolicy, IconRightArrow } from '../../../Components/Icon/Icon'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import Collapsible from 'react-native-collapsible'
+import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
+import { useSelector } from 'react-redux'
+import { navigation } from '../../../../rootNavigation'
+import { IconIsChecked, IconNotChecked, IconPartnerShip, IconRightArrow } from '../../../Components/Icon/Icon'
 import { BASE_COLOR, GREY, WHITE } from '../../../Constant/Color'
 import { stylesFont } from '../../../Constant/Font'
-import Animated, { FadeInRight, FadeOut, useAnimatedRef, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
-import Collapsible from 'react-native-collapsible'
 import { sizeIcon } from '../../../Constant/Icon'
-import { navigation } from '../../../../rootNavigation'
+import { _moderateScale } from '../../../Constant/Scale'
 import ScreenKey from '../../../Navigation/ScreenKey'
-import { checkStepUnlockAffiliate } from '../../../Redux/Action/Affiilate'
-import { useSelector } from 'react-redux'
+import { checkStepUnlockAffiliate, getCurrentCollaborator } from '../../../Redux/Action/Affiilate'
 
 
 const Content = (props) => {
 
     const infoUserRedux = useSelector(state => state.infoUserReducer?.infoUser)
-
-    const refView = useAnimatedRef()
-    const heightValueBox = useSharedValue(0);
-    const [heightContent, setHeightContent] = useState(0);
-
     const [stepUnlockAffiliate, setStepUnlockAffiliate] = useState({})
 
-
     useEffect(() => {
-
         _checkStep(infoUserRedux)
-
     }, [])
 
     const _checkStep = async (infoUserRedux) => {
@@ -36,21 +29,20 @@ const Content = (props) => {
         setStepUnlockAffiliate(result?.data?.data);
     }
 
-
+    const _handleCheckCurrCollabRequest = async () => {
+        let result = await getCurrentCollaborator()
+        if (!isEmpty(result?.data?.data) && result?.data?.data?.status !== 'DENY') {
+            navigation.navigate(ScreenKey.CURR_COLLAB_REQUEST)
+        } else {
+            navigation.navigate(ScreenKey.NEW_VERIFICATION_CTV)
+        }
+    }
 
     return (
-        <Animated.View
-        // ref={refView}
-        // entering={FadeInRight.duration(120).springify().mass(0.3)}
-        // exiting={FadeOut.duration(100).springify().mass(0.3)}
-        >
+        <Animated.View>
             <TouchableOpacity
                 onPress={() => {
-                    if (stepUnlockAffiliate?.isCollaburator) {
-                        return
-                    } else {
-                        navigation.navigate(ScreenKey.VERIFICATION_CTV)
-                    }
+                    _handleCheckCurrCollabRequest()
                 }}
                 style={{
                     flexDirection: 'row',
@@ -84,7 +76,6 @@ const Content = (props) => {
                     alignItems: 'center',
                     marginTop: _moderateScale(8 * 2)
                 }}>
-
                 {
                     stepUnlockAffiliate?.serviceUsed ?
                         <>
@@ -101,8 +92,6 @@ const Content = (props) => {
                             <IconNotChecked style={sizeIcon.sm} />
                         </>
                 }
-
-
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -191,10 +180,6 @@ const TutMakeMoney = memo(() => {
     return (
         <View style={styles.options}>
             <View
-                // activeOpacity={.8}
-                // onPress={() => {
-                //     setIsExpanded(old => !old)
-                // }}
                 style={[styles.options__btn, shadow, isExpanded && { borderColor: BASE_COLOR, borderWidth: 1 }]}>
                 <TouchableOpacity
                     activeOpacity={.8}

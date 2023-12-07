@@ -57,7 +57,7 @@ const Cmnd = memo((props) => {
                 setBackCmnd(image)
             }
         }).catch(e => {
-            console.log({Loi: e });
+            console.log({ Loi: e });
         });
     }
     const pickMultiple = async (key) => {
@@ -254,7 +254,7 @@ const Cmnd = memo((props) => {
                     mặt trước và sau của chứng minh nhân dân
                 </Text>
 
-                <View style={{marginTop:_moderateScale(8*3), flex: 1, alignItems: 'flex-end', justifyContent: 'flex-end', paddingBottom: _moderateScale(8 * 5) + getBottomSpace(), paddingRight: _moderateScale(8 * 3) }}>
+                <View style={{ marginTop: _moderateScale(8 * 3), flex: 1, alignItems: 'flex-end', justifyContent: 'flex-end', paddingBottom: _moderateScale(8 * 5) + getBottomSpace(), paddingRight: _moderateScale(8 * 3) }}>
                     <View style={
                         (frontCmnd?.path && backCmnd?.path) ? { opacity: 1 } : { opacity: 0.5 }
                     }>

@@ -71,15 +71,15 @@ const NewUpdateInfoUser = () => {
       setValueBirthday(
         infoUser?.birthday?.length > 0
           ? {
-              day: moment(infoUser?.birthday).date().toString(),
-              month: (moment(infoUser?.birthday).month() + 1).toString(),
-              year: moment(infoUser?.birthday).year().toString(),
-            }
+            day: moment(infoUser?.birthday).date().toString(),
+            month: (moment(infoUser?.birthday).month() + 1).toString(),
+            year: moment(infoUser?.birthday).year().toString(),
+          }
           : {
-              day: null,
-              month: null,
-              year: null,
-            }
+            day: null,
+            month: null,
+            year: null,
+          }
       );
       setValueGender(infoUser?.gender);
       setValueCMND(infoUser?.idCard?.idNumber);
@@ -282,7 +282,7 @@ const NewUpdateInfoUser = () => {
           );
         }
       })
-      .catch((e) => {});
+      .catch((e) => { });
   };
 
   return (

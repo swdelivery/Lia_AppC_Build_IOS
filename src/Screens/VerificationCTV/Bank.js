@@ -140,7 +140,7 @@ const Bank = memo((props) => {
     return (
         <ScrollView contentContainerStyle={{ flex: 1 }} scrollEnabled={false} style={{ flex: 1, backgroundColor: WHITE }}>
 
-            <View style={{ paddingHorizontal: _moderateScale(8 * 3), marginTop:_moderateScale(8) }}>
+            <View style={{ paddingHorizontal: _moderateScale(8 * 3), marginTop: _moderateScale(8) }}>
                 <Text style={[stylesFont.fontNolan, { fontSize: _moderateScale(16), marginTop: _moderateScale(8 * 2), color: BLACK_OPACITY_8 }]}>
                     Tên ngân hàng {
                         // <Text style={{ color: GREY, fontSize: _moderateScale(14) }}>( Bắt buộc )</Text>
@@ -321,7 +321,7 @@ const Bank = memo((props) => {
 
                             <Text style={[stylesFont.fontNolanBold, { fontSize: _moderateScale(16), color: WHITE }]}>
                                 Xác nhận
-                    </Text>
+                            </Text>
                         </TouchableOpacity>
                     </View>
             }
