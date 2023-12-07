@@ -134,9 +134,10 @@ const RenderHTML = (props) => {
         source={{ html: `${props.data}` }}
         enableExperimentalBRCollapsing={true}
         enableExperimentalMarginCollapsing={true}
+        systemFonts={[FONT_WEIGHTS["regular"]]}
         baseStyle={{
           fontFamily: FONT_WEIGHTS["regular"],
-          fontSize: _moderateScale(14),
+          fontSize: 14,
           color: BLACK,
         }}
       />
