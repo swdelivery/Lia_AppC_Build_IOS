@@ -17,6 +17,9 @@ import { useNavigate } from "src/Hooks/useNavigation";
 import ContentLoader, { Circle, Rect } from "react-content-loader/native";
 import Column from "@Components/Column";
 import { LocationIcon } from "src/SGV";
+import useRequireLoginCallback from "src/Hooks/useRequireLoginAction";
+import { useDispatch } from "react-redux";
+import { startChat } from "@Redux/chat/actions";
 
 type Props = {
   item: Doctor;
@@ -24,10 +27,20 @@ type Props = {
 
 export default function DoctorItem({ item }: Props) {
   const { navigation } = useNavigate();
+  const dispatch = useDispatch();
 
   const handleItemPress = useCallback(() => {
     navigation.navigate(ScreenKey.DETAIL_DOCTOR, { doctor: item });
   }, [item]);
+
+  const handleStartChat = useRequireLoginCallback(async () => {
+    dispatch(
+      startChat.request({
+        type: "treatment",
+        doctorId: item?.userId,
+      })
+    );
+  }, []);
 
   return (
     <TouchableOpacity
@@ -51,7 +64,10 @@ export default function DoctorItem({ item }: Props) {
               />
             </Column>
 
-            <TouchableOpacity style={styles.consultButton}>
+            <TouchableOpacity
+              hitSlop={styleElement.hitslopSm}
+              onPress={handleStartChat}
+              style={styles.consultButton}>
               <Text size={12} weight="bold" color={"white"}>
                 Tư vấn
               </Text>
