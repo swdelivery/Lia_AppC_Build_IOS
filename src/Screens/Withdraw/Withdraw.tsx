@@ -1,32 +1,67 @@
+import ActionButton from '@Components/ActionButton/ActionButton'
 import Column from '@Components/Column'
 import LiAHeader from '@Components/Header/LiAHeader'
-import { IconRightWhite, IconWallet } from '@Components/Icon/Icon'
+import { IconWallet } from '@Components/Icon/Icon'
 import Row from '@Components/Row'
 import Screen from '@Components/Screen'
 import Text from '@Components/Text'
-import { BASE_COLOR, BLUE_FB, BORDER_COLOR, PRICE_ORANGE, RED, WHITE } from '@Constant/Color'
+import { BASE_COLOR, BLUE_FB, BORDER_COLOR, PRICE_ORANGE, RED } from '@Constant/Color'
 import { stylesFont } from "@Constant/Font"
-import { sizeIcon } from '@Constant/Icon'
 import { _moderateScale } from '@Constant/Scale'
 import { formatMonney } from '@Constant/Utils'
-import ScreenKey from '@Navigation/ScreenKey'
+import { createPaymentRequestForWalletCommission } from '@Redux/Action/Affiilate'
+import { getInfoUserReducer } from '@Redux/Selectors'
 import { getWalletState } from '@Redux/wallet/selectors'
-import React, { useState } from 'react'
-import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native'
+import { isEmpty } from 'lodash'
+import React, { useMemo, useState } from 'react'
+import { Alert, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, TextInput, View } from 'react-native'
 import { useSelector } from 'react-redux'
+import useConfirmation from 'src/Hooks/useConfirmation'
 import { useNavigate } from 'src/Hooks/useNavigation'
 
 const Withdraw = () => {
-    const { navigate } = useNavigate()
+    const { infoUser } = useSelector(getInfoUserReducer);
+    const { navigation } = useNavigate()
     const { data: wallet } = useSelector(getWalletState)
+    const { showConfirmation } = useConfirmation();
 
     const [valueMoney, setValueMoney] = useState('')
     const [valueDescription, setValueDescription] = useState('')
 
-
     const _handleOnchangeText = (value) => {
         setValueMoney(value.split('.').join("").toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."))
     }
+    const _handleConfirm = () => {
+        const numberRegex = /^[1-9]\d*$/;
+        let checkIsMoney = numberRegex.test(valueMoney?.split('.')?.join(''));
+        if (!checkIsMoney) {
+            return Alert.alert('Vui lòng nhập đúng định dạng tiền')
+        } else {
+            showConfirmation(
+                "Xác nhận",
+                `Xác nhận yêu cầu rút ${valueMoney} VNĐ về tài khoản?`,
+                async () => {
+                    let dataForFetch = {
+                        amount: Number(valueMoney?.split('.')?.join('')),
+                        methodCode: 'ATM',
+                        currencyCode: "VND",
+                        description: valueDescription.trim()
+                    }
+                    let result = await createPaymentRequestForWalletCommission(dataForFetch);
+                    if (result?.isAxiosError) return
+                    navigation.goBack()
+                }
+            );
+        }
+    }
+
+    const isDisabled = useMemo(() => {
+        if (!isEmpty(valueMoney.trim())) {
+            return false;
+        } else {
+            return true;
+        }
+    }, [valueMoney]);
 
     return (
         <Screen safeBottom>
@@ -60,7 +95,9 @@ const Withdraw = () => {
                         gap={8}
                         marginTop={0}
                         margin={8 * 2}>
-                        <Text color={BASE_COLOR}>
+                        <Text
+                            weight='bold'
+                            color={BASE_COLOR}>
                             Nhập số tiền muốn rút <Text color={RED}>*</Text>
                         </Text>
                         <TextInput
@@ -75,7 +112,9 @@ const Withdraw = () => {
                         gap={8}
                         marginTop={0}
                         margin={8 * 2}>
-                        <Text color={BASE_COLOR}>
+                        <Text
+                            weight='bold'
+                            color={BASE_COLOR}>
                             Ghi chú
                         </Text>
 
@@ -92,33 +131,77 @@ const Withdraw = () => {
                         gap={8}
                         marginTop={0}
                         margin={8 * 2}>
-                        <Text color={BASE_COLOR}>
-                            Thông tin ngân hàng của bạn <Text color={RED}>*</Text>
-                        </Text>
-
                         <Text
-                            color={RED}
-                            fontStyle='italic'>
-                            * Bạn chưa có thông tin ngân hàng, nhấn vào bên dưới để cập nhật trước khi rút tiền
+                            weight='bold'
+                            color={BASE_COLOR}>
+                            Thông tin ngân hàng của bạn
                         </Text>
 
-                        <TouchableOpacity
-                            onPress={navigate(ScreenKey.UPDATE_PARTNER_INFO_BANK)}
-                            style={styles.btnUpdateInfoBank}>
-                            <Row gap={8}>
+                        <Column
+                            gap={8}>
+                            <Column gap={4}>
+                                <Text>
+                                    Tên ngân hàng:
+                                </Text>
                                 <Text
                                     weight='bold'
-                                    color={WHITE}>
-                                    Cập nhật ngay
+                                    color={BLUE_FB}>
+                                    {
+                                        infoUser?.bankAccount?.bankName
+                                    }
                                 </Text>
-                                <IconRightWhite style={sizeIcon.xxs} />
-                            </Row>
-                        </TouchableOpacity>
+                            </Column>
+                            <Column gap={4}>
+                                <Text>
+                                    Số tài khoản:
+                                </Text>
+                                <Text
+                                    weight='bold'
+                                    color={BLUE_FB}>
+                                    {
+                                        infoUser?.bankAccount?.accountNumber
+                                    }
+                                </Text>
+                            </Column>
+                            <Column gap={4}>
+                                <Text>
+                                    Tên chủ thẻ:
+                                </Text>
+                                <Text
+                                    weight='bold'
+                                    color={BLUE_FB}>
+                                    {
+                                        infoUser?.bankAccount?.ownerName
+                                    }
+                                </Text>
+                            </Column>
+                            {
+                                infoUser?.bankAccount?.bankBranch ?
+                                    <Column gap={4}>
+                                        <Text>
+                                            Tên chi nhánh:
+                                        </Text>
+                                        <Text
+                                            weight='bold'
+                                            color={BLUE_FB}>
+                                            {
+                                                infoUser?.bankAccount?.bankBranch
+                                            }
+                                        </Text>
+                                    </Column>
+                                    : <></>
+                            }
 
+                        </Column>
                     </Column>
-
                 </ScrollView>
             </KeyboardAvoidingView>
+
+            <ActionButton
+                disabled={isDisabled}
+                onPress={_handleConfirm}
+                title={"Xác nhận"} />
+
         </Screen>
     )
 }

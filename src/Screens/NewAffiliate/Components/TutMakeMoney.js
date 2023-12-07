@@ -2,11 +2,11 @@ import { isEmpty } from 'lodash'
 import React, { memo, useEffect, useState } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Collapsible from 'react-native-collapsible'
-import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
+import Animated, { interpolateColor, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 import { useSelector } from 'react-redux'
 import { navigation } from '../../../../rootNavigation'
 import { IconIsChecked, IconNotChecked, IconPartnerShip, IconRightArrow } from '../../../Components/Icon/Icon'
-import { BASE_COLOR, GREY, WHITE } from '../../../Constant/Color'
+import { BASE_COLOR, BLUE_FB, GREY, WHITE } from '../../../Constant/Color'
 import { stylesFont } from '../../../Constant/Font'
 import { sizeIcon } from '../../../Constant/Icon'
 import { _moderateScale } from '../../../Constant/Scale'
@@ -153,11 +153,19 @@ const Content = (props) => {
     )
 }
 
-const TutMakeMoney = memo(() => {
-
+const TutMakeMoney = memo((props) => {
+    const { flagRequireDoneStepToShareCode } = props
     const [isExpanded, setIsExpanded] = useState(false)
-
+    const valueBackgroundColor = useSharedValue(0)
     const rotateIcon = useSharedValue(0);
+
+    useEffect(() => {
+        if (flagRequireDoneStepToShareCode) {
+            valueBackgroundColor.value = withTiming(1, { duration: 500 })
+        } else {
+            valueBackgroundColor.value = withTiming(0, { duration: 500 })
+        }
+    }, [flagRequireDoneStepToShareCode])
 
     useEffect(() => {
         if (!isExpanded) {
@@ -176,11 +184,25 @@ const TutMakeMoney = memo(() => {
             ]
         }
     })
+    const animBgColor = useAnimatedStyle(() => {
+        const color = interpolateColor(
+            valueBackgroundColor.value,
+            [0, 1],
+            [WHITE, BLUE_FB]
+        );
+        return {
+            backgroundColor: color,
+        };
+    })
 
     return (
-        <View style={styles.options}>
-            <View
-                style={[styles.options__btn, shadow, isExpanded && { borderColor: BASE_COLOR, borderWidth: 1 }]}>
+        <View style={[styles.options]}>
+            <Animated.View
+                style={[
+                    styles.options__btn, shadow,
+                    isExpanded && { borderColor: BASE_COLOR, borderWidth: 1 },
+                    animBgColor
+                ]}>
                 <TouchableOpacity
                     activeOpacity={.8}
                     onPress={() => {
@@ -205,10 +227,7 @@ const TutMakeMoney = memo(() => {
                 <Collapsible collapsed={!isExpanded}>
                     <Content />
                 </Collapsible>
-
-
-
-            </View>
+            </Animated.View>
         </View>
     )
 })

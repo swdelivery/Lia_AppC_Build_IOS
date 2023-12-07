@@ -19,42 +19,61 @@ import ModalShareCodeAffiliate from './Components/ModalShareCodeAffiliate'
 import ModalShowInfoRanked from './Components/ModalShowInfoRanked'
 import QA from './Components/QA'
 import TutMakeMoney from './Components/TutMakeMoney'
+import { getInfoUserReducer } from '@Redux/Selectors'
+import Animated from 'react-native-reanimated'
+import useHapticCallback from 'src/Hooks/useHapticCallback'
+import ModalFlashMsg from '@Components/ModalFlashMsg/ModalFlashMsg'
+import useVisible from 'src/Hooks/useVisible'
 
 const NewAffiliate = memo(() => {
 
+    const { infoUser } = useSelector(getInfoUserReducer);
     const [showModalInfoRanked, setShowModalInfoRanked] = useState(false)
     const [showModalRequireBecomeCTV, setShowModalRequireBecomeCTV] = useState(false)
     const [showModalShareCodeAffiliate, setShowModalShareCodeAffiliate] = useState(false)
     const [currPartnerLevel, setCurrPartnerLevel] = useState({})
     const [stepUnlockAffiliate, setStepUnlockAffiliate] = useState({})
-    const infoUserRedux = useSelector(state => state.infoUserReducer?.infoUser)
+
+    const [flagRequireDoneStepToShareCode, setFlagRequireDoneStepToShareCode] = useState(false)
 
     useEffect(() => {
         _getPartnerLevel()
-        _checkStep(infoUserRedux?._id)
+        _checkStep(infoUser?._id)
     }, [])
 
     const _checkStep = async (id) => {
         let result = await checkStepUnlockAffiliate(id)
         if (result?.isAxiosError) return
 
-        setStepUnlockAffiliate(result?.data?.data);
+        let { isCollaburator, serviceUsed, diaryFinished, sharedDiary } = result?.data?.data
+        if (isCollaburator && serviceUsed && diaryFinished && sharedDiary) {
+            setStepUnlockAffiliate(result?.data?.data);
+        }
     }
 
     const _getPartnerLevel = async () => {
-
         let result = await getPartnerLevel();
         if (result?.isAxiosError) return
-
         store.dispatch({
             type: ActionType.SAVE_LIST_PARTNER_LEVEL,
             payload: result?.data?.data
         })
-
-        let findCurrPartnerLevel = result?.data?.data?.find(item => item?.code == infoUserRedux?.levelCode)
+        let findCurrPartnerLevel = result?.data?.data?.find(item => item?.code == infoUser?.levelCode)
         setCurrPartnerLevel(findCurrPartnerLevel)
 
     }
+
+    const _handlePressIntiveBtn = useHapticCallback(() => {
+
+        if (stepUnlockAffiliate?.isCollaburator) {
+            setShowModalShareCodeAffiliate(old => !old)
+        } else {
+            setFlagRequireDoneStepToShareCode(true)
+            setTimeout(() => {
+                setFlagRequireDoneStepToShareCode(false)
+            }, 300);
+        }
+    }, [stepUnlockAffiliate])
 
     return (
         <View style={styles.container}>
@@ -63,7 +82,9 @@ const NewAffiliate = memo(() => {
                 <Banner setShowModalInfoRanked={setShowModalInfoRanked} />
                 <BtnRanked data={currPartnerLevel} />
                 <View style={{ height: _moderateScale(8) }} />
-                <TutMakeMoney />
+                <TutMakeMoney
+                    flagRequireDoneStepToShareCode={flagRequireDoneStepToShareCode}
+                />
                 <View style={{ height: _moderateScale(8) }} />
                 <ListF1Btn />
                 <View style={{ height: _moderateScale(8) }} />
@@ -73,11 +94,7 @@ const NewAffiliate = memo(() => {
 
                 <TouchableOpacity
                     onPress={() => {
-                        if (stepUnlockAffiliate?.isCollaburator) {
-                            setShowModalShareCodeAffiliate(old => !old)
-                        } else {
-                            setShowModalRequireBecomeCTV(old => !old)
-                        }
+                        _handlePressIntiveBtn()
                     }}
                     style={styles.btnInvite}>
                     <Text style={[stylesFont.fontNolanBold, { fontSize: _moderateScale(16), color: WHITE }]}>

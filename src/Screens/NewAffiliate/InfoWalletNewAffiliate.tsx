@@ -13,19 +13,19 @@ import ScreenKey from '@Navigation/ScreenKey'
 import { getWallet } from '@Redux/wallet/actions'
 import { getWalletState } from '@Redux/wallet/selectors'
 import moment from 'moment'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'src/Hooks/useNavigation'
+import { useFocused, useNavigate } from 'src/Hooks/useNavigation'
 
 const InfoWalletNewAffiliate = () => {
     const { navigate } = useNavigate()
     const dispatch = useDispatch()
     const { data: wallet } = useSelector(getWalletState)
 
-    useEffect(() => {
+    useFocused(() => {
         dispatch(getWallet.request())
-    }, [])
+    })
 
     const _renderItem = ({ item, index }) => {
         return (
@@ -118,7 +118,7 @@ const InfoWalletNewAffiliate = () => {
                         <Column>
                             <View style={styles.containerBtnCashIn}>
                                 <TouchableOpacity
-                                    onPress={navigate(ScreenKey.WITH_DRAW, {})}
+                                    onPress={navigate(ScreenKey.WITH_DRAW)}
                                     style={styles.btnCashIn}>
                                     <IconDollars style={sizeIcon.llg} />
                                 </TouchableOpacity>
