@@ -53,8 +53,10 @@ export function useNavigate() {
         params?: RootStackParamsList[ScreenKey]
       ) =>
       () => {
-        // @ts-ignore
-        navigation.navigate(screen, params);
+        requestAnimationFrame(() => {
+          // @ts-ignore
+          navigation.navigate(screen, params);
+        });
       },
     []
   );

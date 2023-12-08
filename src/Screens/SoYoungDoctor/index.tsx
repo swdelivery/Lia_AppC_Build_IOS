@@ -16,6 +16,7 @@ import Text from "@Components/Text";
 import Column from "@Components/Column";
 import { useNavigate } from "src/Hooks/useNavigation";
 import ScreenKey from "@Navigation/ScreenKey";
+import { BASE_COLOR_LIGHT } from "@Constant/Color";
 
 const SoYoungDoctor = ({ tabIndex, isFocused }: any) => {
   const { navigate } = useNavigate();
@@ -45,9 +46,8 @@ const SoYoungDoctor = ({ tabIndex, isFocused }: any) => {
           onPress={navigate(ScreenKey.DOCTOR_LIST)}
         >
           <Text
-            size={10}
+            color={BASE_COLOR_LIGHT}
             fontStyle="italic"
-            textDecorationLine="underline"
           >{`Xem tất cả >>`}</Text>
         </Pressable>
       </Column>
@@ -99,14 +99,15 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   container: {
-    // flex: 1,
-    paddingTop: 8 * 2,
+    paddingTop: 8,
     paddingHorizontal: 8 * 1,
     backgroundColor: "#F5F9FA",
     paddingBottom: 30,
     minHeight: _height,
   },
   viewAll: {
-    alignSelf: "flex-end",
+    alignItems: "flex-end",
+    borderRadius: 8,
+    paddingVertical: 4,
   },
 });

@@ -110,7 +110,7 @@ import VideoCall from "../Screens/VideoCall/VideoCall";
 import HistoryLiaTicket from "../Screens/Affiliate/HistoryLiATicket";
 import SettingApp from "../Screens/SettingApp/SettingApp";
 import MyPersonalPage from "../Screens/MyPersonalPage/MyPersonalPage";
-import EditDiary from "../Screens/CreateNewFeed/EditDiary";
+import EditDiary from "../Screens/DiaryDetails";
 import ListDiaryByType from "../Screens/ListDiaryByType/ListDiaryByType";
 import WheelSpin from "../Screens/WheelSpin/WheelSpin";
 
@@ -178,10 +178,14 @@ import DetailPost from "@Screens/Social/DetailPost";
 import ListComments from "@Screens/Social/ListComments";
 import DoctorList from "@Screens/DoctorList";
 import SearchingHome from "@Screens/NewSearchHome/index";
-import RechargeToWallet from '@Screens/RechargeToWallet/index'
+import RechargeToWallet from "@Screens/RechargeToWallet/index";
 import UpdatePartnerInfoBank from "@Screens/NewVerificationCTV/UpdatePartnerInfoBank";
 import NewVerificationCTV from "@Screens/NewVerificationCTV/NewVerificationCTV";
 import CurrCollaboratorRequest from "@Screens/NewVerificationCTV/CurrCollaboratorRequest";
+import ServiceList from "@Screens/ServiceList";
+import BranchList from "@Screens/BranchList";
+import PractitionerList from "@Screens/PractitionerList";
+import MaterialList from "@Screens/MaterialList";
 
 const rootStack = createStackNavigator();
 
@@ -990,6 +994,26 @@ const RootNavigator = () => {
             options={{ ...TransitionPresets.SlideFromRightIOS }}
             name={ScreenKey.DOCTOR_LIST}
             component={DoctorList}
+          />
+          <rootStack.Screen
+            options={{ ...TransitionPresets.SlideFromRightIOS }}
+            name={ScreenKey.PRACTITIONER_LIST}
+            component={PractitionerList}
+          />
+          <rootStack.Screen
+            options={{ ...TransitionPresets.SlideFromRightIOS }}
+            name={ScreenKey.BRANCH_LIST}
+            component={BranchList}
+          />
+          <rootStack.Screen
+            options={{ ...TransitionPresets.SlideFromRightIOS }}
+            name={ScreenKey.SERVICE_LIST}
+            component={ServiceList}
+          />
+          <rootStack.Screen
+            options={{ ...TransitionPresets.SlideFromRightIOS }}
+            name={ScreenKey.MATERIAL_LIST}
+            component={MaterialList}
           />
 
           <rootStack.Screen

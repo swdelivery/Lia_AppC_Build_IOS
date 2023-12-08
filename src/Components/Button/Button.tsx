@@ -169,7 +169,7 @@ const Base = ({
       marginHorizontal,
       opacity: disabled ? 0.5 : 1,
     };
-  }, [height, backgroundColor, width, flex, marginHorizontal]);
+  }, [height, backgroundColor, width, flex, marginHorizontal, disabled]);
 
   return (
     <TouchableOpacity

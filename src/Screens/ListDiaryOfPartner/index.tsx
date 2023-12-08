@@ -17,6 +17,7 @@ import {
   BASE_COLOR,
   GREY,
   BG_GREY_OPACITY_2,
+  BG_BEAUTY_OPACITY_2,
 } from "../../Constant/Color";
 import { _moderateScale, _heightScale } from "../../Constant/Scale";
 import { getBookingDataForPartner } from "../../Redux/Action/BookingAction";
@@ -38,7 +39,7 @@ import ItemDiary from "../MyPersonalPage/Components/ItemDiary";
 import Screen from "@Components/Screen";
 import LiAHeader from "@Components/Header/LiAHeader";
 
-const index = memo((props) => {
+const ListDiaryOfPartner = memo((props) => {
   // const partnerDiaryRedux = useSelector(state => state?.partnerDiaryReducer?.listPartnerDiary)
   const [refresh, setRefresh] = useState(false);
 
@@ -118,8 +119,8 @@ const index = memo((props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: WHITE,
+    backgroundColor: "#F1FCF9",
   },
 });
 
-export default index;
+export default ListDiaryOfPartner;

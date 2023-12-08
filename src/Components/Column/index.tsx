@@ -5,23 +5,36 @@ import {
   StyleProp,
   ViewStyle,
   ViewProps,
+  TouchableWithoutFeedback,
+  Pressable,
 } from "react-native";
 
 type Props = ViewStyle & {
   style?: StyleProp<ViewStyle>;
   children?: ReactNode;
   onLayout?: ViewProps["onLayout"];
+  onPress?: () => void | Promise<void>;
 };
 
-export default function Column({ style, children, onLayout, ...props }: Props) {
+export default function Column({
+  style,
+  children,
+  onLayout,
+  onPress,
+  ...props
+}: Props) {
   const containerStyle = useMemo(() => {
     return { ...props };
   }, [props]);
 
   return (
-    <View style={[styles.container, containerStyle, style]} onLayout={onLayout}>
+    <Pressable
+      disabled={!onPress}
+      onPress={onPress}
+      style={[styles.container, containerStyle, style]}
+    >
       {children}
-    </View>
+    </Pressable>
   );
 }
 

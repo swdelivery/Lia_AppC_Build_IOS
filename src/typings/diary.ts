@@ -1,5 +1,22 @@
-import { FileAvatar } from "./common";
+import { FileAvatar, Timestamp } from "./common";
 import { Partner } from "./partner";
+
+export type DailyDiary = {
+  description: string;
+  isSyncingTreatment: boolean;
+  isShare: boolean;
+  isActive: boolean;
+  isDelete: boolean;
+  _id: string;
+  partnerId: string;
+  date: string;
+  partnerDiaryId: string;
+  __v: number;
+  comments: any;
+  commentsCount: number;
+  id: string;
+  images: FileAvatar[];
+} & Timestamp;
 
 export type Diary = {
   id: string;

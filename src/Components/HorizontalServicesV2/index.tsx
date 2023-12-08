@@ -13,13 +13,20 @@ import { first } from "lodash";
 import { Service } from "@typings/serviceGroup";
 import useServiceDetailsNavigation from "src/Hooks/navigation/useServiceDetailsNavigation";
 import { SERVICE_BANNER_RATIO } from "@Constant/image";
+import Column from "@Components/Column";
 
 type Props = {
   title?: string;
   items: Service[];
   containerStyle?: StyleProp<ViewStyle>;
+  paddingHorizontal?: number;
 };
-const HorizontalServicesV2 = ({ items, title, containerStyle }: Props) => {
+const HorizontalServicesV2 = ({
+  items,
+  title,
+  containerStyle,
+  paddingHorizontal = 16,
+}: Props) => {
   const handlePress = useServiceDetailsNavigation();
 
   function renderItem(item: Service, index: number) {
@@ -27,7 +34,10 @@ const HorizontalServicesV2 = ({ items, title, containerStyle }: Props) => {
   }
 
   return (
-    <View style={[styles.container, containerStyle]}>
+    <Column
+      paddingHorizontal={paddingHorizontal}
+      style={[styles.container, containerStyle]}
+    >
       {!!title && (
         <Text left={0} weight="bold">
           {title}
@@ -43,7 +53,7 @@ const HorizontalServicesV2 = ({ items, title, containerStyle }: Props) => {
           {items.map(renderItem)}
         </ScrollView>
       </View>
-    </View>
+    </Column>
   );
 };
 
@@ -91,7 +101,6 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
   },
   container: {
-    paddingHorizontal: 16,
     borderRadius: _moderateScale(8),
     backgroundColor: "white",
     marginTop: _moderateScale(0),

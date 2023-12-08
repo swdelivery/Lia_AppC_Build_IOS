@@ -22,6 +22,8 @@ import { Booking } from "@typings/booking";
 import { Insurance } from "@typings/insurance";
 import { ServiceTreatment } from "@typings/treatment";
 import { PaymentRequest } from "@typings/payment";
+import { Service } from "@typings/serviceGroup";
+import { Material } from "@typings/material";
 
 const axios = createAxios(URL_FOR_PARTNER);
 
@@ -41,7 +43,7 @@ const getServices = (
   payload: GetServicesPayload,
   page = 1,
   pageSize = configs.apiPageSize
-) => {
+): Promise<ApiResponse<Service[]>> => {
   const query = encodeParams({
     ...payload,
     sort: {
@@ -50,7 +52,7 @@ const getServices = (
     limit: pageSize,
     page,
   });
-  return axios.get(`/service?${query}`).then(({ data }) => data.data);
+  return axios.get(`/service?${query}`).then(({ data }) => data);
 };
 
 const getServicesFilter = (payload: any) => {
@@ -154,6 +156,21 @@ const getConfigFileByCode = (code: string): Promise<ConfigFile> =>
   axios
     .get("/config-file/get-by-code?code=" + code)
     .then(({ data }) => data.data);
+
+const getMaterial = (
+  params,
+  page = 1,
+  pageSize = configs.apiPageSize
+): Promise<ApiResponse<Material[]>> =>
+  axios
+    .get("/material", {
+      params: {
+        ...params,
+        limit: pageSize,
+        page,
+      },
+    })
+    .then(({ data }) => data);
 
 const getMyCoupons = (
   payload: any,
@@ -428,6 +445,9 @@ export default {
   getDiaryList,
 
   getConfigFileByCode,
+
+  // Material
+  getMaterial,
 
   // Coupon
   getMyCoupons,

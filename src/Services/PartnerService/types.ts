@@ -22,7 +22,7 @@ export type GetDiaryPayload = {
 };
 
 export type GetServicesPayload = {
-  codeGroup: Condition;
+  codeGroup?: Condition;
 };
 
 export type GetTreatmentDetailsPayload = {

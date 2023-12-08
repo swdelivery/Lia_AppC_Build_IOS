@@ -43,7 +43,6 @@ const LiAHeader = ({
     <Column
       backgroundColor={bg}
       paddingTop={safeTop ? top : 0}
-      style={styles.header}
       borderBottomWidth={bottomBorderColor ? StyleSheet.hairlineWidth : 0}
       borderBottomColor={bottomBorderColor}
     >
@@ -84,5 +83,4 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     paddingHorizontal: _moderateScale(8 * 2),
   },
-  header: {},
 });
