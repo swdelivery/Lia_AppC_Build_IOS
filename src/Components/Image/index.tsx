@@ -1,6 +1,6 @@
 import FastImage from "@Components/FastImage";
 import LinearGradient from "@Components/LinearGradient";
-import { BASE_COLOR, SECOND_COLOR } from "@Constant/Color";
+import { BASE_COLOR, BG_BEAUTY, SECOND_COLOR, WHITE } from "@Constant/Color";
 import { FileAvatar } from "@typings/common";
 import React, { useMemo } from "react";
 import { StyleProp, StyleSheet, View } from "react-native";
@@ -19,7 +19,7 @@ export default function Image({
   avatar,
   auto = false,
   style,
-  placeholderColors = [BASE_COLOR, SECOND_COLOR],
+  placeholderColors = [BG_BEAUTY, WHITE],
 }: Props) {
   const uri = useMemo(() => {
     return getImageAvataUrl(avatar, "");
@@ -59,8 +59,8 @@ function DefaultPlaceholder({ colors }: { colors: string[] }) {
     <LinearGradient
       style={styles.placeholder}
       colors={colors}
-      // start={{ x: 0, y: 0 }}
-      // end={{ x: 0, y: 1 }}
+    // start={{ x: 0, y: 0 }}
+    // end={{ x: 0, y: 1 }}
     />
   );
 }

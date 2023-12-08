@@ -404,6 +404,10 @@ const getWallet = (payload: any) => {
   return axios.get(`/wallet`, {}).then(({ data }) => data);
 };
 
+const getEyeLabel = (payload: any) => {
+  return axios.get(`/eye-label`, {}).then(({ data }) => data);
+};
+
 export default {
   partnerLogout,
 
@@ -473,5 +477,8 @@ export default {
   createReactionPost,
 
   // Wallet
-  getWallet
+  getWallet,
+
+  // EyeLabel
+  getEyeLabel
 };

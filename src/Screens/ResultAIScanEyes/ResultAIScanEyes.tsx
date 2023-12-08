@@ -20,6 +20,7 @@ import { useDispatch } from "react-redux";
 import {
   getBranchsByResEye,
   getDoctorsByResEye,
+  getEyeLabel,
   getServicesByResEye,
 } from "@Redux/resultcanningeyes/actions";
 import Screen from "@Components/Screen";
@@ -48,6 +49,10 @@ const ResultAIScanEyes = (props) => {
   });
 
   useEffect(() => {
+    getDataEyeLabel()
+  }, [])
+
+  useEffect(() => {
     if (!isEmpty(scanningResult) && !isEmpty(imageScan)) {
       dispatch(
         getServicesByResEye.request({
@@ -62,6 +67,10 @@ const ResultAIScanEyes = (props) => {
       cropRightEyeImage();
     }
   }, [scanningResult, imageScan]);
+
+  const getDataEyeLabel = () => {
+    dispatch(getEyeLabel.request())
+  }
 
   const cropLeftEyeImage = async () => {
     const {
@@ -93,36 +102,36 @@ const ResultAIScanEyes = (props) => {
         boxEyelid:
           coordinate_eyelid_boxs?.length > 0
             ? {
-                point1: {
-                  x: coordinate_eyelid_boxs[0][0],
-                  y: coordinate_eyelid_boxs[0][1],
-                },
-                point2: {
-                  x: coordinate_eyelid_boxs[0][2],
-                  y: coordinate_eyelid_boxs[0][1],
-                },
-                point3: {
-                  x: coordinate_eyelid_boxs[0][2],
-                  y: coordinate_eyelid_boxs[0][3],
-                },
-              }
+              point1: {
+                x: coordinate_eyelid_boxs[0][0],
+                y: coordinate_eyelid_boxs[0][1],
+              },
+              point2: {
+                x: coordinate_eyelid_boxs[0][2],
+                y: coordinate_eyelid_boxs[0][1],
+              },
+              point3: {
+                x: coordinate_eyelid_boxs[0][2],
+                y: coordinate_eyelid_boxs[0][3],
+              },
+            }
             : null,
         boxFatBag:
           coordinate_fat_bag_box?.length > 0
             ? {
-                point1: {
-                  x: coordinate_fat_bag_box[0],
-                  y: coordinate_fat_bag_box[1],
-                },
-                point2: {
-                  x: coordinate_fat_bag_box[2],
-                  y: coordinate_fat_bag_box[1],
-                },
-                point3: {
-                  x: coordinate_fat_bag_box[2],
-                  y: coordinate_fat_bag_box[3],
-                },
-              }
+              point1: {
+                x: coordinate_fat_bag_box[0],
+                y: coordinate_fat_bag_box[1],
+              },
+              point2: {
+                x: coordinate_fat_bag_box[2],
+                y: coordinate_fat_bag_box[1],
+              },
+              point3: {
+                x: coordinate_fat_bag_box[2],
+                y: coordinate_fat_bag_box[3],
+              },
+            }
             : null,
       });
     } catch (error) {
@@ -159,36 +168,36 @@ const ResultAIScanEyes = (props) => {
         boxEyelid:
           coordinate_eyelid_boxs?.length > 0
             ? {
-                point1: {
-                  x: coordinate_eyelid_boxs[0][0],
-                  y: coordinate_eyelid_boxs[0][1],
-                },
-                point2: {
-                  x: coordinate_eyelid_boxs[0][2],
-                  y: coordinate_eyelid_boxs[0][1],
-                },
-                point3: {
-                  x: coordinate_eyelid_boxs[0][2],
-                  y: coordinate_eyelid_boxs[0][3],
-                },
-              }
+              point1: {
+                x: coordinate_eyelid_boxs[0][0],
+                y: coordinate_eyelid_boxs[0][1],
+              },
+              point2: {
+                x: coordinate_eyelid_boxs[0][2],
+                y: coordinate_eyelid_boxs[0][1],
+              },
+              point3: {
+                x: coordinate_eyelid_boxs[0][2],
+                y: coordinate_eyelid_boxs[0][3],
+              },
+            }
             : null,
         boxFatBag:
           coordinate_fat_bag_box?.length > 0
             ? {
-                point1: {
-                  x: coordinate_fat_bag_box[0],
-                  y: coordinate_fat_bag_box[1],
-                },
-                point2: {
-                  x: coordinate_fat_bag_box[2],
-                  y: coordinate_fat_bag_box[1],
-                },
-                point3: {
-                  x: coordinate_fat_bag_box[2],
-                  y: coordinate_fat_bag_box[3],
-                },
-              }
+              point1: {
+                x: coordinate_fat_bag_box[0],
+                y: coordinate_fat_bag_box[1],
+              },
+              point2: {
+                x: coordinate_fat_bag_box[2],
+                y: coordinate_fat_bag_box[1],
+              },
+              point3: {
+                x: coordinate_fat_bag_box[2],
+                y: coordinate_fat_bag_box[3],
+              },
+            }
             : null,
       });
     } catch (error) {

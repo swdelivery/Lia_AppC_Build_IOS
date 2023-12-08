@@ -1,21 +1,23 @@
-import { Image, StyleSheet, TouchableOpacity, View } from 'react-native'
-import React from 'react'
-import { _moderateScale, _width, _widthScale } from '../../../Constant/Scale'
-import { GREY_FOR_TITLE, RED, WHITE } from '../../../Constant/Color'
-import { _codeResultScanning } from '@Constant/CodeResultScanningEye'
-import Row from '@Components/Row'
 import Column from '@Components/Column'
-import Text from '@Components/Text'
 import { IconBagFat, IconCurvedArrow } from '@Components/Icon/Icon'
-import Svg, { Polygon, Path, Rect } from 'react-native-svg';
+import Row from '@Components/Row'
+import Text from '@Components/Text'
+import { getEyeLabelState } from '@Redux/resultcanningeyes/selectors'
+import React from 'react'
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { useSelector } from 'react-redux'
+import { GREY_FOR_TITLE, RED, WHITE } from '../../../Constant/Color'
+import { _moderateScale } from '../../../Constant/Scale'
+import { useNavigate } from 'src/Hooks/useNavigation'
+import ScreenKey from '@Navigation/ScreenKey'
 
 const WIDTH_IMAGE = _moderateScale(8 * 18)
 const WIDTH_IMAGE_SMALL = _moderateScale(8 * 8)
 
 const LeftEye = (props) => {
-
+    const { navigate } = useNavigate()
+    const { data: dataEyeLabel } = useSelector(getEyeLabelState)
     const { croppedRightEyeImage: { ratio, boxEyelid, boxFatBag, width, height, uri }, scanningResult } = props
-
 
     return (
         <View>
@@ -27,7 +29,6 @@ const LeftEye = (props) => {
 
                 <Column flex={1} gap={8}>
                     <Text size={22} weight='bold' color={WHITE} >
-                        {/* [ {_codeResultScanning(scanningResult?.left?.eylid_type)} ] */}
                         [ Mắt phải ]
                     </Text>
 
@@ -37,7 +38,9 @@ const LeftEye = (props) => {
                             alignItems='center'>
                             <View style={[styles.dot, { backgroundColor: 'red' }]} />
                             <Text size={16} weight='bold' color={RED}>
-                                {_codeResultScanning(scanningResult?.right?.eylid_type)}
+                                {
+                                    dataEyeLabel?.find(item => item?.code === scanningResult?.right?.eylid_type)?.name
+                                }
                             </Text>
                         </Row>
                         <Row
@@ -45,7 +48,9 @@ const LeftEye = (props) => {
                             alignItems='center'>
                             <View style={[styles.dot, { backgroundColor: 'red' }]} />
                             <Text size={16} weight='bold' color={RED}>
-                                {_codeResultScanning(scanningResult?.right?.eye_bag_type)}
+                                {
+                                    dataEyeLabel?.find(item => item?.code === scanningResult?.right?.eye_bag_type)?.name
+                                }
                             </Text>
                         </Row>
                     </Column>
@@ -119,9 +124,7 @@ const LeftEye = (props) => {
                 backgroundColor={WHITE}
                 marginHorizontal={8 * 2}
                 marginTop={8 * 2}>
-
                 <View style={styles.arrowUp} />
-
                 <Column paddingHorizontal={8 * 2}>
                     <Row
                         gap={8}
@@ -150,19 +153,6 @@ const LeftEye = (props) => {
                                             </View>
                                             : <></>
                                     }
-                                    {/* <Svg
-                                        width={WIDTH_IMAGE_SMALL}
-                                        height={WIDTH_IMAGE_SMALL / ratio}>
-                                        <Rect
-                                            x={WIDTH_IMAGE_SMALL * boxEyelid?.point1.x / width}
-                                            y={WIDTH_IMAGE_SMALL / ratio * boxEyelid?.point1.y / height}
-                                            width={WIDTH_IMAGE_SMALL * (boxEyelid?.point2.x - boxEyelid?.point1.x) / width}
-                                            height={WIDTH_IMAGE_SMALL / ratio * (boxEyelid?.point3.y - boxEyelid?.point2.y) / height}
-                                            stroke="white"
-                                            strokeWidth="2"
-                                            fill="transparent"
-                                        />
-                                    </Svg> */}
                                     <Image
                                         style={{
                                             width: WIDTH_IMAGE_SMALL,
@@ -175,16 +165,18 @@ const LeftEye = (props) => {
                                 </View>
                                 : <></>
                         }
-
                         <Column gap={4} flex={1}>
                             <Row>
                                 <Column flex={1}>
                                     <Text numberOfLines={1} weight='bold' color={'#38484F'}>
-                                        {_codeResultScanning(scanningResult?.right?.eylid_type)}
+                                        {
+                                            dataEyeLabel?.find(item => item?.code === scanningResult?.right?.eylid_type)?.name
+                                        }
                                     </Text>
                                 </Column>
-
-                                <TouchableOpacity>
+                                <TouchableOpacity
+                                    onPress={navigate(ScreenKey.SCREEN_HTML,
+                                        { title: 'Thông tin chi tiết', value: dataEyeLabel?.find(item => item?.code === scanningResult?.right?.eylid_type)?.detail })}>
                                     <Text color={"#65B4C9"}>
                                         {`Chi tiết >`}
                                     </Text>
@@ -193,7 +185,9 @@ const LeftEye = (props) => {
                             <Text
                                 numberOfLines={3}
                                 size={12}>
-                                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled
+                                {
+                                    dataEyeLabel?.find(item => item?.code === scanningResult?.right?.eylid_type)?.description
+                                }
                             </Text>
                         </Column>
                     </Row>
@@ -205,7 +199,6 @@ const LeftEye = (props) => {
                         gap={8}
                         alignItems='flex-start'
                         marginVertical={8 * 2}>
-
                         {
                             ratio ?
                                 <View style={{
@@ -228,19 +221,6 @@ const LeftEye = (props) => {
                                             </View>
                                             : <></>
                                     }
-                                    {/* <Svg
-                                        width={WIDTH_IMAGE_SMALL}
-                                        height={WIDTH_IMAGE_SMALL / ratio}>
-                                        <Rect
-                                            x={WIDTH_IMAGE_SMALL * boxFatBag?.point1.x / width}
-                                            y={WIDTH_IMAGE_SMALL / ratio * boxFatBag?.point1.y / height}
-                                            width={WIDTH_IMAGE_SMALL * (boxFatBag?.point2.x - boxFatBag?.point1.x) / width}
-                                            height={WIDTH_IMAGE_SMALL / ratio * (boxFatBag?.point3.y - boxFatBag?.point2.y) / height}
-                                            stroke="red"
-                                            strokeWidth="2"
-                                            fill="transparent"
-                                        />
-                                    </Svg> */}
                                     <Image
                                         style={{
                                             width: WIDTH_IMAGE_SMALL,
@@ -253,16 +233,19 @@ const LeftEye = (props) => {
                                 </View>
                                 : <></>
                         }
-
                         <Column gap={4} flex={1}>
                             <Row>
                                 <Column flex={1}>
                                     <Text numberOfLines={1} weight='bold' color={'#38484F'}>
-                                        {_codeResultScanning(scanningResult?.right?.eye_bag_type)}
+                                        {
+                                            dataEyeLabel?.find(item => item?.code === scanningResult?.right?.eye_bag_type)?.name
+                                        }
                                     </Text>
                                 </Column>
 
-                                <TouchableOpacity>
+                                <TouchableOpacity
+                                    onPress={navigate(ScreenKey.SCREEN_HTML,
+                                        { title: 'Thông tin chi tiết', value: dataEyeLabel?.find(item => item?.code === scanningResult?.right?.eye_bag_type)?.detail })}>
                                     <Text color={"#65B4C9"}>
                                         {`Chi tiết >`}
                                     </Text>
@@ -271,15 +254,14 @@ const LeftEye = (props) => {
                             <Text
                                 numberOfLines={3}
                                 size={12}>
-                                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled
+                                {
+                                    dataEyeLabel?.find(item => item?.code === scanningResult?.right?.eye_bag_type)?.description
+                                }
                             </Text>
                         </Column>
                     </Row>
                 </Column>
-
-
             </Column>
-
         </View>
     )
 }
