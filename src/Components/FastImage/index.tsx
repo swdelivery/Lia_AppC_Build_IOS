@@ -4,27 +4,25 @@ import FastImage, {
   Source,
 } from "react-native-fast-image";
 import React, { ReactNode, useState, useCallback, useMemo } from "react";
-import { View, StyleSheet, ViewStyle } from "react-native";
-import Fade from "@Components/Fade";
+import { StyleSheet, ViewStyle } from "react-native";
 import Animated, {
+  interpolate,
   useAnimatedStyle,
   useSharedValue,
+  withSpring,
+  withTiming,
 } from "react-native-reanimated";
 
 export type { Source };
 export interface ImageProps extends FastImageProps {
   auto?: boolean;
-  placeholder?: Source | number;
   placeholderComponent?: ReactNode;
   onReady?: () => void;
   uri?: string;
 }
 
-const DEFAULT_SOURCE = require("../../Image/logo.png");
-
 function Image({
   auto = false,
-  placeholder,
   placeholderComponent,
   // source,
   style,
@@ -40,7 +38,7 @@ function Image({
     width: containerStyle.width,
     height: containerStyle.height,
   });
-  const [isReady, setReady] = useState(false);
+  const isReady = useSharedValue(0);
 
   const handleLoad = useCallback(
     (evt: OnLoadEvent) => {
@@ -50,7 +48,6 @@ function Image({
         if (containerStyle.width) {
           // Auto height
           const newHeight = containerStyle.width / ratio;
-          console.log({ newHeight });
           autoStyle.value = {
             width: containerStyle.width,
             height: newHeight,
@@ -68,7 +65,7 @@ function Image({
           };
         }
       }
-      setReady(true);
+      isReady.value = withTiming(1, { duration: 700 });
       if (onReady) {
         onReady();
       }
@@ -89,27 +86,24 @@ function Image({
     return autoStyle.value;
   }, []);
 
+  const imageContainerStyle = useAnimatedStyle(() => {
+    return {
+      opacity: interpolate(isReady.value, [0, 1], [0, 1], "clamp"),
+    };
+  }, []);
+
   return (
     <Animated.View style={[styles.container, style, mAutoStyle]}>
-      <FastImage
-        // @ts-ignore
-        source={normalisedSource}
-        style={StyleSheet.absoluteFill}
-        onLoad={handleLoad}
-        {...props}
-      />
-      {!placeholderComponent && placeholder && !isReady && (
+      {placeholderComponent}
+      <Animated.View style={[styles.placeholder, imageContainerStyle]}>
         <FastImage
-          source={placeholder}
-          style={styles.placeholder}
-          resizeMode="contain"
+          // @ts-ignore
+          source={normalisedSource}
+          style={StyleSheet.absoluteFill}
+          onLoad={handleLoad}
           {...props}
         />
-      )}
-
-      {!!placeholderComponent && (
-        <Fade visible={!isReady}>{placeholderComponent}</Fade>
-      )}
+      </Animated.View>
     </Animated.View>
   );
 }

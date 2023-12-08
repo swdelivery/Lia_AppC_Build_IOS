@@ -10,6 +10,7 @@ import Column from "@Components/Column";
 import HorizontalServices from "@Components/HorizontalServices";
 import Spacer from "@Components/Spacer";
 import { Practitioner } from "@typings/practitioner";
+import { ThumbsUpIcon } from "src/SGV";
 
 type Props = {
   practitioner: Practitioner;
@@ -60,16 +61,20 @@ const Banner = ({ practitioner }: Props) => {
       </Column>
       <Column right={8} gap={8} top={8} left={0}>
         <Row left={16} gap={4}>
-          <Image
+          <Column
             style={styles.iconLike}
-            source={require("../../../Image/like.png")}
-          />
-          <Text weight="bold">
-            Chuyên dự án: {practitioner?.specialization}
-          </Text>
+            alignItems="center"
+            justifyContent="center"
+          >
+            <ThumbsUpIcon />
+          </Column>
+          <Text weight="bold">Chuyên khoa: {practitioner?.specialization}</Text>
         </Row>
         {practitioner?.practitionerServices?.length > 0 && (
-          <HorizontalServices items={practitioner.practitionerServices} />
+          <HorizontalServices
+            items={practitioner.practitionerServices}
+            paddingHorizontal={16}
+          />
         )}
       </Column>
 

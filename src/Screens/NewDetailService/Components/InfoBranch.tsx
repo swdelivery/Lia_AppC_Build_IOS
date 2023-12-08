@@ -64,23 +64,27 @@ const InfoBranch = ({ service }: Props) => {
             >
               <Avatar style={styles.avatarBranch} avatar={item?.avatar} />
               <Column flex={1} marginLeft={_moderateScale(8)} marginBottom={8}>
-                <Text style={styles.name}>{item?.name}</Text>
-                <CountStar2
-                  count={item?.reviewCount}
-                  rating={item.averageRating}
-                  size={10}
-                />
+                <Row alignItems="flex-start">
+                  <Column flex={1}>
+                    <Text style={styles.name}>{item?.name}</Text>
+                    <CountStar2
+                      count={item?.reviewCount}
+                      rating={item.averageRating}
+                      size={10}
+                    />
+                  </Column>
+                  <TouchableOpacity
+                    onPress={_handleGoDetailBranch(item)}
+                    style={styles.more}
+                  >
+                    <Text weight="bold" size={12} color={"white"} bottom={3}>
+                      {`Xem thêm`}
+                    </Text>
+                    <Icon name="chevron-right" size={14} color={"white"} />
+                  </TouchableOpacity>
+                </Row>
                 <Certificates data={item?.branchFileArr} />
               </Column>
-              <TouchableOpacity
-                onPress={_handleGoDetailBranch(item)}
-                style={styles.more}
-              >
-                <Text weight="bold" size={12} color={"white"} bottom={3}>
-                  {`Xem thêm`}
-                </Text>
-                <Icon name="chevron-right" size={14} color={"white"} />
-              </TouchableOpacity>
             </Row>
           );
         })}
