@@ -17,6 +17,7 @@ import Text from "@Components/Text";
 import { BASE_COLOR_LIGHT } from "@Constant/Color";
 import { useNavigate } from "src/Hooks/useNavigation";
 import ScreenKey from "@Navigation/ScreenKey";
+import { AfterTimeoutFragment } from "@Components/AfterTimeoutFragment";
 
 const SoYoungBranch = ({ tabIndex, isFocused }: any) => {
   const { navigate } = useNavigate();
@@ -39,7 +40,13 @@ const SoYoungBranch = ({ tabIndex, isFocused }: any) => {
   }
 
   return (
-    <>
+    <AfterTimeoutFragment
+      placeholder={
+        <PlaceholderSkeletons count={5} itemHeight={PLACEHOLDER_HEIGHT}>
+          <Placeholder />
+        </PlaceholderSkeletons>
+      }
+    >
       <Column backgroundColor={"#F5F9FA"} paddingHorizontal={8} paddingTop={8}>
         <Pressable
           style={styles.viewAll}
@@ -69,8 +76,9 @@ const SoYoungBranch = ({ tabIndex, isFocused }: any) => {
             />
           )
         }
+        removeClippedSubviews
       />
-    </>
+    </AfterTimeoutFragment>
   );
 };
 

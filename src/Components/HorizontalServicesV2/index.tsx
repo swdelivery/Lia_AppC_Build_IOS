@@ -22,7 +22,7 @@ type Props = {
   paddingHorizontal?: number;
 };
 const HorizontalServicesV2 = ({
-  items,
+  items = [],
   title,
   containerStyle,
   paddingHorizontal = 16,

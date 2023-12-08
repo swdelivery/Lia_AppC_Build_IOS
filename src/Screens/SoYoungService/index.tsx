@@ -18,6 +18,7 @@ import Text from "@Components/Text";
 import { BASE_COLOR_LIGHT } from "@Constant/Color";
 import ScreenKey from "@Navigation/ScreenKey";
 import { useNavigate } from "src/Hooks/useNavigation";
+import { AfterTimeoutFragment } from "@Components/AfterTimeoutFragment";
 
 const SoYoungService = ({ tabIndex, isFocused }: any) => {
   const dispatch = useDispatch();
@@ -39,7 +40,14 @@ const SoYoungService = ({ tabIndex, isFocused }: any) => {
   const { keyExtractor } = useItemExtractor<Service>((item) => item._id);
 
   return (
-    <>
+    <AfterTimeoutFragment
+      timeout={2000}
+      placeholder={
+        <PlaceholderSkeletons count={5} itemHeight={PLACEHOLDER_HEIGHT}>
+          <Placeholder />
+        </PlaceholderSkeletons>
+      }
+    >
       <Column backgroundColor={"#F5F9FA"} paddingHorizontal={8} paddingTop={8}>
         <Pressable
           style={styles.viewAll}
@@ -65,8 +73,9 @@ const SoYoungService = ({ tabIndex, isFocused }: any) => {
             </PlaceholderSkeletons>
           ) : null
         }
+        removeClippedSubviews
       />
-    </>
+    </AfterTimeoutFragment>
   );
 };
 
