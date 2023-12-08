@@ -8,15 +8,19 @@ import LiAHeader from "@Components/Header/LiAHeader";
 const ScreenHTML = (props) => {
   const [data, setData] = useState(null);
 
-  const { code, title } = props?.route?.params;
+  const { code, title, value } = props?.route?.params;
 
   useEffect(() => {
-    console.log({ code, title });
-
     if (code) {
       _getConfigDataByCode(code);
     }
   }, [code]);
+
+  useEffect(() => {
+    if (value) {
+      setData({ value })
+    }
+  }, [value])
 
   const _getConfigDataByCode = async (code) => {
     let result = await getConfigData(code);

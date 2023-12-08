@@ -18,5 +18,6 @@ export function* rootSaga() {
     fork(require("./relatives/sagas").default),
     fork(require("./aichat/sagas").default),
     fork(require("./newfeeds/sagas").default),
+    fork(require("./wallet/sagas").default),
   ]);
 }

@@ -42,6 +42,7 @@ import relatives from "../relatives/reducers";
 import aichat from "../aichat/reducers";
 import material from "../material/reducers";
 import newfeeds from "../newfeeds/reducers";
+import wallet from "../wallet/reducers";
 
 const rootReducer = combineReducers({
   newsReducer,
@@ -86,6 +87,7 @@ const rootReducer = combineReducers({
   relatives,
   aichat,
   newfeeds,
+  wallet,
 });
 
 // const rootReducer = (state, action) => {

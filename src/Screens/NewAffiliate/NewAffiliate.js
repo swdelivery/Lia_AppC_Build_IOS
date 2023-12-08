@@ -1,139 +1,100 @@
-import { Alert, StatusBar, StyleSheet, Text, TouchableOpacity, View, ScrollView } from 'react-native'
 import React, { memo, useEffect, useState } from 'react'
-import Header from './Components/Header'
-import Banner from './Components/Banner'
-import { BASE_COLOR, WHITE } from '../../Constant/Color'
-import BtnRanked from './Components/BtnRanked'
-import { _height, _moderateScale, _width } from '../../Constant/Scale'
-import TutMakeMoney from './Components/TutMakeMoney'
-import ListF1Btn from './Components/ListF1Btn'
-import CheckOrderBtn from './Components/CheckOrderBtn'
-import QA from './Components/QA'
-import { stylesFont } from '../../Constant/Font'
-import { IconDoubleRightArrow } from '../../Components/Icon/Icon'
-import StatusBarCustom from '../../Components/StatusBar/StatusBarCustom'
-import Animated, { FadeInRight, FadeOut } from 'react-native-reanimated'
-import ModalShowInfoRanked from './Components/ModalShowInfoRanked'
-import ModalRequireBecomeCTV from './Components/ModalRequireBecomeCTV'
-// import { ScrollView } from 'react-native-gesture-handler'
-import ModalShareCodeAffiliate from './Components/ModalShareCodeAffiliate'
-import { getPartnerLevel } from '../../Redux/Action/InfoAction'
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { useSelector } from 'react-redux'
-import store from "../../Redux/store";
-import * as ActionType from '../../Redux/Constants/ActionType';
+import { IconDoubleRightArrow } from '../../Components/Icon/Icon'
+import { BASE_COLOR, WHITE } from '../../Constant/Color'
+import { stylesFont } from '../../Constant/Font'
+import { _moderateScale } from '../../Constant/Scale'
 import { checkStepUnlockAffiliate } from '../../Redux/Action/Affiilate'
-// import ModalDemo from './Components/ModalDemo'
+import { getPartnerLevel } from '../../Redux/Action/InfoAction'
+import * as ActionType from '../../Redux/Constants/ActionType'
+import store from "../../Redux/store"
+import Banner from './Components/Banner'
+import BtnRanked from './Components/BtnRanked'
+import CheckOrderBtn from './Components/CheckOrderBtn'
+import Header from './Components/Header'
+import ListF1Btn from './Components/ListF1Btn'
+import ModalRequireBecomeCTV from './Components/ModalRequireBecomeCTV'
+import ModalShareCodeAffiliate from './Components/ModalShareCodeAffiliate'
+import ModalShowInfoRanked from './Components/ModalShowInfoRanked'
+import QA from './Components/QA'
+import TutMakeMoney from './Components/TutMakeMoney'
+import { getInfoUserReducer } from '@Redux/Selectors'
+import Animated from 'react-native-reanimated'
+import useHapticCallback from 'src/Hooks/useHapticCallback'
+import ModalFlashMsg from '@Components/ModalFlashMsg/ModalFlashMsg'
+import useVisible from 'src/Hooks/useVisible'
 
 const NewAffiliate = memo(() => {
 
+    const { infoUser } = useSelector(getInfoUserReducer);
     const [showModalInfoRanked, setShowModalInfoRanked] = useState(false)
     const [showModalRequireBecomeCTV, setShowModalRequireBecomeCTV] = useState(false)
     const [showModalShareCodeAffiliate, setShowModalShareCodeAffiliate] = useState(false)
-    const [showModalDemo, setShowModalDemo] = useState(false)
-
     const [currPartnerLevel, setCurrPartnerLevel] = useState({})
-
     const [stepUnlockAffiliate, setStepUnlockAffiliate] = useState({})
 
-    const infoUserRedux = useSelector(state => state.infoUserReducer?.infoUser)
-    // const [infoUserRedux, setInfoUserRedux] = useState({
-    //     levelCode: "BRONZE",
-    //     liaPoint: 0,
-    //     fileAvatar: {
-    //         link: "/public/partner/1697701063424aqQW.jpeg"
-    //     }
-    // })
-
-    useEffect(() => {
-
-
-    }, [])
-
-
+    const [flagRequireDoneStepToShareCode, setFlagRequireDoneStepToShareCode] = useState(false)
 
     useEffect(() => {
         _getPartnerLevel()
-        _checkStep(infoUserRedux?._id)
-
+        _checkStep(infoUser?._id)
     }, [])
 
     const _checkStep = async (id) => {
         let result = await checkStepUnlockAffiliate(id)
         if (result?.isAxiosError) return
 
-        setStepUnlockAffiliate(result?.data?.data);
+        let { isCollaburator, serviceUsed, diaryFinished, sharedDiary } = result?.data?.data
+        if (isCollaburator && serviceUsed && diaryFinished && sharedDiary) {
+            setStepUnlockAffiliate(result?.data?.data);
+        }
     }
 
     const _getPartnerLevel = async () => {
-
         let result = await getPartnerLevel();
         if (result?.isAxiosError) return
-
         store.dispatch({
             type: ActionType.SAVE_LIST_PARTNER_LEVEL,
             payload: result?.data?.data
         })
-
-        let findCurrPartnerLevel = result?.data?.data?.find(item => item?.code == infoUserRedux?.levelCode)
+        let findCurrPartnerLevel = result?.data?.data?.find(item => item?.code == infoUser?.levelCode)
         setCurrPartnerLevel(findCurrPartnerLevel)
 
     }
 
+    const _handlePressIntiveBtn = useHapticCallback(() => {
+
+        if (stepUnlockAffiliate?.isCollaburator) {
+            setShowModalShareCodeAffiliate(old => !old)
+        } else {
+            setFlagRequireDoneStepToShareCode(true)
+            setTimeout(() => {
+                setFlagRequireDoneStepToShareCode(false)
+            }, 300);
+        }
+    }, [stepUnlockAffiliate])
+
     return (
         <View style={styles.container}>
-
-            <ModalShowInfoRanked isShow={showModalInfoRanked} onHideModal={() => setShowModalInfoRanked(false)} />
-            <ModalRequireBecomeCTV isShow={showModalRequireBecomeCTV} onHideModal={() => setShowModalRequireBecomeCTV(false)} />
-
-            <ModalShareCodeAffiliate isShow={showModalShareCodeAffiliate} onHideModal={() => setShowModalShareCodeAffiliate(false)} />
-
-            {/* <View style={{
-                    width:_width,
-                    height:_height,
-                    backgroundColor:'red'
-                }}>
-
-                </View> */}
-
             <Header />
-
             <ScrollView>
                 <Banner setShowModalInfoRanked={setShowModalInfoRanked} />
-
-                {/* <Animated.View entering={FadeInRight.delay(200)}> */}
                 <BtnRanked data={currPartnerLevel} />
-                {/* </Animated.View> */}
                 <View style={{ height: _moderateScale(8) }} />
-
-                {/* <Animated.View entering={FadeInRight.delay(200)}> */}
-                <TutMakeMoney />
-                {/* </Animated.View> */}
+                <TutMakeMoney
+                    flagRequireDoneStepToShareCode={flagRequireDoneStepToShareCode}
+                />
                 <View style={{ height: _moderateScale(8) }} />
-
-                {/* <Animated.View entering={FadeInRight.delay(200)}> */}
                 <ListF1Btn />
-                {/* </Animated.View> */}
-
                 <View style={{ height: _moderateScale(8) }} />
-
-                {/* <Animated.View entering={FadeInRight.delay(200)}> */}
                 <CheckOrderBtn />
-                {/* </Animated.View> */}
-
                 <View style={{ height: _moderateScale(8) }} />
-
-                {/* <Animated.View entering={FadeInRight.delay(200)}> */}
                 <QA />
-                {/* </Animated.View> */}
-
 
                 <TouchableOpacity
                     onPress={() => {
-                        if (stepUnlockAffiliate?.isCollaburator) {
-                            setShowModalShareCodeAffiliate(old => !old)
-                        } else {
-                            setShowModalRequireBecomeCTV(old=> !old)
-                        }
+                        _handlePressIntiveBtn()
                     }}
                     style={styles.btnInvite}>
                     <Text style={[stylesFont.fontNolanBold, { fontSize: _moderateScale(16), color: WHITE }]}>
@@ -148,6 +109,10 @@ const NewAffiliate = memo(() => {
                 </TouchableOpacity>
                 <View style={{ height: 100 }} />
             </ScrollView>
+            <ModalShowInfoRanked isShow={showModalInfoRanked} onHideModal={() => setShowModalInfoRanked(false)} />
+            <ModalRequireBecomeCTV isShow={showModalRequireBecomeCTV} onHideModal={() => setShowModalRequireBecomeCTV(false)} />
+            <ModalShareCodeAffiliate isShow={showModalShareCodeAffiliate} onHideModal={() => setShowModalShareCodeAffiliate(false)} />
+
         </View>
     )
 })

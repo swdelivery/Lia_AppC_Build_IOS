@@ -178,6 +178,10 @@ import DetailPost from "@Screens/Social/DetailPost";
 import ListComments from "@Screens/Social/ListComments";
 import DoctorList from "@Screens/DoctorList";
 import SearchingHome from "@Screens/NewSearchHome/index";
+import RechargeToWallet from "@Screens/RechargeToWallet/index";
+import UpdatePartnerInfoBank from "@Screens/NewVerificationCTV/UpdatePartnerInfoBank";
+import NewVerificationCTV from "@Screens/NewVerificationCTV/NewVerificationCTV";
+import CurrCollaboratorRequest from "@Screens/NewVerificationCTV/CurrCollaboratorRequest";
 import ServiceList from "@Screens/ServiceList";
 import BranchList from "@Screens/BranchList";
 import PractitionerList from "@Screens/PractitionerList";
@@ -297,6 +301,16 @@ const RootNavigator = () => {
           />
           <rootStack.Screen
             options={{ ...TransitionPresets.SlideFromRightIOS }}
+            name={ScreenKey.NEW_VERIFICATION_CTV}
+            component={NewVerificationCTV}
+          />
+          <rootStack.Screen
+            options={{ ...TransitionPresets.SlideFromRightIOS }}
+            name={ScreenKey.CURR_COLLAB_REQUEST}
+            component={CurrCollaboratorRequest}
+          />
+          <rootStack.Screen
+            options={{ ...TransitionPresets.SlideFromRightIOS }}
             name={ScreenKey.LIST_BANK_FOR_WITHDRAW}
             component={ListBankForWithdraw}
           />
@@ -304,6 +318,11 @@ const RootNavigator = () => {
             options={{ ...TransitionPresets.SlideFromRightIOS }}
             name={ScreenKey.WITH_DRAW}
             component={WithDraw}
+          />
+          <rootStack.Screen
+            options={{ ...TransitionPresets.SlideFromRightIOS }}
+            name={ScreenKey.UPDATE_PARTNER_INFO_BANK}
+            component={UpdatePartnerInfoBank}
           />
           <rootStack.Screen
             options={{ ...TransitionPresets.SlideFromRightIOS }}
@@ -898,6 +917,11 @@ const RootNavigator = () => {
             options={{ ...TransitionPresets.SlideFromRightIOS }}
             name={ScreenKey.LIST_RANKED}
             component={ListRanked}
+          />
+          <rootStack.Screen
+            options={{ ...TransitionPresets.SlideFromRightIOS }}
+            name={ScreenKey.RECHARGE_TO_WALLET}
+            component={RechargeToWallet}
           />
 
           {/* LiA Voucher */}

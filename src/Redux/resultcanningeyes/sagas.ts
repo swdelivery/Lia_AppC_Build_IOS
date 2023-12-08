@@ -1,5 +1,5 @@
 import { all, call, put, takeLatest } from "redux-saga/effects";
-import { GET_BRANCHS, GET_DOCTORS, GET_SERVICES } from "./types";
+import { GET_BRANCHS, GET_DOCTORS, GET_EYE_LABEL, GET_SERVICES } from "./types";
 import * as actions from "./actions";
 import PartnerService from "src/Services/PartnerService";
 
@@ -36,8 +36,19 @@ function* getBranchs({ payload }) {
   }
 }
 
+function* getEyeLabel() {
+  try {
+    const data = yield call(PartnerService.getEyeLabel, {});
+    yield put(actions.getEyeLabel.success(data));
+  } catch (error: any) {
+  }
+}
+
 export default function* sagas() {
-  yield all([takeLatest(GET_SERVICES.REQUEST, getServices)]);
-  yield all([takeLatest(GET_DOCTORS.REQUEST, getDoctors)]);
-  yield all([takeLatest(GET_BRANCHS.REQUEST, getBranchs)]);
+  yield all([
+    takeLatest(GET_SERVICES.REQUEST, getServices),
+    takeLatest(GET_DOCTORS.REQUEST, getDoctors),
+    takeLatest(GET_BRANCHS.REQUEST, getBranchs),
+    takeLatest(GET_EYE_LABEL.REQUEST, getEyeLabel)
+  ]);
 }

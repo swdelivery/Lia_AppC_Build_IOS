@@ -1,29 +1,18 @@
-import React, { useRef, memo, useState, useEffect } from 'react';
-import { View, ScrollView, Image, Animated, Text, StyleSheet, TouchableOpacity, TextInput, ImageBackground, processColor } from 'react-native';
+import LiAHeader from '@Components/Header/LiAHeader'
+import Screen from '@Components/Screen'
+import Text from '@Components/Text'
+import { BG_GREY_OPACITY_2, BLACK, GREY, WHITE } from '@Constant/Color'
+import { stylesFont } from "@Constant/Font"
+import { sizeIcon } from '@Constant/Icon'
+import { _moderateScale, _widthScale } from '@Constant/Scale'
+import { getListBank } from '@Redux/Action/Affiilate'
+import { isEmpty } from 'lodash'
+import React, { useEffect, useState } from 'react'
+import { Image, ScrollView, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native'
+import { useNavigate } from 'src/Hooks/useNavigation'
 
-
-import { _moderateScale, _heightScale, _width, _widthScale } from '../../Constant/Scale';
-import { WHITE, RED, GREY, BG_GREY_OPACITY_2, BLACK_OPACITY_8, BG_GREY_OPACITY_5, BLUE_FB, BTN_PRICE, GREEN_SUCCESS, BASE_COLOR } from '../../Constant/Color';
-import { randomStringFixLengthCode } from '../../Constant/Utils';
-import { styleElement } from '../../Constant/StyleElement';
-import { sizeIcon, sizeLogo } from '../../Constant/Icon';
-import { stylesFont } from '../../Constant/Font';
-
-import ScreenKey from '../../Navigation/ScreenKey';
-import { useSelector } from 'react-redux';
-import store from "../../Redux/store";
-import * as ActionType from '../../Redux/Constants/ActionType'
-import Header from '../../Components/HeaderLoseWeight/index';
-import LinearGradient from 'react-native-linear-gradient';
-import { getListBank } from '../../Redux/Action/Affiilate';
-import { escapeRegExp, isEmpty, remove } from 'lodash';
-import slugify from 'slugify';
-import { navigation } from '../../../rootNavigation';
-import StatusBarCustom from '../../Components/StatusBar/StatusBarCustom';
-import { getBottomSpace } from 'react-native-iphone-x-helper';
-
-const index = memo((props) => {
-
+const ListBank = (props) => {
+    const { navigation } = useNavigate()
     const [listBank, setListBank] = useState([])
     const [listBankAfterFilter, setListBankAfterFilter] = useState([])
 
@@ -60,16 +49,16 @@ const index = memo((props) => {
             navigation.goBack()
             return
         }
-
-        navigation.navigate(ScreenKey.WITH_DRAW, { data: bank })
-
     }
 
     return (
-        <View style={styles.container}>
-            <StatusBarCustom bgColor={WHITE} barStyle={'dark-content'} />
-            <View style={{ height: _moderateScale(8) }} />
-            <Header title={"Chuyển tiền đến ngân hàng"} />
+        <Screen>
+            <LiAHeader
+                titleColor={BLACK}
+                barStyle={'dark-content'}
+                bg={WHITE}
+                safeTop
+                title={"Danh sách ngân hàng"} />
             <View style={styles.inputHeader}>
                 <TextInput
                     onChangeText={(c) => {
@@ -141,11 +130,12 @@ const index = memo((props) => {
                         </View>
                 }
 
-                <View style={{ height: getBottomSpace() }} />
             </ScrollView>
-        </View>
-    );
-});
+        </Screen>
+    )
+}
+
+export default ListBank
 
 
 const styles = StyleSheet.create({
@@ -180,6 +170,3 @@ const styles = StyleSheet.create({
         backgroundColor: WHITE
     }
 })
-
-
-export default index;

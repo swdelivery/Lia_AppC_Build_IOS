@@ -1,9 +1,9 @@
-import { Alert, Image, ImageBackground, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Alert, Image, ImageBackground, Linking, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useRef, useState } from 'react'
 import { _height, _heightScale, _moderateScale, _width, _widthScale } from '../../Constant/Scale'
 import Animated, { Extrapolation, interpolate, runOnJS, runOnUI, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 import RightEffectDotEye from './Components/RightEffectDotEye';
-import { Camera, useCameraDevice } from 'react-native-vision-camera'
+import { Camera, useCameraDevice, useCameraPermission } from 'react-native-vision-camera'
 import RightEffectTextEye from './Components/RightEffectTextEye';
 import RightEyeResult from './Components/RightEyeResult';
 import LeftEffectDotEye from './Components/LeftEffectDotEye';
@@ -24,12 +24,16 @@ import ImageEditor from "@react-native-community/image-editor";
 import Svg, { Polygon, Path, Rect } from 'react-native-svg';
 import ImagePicker from 'react-native-image-crop-picker';
 import { isEmpty } from 'lodash';
+import useConfirmation from 'src/Hooks/useConfirmation';
+
 
 const EYE_INDICATOR_SIZE = 10;
 
 const FaceAI = () => {
+  const { hasPermission, requestPermission } = useCameraPermission()
   const device = useCameraDevice("front");
   const refCamera = useRef(null);
+  const { showConfirmation } = useConfirmation();
 
   const tranImageX = useSharedValue(0);
   const tranImageY = useSharedValue(0);
@@ -64,6 +68,27 @@ const FaceAI = () => {
   //     path: image,
   //   });
   // });
+
+  //ASK PERMISSION CAMERA
+  useEffect(() => {
+    _checkPermission()
+  }, [])
+
+  const _checkPermission = async () => {
+    let isEnablePerCamera = hasPermission;
+    if (!isEnablePerCamera) {
+      let result = await requestPermission();
+      if (!result) {
+        showConfirmation(
+          "Cấp quyền truy cập",
+          "Hãy bật quyền truy cập máy ảnh để sử dụng chức năng này nhé?",
+          async () => {
+            await Linking.openSettings()
+          }
+        );
+      }
+    }
+  }
 
   useEffect(() => {
     if (posRightEyeX && posRightEyeY) {
@@ -189,7 +214,7 @@ const FaceAI = () => {
   const processImage = async (photo) => {
     setImageScan(photo?.path);
     let result = await scanningEyes(photo);
-    console.log({ message: result?.data?.message });
+    // console.log({ message: result?.data?.message });
     if (result?.data?.message == "SUCCESS") {
       // console.log("DONE" + result?.data?.data?.right?.coordinate_eye_origi);
       const { left, right, width, height } = result?.data?.data;

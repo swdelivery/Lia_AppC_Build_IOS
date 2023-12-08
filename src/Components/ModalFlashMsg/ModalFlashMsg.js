@@ -19,14 +19,14 @@ import { getConfigData } from '../../Redux/Action/OrtherAction';
 
 const ModalFlashMsg = props => {
 
-    
+
     return (
         <Modal style={[{
             margin: 0,
             alignItems: "center",
             // justifyContent: 'flex-end',
-            paddingBottom:_heightScale(100)
-        },props?.bottom && {justifyContent: 'flex-end'}]}
+            paddingBottom: _heightScale(100)
+        }, props?.bottom && { justifyContent: 'flex-end' }]}
             animationIn='fadeIn'
             animationOut='fadeOut'
             // animationInTiming={500}
@@ -46,23 +46,24 @@ const ModalFlashMsg = props => {
             }}>
 
             <View style={{
-                paddingHorizontal:_moderateScale(8*2),
-                paddingVertical:_moderateScale(8),
-                borderRadius:_moderateScale(8),
-                backgroundColor:Color.BLACK
+                paddingHorizontal: _moderateScale(8 * 2),
+                paddingVertical: _moderateScale(8),
+                borderRadius: _moderateScale(8),
+                backgroundColor: Color.BLACK,
+                bottom: props?.positionBottom ? props?.positionBottom : undefined
             }}>
-                <Text style={{...stylesFont.fontNolan500,fontSize:_moderateScale(14),color:Color.WHITE}}>
+                <Text style={{ ...stylesFont.fontNolan500, fontSize: _moderateScale(14), color: Color.WHITE }}>
                     {props?.data}
                 </Text>
             </View>
-           
+
 
         </Modal>
     );
 };
 
 const styles = StyleSheet.create({
-   
+
 })
 
 
