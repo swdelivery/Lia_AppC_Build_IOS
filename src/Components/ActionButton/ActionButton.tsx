@@ -2,7 +2,7 @@ import Button from "@Components/Button/Button";
 import Text from "@Components/Text";
 import { BORDER_COLOR, WHITE } from "@Constant/Color";
 import { _moderateScale, _width } from "@Constant/Scale";
-import React from "react";
+import React, { useMemo } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 

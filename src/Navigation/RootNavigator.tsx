@@ -110,7 +110,7 @@ import VideoCall from "../Screens/VideoCall/VideoCall";
 import HistoryLiaTicket from "../Screens/Affiliate/HistoryLiATicket";
 import SettingApp from "../Screens/SettingApp/SettingApp";
 import MyPersonalPage from "../Screens/MyPersonalPage/MyPersonalPage";
-import EditDiary from "../Screens/CreateNewFeed/EditDiary";
+import EditDiary from "../Screens/DiaryDetails";
 import ListDiaryByType from "../Screens/ListDiaryByType/ListDiaryByType";
 import WheelSpin from "../Screens/WheelSpin/WheelSpin";
 

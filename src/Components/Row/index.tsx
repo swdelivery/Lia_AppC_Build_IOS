@@ -1,12 +1,26 @@
 import React, { ReactNode, useMemo } from "react";
-import { View, StyleSheet, StyleProp, ViewStyle } from "react-native";
+import {
+  View,
+  StyleSheet,
+  StyleProp,
+  ViewStyle,
+  Pressable,
+} from "react-native";
 
 type Props = ViewStyle & {
   style?: StyleProp<ViewStyle>;
   children?: ReactNode;
+  onPress?: () => void;
 };
 
-export default function Row({ alignItems = "center", justifyContent = 'flex-start', children, style, ...props }: Props) {
+export default function Row({
+  alignItems = "center",
+  justifyContent = "flex-start",
+  children,
+  style,
+  onPress,
+  ...props
+}: Props) {
   const containerStyle = useMemo(() => {
     return {
       alignItems,
@@ -14,8 +28,15 @@ export default function Row({ alignItems = "center", justifyContent = 'flex-star
       ...props,
     };
   }, [alignItems, props]);
+
   return (
-    <View style={[styles.container, containerStyle, style]}>{children}</View>
+    <Pressable
+      disabled={!onPress}
+      onPress={onPress}
+      style={[styles.container, containerStyle, style]}
+    >
+      {children}
+    </Pressable>
   );
 }
 

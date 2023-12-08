@@ -1,23 +1,20 @@
+import FastImage, {
+  FastImageProps,
+  OnLoadEvent,
+  Source,
+} from "react-native-fast-image";
 import React, { ReactNode, useState, useCallback, useMemo } from "react";
-import {
-  View,
-  StyleSheet,
-  ViewStyle,
-  Image as RNImage,
-  ImageProps,
-  ImageSourcePropType,
-  ImageLoadEventData,
-  NativeSyntheticEvent,
-} from "react-native";
+import { View, StyleSheet, ViewStyle } from "react-native";
 import Fade from "@Components/Fade";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
 } from "react-native-reanimated";
 
-export interface Props extends Omit<ImageProps, "source"> {
+export type { Source };
+export interface ImageProps extends FastImageProps {
   auto?: boolean;
-  placeholder?: ImageSourcePropType;
+  placeholder?: Source | number;
   placeholderComponent?: ReactNode;
   onReady?: () => void;
   uri?: string;
@@ -34,7 +31,7 @@ function Image({
   onReady,
   uri,
   ...props
-}: Props) {
+}: ImageProps) {
   const containerStyle: any = useMemo(
     () => StyleSheet.flatten(style) || {},
     [style]
@@ -46,9 +43,9 @@ function Image({
   const [isReady, setReady] = useState(false);
 
   const handleLoad = useCallback(
-    (evt: NativeSyntheticEvent<ImageLoadEventData>) => {
+    (evt: OnLoadEvent) => {
       if (auto) {
-        const { width, height } = evt.nativeEvent.source;
+        const { width, height } = evt.nativeEvent;
         const ratio = width / height;
         if (containerStyle.width) {
           // Auto height
@@ -88,29 +85,26 @@ function Image({
         : { uri },
     [uri]
   );
-
   const mAutoStyle = useAnimatedStyle(() => {
     return autoStyle.value;
   }, []);
 
   return (
     <Animated.View style={[styles.container, style, mAutoStyle]}>
-      <RNImage
+      <FastImage
         // @ts-ignore
         source={normalisedSource}
         style={StyleSheet.absoluteFill}
         onLoad={handleLoad}
         {...props}
       />
-      {!placeholderComponent && placeholder && (
-        <Fade visible={!isReady} style={styles.placeholder}>
-          <RNImage
-            source={placeholder}
-            style={styles.placeholder}
-            resizeMode="contain"
-            {...props}
-          />
-        </Fade>
+      {!placeholderComponent && placeholder && !isReady && (
+        <FastImage
+          source={placeholder}
+          style={styles.placeholder}
+          resizeMode="contain"
+          {...props}
+        />
       )}
 
       {!!placeholderComponent && (
