@@ -625,7 +625,7 @@ PODS:
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
     - ReactCommon/turbomodule/core
-  - RNScreens (3.27.0):
+  - RNScreens (3.29.0):
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
   - RNShare (9.4.1):
@@ -643,7 +643,7 @@ PODS:
     - SDWebImage/Core (~> 5.10)
   - SocketRocket (0.6.1)
   - TOCropViewController (2.6.1)
-  - VisionCamera (3.6.12):
+  - VisionCamera (3.6.14):
     - React
     - React-callinvoker
     - React-Core
@@ -1026,7 +1026,7 @@ SPEC CHECKSUMS:
   RNPermissions: a8a54af8a71a760e9ef2b194d7349447b2432a7d
   RNReactNativeHapticFeedback: ec56a5f81c3941206fd85625fa669ffc7b4545f9
   RNReanimated: fdbaa9c964bbab7fac50c90862b6cc5f041679b9
-  RNScreens: 3c2d122f5e08c192e254c510b212306da97d2581
+  RNScreens: 3c5b9f4a9dcde752466854b6109b79c0e205dad3
   RNShare: 32e97adc8d8c97d4a26bcdd3c45516882184f8b6
   RNSVG: d00c8f91c3cbf6d476451313a18f04d220d4f396
   RNVectorIcons: 23b6e11af4aaf104d169b1b0afa7e5cf96c676ce
@@ -1034,7 +1034,7 @@ SPEC CHECKSUMS:
   SDWebImageWebPCoder: 908b83b6adda48effe7667cd2b7f78c897e5111d
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   TOCropViewController: edfd4f25713d56905ad1e0b9f5be3fbe0f59c863
-  VisionCamera: 4072a150c532927587d6f628f292f1c80ee21a98
+  VisionCamera: d8fa57fa3d5d97f3679c6a767c8382d9930e287b
   Yoga: 4c3aa327e4a6a23eeacd71f61c81df1bcdf677d5
 
 PODFILE CHECKSUM: dcc61700afda1f5194b3cc5982e1c6bcaf379299

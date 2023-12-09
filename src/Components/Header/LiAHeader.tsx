@@ -62,7 +62,7 @@ const LiAHeader = ({
           )}
         </View>
         <Column flex={4} alignItems="center">
-          <Text weight="bold" size={16} color={titleColor}>
+          <Text numberOfLines={1} weight="bold" size={16} color={titleColor}>
             {title}
           </Text>
         </Column>

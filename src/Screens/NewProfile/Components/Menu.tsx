@@ -78,6 +78,8 @@ const BtnIcon = ({ name = '', icon = null, horizontal = false, lasted = null, fl
 
   const _handleOnpress = () => {
     switch (flag) {
+      case 'takecare':
+        return navigate(ScreenKey.TAKECARE)()
       case 'lia-voucher':
         return navigate(ScreenKey.LIA_VOUCHER)()
       case 'lia-wallet':
