@@ -735,6 +735,7 @@ DEPENDENCIES:
   - RNShare (from `../node_modules/react-native-share`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
+  - SDWebImage
   - VisionCamera (from `../node_modules/react-native-vision-camera`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
@@ -1037,6 +1038,6 @@ SPEC CHECKSUMS:
   VisionCamera: d8fa57fa3d5d97f3679c6a767c8382d9930e287b
   Yoga: 4c3aa327e4a6a23eeacd71f61c81df1bcdf677d5
 
-PODFILE CHECKSUM: dcc61700afda1f5194b3cc5982e1c6bcaf379299
+PODFILE CHECKSUM: 8273f715420ef2288490e4f4cff9df3035e1e75f
 
 COCOAPODS: 1.13.0
