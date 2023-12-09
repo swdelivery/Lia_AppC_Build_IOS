@@ -69,6 +69,7 @@ export type Service = {
   isActive: boolean;
   isDelete: boolean;
   description: string;
+  avatar: FileAvatar;
   representationFileArr: FileAvatar[];
   options: ServiceOption[];
   doctorServices: {

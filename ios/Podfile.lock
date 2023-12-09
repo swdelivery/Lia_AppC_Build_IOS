@@ -1023,7 +1023,7 @@ SPEC CHECKSUMS:
   RNImageColors: 9ac05083b52d5c350e6972650ae3ba0e556466c1
   RNImageCropPicker: d9616a0cb9b72e8551ff94a7a5021fbd29050aa5
   RNInAppBrowser: e36d6935517101ccba0e875bac8ad7b0cb655364
-  RNPermissions: e08e1d1ca6b815e0e95f025a629056af24d4e93a
+  RNPermissions: a8a54af8a71a760e9ef2b194d7349447b2432a7d
   RNReactNativeHapticFeedback: ec56a5f81c3941206fd85625fa669ffc7b4545f9
   RNReanimated: fdbaa9c964bbab7fac50c90862b6cc5f041679b9
   RNScreens: 3c2d122f5e08c192e254c510b212306da97d2581
