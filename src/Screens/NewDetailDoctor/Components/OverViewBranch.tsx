@@ -11,6 +11,7 @@ import { styleElement } from "@Constant/StyleElement";
 import Icon from "@Components/Icon";
 import useBranchDetailsNavigation from "src/Hooks/navigation/useBranchDetailsNavigation";
 import { LocationIcon, PersonsIcon } from "src/SGV";
+import Column from "@Components/Column";
 
 type Props = {
   branch: Branch;
@@ -28,13 +29,23 @@ const OverViewBranch = ({ branch }: Props) => {
       <Row marginTop={8} gap={8} alignItems="flex-start">
         <Image style={styles.avatarBranch} avatar={branch?.avatar} />
         <View style={styleElement.flex}>
-          <Text style={styles.name}>{branch?.name}</Text>
-          <CountStar2
-            rating={branch?.averageRating}
-            count={branch?.reviewCount}
-            countPartner={branch.countPartner}
-            size={12}
-          />
+          <Row alignItems="flex-start">
+            <Column flex={1}>
+              <Text style={styles.name}>{branch?.name}</Text>
+              <CountStar2
+                rating={branch?.averageRating}
+                count={branch?.reviewCount}
+                countPartner={branch.countPartner}
+                size={12}
+              />
+            </Column>
+            <TouchableOpacity onPress={handleBranchPress} style={styles.button}>
+              <Text weight="bold" color="white" size={12}>
+                {`Chi tiết`}
+              </Text>
+              <Icon name="chevron-right" size={14} color="white" />
+            </TouchableOpacity>
+          </Row>
           <Row gap={4}>
             <LocationIcon />
             <Text flex={1} size={12}>
@@ -45,12 +56,6 @@ const OverViewBranch = ({ branch }: Props) => {
             <Certificates data={branch.branchFileArr} />
           )}
         </View>
-        <TouchableOpacity onPress={handleBranchPress} style={styles.button}>
-          <Text weight="bold" color="white" size={12}>
-            {`Chi tiết`}
-          </Text>
-          <Icon name="chevron-right" size={14} color="white" />
-        </TouchableOpacity>
       </Row>
     </View>
   );

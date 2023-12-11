@@ -5,14 +5,16 @@ import Animated, {
   runOnJS,
   Keyframe,
   useSharedValue,
-} from 'react-native-reanimated';
+  FadeIn,
+  FadeOut,
+} from "react-native-reanimated";
 import {
   StyleProp,
   StyleSheet,
   View,
   ViewProps,
   ViewStyle,
-} from 'react-native';
+} from "react-native";
 
 type Props = ViewProps & {
   visible: boolean;
@@ -29,7 +31,7 @@ function Fade({
   placeholder = null,
   style,
   children,
-  duration = 300,
+  duration = 1000,
   initialScale = 0.8,
   onHidden = () => null,
   ...rest
@@ -51,58 +53,20 @@ function Fade({
     }
   }, []);
 
-  const entering = new Keyframe({
-    0: {
-      opacity: 0.3,
-      // transform: [
-      //   {
-      //     scale: initialScale,
-      //   },
-      // ],
-    },
-    100: {
-      opacity: 1,
-      // transform: [
-      //   {
-      //     scale: 1,
-      //   },
-      // ],
-    },
-  }).duration(duration);
-
-  const exiting = new Keyframe({
-    0: {
-      opacity: 1,
-      // transform: [
-      //   {
-      //     scale: 1,
-      //   },
-      // ],
-    },
-    100: {
-      opacity: 0.3,
-      // transform: [
-      //   {
-      //     scale: initialScale,
-      //   },
-      // ],
-    },
-  })
-    .duration(duration)
-    .withCallback((finished: boolean) => {
-      "worklet";
-      if (finished) {
-        runOnJS(handleClose)();
-      }
-    });
-
   return (
     <>
       {visible && (
         <Animated.View
           style={style}
-          entering={entering}
-          exiting={exiting}
+          entering={FadeIn.duration(duration)}
+          exiting={FadeOut.duration(duration).withCallback(
+            (finished: boolean) => {
+              "worklet";
+              if (finished) {
+                runOnJS(handleClose)();
+              }
+            }
+          )}
           {...rest}
         >
           {children}

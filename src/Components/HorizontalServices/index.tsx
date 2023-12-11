@@ -10,8 +10,14 @@ type Props = {
   title?: string;
   items: BranchService[];
   containerStyle?: StyleProp<ViewStyle>;
+  paddingHorizontal?: number;
 };
-const HorizontalServices = ({ items, title, containerStyle }: Props) => {
+const HorizontalServices = ({
+  items,
+  title,
+  containerStyle,
+  paddingHorizontal = 0,
+}: Props) => {
   const data = useMemo(() => {
     return items.map((item) => item.service).filter((item) => item);
   }, [items]);
@@ -22,7 +28,7 @@ const HorizontalServices = ({ items, title, containerStyle }: Props) => {
         items={data}
         title={title}
         containerStyle={containerStyle}
-        paddingHorizontal={0}
+        paddingHorizontal={paddingHorizontal}
       />
     </Fade>
   );

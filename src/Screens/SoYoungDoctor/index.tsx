@@ -17,6 +17,7 @@ import Column from "@Components/Column";
 import { useNavigate } from "src/Hooks/useNavigation";
 import ScreenKey from "@Navigation/ScreenKey";
 import { BASE_COLOR_LIGHT } from "@Constant/Color";
+import { AfterTimeoutFragment } from "@Components/AfterTimeoutFragment";
 
 const SoYoungDoctor = ({ tabIndex, isFocused }: any) => {
   const { navigate } = useNavigate();
@@ -39,7 +40,13 @@ const SoYoungDoctor = ({ tabIndex, isFocused }: any) => {
   }
 
   return (
-    <>
+    <AfterTimeoutFragment
+      placeholder={
+        <PlaceholderSkeletons count={5} itemHeight={PLACEHOLDER_HEIGHT}>
+          <Placeholder />
+        </PlaceholderSkeletons>
+      }
+    >
       <Column backgroundColor={"#F5F9FA"} paddingHorizontal={8} paddingTop={8}>
         <Pressable
           style={styles.viewAll}
@@ -65,8 +72,9 @@ const SoYoungDoctor = ({ tabIndex, isFocused }: any) => {
             <ListEmpty isLoading={isLoading} title="Không tìm thấy bác sĩ" />
           )
         }
+        removeClippedSubviews
       />
-    </>
+    </AfterTimeoutFragment>
   );
 };
 

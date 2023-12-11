@@ -106,7 +106,10 @@ const Banner = ({ doctor }: Props) => {
           <Text>Dịch vụ: {doctor?.service}</Text>
         </Row>
         {doctor?.doctorServices?.length > 0 && (
-          <HorizontalServices items={doctor.doctorServices} />
+          <HorizontalServices
+            items={doctor.doctorServices}
+            paddingHorizontal={16}
+          />
         )}
       </Column>
 

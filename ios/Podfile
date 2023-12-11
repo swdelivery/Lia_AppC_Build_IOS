@@ -92,6 +92,8 @@ target 'LiaAppC' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
   
+  pod 'SDWebImage', :modular_headers => true
+
   pod 'FirebaseCore', :modular_headers => true
   pod 'FirebaseCoreInternal', :modular_headers => true
   pod 'Firebase/Messaging', :modular_headers => true

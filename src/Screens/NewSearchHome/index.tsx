@@ -38,6 +38,7 @@ import { sizeIcon } from "../../Constant/Icon";
 import { getAllProductv2 } from "../../Redux/Action/Product";
 import AsyncStorage from "@react-native-community/async-storage";
 import Screen from "../../Components/Screen";
+import { StatusBar } from "@Components/StatusBar";
 
 const NewSearchHome = memo((props) => {
   const [keySearch, setKeySearch] = useState("");
@@ -260,6 +261,7 @@ const NewSearchHome = memo((props) => {
 
   return (
     <Screen style={styles.container} safeTop>
+      <StatusBar barStyle="dark-content" />
       <Header
         pressSearch={_pressSearch}
         setKeySearch={setKeySearch}
