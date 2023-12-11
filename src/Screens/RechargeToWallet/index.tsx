@@ -11,7 +11,7 @@ import { stylesFont } from "@Constant/Font"
 import { sizeIcon } from '@Constant/Icon'
 import { _moderateScale } from '@Constant/Scale'
 import { createPaymentRequest, uploadModule } from '@Redux/Action/BookingAction'
-import Clipboard from '@react-native-community/clipboard'
+import Clipboard from "@react-native-clipboard/clipboard";
 import { isEmpty } from 'lodash'
 import React, { useEffect, useMemo, useState } from 'react'
 import { Image, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native'
