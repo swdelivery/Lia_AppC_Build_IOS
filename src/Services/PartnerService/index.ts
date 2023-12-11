@@ -420,6 +420,12 @@ const createReactionPost = (payload: any) => {
 const getWallet = (payload: any) => {
   return axios.get(`/wallet`, {}).then(({ data }) => data);
 };
+const getHistoryWallet = (payload: any) => {
+  const query = encodeParams({
+    ...payload,
+  });
+  return axios.get(`/wallet-history?${query}`, {}).then(({ data }) => data);
+};
 
 const getEyeLabel = (payload: any) => {
   return axios.get(`/eye-label`, {}).then(({ data }) => data);
@@ -509,6 +515,7 @@ export default {
 
   // Wallet
   getWallet,
+  getHistoryWallet,
 
   // EyeLabel
   getEyeLabel,

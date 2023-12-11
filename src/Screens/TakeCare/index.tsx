@@ -1,5 +1,6 @@
 import LiAHeader from '@Components/Header/LiAHeader'
 import Screen from '@Components/Screen'
+import { FocusAwareStatusBar } from '@Components/StatusBar'
 import { getListPartnerTreatment } from '@Redux/takecare/actions'
 import { getListPartnerTreatmentState } from '@Redux/takecare/selectors'
 import React, { useCallback, useEffect } from 'react'
@@ -30,6 +31,7 @@ const TakeCare = () => {
     <Screen
       safeBottom
       backgroundColor='#F1FCF9'>
+      <FocusAwareStatusBar barStyle="light-content" />
       <LiAHeader
         safeTop
         title='Lịch sử điều trị' />

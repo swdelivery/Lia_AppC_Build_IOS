@@ -50,14 +50,14 @@ const LiAHeader = ({
       <View style={styles.header__box}>
         <View style={styleElement.flex}>
           {!backDisable && (
-            <TouchableOpacity onPress={navigation.goBack}>
-              <TouchableOpacity onPress={navigation.goBack}>
-                <BackIcon
-                  color={bg === WHITE ? BASE_COLOR : "white"}
-                  width={24}
-                  height={24}
-                />
-              </TouchableOpacity>
+            <TouchableOpacity
+              hitSlop={styleElement.hitslopSm}
+              onPress={navigation.goBack}>
+              <BackIcon
+                color={bg === WHITE ? BASE_COLOR : "white"}
+                width={24}
+                height={24}
+              />
             </TouchableOpacity>
           )}
         </View>

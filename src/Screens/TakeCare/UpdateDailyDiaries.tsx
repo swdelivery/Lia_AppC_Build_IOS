@@ -1,5 +1,6 @@
 import LiAHeader from '@Components/Header/LiAHeader'
 import Screen from '@Components/Screen'
+import { FocusAwareStatusBar } from '@Components/StatusBar'
 import Text from '@Components/Text'
 import { BASE_COLOR, BLUE, BLUE_FB, GREEN_SUCCESS, GREY, RED, WHITE } from '@Constant/Color'
 import { _moderateScale } from '@Constant/Scale'
@@ -131,6 +132,7 @@ const UpdateDailyDiaries = (props) => {
     <Screen
       safeBottom
       backgroundColor='#F1FCF9'>
+      <FocusAwareStatusBar barStyle="light-content" />
       <LiAHeader
         safeTop
         title={`${dataPartnerTreatment?.serviceName}`} />
