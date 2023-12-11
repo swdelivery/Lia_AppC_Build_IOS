@@ -1,7 +1,7 @@
 import { createReducer } from "@Redux/helper";
 import { Handler } from "@Redux/types";
 import { CommentPost, Meta } from "@typings/newfeeds";
-import { CLEAR_COMMENTS_POST, CREATE_COMMENT_POST, GET_CHILD_COMMENTS_POST, GET_COMMENTS_POST, GET_MORE_COMMENTS_POST, SELECT_COMMENT_TO_REPLY } from "../types";
+import { CLEAR_COMMENTS_POST, CREATE_COMMENT_POST, CREATE_REACTION_COMMENT, GET_CHILD_COMMENTS_POST, GET_COMMENTS_POST, GET_MORE_COMMENTS_POST, SELECT_COMMENT_TO_REPLY } from "../types";
 
 export type State = {
   isLoading: boolean;
@@ -83,8 +83,6 @@ const createCommentPostSuccess: Handler<State> = (state, { payload }) => {
       data: [payload?.data?.data, ...state.data]
     }
   }
-
-
 }
 
 const selectCommentToReply: Handler<State> = (state, { payload }) => {
@@ -93,6 +91,27 @@ const selectCommentToReply: Handler<State> = (state, { payload }) => {
     selectedCommentToReply: payload
   }
 }
+
+
+const createReactionCommentSuccess: Handler<State> = (state, { payload }) => {
+  let dataTemp = [...state.data]
+  let indexFind = dataTemp?.findIndex(item => item?._id == payload?.commentId);
+  if (indexFind !== -1) {
+    dataTemp[indexFind]['reactionCount'] = payload?.data?.data?.reactionCount
+  } else {
+    dataTemp?.map((itemMap, indexMap) => {
+      let indexFindCmtChild = itemMap?.childComments?.findIndex(childCmt => childCmt?._id == payload?.commentId);
+      if (indexFindCmtChild !== -1) {
+        dataTemp[indexMap]['childComments'][indexFindCmtChild]['reactionCount'] = payload?.data?.data?.reactionCount
+      }
+    })
+  }
+  return {
+    ...state,
+    data: dataTemp
+  }
+}
+
 export default createReducer(INITIAL_STATE, {
   [GET_COMMENTS_POST.REQUEST]: request,
   [GET_COMMENTS_POST.SUCCESS]: success,
@@ -101,4 +120,5 @@ export default createReducer(INITIAL_STATE, {
   [CLEAR_COMMENTS_POST]: clearCommentsPost,
   [CREATE_COMMENT_POST.SUCCESS]: createCommentPostSuccess,
   [SELECT_COMMENT_TO_REPLY]: selectCommentToReply,
+  [CREATE_REACTION_COMMENT.SUCCESS]: createReactionCommentSuccess,
 });

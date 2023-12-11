@@ -1,5 +1,5 @@
 import Column from '@Components/Column'
-import { IconLike } from '@Components/Icon/Icon'
+import { IconLike, IconLikeFilled } from '@Components/Icon/Icon'
 import Image from '@Components/Image'
 import Row from '@Components/Row'
 import Text from '@Components/Text'
@@ -9,7 +9,9 @@ import moment from 'moment'
 import React from 'react'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { useDispatch } from 'react-redux'
-import { selectCommentToReply } from '@Redux/newfeeds/actions'
+import { createReactionComment, selectCommentToReply } from '@Redux/newfeeds/actions'
+import useHapticCallback from 'src/Hooks/useHapticCallback'
+import { styleElement } from '@Constant/StyleElement'
 
 type Props = {
   data: CommentPost
@@ -17,11 +19,17 @@ type Props = {
 
 const ChildComment = ({ data }: Props) => {
   const dispatch = useDispatch()
-  const { partner, content, created, parentInfo } = data
+  const { partner, content, created, parentInfo, reactionCount } = data
 
   const _handleReplyChildComment = () => {
     dispatch(selectCommentToReply(data))
   }
+  const _handleLikeComment = useHapticCallback(() => {
+    dispatch(createReactionComment.request({
+      "commentId": data?._id,
+      "type": "LIKE"
+    }))
+  }, [])
 
   return (
     <View>
@@ -74,12 +82,19 @@ const ChildComment = ({ data }: Props) => {
               <Text>Trả lời</Text>
             </TouchableOpacity>
             {/* PENDING */}
-            {/* <TouchableOpacity>
+            <TouchableOpacity
+              hitSlop={styleElement.hitslopSm}
+              onPress={_handleLikeComment}>
               <Row gap={4}>
-                <IconLike />
-                <Text>10</Text>
+                {
+                  reactionCount ?
+                    <IconLikeFilled />
+                    :
+                    <IconLike />
+                }
+                <Text>{reactionCount}</Text>
               </Row>
-            </TouchableOpacity> */}
+            </TouchableOpacity>
           </Row>
 
         </Column>

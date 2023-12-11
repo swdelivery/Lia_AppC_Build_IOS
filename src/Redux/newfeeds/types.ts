@@ -18,3 +18,4 @@ export const CLEAR_COMMENTS_POST = "@newfeeds/clear-comments-post"
 // CREATE
 export const CREATE_COMMENT_POST = generateActionTypes("@newfeeds/create-commnent-post");
 export const CREATE_REACTION_POST = generateActionTypes("@newfeeds/create-reaction-post");
+export const CREATE_REACTION_COMMENT = generateActionTypes("@newfeeds/create-reaction-comment");

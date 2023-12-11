@@ -19,6 +19,7 @@ import {
 import EachComment from './Components/EachComment/EachComment'
 import LoadingIndicator from '@Components/LoadingIndicator/LoadingIndicator'
 import EmptyResultData from '@Components/LoadingIndicator/EmptyResultData'
+import { FocusAwareStatusBar } from '@Components/StatusBar'
 
 const ListComments = (props) => {
   const { navigation } = useNavigate()
@@ -156,6 +157,7 @@ const ListComments = (props) => {
         safeBottom
         safeTop
         style={styles.container}>
+        <FocusAwareStatusBar barStyle="dark-content" />
         <Row
           justifyContent='space-between'
           padding={8 * 2}>

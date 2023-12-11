@@ -417,6 +417,10 @@ const createReactionPost = (payload: any) => {
   return axios.post(`/partner-post-reaction`, payload).then(({ data }) => data);
 };
 
+const createReactionComment = (payload: any) => {
+  return axios.post(`/partner-comment-reaction`, payload).then(({ data }) => data);
+};
+
 const getWallet = (payload: any) => {
   return axios.get(`/wallet`, {}).then(({ data }) => data);
 };
@@ -512,6 +516,7 @@ export default {
   getChildCommentsPost,
   createCommentPost,
   createReactionPost,
+  createReactionComment,
 
   // Wallet
   getWallet,

@@ -4,6 +4,7 @@ import { CommentPost, PartnerDiary, Post } from "@typings/newfeeds";
 import {
   CLEAR_COMMENTS_POST,
   CREATE_COMMENT_POST,
+  CREATE_REACTION_COMMENT,
   CREATE_REACTION_POST,
   GET_CHILD_COMMENTS_POST,
   GET_COMMENTS_POST,
@@ -20,6 +21,12 @@ export const createReactionPost = generateActionsGroup<
   any,
   ApiResponse<CommentPost>
 >(CREATE_REACTION_POST);
+
+export const createReactionComment = generateActionsGroup<
+  any,
+  // NOTICE HERE
+  ApiResponse<any>
+>(CREATE_REACTION_COMMENT);
 
 // GET
 export const getListPosts = generateActionsGroup<
