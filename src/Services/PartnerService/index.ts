@@ -420,9 +420,26 @@ const createReactionPost = (payload: any) => {
 const getWallet = (payload: any) => {
   return axios.get(`/wallet`, {}).then(({ data }) => data);
 };
+const getHistoryWallet = (payload: any) => {
+  const query = encodeParams({
+    ...payload,
+  });
+  return axios.get(`/wallet-history?${query}`, {}).then(({ data }) => data);
+};
 
 const getEyeLabel = (payload: any) => {
   return axios.get(`/eye-label`, {}).then(({ data }) => data);
+};
+
+// Takecare
+const getListPartnerTreatment = (payload: any) => {
+  return axios.get(`/partners/treatment-detail`, {}).then(({ data }) => data);
+};
+const getListPostoperative = (payload: any) => {
+  return axios.get(`/daily-diary/${payload?.idPartnerTreatment}/postoperative`, {}).then(({ data }) => data);
+};
+const updateDailyDiary = (payload: any) => {
+  return axios.put(`/daily-diary/${payload?.id}`, payload?.data).then(({ data }) => data);
 };
 
 export default {
@@ -498,7 +515,13 @@ export default {
 
   // Wallet
   getWallet,
+  getHistoryWallet,
 
   // EyeLabel
-  getEyeLabel
+  getEyeLabel,
+
+  // Takecare
+  getListPartnerTreatment,
+  getListPostoperative,
+  updateDailyDiary
 };

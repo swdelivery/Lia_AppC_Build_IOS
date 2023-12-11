@@ -84,12 +84,13 @@ const EachComment = ({ data }: Props) => {
               onPress={_handleSelectCommentToReply}>
               <Text>Trả lời</Text>
             </TouchableOpacity>
-            <TouchableOpacity>
+            {/* PENDING */}
+            {/* <TouchableOpacity>
               <Row gap={4}>
                 <IconLike />
                 <Text>10</Text>
               </Row>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </Row>
           {
             childComments?.length > 0 ?

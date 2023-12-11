@@ -19,4 +19,20 @@ export type Wallet = {
 
 } & Timestamp;
 
+export type PaymentWallet = {
+  money: number;
+  isDelete: boolean;
+  _id: string;
+  walletId: string;
+  paymentFor: string;
+  status: string;
+  userCreate: string;
+  detail: any;
+  created: string;
+  updated: string;
+  __v: number;
+  receivedFrom: any;
+  id: string;
+}
+
 

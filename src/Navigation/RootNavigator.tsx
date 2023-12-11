@@ -186,6 +186,8 @@ import ServiceList from "@Screens/ServiceList";
 import BranchList from "@Screens/BranchList";
 import PractitionerList from "@Screens/PractitionerList";
 import MaterialList from "@Screens/MaterialList";
+import TakeCare from "@Screens/TakeCare";
+import UpdateDailyDiaries from "@Screens/TakeCare/UpdateDailyDiaries";
 
 const rootStack = createStackNavigator();
 
@@ -1021,6 +1023,16 @@ const RootNavigator = () => {
             name={ScreenKey.SEARCHING_HOME}
             component={SearchingHome}
           />
+
+          {/* TAKE CARE AFTER TREATMENT */}
+          <rootStack.Screen
+            options={{ ...TransitionPresets.SlideFromRightIOS }}
+            name={ScreenKey.TAKECARE}
+            component={TakeCare} />
+          <rootStack.Screen
+            options={{ ...TransitionPresets.SlideFromRightIOS }}
+            name={ScreenKey.UPDATE_DAILY_DIARIES}
+            component={UpdateDailyDiaries} />
 
           <rootStack.Screen
             options={{

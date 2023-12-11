@@ -17,6 +17,8 @@ import {
   SendIcon,
 } from "src/SGV"
 import EachComment from './Components/EachComment/EachComment'
+import LoadingIndicator from '@Components/LoadingIndicator/LoadingIndicator'
+import EmptyResultData from '@Components/LoadingIndicator/EmptyResultData'
 
 const ListComments = (props) => {
   const { navigation } = useNavigate()
@@ -27,7 +29,12 @@ const ListComments = (props) => {
   let RefTextInput = useRef(null)
   const [valueComment, setValueComment] = useState('')
 
-  const { data: dataListComments, selectedCommentToReply, meta: metaListCommentsPost } = useSelector(getListCommentsState)
+  const {
+    data: dataListComments,
+    selectedCommentToReply,
+    meta: metaListCommentsPost,
+    isLoading: isLoadingListComments
+  } = useSelector(getListCommentsState)
   const { data: { reactionCount } } = useSelector(getInfoPostState)
 
   useEffect(() => {
@@ -82,7 +89,12 @@ const ListComments = (props) => {
     }
     // Check if exist selectedCommentToReply 
     if (!isEmpty(selectedCommentToReply)) {
-      dataFetch['parentId'] = selectedCommentToReply?._id
+      if (selectedCommentToReply?.parentId) {
+        dataFetch['parentId'] = selectedCommentToReply?.parentId
+        dataFetch['replyFor'] = selectedCommentToReply?.partner?._id
+      } else {
+        dataFetch['parentId'] = selectedCommentToReply?._id
+      }
     }
     dispatch(createCommentPost.request(dataFetch))
     setValueComment('')
@@ -159,13 +171,20 @@ const ListComments = (props) => {
         </Row>
         <HorizontalLine
           style={{ backgroundColor: BORDER_COLOR }} />
-        <FlatList
-          contentContainerStyle={styles.containerFlatlist}
-          data={dataListComments}
-          renderItem={_renderItem}
-          keyExtractor={(item, index) => item?._id.toString()}
-          ListFooterComponent={_renderFooterFlatlist}
-          onEndReachedThreshold={1} />
+        {
+          isLoadingListComments ?
+            <LoadingIndicator />
+            :
+            <FlatList
+              contentContainerStyle={styles.containerFlatlist}
+              data={dataListComments}
+              renderItem={_renderItem}
+              keyExtractor={(item, index) => item?._id.toString()}
+              ListFooterComponent={_renderFooterFlatlist}
+              ListEmptyComponent={<EmptyResultData />}
+              onEndReachedThreshold={1} />
+        }
+
         <View style={styles.containerInput}>
           {
             selectedCommentToReply ?
@@ -228,7 +247,8 @@ const styles = StyleSheet.create({
   containerFlatlist: {
     gap: 8 * 2,
     paddingTop: 8 * 2,
-    paddingBottom: 50
+    paddingBottom: 50,
+    flexGrow: 1
   },
   textInput: {
     margin: 0,

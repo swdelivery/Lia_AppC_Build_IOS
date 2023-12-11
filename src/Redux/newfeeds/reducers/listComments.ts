@@ -94,6 +94,7 @@ const selectCommentToReply: Handler<State> = (state, { payload }) => {
   }
 }
 export default createReducer(INITIAL_STATE, {
+  [GET_COMMENTS_POST.REQUEST]: request,
   [GET_COMMENTS_POST.SUCCESS]: success,
   [GET_MORE_COMMENTS_POST.SUCCESS]: getMoreCommentsPostSuccess,
   [GET_CHILD_COMMENTS_POST.SUCCESS]: getChildCommentSuccess,
