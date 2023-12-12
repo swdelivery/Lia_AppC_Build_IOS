@@ -12,7 +12,7 @@ export default function useRecomendServices(service: Service) {
     }
     getData({
       codeGroup: {
-        nin: service.codeGroup,
+        notIn: service.codeGroup,
       },
     });
   }, [...(service?.codeGroup || [])]);
