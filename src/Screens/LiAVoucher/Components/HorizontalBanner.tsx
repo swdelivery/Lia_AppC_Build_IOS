@@ -188,10 +188,10 @@ const HorizontalBanner = ({
             // setIsDragingBanner(false)
           }}
           onMomentumScrollEnd={(event) => {
-            console.log({
-              contentOffsetX: event.nativeEvent.contentOffset.x,
-              layoutMeasurementWidth: event.nativeEvent.layoutMeasurement.width,
-            });
+            // console.log({
+            //   contentOffsetX: event.nativeEvent.contentOffset.x,
+            //   layoutMeasurementWidth: event.nativeEvent.layoutMeasurement.width,
+            // });
             const index =
               event.nativeEvent.contentOffset.x /
               event.nativeEvent.layoutMeasurement.width;

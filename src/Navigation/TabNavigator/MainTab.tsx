@@ -107,7 +107,7 @@ const MainTab = (props) => {
         }}
         name={ScreenKey.TAB_TIMELINE}
         component={TimelineTab}
-        // component={infoUser?._id ? TimelineTab : () => <></>}
+      // component={infoUser?._id ? TimelineTab : () => <></>}
       />
 
       {/* <Tab.Screen
