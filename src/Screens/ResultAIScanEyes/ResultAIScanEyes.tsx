@@ -56,9 +56,7 @@ const ResultAIScanEyes = (props) => {
     if (!isEmpty(scanningResult) && !isEmpty(imageScan)) {
       dispatch(
         getServicesByResEye.request({
-          condition: {
-            codeGroup: { equal: "MAT" },
-          },
+          codeGroup: { equal: "MAT" },
         })
       );
       dispatch(getDoctorsByResEye.request({}));
