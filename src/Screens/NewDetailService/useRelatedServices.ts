@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import useApiPaging from "src/Hooks/services/useApiPaging";
 import PartnerService from "src/Services/PartnerService";
 
-export default function useRecomendServices(service: Service) {
+export default function useRelatedServices(service: Service) {
   const { data, getData } = useApiPaging(PartnerService.getServices);
 
   useEffect(() => {
@@ -12,7 +12,7 @@ export default function useRecomendServices(service: Service) {
     }
     getData({
       codeGroup: {
-        nin: service.codeGroup,
+        in: service.codeGroup,
       },
     });
   }, [...(service?.codeGroup || [])]);

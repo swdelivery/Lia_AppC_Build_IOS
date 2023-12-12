@@ -45,7 +45,9 @@ const getServices = (
   pageSize = configs.apiPageSize
 ): Promise<ApiResponse<Service[]>> => {
   const query = encodeParams({
-    ...payload,
+    condition: {
+      ...payload,
+    },
     sort: {
       orderNumber: -1,
     },
@@ -67,8 +69,8 @@ const getServicesFilter = (payload: any) => {
     .then(({ data }) => data.data);
 };
 
-const getServiceDetails = (serviceId: string): Promise<any> =>
-  axios.get(`/service/${serviceId}`).then(({ data }) => data.data);
+const getServiceDetails = (serviceId: string): Promise<Service> =>
+  axios.get(`/service/${serviceId}`).then(({ data }) => (data?.data ?? [])[0]);
 
 const getBranchList = (
   payload: any,

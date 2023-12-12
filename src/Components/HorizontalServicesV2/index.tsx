@@ -72,10 +72,7 @@ function ServiceItem({
       style={styles.itemContainer}
       onPress={trigger(onPress)}
     >
-      <Image
-        style={styles.serviceImage}
-        avatar={first(item?.representationFileArr)}
-      />
+      <Image style={styles.serviceImage} avatar={item.avatar} />
       <Text color={"black"} size={10} weight="bold" numberOfLines={1} top={4}>
         {item?.name}
       </Text>

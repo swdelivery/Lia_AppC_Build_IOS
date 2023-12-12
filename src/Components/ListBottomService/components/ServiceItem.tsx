@@ -25,7 +25,7 @@ export default function ServiceItem({ item, onPress }: Props) {
     <TouchableOpacity onPress={trigger(onPress)} style={styles.card}>
       <View style={styles.itemContent}>
         <View>
-          <Image style={styles.image} avatar={item?.representationFileArr[0]} />
+          <Image style={styles.image} avatar={item.avatar} />
         </View>
         <View style={styles.itemInfo}>
           <Text numberOfLines={1} size={12} weight="bold">

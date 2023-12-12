@@ -71,6 +71,7 @@ export type Service = {
   description: string;
   avatar: FileAvatar;
   representationFileArr: FileAvatar[];
+  representationServiceFileArr: FileAvatar[];
   options: ServiceOption[];
   doctorServices: {
     _id: string;

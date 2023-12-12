@@ -5,4 +5,5 @@ export type Condition =
   | {
       like: string;
     }
-  | { in: string[] };
+  | { in: string[] }
+  | { nin: string[] };

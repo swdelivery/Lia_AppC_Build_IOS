@@ -40,7 +40,7 @@ export default function ServiceItem({ item }: Props) {
       style={styles.card}
     >
       <View style={styles.content}>
-        <Image style={styles.image} avatar={item.representationFileArr[0]} />
+        <Image style={styles.image} avatar={item.avatar} />
         <Column style={styles.info}>
           <Column height={35}>
             <Text numberOfLines={2} size={12} weight="bold">

@@ -29,17 +29,18 @@ import Animated, {
 import { getImageAvataUrl } from "src/utils/avatar";
 import ScreenKey from "@Navigation/ScreenKey";
 import { useNavigate } from "src/Hooks/useNavigation";
+import RecommendServices from "./Components/RecommendServices";
+import RelatedServices from "./Components/RelatedServices";
 
 const DetailService = () => {
   const { navigate } = useNavigate();
   const { service } = useServiceDetailsContext();
   const { data: reviews, meta: reviewsMeta } = useServiceReviews(service);
-  const recomendServices = useRecomendServices(service);
   const { secondColor, primaryColor, getColors } = useImageColors();
 
   useEffect(() => {
-    if (service?.representationFileArr?.length) {
-      getColors(getImageAvataUrl(service.representationFileArr[0]));
+    if (service?.representationServiceFileArr?.length) {
+      getColors(getImageAvataUrl(service.representationServiceFileArr[0]));
     }
   }, [service]);
 
@@ -52,7 +53,7 @@ const DetailService = () => {
         { duration: 500 }
       ),
     };
-  });  
+  });
 
   return (
     <Screen safeBottom safeTop style={styles.container}>
@@ -65,7 +66,7 @@ const DetailService = () => {
       <AfterTimeoutFragment placeholder={<Placeholder />} timeout={1000}>
         <ScrollView style={styles.content}>
           <HorizonListImage
-            images={service?.representationFileArr ?? []}
+            images={service?.representationServiceFileArr ?? []}
             getColors={getColors}
           />
           <View style={styles.body}>
@@ -92,15 +93,11 @@ const DetailService = () => {
           />
           {/* <Tutorial /> */}
           <MainInfoService service={service} />
-          <HorizontalServicesV2
-            title="Có thể bạn sẽ quan tâm"
-            items={recomendServices}
-            containerStyle={styles.recomendService}
-          />
+          <RelatedServices service={service} />
           <Feedback reviews={reviews} />
 
           <Spacer top={16} />
-          <ListBottomService services={recomendServices} />
+          <RecommendServices service={service} />
         </ScrollView>
         <BottomAction service={service} />
       </AfterTimeoutFragment>
@@ -169,13 +166,5 @@ const styles = StyleSheet.create({
     right: 0,
     top: 0,
     height: 100,
-  },
-  recomendService: {
-    marginHorizontal: 8,
-    backgroundColor: "white",
-    paddingHorizontal: 16,
-    marginTop: 8,
-    paddingVertical: 8,
-    borderRadius: 8,
   },
 });

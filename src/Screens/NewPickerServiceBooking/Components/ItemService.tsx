@@ -40,7 +40,7 @@ const ItemService = ({ isSelected, data, onToggleSelection }: Props) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={_handleGoDetailService} style={styles.item}>
-        <Image style={styles.avatar} avatar={data?.representationFileArr[0]} />
+        <Image style={styles.avatar} avatar={data?.avatar} />
         <View style={styles.item__body}>
           <Column padding={8}>
             <Column gap={0}>
