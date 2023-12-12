@@ -13,6 +13,7 @@ import {
   getDoctorListByBranchCode,
   getPractitionerListByBranchCode,
   selectBranch,
+  selectCoupon,
   selectDate,
   selectDoctor,
   selectPractitioner,
@@ -29,6 +30,7 @@ import { TimeForBooking } from "@typings/booking";
 import moment from "moment";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import {
+  Alert,
   KeyboardAvoidingView,
   Platform,
   StatusBar,
@@ -60,6 +62,7 @@ import { useNavigationParams } from "src/Hooks/useNavigation";
 import { getBranchList } from "@Redux/branch/actions";
 import { AfterTimeoutFragment } from "@Components/AfterTimeoutFragment";
 import ModalScrollPicker from "@Components/ModalBottom/ModalScrollPicker";
+import { formatMonney } from "@Constant/Utils";
 
 const listTimeForBooking: TimeForBooking[] = [
   {
@@ -128,9 +131,9 @@ type ScreenK = typeof ScreenKey.CREATE_BOOKING;
 
 const NewCreateBooking = () => {
   const dispatch = useDispatch();
-  const { doctor, branch, practitioner, service } = useNavigationParams<ScreenK>();
+  const { doctor, branch, practitioner, service, coupon } = useNavigationParams<ScreenK>();
   const scrollY = useSharedValue(0);
-  const { dataBranch, dataDoctor, dataPractitioner } = useSelector(
+  const { dataBranch, dataDoctor, dataPractitioner, dataServices } = useSelector(
     getDataCreateBookingState
   );
 
@@ -172,6 +175,18 @@ const NewCreateBooking = () => {
       dispatch(selectPractitioner(practitioner));
     }
   }, [practitioner]);
+
+  useEffect(() => {
+    if (coupon?._id) {
+      console.log({ coupon, dataServices });
+      let totalPriceSerive = dataServices?.reduce((sum, { price }) => sum + price, 0);
+      if (totalPriceSerive == 0) return;
+      if (totalPriceSerive < coupon?.coupon?.minRequiredOrderAmount) {
+        return Alert.alert(`Bạn cần đạt giá trị đơn hàng tối thiểu ${formatMonney(coupon?.coupon?.minRequiredOrderAmount)} để sử dụng Voucher này`)
+      }
+      dispatch(selectCoupon(coupon))
+    }
+  }, [coupon])
 
   useEffect(() => {
     if (dataBranch?.code) {
