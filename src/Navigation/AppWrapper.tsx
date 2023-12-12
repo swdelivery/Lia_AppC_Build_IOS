@@ -19,6 +19,7 @@ import ActionSheetIcon from "@Components/ModalBottom/ActionSheetIcon";
 import RootNavigator from "./RootNavigator";
 import Toast from "react-native-toast-message";
 import toastConfig from "@Components/BottomToast";
+import RightNoti from "@Components/RightNoti/RightNoti";
 
 const AppWrapper = (props) => {
   const reduxAuth = useSelector((state) => state.authReducer);
@@ -249,6 +250,7 @@ const AppWrapper = (props) => {
       <ModalRequireLogin />
       <ActionSheetIcon />
       <Toast config={toastConfig} position="bottom" bottomOffset={60} />
+      <RightNoti />
     </>
   );
 };

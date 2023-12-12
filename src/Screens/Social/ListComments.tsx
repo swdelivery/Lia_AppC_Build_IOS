@@ -19,6 +19,7 @@ import {
 import EachComment from './Components/EachComment/EachComment'
 import LoadingIndicator from '@Components/LoadingIndicator/LoadingIndicator'
 import EmptyResultData from '@Components/LoadingIndicator/EmptyResultData'
+import { FocusAwareStatusBar } from '@Components/StatusBar'
 
 const ListComments = (props) => {
   const { navigation } = useNavigate()
@@ -35,7 +36,7 @@ const ListComments = (props) => {
     meta: metaListCommentsPost,
     isLoading: isLoadingListComments
   } = useSelector(getListCommentsState)
-  const { data: { reactionCount } } = useSelector(getInfoPostState)
+  const { data } = useSelector(getInfoPostState)
 
   useEffect(() => {
 
@@ -156,13 +157,14 @@ const ListComments = (props) => {
         safeBottom
         safeTop
         style={styles.container}>
+        <FocusAwareStatusBar barStyle="dark-content" />
         <Row
           justifyContent='space-between'
           padding={8 * 2}>
           <Row gap={8}>
             <IconLikeFilled />
             <Text>
-              {reactionCount} lượt yêu thích bài viết
+              {data?.reactionCount} lượt yêu thích bài viết
             </Text>
           </Row>
           <TouchableOpacity onPress={navigation.goBack}>

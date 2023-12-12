@@ -72,6 +72,7 @@ export type CommentPost = {
   partner: any;
   id: string;
   parentInfo: any;
+  reactionCount: number;
 
   // Local
   childComments: any;

@@ -419,6 +419,10 @@ const createReactionPost = (payload: any) => {
   return axios.post(`/partner-post-reaction`, payload).then(({ data }) => data);
 };
 
+const createReactionComment = (payload: any) => {
+  return axios.post(`/partner-comment-reaction`, payload).then(({ data }) => data);
+};
+
 const getWallet = (payload: any) => {
   return axios.get(`/wallet`, {}).then(({ data }) => data);
 };
@@ -442,6 +446,14 @@ const getListPostoperative = (payload: any) => {
 };
 const updateDailyDiary = (payload: any) => {
   return axios.put(`/daily-diary/${payload?.id}`, payload?.data).then(({ data }) => data);
+};
+
+// Notification
+const getPartnerNotifications = (payload: any) => {
+  const query = encodeParams({
+    ...payload,
+  });
+  return axios.get(`/partner-notification?${query}`, {}).then(({ data }) => data);
 };
 
 export default {
@@ -514,6 +526,7 @@ export default {
   getChildCommentsPost,
   createCommentPost,
   createReactionPost,
+  createReactionComment,
 
   // Wallet
   getWallet,
@@ -525,5 +538,8 @@ export default {
   // Takecare
   getListPartnerTreatment,
   getListPostoperative,
-  updateDailyDiary
+  updateDailyDiary,
+
+  // Notification
+  getPartnerNotifications
 };

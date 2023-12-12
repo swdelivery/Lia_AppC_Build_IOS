@@ -27,7 +27,7 @@ const ItemFeed = ({ data }: Props) => {
       <DiaryBox data={data} />
       <CountCommentLike data={data} />
       <CommentLike data={data} />
-      <PreviewComment data={data} />
+      {/* <PreviewComment data={data} /> */}
 
     </Column>
   )

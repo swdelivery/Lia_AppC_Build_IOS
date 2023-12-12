@@ -5,14 +5,20 @@ import Text from '@Components/Text'
 import { BASE_COLOR, GREY, WHITE } from '@Constant/Color'
 import { sizeIcon } from '@Constant/Icon'
 import { getInfoUserReducer } from '@Redux/Selectors'
+import { openModalRightNoti } from '@Redux/modal/actions'
 import React from 'react'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 const Header = () => {
+  const dispatch = useDispatch()
   const { infoUser } = useSelector(getInfoUserReducer);
   const { top } = useSafeAreaInsets()
+
+  const _handleShowRightNoti = () => {
+    dispatch(openModalRightNoti())
+  }
 
   return (
     <View style={styles.container}>
@@ -39,7 +45,7 @@ const Header = () => {
             <IconPlusBase />
           </TouchableOpacity>
 
-          <TouchableOpacity>
+          <TouchableOpacity onPress={_handleShowRightNoti}>
             <IconAlarmWhite />
           </TouchableOpacity>
 

@@ -1,11 +1,15 @@
-import { IconLike, IconPostComment } from '@Components/Icon/Icon'
+import { IconLike, IconLikeFilled, IconPostComment } from '@Components/Icon/Icon'
 import Row from '@Components/Row'
 import Text from '@Components/Text'
 import { BG_GREY_OPACITY_5, BORDER_COLOR, GREY } from '@Constant/Color'
 import ScreenKey from '@Navigation/ScreenKey'
+import { createReactionPost } from '@Redux/newfeeds/actions'
 import { Post } from '@typings/newfeeds'
+import { isEmpty } from 'lodash'
 import React from 'react'
 import { StyleSheet, TouchableOpacity } from 'react-native'
+import { useDispatch } from 'react-redux'
+import useHapticCallback from 'src/Hooks/useHapticCallback'
 import { useNavigate } from 'src/Hooks/useNavigation'
 
 type Props = {
@@ -14,6 +18,18 @@ type Props = {
 
 const CommentBottom = ({ data }: Props) => {
   const { navigate } = useNavigate()
+  const dispatch = useDispatch()
+  const { _id } = data
+
+  const _handleLikePost = useHapticCallback(() => {
+    const dataFetch = {
+      postId: _id,
+    }
+    if (isEmpty(data?.reaction)) {
+      dataFetch['type'] = "LIKE"
+    }
+    dispatch(createReactionPost.request(dataFetch))
+  }, [])
   return (
     <Row
       gap={8 * 2}
@@ -29,9 +45,14 @@ const CommentBottom = ({ data }: Props) => {
         </Text>
       </TouchableOpacity>
       <Row gap={8 * 2}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={_handleLikePost}>
           <Row gap={8}>
-            <IconLike />
+            {
+              data?.reaction?._id ?
+                <IconLikeFilled />
+                :
+                <IconLike />
+            }
             <Text weight='bold'>{data?.reactionCount}</Text>
           </Row>
         </TouchableOpacity>
