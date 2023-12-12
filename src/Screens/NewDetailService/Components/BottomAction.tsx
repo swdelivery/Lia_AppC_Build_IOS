@@ -20,7 +20,7 @@ const BottomAction = ({ service }: Props) => {
   const { navigate } = useNavigate()
 
   const handleBooking = useRequireLoginCallback(() => {
-    navigate(ScreenKey.CREATE_BOOKING)();
+    navigate(ScreenKey.CREATE_BOOKING, { service })();
   }, [service]);
 
   const handlePhonePress = useCallback(() => { }, [service]);

@@ -46,7 +46,7 @@ const PickService = () => {
         showsHorizontalScrollIndicator={false}
       >
         {dataServices?.map((item, index) => {
-          return <ItemService key={item.id} data={item} />;
+          return <ItemService key={item?.id} data={item} />;
         })}
         <TouchableOpacity
           onPress={_handleGoPickerService}

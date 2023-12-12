@@ -5,6 +5,8 @@ import TimePicker from "@Components/TimePicker/TimePicker";
 import { WHITE } from "@Constant/Color";
 import { _heightScale } from "@Constant/Scale";
 import {
+  changeBranchListForBookingByService,
+  clearDataCreateBooking,
   clearDoctor,
   clearPractitioner,
   getBranchListForBooking,
@@ -14,6 +16,8 @@ import {
   selectDate,
   selectDoctor,
   selectPractitioner,
+  selectServices,
+  selectTime,
 } from "@Redux/booking/actions";
 import { getDataCreateBookingState } from "@Redux/booking/selectors";
 import {
@@ -23,7 +27,7 @@ import {
 import { getInsuranceListState } from "@Redux/insurance/selectors";
 import { TimeForBooking } from "@typings/booking";
 import moment from "moment";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import {
   KeyboardAvoidingView,
   Platform,
@@ -55,6 +59,7 @@ import ScreenKey from "@Navigation/ScreenKey";
 import { useNavigationParams } from "src/Hooks/useNavigation";
 import { getBranchList } from "@Redux/branch/actions";
 import { AfterTimeoutFragment } from "@Components/AfterTimeoutFragment";
+import ModalScrollPicker from "@Components/ModalBottom/ModalScrollPicker";
 
 const listTimeForBooking: TimeForBooking[] = [
   {
@@ -123,7 +128,7 @@ type ScreenK = typeof ScreenKey.CREATE_BOOKING;
 
 const NewCreateBooking = () => {
   const dispatch = useDispatch();
-  const { doctor, branch, practitioner } = useNavigationParams<ScreenK>();
+  const { doctor, branch, practitioner, service } = useNavigationParams<ScreenK>();
   const scrollY = useSharedValue(0);
   const { dataBranch, dataDoctor, dataPractitioner } = useSelector(
     getDataCreateBookingState
@@ -136,6 +141,13 @@ const NewCreateBooking = () => {
   const insurancePicker = useVisible();
 
   useEffect(() => {
+    dispatch(getInsuranceList.request())
+    return () => {
+      dispatch(clearDataCreateBooking())
+    };
+  }, [])
+
+  useEffect(() => {
     if (branch) {
       dispatch(selectBranch(branch));
     }
@@ -146,6 +158,14 @@ const NewCreateBooking = () => {
       dispatch(selectDoctor(doctor));
     }
   }, [doctor]);
+
+  useEffect(() => {
+    if (service?._id) {
+      let branches = (service?.branchServices || []).map(item => item.branch);
+      dispatch(selectBranch(branches[0]));
+      dispatch(selectServices([service]));
+    }
+  }, [service])
 
   useEffect(() => {
     if (practitioner) {
@@ -170,6 +190,14 @@ const NewCreateBooking = () => {
   const _handleConfirmPickDate = useCallback((date) => {
     dispatch(selectDate(moment(date)));
   }, []);
+  const _handleConfirmPickTime = useCallback((data) => {
+    dispatch(
+      selectTime({
+        hour: `${data?.valueInteger}`,
+        minute: `${data?.valueDecimal}`,
+      })
+    );
+  }, [])
 
   const scrollHandler = useAnimatedScrollHandler({
     onScroll: (event, ctx) => {
@@ -246,10 +274,19 @@ const NewCreateBooking = () => {
         visible={datePicker.visible}
         onClose={datePicker.hide}
       />
-      <TimePicker isShow={timePicker.visible} onHideModal={timePicker.hide} />
       <ModalListBeautyInsurance
         visible={insurancePicker.visible}
         onClose={insurancePicker.hide}
+      />
+
+      <ModalScrollPicker
+        title={"Chọn khung giờ"}
+        unit={""}
+        dataInteger={["", ...Array.from(new Array(13), (x, i) => i + 9), ""]}
+        dataDecimal={["", `00`, `15`, `30`, `45`, ""]}
+        onConfirm={_handleConfirmPickTime}
+        visible={timePicker.visible}
+        onClose={timePicker.hide}
       />
     </Screen>
   );

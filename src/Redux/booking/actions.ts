@@ -23,6 +23,7 @@ import {
   CREAT_PARTNER_BOOKING,
   CLEAR_DATA_CREATE_BOOKING,
   GetListServiceForBookingParams,
+  CHANGE_BRANCH_LIST_FOR_BOOKING_BY_SERVICE,
 } from "./types";
 import { Service } from "@typings/serviceGroup";
 import { Review } from "@typings/review";
@@ -113,4 +114,10 @@ export const clearCoupon = (data) => ({
 });
 export const clearDataCreateBooking = () => ({
   type: CLEAR_DATA_CREATE_BOOKING,
+});
+
+// CHANGE
+export const changeBranchListForBookingByService = (data) => ({
+  type: CHANGE_BRANCH_LIST_FOR_BOOKING_BY_SERVICE,
+  payload: data,
 });

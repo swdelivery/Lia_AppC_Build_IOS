@@ -116,21 +116,9 @@ function* createPartnerBooking({ payload }: BaseAction<any>) {
 export default function* sagas() {
   yield all([
     takeLatest(GET_BRANCH_LIST_FOR_BOOKING.REQUEST, getBranchListForBooking),
-  ]);
-  yield all([
-    takeLatest(
-      GET_DOCTOR_LIST_BY_BRANCH_CODE.REQUEST,
-      getDoctorListByBranchCode
-    ),
-  ]);
-  yield all([
-    takeLatest(
-      GET_PRACTITIONER_LIST_BY_BRANCH_CODE.REQUEST,
-      getPractitionerListByBranchCode
-    ),
-  ]);
-  yield all([
+    takeLatest(GET_DOCTOR_LIST_BY_BRANCH_CODE.REQUEST, getDoctorListByBranchCode),
+    takeLatest(GET_PRACTITIONER_LIST_BY_BRANCH_CODE.REQUEST, getPractitionerListByBranchCode),
     takeLatest(GET_LIST_SERVICE_FILTER.REQUEST, getListServiceFilter),
+    takeLatest(CREAT_PARTNER_BOOKING.REQUEST, createPartnerBooking)
   ]);
-  yield all([takeLatest(CREAT_PARTNER_BOOKING.REQUEST, createPartnerBooking)]);
 }

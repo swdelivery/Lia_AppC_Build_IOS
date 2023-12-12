@@ -3,6 +3,9 @@ import { generateActionTypes } from "@Redux/helper";
 
 export const OPEN_MODAL_ADD_SERVICE_TO_BOOKING = "@booking/open-modal-add-service-to-booking";
 
+// CHANGE
+export const CHANGE_BRANCH_LIST_FOR_BOOKING_BY_SERVICE = "@booking/change-branch-list-for-booking-by-service";
+
 // SELECT
 export const SELECT_BRANCH = "@booking/select-branch";
 export const SELECT_DOCTOR = "@booking/select-doctor";
