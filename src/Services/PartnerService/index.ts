@@ -446,6 +446,14 @@ const updateDailyDiary = (payload: any) => {
   return axios.put(`/daily-diary/${payload?.id}`, payload?.data).then(({ data }) => data);
 };
 
+// Notification
+const getPartnerNotifications = (payload: any) => {
+  const query = encodeParams({
+    ...payload,
+  });
+  return axios.get(`/partner-notification?${query}`, {}).then(({ data }) => data);
+};
+
 export default {
   partnerLogout,
 
@@ -528,5 +536,8 @@ export default {
   // Takecare
   getListPartnerTreatment,
   getListPostoperative,
-  updateDailyDiary
+  updateDailyDiary,
+
+  // Notification
+  getPartnerNotifications
 };

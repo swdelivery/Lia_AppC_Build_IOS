@@ -36,7 +36,7 @@ const ListComments = (props) => {
     meta: metaListCommentsPost,
     isLoading: isLoadingListComments
   } = useSelector(getListCommentsState)
-  const { data: { reactionCount } } = useSelector(getInfoPostState)
+  const { data } = useSelector(getInfoPostState)
 
   useEffect(() => {
 
@@ -164,7 +164,7 @@ const ListComments = (props) => {
           <Row gap={8}>
             <IconLikeFilled />
             <Text>
-              {reactionCount} lượt yêu thích bài viết
+              {data?.reactionCount} lượt yêu thích bài viết
             </Text>
           </Row>
           <TouchableOpacity onPress={navigation.goBack}>
