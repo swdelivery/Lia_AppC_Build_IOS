@@ -1,5 +1,5 @@
 import Avatar from "@Components/Avatar";
-import Certificate from "@Components/Certificate/Certificate";
+import Certificate, { Certificates } from "@Components/Certificate/Certificate";
 import Column from "@Components/Column";
 import HorizontalServices from "@Components/HorizontalServices";
 import Icon from "@Components/Icon";
@@ -46,9 +46,11 @@ export default function ItemPractitioner({ data }: Props) {
         <Avatar size={48} avatar={avatar} circle />
         <View style={styleElement.flex}>
           <Row justifyContent="space-between">
-            <Text numberOfLines={1} weight="bold">
-              {name}
-            </Text>
+            <Column flex={1}>
+              <Text size={12} numberOfLines={1} weight="bold">
+                {name}
+              </Text>
+            </Column>
 
             <TouchableOpacity style={styles.consultButton}>
               <Text size={12} weight="bold" color={"white"}>
@@ -72,17 +74,7 @@ export default function ItemPractitioner({ data }: Props) {
               {branch?.name}
             </Text>
           </Row>
-          {practitionerFileArr?.length > 0 && (
-            <Row marginTop={4} flexWrap={"wrap"} gap={4} marginBottom={8}>
-              {practitionerFileArr.map((item, i) => (
-                <Certificate
-                  key={item._id}
-                  item={item}
-                  backgroundColor={i % 2 === 0 ? "#414378" : "#151617"}
-                />
-              ))}
-            </Row>
-          )}
+          <Certificates data={practitionerFileArr} />
         </View>
       </Row>
       {practitionerServices?.length > 0 && (

@@ -57,9 +57,9 @@ const ItemDoctor = ({ data }: Props) => {
       <Row alignItems="flex-start" gap={8} marginBottom={8}>
         <Avatar size={48} avatar={avatar} circle />
         <Column style={styleElement.flex}>
-          <Row justifyContent="space-between">
-            <Column>
-              <Text numberOfLines={1} weight="bold">
+          <Row alignItems="flex-start" justifyContent="space-between">
+            <Column flex={1}>
+              <Text size={12} numberOfLines={1} weight="bold">
                 {name}
               </Text>
               <CountStar2

@@ -28,156 +28,43 @@ import ItemDoctor from './Components/ItemDoctor'
 import ItemMaterial from './Components/ItemMaterial'
 import ItemPractitioner from './Components/ItemPractitioner'
 import ItemService from './Components/ItemService'
+import BtnCategory from './Components/BtnCategory'
+import BtnMenu from './Components/BtnMenu'
+import BtnFilter from './Components/BtnFilter'
+import ResultService from './Components/ResultService'
+import ResultBranch from './Components/ResultBranch'
+import ResultDoctor from './Components/ResultDoctor'
+import ResultPractitioner from './Components/ResultPractitioner'
+import ResultMaterial from './Components/ResultMaterial'
+import Header from './Components/Header'
 
 const WIDTH_IMAGE_SERVICE = ((_width - 80) / 2) - 8 * 2
 
 const NewCategory = () => {
-  const dispatch = useDispatch()
-  const { data: dataService } = useSelector(getServiceListState);
-
-  const { data: dataBranch, getData: getDataBranch } = useListFilter(
-    getBranchListState,
-    getBranchList,
-  );
-  const { data: dataDoctor, getData: getDataDoctor } = useListFilter(
-    getDoctorListState,
-    getDoctorList,
-  );
-  const { data: dataPractitioner, getData: getDataPractitioner } = useListFilter(
-    getPractitionerListState,
-    getPractitionerList,
-  );
-  const { data: dataMaterial, getData: getDataMaterial } = useListFilter(
-    getMaterialListState,
-    getMaterialList,
-  );
-
-  const [categoryChoice, setCategoryChoice] = useState('service')
-
-  useEffect(() => {
-    if (categoryChoice == 'service') {
-      dispatch(getServices.request());
-    }
-    if (categoryChoice == 'branch') {
-      getDataBranch()
-    }
-    if (categoryChoice == 'doctor') {
-      getDataDoctor()
-    }
-    if (categoryChoice == 'practitioner') {
-      getDataPractitioner()
-    }
-    if (categoryChoice == 'material') {
-      getDataMaterial()
-    }
-  }, [categoryChoice])
+  const [categoryChoice, setCategoryChoice] = useState('service');
+  const [menuChoice, setMenuChoice] = useState('');
 
 
-  const BtnCategory = ({ title = '', isActive = false, flag = "" }) => {
-    const _handleChoiceCategory = () => {
-      setCategoryChoice(flag)
-    }
-    return (
-      <TouchableOpacity onPress={_handleChoiceCategory}>
-        <Text
-          color={isActive ? "#366792" : BLACK}
-          textDecorationLine={isActive ? 'underline' : 'none'}
-          weight={isActive ? 'bold' : 'regular'}>
-          {title}
-        </Text>
-      </TouchableOpacity>
-    )
+  const _handleChoiceCategory = (flag) => {
+    setCategoryChoice(flag)
   }
-  const BtnFilter = ({ title = '', isActive = false }) => {
-    return (
-      <TouchableOpacity>
-        <Text
-          color={WHITE}
-          weight={isActive ? 'bold' : 'regular'}>
-          {title}
-        </Text>
-      </TouchableOpacity>
-    )
-  }
-  const BtnMenu = ({ title = '', isActive = false }) => {
-    return (
-      <TouchableOpacity>
-        <Column
-          padding={8 * 2}
-          backgroundColor={isActive ? WHITE : BG_BEAUTY}>
-          <Text
-            size={12}
-            color={BLACK}
-            weight={isActive ? 'bold' : 'regular'}>
-            {title}
-          </Text>
-        </Column>
-      </TouchableOpacity>
-    )
-  }
-
-  const _renderItemService = ({ item, index }) => {
-    return (
-      <ItemService data={item} />
-    )
-  }
-  const _renderItemBranch = ({ item, index }) => {
-    return (
-      <ItemBranch data={item} />
-    )
-  }
-  const _renderItemDoctor = ({ item, index }) => {
-    return (
-      <ItemDoctor data={item} />
-    )
-  }
-  const _renderItemPractitioner = ({ item, index }) => {
-    return (
-      <ItemPractitioner data={item} />
-    )
-  }
-  const _renderItemMaterial = ({ item, index }) => {
-    return (
-      <ItemMaterial data={item} />
-    )
+  const _handleChoiceMenu = (flag) => {
+    setMenuChoice(flag)
   }
 
   return (
     <Screen safeBottom>
       <FocusAwareStatusBar
         barStyle="dark-content" />
-      <LiAHeader
-        bg={WHITE}
-        titleColor={"#366792"}
-        safeTop
-        title='Danh sách dịch vụ' />
-      <Row
-        marginTop={0}
-        borderRadius={8}
-        borderWidth={1}
-        borderColor={BORDER_COLOR}
-        padding={8 * 2}
-        paddingVertical={8}
-        gap={8}
-        margin={8 * 2}>
-        <IconFindGrey style={sizeIcon.md} />
-        <TextInput
-
-          style={{ flex: 1, paddingVertical: 0 }}
-          placeholder='Nhập thông tin tìm kiếm' />
-        <IconCamera
-          width={8 * 2.5}
-          height={8 * 2.5}
-          style={[{ opacity: .5 }]} />
-      </Row>
+      <Header />
       <Row
         justifyContent='space-between'
         marginHorizontal={8 * 2}>
-        <BtnCategory flag='service' isActive={categoryChoice == "service"} title='Dịch vụ' />
-        <BtnCategory flag='branch' isActive={categoryChoice == "branch"} title='Phòng khám' />
-        <BtnCategory flag='doctor' isActive={categoryChoice == "doctor"} title='Bác sĩ' />
-        <BtnCategory flag='practitioner' isActive={categoryChoice == "practitioner"} title='Chuyên viên' />
-        <BtnCategory flag='material' isActive={categoryChoice == "material"} title='Vật liệu' />
+        <BtnCategory onPress={_handleChoiceCategory} flag='service' isActive={categoryChoice == "service"} title='Dịch vụ' />
+        <BtnCategory onPress={_handleChoiceCategory} flag='branch' isActive={categoryChoice == "branch"} title='Phòng khám' />
+        <BtnCategory onPress={_handleChoiceCategory} flag='doctor' isActive={categoryChoice == "doctor"} title='Bác sĩ' />
+        <BtnCategory onPress={_handleChoiceCategory} flag='practitioner' isActive={categoryChoice == "practitioner"} title='Chuyên viên' />
+        <BtnCategory onPress={_handleChoiceCategory} flag='material' isActive={categoryChoice == "material"} title='Vật liệu' />
       </Row>
       <HorizontalLine style={styles.horizontalLine} />
       <Row
@@ -198,85 +85,49 @@ const NewCategory = () => {
           width={80}>
           <ScrollView
             showsVerticalScrollIndicator={false}>
-            <BtnMenu title='Da' />
-            <BtnMenu title='Mắt' />
-            <BtnMenu title='Mũi' />
-            <BtnMenu title='Môi' />
-            <BtnMenu title='Hàm mặt' />
-            <BtnMenu title='Nha Khoa' />
-            <BtnMenu title='Filler' />
-            <BtnMenu title='Botox' />
-            <BtnMenu title='Ngực' />
-            <BtnMenu title='Định hình cơ thể' />
-            <BtnMenu title='Cấy mỡ' />
-            <BtnMenu title='Phun xăm điêu khắc' />
-            <BtnMenu title='Vùng kín' />
-            <BtnMenu title='Triệt lông' />
-            <BtnMenu title='Cấy tóc/Chăm sóc tóc' />
-            <BtnMenu title='Spa/Massage' />
+            <BtnMenu onPress={_handleChoiceMenu} flag='da' isActive={menuChoice == 'da'} title='Da' />
+            <BtnMenu onPress={_handleChoiceMenu} flag='mat' isActive={menuChoice == 'mat'} title='Mắt' />
+            <BtnMenu onPress={_handleChoiceMenu} flag='mui' isActive={menuChoice == 'mui'} title='Mũi' />
+            <BtnMenu onPress={_handleChoiceMenu} flag='moi' isActive={menuChoice == 'moi'} title='Môi' />
+            <BtnMenu onPress={_handleChoiceMenu} flag='ham-mat' isActive={menuChoice == 'ham-mat'} title='Hàm mặt' />
+            <BtnMenu onPress={_handleChoiceMenu} flag='nha-khoa' isActive={menuChoice == 'nha-khoa'} title='Nha Khoa' />
+            <BtnMenu onPress={_handleChoiceMenu} flag='filler' isActive={menuChoice == 'filler'} title='Filler' />
+            <BtnMenu onPress={_handleChoiceMenu} flag='botox' isActive={menuChoice == 'botox'} title='Botox' />
+            <BtnMenu onPress={_handleChoiceMenu} flag='nguc' isActive={menuChoice == 'nguc'} title='Ngực' />
+            <BtnMenu onPress={_handleChoiceMenu} flag='dinh-hinh' isActive={menuChoice == 'dinh-hinh'} title='Định hình cơ thể' />
+            <BtnMenu onPress={_handleChoiceMenu} flag='cay-mo' isActive={menuChoice == 'cay-mo'} title='Cấy mỡ' />
+            <BtnMenu onPress={_handleChoiceMenu} flag='phun-xam' isActive={menuChoice == 'phun-xam'} title='Phun xăm điêu khắc' />
+            <BtnMenu onPress={_handleChoiceMenu} flag='vung-kin' isActive={menuChoice == 'vung-kin'} title='Vùng kín' />
+            <BtnMenu onPress={_handleChoiceMenu} flag='triet-long' isActive={menuChoice == 'triet-long'} title='Triệt lông' />
+            <BtnMenu onPress={_handleChoiceMenu} flag='cay-toc' isActive={menuChoice == 'cay-toc'} title='Cấy tóc/Chăm sóc tóc' />
+            <BtnMenu onPress={_handleChoiceMenu} flag='spa' isActive={menuChoice == 'spa'} title='Spa/Massage' />
           </ScrollView>
         </Column>
 
         {/* RIGHT RESULT */}
         {
           categoryChoice == 'service' ?
-            <Column
-              flex={1}
-              alignItems='center'>
-              <FlatList
-                contentContainerStyle={{ justifyContent: 'space-between', paddingVertical: 8 }}
-                renderItem={_renderItemService}
-                keyExtractor={(item, index) => item?.id}
-                numColumns={2}
-                data={dataService} />
-            </Column>
+            <ResultService />
             : <></>
         }
         {
           categoryChoice == 'branch' ?
-            <Column
-              flex={1}>
-              <FlatList
-                renderItem={_renderItemBranch}
-                keyExtractor={(item, index) => item?.id}
-                data={dataBranch} />
-            </Column>
+            <ResultBranch />
             : <></>
         }
         {
           categoryChoice == 'doctor' ?
-            <Column
-              flex={1}>
-              <FlatList
-                renderItem={_renderItemDoctor}
-                keyExtractor={(item, index) => item?.id}
-                data={dataDoctor} />
-            </Column>
+            <ResultDoctor />
             : <></>
         }
         {
           categoryChoice == 'practitioner' ?
-            <Column
-              flex={1}>
-              <FlatList
-                renderItem={_renderItemPractitioner}
-                keyExtractor={(item, index) => item?.id}
-                data={dataPractitioner} />
-            </Column>
+            <ResultPractitioner />
             : <></>
         }
         {
           categoryChoice == 'material' ?
-            <Column
-              flex={1}
-              alignItems='center'>
-              <FlatList
-                contentContainerStyle={{ justifyContent: 'space-between', paddingVertical: 8 }}
-                renderItem={_renderItemMaterial}
-                keyExtractor={(item, index) => item?.id}
-                numColumns={2}
-                data={dataMaterial} />
-            </Column>
+            <ResultMaterial />
             : <></>
         }
 

@@ -128,6 +128,7 @@ export { default as IconLikeFilled } from "../../SGV/social/likeFilled.svg";
 export { default as IconUpload } from "../../SGV/wallet/upload.svg";
 export { default as IconGallery } from "../../SGV/gallery/iconGallery.svg";
 export { default as IconCamera } from "../../SGV/gallery/iconCamera.svg";
+export { default as IconBackBlue } from "../../SGV/backBlue.svg";
 
 
 export const IconSetting = (props) => {

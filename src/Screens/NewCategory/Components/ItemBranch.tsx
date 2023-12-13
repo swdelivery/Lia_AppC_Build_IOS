@@ -41,7 +41,7 @@ const ItemBranch = ({ data }: Props) => {
         <Avatar size={48} avatar={avatar} circle />
         <View style={styleElement.flex}>
           <Row justifyContent="space-between" gap={4}>
-            <Text numberOfLines={2} weight="bold" flex={1}>
+            <Text size={12} numberOfLines={2} weight="bold" flex={1}>
               {name}
             </Text>
             <TouchableOpacity style={styles.adviseBtn}>
