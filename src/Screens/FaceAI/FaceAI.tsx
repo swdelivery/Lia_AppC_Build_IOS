@@ -49,7 +49,7 @@ const EYE_INDICATOR_SIZE = 10;
 const FaceAI = () => {
   const { hasPermission, requestPermission } = useCameraPermission();
   const device = useCameraDevice("front");
-  const refCamera = useRef(null);
+  const refCamera = useRef<Camera>(null);
   const { showConfirmation } = useConfirmation();
 
   const tranImageX = useSharedValue(0);
@@ -291,7 +291,9 @@ const FaceAI = () => {
   };
 
   const _handleTakePhoto = async () => {
-    const photo = await refCamera.current.takePhoto({});
+    const photo = await refCamera.current.takePhoto({
+      enableShutterSound: true,
+    });
     processImage(photo);
   };
 
