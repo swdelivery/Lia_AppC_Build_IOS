@@ -1,36 +1,52 @@
-import { Alert, Image, ImageBackground, Linking, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useEffect, useRef, useState } from 'react'
-import { _height, _heightScale, _moderateScale, _width, _widthScale } from '../../Constant/Scale'
-import Animated, { Extrapolation, interpolate, runOnJS, runOnUI, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
-import RightEffectDotEye from './Components/RightEffectDotEye';
-import { Camera, useCameraDevice, useCameraPermission } from 'react-native-vision-camera'
-import RightEffectTextEye from './Components/RightEffectTextEye';
-import RightEyeResult from './Components/RightEyeResult';
-import LeftEffectDotEye from './Components/LeftEffectDotEye';
-import LeftEffectTextEye from './Components/LeftEffectTextEye';
-import LeftEyeResult from './Components/LeftEyeResult';
-import { navigation } from '../../../rootNavigation';
-import ScreenKey from '../../Navigation/ScreenKey';
-import { scanningEyes } from '../../Redux/Action/FaceAiAction';
-import { getStatusBarHeight } from 'react-native-iphone-x-helper';
-import BackDropOpacity from './Components/BackDropOpacity';
-import RightCircle from './Components/RightCircle';
-import LeftCircle from './Components/LeftCircle';
+import {
+  Alert,
+  Image,
+  Linking,
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import {
+  _height,
+  _heightScale,
+  _moderateScale,
+  _width,
+  _widthScale,
+} from "../../Constant/Scale";
+import Animated, {
+  runOnJS,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from "react-native-reanimated";
+import RightEffectDotEye from "./Components/RightEffectDotEye";
+import {
+  Camera,
+  useCameraDevice,
+  useCameraPermission,
+} from "react-native-vision-camera";
+import RightEffectTextEye from "./Components/RightEffectTextEye";
+import RightEyeResult from "./Components/RightEyeResult";
+import LeftEffectDotEye from "./Components/LeftEffectDotEye";
+import LeftEffectTextEye from "./Components/LeftEffectTextEye";
+import LeftEyeResult from "./Components/LeftEyeResult";
+import { navigation } from "../../../rootNavigation";
+import ScreenKey from "../../Navigation/ScreenKey";
+import { scanningEyes } from "../../Redux/Action/FaceAiAction";
+import BackDropOpacity from "./Components/BackDropOpacity";
+import RightCircle from "./Components/RightCircle";
+import LeftCircle from "./Components/LeftCircle";
 import { convertImageCoordsToDeviceCoords } from "src/utils/common";
-import useImagePicker from "./useImagePicker";
-import DeviceInfo from "react-native-device-info";
-import { CameraRoll } from '@react-native-camera-roll/camera-roll';
-import ImageEditor from "@react-native-community/image-editor";
-import Svg, { Polygon, Path, Rect } from 'react-native-svg';
-import ImagePicker from 'react-native-image-crop-picker';
-import { isEmpty } from 'lodash';
-import useConfirmation from 'src/Hooks/useConfirmation';
-
+import { CameraRoll } from "@react-native-camera-roll/camera-roll";
+import useConfirmation from "src/Hooks/useConfirmation";
 
 const EYE_INDICATOR_SIZE = 10;
 
 const FaceAI = () => {
-  const { hasPermission, requestPermission } = useCameraPermission()
+  const { hasPermission, requestPermission } = useCameraPermission();
   const device = useCameraDevice("front");
   const refCamera = useRef(null);
   const { showConfirmation } = useConfirmation();
@@ -71,8 +87,8 @@ const FaceAI = () => {
 
   //ASK PERMISSION CAMERA
   useEffect(() => {
-    _checkPermission()
-  }, [])
+    _checkPermission();
+  }, []);
 
   const _checkPermission = async () => {
     let isEnablePerCamera = hasPermission;
@@ -83,12 +99,12 @@ const FaceAI = () => {
           "Cấp quyền truy cập",
           "Hãy bật quyền truy cập máy ảnh để sử dụng chức năng này nhé?",
           async () => {
-            await Linking.openSettings()
+            await Linking.openSettings();
           }
         );
       }
     }
-  }
+  };
 
   useEffect(() => {
     if (posRightEyeX && posRightEyeY) {
@@ -179,7 +195,10 @@ const FaceAI = () => {
         setStartResultLeftEye(true);
 
         setTimeout(() => {
-          navigation.replace(ScreenKey.RESULT_AI_SCAN_EYES, { scanningResult, imageScan });
+          navigation.replace(ScreenKey.RESULT_AI_SCAN_EYES, {
+            scanningResult,
+            imageScan,
+          });
         }, 3000);
       }, 1000);
     }
@@ -250,7 +269,6 @@ const FaceAI = () => {
       setPosLeftEyeY(valueLeftY);
 
       setScanningResult(result?.data?.data);
-
     } else {
       Alert.alert("Hình chưa hợp lệ!");
       setImageScan(null);
@@ -259,12 +277,8 @@ const FaceAI = () => {
 
   const _handleTakePhoto = async () => {
     const photo = await refCamera.current.takePhoto({});
-    await CameraRoll.save(`file://${photo.path}`, {
-      type: "photo",
-    });
     processImage(photo);
   };
-
 
   // ANIMATED
   const animScaleImage = useAnimatedStyle(() => {
@@ -283,11 +297,8 @@ const FaceAI = () => {
     };
   });
 
-
-
   return (
     <View style={{ flex: 1 }}>
-
       {/* <View
         style={{
           width: EYE_INDICATOR_SIZE,
@@ -351,7 +362,14 @@ const FaceAI = () => {
       <LeftEyeResult startRightResult={startResultLeftEye} />
 
       {imageScan ? (
-        <View style={{ width: _width, height: _height, position: 'absolute', zIndex: -1 }}>
+        <View
+          style={{
+            width: _width,
+            height: _height,
+            position: "absolute",
+            zIndex: -1,
+          }}
+        >
           <Animated.View style={animScaleImage}>
             {Platform.OS == "ios" ? (
               <Image
@@ -495,25 +513,24 @@ const FaceAI = () => {
   );
 };
 
-export default FaceAI
+export default FaceAI;
 
 const styles = StyleSheet.create({
   btnTakeImage__child: {
     width: _moderateScale(8 * 8),
     height: _moderateScale(8 * 8),
     borderRadius: _moderateScale(8 * 8) / 2,
-    backgroundColor: 'white'
+    backgroundColor: "white",
   },
   btnTakeImage: {
-    position: 'absolute',
+    position: "absolute",
     bottom: _heightScale(8 * 10),
     width: _moderateScale(8 * 10),
     height: _moderateScale(8 * 10),
     borderRadius: _moderateScale(8 * 10) / 2,
     borderWidth: 3,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderColor: 'white'
-  }
-
-})
+    justifyContent: "center",
+    alignItems: "center",
+    borderColor: "white",
+  },
+});
