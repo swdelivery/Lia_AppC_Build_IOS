@@ -42,6 +42,7 @@ import LeftCircle from "./Components/LeftCircle";
 import { convertImageCoordsToDeviceCoords } from "src/utils/common";
 import { CameraRoll } from "@react-native-camera-roll/camera-roll";
 import useConfirmation from "src/Hooks/useConfirmation";
+import useImagePicker from "./useImagePicker";
 
 const EYE_INDICATOR_SIZE = 10;
 
@@ -78,12 +79,13 @@ const FaceAI = () => {
   const [showBackDropOpacity, setShowBackDropOpacity] = useState(null);
 
   // FIXME: This code is used for testing on emulator
-  // useImagePicker((image) => {
-  //   console.log({ image });
-  //   processImage({
-  //     path: image,
-  //   });
-  // });
+  __DEV__ &&
+    useImagePicker((image) => {
+      console.log({ image });
+      processImage({
+        path: image,
+      });
+    });
 
   //ASK PERMISSION CAMERA
   useEffect(() => {
@@ -195,10 +197,23 @@ const FaceAI = () => {
         setStartResultLeftEye(true);
 
         setTimeout(() => {
-          navigation.replace(ScreenKey.RESULT_AI_SCAN_EYES, {
+          navigation.navigate(ScreenKey.RESULT_AI_SCAN_EYES, {
             scanningResult,
             imageScan,
           });
+          // Reset all state
+          setScanningResult(null);
+          setImageScan(null);
+          setStartResultRightEye(null);
+          setStartResultLeftEye(null);
+          setStartZoomLeftEye(null);
+          setStartDotLeftEye(null);
+          setStartCirlLeftEye(null);
+          setStartTextLeftEye(null);
+          setStartDotRightEye(null);
+          setStartCirlRightEye(null);
+          setStartTextRightEye(null);
+          setShowBackDropOpacity(null);
         }, 3000);
       }, 1000);
     }
