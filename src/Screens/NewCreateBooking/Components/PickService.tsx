@@ -1,5 +1,5 @@
 import { ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import Text from "@Components/Text";
 import {
   BORDER_COLOR,
@@ -17,13 +17,17 @@ import Row from "@Components/Row";
 import Icon from "@Components/Icon";
 import { navigation } from "rootNavigation";
 import ScreenKey from "@Navigation/ScreenKey";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getDataCreateBookingState } from "@Redux/booking/selectors";
 import Image from "@Components/Image";
 import { formatMonney } from "@Constant/Utils";
 import { Alert } from "react-native";
+import ButtonDelete from "@Components/ButtonDelete/ButtonDelete";
+import useHapticCallback from "src/Hooks/useHapticCallback";
+import { removeService, selectCoupon } from "@Redux/booking/actions";
 
 const PickService = () => {
+  const dispatch = useDispatch()
   const { dataServices, dataBranch } = useSelector(getDataCreateBookingState);
 
   const _handleGoPickerService = useCallback(() => {
@@ -33,6 +37,10 @@ const PickService = () => {
     navigation.navigate(ScreenKey.PICK_SERVICE_TO_BOOKING);
   }, [dataBranch?.code]);
 
+  useEffect(() => {
+    dispatch(selectCoupon(null))
+  }, [dataServices])
+
   return (
     <View style={styles.container}>
       <Text size={14} weight="bold">
@@ -41,12 +49,12 @@ const PickService = () => {
       <View style={{ height: _moderateScale(8 * 2) }} />
 
       <ScrollView
-        contentContainerStyle={{ gap: 8 * 2 }}
+        contentContainerStyle={{ gap: 8 * 2, paddingVertical: 8 * 2 }}
         horizontal
         showsHorizontalScrollIndicator={false}
       >
         {dataServices?.map((item, index) => {
-          return <ItemService key={item.id} data={item} />;
+          return <ItemService key={item?.id} data={item} />;
         })}
         <TouchableOpacity
           onPress={_handleGoPickerService}
@@ -63,31 +71,37 @@ const PickService = () => {
 export default PickService;
 
 const ItemService = ({ data }) => {
+  const dispatch = useDispatch()
+
+  const _handleRemoveService = useHapticCallback(() => {
+    dispatch(removeService(data))
+  }, [])
+
   return (
-    <Column width={_moderateScale(8 * 22)} borderRadius={8} overflow="hidden">
+    <Column width={_moderateScale(8 * 22)} borderRadius={8}>
+
+      <View style={{
+        position: 'absolute',
+        zIndex: 1,
+        top: -8,
+        right: -8
+      }}>
+        <ButtonDelete onPress={_handleRemoveService} />
+      </View>
+
       <Image style={styles.image} avatar={data?.representationFileArr[0]} />
       <Column
         borderWidth={1}
         borderTopWidth={0}
         borderColor={BORDER_COLOR}
         padding={8}
+        flex={1}
       >
         <Text weight="bold" color={GREY_FOR_TITLE}>
           {data?.name}
         </Text>
+        <View style={{ flex: 1 }} />
         <CountStar2 size={10} count={data?.reviewCount} rating={5} />
-        {/* <Column>
-                            <Text size={12}>
-                                - Gói bảo hành 1 năm
-                            </Text>
-                            <Text size={12}>
-                                - Gói chăm sóc tại nhà
-                            </Text>
-                            <Text size={12}>
-                                - Công nghệ Plasma lạnh
-                            </Text>
-                        </Column> */}
-
         <Row marginTop={2} justifyContent="space-between">
           <Text color={PRICE_ORANGE} weight="bold" size={14}>
             {formatMonney(data?.price)} VND
@@ -119,5 +133,7 @@ const styles = StyleSheet.create({
   image: {
     width: _moderateScale(8 * 22),
     height: (_moderateScale(8 * 22) * 9) / 16,
+    borderTopLeftRadius: 8,
+    borderTopRightRadius: 8
   },
 });

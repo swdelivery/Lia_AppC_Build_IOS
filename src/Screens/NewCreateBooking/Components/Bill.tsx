@@ -32,7 +32,12 @@ const Bill = () => {
                     }
                 } else if (dataCoupon?.coupon?.discountType == 'percent') {
                     if (originPrice > dataCoupon?.coupon?.minRequiredOrderAmount) {
-                        setDiscountAmount(originPrice * dataCoupon?.coupon?.discountAmount / 100)
+                        let discountAmountTemp = originPrice * dataCoupon?.coupon?.discountAmount / 100;
+                        if (discountAmountTemp > dataCoupon?.coupon?.maxAmountDiscount) {
+                            setDiscountAmount(dataCoupon?.coupon?.maxAmountDiscount)
+                        } else {
+                            setDiscountAmount(originPrice * dataCoupon?.coupon?.discountAmount / 100)
+                        }
                     }
                 }
             } else if (dataCoupon?.coupon?.couponType == 'Refund') {
@@ -42,7 +47,12 @@ const Bill = () => {
                     }
                 } else if (dataCoupon?.coupon?.discountType == 'percent') {
                     if (originPrice > dataCoupon?.coupon?.minRequiredOrderAmount) {
-                        setDiscountAmount(originPrice * dataCoupon?.coupon?.discountAmount / 100)
+                        let discountAmountTemp = originPrice * dataCoupon?.coupon?.discountAmount / 100;
+                        if (discountAmountTemp > dataCoupon?.coupon?.maxAmountDiscount) {
+                            setDiscountAmount(dataCoupon?.coupon?.maxAmountDiscount)
+                        } else {
+                            setDiscountAmount(originPrice * dataCoupon?.coupon?.discountAmount / 100)
+                        }
                     }
                 }
             }

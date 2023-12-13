@@ -1,3 +1,4 @@
+import Column from "@Components/Column";
 import { IconCalendarBase } from "@Components/Icon/Icon";
 import Row from "@Components/Row";
 import Text from "@Components/Text";
@@ -82,7 +83,6 @@ const InputTimeBooking = memo(
       setShowModalDatePicker(true);
     }, []);
     const _handleShowModalTimePicker = useCallback(() => {
-      return Alert.alert("Pending...");
       setShowModalTimePicker(true);
     }, []);
 
@@ -157,8 +157,17 @@ const InputTimeBooking = memo(
           })}
         </Row>
 
-        <Row marginTop={8 * 2} justifyContent={"space-between"}>
-          <Text color={GREY}>Chọn khung giờ</Text>
+        <Row alignItems="flex-end" marginTop={8 * 2} justifyContent={"space-between"}>
+          <Column gap={8 * 2}>
+            <Text color={GREY}>Chọn khung giờ</Text>
+            {
+              dataTime ?
+                <Text>
+                  Đã chọn: <Text color={BASE_COLOR} weight="bold"> {`${dataTime?.hour} : ${dataTime?.minute}`}</Text>
+                </Text>
+                : <></>
+            }
+          </Column>
           <TouchableOpacity onPress={_handleShowModalTimePicker}>
             <Text color={BASE_COLOR}>+ Chọn giờ khác</Text>
           </TouchableOpacity>

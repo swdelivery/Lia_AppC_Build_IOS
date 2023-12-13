@@ -205,11 +205,16 @@ const ModalScrollPicker = memo(({ visible, onClose, onConfirm, title, unit, data
             />
           </View>
 
-          <View style={styles.containerUnit}>
-            <Text weight="bold" size={40}>
-              {unit}
-            </Text>
-          </View>
+          {
+            unit ?
+              <View style={styles.containerUnit}>
+                <Text weight="bold" size={40}>
+                  {unit}
+                </Text>
+              </View>
+              : <></>
+          }
+
 
         </Row>
         <View style={{ flex: 1, justifyContent: 'flex-end' }}>

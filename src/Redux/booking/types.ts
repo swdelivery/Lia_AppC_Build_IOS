@@ -3,6 +3,9 @@ import { generateActionTypes } from "@Redux/helper";
 
 export const OPEN_MODAL_ADD_SERVICE_TO_BOOKING = "@booking/open-modal-add-service-to-booking";
 
+// CHANGE
+export const CHANGE_BRANCH_LIST_FOR_BOOKING_BY_SERVICE = "@booking/change-branch-list-for-booking-by-service";
+
 // SELECT
 export const SELECT_BRANCH = "@booking/select-branch";
 export const SELECT_DOCTOR = "@booking/select-doctor";
@@ -13,6 +16,7 @@ export const SELECT_SERVICES = "@booking/select-services";
 export const REMOVE_SERVICE = "@booking/remove-service";
 export const SELECT_COUPON = "@booking/select-coupon";
 export const SELECT_INSURANCE = "@booking/select-insurance";
+export const SET_INSURANCE = "@booking/set-insurance";
 export const SELECT_DESCRIPTION = "@booking/select-description";
 
 // CLEAR
@@ -55,3 +59,8 @@ export type GetListServiceForBookingParams = {
   practitionerCode: string;
   branchCode: string;
 };
+
+// PUT
+export const UPDATE_PARTNER_BOOKING = generateActionTypes(
+  "@booking/update-partner-booking"
+);

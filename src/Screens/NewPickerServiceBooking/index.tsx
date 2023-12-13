@@ -40,7 +40,7 @@ const NewPickerServiceBooking = () => {
     }
   );
 
-  useEffect(() => {}, [dataServices]);
+  useEffect(() => { }, [dataServices]);
 
   useEffect(() => {
     dispatch(

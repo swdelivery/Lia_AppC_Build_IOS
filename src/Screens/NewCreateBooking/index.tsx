@@ -5,15 +5,23 @@ import TimePicker from "@Components/TimePicker/TimePicker";
 import { WHITE } from "@Constant/Color";
 import { _heightScale } from "@Constant/Scale";
 import {
+  changeBranchListForBookingByService,
+  clearDataCreateBooking,
   clearDoctor,
   clearPractitioner,
   getBranchListForBooking,
   getDoctorListByBranchCode,
   getPractitionerListByBranchCode,
   selectBranch,
+  selectCoupon,
   selectDate,
+  selectDescription,
   selectDoctor,
+  selectInsurance,
   selectPractitioner,
+  selectServices,
+  selectTime,
+  setInsurance,
 } from "@Redux/booking/actions";
 import { getDataCreateBookingState } from "@Redux/booking/selectors";
 import {
@@ -23,8 +31,9 @@ import {
 import { getInsuranceListState } from "@Redux/insurance/selectors";
 import { TimeForBooking } from "@typings/booking";
 import moment from "moment";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import {
+  Alert,
   KeyboardAvoidingView,
   Platform,
   StatusBar,
@@ -55,6 +64,9 @@ import ScreenKey from "@Navigation/ScreenKey";
 import { useNavigationParams } from "src/Hooks/useNavigation";
 import { getBranchList } from "@Redux/branch/actions";
 import { AfterTimeoutFragment } from "@Components/AfterTimeoutFragment";
+import ModalScrollPicker from "@Components/ModalBottom/ModalScrollPicker";
+import { formatMonney } from "@Constant/Utils";
+import { getMyCouponsState } from "@Redux/user/selectors";
 
 const listTimeForBooking: TimeForBooking[] = [
   {
@@ -123,17 +135,87 @@ type ScreenK = typeof ScreenKey.CREATE_BOOKING;
 
 const NewCreateBooking = () => {
   const dispatch = useDispatch();
-  const { doctor, branch, practitioner } = useNavigationParams<ScreenK>();
+  const { doctor, branch, practitioner, service, coupon, type, dataBookingEdit } = useNavigationParams<ScreenK>();
   const scrollY = useSharedValue(0);
-  const { dataBranch, dataDoctor, dataPractitioner } = useSelector(
+  const { dataBranch, dataDoctor, dataPractitioner, dataServices } = useSelector(
     getDataCreateBookingState
   );
+  const listDoctorRedux = useSelector(
+    (state) => state?.bookingReducer?.listDoctor
+  );
+  const { data: listMyCoupon } = useSelector(getMyCouponsState);
+  const { data: dataListInsurance } = useSelector(getInsuranceListState);
 
   const listBranchPicker = useVisible();
   const listDoctorPicker = useVisible();
   const datePicker = useVisible();
   const timePicker = useVisible();
   const insurancePicker = useVisible();
+
+  const [isEditBooking, setIsEditBooking] = useState(false)
+  const [editBookingId, setEditBookingId] = useState(null)
+
+  useEffect(() => {
+    dispatch(getInsuranceList.request())
+    return () => {
+      dispatch(clearDataCreateBooking())
+    };
+  }, [])
+
+  useEffect(() => {
+    if (type == 'edit') {
+      setIsEditBooking(true)
+      setEditBookingId(dataBookingEdit?._id)
+      const {
+        branch,
+        assignedDoctorCode,
+        appointmentDateFinal,
+        servicesNeedCare,
+        partnerCouponIdArr,
+        insuranceCodeArr,
+        description
+      } = dataBookingEdit
+
+      dispatch(selectBranch(branch));
+      if (assignedDoctorCode) {
+        let findDoctor = listDoctorRedux?.find(item => item?.code == assignedDoctorCode);
+        if (findDoctor?.code) {
+          dispatch(selectDoctor(findDoctor))
+        }
+      }
+      if (appointmentDateFinal?.date) {
+        dispatch(selectDate(moment(appointmentDateFinal?.date)));
+        dispatch(
+          selectTime({
+            hour: `${appointmentDateFinal?.from?.hour}`,
+            minute: `${appointmentDateFinal?.from?.minute}`,
+          })
+        );
+      }
+      if (servicesNeedCare?.length > 0) {
+        dispatch(selectServices(servicesNeedCare));
+      }
+      if (partnerCouponIdArr?.length > 0) {
+        let findCoupon = listMyCoupon?.find(item => item?._id == partnerCouponIdArr[0])
+        if (findCoupon?._id) {
+          dispatch(selectCoupon(findCoupon))
+        }
+      }
+      if (insuranceCodeArr?.length > 0) {
+        let listInsuranceFinded = [];
+        dataListInsurance?.map(item => {
+          let finded = insuranceCodeArr?.find(itemFind => itemFind == item?.code)
+          if (finded) {
+            listInsuranceFinded.push(item)
+          }
+        })
+        dispatch(setInsurance(listInsuranceFinded))
+      }
+      if (description) {
+        dispatch(selectDescription(description))
+      }
+    }
+  }, [type, listMyCoupon, dataListInsurance])
 
   useEffect(() => {
     if (branch) {
@@ -148,10 +230,29 @@ const NewCreateBooking = () => {
   }, [doctor]);
 
   useEffect(() => {
+    if (service?._id) {
+      let branches = (service?.branchServices || []).map(item => item.branch);
+      dispatch(selectBranch(branches[0]));
+      dispatch(selectServices([service]));
+    }
+  }, [service])
+
+  useEffect(() => {
     if (practitioner) {
       dispatch(selectPractitioner(practitioner));
     }
   }, [practitioner]);
+
+  useEffect(() => {
+    if (coupon?._id) {
+      let totalPriceSerive = dataServices?.reduce((sum, { price }) => sum + price, 0);
+      if (totalPriceSerive == 0) return;
+      if (totalPriceSerive < coupon?.coupon?.minRequiredOrderAmount) {
+        return Alert.alert(`Bạn cần đạt giá trị đơn hàng tối thiểu ${formatMonney(coupon?.coupon?.minRequiredOrderAmount)} để sử dụng Voucher này`)
+      }
+      dispatch(selectCoupon(coupon))
+    }
+  }, [coupon])
 
   useEffect(() => {
     if (dataBranch?.code) {
@@ -170,6 +271,14 @@ const NewCreateBooking = () => {
   const _handleConfirmPickDate = useCallback((date) => {
     dispatch(selectDate(moment(date)));
   }, []);
+  const _handleConfirmPickTime = useCallback((data) => {
+    dispatch(
+      selectTime({
+        hour: `${data?.valueInteger}`,
+        minute: `${data?.valueDecimal}`,
+      })
+    );
+  }, [])
 
   const scrollHandler = useAnimatedScrollHandler({
     onScroll: (event, ctx) => {
@@ -229,7 +338,9 @@ const NewCreateBooking = () => {
             </Column>
           </Animated.ScrollView>
         </KeyboardAvoidingView>
-        <ActionBottom />
+        <ActionBottom
+          editBookingId={editBookingId}
+          isEditBooking={isEditBooking} />
       </AfterTimeoutFragment>
       <ModalListBranch
         visible={listBranchPicker.visible}
@@ -246,10 +357,19 @@ const NewCreateBooking = () => {
         visible={datePicker.visible}
         onClose={datePicker.hide}
       />
-      <TimePicker isShow={timePicker.visible} onHideModal={timePicker.hide} />
       <ModalListBeautyInsurance
         visible={insurancePicker.visible}
         onClose={insurancePicker.hide}
+      />
+
+      <ModalScrollPicker
+        title={"Chọn khung giờ"}
+        unit={""}
+        dataInteger={["", ...Array.from(new Array(13), (x, i) => i + 9), ""]}
+        dataDecimal={["", `00`, `15`, `30`, `45`, ""]}
+        onConfirm={_handleConfirmPickTime}
+        visible={timePicker.visible}
+        onClose={timePicker.hide}
       />
     </Screen>
   );

@@ -28,7 +28,7 @@ const success: Handler<State> = (state, { payload }) => {
   return {
     ...state,
     isLoading: false,
-    dataServices: payload.slice(0, 6),
+    dataServices: payload.data.slice(0, 6),
   }
 }
 

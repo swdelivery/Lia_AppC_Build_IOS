@@ -28,7 +28,7 @@ const MyVouchers = () => {
   });
 
   const handleUseCoupon = useCallback((item: MyVoucher) => {
-    navigation.navigate(ScreenKey.CREATE_BOOKING);
+    navigation.navigate(ScreenKey.CREATE_BOOKING, { coupon: item });
   }, []);
 
   const handleViewDetails = useCallback((item: MyVoucher) => {
