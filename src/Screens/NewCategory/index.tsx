@@ -80,7 +80,7 @@ const NewCategory = () => {
     return (
       <TouchableOpacity onPress={_handleChoiceCategory}>
         <Text
-          color={isActive ? BASE_COLOR : BLACK}
+          color={isActive ? "#366792" : BLACK}
           textDecorationLine={isActive ? 'underline' : 'none'}
           weight={isActive ? 'bold' : 'regular'}>
           {title}
@@ -148,7 +148,7 @@ const NewCategory = () => {
         barStyle="dark-content" />
       <LiAHeader
         bg={WHITE}
-        titleColor={BASE_COLOR}
+        titleColor={"#366792"}
         safeTop
         title='Danh sách dịch vụ' />
       <Row
@@ -184,7 +184,7 @@ const NewCategory = () => {
         paddingVertical={8}
         justifyContent='space-between'
         paddingHorizontal={8 * 2}
-        backgroundColor={BASE_COLOR}>
+        backgroundColor={"#366792"}>
         <BtnFilter isActive title='Giới thiệu' />
         <BtnFilter title='Phổ biến nhất' />
         <BtnFilter title='Giá' />
