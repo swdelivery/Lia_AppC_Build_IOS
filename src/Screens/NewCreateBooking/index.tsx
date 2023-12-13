@@ -15,10 +15,13 @@ import {
   selectBranch,
   selectCoupon,
   selectDate,
+  selectDescription,
   selectDoctor,
+  selectInsurance,
   selectPractitioner,
   selectServices,
   selectTime,
+  setInsurance,
 } from "@Redux/booking/actions";
 import { getDataCreateBookingState } from "@Redux/booking/selectors";
 import {
@@ -63,6 +66,7 @@ import { getBranchList } from "@Redux/branch/actions";
 import { AfterTimeoutFragment } from "@Components/AfterTimeoutFragment";
 import ModalScrollPicker from "@Components/ModalBottom/ModalScrollPicker";
 import { formatMonney } from "@Constant/Utils";
+import { getMyCouponsState } from "@Redux/user/selectors";
 
 const listTimeForBooking: TimeForBooking[] = [
   {
@@ -131,11 +135,16 @@ type ScreenK = typeof ScreenKey.CREATE_BOOKING;
 
 const NewCreateBooking = () => {
   const dispatch = useDispatch();
-  const { doctor, branch, practitioner, service, coupon } = useNavigationParams<ScreenK>();
+  const { doctor, branch, practitioner, service, coupon, type, dataBookingEdit } = useNavigationParams<ScreenK>();
   const scrollY = useSharedValue(0);
   const { dataBranch, dataDoctor, dataPractitioner, dataServices } = useSelector(
     getDataCreateBookingState
   );
+  const listDoctorRedux = useSelector(
+    (state) => state?.bookingReducer?.listDoctor
+  );
+  const { data: listMyCoupon } = useSelector(getMyCouponsState);
+  const { data: dataListInsurance } = useSelector(getInsuranceListState);
 
   const listBranchPicker = useVisible();
   const listDoctorPicker = useVisible();
@@ -143,12 +152,70 @@ const NewCreateBooking = () => {
   const timePicker = useVisible();
   const insurancePicker = useVisible();
 
+  const [isEditBooking, setIsEditBooking] = useState(false)
+  const [editBookingId, setEditBookingId] = useState(null)
+
   useEffect(() => {
     dispatch(getInsuranceList.request())
     return () => {
       dispatch(clearDataCreateBooking())
     };
   }, [])
+
+  useEffect(() => {
+    if (type == 'edit') {
+      setIsEditBooking(true)
+      setEditBookingId(dataBookingEdit?._id)
+      const {
+        branch,
+        assignedDoctorCode,
+        appointmentDateFinal,
+        servicesNeedCare,
+        partnerCouponIdArr,
+        insuranceCodeArr,
+        description
+      } = dataBookingEdit
+
+      dispatch(selectBranch(branch));
+      if (assignedDoctorCode) {
+        let findDoctor = listDoctorRedux?.find(item => item?.code == assignedDoctorCode);
+        if (findDoctor?.code) {
+          dispatch(selectDoctor(findDoctor))
+        }
+      }
+      if (appointmentDateFinal?.date) {
+        dispatch(selectDate(moment(appointmentDateFinal?.date)));
+        dispatch(
+          selectTime({
+            hour: `${appointmentDateFinal?.from?.hour}`,
+            minute: `${appointmentDateFinal?.from?.minute}`,
+          })
+        );
+      }
+      if (servicesNeedCare?.length > 0) {
+        dispatch(selectServices(servicesNeedCare));
+      }
+      if (partnerCouponIdArr?.length > 0) {
+        let findCoupon = listMyCoupon?.find(item => item?._id == partnerCouponIdArr[0])
+        if (findCoupon?._id) {
+          dispatch(selectCoupon(findCoupon))
+        }
+      }
+      if (insuranceCodeArr?.length > 0) {
+        let listInsuranceFinded = [];
+        dataListInsurance?.map(item => {
+          let finded = insuranceCodeArr?.find(itemFind => itemFind == item?.code)
+          if (finded) {
+            listInsuranceFinded.push(item)
+          }
+        })
+        dispatch(setInsurance(listInsuranceFinded))
+      }
+      if (description) {
+        dispatch(selectDescription(description))
+      }
+    }
+  }, [type, listMyCoupon, dataListInsurance])
 
   useEffect(() => {
     if (branch) {
@@ -178,7 +245,6 @@ const NewCreateBooking = () => {
 
   useEffect(() => {
     if (coupon?._id) {
-      console.log({ coupon, dataServices });
       let totalPriceSerive = dataServices?.reduce((sum, { price }) => sum + price, 0);
       if (totalPriceSerive == 0) return;
       if (totalPriceSerive < coupon?.coupon?.minRequiredOrderAmount) {
@@ -272,7 +338,9 @@ const NewCreateBooking = () => {
             </Column>
           </Animated.ScrollView>
         </KeyboardAvoidingView>
-        <ActionBottom />
+        <ActionBottom
+          editBookingId={editBookingId}
+          isEditBooking={isEditBooking} />
       </AfterTimeoutFragment>
       <ModalListBranch
         visible={listBranchPicker.visible}

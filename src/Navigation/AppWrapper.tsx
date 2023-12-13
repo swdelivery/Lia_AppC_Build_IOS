@@ -34,7 +34,7 @@ const AppWrapper = (props) => {
     if (reduxAuth.isLoggedIn == true) {
       dispatch(
         getListDoctorForPartner({
-          limit: 5,
+          limit: 1000,
           sort: {
             orderNumber: -1,
           },

@@ -16,6 +16,7 @@ import {
   SELECT_PRACTITIONER,
   SELECT_SERVICES,
   SELECT_TIME,
+  SET_INSURANCE,
 } from "../types";
 import { Branch } from "@typings/branch";
 import { Doctor } from "@typings/doctor";
@@ -127,6 +128,12 @@ const selectInsurance: Handler<State> = (state, { payload }) => {
     dataInsurance: dataTemp,
   };
 };
+const setInsurance: Handler<State> = (state, { payload }) => {
+  return {
+    ...state,
+    dataInsurance: payload,
+  };
+};
 const selectDescription: Handler<State> = (state, { payload }) => ({
   ...state,
   dataDescription: payload,
@@ -167,6 +174,7 @@ export default createReducer(INITIAL_STATE, {
   [SELECT_COUPON]: selectCoupon,
   [SELECT_SERVICES]: selectService,
   [SELECT_INSURANCE]: selectInsurance,
+  [SET_INSURANCE]: setInsurance,
   [SELECT_DESCRIPTION]: selectDescription,
   [REMOVE_SERVICE]: removeService,
   [CLEAR_DOCTOR]: clearDoctor,

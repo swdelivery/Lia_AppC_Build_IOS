@@ -10,20 +10,20 @@ import {
   GREY,
   GREY_FOR_TITLE,
   WHITE,
-} from "@Constant/Color";
-import { _moderateScale } from "@Constant/Scale";
-import { styleElement } from "@Constant/StyleElement";
-import ScreenKey from "@Navigation/ScreenKey";
-import { openActionSheetBottom } from "@Redux/modal/actions";
-import React, { useCallback, useMemo } from "react";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
-import { useDispatch } from "react-redux";
-import StatusBooking from "./StatusBooking";
-import { Booking } from "@typings/booking";
-import { OptionDotsIcon } from "src/SGV";
-import moment from "moment";
-import { fromUtc } from "src/utils/date";
-import { useNavigate } from "src/Hooks/useNavigation";
+} from "@Constant/Color"
+import { _moderateScale } from "@Constant/Scale"
+import { styleElement } from "@Constant/StyleElement"
+import ScreenKey from "@Navigation/ScreenKey"
+import { openActionSheetBottom } from "@Redux/modal/actions"
+import { Booking } from "@typings/booking"
+import moment from "moment"
+import React, { useCallback, useMemo } from "react"
+import { StyleSheet, TouchableOpacity, View } from "react-native"
+import { useDispatch } from "react-redux"
+import { useNavigate } from "src/Hooks/useNavigation"
+import { OptionDotsIcon } from "src/SGV"
+import { fromUtc } from "src/utils/date"
+import StatusBooking from "./StatusBooking"
 
 type Props = {
   item: Booking;
@@ -50,10 +50,10 @@ const CardBooking = ({ item }: Props) => {
     dispatch(
       openActionSheetBottom({
         flag: true,
-        data: {},
+        data: item,
       })
     );
-  }, []);
+  }, [item]);
 
   return (
     <TouchableOpacity

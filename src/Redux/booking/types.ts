@@ -16,6 +16,7 @@ export const SELECT_SERVICES = "@booking/select-services";
 export const REMOVE_SERVICE = "@booking/remove-service";
 export const SELECT_COUPON = "@booking/select-coupon";
 export const SELECT_INSURANCE = "@booking/select-insurance";
+export const SET_INSURANCE = "@booking/set-insurance";
 export const SELECT_DESCRIPTION = "@booking/select-description";
 
 // CLEAR
@@ -58,3 +59,8 @@ export type GetListServiceForBookingParams = {
   practitionerCode: string;
   branchCode: string;
 };
+
+// PUT
+export const UPDATE_PARTNER_BOOKING = generateActionTypes(
+  "@booking/update-partner-booking"
+);

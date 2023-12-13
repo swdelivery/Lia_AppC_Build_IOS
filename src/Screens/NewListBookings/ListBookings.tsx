@@ -9,14 +9,14 @@ import { RenderItemProps } from "@typings/common";
 import { Booking } from "@typings/booking";
 
 const ListBookings = () => {
-  const { getData, data } = useListFilter(
+  const { getData, data, refreshData } = useListFilter(
     getMyBookingState,
     getMyBooking,
     loadMoreMyBooking
   );
 
   useFocused(() => {
-    getData();
+    refreshData()
   });
 
   const _renderItem = ({ item }: RenderItemProps<Booking>) => {

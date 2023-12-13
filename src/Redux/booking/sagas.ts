@@ -13,6 +13,7 @@ import {
   GetPractitionerListByBranchCodeParams,
   CREAT_PARTNER_BOOKING,
   GetListServiceForBookingParams,
+  UPDATE_PARTNER_BOOKING,
 } from "./types";
 import { Doctor } from "@typings/doctor";
 import { Practitioner } from "@typings/practitioner";
@@ -113,12 +114,26 @@ function* createPartnerBooking({ payload }: BaseAction<any>) {
   }
 }
 
+function* updatePartnerBooking({ payload }: BaseAction<any>) {
+  try {
+    const data = yield call(PartnerService.updatePartnerBooking, payload);
+    Alert.alert(data?.message);
+    yield put(actions.clearDataCreateBooking());
+    navigation.goBack();
+    // navigation.navigate(ScreenKey.LIST_BOOKING);
+  } catch (error: any) {
+    Alert.alert(error?.message);
+    yield put(actions.createPartnerBooking.failure(error));
+  }
+}
+
 export default function* sagas() {
   yield all([
     takeLatest(GET_BRANCH_LIST_FOR_BOOKING.REQUEST, getBranchListForBooking),
     takeLatest(GET_DOCTOR_LIST_BY_BRANCH_CODE.REQUEST, getDoctorListByBranchCode),
     takeLatest(GET_PRACTITIONER_LIST_BY_BRANCH_CODE.REQUEST, getPractitionerListByBranchCode),
     takeLatest(GET_LIST_SERVICE_FILTER.REQUEST, getListServiceFilter),
-    takeLatest(CREAT_PARTNER_BOOKING.REQUEST, createPartnerBooking)
+    takeLatest(CREAT_PARTNER_BOOKING.REQUEST, createPartnerBooking),
+    takeLatest(UPDATE_PARTNER_BOOKING.REQUEST, updatePartnerBooking)
   ]);
 }

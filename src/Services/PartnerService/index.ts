@@ -231,6 +231,9 @@ const takeVoucher = (payload: any) => {
 const createPartnerBooking = (payload: any) => {
   return axios.post("/booking", payload).then(({ data }) => data);
 };
+const updatePartnerBooking = (payload: any) => {
+  return axios.put(`/booking/${payload?.idBooking}`, payload?.data).then(({ data }) => data);
+};
 
 const getInsuranceList = (): Promise<ApiResponse<Insurance[]>> =>
   axios
@@ -491,6 +494,7 @@ export default {
   getInsuranceDetails,
   // Booking
   createPartnerBooking,
+  updatePartnerBooking,
   getBookingList,
 
   getBookingDetails,

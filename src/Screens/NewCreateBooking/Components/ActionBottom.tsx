@@ -1,7 +1,7 @@
 import Text from "@Components/Text";
 import { BORDER_COLOR, WHITE } from "@Constant/Color";
 import { _moderateScale, _width } from "@Constant/Scale";
-import { createPartnerBooking } from "@Redux/booking/actions";
+import { createPartnerBooking, updatePartnerBooking } from "@Redux/booking/actions";
 import { getDataCreateBookingState } from "@Redux/booking/selectors";
 import { isEmpty } from "lodash";
 import React from "react";
@@ -9,10 +9,17 @@ import { Alert, StyleSheet, TouchableOpacity, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "src/Hooks/useNavigation";
+import useConfirmation from "src/Hooks/useConfirmation";
 
-const ActionBottom = () => {
+type Props = {
+  isEditBooking?: boolean;
+  editBookingId?: string;
+};
+
+const ActionBottom = ({ isEditBooking, editBookingId }: Props) => {
   const dispatch = useDispatch();
   const { navigation } = useNavigate();
+  const { showConfirmation } = useConfirmation();
 
   const {
     dataBranch,
@@ -25,6 +32,7 @@ const ActionBottom = () => {
     dataInsurance,
     dataDescription,
   } = useSelector(getDataCreateBookingState);
+
 
   const infoUserRedux = useSelector((state) => state.infoUserReducer);
 
@@ -81,6 +89,8 @@ const ActionBottom = () => {
     }
     if (!isEmpty(dataCoupon)) {
       dataFetch["partnerCouponIdArr"] = [dataCoupon?._id];
+    } else {
+      dataFetch["partnerCouponIdArr"] = []
     }
     if (!isEmpty(dataDoctor)) {
       dataFetch["assignedDoctorCode"] = dataDoctor.code;
@@ -89,28 +99,32 @@ const ActionBottom = () => {
       dataFetch["assignedPractitionerCode"] = dataPractitioner.code;
     }
     if (!isEmpty(dataInsurance)) {
-      dataFetch["serviceNeedCareCodeArr"] = dataInsurance?.map(
+      dataFetch["insuranceCodeArr"] = dataInsurance?.map(
         (item) => item.code
       );
+    } else {
+      dataFetch["insuranceCodeArr"] = []
     }
-    console.log({ dataFetch });
-    Alert.alert(
-      "Xác nhận",
-      `Xác nhận tạo lịch hẹn?`,
-      [
-        {
-          text: "Huỷ",
-          style: "cancel",
-        },
-        {
-          text: "Đồng ý",
-          onPress: async () => {
-            dispatch(createPartnerBooking.request(dataFetch));
-          },
-        },
-      ],
-      { cancelable: false }
-    );
+    if (isEditBooking) {
+      showConfirmation(
+        "Xác nhận",
+        "Xác nhận cập nhật lịch hẹn?",
+        () => {
+          dispatch(updatePartnerBooking.request({
+            idBooking: editBookingId,
+            data: dataFetch
+          }));
+        }
+      );
+    } else {
+      showConfirmation(
+        "Xác nhận",
+        "Xác nhận tạo lịch hẹn?",
+        () => {
+          dispatch(createPartnerBooking.request(dataFetch));
+        }
+      );
+    }
   };
 
   return (
@@ -126,7 +140,12 @@ const ActionBottom = () => {
           colors={["#01AB84", "#186A57"]}
         />
         <Text color={WHITE} weight="bold" size={14}>
-          Xác nhận lịch hẹn
+          {
+            isEditBooking ?
+              `Cập nhật lịch hẹn`
+              :
+              `Xác nhận lịch hẹn`
+          }
         </Text>
       </TouchableOpacity>
     </View>
