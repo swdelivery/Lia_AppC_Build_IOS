@@ -43,6 +43,8 @@ import { convertImageCoordsToDeviceCoords } from "src/utils/common";
 import { CameraRoll } from "@react-native-camera-roll/camera-roll";
 import useConfirmation from "src/Hooks/useConfirmation";
 import useImagePicker from "./useImagePicker";
+import { isAndroid } from "src/utils/platform";
+import useVolume from "./Components/useVolume";
 
 const EYE_INDICATOR_SIZE = 10;
 
@@ -86,6 +88,10 @@ const FaceAI = () => {
         path: image,
       });
     });
+
+  const volumne = isAndroid ? useVolume() : -1;
+
+  console.log({ volumne });
 
   //ASK PERMISSION CAMERA
   useEffect(() => {
@@ -292,7 +298,7 @@ const FaceAI = () => {
 
   const _handleTakePhoto = async () => {
     const photo = await refCamera.current.takePhoto({
-      enableShutterSound: true,
+      enableShutterSound: volumne !== 0,
     });
     processImage(photo);
   };
