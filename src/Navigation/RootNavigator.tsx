@@ -188,6 +188,7 @@ import PractitionerList from "@Screens/PractitionerList";
 import MaterialList from "@Screens/MaterialList";
 import TakeCare from "@Screens/TakeCare";
 import UpdateDailyDiaries from "@Screens/TakeCare/UpdateDailyDiaries";
+import NewCategory from "@Screens/NewCategory";
 
 const rootStack = createStackNavigator();
 
@@ -494,6 +495,11 @@ const RootNavigator = () => {
             options={{ ...TransitionPresets.SlideFromRightIOS }}
             name={ScreenKey.LIST_SERVICE}
             component={ListService}
+          />
+          <rootStack.Screen
+            options={{ ...TransitionPresets.SlideFromRightIOS }}
+            name={ScreenKey.NEW_CATEGORY}
+            component={NewCategory}
           />
           <rootStack.Screen
             options={{ ...TransitionPresets.SlideFromRightIOS }}

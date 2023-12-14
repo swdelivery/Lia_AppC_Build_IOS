@@ -115,7 +115,7 @@ const Banner = () => {
         style={StyleSheet.absoluteFill}
         start={{ x: 0, y: 0 }}
         end={{ x: 0, y: 1 }}
-        colors={["transparent", "#EE79B8"]}
+        colors={["transparent", "#9a0000"]}
       />
       <Spacer top={top + 50} />
       <View>
@@ -178,7 +178,7 @@ const Banner = () => {
       </View>
       <OptionService />
       <Voucher />
-      {/* <FlashSale /> */}
+      <FlashSale />
       <ListDoctor />
     </Animated.View>
   );

@@ -74,6 +74,7 @@ const PATTERN_CHART = [
 
 // NEW COLOR
 const BASE_COLOR = "#4A9F80";
+const NEW_BASE_COLOR = "#366792";
 const BASE_COLOR_LIGHT = "#01AB84";
 const BG_GREY_OPACITY_5 = "rgba(229,229,229,.5)";
 const SECOND_COLOR = "#7d3da8";
@@ -163,4 +164,5 @@ export {
   SILVER,
   GOLD,
   PLATINUM,
+  NEW_BASE_COLOR
 };

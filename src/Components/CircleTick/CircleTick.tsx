@@ -16,7 +16,7 @@ const CircleTick = ({ isTicked }: Props) => {
             {
                 isTicked ?
                     <View style={styles.active}>
-                        <View style={styles.active__child}/>
+                        <View style={styles.active__child} />
                     </View>
                     :
                     <View style={styles.inActive}>
@@ -30,27 +30,27 @@ const CircleTick = ({ isTicked }: Props) => {
 export default CircleTick
 
 const styles = StyleSheet.create({
-    inActive:{
-        width:_moderateScale(8*3),
-        height:_moderateScale(8*3),
-        borderRadius:_moderateScale(8*3/2),
-        borderWidth:2,
-        borderColor:BG_GREY_OPACITY_7,
+    inActive: {
+        width: _moderateScale(8 * 3),
+        height: _moderateScale(8 * 3),
+        borderRadius: _moderateScale(8 * 3 / 2),
+        borderWidth: 2,
+        borderColor: BG_GREY_OPACITY_7,
     },
-    active__child:{
-        width:_moderateScale(8*2),
-        height:_moderateScale(8*2),
-        borderRadius:_moderateScale(8*2/2),
-        backgroundColor:BASE_COLOR,
+    active__child: {
+        width: _moderateScale(8 * 2),
+        height: _moderateScale(8 * 2),
+        borderRadius: _moderateScale(8 * 2 / 2),
+        backgroundColor: BASE_COLOR,
     },
-    active:{
-        width:_moderateScale(8*3),
-        height:_moderateScale(8*3),
-        borderRadius:_moderateScale(8*3/2),
-        borderWidth:2,
-        borderColor:BASE_COLOR,
-        justifyContent:'center',
-        alignItems:'center'
+    active: {
+        width: _moderateScale(8 * 3),
+        height: _moderateScale(8 * 3),
+        borderRadius: _moderateScale(8 * 3 / 2),
+        borderWidth: 2,
+        borderColor: BASE_COLOR,
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 
 })
