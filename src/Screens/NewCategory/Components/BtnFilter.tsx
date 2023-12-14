@@ -1,22 +1,41 @@
-import { StyleSheet, TouchableOpacity, View } from 'react-native'
-import React from 'react'
-import Text from '@Components/Text'
-import { WHITE } from '@Constant/Color'
+import { IconFilter } from '@Components/Icon/Icon';
+import Row from '@Components/Row';
+import Text from '@Components/Text';
+import { WHITE } from '@Constant/Color';
+import React from 'react';
+import { StyleSheet, TouchableOpacity } from 'react-native';
+import useHapticCallback from 'src/Hooks/useHapticCallback';
 
 
 type Props = {
   title: string;
   isActive?: boolean;
+  onPress?: () => void;
+  icon?: any;
 };
 
-const BtnFilter = ({ title = '', isActive = false }: Props) => {
+const BtnFilter = ({ title = '', isActive = false, onPress, icon = null }: Props) => {
+
+  const _handlePress = useHapticCallback(() => {
+    onPress ? onPress() : null
+  }, [])
+
   return (
-    <TouchableOpacity>
-      <Text
-        color={WHITE}
-        weight={isActive ? 'bold' : 'regular'}>
-        {title}
-      </Text>
+    <TouchableOpacity onPress={_handlePress}>
+      <Row gap={4}>
+        <Text
+          color={WHITE}
+          weight={isActive ? 'bold' : 'regular'}>
+          {title.toUpperCase()}
+        </Text>
+        {
+          icon ?
+            <>
+              {icon}
+            </>
+            : <></>
+        }
+      </Row>
     </TouchableOpacity>
   )
 }

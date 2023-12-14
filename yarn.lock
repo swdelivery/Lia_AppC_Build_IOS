@@ -1935,6 +1935,11 @@
   dependencies:
     invariant "^2.2.4"
 
+"@react-native-community/slider@^4.4.4":
+  version "4.4.4"
+  resolved "https://registry.yarnpkg.com/@react-native-community/slider/-/slider-4.4.4.tgz#0b2168cd0f53683c27b36b4917d01514d6dda1bb"
+  integrity sha512-PEq9mTEVwOh+wuBvuuIslvC8gyGHfS2G01SJJWdbb4xz+u5559iuQXqDOUxQgFuN45dM0Ut1wMFDDdawN9RTEA==
+
 "@react-native-firebase/app@^18.6.0":
   version "18.7.2"
   resolved "https://registry.yarnpkg.com/@react-native-firebase/app/-/app-18.7.2.tgz#f50fc3ad5d990086cb01802f4d2e72137e454425"
@@ -3727,7 +3732,7 @@ depd@2.0.0:
   resolved "https://registry.yarnpkg.com/depd/-/depd-2.0.0.tgz#b696163cc757560d09cf22cc8fad1571b79e76df"
   integrity sha512-g7nH6P6dyDioJogAAGprGpCtVImJhpPk/roCzdb3fIh61/s/nPsfR6onyMwkCAR/OlC3yBC0lESvUoQEAssIrw==
 
-deprecated-react-native-prop-types@^2.2.0:
+deprecated-react-native-prop-types@^2.2.0, deprecated-react-native-prop-types@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/deprecated-react-native-prop-types/-/deprecated-react-native-prop-types-2.3.0.tgz#c10c6ee75ff2b6de94bb127f142b814e6e08d9ab"
   integrity sha512-pWD0voFtNYxrVqvBMYf5gq3NA2GCpfodS1yNynTPc93AYA/KEMGeWDqqeUB6R2Z9ZofVhks2aeJXiuQqKNpesA==
@@ -7653,6 +7658,14 @@ react-native-permissions@^3.10.1:
   version "3.10.1"
   resolved "https://registry.yarnpkg.com/react-native-permissions/-/react-native-permissions-3.10.1.tgz#cb0171c8d12113869deaabbdfb979aad1a44752b"
   integrity sha512-Gc5BxxpjZn4QNUDiVeHOO0vXh3AH7ToolmwTJozqC6DsxV7NAf3ttap+8BSmzDR8WxuAM3Cror+YNiBhHJx7/w==
+
+react-native-popover-view@^5.1.8:
+  version "5.1.8"
+  resolved "https://registry.yarnpkg.com/react-native-popover-view/-/react-native-popover-view-5.1.8.tgz#5c13815d56862cd59a0cdef548d892ce572a7956"
+  integrity sha512-kDH2liv/Xb8y0JCY25Ft2SiA5fJtVL4o7gk2dXyhXeNhjSEEss3Z3hZyeYMi4ctHimovWSBZz/CjfejNbUF1jA==
+  dependencies:
+    deprecated-react-native-prop-types "^2.3.0"
+    prop-types "^15.8.1"
 
 react-native-portalize@r0b0t3d/react-native-portalize#master:
   version "1.0.7"
