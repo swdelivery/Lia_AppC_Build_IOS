@@ -192,6 +192,7 @@ import NewCategory from "@Screens/NewCategory";
 import CharityFundDetails from "@Screens/CharityFundDetails";
 import Charity from "@Screens/Charity";
 import SearchingCharity from "@Screens/Charity/SearchingCharity";
+import CharityAccountStatement from "@Screens/CharityAccountStatement";
 
 const rootStack = createStackNavigator();
 
@@ -224,6 +225,7 @@ const RootNavigator = () => {
           <rootStack.Screen component={MainTab} name="MainTab" />
 
           <rootStack.Screen
+            options={{ ...TransitionPresets.SlideFromRightIOS }}
             component={CharityFundDetails}
             name={ScreenKey.CHARITY_FUND_DETAILS}
           />
@@ -1059,6 +1061,10 @@ const RootNavigator = () => {
             options={{ ...TransitionPresets.SlideFromRightIOS }}
             name={ScreenKey.SEARCHING_CHARITY}
             component={SearchingCharity} />
+          <rootStack.Screen
+            options={{ ...TransitionPresets.SlideFromRightIOS }}
+            name={ScreenKey.CHARITY_ACCOUNT_STATEMENT}
+            component={CharityAccountStatement} />
 
           <rootStack.Screen
             options={{

@@ -7,11 +7,16 @@ import Text from "@Components/Text";
 import { BLACK_OPACITY_4, NEW_BASE_COLOR } from "@Constant/Color";
 import { _width } from "@Constant/Scale";
 import { formatMonney } from "@Constant/Utils";
+import ScreenKey from "@Navigation/ScreenKey";
 import React from "react";
+import { TouchableOpacity } from "react-native";
+import { useNavigate } from "src/Hooks/useNavigation";
 
 const ITEMS_COUNT = Math.floor((_width - 32) / 40) - 1;
 
 export default function DonationInfo() {
+  const { navigate } = useNavigate()
+
   return (
     <Column paddingHorizontal={16}>
       <HorizontalProgress percent={80} />
@@ -45,12 +50,14 @@ export default function DonationInfo() {
         Nguyễn Đình Mạnh, NGUYEN HUONG GIANG{" "}
         <Text size={12}>và 2.421 người khác đã ủng hộ</Text>
       </Text>
-      <Row alignSelf="flex-end" marginTop={12}>
-        <Text size={12} color={NEW_BASE_COLOR}>
-          Xem sao kê tài khoản
-        </Text>
-        <Icon name="arrow-right-thin" color={NEW_BASE_COLOR} size={18} />
-      </Row>
+      <TouchableOpacity onPress={navigate(ScreenKey.CHARITY_ACCOUNT_STATEMENT)}>
+        <Row alignSelf="flex-end" marginTop={12}>
+          <Text size={12} color={NEW_BASE_COLOR}>
+            Xem sao kê tài khoản
+          </Text>
+          <Icon name="arrow-right-thin" color={NEW_BASE_COLOR} size={18} />
+        </Row>
+      </TouchableOpacity>
     </Column>
   );
 }

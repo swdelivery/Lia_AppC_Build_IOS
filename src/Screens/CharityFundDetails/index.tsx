@@ -31,6 +31,7 @@ export default function CharityFundDetails({ }: Props) {
         </ScrollView>
         <Row paddingHorizontal={16} paddingVertical={8} gap={8}>
           <Button.Outline
+            onPress={() => { }}
             flex={1}
             title="Đồng hành"
             borderColor={NEW_BASE_COLOR}
@@ -40,6 +41,7 @@ export default function CharityFundDetails({ }: Props) {
             borderRadius={12}
           />
           <Button.Gradient
+            onPress={() => { }}
             title="Ủng hộ"
             titleSize={16}
             height={40}
