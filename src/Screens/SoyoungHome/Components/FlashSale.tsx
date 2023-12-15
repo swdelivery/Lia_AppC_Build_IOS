@@ -6,8 +6,13 @@ import FastImage from "@Components/FastImage";
 import Text from "@Components/Text";
 import Column from "@Components/Column";
 import Row from "@Components/Row";
+import { TouchableOpacity } from "react-native";
+import { useNavigate } from "src/Hooks/useNavigation";
+import ScreenKey from "@Navigation/ScreenKey";
 
 const FlashSale = memo(() => {
+  const { navigate } = useNavigate()
+
   const _renderItem = () => {
     return (
       <View style={styles.itemContainer}>
@@ -24,37 +29,39 @@ const FlashSale = memo(() => {
 
   return (
     <View style={styles.container}>
-      <Column style={styles.fls__title} gap={4}>
-        <Lottie
-          speed={1}
-          autoPlay={true}
-          loop={true}
-          style={styles.lottie}
-          source={require("../../../Json/flashsale.json")}
-        />
-        <Text size={15} color="red" weight="bold">
-          Flash Sale
-        </Text>
-        <Row gap={2}>
-          <View style={styles.clockHours}>
-            <Text color={"white"} weight="bold" size={12}>
-              00
-            </Text>
-          </View>
-          <Text>:</Text>
-          <View style={styles.clockHours}>
-            <Text color={"white"} weight="bold" size={12}>
-              30
-            </Text>
-          </View>
-          <Text>:</Text>
-          <View style={styles.clockHours}>
-            <Text color={"white"} weight="bold" size={12}>
-              59
-            </Text>
-          </View>
-        </Row>
-      </Column>
+      <TouchableOpacity onPress={navigate(ScreenKey.FLASHSALE_SCREEN)}>
+        <Column style={styles.fls__title} gap={4}>
+          <Lottie
+            speed={1}
+            autoPlay={true}
+            loop={true}
+            style={styles.lottie}
+            source={require("../../../Json/flashsale.json")}
+          />
+          <Text size={15} color="red" weight="bold">
+            Flash Sale
+          </Text>
+          <Row gap={2}>
+            <View style={styles.clockHours}>
+              <Text color={"white"} weight="bold" size={12}>
+                00
+              </Text>
+            </View>
+            <Text>:</Text>
+            <View style={styles.clockHours}>
+              <Text color={"white"} weight="bold" size={12}>
+                30
+              </Text>
+            </View>
+            <Text>:</Text>
+            <View style={styles.clockHours}>
+              <Text color={"white"} weight="bold" size={12}>
+                59
+              </Text>
+            </View>
+          </Row>
+        </Column>
+      </TouchableOpacity>
 
       <FlatList
         horizontal

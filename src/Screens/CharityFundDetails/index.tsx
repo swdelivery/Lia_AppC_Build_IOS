@@ -11,12 +11,14 @@ import CoFounders from "./components/CoFounders";
 import Button from "@Components/Button/Button";
 import Row from "@Components/Row";
 import { NEW_BASE_COLOR } from "@Constant/Color";
+import { FocusAwareStatusBar } from "@Components/StatusBar";
 
 type Props = {};
 
-export default function CharityFundDetails({}: Props) {
+export default function CharityFundDetails({ }: Props) {
   return (
     <Screen safeBottom>
+      <FocusAwareStatusBar barStyle="dark-content" />
       <AfterTimeoutFragment placeholder={<Placeholder />} timeout={500}>
         <ScrollView
           style={styles.content}
@@ -29,6 +31,7 @@ export default function CharityFundDetails({}: Props) {
         </ScrollView>
         <Row paddingHorizontal={16} paddingVertical={8} gap={8}>
           <Button.Outline
+            onPress={() => { }}
             flex={1}
             title="Đồng hành"
             borderColor={NEW_BASE_COLOR}
@@ -38,6 +41,7 @@ export default function CharityFundDetails({}: Props) {
             borderRadius={12}
           />
           <Button.Gradient
+            onPress={() => { }}
             title="Ủng hộ"
             titleSize={16}
             height={40}

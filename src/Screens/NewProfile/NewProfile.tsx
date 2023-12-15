@@ -70,6 +70,7 @@ const NewProfile = () => {
               title={"Phụng sự"}
               data={[
                 {
+                  flag: "charity",
                   name: "Lá lành\nđùm lá rách",
                   icon: <IconProfileHandHeartIn />,
                 },

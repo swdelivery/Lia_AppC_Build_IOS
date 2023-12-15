@@ -9,7 +9,7 @@ import { StyleSheet } from "react-native";
 
 type Props = {};
 
-export default function FundInfo({}: Props) {
+export default function FundInfo({ }: Props) {
   return (
     <Column paddingHorizontal={16} paddingVertical={20}>
       <Row>
