@@ -15,11 +15,12 @@ const CardInfoCharity = () => {
 
   return (
     <Column
+      backgroundColor={"#F6F6F6"}
       borderColor={BORDER_COLOR}
-      borderRadius={8}
+      borderRadius={8 * 2}
       marginHorizontal={8 * 2}
       borderWidth={1}
-      padding={8 * 2}>
+      padding={8}>
       <Column
         top={8 * 3}
         borderTopRightRadius={4}
@@ -98,6 +99,6 @@ const styles = StyleSheet.create({
   image: {
     width: 8 * 12,
     height: 8 * 12,
-    borderRadius: 4
+    borderRadius: 8
   }
 })

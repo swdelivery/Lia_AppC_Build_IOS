@@ -12,6 +12,7 @@ import { FlatList, StyleSheet } from 'react-native'
 import CardInfoCharity from './Components/CardInfoCharity'
 import Header from './Components/Header'
 import ListUsers from './Components/ListUsers'
+import { IconOptions } from '@Components/Icon/Icon'
 
 const Charity = () => {
   const [listCharity, setListCharity] = useState([1, 2, 3, 4, 5, 6])
@@ -21,7 +22,10 @@ const Charity = () => {
       <Column>
         <ListUsers />
         <HorizontalLine style={styles.horizontalLine} />
-        <Row paddingHorizontal={8 * 2}>
+        <Row
+          marginTop={8} gap={8}
+          paddingHorizontal={8 * 2}>
+          <IconOptions width={8 * 2} height={8 * 2} />
           <Text
             color={NEW_BASE_COLOR}
             weight='bold'>

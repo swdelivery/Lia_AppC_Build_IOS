@@ -3,12 +3,13 @@ import Row from '@Components/Row'
 import Text from '@Components/Text'
 import { NEW_BASE_COLOR } from '@Constant/Color'
 import { styleElement } from '@Constant/StyleElement'
+import ScreenKey from '@Navigation/ScreenKey'
 import React from 'react'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 import { useNavigate } from 'src/Hooks/useNavigation'
 
 const Header = () => {
-  const { navigation } = useNavigate()
+  const { navigation, navigate } = useNavigate()
   return (
     <Row
       justifyContent='space-between'
@@ -29,7 +30,11 @@ const Header = () => {
         </Text>
       </Row>
       <Row gap={8 * 2}>
-        <IconFindAroundCirle width={8 * 3} height={8 * 3} />
+        <TouchableOpacity
+          onPress={navigate(ScreenKey.SEARCHING_CHARITY)}
+          hitSlop={styleElement.hitslopSm}>
+          <IconFindAroundCirle width={8 * 3} height={8 * 3} />
+        </TouchableOpacity>
         <IconProfileAroundCirle width={8 * 3} height={8 * 3} />
       </Row>
     </Row>

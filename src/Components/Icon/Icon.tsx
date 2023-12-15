@@ -136,6 +136,7 @@ export { default as IconLogoCharity } from "../../SGV/charity/logoCharity.svg";
 export { default as IconFindAroundCirle } from "../../SGV/charity/findAroundCirle.svg";
 export { default as IconProfileAroundCirle } from "../../SGV/charity/profileAroundCirle.svg";
 export { default as IconVerify } from "../../SGV/charity/verify.svg";
+export { default as IconOptions } from "../../SGV/charity/options.svg";
 
 
 export const IconSetting = (props) => {
