@@ -11,12 +11,14 @@ import CoFounders from "./components/CoFounders";
 import Button from "@Components/Button/Button";
 import Row from "@Components/Row";
 import { NEW_BASE_COLOR } from "@Constant/Color";
+import { FocusAwareStatusBar } from "@Components/StatusBar";
 
 type Props = {};
 
-export default function CharityFundDetails({}: Props) {
+export default function CharityFundDetails({ }: Props) {
   return (
     <Screen safeBottom>
+      <FocusAwareStatusBar barStyle="dark-content" />
       <AfterTimeoutFragment placeholder={<Placeholder />} timeout={500}>
         <ScrollView
           style={styles.content}

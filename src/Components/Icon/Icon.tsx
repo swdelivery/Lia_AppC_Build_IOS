@@ -132,6 +132,10 @@ export { default as IconBackBlue } from "../../SGV/backBlue.svg";
 export { default as IconFilter } from "../../SGV/service/filter.svg";
 export { default as IconSort } from "../../SGV/service/sort.svg";
 export { default as IconExpand } from "../../SGV/service/expand.svg";
+export { default as IconLogoCharity } from "../../SGV/charity/logoCharity.svg";
+export { default as IconFindAroundCirle } from "../../SGV/charity/findAroundCirle.svg";
+export { default as IconProfileAroundCirle } from "../../SGV/charity/profileAroundCirle.svg";
+export { default as IconVerify } from "../../SGV/charity/verify.svg";
 
 
 export const IconSetting = (props) => {

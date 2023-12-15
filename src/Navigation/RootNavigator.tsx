@@ -190,6 +190,7 @@ import TakeCare from "@Screens/TakeCare";
 import UpdateDailyDiaries from "@Screens/TakeCare/UpdateDailyDiaries";
 import NewCategory from "@Screens/NewCategory";
 import CharityFundDetails from "@Screens/CharityFundDetails";
+import Charity from "@Screens/Charity";
 
 const rootStack = createStackNavigator();
 
@@ -1047,6 +1048,12 @@ const RootNavigator = () => {
             name={ScreenKey.UPDATE_DAILY_DIARIES}
             component={UpdateDailyDiaries}
           />
+
+          {/* CHARITY */}
+          <rootStack.Screen
+            options={{ ...TransitionPresets.SlideFromRightIOS }}
+            name={ScreenKey.CHARITY}
+            component={Charity} />
 
           <rootStack.Screen
             options={{
