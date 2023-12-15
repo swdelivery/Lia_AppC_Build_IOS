@@ -189,6 +189,7 @@ import MaterialList from "@Screens/MaterialList";
 import TakeCare from "@Screens/TakeCare";
 import UpdateDailyDiaries from "@Screens/TakeCare/UpdateDailyDiaries";
 import NewCategory from "@Screens/NewCategory";
+import CharityFundDetails from "@Screens/CharityFundDetails";
 
 const rootStack = createStackNavigator();
 
@@ -213,12 +214,17 @@ const optionsModal = {
 const RootNavigator = () => {
   return (
     <rootStack.Navigator
-      //  initialRouteName={ScreenKey.MODAL_CREATE_GROUP_CHAT}
+      initialRouteName={ScreenKey.CHARITY_FUND_DETAILS}
       screenOptions={navigationOptions}
     >
       {true ? (
         <>
           <rootStack.Screen component={MainTab} name="MainTab" />
+
+          <rootStack.Screen
+            component={CharityFundDetails}
+            name={ScreenKey.CHARITY_FUND_DETAILS}
+          />
 
           <rootStack.Screen
             options={{ ...TransitionPresets.SlideFromRightIOS }}
@@ -1034,11 +1040,13 @@ const RootNavigator = () => {
           <rootStack.Screen
             options={{ ...TransitionPresets.SlideFromRightIOS }}
             name={ScreenKey.TAKECARE}
-            component={TakeCare} />
+            component={TakeCare}
+          />
           <rootStack.Screen
             options={{ ...TransitionPresets.SlideFromRightIOS }}
             name={ScreenKey.UPDATE_DAILY_DIARIES}
-            component={UpdateDailyDiaries} />
+            component={UpdateDailyDiaries}
+          />
 
           <rootStack.Screen
             options={{
