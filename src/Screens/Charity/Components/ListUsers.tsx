@@ -22,6 +22,7 @@ const ListUsers = () => {
         </Text>
       </Row>
       <ScrollView
+        showsHorizontalScrollIndicator={false}
         contentContainerStyle={{ gap: 8 * 2 }}
         horizontal>
         {

@@ -4,7 +4,7 @@ import { IconVerify } from '@Components/Icon/Icon'
 import Image from '@Components/Image'
 import Row from '@Components/Row'
 import Text from '@Components/Text'
-import { BORDER_COLOR, NEW_BASE_COLOR } from '@Constant/Color'
+import { BORDER_COLOR, NEW_BASE_COLOR, WHITE } from '@Constant/Color'
 import ScreenKey from '@Navigation/ScreenKey'
 import React from 'react'
 import { StyleSheet, TouchableOpacity } from 'react-native'
@@ -20,6 +20,21 @@ const CardInfoCharity = () => {
       marginHorizontal={8 * 2}
       borderWidth={1}
       padding={8 * 2}>
+      <Column
+        top={8 * 3}
+        borderTopRightRadius={4}
+        borderBottomRightRadius={4}
+        zIndex={1}
+        paddingHorizontal={8}
+        paddingVertical={2}
+        backgroundColor={NEW_BASE_COLOR}
+        position='absolute'>
+        <Text
+          color={WHITE}
+          size={10}>
+          420 Ngày
+        </Text>
+      </Column>
       <TouchableOpacity onPress={navigate(ScreenKey.CHARITY_FUND_DETAILS)}>
         <Row gap={8}>
           <Image style={styles.image} />
