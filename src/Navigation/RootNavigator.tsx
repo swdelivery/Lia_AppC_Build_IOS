@@ -214,7 +214,7 @@ const optionsModal = {
 const RootNavigator = () => {
   return (
     <rootStack.Navigator
-      initialRouteName={ScreenKey.CHARITY_FUND_DETAILS}
+      // initialRouteName={ScreenKey.CHARITY_FUND_DETAILS}
       screenOptions={navigationOptions}
     >
       {true ? (
