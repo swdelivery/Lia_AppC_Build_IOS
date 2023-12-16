@@ -1,4 +1,3 @@
-import { IconFilter } from '@Components/Icon/Icon';
 import Row from '@Components/Row';
 import Text from '@Components/Text';
 import { WHITE } from '@Constant/Color';
@@ -26,7 +25,7 @@ const BtnFilter = ({ title = '', isActive = false, onPress, icon = null }: Props
         <Text
           color={WHITE}
           weight={isActive ? 'bold' : 'regular'}>
-          {title.toUpperCase()}
+          {title}
         </Text>
         {
           icon ?

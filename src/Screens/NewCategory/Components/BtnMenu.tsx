@@ -1,8 +1,9 @@
-import { StyleSheet, TouchableOpacity, View } from 'react-native'
-import React, { useCallback } from 'react'
-import Column from '@Components/Column'
-import { BG_BEAUTY, BLACK, WHITE } from '@Constant/Color'
+import Column from '@Components/Column';
 import Text from '@Components/Text';
+import { BG_BEAUTY, BLACK, WHITE } from '@Constant/Color';
+import React from 'react';
+import { StyleSheet, TouchableOpacity } from 'react-native';
+import useHapticCallback from 'src/Hooks/useHapticCallback';
 
 
 type Props = {
@@ -14,7 +15,7 @@ type Props = {
 
 const BtnMenu = ({ title = '', isActive = false, flag = "", onPress }: Props) => {
 
-  const _handleChoice = useCallback(() => {
+  const _handleChoice = useHapticCallback(() => {
     onPress(flag)
   }, [flag, onPress])
 

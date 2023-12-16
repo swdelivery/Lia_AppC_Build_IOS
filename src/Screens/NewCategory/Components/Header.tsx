@@ -1,18 +1,23 @@
-import { StyleSheet, TextInput, TouchableOpacity, View } from 'react-native'
-import React, { useEffect, useRef, useState } from 'react'
 import Column from '@Components/Column'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { IconBackBlue, IconFindGrey, IconLike } from '@Components/Icon/Icon'
 import Row from '@Components/Row'
-import { IconBackBase, IconBackBlue, IconBackGrey, IconFindGrey, IconLike } from '@Components/Icon/Icon'
 import Text from '@Components/Text'
-import { sizeIcon } from '@Constant/Icon'
-import { styleElement } from '@Constant/StyleElement'
-import { useNavigate } from 'src/Hooks/useNavigation'
-import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 import { BORDER_COLOR, WHITE } from '@Constant/Color'
+import { sizeIcon } from '@Constant/Icon'
 import { _widthScale } from '@Constant/Scale'
+import { styleElement } from '@Constant/StyleElement'
+import { selectServiceSearching } from '@Redux/category/actions'
+import { isEmpty } from 'lodash'
+import React, { useEffect, useRef, useState } from 'react'
+import { StyleSheet, TextInput, TouchableOpacity, View } from 'react-native'
+import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { useDispatch } from 'react-redux'
+import useHapticCallback from 'src/Hooks/useHapticCallback'
+import { useNavigate } from 'src/Hooks/useNavigation'
 
 const Header = () => {
+  const dispatch = useDispatch()
   const { top } = useSafeAreaInsets()
   const { navigation } = useNavigate()
   const RefTextInput = useRef(null)
@@ -23,10 +28,14 @@ const Header = () => {
   const opacityTitle = useSharedValue(1);
 
   const [isExpandTextInput, setIsExpandTextInput] = useState(false)
+  const [valueSearch, setValueSearch] = useState('')
 
-  const _handleToggle = () => {
-    setIsExpandTextInput(old => !old)
-  }
+  const _handleToggle = useHapticCallback(() => {
+    if (isEmpty(valueSearch)) {
+      setIsExpandTextInput(old => !old)
+    }
+    dispatch(selectServiceSearching(valueSearch))
+  }, [valueSearch])
 
   useEffect(() => {
     if (isExpandTextInput) {
@@ -90,10 +99,22 @@ const Header = () => {
               paddingHorizontal={8}>
               <IconFindGrey style={sizeIcon.lg} />
               <TextInput
-                style={{ flex: 1 }}
+                onChangeText={(e) => setValueSearch(e)}
+                value={valueSearch}
+                style={[styleElement.flex]}
                 ref={RefTextInput}
                 onBlur={_handleToggle}
-                placeholder='Nhập thông tin tìm kiếm' />
+                placeholder='Nhập thông tin' />
+
+              <Column marginRight={8}>
+                <TouchableOpacity onPress={() => {
+                  RefTextInput?.current?.blur();
+                }}>
+                  <Text>
+                    Tìm
+                  </Text>
+                </TouchableOpacity>
+              </Column>
             </Row>
           </Animated.View>
         </Row>
@@ -103,7 +124,9 @@ const Header = () => {
               <>
               </>
               :
-              <TouchableOpacity onPress={_handleToggle}>
+              <TouchableOpacity
+                hitSlop={styleElement.hitslopSm}
+                onPress={_handleToggle}>
                 <IconFindGrey style={sizeIcon.lg} />
               </TouchableOpacity>
           }

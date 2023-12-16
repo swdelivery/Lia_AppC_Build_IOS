@@ -20,5 +20,6 @@ export function* rootSaga() {
     fork(require("./newfeeds/sagas").default),
     fork(require("./wallet/sagas").default),
     fork(require("./takecare/sagas").default),
+    fork(require("./category/sagas").default),
   ]);
 }

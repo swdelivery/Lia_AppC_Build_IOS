@@ -1,36 +1,50 @@
-import Column from '@Components/Column'
+import { IconExpand, IconFilter } from '@Components/Icon/Icon'
 import HorizontalLine from '@Components/Line/HorizontalLine'
 import Row from '@Components/Row'
 import Screen from '@Components/Screen'
 import { FocusAwareStatusBar } from '@Components/StatusBar'
-import { BG_BEAUTY } from '@Constant/Color'
-import React, { useState } from 'react'
-import { ScrollView, StyleSheet, View } from 'react-native'
+import { clearServiceDataFilter, selectServiceParentCodeGroup } from '@Redux/category/actions'
+import React, { useEffect, useState } from 'react'
+import { StyleSheet } from 'react-native'
+import { useDispatch } from 'react-redux'
+import { useNavigationParams } from 'src/Hooks/useNavigation'
 import useVisible from 'src/Hooks/useVisible'
 import BtnCategory from './Components/BtnCategory'
+import BtnChangePrice from './Components/BtnChangePrice'
 import BtnFilter from './Components/BtnFilter'
-import BtnMenu from './Components/BtnMenu'
+import BtnMostPopular from './Components/BtnMostPopular'
+import BtnPopover from './Components/BtnPopover'
 import Header from './Components/Header'
+import ListServiceGroup from './Components/ListServiceGroup'
 import ResultBranch from './Components/ResultBranch'
 import ResultDoctor from './Components/ResultDoctor'
 import ResultMaterial from './Components/ResultMaterial'
 import ResultPractitioner from './Components/ResultPractitioner'
 import ResultService from './Components/ResultService'
 import ModalFilter from './ModalFilter'
-import { IconExpand, IconFilter, IconSort } from '@Components/Icon/Icon'
-import BtnPopover from './Components/BtnPopover'
-import { useSelector } from 'react-redux'
-import { getServiceGroupState } from '@Redux/home/selectors'
-import ListServiceGroup from './Components/ListServiceGroup'
 
 
 const NewCategory = () => {
+  const dispatch = useDispatch()
   const [categoryChoice, setCategoryChoice] = useState('service');
   const visibleModalFilter = useVisible()
+  const { parentCodeParam } = useNavigationParams<any>();
 
   const _handleChoiceCategory = (flag) => {
     setCategoryChoice(flag)
   }
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearServiceDataFilter())
+    };
+  }, [])
+
+  useEffect(() => {
+    if (parentCodeParam) {
+      dispatch(selectServiceParentCodeGroup(parentCodeParam))
+    }
+  }, [parentCodeParam])
 
   return (
     <Screen safeBottom>
@@ -60,13 +74,9 @@ const NewCategory = () => {
           isActive
           title='Giới thiệu' />
 
-        <BtnFilter title='Phổ biến nhất' />
+        <BtnMostPopular />
 
-        <BtnFilter
-          icon={<IconSort
-            width={8 * 1.5}
-            height={8 * 1.5} />}
-          title='Giá' />
+        <BtnChangePrice />
 
         <BtnFilter
           icon={<IconFilter

@@ -1,18 +1,21 @@
-import { ScrollView, StyleSheet, Text, View } from 'react-native'
-import React, { useState } from 'react'
 import Column from '@Components/Column'
 import { BG_BEAUTY } from '@Constant/Color'
-import { useSelector } from 'react-redux'
+import { selectServiceParentCodeGroup } from '@Redux/category/actions'
+import { getDataFilterServiceState } from '@Redux/category/selectors'
 import { getServiceGroupState } from '@Redux/home/selectors'
+import React, { useCallback } from 'react'
+import { ScrollView, StyleSheet } from 'react-native'
+import { useDispatch, useSelector } from 'react-redux'
 import BtnMenu from './BtnMenu'
 
 const ListServiceGroup = () => {
+  const dispatch = useDispatch()
   const { data: dataServiceGR } = useSelector(getServiceGroupState);
-  const [menuChoice, setMenuChoice] = useState('');
+  const { dataServiceParentCodeGroup } = useSelector(getDataFilterServiceState);
 
-  const _handleChoiceMenu = (flag) => {
-    setMenuChoice(flag)
-  }
+  const _handleChoiceMenu = useCallback((item) => () => {
+    dispatch(selectServiceParentCodeGroup(item))
+  }, [])
 
   return (
     <Column
@@ -25,9 +28,9 @@ const ListServiceGroup = () => {
             return (
               <BtnMenu
                 key={item?._id}
-                onPress={_handleChoiceMenu}
+                onPress={_handleChoiceMenu(item)}
                 flag={item?.code}
-                isActive={menuChoice == item?.code}
+                isActive={dataServiceParentCodeGroup?.code == item?.code}
                 title={item?.name} />
             )
           })

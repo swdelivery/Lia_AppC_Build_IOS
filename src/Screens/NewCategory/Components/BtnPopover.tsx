@@ -1,16 +1,19 @@
 import Column from '@Components/Column';
-import { IconFilter } from '@Components/Icon/Icon';
+import { IconTick } from '@Components/Icon/Icon';
 import HorizontalLine from '@Components/Line/HorizontalLine';
 import Row from '@Components/Row';
 import Text from '@Components/Text';
-import { NEW_BASE_COLOR, WHITE } from '@Constant/Color';
-import React, { useRef } from 'react';
-import { Platform, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { NEW_BASE_COLOR, RED, WHITE } from '@Constant/Color';
+import { sizeIcon } from '@Constant/Icon';
+import { styleElement } from '@Constant/StyleElement';
+import { selectServiceAverageRating, selectServiceCoupon } from '@Redux/category/actions';
+import { getDataFilterServiceState } from '@Redux/category/selectors';
+import React from 'react';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 import Popover from 'react-native-popover-view';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useDispatch, useSelector } from 'react-redux';
 import useHapticCallback from 'src/Hooks/useHapticCallback';
 import useVisible from 'src/Hooks/useVisible';
-import { isAndroid } from 'src/utils/platform';
 
 
 type Props = {
@@ -21,12 +24,33 @@ type Props = {
 };
 
 const BtnPopover = ({ title = '', isActive = false, onPress, icon = null }: Props) => {
-  const { top } = useSafeAreaInsets()
   const visiblePopover = useVisible()
+  const dispatch = useDispatch()
+  const { dataServiceCoupon, dataServiceAverageRating } = useSelector(getDataFilterServiceState)
 
   const showPopover = useHapticCallback(() => {
     visiblePopover.show()
   }, [])
+
+  const _handleSelectServiceCoupon = useHapticCallback(() => {
+    visiblePopover.hide()
+    dispatch(selectServiceCoupon())
+  }, [])
+  const _handleSelectServiceAverageRating = useHapticCallback(() => {
+    visiblePopover.hide()
+    dispatch(selectServiceAverageRating())
+  }, [])
+
+  const calculateNumber = () => {
+    let number = 0;
+    if (dataServiceCoupon) {
+      number += 1
+    }
+    if (dataServiceAverageRating) {
+      number += 1
+    }
+    return number
+  }
 
   return (
     <Popover
@@ -41,7 +65,7 @@ const BtnPopover = ({ title = '', isActive = false, onPress, icon = null }: Prop
             <Text
               color={WHITE}
               weight={isActive ? 'bold' : 'regular'}>
-              {title.toUpperCase()}
+              {title}
             </Text>
             {
               icon ?
@@ -51,24 +75,59 @@ const BtnPopover = ({ title = '', isActive = false, onPress, icon = null }: Prop
                 : <></>
             }
           </Row>
+          {
+            calculateNumber() ?
+              <Column
+                width={8 * 2}
+                height={8 * 2}
+                right={-2}
+                top={1}
+                borderRadius={8}
+                backgroundColor={RED}
+                style={styleElement.centerChild}
+                position='absolute'>
+                <Text
+                  size={10}
+                  color={WHITE}
+                  weight='bold'>
+                  {calculateNumber()}
+                </Text>
+              </Column>
+              : <></>
+          }
+
         </TouchableOpacity>
       )}>
       <Column
-        width={140} backgroundColor={WHITE}>
+        width={180} backgroundColor={WHITE}>
         <TouchableOpacity
-          onPress={visiblePopover.hide}
+          onPress={_handleSelectServiceCoupon}
           style={styles.containerTouch}>
-          <Text>
-            Ưu đãi
-          </Text>
+          <Row gap={8}>
+            <Text>
+              Ưu đãi
+            </Text>
+            {
+              dataServiceCoupon ?
+                <IconTick style={sizeIcon.xxxxs} />
+                : <></>
+            }
+          </Row>
         </TouchableOpacity>
         <HorizontalLine style={styles.horizontalLine} />
         <TouchableOpacity
-          onPress={visiblePopover.hide}
+          onPress={_handleSelectServiceAverageRating}
           style={styles.containerTouch}>
-          <Text>
-            Đánh giá hàng đầu
-          </Text>
+          <Row gap={8}>
+            <Text>
+              Đánh giá hàng đầu
+            </Text>
+            {
+              dataServiceAverageRating ?
+                <IconTick style={sizeIcon.xxxxs} />
+                : <></>
+            }
+          </Row>
         </TouchableOpacity>
       </Column>
     </Popover>

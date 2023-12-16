@@ -2,8 +2,9 @@ import Column from '@Components/Column'
 import { IconArrowDown } from '@Components/Icon/Icon'
 import Row from '@Components/Row'
 import Text from '@Components/Text'
-import { BORDER_COLOR } from '@Constant/Color'
+import { BORDER_COLOR, NEW_BASE_COLOR } from '@Constant/Color'
 import { sizeIcon } from '@Constant/Icon'
+import { isEmpty } from 'lodash'
 import React from 'react'
 import { TouchableOpacity } from 'react-native'
 import useHapticCallback from 'src/Hooks/useHapticCallback'
@@ -11,10 +12,11 @@ import useHapticCallback from 'src/Hooks/useHapticCallback'
 
 type Props = {
   visibleModalBottomLocation: any;
+  provinceChoiced: any;
 };
 
 
-const FilterLocation = ({ visibleModalBottomLocation }: Props) => {
+const FilterLocation = ({ visibleModalBottomLocation, provinceChoiced }: Props) => {
 
   const _handleShow = useHapticCallback(() => {
     visibleModalBottomLocation.show()
@@ -35,9 +37,19 @@ const FilterLocation = ({ visibleModalBottomLocation }: Props) => {
           borderRadius={8}
           paddingHorizontal={8 * 2}>
           <Row gap={8}>
-            <Text size={12}>
-              Thành phố Hồ Chí Minh
-            </Text>
+            {
+              !isEmpty(provinceChoiced) ?
+                <Text
+                  weight='bold'
+                  color={NEW_BASE_COLOR}
+                  size={12}>
+                  {provinceChoiced?.cityName[0]}
+                </Text>
+                :
+                <Text size={12}>
+                  Nhấn để chọn vị trí
+                </Text>
+            }
             <IconArrowDown style={sizeIcon.sm} />
           </Row>
         </Column>

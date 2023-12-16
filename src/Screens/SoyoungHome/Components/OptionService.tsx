@@ -42,8 +42,8 @@ const OptionService = () => {
     dispatch(getServiceGroup.request(condition));
   }, []);
 
-  const _handleGoCategory = useCallback(() => {
-    navigation.navigate(ScreenKey.NEW_CATEGORY)
+  const _handleGoCategory = useCallback((item) => {
+    navigation.navigate(ScreenKey.NEW_CATEGORY, { parentCodeParam: item })
   }, [])
 
   return (
@@ -58,7 +58,7 @@ const OptionService = () => {
         return (
           <TouchableOpacity
             key={item._id}
-            onPress={_handleGoCategory}
+            onPress={() => _handleGoCategory(item)}
             style={styles.itemContainer}>
             <Image
               style={styles.item__option}
