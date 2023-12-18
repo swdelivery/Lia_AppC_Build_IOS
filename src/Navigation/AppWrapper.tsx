@@ -6,25 +6,29 @@ import { navigationRef, navigation } from "../../rootNavigation";
 import { _heightScale } from "../Constant/Scale";
 import ScreenKey from "./ScreenKey";
 import { getListDoctorForPartner } from "../Redux/Action/MembersAction";
-import * as ActionType from "../Redux/Constants/ActionType";
-import Store from "../Redux/store";
-import NotifiRightTab from "../Components/NotifiRight/TabRightNotifi";
-import ModalNoti from "../Components/Notification/ModalNoti";
-import store from "../Redux/store";
 import ModalRequireLogin from "../Components/Notification/ModalRequireLogin";
-import { getTreatmentDiaryIncompleteDaily } from "../Redux/Action/Diary";
-import AsyncStorage from "@react-native-community/async-storage";
 import messaging from "@react-native-firebase/messaging";
 import ActionSheetIcon from "@Components/ModalBottom/ActionSheetIcon";
 import RootNavigator from "./RootNavigator";
 import Toast from "react-native-toast-message";
 import toastConfig from "@Components/BottomToast";
 import RightNoti from "@Components/RightNoti/RightNoti";
+import configs from "src/configs";
+import Text from "@Components/Text";
+
+const LINKING = {
+  prefixes: [`https://${configs.appLinkDomain}`],
+
+  config: {
+    screens: {
+      [ScreenKey.CHARITY_FUND_DETAILS]: "thien-nguyen/:id",
+    },
+  },
+};
 
 const AppWrapper = (props) => {
-  const reduxAuth = useSelector((state) => state.authReducer);
-
   const dispatch = useDispatch();
+  const reduxAuth = useSelector((state) => state.authReducer);
 
   useEffect(() => {
     BootSplash.hide({ fade: true });
@@ -80,7 +84,11 @@ const AppWrapper = (props) => {
 
   return (
     <>
-      <NavigationContainer ref={navigationRef}>
+      <NavigationContainer
+        ref={navigationRef}
+        linking={LINKING}
+        fallback={<Text>Đang tải...</Text>}
+      >
         <RootNavigator />
       </NavigationContainer>
 

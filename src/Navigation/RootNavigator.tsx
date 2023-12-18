@@ -1056,15 +1056,18 @@ const RootNavigator = () => {
           <rootStack.Screen
             options={{ ...TransitionPresets.SlideFromRightIOS }}
             name={ScreenKey.CHARITY}
-            component={Charity} />
+            component={Charity}
+          />
           <rootStack.Screen
             options={{ ...TransitionPresets.SlideFromRightIOS }}
             name={ScreenKey.SEARCHING_CHARITY}
-            component={SearchingCharity} />
+            component={SearchingCharity}
+          />
           <rootStack.Screen
             options={{ ...TransitionPresets.SlideFromRightIOS }}
             name={ScreenKey.CHARITY_ACCOUNT_STATEMENT}
-            component={CharityAccountStatement} />
+            component={CharityAccountStatement}
+          />
 
           <rootStack.Screen
             options={{
