@@ -4,18 +4,24 @@ import Text, { FONT_WEIGHTS } from '@Components/Text'
 import { WHITE } from '@Constant/Color'
 import { _heightScale, _width } from '@Constant/Scale'
 import ScrollableTabView from "@itenl/react-native-scrollable-tabview"
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import Banner from './Components/Banner'
 import Header from './Components/Header'
 import MoneyInput from './Components/MoneyInput'
 import StickyHeader from './Components/StickyHeader'
+import MoneyOut from './Components/MoneyOut'
 
 const CharityAccountStatement = () => {
   const [rootTime, setRootTime] = useState(Date.now());
   const scrollableTabViewRef = useRef();
   const { top } = useSafeAreaInsets()
+  const [currIndexTab, setCurrIndexTab] = useState(0)
+
+  useEffect(() => {
+    scrollableTabViewRef?.current?.toTabView(currIndexTab)
+  }, [currIndexTab])
 
   const STACKS = [
     {
@@ -26,9 +32,7 @@ const CharityAccountStatement = () => {
     },
     {
       screen: () => {
-        return <View style={{ height: 1000 }} >
-          <Text>SECOND</Text>
-        </View>
+        return <MoneyOut />
       },
       tabLabel: "Chi",
     },
@@ -41,7 +45,11 @@ const CharityAccountStatement = () => {
 
       <ScrollableTabView
         tabsShown={false}
-        stickyHeader={<StickyHeader />}
+        stickyHeader={
+          <StickyHeader
+            setCurrIndexTab={setCurrIndexTab}
+            currIndexTab={currIndexTab} />
+        }
         title={<View style={{ width: _width, height: '100%', backgroundColor: WHITE }} />}
         titleArgs={{
           interpolateHeight: {
@@ -68,6 +76,7 @@ const CharityAccountStatement = () => {
         toTabsOnTab={true}
         oneTabHidden={true}
         enableCachePage={true}
+        onTabviewChanged={setCurrIndexTab}
       />
     </Screen>
   )

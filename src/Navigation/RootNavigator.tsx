@@ -194,6 +194,7 @@ import Charity from "@Screens/Charity";
 import SearchingCharity from "@Screens/Charity/SearchingCharity";
 import CharityAccountStatement from "@Screens/CharityAccountStatement";
 import ListOutstanding from "@Screens/Charity/ListOutstanding";
+import ModalFilter from "@Screens/CharityAccountStatement/ModalFilter";
 
 const rootStack = createStackNavigator();
 
@@ -1070,6 +1071,10 @@ const RootNavigator = () => {
             options={{ ...TransitionPresets.SlideFromRightIOS }}
             name={ScreenKey.CHARITY_LIST_OUTSTANDING}
             component={ListOutstanding} />
+          <rootStack.Screen
+            options={optionsModal}
+            name={ScreenKey.CHARITY_ACCOUNT_MODAL_FILTER}
+            component={ModalFilter} />
 
           <rootStack.Screen
             options={{

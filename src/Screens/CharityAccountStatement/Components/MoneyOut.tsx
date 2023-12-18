@@ -3,12 +3,12 @@ import React from 'react'
 import Text from '@Components/Text'
 import Row from '@Components/Row'
 import Column from '@Components/Column'
-import { BORDER_COLOR, GREEN_SUCCESS, NEW_BASE_COLOR } from '@Constant/Color'
+import { BORDER_COLOR, GREEN_SUCCESS, NEW_BASE_COLOR, RED } from '@Constant/Color'
 import { styleElement } from '@Constant/StyleElement'
 import CardSmallCharity from '@Screens/Charity/Components/CardSmallCharity'
 import { ScrollView } from 'react-native-gesture-handler'
 
-const MoneyInput = () => {
+const MoneyOut = () => {
   return (
     <View style={styles.container}>
       <Row
@@ -16,7 +16,7 @@ const MoneyInput = () => {
         justifyContent='space-between'>
         <Text
           weight='bold'>
-          Ngày 11 tháng 12
+          Ngày 12 tháng 12
         </Text>
         <Text>
           64 Giao dịch
@@ -35,15 +35,15 @@ const MoneyInput = () => {
               <Column key={index} gap={8}>
                 <Row gap={8}>
                   <Text>
-                    Từ:
+                    Đến:
                   </Text>
                   <Text numberOfLines={1} flex={1} weight='bold'>
-                    SACOMBANK CK TU SACOMBANK
+                    NGUYEN NGOC HUAN
                   </Text>
                   <Text
-                    color={GREEN_SUCCESS}
+                    color={RED}
                     weight='bold'>
-                    + 1.000.000
+                    - 1.000.000
                   </Text>
                 </Row>
                 <Row alignItems='flex-start'>
@@ -87,7 +87,7 @@ const MoneyInput = () => {
   )
 }
 
-export default MoneyInput
+export default MoneyOut
 
 const styles = StyleSheet.create({
   container: {

@@ -192,7 +192,7 @@ const FlashSale = (props) => {
                                             opacity: opacity
                                         }]}>
                                             Sắp bắt đầu
-                                </Animated.Text>
+                                        </Animated.Text>
                                         <Timer
                                             ref={refTimer}
                                             timestamp={diffStart}
@@ -223,7 +223,7 @@ const FlashSale = (props) => {
                                             opacity: opacity
                                         }]}>
                                             Kết thúc trong
-                                    </Animated.Text>
+                                        </Animated.Text>
                                         <Timer
                                             ref={refTimer}
                                             timestamp={diffEnd}
