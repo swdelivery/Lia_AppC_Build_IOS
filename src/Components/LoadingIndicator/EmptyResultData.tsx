@@ -4,7 +4,12 @@ import Column from '@Components/Column'
 import Text from '@Components/Text'
 import { GREY } from '@Constant/Color'
 
-const EmptyResultData = () => {
+
+type Props = {
+  title?: string;
+};
+
+const EmptyResultData = ({ title = 'Chưa có dữ liệu' }: Props) => {
   return (
     <Column
       alignItems='center'
@@ -13,7 +18,7 @@ const EmptyResultData = () => {
       <Text
         color={GREY}
         fontStyle='italic'>
-        Chưa có dữ liệu
+        {title}
       </Text>
     </Column>
   )

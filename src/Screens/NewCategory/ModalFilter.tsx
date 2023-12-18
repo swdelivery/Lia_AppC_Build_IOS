@@ -1,3 +1,4 @@
+import Button from '@Components/Button/Button'
 import Column from '@Components/Column'
 import { IconCancelGrey } from '@Components/Icon/Icon'
 import Row from '@Components/Row'
@@ -6,16 +7,20 @@ import { GREY, GREY_FOR_TITLE, NEW_BASE_COLOR, WHITE } from '@Constant/Color'
 import { sizeIcon } from '@Constant/Icon'
 import { _width } from '@Constant/Scale'
 import { styleElement } from '@Constant/StyleElement'
+import { getListServiceFilter, selectServiceBranchGroup, selectServiceChildCodeGroup, selectServiceLocation, selectServiceRangePrice, selectServiceUtilities } from '@Redux/category/actions'
+import { getDataFilterServiceState } from '@Redux/category/selectors'
+import { isEmpty } from 'lodash'
 import React, { useEffect, useState } from 'react'
 import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
 import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import Button from '@Components/Button/Button'
+import { useDispatch, useSelector } from 'react-redux'
 import useVisible from 'src/Hooks/useVisible'
 import ModalBottomLocation from './ModalBottomLocation'
 import FilterLocation from './ModalFilterComponents/FilterLocation'
 import SliderPrice from './ModalFilterComponents/SliderPrice'
 import WrapList from './ModalFilterComponents/WrapList'
+import WrapListString from './ModalFilterComponents/WrapListString'
 
 const WIDTH_MODAL = _width / 1.15
 
@@ -26,44 +31,47 @@ type Props = {
 };
 
 const ModalFilter = ({ visible, onClose }: Props) => {
-
+  const dispatch = useDispatch()
   const { top } = useSafeAreaInsets()
   const tranX = useSharedValue(0);
   const opacityBackDrop = useSharedValue(0);
 
   const visibleModalBottomLocation = useVisible()
 
-  const [listTagService, setListTagService] = useState([
-    { code: 'nhan-mi', name: 'Nhấn mí' },
-    { code: 'cat-mi', name: 'Cắt mí' },
-    { code: 'nang-cung', name: 'Nâng cung' },
-    { code: 'mo-khoe-ngoai', name: 'Mở khoé ngoài' },
-    { code: 'lay-mo-bong-mat', name: 'Lấy mỡ bọng mắt' },
-  ])
+  // DATA FOR USER TO SELECT 
+  const { dataForModalFilterService:
+    {
+      childrenServiceGroup,
+      typeGroupBranch,
+      utilitiesGroupBranch,
+    }
+  } = useSelector(getDataFilterServiceState)
+
+  // DATA'S USER HAS SELECTED FROM STORE
+  const {
+    dataServiceParentCodeGroup,
+    dataServiceCoupon,
+    dataServiceAverageRating,
+    dataServiceMostPopular,
+    dataServiceSortPrice,
+    dataServiceChildCodeGroup,
+    dataServiceLocation,
+    dataServiceBranchGroup,
+    dataServiceRangePrice,
+    dataServiceUtilities
+  } = useSelector(getDataFilterServiceState)
+
+
   const [selectedListTagService, setSelectedListTagService] = useState([])
-
-  const [listTagType, setListTagType] = useState([
-    { code: 'benh-vien', name: 'Bệnh viện' },
-    { code: 'phong-kham', name: 'Phòng khám' },
-    { code: 'clinic', name: 'Clinic' },
-    { code: 'spa', name: 'Spa' },
-  ])
   const [selectedListTagType, setSelectedListTagType] = useState([])
-
-  const [listTagUtilitie, setListTagUtilitie] = useState([
-    { code: 'xe-dua-don', name: 'Xe đưa đón' },
-    { code: 'tra', name: 'Trà/Đồ uống' },
-    { code: 'bai-dau-xe', name: 'Bãi đậu xe miễn phí' },
-    { code: 'trai-cay', name: 'Trái cây' },
-    { code: 'phong-tiem-rieng', name: 'Phòng tiêm riêng' },
-    { code: 'goi-tu-cham-soc', name: 'Gói tự chăm sóc' },
-    { code: 'phong-nghi', name: 'Phòng nghĩ dưỡng VIP' },
-  ])
   const [selectedListTagUtilitie, setSelectedListTagUtilitie] = useState([])
+  const [selectedPrice, setSelectedPrice] = useState(null)
+  const [provinceChoiced, setProvinceChoiced] = useState(null)
 
 
   useEffect(() => {
     if (visible) {
+      _handleFillDataStoreToState()
       tranX.value = withTiming(-WIDTH_MODAL, { duration: 300 })
       opacityBackDrop.value = withTiming(1, { duration: 300 })
     } else {
@@ -72,6 +80,14 @@ const ModalFilter = ({ visible, onClose }: Props) => {
   }, [visible])
 
   // FUNCTION
+  const _handleFillDataStoreToState = () => {
+    setSelectedListTagService(dataServiceChildCodeGroup)
+    setProvinceChoiced(dataServiceLocation)
+    setSelectedListTagType(dataServiceBranchGroup)
+    setSelectedPrice(dataServiceRangePrice)
+    setSelectedListTagUtilitie(dataServiceUtilities)
+  }
+
   const _handleSelectTagService = (data) => {
     let arrTemp = [...selectedListTagService];
     let indexFinded = arrTemp?.findIndex(item => item?.code == data?.code);
@@ -84,7 +100,7 @@ const ModalFilter = ({ visible, onClose }: Props) => {
   }
   const _handleSelectTagType = (data) => {
     let arrTemp = [...selectedListTagType];
-    let indexFinded = arrTemp?.findIndex(item => item?.code == data?.code);
+    let indexFinded = arrTemp?.findIndex(item => item == data);
     if (indexFinded !== -1) {
       arrTemp.splice(indexFinded, 1);
     } else {
@@ -94,7 +110,7 @@ const ModalFilter = ({ visible, onClose }: Props) => {
   }
   const _handleSelectTagUtilitie = (data) => {
     let arrTemp = [...selectedListTagUtilitie];
-    let indexFinded = arrTemp?.findIndex(item => item?.code == data?.code);
+    let indexFinded = arrTemp?.findIndex(item => item == data);
     if (indexFinded !== -1) {
       arrTemp.splice(indexFinded, 1);
     } else {
@@ -103,9 +119,77 @@ const ModalFilter = ({ visible, onClose }: Props) => {
     setSelectedListTagUtilitie(arrTemp)
   }
 
+  // CHANGE TO INITIAL STATE
+  const _handleClearData = () => {
+    setSelectedListTagService([])
+    setSelectedListTagType([])
+    setSelectedListTagUtilitie([])
+    setSelectedPrice(null)
+    setProvinceChoiced(null)
+  }
+
+  // CONFIRM FILTER
+  const _handleConfirm = () => {
+    requestAnimationFrame(() => {
+      let dataFetch = {
+        condition: {},
+        sort: {}
+      };
+      if (!isEmpty(selectedListTagService)) {
+        dataFetch['condition']["codeGroup"] = {
+          in: selectedListTagService.map(item => item?.code)
+        };
+      } else {
+        dataFetch['condition']["codeGroup"] = {
+          in: [dataServiceParentCodeGroup?.code]
+        };
+      }
+      if (dataServiceCoupon) {
+        dataFetch['condition']["preferential"] = { "notEqual": [] }
+      }
+      if (dataServiceAverageRating) {
+        dataFetch['sort']["averageRating"] = -1
+      }
+      if (dataServiceMostPopular) {
+        dataFetch['sort']["reviewCount"] = -1
+        dataFetch['sort']["countPartner"] = -1
+      }
+      if (dataServiceSortPrice) {
+        dataFetch['sort']["price"] = dataServiceSortPrice
+      }
+      if (!isEmpty(provinceChoiced)) {
+        dataFetch['condition']["cityCode"] = { "equal": provinceChoiced?.codeCity[0] }
+      }
+      if (!isEmpty(selectedListTagType)) {
+        dataFetch['condition']["type"] = {
+          "in": selectedListTagType
+        }
+      }
+      if (selectedPrice) {
+        dataFetch['condition']["price"] = {
+          "from": 0, "to": selectedPrice
+        }
+      }
+      if (!isEmpty(selectedListTagUtilitie)) {
+        dataFetch['condition']["utilities"] = {
+          "in": selectedListTagUtilitie
+        }
+      }
+      dispatch(getListServiceFilter.request(dataFetch))
+      dispatch(selectServiceChildCodeGroup(selectedListTagService))
+      dispatch(selectServiceLocation(provinceChoiced))
+      dispatch(selectServiceBranchGroup(selectedListTagType))
+      dispatch(selectServiceRangePrice(selectedPrice))
+      dispatch(selectServiceUtilities(selectedListTagUtilitie))
+
+    });
+    _handleClosing()
+  }
+
 
   // ANIMATION
   const _handleClosing = () => {
+    _handleClearData()
     tranX.value = withTiming(0, { duration: 300 }, (isFinished) => {
       if (isFinished) {
         runOnJS(_handleHide)()
@@ -169,23 +253,40 @@ const ModalFilter = ({ visible, onClose }: Props) => {
           </TouchableOpacity>
         </Column>
         <ScrollView>
-          <WrapList
-            selected={selectedListTagService}
-            onSelected={_handleSelectTagService}
-            data={listTagService}
-            title="Dịch vụ" />
-          <FilterLocation visibleModalBottomLocation={visibleModalBottomLocation} />
-          <WrapList
-            selected={selectedListTagType}
-            onSelected={_handleSelectTagType}
-            data={listTagType}
-            title="Loại hình" />
-          <SliderPrice />
-          <WrapList
-            selected={selectedListTagUtilitie}
-            onSelected={_handleSelectTagUtilitie}
-            data={listTagUtilitie}
-            title="Tiện ích" />
+          {
+            !isEmpty(childrenServiceGroup) ?
+              <WrapList
+                selected={selectedListTagService}
+                onSelected={_handleSelectTagService}
+                data={childrenServiceGroup}
+                title="Dịch vụ" />
+              : <></>
+          }
+          <FilterLocation
+            provinceChoiced={provinceChoiced}
+            visibleModalBottomLocation={visibleModalBottomLocation} />
+          {
+            !isEmpty(typeGroupBranch) ?
+              <WrapListString
+                selected={selectedListTagType}
+                onSelected={_handleSelectTagType}
+                data={typeGroupBranch}
+                title="Loại hình" />
+              : <></>
+          }
+          <SliderPrice
+            selectedPrice={selectedPrice}
+            setSelectedPrice={setSelectedPrice}
+          />
+          {
+            !isEmpty(utilitiesGroupBranch) ?
+              <WrapListString
+                selected={selectedListTagUtilitie}
+                onSelected={_handleSelectTagUtilitie}
+                data={utilitiesGroupBranch}
+                title="Tiện ích" />
+              : <></>
+          }
         </ScrollView>
 
         <Row
@@ -198,7 +299,7 @@ const ModalFilter = ({ visible, onClose }: Props) => {
               bgColor={'#F2F2F5'}
               colorText={GREY}
               title={`Thiết lập lại`}
-              onPress={() => { }}
+              onPress={_handleClearData}
               height={40}
             />
           </Column>
@@ -209,14 +310,14 @@ const ModalFilter = ({ visible, onClose }: Props) => {
             end={{ x: 0, y: 1 }}
             colors={[NEW_BASE_COLOR, NEW_BASE_COLOR]}
             title={`Áp dụng`}
-            onPress={() => { }}
+            onPress={_handleConfirm}
             height={40}
           />
         </Row>
-
       </Animated.View>
-
       <ModalBottomLocation
+        provinceChoiced={provinceChoiced}
+        setProvinceChoiced={setProvinceChoiced}
         onClose={visibleModalBottomLocation.hide}
         visible={visibleModalBottomLocation.visible} />
 

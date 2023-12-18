@@ -6,9 +6,11 @@ import Text from '@Components/Text'
 import { BORDER_COLOR } from '@Constant/Color'
 import { sizeIcon } from '@Constant/Icon'
 import { getAllAddressVietNam } from '@Redux/Action/BookingAction'
+import { getDataFilterServiceState } from '@Redux/category/selectors'
 import { escapeRegExp, isEmpty } from 'lodash'
 import React, { useEffect, useState } from 'react'
 import { FlatList, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
+import { useSelector } from 'react-redux'
 import slugify from 'slugify'
 
 
@@ -20,6 +22,12 @@ type Props = {
 const ListAllProvince = ({ onChoice, provinceChoiced }: Props) => {
   const [listAllProvince, setListAllProvince] = useState([])
   const [listAllProvinceFilter, setListAllProvinceFilter] = useState([])
+
+  const { dataForModalFilterService:
+    {
+      location
+    }
+  } = useSelector(getDataFilterServiceState)
 
   useEffect(() => {
     _getAllAddressVietNam()
@@ -72,10 +80,10 @@ const ListAllProvince = ({ onChoice, provinceChoiced }: Props) => {
           padding={8 * 2}>
           <Column flex={1}>
             <Text>
-              {item?.name}
+              {item?.cityName[0]}
             </Text>
           </Column>
-          <CircleTick isTicked={provinceChoiced?.code == item?.code} />
+          <CircleTick isTicked={provinceChoiced?.codeCity[0] == item?.codeCity[0]} />
         </Row>
       </TouchableOpacity>
     )
@@ -83,7 +91,8 @@ const ListAllProvince = ({ onChoice, provinceChoiced }: Props) => {
 
   return (
     <Column flex={1}>
-      <Row
+      {/* TEMP CLOSE */}
+      {/* <Row
         gap={8}
         padding={8 * 2}>
         <IconFindGrey style={sizeIcon.lg} />
@@ -91,7 +100,7 @@ const ListAllProvince = ({ onChoice, provinceChoiced }: Props) => {
           onChangeText={(text) => filterByNames(listAllProvince, text)}
           style={{ padding: 0, flex: 1 }}
           placeholder='Tìm kiếm thành phố' />
-      </Row>
+      </Row> */}
       <Row
         marginVertical={8}
         margin={8 * 2}>
@@ -100,7 +109,8 @@ const ListAllProvince = ({ onChoice, provinceChoiced }: Props) => {
       <Column flex={1}>
         <FlatList
           renderItem={_renderItem}
-          data={!isEmpty(listAllProvinceFilter) ? listAllProvinceFilter : listAllProvince}
+          // data={!isEmpty(listAllProvinceFilter) ? listAllProvinceFilter : listAllProvince}
+          data={location}
           keyExtractor={(item, index) => `${index}-${item?.codename}`}
         />
       </Column>

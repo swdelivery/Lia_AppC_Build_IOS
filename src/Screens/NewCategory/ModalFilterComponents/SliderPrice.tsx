@@ -1,19 +1,29 @@
 import Column from '@Components/Column'
 import Row from '@Components/Row'
 import Text from '@Components/Text'
-import { BLUE_FB, GREY, NEW_BASE_COLOR } from '@Constant/Color'
+import { NEW_BASE_COLOR } from '@Constant/Color'
 import { _widthScale } from '@Constant/Scale'
 import { formatMonney } from '@Constant/Utils'
 import Slider from '@react-native-community/slider'
-import React, { useState } from 'react'
-import { Platform } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { Platform, StyleSheet } from 'react-native'
 
-const SliderPrice = () => {
+
+type Props = {
+  selectedPrice: number;
+  setSelectedPrice?: (item) => void;
+};
+
+const SliderPrice = ({ selectedPrice, setSelectedPrice }: Props) => {
   const [currValuePrice, setCurrValuePrice] = useState(0)
 
   const _handleValueChange = (e) => {
     setCurrValuePrice(e)
   }
+
+  useEffect(() => {
+    setCurrValuePrice(selectedPrice)
+  }, [selectedPrice])
 
   return (
     <Column gap={8} margin={8 * 2}>
@@ -26,8 +36,10 @@ const SliderPrice = () => {
 
       <Column alignSelf='flex-start'>
         <Slider
+          value={selectedPrice}
+          onSlidingComplete={setSelectedPrice}
           onValueChange={_handleValueChange}
-          style={{ width: _widthScale(280), height: 20 }}
+          style={styles.slider}
           minimumValue={0}
           step={500000}
           thumbTintColor={Platform.OS == 'ios' ? null : NEW_BASE_COLOR}
@@ -45,4 +57,8 @@ const SliderPrice = () => {
 }
 
 export default SliderPrice
+
+const styles = StyleSheet.create({
+  slider: { width: _widthScale(280), height: 20 }
+})
 

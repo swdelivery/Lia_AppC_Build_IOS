@@ -459,6 +459,22 @@ const getPartnerNotifications = (payload: any) => {
   return axios.get(`/partner-notification?${query}`, {}).then(({ data }) => data);
 };
 
+// Category
+const getServiceFilterCategory = (payload: any) => {
+  const query = encodeParams({
+    ...payload,
+  });
+  return axios
+    .get(`/service?${query}`)
+    .then(({ data }) => data);
+};
+const getDataForModalFilterService = (payload: any) => {
+  return axios
+    .get(`/service/${payload?._id}/data-filter`)
+    .then(({ data }) => data);
+};
+
+
 export default {
   partnerLogout,
 
@@ -545,5 +561,9 @@ export default {
   updateDailyDiary,
 
   // Notification
-  getPartnerNotifications
+  getPartnerNotifications,
+
+  // Category
+  getServiceFilterCategory,
+  getDataForModalFilterService
 };

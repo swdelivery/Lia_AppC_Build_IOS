@@ -14,18 +14,17 @@ type Props = {
   selected?: any;
 };
 
-
-const WrapList = ({ title, data, onSelected, selected }: Props) => {
-
+const WrapListString = ({ title, data, onSelected, selected }: Props) => {
 
   const ItemTag = ({ item }) => {
+
+    const isSelected = useMemo(() => {
+      return selected && !!selected.find(itemFind => itemFind == item);
+    }, [selected, item])
+
     const _handleSelect = useHapticCallback(() => {
       onSelected(item)
     }, [])
-
-    const isSelected = useMemo(() => {
-      return selected && !!selected.find(itemFind => itemFind?.code == item?.code);
-    }, [selected, item])
 
     return (
       <TouchableOpacity
@@ -40,7 +39,7 @@ const WrapList = ({ title, data, onSelected, selected }: Props) => {
           <Text
             color={isSelected ? WHITE : BLACK}
             size={12}>
-            {item?.name}
+            {item}
           </Text>
         </Column>
       </TouchableOpacity>
@@ -67,6 +66,6 @@ const WrapList = ({ title, data, onSelected, selected }: Props) => {
   )
 }
 
-export default WrapList
+export default WrapListString
 
 const styles = StyleSheet.create({})

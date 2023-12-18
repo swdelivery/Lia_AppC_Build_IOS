@@ -13,21 +13,23 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 import ListAllDistrict from './ModalBottomLocationComponents/ListAllDistrict'
 import ListAllProvince from './ModalBottomLocationComponents/ListAllProvince'
+import { useSelector } from 'react-redux'
+import { getDataFilterServiceState } from '@Redux/category/selectors'
 
 const HEIGHT_MODAL = _heightScale(650)
 
 type Props = {
   visible: boolean;
   onClose?: () => void;
+  provinceChoiced: any;
+  setProvinceChoiced: (item) => void
 };
 
-const ModalBottomLocation = ({ visible, onClose }: Props) => {
-
+const ModalBottomLocation = ({ visible, onClose, provinceChoiced, setProvinceChoiced }: Props) => {
   const tranY = useSharedValue(0);
   const opacityBackDrop = useSharedValue(0);
 
   const [currTypeChoice, setCurrTypeChoice] = useState('province')
-  const [provinceChoiced, setProvinceChoiced] = useState(null)
   const [districtChoiced, setDistrictChoiced] = useState(null)
 
 
@@ -40,11 +42,11 @@ const ModalBottomLocation = ({ visible, onClose }: Props) => {
     }
   }, [visible])
 
-  useEffect(() => {
-    if (!isEmpty(provinceChoiced)) {
-      setCurrTypeChoice('district')
-    }
-  }, [provinceChoiced])
+  // useEffect(() => {
+  //   if (!isEmpty(provinceChoiced)) {
+  //     setCurrTypeChoice('district')
+  //   }
+  // }, [provinceChoiced])
 
   // FUNCTION
   const _handleConfirm = () => {
@@ -117,7 +119,8 @@ const ModalBottomLocation = ({ visible, onClose }: Props) => {
           </TouchableOpacity>
         </Column>
 
-        {
+        {/* TEMP CLOSE */}
+        {/* {
           !isEmpty(provinceChoiced) ?
             <Column paddingHorizontal={8 * 2}>
               <Row>
@@ -125,7 +128,7 @@ const ModalBottomLocation = ({ visible, onClose }: Props) => {
                   Đã chọn:
                 </Text>
                 <Text color={BLUE_FB}>
-                  {` ${provinceChoiced?.name}`}
+                  {` ${provinceChoiced}`}
                 </Text>
                 {
                   !isEmpty(districtChoiced) ?
@@ -138,15 +141,20 @@ const ModalBottomLocation = ({ visible, onClose }: Props) => {
             </Column>
             :
             <></>
-        }
+        } */}
         {
           currTypeChoice == 'province' ?
             <ListAllProvince
               provinceChoiced={provinceChoiced}
-              onChoice={setProvinceChoiced} />
+              onChoice={(data) => {
+                setProvinceChoiced(data)
+                _handleClosing()
+              }} />
             : <></>
         }
-        {
+
+        {/* WAITING BACKEND UPDATE DISTRICT API */}
+        {/* {
           currTypeChoice == 'district' ?
             <ListAllDistrict
               onBack={(data) => {
@@ -157,11 +165,11 @@ const ModalBottomLocation = ({ visible, onClose }: Props) => {
               onChoice={setDistrictChoiced}
               provinceChoiced={provinceChoiced} />
             : <></>
-        }
-        <ActionButton
+        } */}
+        {/* <ActionButton
           colors={[NEW_BASE_COLOR, NEW_BASE_COLOR]}
           onPress={_handleConfirm}
-          title='Xác nhận' />
+          title='Xác nhận' /> */}
       </Animated.View>
     </View>
   )
