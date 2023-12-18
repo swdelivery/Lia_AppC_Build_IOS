@@ -1,23 +1,23 @@
-import { StyleSheet, TouchableOpacity, View } from 'react-native'
-import React, { useCallback, useMemo } from 'react'
-import { _width } from '@Constant/Scale'
-import { BORDER_COLOR, GREEN_SUCCESS, GREY, RED, WHITE } from '@Constant/Color'
-import Row from '@Components/Row'
-import { IconBackBlue } from '@Components/Icon/Icon'
 import Column from '@Components/Column'
+import Icon from "@Components/Icon"
+import Row from '@Components/Row'
 import Text from '@Components/Text'
+import { BORDER_COLOR, GREEN_SUCCESS, GREY, RED, WHITE } from '@Constant/Color'
+import { _width } from '@Constant/Scale'
 import { styleElement } from '@Constant/StyleElement'
-import Icon from "@Components/Icon";
-import { useNavigate } from 'src/Hooks/useNavigation'
 import ScreenKey from '@Navigation/ScreenKey'
+import React, { useCallback, useMemo } from 'react'
+import { StyleSheet, TouchableOpacity } from 'react-native'
+import { useNavigate } from 'src/Hooks/useNavigation'
 
 
 type Props = {
   currIndexTab: number;
   setCurrIndexTab: (value) => void;
+  showFilterIcon?: boolean;
 };
 
-const StickyHeader = ({ currIndexTab, setCurrIndexTab }: Props) => {
+const StickyHeader = ({ currIndexTab, setCurrIndexTab, showFilterIcon = false }: Props) => {
   const { navigate } = useNavigate()
 
   const isActiveIn = useMemo(() => {
@@ -55,16 +55,20 @@ const StickyHeader = ({ currIndexTab, setCurrIndexTab }: Props) => {
           weight='bold'>
           Chi
         </Text>
+        {
+          showFilterIcon ?
+            <Column
+              right={8 * 2}
+              position='absolute'>
+              <TouchableOpacity
+                onPress={navigate(ScreenKey.CHARITY_ACCOUNT_MODAL_FILTER)}
+                hitSlop={styleElement.hitslopSm}>
+                <Icon name="filter-variant" size={24} />
+              </TouchableOpacity>
+            </Column>
+            : <></>
+        }
 
-        <Column
-          right={8 * 2}
-          position='absolute'>
-          <TouchableOpacity
-            onPress={navigate(ScreenKey.CHARITY_ACCOUNT_MODAL_FILTER)}
-            hitSlop={styleElement.hitslopSm}>
-            <Icon name="filter-variant" size={24} />
-          </TouchableOpacity>
-        </Column>
 
       </TouchableOpacity>
     </Row>

@@ -1,23 +1,21 @@
+import LiAHeader from '@Components/Header/LiAHeader'
 import Screen from '@Components/Screen'
 import { FocusAwareStatusBar } from '@Components/StatusBar'
 import { FONT_WEIGHTS } from '@Components/Text'
-import { WHITE } from '@Constant/Color'
+import { NEW_BASE_COLOR, WHITE } from '@Constant/Color'
 import { _heightScale, _width } from '@Constant/Scale'
 import ScrollableTabView from "@itenl/react-native-scrollable-tabview"
 import React, { useEffect, useRef, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import Banner from './Components/Banner'
-import Header from './Components/Header'
-import MoneyIn from './Components/MoneyIn'
-import MoneyOut from './Components/MoneyOut'
 import StickyHeader from './Components/StickyHeader'
+import Banner from './ResultFilterComponents/Banner'
+import HistoryCashIn from './ResultFilterComponents/HistoryCashIn'
+import HistoryCashOut from './ResultFilterComponents/HistoryCashOut'
 
-const CharityAccountStatement = () => {
+const ResultFilter = () => {
+  const [currIndexTab, setCurrIndexTab] = useState(0)
   const [rootTime, setRootTime] = useState(Date.now());
   const scrollableTabViewRef = useRef();
-  const { top } = useSafeAreaInsets()
-  const [currIndexTab, setCurrIndexTab] = useState(0)
 
   useEffect(() => {
     scrollableTabViewRef?.current?.toTabView(currIndexTab)
@@ -26,36 +24,37 @@ const CharityAccountStatement = () => {
   const STACKS = [
     {
       screen: () => {
-        return <MoneyIn />
+        return <HistoryCashIn />
       },
       tabLabel: "Thu",
     },
     {
       screen: () => {
-        return <MoneyOut />
+        return <HistoryCashOut />
       },
       tabLabel: "Chi",
     },
   ];
 
   return (
-    <Screen>
-      <FocusAwareStatusBar barStyle='dark-content' />
-      <Header />
-
+    <Screen safeBottom >
+      <FocusAwareStatusBar barStyle='light-content' />
+      <LiAHeader
+        bg={NEW_BASE_COLOR}
+        safeTop
+        title='Chi tiết thu chi' />
       <ScrollableTabView
         tabsShown={false}
         stickyHeader={
           <StickyHeader
-            showFilterIcon
             setCurrIndexTab={setCurrIndexTab}
             currIndexTab={currIndexTab} />
         }
         title={<View style={{ width: _width, height: '100%', backgroundColor: WHITE }} />}
         titleArgs={{
           interpolateHeight: {
-            inputRange: [0, 300 + top],
-            outputRange: [0, 55 + top],
+            inputRange: [0, 0],
+            outputRange: [0, 0],
             extrapolate: "clamp",
           },
         }}
@@ -83,7 +82,7 @@ const CharityAccountStatement = () => {
   )
 }
 
-export default CharityAccountStatement
+export default ResultFilter
 
 const styles = StyleSheet.create({
   imageBackground: {

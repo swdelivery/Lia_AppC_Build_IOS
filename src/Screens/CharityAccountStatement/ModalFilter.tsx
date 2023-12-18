@@ -1,25 +1,23 @@
-import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
-import React, { useCallback, useState } from 'react'
-import Screen from '@Components/Screen'
-import Text from '@Components/Text'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import Row from '@Components/Row'
-import { useNavigate } from 'src/Hooks/useNavigation'
-import Icon from "@Components/Icon";
-import { FocusAwareStatusBar } from '@Components/StatusBar'
-import { styleElement } from '@Constant/StyleElement'
-import SearchInput from './ModalFilterComponents/SearchInput'
-import RangeDateInput from './ModalFilterComponents/RangeDateInput'
-import MultiPickerColumn from './ModalFilterComponents/MultiPickerColumn'
 import Button from '@Components/Button/Button'
-import { NEW_BASE_COLOR } from '@Constant/Color'
-import CalendarPickSingle from '@Components/CalendarPickSingle/CalendarPickSingle'
-import useVisible from 'src/Hooks/useVisible'
+import Icon from "@Components/Icon"
 import NewDatePicker from '@Components/NewDatePicker/NewDatePicker'
+import Row from '@Components/Row'
+import Screen from '@Components/Screen'
+import { FocusAwareStatusBar } from '@Components/StatusBar'
+import Text from '@Components/Text'
+import { NEW_BASE_COLOR } from '@Constant/Color'
+import { styleElement } from '@Constant/StyleElement'
+import ScreenKey from '@Navigation/ScreenKey'
 import moment from 'moment'
+import React, { useCallback, useState } from 'react'
+import { ScrollView, StyleSheet, TouchableOpacity } from 'react-native'
+import { useNavigate } from 'src/Hooks/useNavigation'
+import useVisible from 'src/Hooks/useVisible'
+import MultiPickerColumn from './ModalFilterComponents/MultiPickerColumn'
+import RangeDateInput from './ModalFilterComponents/RangeDateInput'
+import SearchInput from './ModalFilterComponents/SearchInput'
 
 const ModalFilter = () => {
-  const { top } = useSafeAreaInsets()
   const { navigation } = useNavigate()
 
   const [dataType, setDataType] = useState([
@@ -79,6 +77,10 @@ const ModalFilter = () => {
     setValueTimeTo(null)
   }, [])
 
+  const _handleGoResultFilter = useCallback(() => {
+    navigation.navigate(ScreenKey.CHARITY_RESULT_FILTER_CASH_FLOW)
+  }, [])
+
   return (
     <Screen
       safeBottom
@@ -130,7 +132,7 @@ const ModalFilter = () => {
           borderRadius={12}
         />
         <Button.Gradient
-          onPress={() => { }}
+          onPress={_handleGoResultFilter}
           title="Áp dụng"
           titleSize={16}
           height={40}

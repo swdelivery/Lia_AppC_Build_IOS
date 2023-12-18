@@ -8,7 +8,7 @@ import { StyleSheet, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import CardCash from './CardCash'
 
-const MoneyOut = () => {
+const MoneyIn = () => {
   return (
     <View style={styles.container}>
       <Row
@@ -16,7 +16,7 @@ const MoneyOut = () => {
         justifyContent='space-between'>
         <Text
           weight='bold'>
-          Ngày 12 tháng 12
+          Ngày 11 tháng 12
         </Text>
         <Text>
           64 Giao dịch
@@ -28,9 +28,9 @@ const MoneyOut = () => {
         backgroundColor={'#F4F4F4'}
         marginHorizontal={8 * 2}>
         {
-          [1, 2, 4, 5, 6, 7]?.map((item, index) => {
+          [1, 2, 4, 5, 6, 7, 8, 9]?.map((item, index) => {
             return (
-              <CardCash key={index} />
+              <CardCash key={index} isCashIn />
             )
           })
         }
@@ -63,7 +63,7 @@ const MoneyOut = () => {
   )
 }
 
-export default MoneyOut
+export default MoneyIn
 
 const styles = StyleSheet.create({
   container: {
