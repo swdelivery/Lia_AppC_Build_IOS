@@ -19,7 +19,9 @@ const INITIAL_STATE: State = {
 const request: Handler<State> = (state, { payload }) => {
   return {
     ...state,
-    isLoading: true
+    isLoading: true,
+    data: INITIAL_STATE.data,
+    meta: INITIAL_STATE.meta
   }
 };
 

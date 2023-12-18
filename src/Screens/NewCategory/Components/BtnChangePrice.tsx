@@ -2,7 +2,7 @@ import { IconSortPrice, IconSortPriceDown, IconSortPriceUp } from '@Components/I
 import Row from '@Components/Row';
 import Text from '@Components/Text';
 import { WHITE } from '@Constant/Color';
-import { selectServiceSortPrice } from '@Redux/category/actions';
+import { selectServiceMostPopular, selectServiceSortPrice } from '@Redux/category/actions';
 import { getDataFilterServiceState } from '@Redux/category/selectors';
 import React from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
@@ -15,7 +15,7 @@ const BtnChangePrice = () => {
   const { dataServiceSortPrice } = useSelector(getDataFilterServiceState)
 
   const _handlePress = useHapticCallback(() => {
-    console.log({ dataServiceSortPrice });
+    dispatch(selectServiceMostPopular(false))
     if (!dataServiceSortPrice) {
       dispatch(selectServiceSortPrice(1))
     } else if (dataServiceSortPrice == 1) {

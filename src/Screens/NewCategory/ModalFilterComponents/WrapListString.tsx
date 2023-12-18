@@ -2,7 +2,7 @@ import Column from '@Components/Column'
 import Row from '@Components/Row'
 import Text from '@Components/Text'
 import { BLACK, BORDER_COLOR, NEW_BASE_COLOR, WHITE } from '@Constant/Color'
-import React from 'react'
+import React, { useMemo } from 'react'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 import useHapticCallback from 'src/Hooks/useHapticCallback'
 
@@ -17,9 +17,15 @@ type Props = {
 const WrapListString = ({ title, data, onSelected, selected }: Props) => {
 
   const ItemTag = ({ item }) => {
+
+    const isSelected = useMemo(() => {
+      return selected && !!selected.find(itemFind => itemFind == item);
+    }, [selected, item])
+
     const _handleSelect = useHapticCallback(() => {
       onSelected(item)
     }, [])
+
     return (
       <TouchableOpacity
         onPress={_handleSelect}>
@@ -27,11 +33,11 @@ const WrapListString = ({ title, data, onSelected, selected }: Props) => {
           paddingVertical={4}
           paddingHorizontal={8}
           borderWidth={1}
-          borderColor={(selected?.find(itemFind => itemFind == item)) ? NEW_BASE_COLOR : BORDER_COLOR}
-          backgroundColor={(selected?.find(itemFind => itemFind == item)) ? NEW_BASE_COLOR : null}
+          borderColor={isSelected ? NEW_BASE_COLOR : BORDER_COLOR}
+          backgroundColor={isSelected ? NEW_BASE_COLOR : null}
           borderRadius={8}>
           <Text
-            color={(selected?.find(itemFind => itemFind == item)) ? WHITE : BLACK}
+            color={isSelected ? WHITE : BLACK}
             size={12}>
             {item}
           </Text>

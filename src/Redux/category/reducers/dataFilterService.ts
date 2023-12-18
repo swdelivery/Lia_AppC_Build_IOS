@@ -56,10 +56,19 @@ const selectServiceAverageRating: Handler<State> = (state, { payload }) => {
   }
 };
 const selectServiceMostPopular: Handler<State> = (state, { payload }) => {
-  return {
-    ...state,
-    dataServiceMostPopular: !state.dataServiceMostPopular
+
+  if (payload !== null) {
+    return {
+      ...state,
+      dataServiceMostPopular: payload
+    }
+  } else {
+    return {
+      ...state,
+      dataServiceMostPopular: !state.dataServiceMostPopular
+    }
   }
+
 };
 const selectServiceSortPrice: Handler<State> = (state, { payload }) => {
   return {

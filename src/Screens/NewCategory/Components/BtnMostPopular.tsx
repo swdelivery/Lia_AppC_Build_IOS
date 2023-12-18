@@ -1,7 +1,7 @@
 import Row from '@Components/Row';
 import Text from '@Components/Text';
 import { WHITE } from '@Constant/Color';
-import { selectServiceMostPopular } from '@Redux/category/actions';
+import { selectServiceMostPopular, selectServiceSortPrice } from '@Redux/category/actions';
 import { getDataFilterServiceState } from '@Redux/category/selectors';
 import React from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
@@ -15,6 +15,7 @@ const BtnMostPopular = () => {
 
   const _handlePress = useHapticCallback(() => {
     dispatch(selectServiceMostPopular())
+    dispatch(selectServiceSortPrice(null))
   }, [])
 
   return (

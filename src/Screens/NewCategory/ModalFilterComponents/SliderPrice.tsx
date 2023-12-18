@@ -6,7 +6,7 @@ import { _widthScale } from '@Constant/Scale'
 import { formatMonney } from '@Constant/Utils'
 import Slider from '@react-native-community/slider'
 import React, { useEffect, useState } from 'react'
-import { Platform } from 'react-native'
+import { Platform, StyleSheet } from 'react-native'
 
 
 type Props = {
@@ -37,9 +37,9 @@ const SliderPrice = ({ selectedPrice, setSelectedPrice }: Props) => {
       <Column alignSelf='flex-start'>
         <Slider
           value={selectedPrice}
-          onSlidingComplete={(e) => setSelectedPrice(e)}
+          onSlidingComplete={setSelectedPrice}
           onValueChange={_handleValueChange}
-          style={{ width: _widthScale(280), height: 20 }}
+          style={styles.slider}
           minimumValue={0}
           step={500000}
           thumbTintColor={Platform.OS == 'ios' ? null : NEW_BASE_COLOR}
@@ -57,4 +57,8 @@ const SliderPrice = ({ selectedPrice, setSelectedPrice }: Props) => {
 }
 
 export default SliderPrice
+
+const styles = StyleSheet.create({
+  slider: { width: _widthScale(280), height: 20 }
+})
 

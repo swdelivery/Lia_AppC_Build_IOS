@@ -8,7 +8,7 @@ import { sizeIcon } from '@Constant/Icon';
 import { styleElement } from '@Constant/StyleElement';
 import { selectServiceAverageRating, selectServiceCoupon } from '@Redux/category/actions';
 import { getDataFilterServiceState } from '@Redux/category/selectors';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import Popover from 'react-native-popover-view';
 import { useDispatch, useSelector } from 'react-redux';
@@ -41,7 +41,7 @@ const BtnPopover = ({ title = '', isActive = false, onPress, icon = null }: Prop
     dispatch(selectServiceAverageRating())
   }, [])
 
-  const calculateNumber = () => {
+  const count = useMemo(() => {
     let number = 0;
     if (dataServiceCoupon) {
       number += 1
@@ -50,7 +50,7 @@ const BtnPopover = ({ title = '', isActive = false, onPress, icon = null }: Prop
       number += 1
     }
     return number
-  }
+  }, [dataServiceCoupon, dataServiceAverageRating])
 
   return (
     <Popover
@@ -76,7 +76,7 @@ const BtnPopover = ({ title = '', isActive = false, onPress, icon = null }: Prop
             }
           </Row>
           {
-            calculateNumber() ?
+            count ?
               <Column
                 width={8 * 2}
                 height={8 * 2}
@@ -90,7 +90,7 @@ const BtnPopover = ({ title = '', isActive = false, onPress, icon = null }: Prop
                   size={10}
                   color={WHITE}
                   weight='bold'>
-                  {calculateNumber()}
+                  {count}
                 </Text>
               </Column>
               : <></>

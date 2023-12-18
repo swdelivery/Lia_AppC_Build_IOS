@@ -144,18 +144,18 @@ const ResultService = () => {
       <Column
         flex={1}
         alignItems='center'>
-        {
+        {/* {
           isLoading ?
             <LoadingIndicator />
-            :
-            <FlatList
-              ListEmptyComponent={<EmptyResultData title='Không tìm thấy dữ liệu' />}
-              contentContainerStyle={{ justifyContent: 'space-between', paddingVertical: 8 }}
-              renderItem={_renderItemService}
-              keyExtractor={_awesomeChildListKeyExtractor}
-              numColumns={2}
-              data={dataResultListService} />
-        }
+            : */}
+        <FlatList
+          ListEmptyComponent={isLoading ? <LoadingIndicator /> : <EmptyResultData title='Không tìm thấy dữ liệu' />}
+          contentContainerStyle={{ justifyContent: 'space-between', paddingVertical: 8 }}
+          renderItem={_renderItemService}
+          keyExtractor={_awesomeChildListKeyExtractor}
+          numColumns={2}
+          data={dataResultListService} />
+        {/* } */}
 
       </Column>
     </AfterTimeoutFragment>

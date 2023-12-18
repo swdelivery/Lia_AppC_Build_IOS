@@ -20,7 +20,7 @@ const Header = () => {
   const dispatch = useDispatch()
   const { top } = useSafeAreaInsets()
   const { navigation } = useNavigate()
-  const RefTextInput = useRef(null)
+  const textInputRef = useRef(null)
 
   const widthExpandInput = useSharedValue(0)
   const opacityExpandInput = useSharedValue(0);
@@ -39,7 +39,7 @@ const Header = () => {
 
   useEffect(() => {
     if (isExpandTextInput) {
-      RefTextInput?.current?.focus();
+      textInputRef?.current?.focus();
       widthExpandInput.value = withTiming(_widthScale(230), { duration: 500 })
       opacityExpandInput.value = withTiming(1, { duration: 300 })
       opacityTitle.value = withTiming(0, { duration: 200 })
@@ -99,16 +99,16 @@ const Header = () => {
               paddingHorizontal={8}>
               <IconFindGrey style={sizeIcon.lg} />
               <TextInput
-                onChangeText={(e) => setValueSearch(e)}
+                onChangeText={setValueSearch}
                 value={valueSearch}
                 style={[styleElement.flex]}
-                ref={RefTextInput}
+                ref={textInputRef}
                 onBlur={_handleToggle}
                 placeholder='Nhập thông tin' />
 
               <Column marginRight={8}>
                 <TouchableOpacity onPress={() => {
-                  RefTextInput?.current?.blur();
+                  textInputRef?.current?.blur();
                 }}>
                   <Text>
                     Tìm

@@ -40,8 +40,9 @@ export const selectServiceCoupon = () => ({
 export const selectServiceAverageRating = () => ({
   type: SELECT_SERVICE_AVERAGERATING,
 });
-export const selectServiceMostPopular = () => ({
+export const selectServiceMostPopular = (data = null) => ({
   type: SELECT_SERVICE_MOST_POPULAR,
+  payload: data
 });
 export const selectServiceSortPrice = (data) => ({
   type: SELECT_SERVICE_SORT_PRICE,
