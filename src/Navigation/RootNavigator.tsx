@@ -193,6 +193,9 @@ import CharityFundDetails from "@Screens/CharityFundDetails";
 import Charity from "@Screens/Charity";
 import SearchingCharity from "@Screens/Charity/SearchingCharity";
 import CharityAccountStatement from "@Screens/CharityAccountStatement";
+import ListOutstanding from "@Screens/Charity/ListOutstanding";
+import ModalFilter from "@Screens/CharityAccountStatement/ModalFilter";
+import ResultFilter from "@Screens/CharityAccountStatement/ResultFilter";
 
 const rootStack = createStackNavigator();
 
@@ -1067,6 +1070,21 @@ const RootNavigator = () => {
             options={{ ...TransitionPresets.SlideFromRightIOS }}
             name={ScreenKey.CHARITY_ACCOUNT_STATEMENT}
             component={CharityAccountStatement}
+          />
+          <rootStack.Screen
+            options={{ ...TransitionPresets.SlideFromRightIOS }}
+            name={ScreenKey.CHARITY_LIST_OUTSTANDING}
+            component={ListOutstanding}
+          />
+          <rootStack.Screen
+            options={optionsModal}
+            name={ScreenKey.CHARITY_ACCOUNT_MODAL_FILTER}
+            component={ModalFilter}
+          />
+          <rootStack.Screen
+            options={{ ...TransitionPresets.SlideFromRightIOS }}
+            name={ScreenKey.CHARITY_RESULT_FILTER_CASH_FLOW}
+            component={ResultFilter}
           />
 
           <rootStack.Screen

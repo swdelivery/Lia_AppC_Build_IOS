@@ -80,7 +80,7 @@ const ListSale = memo((props) => {
                     {
                         100 - Math.floor((item?.final / item?.amount) * 100)
                     }%
-                    </Text>
+                </Text>
             </View>
             <Text style={{ fontSize: _moderateScale(14), textDecorationLine: 'line-through', color: GREY }}>
                 {item?.amount.toString().split('.').join("").toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
@@ -130,7 +130,7 @@ const ListSale = memo((props) => {
                                                         //     alertCustomNotAction(`Thông báo`,`Hiện chưa đến khung giờ áp dụng khuyến mãi`)
                                                         // }
 
-                                                       
+
                                                     }}
                                                     style={{
                                                         paddingHorizontal: _moderateScale(8 * 2),
@@ -214,7 +214,7 @@ const ListSale = memo((props) => {
                                                                     height: _moderateScale(8 * 1.75),
                                                                     width: `${item?.usage / item?.limit * 100}%`,
                                                                     borderRadius: _moderateScale(6), backgroundColor: RED,
-                                                                    alignSelf:'flex-start'
+                                                                    alignSelf: 'flex-start'
                                                                 }}>
                                                                 </View>
                                                             </View>
@@ -284,7 +284,7 @@ const ListSale = memo((props) => {
                             <View style={[{ flex: 1, alignItems: 'center', paddingTop: _heightScale(8 * 30) }]}>
                                 <Text style={{ ...stylesFont.fontNolan500, fontSize: _moderateScale(14), color: GREY, fontStyle: 'italic' }}>
                                     Sự kiện chưa diễn ra
-                                    </Text>
+                                </Text>
                             </View>
                     }
                 </>

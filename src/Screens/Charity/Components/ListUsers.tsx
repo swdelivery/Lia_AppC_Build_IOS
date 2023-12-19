@@ -3,10 +3,14 @@ import Column from '@Components/Column'
 import Row from '@Components/Row'
 import Text from '@Components/Text'
 import { NEW_BASE_COLOR } from '@Constant/Color'
+import ScreenKey from '@Navigation/ScreenKey'
 import React from 'react'
-import { ScrollView, StyleSheet } from 'react-native'
+import { ScrollView, StyleSheet, TouchableOpacity } from 'react-native'
+import { useNavigate } from 'src/Hooks/useNavigation'
 
 const ListUsers = () => {
+  const { navigate } = useNavigate()
+
   return (
     <Column
       gap={8 * 2}
@@ -17,9 +21,11 @@ const ListUsers = () => {
           weight='bold'>
           Tài khoản tích cực
         </Text>
-        <Text color={NEW_BASE_COLOR}>
-          {`Xem tất cả >`}
-        </Text>
+        <TouchableOpacity onPress={navigate(ScreenKey.CHARITY_LIST_OUTSTANDING)}>
+          <Text color={NEW_BASE_COLOR}>
+            {`Xem tất cả >`}
+          </Text>
+        </TouchableOpacity>
       </Row>
       <ScrollView
         showsHorizontalScrollIndicator={false}

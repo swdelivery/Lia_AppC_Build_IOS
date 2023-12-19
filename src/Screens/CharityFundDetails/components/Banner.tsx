@@ -1,4 +1,5 @@
 import Column from "@Components/Column";
+import { IconBackWhite } from "@Components/Icon/Icon";
 import Text from "@Components/Text";
 import {
   BG_MAIN_OPACITY,
@@ -9,15 +10,28 @@ import HorizonListImage from "@Screens/NewDetailService/Components/HorizonListIm
 import React from "react";
 import { StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useNavigate } from "src/Hooks/useNavigation";
 
 type Props = {};
 
-export default function Banner({}: Props) {
+export default function Banner({ }: Props) {
   const { top } = useSafeAreaInsets();
+  const { navigation } = useNavigate()
 
   return (
     <Column backgroundColor={BG_MAIN_OPACITY}>
       <HorizonListImage images={[]} />
+
+      <Column
+        onPress={navigation.goBack}
+        backgroundColor={BLACK_OPACITY_4}
+        top={top + 20}
+        borderRadius={8 * 10}
+        left={20}
+        position="absolute">
+        <IconBackWhite />
+      </Column>
+
       <Column
         position="absolute"
         top={top + 20}

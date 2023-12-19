@@ -33,16 +33,19 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 type Props = {
   visible: boolean;
-  onClose: () => void; 
+  onClose: () => void;
   onConfirm: (item) => void;
   minDate: string;
+  maxDate: string;
+  colors: any;
+  selectedDayColor: any;
   // other props
 };
 
 const HEIGHT_MODAL = _heightScale(420);
 
 const NewDatePicker = memo(
-  ({ visible, onClose, minDate, onConfirm }: Props) => {
+  ({ visible, onClose, minDate, maxDate, onConfirm, colors, selectedDayColor }: Props) => {
     const [datePick, setDatePick] = useState(null);
     const opacityBackDrop = useSharedValue(0);
     const tranYModal = useSharedValue(0);
@@ -145,6 +148,7 @@ const NewDatePicker = memo(
               <CalendarPicker
                 onDateChange={_handleOnDateChange}
                 minDate={minDate ? minDate : null}
+                maxDate={maxDate ? maxDate : null}
                 // maxDate={props?.maxDate ? props?.maxDate : null}
                 previousTitle={"Trước"}
                 nextTitle={"Sau"}
@@ -163,7 +167,7 @@ const NewDatePicker = memo(
                   "Tháng 11",
                   "Tháng 12",
                 ]}
-                selectedDayColor={BASE_COLOR}
+                selectedDayColor={selectedDayColor ? selectedDayColor : BASE_COLOR}
                 selectedDayTextColor={WHITE}
                 selectedDayTextStyle={[stylesFont.fontNolanBold]}
                 textStyle={[stylesFont.fontNolan]}
@@ -199,7 +203,7 @@ const NewDatePicker = memo(
                       ]}
                       start={{ x: 0, y: 0 }}
                       end={{ x: 0, y: 1 }}
-                      colors={["#01AB84", "#186A57"]}
+                      colors={colors ? colors : ["#01AB84", "#186A57"]}
                     />
 
                     <Text weight="bold" size={14} color={WHITE}>

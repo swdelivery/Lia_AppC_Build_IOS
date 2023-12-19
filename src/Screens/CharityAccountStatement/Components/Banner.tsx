@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
   },
   imageBackground: {
     width: _width,
-    height: _heightScale(360)
+    height: _widthScale(360)
   }
 })
 
