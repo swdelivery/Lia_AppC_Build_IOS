@@ -101,6 +101,9 @@ const PLATINUM = "#658ACB"
 
 // 8c104e, db0505, 641a96
 
+const MAIN_RED = "#e3161d";
+const MAIN_RED_100 = "#f39fa2";
+
 export {
   TEXT_BASE,
   BG_CLEAR,
@@ -164,5 +167,7 @@ export {
   SILVER,
   GOLD,
   PLATINUM,
-  NEW_BASE_COLOR
+  NEW_BASE_COLOR,
+  MAIN_RED,
+  MAIN_RED_100,
 };
