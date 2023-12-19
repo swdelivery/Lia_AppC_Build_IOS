@@ -1059,27 +1059,33 @@ const RootNavigator = () => {
           <rootStack.Screen
             options={{ ...TransitionPresets.SlideFromRightIOS }}
             name={ScreenKey.CHARITY}
-            component={Charity} />
+            component={Charity}
+          />
           <rootStack.Screen
             options={{ ...TransitionPresets.SlideFromRightIOS }}
             name={ScreenKey.SEARCHING_CHARITY}
-            component={SearchingCharity} />
+            component={SearchingCharity}
+          />
           <rootStack.Screen
             options={{ ...TransitionPresets.SlideFromRightIOS }}
             name={ScreenKey.CHARITY_ACCOUNT_STATEMENT}
-            component={CharityAccountStatement} />
+            component={CharityAccountStatement}
+          />
           <rootStack.Screen
             options={{ ...TransitionPresets.SlideFromRightIOS }}
             name={ScreenKey.CHARITY_LIST_OUTSTANDING}
-            component={ListOutstanding} />
+            component={ListOutstanding}
+          />
           <rootStack.Screen
             options={optionsModal}
             name={ScreenKey.CHARITY_ACCOUNT_MODAL_FILTER}
-            component={ModalFilter} />
+            component={ModalFilter}
+          />
           <rootStack.Screen
             options={{ ...TransitionPresets.SlideFromRightIOS }}
             name={ScreenKey.CHARITY_RESULT_FILTER_CASH_FLOW}
-            component={ResultFilter} />
+            component={ResultFilter}
+          />
 
           <rootStack.Screen
             options={{

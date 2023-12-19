@@ -33,3 +33,13 @@ export const convertImageCoordsToDeviceCoords = (
     (imageCoords[1] * finalHeight) / imageHeight - extraSpaceHeight,
   ];
 };
+
+export const parseUrl = (url: string) => {
+  const regex = /[?&]([^=#]+)=([^&#]*)/g;
+  const params: any = {};
+  let match;
+  while ((match = regex.exec(url))) {
+    params[match[1]] = match[2];
+  }
+  return params;
+};
