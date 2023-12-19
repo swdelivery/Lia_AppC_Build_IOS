@@ -1,5 +1,5 @@
 import { generateActionsGroup } from "@Redux/helper";
-import { CLOSE_ACTION_SHEET_BOTTOM, GET_PARTNER_NOTIFICATIONS, OPEN_ACTION_SHEET_BOTTOM, OPEN_ACTION_SHEET_ICON, OPEN_MODAL_RIGHT_NOTI, SELECT_ITEM_ACTION_SHEET_ICON } from "./types";
+import { CLOSE_ACTION_SHEET_BOTTOM, GET_PARTNER_NOTIFICATIONS, OPEN_ACTION_SHEET_BOTTOM, OPEN_ACTION_SHEET_ICON, OPEN_MODAL_RIGHT_NOTI, OPEN_MODAL_THANKS, SELECT_ITEM_ACTION_SHEET_ICON } from "./types";
 import { Service } from "@typings/serviceGroup";
 import { Review } from "@typings/review";
 import { ApiResponse } from "@typings/api";
@@ -33,4 +33,9 @@ export const selectItemActionSheetIcon = (data) => ({
 
 export const openModalRightNoti = () => ({
   type: OPEN_MODAL_RIGHT_NOTI,
+});
+
+export const openModalThanks = (data) => ({
+  type: OPEN_MODAL_THANKS,
+  payload: data,
 });

@@ -9,10 +9,13 @@ import Text from '@Components/Text'
 import { BACKGROUND_COLOR, BORDER_COLOR, GREY, NEW_BASE_COLOR, WHITE } from '@Constant/Color'
 import { stylesFont } from '@Constant/Font'
 import { formatMonney } from '@Constant/Utils'
+import { openModalThanks } from "@Redux/modal/actions"
 import React, { useCallback, useState } from 'react'
 import { ScrollView, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
+import { useDispatch } from "react-redux"
 
 const Companion = () => {
+  const dispatch = useDispatch()
   const [goalMoney, setGoalMoney] = useState(420000000)
   const [valueMoney, setValueMoney] = useState('')
 
@@ -24,6 +27,18 @@ const Companion = () => {
     let money = goalMoney * percent / 100;
     setValueMoney(money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."))
   }, [goalMoney])
+
+  const _handleConfirm = useCallback(() => {
+    dispatch(openModalThanks({
+      visible: true,
+      data: {
+        type: 'companion',
+        name: `Hoang Oanh`,
+        campainName: `Chiến dịch thiện nguyện mang nhà vệ sinh đến trẻ em mầm non vùng cao`,
+        ownerName: `LiA Beauty`
+      }
+    }))
+  }, [])
 
   return (
     <Screen
@@ -144,7 +159,7 @@ const Companion = () => {
       </ScrollView>
       <ActionButton
         colors={["#34759b", "#1a3e67"]}
-        onPress={() => { }}
+        onPress={_handleConfirm}
         title="Đăng ký"
       />
     </Screen>

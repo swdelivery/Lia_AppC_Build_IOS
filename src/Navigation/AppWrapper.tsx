@@ -15,6 +15,7 @@ import toastConfig from "@Components/BottomToast";
 import RightNoti from "@Components/RightNoti/RightNoti";
 import configs from "src/configs";
 import Text from "@Components/Text";
+import ModalThanks from "@Components/Modal/ModalThanks";
 
 const LINKING = {
   prefixes: [`https://${configs.appLinkDomain}`],
@@ -96,6 +97,7 @@ const AppWrapper = (props) => {
       <ActionSheetIcon />
       <Toast config={toastConfig} position="bottom" bottomOffset={60} />
       <RightNoti />
+      <ModalThanks />
     </>
   );
 };

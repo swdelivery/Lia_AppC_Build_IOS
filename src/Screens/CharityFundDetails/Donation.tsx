@@ -1,5 +1,5 @@
 import { ScrollView, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import Text from '@Components/Text'
 import Screen from '@Components/Screen'
 import { FocusAwareStatusBar } from '@Components/StatusBar'
@@ -14,11 +14,25 @@ import InputMoney from './DonationComponents/InputMoney'
 import InputWish from './DonationComponents/InputWish'
 import TypeDonate from './DonationComponents/TypeDonate'
 import ActionButton from '@Components/ActionButton/ActionButton'
+import { useDispatch } from 'react-redux'
+import { openModalThanks } from '@Redux/modal/actions'
 
 const Donation = () => {
-
+  const dispatch = useDispatch()
   const [isAnonymous, setIsAnonymous] = useState(false)
 
+  const _handleConfirm = useCallback(() => {
+    dispatch(openModalThanks({
+      visible: true,
+      data: {
+        type: 'donation',
+        price: 100000,
+        name: `Hoang Oanh`,
+        campainName: `Chiến dịch thiện nguyện mang nhà vệ sinh đến trẻ em mầm non vùng cao`,
+        ownerName: `LiA Beauty`
+      }
+    }))
+  }, [])
 
   return (
     <Screen safeBottom>
@@ -40,7 +54,7 @@ const Donation = () => {
         <TypeDonate />
       </ScrollView>
       <ActionButton
-        onPress={() => { }}
+        onPress={_handleConfirm}
         colors={["#34759b", "#1a3e67"]}
         title='Ủng hộ' />
     </Screen>
