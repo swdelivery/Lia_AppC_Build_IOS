@@ -15,6 +15,8 @@ import { useNavigate } from "src/Hooks/useNavigation";
 type Props = {};
 
 export default function CoFounders({ }: Props) {
+  const { navigate } = useNavigate()
+
   return (
     <Column marginTop={20}>
       <Row paddingHorizontal={16}>
@@ -22,7 +24,9 @@ export default function CoFounders({ }: Props) {
         <Text color={NEW_BASE_COLOR} flex={1}>
           (2)
         </Text>
-        <Text color={NEW_BASE_COLOR}>Xem tất cả</Text>
+        <TouchableOpacity onPress={navigate(ScreenKey.CHARITY_LIST_COMPANION)}>
+          <Text color={NEW_BASE_COLOR}>Xem tất cả</Text>
+        </TouchableOpacity>
       </Row>
       <CoFounderItem />
     </Column>
