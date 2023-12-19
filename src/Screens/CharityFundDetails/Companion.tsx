@@ -26,7 +26,9 @@ const Companion = () => {
   }, [goalMoney])
 
   return (
-    <Screen backgroundColor={BACKGROUND_COLOR}>
+    <Screen
+      safeBottom
+      backgroundColor={BACKGROUND_COLOR}>
       <FocusAwareStatusBar barStyle='light-content' />
       <LiAHeader
         safeTop

@@ -48,7 +48,7 @@ export default function CharityFundDetails() {
             borderRadius={12}
           />
           <Button.Gradient
-            onPress={() => { }}
+            onPress={navigate(ScreenKey.CHARITY_DONATION)}
             title="Ủng hộ"
             titleSize={16}
             height={40}

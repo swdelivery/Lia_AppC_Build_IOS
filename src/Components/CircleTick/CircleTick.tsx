@@ -4,10 +4,12 @@ import { _moderateScale } from '@Constant/Scale'
 import { BASE_COLOR, BG_GREY_OPACITY_7, BORDER_COLOR, GREY } from '@Constant/Color'
 
 type Props = {
-    isTicked: boolean
+    isTicked: boolean,
+    // NOTICE type
+    color?: any;
 }
 
-const CircleTick = ({ isTicked }: Props) => {
+const CircleTick = ({ isTicked, color }: Props) => {
 
     // const { isTicked } = props
 
@@ -15,8 +17,8 @@ const CircleTick = ({ isTicked }: Props) => {
         <>
             {
                 isTicked ?
-                    <View style={styles.active}>
-                        <View style={styles.active__child} />
+                    <View style={[styles.active, color && { borderColor: color }]}>
+                        <View style={[styles.active__child, color && { backgroundColor: color }]} />
                     </View>
                     :
                     <View style={styles.inActive}>
