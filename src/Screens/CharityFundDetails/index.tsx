@@ -12,10 +12,12 @@ import Button from "@Components/Button/Button";
 import Row from "@Components/Row";
 import { NEW_BASE_COLOR } from "@Constant/Color";
 import { FocusAwareStatusBar } from "@Components/StatusBar";
-import { useNavigationParams } from "src/Hooks/useNavigation";
+import { useNavigate, useNavigationParams } from "src/Hooks/useNavigation";
+import ScreenKey from "@Navigation/ScreenKey";
 
 export default function CharityFundDetails() {
   const { id } = useNavigationParams();
+  const { navigate } = useNavigate()
 
   useEffect(() => {
     // This is id from app link
@@ -36,7 +38,7 @@ export default function CharityFundDetails() {
         </ScrollView>
         <Row paddingHorizontal={16} paddingVertical={8} gap={8}>
           <Button.Outline
-            onPress={() => {}}
+            onPress={navigate(ScreenKey.CHARITY_COMPANION)}
             flex={1}
             title="Đồng hành"
             borderColor={NEW_BASE_COLOR}
@@ -46,7 +48,7 @@ export default function CharityFundDetails() {
             borderRadius={12}
           />
           <Button.Gradient
-            onPress={() => {}}
+            onPress={() => { }}
             title="Ủng hộ"
             titleSize={16}
             height={40}
