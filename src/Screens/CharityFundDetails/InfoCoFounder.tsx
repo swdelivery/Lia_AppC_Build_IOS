@@ -1,21 +1,16 @@
-import { ScrollView, StyleSheet, View } from 'react-native'
-import React from 'react'
-import Text from '@Components/Text'
-import Screen from '@Components/Screen'
-import { FocusAwareStatusBar } from '@Components/StatusBar'
-import LiAHeader from '@Components/Header/LiAHeader'
-import { BACKGROUND_COLOR, BORDER_COLOR, GREY, NEW_BASE_COLOR, WHITE } from '@Constant/Color'
-import InfoPerson from './InfoCoFounderComponents/InfoPerson'
 import Column from '@Components/Column'
-import Row from '@Components/Row'
-import HorizontalLine from '@Components/Line/HorizontalLine'
-import { IconFilter, IconFindGrey } from '@Components/Icon/Icon'
-import Icon from '@Components/Icon'
-import { styleElement } from '@Constant/StyleElement'
+import LiAHeader from '@Components/Header/LiAHeader'
+import Screen from '@Components/Screen'
+import Spacer from '@Components/Spacer'
+import { FocusAwareStatusBar } from '@Components/StatusBar'
+import Text from '@Components/Text'
+import { BACKGROUND_COLOR, NEW_BASE_COLOR } from '@Constant/Color'
+import React from 'react'
+import { ScrollView, StyleSheet } from 'react-native'
+import CardCampaign from './InfoCoFounderComponents/CardCampaign'
+import InfoPerson from './InfoCoFounderComponents/InfoPerson'
 import Quotes from './InfoCoFounderComponents/Quotes'
 import Report from './InfoCoFounderComponents/Report'
-import CardCampaign from './InfoCoFounderComponents/CardCampaign'
-import BlankView from '@Components/BlankView/BlankView'
 
 const InfoCoFounder = () => {
   return (
@@ -44,7 +39,7 @@ const InfoCoFounder = () => {
           <CardCampaign />
         </Column>
 
-        <BlankView height={100} />
+        <Spacer top={100} />
       </ScrollView>
 
     </Screen>
