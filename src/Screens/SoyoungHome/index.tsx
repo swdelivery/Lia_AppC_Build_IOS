@@ -14,7 +14,6 @@ import { useState } from "react";
 import SoYoungService from "../SoYoungService/index";
 import SoYoungBranch from "../SoYoungBranch/index";
 import SoYoungDoctor from "../SoYoungDoctor/index";
-import { useRef } from "react";
 import { useSharedValue, withTiming } from "react-native-reanimated";
 import Screen from "../../Components/Screen";
 import { useSafeAreaInsets } from "react-native-safe-area-context";

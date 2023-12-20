@@ -16,7 +16,7 @@ import TabDiamond from './TabDiamond'
 import { styleElement } from '../../../Constant/StyleElement'
 import { navigation } from '../../../../rootNavigation'
 import ScreenKey from '../../../Navigation/ScreenKey'
-import Clipboard from '@react-native-community/clipboard'
+import Clipboard from "@react-native-clipboard/clipboard";
 import ModalFlashMsg from '../../../Components/ModalFlashMsg/ModalFlashMsg'
 import Share from 'react-native-share';
 import { useSelector } from 'react-redux'

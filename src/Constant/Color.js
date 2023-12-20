@@ -97,10 +97,13 @@ const ERROR_COLOR = "#EB4303";
 const INFO_COLOR = "#FFC242";
 const BRONZE = "#893B10";
 const SILVER = "#B1BFC7";
-const GOLD = "#F8C904"
-const PLATINUM = "#658ACB"
+const GOLD = "#F8C904";
+const PLATINUM = "#658ACB";
 
 // 8c104e, db0505, 641a96
+
+const MAIN_RED = "#e3161d";
+const MAIN_RED_100 = "#f39fa2";
 
 export {
   TEXT_BASE,
@@ -166,5 +169,7 @@ export {
   GOLD,
   PLATINUM,
   NEW_BASE_COLOR,
-  BACKGROUND_COLOR
+  BACKGROUND_COLOR,
+  MAIN_RED,
+  MAIN_RED_100,
 };
