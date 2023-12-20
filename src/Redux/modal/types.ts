@@ -11,3 +11,5 @@ export const OPEN_ACTION_SHEET_ICON = "@modal/open-action-sheet-icon";
 export const SELECT_ITEM_ACTION_SHEET_ICON = "@modal/select-item-action-sheet-icon";
 
 export const OPEN_MODAL_RIGHT_NOTI = "@modal/open-modal-right-noti"
+
+export const OPEN_MODAL_THANKS = "@modal/open-modal-thanks"

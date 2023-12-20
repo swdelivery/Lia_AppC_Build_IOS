@@ -31,6 +31,7 @@ import ScreenKey from "@Navigation/ScreenKey";
 import { useNavigate } from "src/Hooks/useNavigation";
 import RecommendServices from "./Components/RecommendServices";
 import RelatedServices from "./Components/RelatedServices";
+import FlashSale from "./Components/FlashSale";
 
 const DetailService = () => {
   const { navigate } = useNavigate();

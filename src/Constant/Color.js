@@ -75,6 +75,7 @@ const PATTERN_CHART = [
 // NEW COLOR
 const BASE_COLOR = "#4A9F80";
 const NEW_BASE_COLOR = "#366792";
+const BACKGROUND_COLOR = "#F4F4F4";
 const BASE_COLOR_LIGHT = "#01AB84";
 const BG_GREY_OPACITY_5 = "rgba(229,229,229,.5)";
 const SECOND_COLOR = "#7d3da8";
@@ -96,8 +97,8 @@ const ERROR_COLOR = "#EB4303";
 const INFO_COLOR = "#FFC242";
 const BRONZE = "#893B10";
 const SILVER = "#B1BFC7";
-const GOLD = "#F8C904"
-const PLATINUM = "#658ACB"
+const GOLD = "#F8C904";
+const PLATINUM = "#658ACB";
 
 // 8c104e, db0505, 641a96
 
@@ -168,6 +169,7 @@ export {
   GOLD,
   PLATINUM,
   NEW_BASE_COLOR,
+  BACKGROUND_COLOR,
   MAIN_RED,
   MAIN_RED_100,
 };
