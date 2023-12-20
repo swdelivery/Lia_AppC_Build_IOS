@@ -94,7 +94,7 @@ const BG_LOGIN_BUTTON = "#1B5478";
 const TEXT_COLOR_FORGET_PASS = "#9CCF79";
 const BORDER_INPUT_TEXT_FOCUSED = "#70BB57";
 const ERROR_COLOR = "#EB4303";
-const INFO_COLOR = "#FFC242";
+const INFO_COLOR = "#fec400";
 const BRONZE = "#893B10";
 const SILVER = "#B1BFC7";
 const GOLD = "#F8C904";
@@ -104,7 +104,7 @@ const PLATINUM = "#658ACB";
 
 const MAIN_RED = "#e3161d";
 const MAIN_RED_100 = "#f39fa2";
-const MAIN_RED_500 = "#ce0000";
+const MAIN_RED_500 = "#bb0e00";
 
 export {
   TEXT_BASE,

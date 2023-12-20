@@ -1,17 +1,24 @@
-import Button from "@Components/Button/Button";
 import Column from "@Components/Column";
 import HorizontalProgress from "@Components/HoriontalProgress";
+import Icon from "@Components/Icon";
 import Image from "@Components/Image";
 import Row from "@Components/Row";
 import Text from "@Components/Text";
-import { GREY, MAIN_RED, MAIN_RED_100, TITLE_GREY } from "@Constant/Color";
+import {
+  MAIN_RED,
+  MAIN_RED_100,
+  MAIN_RED_500,
+  TITLE_GREY,
+} from "@Constant/Color";
 import { _width } from "@Constant/Scale";
 import { styleElement } from "@Constant/StyleElement";
 import { formatMonney } from "@Constant/Utils";
 import { SERVICE_BANNER_RATIO } from "@Constant/image";
 import { Service } from "@typings/serviceGroup";
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
+import useServiceDetailsNavigation from "src/Hooks/navigation/useServiceDetailsNavigation";
+import useCallbackItem from "src/Hooks/useCallbackItem";
 
 const IMAGE_WIDTH = _width / 2 - 8 * 2 + 1;
 const IMAGE_HEIGHT = IMAGE_WIDTH * SERVICE_BANNER_RATIO;
@@ -20,6 +27,9 @@ type Props = {
 };
 
 export default function FlashSaleItem({ item }: Props) {
+  const trigger = useCallbackItem(item);
+  const handleServicePress = useServiceDetailsNavigation();
+
   return (
     <Column
       flex={1}
@@ -28,6 +38,7 @@ export default function FlashSaleItem({ item }: Props) {
       paddingLeft={4}
       paddingRight={4}
       marginBottom={8}
+      onPress={trigger(handleServicePress)}
     >
       <Column
         flex={1}
@@ -49,14 +60,15 @@ export default function FlashSaleItem({ item }: Props) {
               {formatMonney(item.price)}
             </Text>
           </Row>
-          <Column marginTop={4}>
+          <Column marginTop={4} paddingTop={8}>
             <HorizontalProgress
               percent={40}
               height={12}
-              colors={[MAIN_RED, MAIN_RED]}
+              colors={[MAIN_RED_500, MAIN_RED_500]}
               backgroundColor={MAIN_RED_100}
             />
             <Text
+              top={8}
               removePadding
               size={10}
               weight="bold"
@@ -65,6 +77,15 @@ export default function FlashSaleItem({ item }: Props) {
             >
               70/100
             </Text>
+            <Row style={StyleSheet.absoluteFill}>
+              <Column flex={0.4} />
+              <Icon
+                name="fire"
+                size={24}
+                color={"#fec400"}
+                style={styles.fireIcon}
+              />
+            </Row>
           </Column>
         </Column>
         <Column
@@ -93,5 +114,8 @@ const styles = StyleSheet.create({
   progress: {
     position: "absolute",
     alignSelf: "center",
+  },
+  fireIcon: {
+    marginLeft: -24,
   },
 });
