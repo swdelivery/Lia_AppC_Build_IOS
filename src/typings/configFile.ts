@@ -3,6 +3,8 @@ import { FileAvatar } from "./common";
 export enum ConfigFileCode {
   PricePerWheelTurn = "PRICE_PER_WHEEL_TURN",
   ImageVoucherHome = "IMAGE_VOUCHER_HOME",
+  ImageFlashSaleHome = "IMAGE_FLASHSALE_HOME",
+  FlashSaleRule = "FLASH_SALE_RULE",
 }
 
 export type ConfigFile = {

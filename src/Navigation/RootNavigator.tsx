@@ -125,7 +125,7 @@ import CreateBooking from "../Screens/NewCreateBooking/index";
 import ListVoucher from "../Screens/ListVoucher/ListVoucher";
 import OtherPersonalPage from "../Screens/MyPersonalPage/OtherPersonalPage";
 import ListAllHistoryTreatment from "../Screens/Profile/ListAllHistoryTreatment";
-import FlashSale from "../Screens/FlashSale/index copy";
+import FlashSale from "../Screens/FlashSale";
 import CreateBookingFlashSale from "../Screens/CreateBooking/CreateBookingFlashSale";
 import DetailServiceFlashSale from "../Screens/DetailService/DetailServiceFlashSale";
 import DetailEncyclopedia from "../Screens/DetailNews/DetailEncyclopedia";

@@ -1,8 +1,7 @@
 import Lottie from "lottie-react-native";
 import React, { memo, useMemo } from "react";
-import { FlatList, Image, StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
 import { _widthScale } from "../../../../Constant/Scale";
-import FastImage from "@Components/FastImage";
 import Text from "@Components/Text";
 import Column from "@Components/Column";
 import { TouchableOpacity } from "react-native";
@@ -12,13 +11,19 @@ import FlashSaleTimer from "./components/FlashSaleTimer";
 import useRecomendServices from "@Screens/NewDetailService/useRecomendServices";
 import Row from "@Components/Row";
 import FlashSaleItem from "./components/FlashSaleItem";
+import { ScrollView } from "react-native-gesture-handler";
+import useConfigFile from "src/Hooks/useConfigFile";
+import { ConfigFileCode } from "@typings/configFile";
+import Image from "@Components/Image";
+import { head } from "lodash";
 
 const FlashSale = memo(() => {
   const { navigate } = useNavigate();
+  const flashSaleConfig = useConfigFile(ConfigFileCode.ImageFlashSaleHome);
   const services = useRecomendServices({ codeGroup: ["MAT"] });
 
   const data = useMemo(() => {
-    return services.slice(0, 3);
+    return services.slice(0, 10);
   }, [services]);
 
   const _renderItem = (item: any) => {
@@ -27,23 +32,25 @@ const FlashSale = memo(() => {
 
   return (
     <Row style={styles.container} gap={8}>
-      <TouchableOpacity onPress={navigate(ScreenKey.FLASHSALE_SCREEN)}>
-        <Column gap={4} alignItems="center">
-          <Lottie
-            speed={1}
-            autoPlay={true}
-            loop={true}
-            style={styles.lottie}
-            source={require("../../../../Json/flashsale.json")}
-          />
-          <Text size={12} color="red" weight="bold">
-            Flash Sale
-          </Text>
-          <FlashSaleTimer />
+      <Column
+        gap={4}
+        paddingVertical={8}
+        alignItems="center"
+        onPress={navigate(ScreenKey.FLASHSALE_SCREEN)}
+      >
+        <Column flex={1} justifyContent="center" alignItems="center">
+          <Image avatar={head(flashSaleConfig?.fileArr)} style={styles.image} />
         </Column>
-      </TouchableOpacity>
-      <Row gap={8} flex={1}>
-        {data.map(_renderItem)}
+        <FlashSaleTimer />
+      </Column>
+      <Row flex={1}>
+        <ScrollView
+          horizontal
+          contentContainerStyle={styles.services}
+          showsHorizontalScrollIndicator={false}
+        >
+          {data.map(_renderItem)}
+        </ScrollView>
       </Row>
     </Row>
   );
@@ -65,10 +72,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   container: {
-    // width: _widthScale(350),
     marginHorizontal: 12,
     paddingHorizontal: 8,
-    height: _widthScale(110),
+    height: 120,
     alignSelf: "center",
     borderRadius: 8,
     backgroundColor: "rgba(255,255,255,1)",
@@ -90,5 +96,8 @@ const styles = StyleSheet.create({
     marginRight: 8,
     alignItems: "center",
     justifyContent: "center",
+  },
+  services: {
+    gap: 8,
   },
 });
