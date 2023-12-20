@@ -38,11 +38,11 @@ const BLACK = "#000";
 const BACK_GROUND_BASE = "#F2F1F5";
 const TEXT_BASE = "#57565D";
 
-const BLACK_OPACITY_8 = "rgba(0, 0, 0,0.8)";
-const BLACK_OPACITY_7 = "rgba(0, 0, 0,0.7)";
-const BLACK_OPACITY_4 = "rgba(0, 0, 0,0.7)";
-const BLACK_OPACITY_3 = "rgba(0, 0, 0,0.3)";
-const MAIN_OPACITY_8 = "rgba(208, 253, 241,0.85)";
+const BLACK_OPACITY_8 = "rgba(0,0,0,0.8)";
+const BLACK_OPACITY_7 = "rgba(0,0,0,0.7)";
+const BLACK_OPACITY_4 = "rgba(0,0,0,0.4)";
+const BLACK_OPACITY_3 = "rgba(0,0,0,0.3)";
+const MAIN_OPACITY_8 = "rgba(208,253,241,0.85)";
 
 const SENDER_BG = "#01AB8433";
 const SENDER_COLOR_TEXT = "#040D15";
@@ -74,6 +74,7 @@ const PATTERN_CHART = [
 
 // NEW COLOR
 const BASE_COLOR = "#4A9F80";
+const NEW_BASE_COLOR = "#366792";
 const BASE_COLOR_LIGHT = "#01AB84";
 const BG_GREY_OPACITY_5 = "rgba(229,229,229,.5)";
 const SECOND_COLOR = "#7d3da8";
@@ -99,6 +100,9 @@ const GOLD = "#F8C904"
 const PLATINUM = "#658ACB"
 
 // 8c104e, db0505, 641a96
+
+const MAIN_RED = "#e3161d";
+const MAIN_RED_100 = "#f39fa2";
 
 export {
   TEXT_BASE,
@@ -163,4 +167,7 @@ export {
   SILVER,
   GOLD,
   PLATINUM,
+  NEW_BASE_COLOR,
+  MAIN_RED,
+  MAIN_RED_100,
 };

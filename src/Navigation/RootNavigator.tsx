@@ -186,6 +186,16 @@ import ServiceList from "@Screens/ServiceList";
 import BranchList from "@Screens/BranchList";
 import PractitionerList from "@Screens/PractitionerList";
 import MaterialList from "@Screens/MaterialList";
+import TakeCare from "@Screens/TakeCare";
+import UpdateDailyDiaries from "@Screens/TakeCare/UpdateDailyDiaries";
+import NewCategory from "@Screens/NewCategory";
+import CharityFundDetails from "@Screens/CharityFundDetails";
+import Charity from "@Screens/Charity";
+import SearchingCharity from "@Screens/Charity/SearchingCharity";
+import CharityAccountStatement from "@Screens/CharityAccountStatement";
+import ListOutstanding from "@Screens/Charity/ListOutstanding";
+import ModalFilter from "@Screens/CharityAccountStatement/ModalFilter";
+import ResultFilter from "@Screens/CharityAccountStatement/ResultFilter";
 
 const rootStack = createStackNavigator();
 
@@ -210,12 +220,18 @@ const optionsModal = {
 const RootNavigator = () => {
   return (
     <rootStack.Navigator
-      //  initialRouteName={ScreenKey.MODAL_CREATE_GROUP_CHAT}
+      // initialRouteName={ScreenKey.CHARITY_FUND_DETAILS}
       screenOptions={navigationOptions}
     >
       {true ? (
         <>
           <rootStack.Screen component={MainTab} name="MainTab" />
+
+          <rootStack.Screen
+            options={{ ...TransitionPresets.SlideFromRightIOS }}
+            component={CharityFundDetails}
+            name={ScreenKey.CHARITY_FUND_DETAILS}
+          />
 
           <rootStack.Screen
             options={{ ...TransitionPresets.SlideFromRightIOS }}
@@ -492,6 +508,11 @@ const RootNavigator = () => {
             options={{ ...TransitionPresets.SlideFromRightIOS }}
             name={ScreenKey.LIST_SERVICE}
             component={ListService}
+          />
+          <rootStack.Screen
+            options={{ ...TransitionPresets.SlideFromRightIOS }}
+            name={ScreenKey.NEW_CATEGORY}
+            component={NewCategory}
           />
           <rootStack.Screen
             options={{ ...TransitionPresets.SlideFromRightIOS }}
@@ -1020,6 +1041,50 @@ const RootNavigator = () => {
             options={{ ...TransitionPresets.SlideFromRightIOS }}
             name={ScreenKey.SEARCHING_HOME}
             component={SearchingHome}
+          />
+
+          {/* TAKE CARE AFTER TREATMENT */}
+          <rootStack.Screen
+            options={{ ...TransitionPresets.SlideFromRightIOS }}
+            name={ScreenKey.TAKECARE}
+            component={TakeCare}
+          />
+          <rootStack.Screen
+            options={{ ...TransitionPresets.SlideFromRightIOS }}
+            name={ScreenKey.UPDATE_DAILY_DIARIES}
+            component={UpdateDailyDiaries}
+          />
+
+          {/* CHARITY */}
+          <rootStack.Screen
+            options={{ ...TransitionPresets.SlideFromRightIOS }}
+            name={ScreenKey.CHARITY}
+            component={Charity}
+          />
+          <rootStack.Screen
+            options={{ ...TransitionPresets.SlideFromRightIOS }}
+            name={ScreenKey.SEARCHING_CHARITY}
+            component={SearchingCharity}
+          />
+          <rootStack.Screen
+            options={{ ...TransitionPresets.SlideFromRightIOS }}
+            name={ScreenKey.CHARITY_ACCOUNT_STATEMENT}
+            component={CharityAccountStatement}
+          />
+          <rootStack.Screen
+            options={{ ...TransitionPresets.SlideFromRightIOS }}
+            name={ScreenKey.CHARITY_LIST_OUTSTANDING}
+            component={ListOutstanding}
+          />
+          <rootStack.Screen
+            options={optionsModal}
+            name={ScreenKey.CHARITY_ACCOUNT_MODAL_FILTER}
+            component={ModalFilter}
+          />
+          <rootStack.Screen
+            options={{ ...TransitionPresets.SlideFromRightIOS }}
+            name={ScreenKey.CHARITY_RESULT_FILTER_CASH_FLOW}
+            component={ResultFilter}
           />
 
           <rootStack.Screen

@@ -6,10 +6,10 @@ import { IconIsChecked, IconNotChecked } from '@Components/Icon/Icon'
 import { sizeIcon } from '@Constant/Icon'
 
 type Props = {
-    isTicked: boolean
+    isTicked?: boolean
 }
 
-const SquareTick = ({ isTicked }: Props) => {
+const SquareTick = ({ isTicked = false }: Props) => {
 
     return (
         <>

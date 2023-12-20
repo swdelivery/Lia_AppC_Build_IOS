@@ -1,8 +1,12 @@
 export type Condition =
   | {
-      equal: string;
+      equal: string | string[];
+    }
+  | {
+      notEqual: string | string[];
     }
   | {
       like: string;
     }
-  | { in: string[] };
+  | { in: string[] }
+  | { notIn: string[] };

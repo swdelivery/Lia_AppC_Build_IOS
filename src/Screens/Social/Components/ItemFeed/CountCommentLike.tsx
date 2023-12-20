@@ -1,14 +1,14 @@
 import Column from '@Components/Column';
+import Image from '@Components/Image';
 import Row from '@Components/Row';
 import Text from '@Components/Text';
 import { WHITE } from '@Constant/Color';
-import { URL_ORIGINAL } from '@Constant/Url';
 import ScreenKey from '@Navigation/ScreenKey';
 import { getInfoUserReducer } from '@Redux/Selectors';
 import { selectPost } from '@Redux/newfeeds/actions';
 import { Post } from "@typings/newfeeds";
 import React from 'react';
-import { Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'src/Hooks/useNavigation';
 
@@ -18,9 +18,8 @@ type Props = {
 
 const CountCommentLike = ({ data }: Props) => {
   const { navigate } = useNavigate()
-  const { infoUser } = useSelector(getInfoUserReducer);
   const dispatch = useDispatch()
-  const { reactionCount, commentsCount, _id } = data
+  const { reactionCount, commentsCount, _id, partnersReaction } = data
 
   const _handleGoToListComments = () => {
     dispatch(selectPost(data))
@@ -35,13 +34,12 @@ const CountCommentLike = ({ data }: Props) => {
           gap={8}
           paddingLeft={8}>
           <Row>
-            {/* Waiting for API */}
             {
-              Array.from(new Array(reactionCount), (x, i) => i)?.map((item, index) => {
+              partnersReaction?.map((item, index) => {
                 return (
                   <Image
                     style={styles.image}
-                    source={{ uri: `${URL_ORIGINAL}${infoUser?.fileAvatar?.link}` }} />
+                    avatar={item?.partner?.fileAvatar} />
                 )
               })
             }

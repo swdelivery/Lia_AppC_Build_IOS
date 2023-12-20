@@ -29,6 +29,7 @@ type Props = {
   height?: number;
   width?: number;
   flex?: number;
+  borderRadius?: number;
   marginHorizontal?: number;
   containerStyle?: StyleProp<ViewStyle>;
   children?: ReactNode;
@@ -157,6 +158,7 @@ const Base = ({
   marginHorizontal,
   onPress,
   children,
+  borderRadius = 8,
 }: Props) => {
   const handlePress = useDebounceCallback(onPress, [onPress]);
 
@@ -168,8 +170,17 @@ const Base = ({
       flex,
       marginHorizontal,
       opacity: disabled ? 0.5 : 1,
+      borderRadius,
     };
-  }, [height, backgroundColor, width, flex, marginHorizontal, disabled]);
+  }, [
+    height,
+    backgroundColor,
+    width,
+    flex,
+    marginHorizontal,
+    disabled,
+    borderRadius,
+  ]);
 
   return (
     <TouchableOpacity
@@ -196,6 +207,7 @@ const Outline = ({
     return {
       borderColor,
       borderWidth: 1,
+      backgroundColor: Color.WHITE,
     };
   }, [borderColor]);
 

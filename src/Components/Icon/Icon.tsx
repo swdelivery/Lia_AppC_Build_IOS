@@ -126,6 +126,20 @@ export { default as IconLike } from "../../SGV/social/like.svg";
 export { default as IconPostComment } from "../../SGV/social/comment.svg";
 export { default as IconLikeFilled } from "../../SGV/social/likeFilled.svg";
 export { default as IconUpload } from "../../SGV/wallet/upload.svg";
+export { default as IconGallery } from "../../SGV/gallery/iconGallery.svg";
+export { default as IconCamera } from "../../SGV/gallery/iconCamera.svg";
+export { default as IconBackBlue } from "../../SGV/backBlue.svg";
+export { default as IconFilter } from "../../SGV/service/filter.svg";
+export { default as IconSort } from "../../SGV/service/sort.svg";
+export { default as IconExpand } from "../../SGV/service/expand.svg";
+export { default as IconLogoCharity } from "../../SGV/charity/logoCharity.svg";
+export { default as IconFindAroundCirle } from "../../SGV/charity/findAroundCirle.svg";
+export { default as IconProfileAroundCirle } from "../../SGV/charity/profileAroundCirle.svg";
+export { default as IconVerify } from "../../SGV/charity/verify.svg";
+export { default as IconOptions } from "../../SGV/charity/options.svg";
+export { default as IconSortPrice } from "../../SGV/service/sortPrice.svg";
+export { default as IconSortPriceUp } from "../../SGV/service/sortPriceUp.svg";
+export { default as IconSortPriceDown } from "../../SGV/service/sortPriceDown.svg";
 
 
 export const IconSetting = (props) => {

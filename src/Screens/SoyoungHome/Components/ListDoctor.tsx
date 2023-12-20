@@ -25,7 +25,9 @@ const ListDoctor = () => {
   }, [listDoctorRedux]);
 
   return (
-    <HorizontalDoctors items={doctors} containerStyle={styles.container} />
+    <HorizontalDoctors
+      title="Đội ngũ Bác sĩ nhiều năm kinh nghiệm"
+      items={doctors} containerStyle={styles.container} />
   );
 };
 
@@ -57,6 +59,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     backgroundColor: "rgba(255,255,255,1)",
     paddingVertical: 8,
-    flexDirection: "row",
+    paddingRight: 8 * 2
+    // flexDirection: "row",
   },
 });

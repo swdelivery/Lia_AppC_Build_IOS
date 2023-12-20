@@ -25,7 +25,8 @@ export type Post = {
   reactionCount: number;
   commentsCount: number;
   comments: any;
-  partner: any
+  partner: any;
+  partnersReaction: any;
 
 } & Timestamp;
 
@@ -70,6 +71,8 @@ export type CommentPost = {
   commentsCount: number;
   partner: any;
   id: string;
+  parentInfo: any;
+  reactionCount: number;
 
   // Local
   childComments: any;

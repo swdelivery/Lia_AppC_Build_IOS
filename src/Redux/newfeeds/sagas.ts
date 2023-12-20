@@ -5,6 +5,7 @@ import PartnerService from "src/Services/PartnerService";
 import * as actions from "./actions";
 import {
   CREATE_COMMENT_POST,
+  CREATE_REACTION_COMMENT,
   CREATE_REACTION_POST,
   GET_CHILD_COMMENTS_POST,
   GET_COMMENTS_POST,
@@ -116,6 +117,20 @@ function* createReactionPost({ payload }: BaseAction<string>) {
   }
 }
 
+function* createReactionComment({ payload }: BaseAction<string>) {
+  try {
+    const data = yield call(PartnerService.createReactionComment, payload);
+    yield put(
+      actions.createReactionComment.success({
+        data,
+        commentId: payload?.commentId
+      })
+    );
+  } catch (error: any) {
+    Alert.alert(error.message)
+  }
+}
+
 
 export default function* sagas() {
   yield all([
@@ -127,5 +142,6 @@ export default function* sagas() {
     takeEvery(GET_CHILD_COMMENTS_POST.REQUEST, getChildCommentsPost),
     takeLatest(CREATE_COMMENT_POST.REQUEST, createCommentPost),
     takeLatest(CREATE_REACTION_POST.REQUEST, createReactionPost),
+    takeLatest(CREATE_REACTION_COMMENT.REQUEST, createReactionComment),
   ]);
 }

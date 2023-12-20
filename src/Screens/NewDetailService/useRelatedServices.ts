@@ -1,0 +1,21 @@
+import { Service } from "@typings/serviceGroup";
+import { useEffect } from "react";
+import useApiPaging from "src/Hooks/services/useApiPaging";
+import PartnerService from "src/Services/PartnerService";
+
+export default function useRelatedServices(service: Service) {
+  const { data, getData } = useApiPaging(PartnerService.getServices);
+
+  useEffect(() => {
+    if (!service) {
+      return;
+    }
+    getData({
+      codeGroup: {
+        in: service.codeGroup,
+      },
+    });
+  }, [...(service?.codeGroup || [])]);
+
+  return data;
+}

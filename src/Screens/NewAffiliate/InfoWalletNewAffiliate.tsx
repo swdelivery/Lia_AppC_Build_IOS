@@ -1,6 +1,8 @@
 import Column from '@Components/Column'
 import LiAHeader from '@Components/Header/LiAHeader'
 import { IconCashIn, IconCommision, IconDollars } from '@Components/Icon/Icon'
+import EmptyResultData from '@Components/LoadingIndicator/EmptyResultData'
+import LoadingIndicator from '@Components/LoadingIndicator/LoadingIndicator'
 import Row from '@Components/Row'
 import Screen from '@Components/Screen'
 import Text from '@Components/Text'
@@ -10,8 +12,8 @@ import { _moderateScale, _width } from '@Constant/Scale'
 import { styleElement } from '@Constant/StyleElement'
 import { formatMonney } from '@Constant/Utils'
 import ScreenKey from '@Navigation/ScreenKey'
-import { getWallet } from '@Redux/wallet/actions'
-import { getWalletState } from '@Redux/wallet/selectors'
+import { getHistoryWallet, getWallet } from '@Redux/wallet/actions'
+import { getHistoryWalletState, getWalletState } from '@Redux/wallet/selectors'
 import moment from 'moment'
 import React from 'react'
 import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native'
@@ -22,12 +24,73 @@ const InfoWalletNewAffiliate = () => {
     const { navigate } = useNavigate()
     const dispatch = useDispatch()
     const { data: wallet } = useSelector(getWalletState)
+    const { data: historyWallet, isLoading: isLoadingHistoryWallet } = useSelector(getHistoryWalletState)
 
     useFocused(() => {
         dispatch(getWallet.request())
+        dispatch(getHistoryWallet.request({
+            condition: {
+                "paymentFor": {
+                    "in": ["WALLET_COMMISSION", "WALLET"]
+                }
+            },
+            limit: 100
+        }))
     })
-
     const _renderItem = ({ item, index }) => {
+        const _renderTitleByCodePaymentFor = (code, status) => {
+            switch (code) {
+                case "WALLET_COMMISSION":
+                    return (
+                        <Text
+                            numberOfLines={1}
+                            color={BLUE_FB}
+                            weight='bold'>
+                            {
+                                status == 'increase' ?
+                                    <>
+                                        Nhận tiền hoa hồng {
+                                            item?.receivedFrom?.name ?
+                                                <Text color={BLUE_FB}
+                                                    weight='bold'>
+                                                    {` từ ${item?.receivedFrom?.name}`}
+                                                </Text>
+                                                : <></>
+                                        }
+                                    </>
+                                    :
+                                    <>
+                                        Rút tiền hoa hồng
+                                    </>
+                            }
+
+                        </Text>
+                    )
+                case "WALLET":
+                    return (
+                        <Text
+                            numberOfLines={1}
+                            color={BLUE_FB}
+                            weight='bold'>
+                            {
+                                status == 'increase' ?
+                                    <>
+                                        Nạp tiền vào ví
+                                    </>
+                                    :
+                                    <>
+                                        Rút tiền ví
+                                    </>
+                            }
+
+                        </Text>
+                    )
+
+                default:
+                    break;
+            }
+        }
+
         return (
             <Row
                 gap={8 * 2}
@@ -48,18 +111,13 @@ const InfoWalletNewAffiliate = () => {
 
                 <Column
                     flex={1}>
-                    <Text
-                        numberOfLines={1}
-                        color={BLUE_FB}
-                        weight='bold'>
-                        {item?.paymentFor}
-                    </Text>
+                    {_renderTitleByCodePaymentFor(item?.paymentFor, item?.status)}
                     <Text
                         size={12}
                         numberOfLines={1}
                         color={GREY}
                         weight='regular'>
-                        {moment(item?.created).format("DD/MM/YYYY")}
+                        {moment(item?.created).format("DD/MM/YYYY")} - {moment(item?.created).format("HH:MM")}
                     </Text>
                     <Text
                         numberOfLines={1}
@@ -74,7 +132,7 @@ const InfoWalletNewAffiliate = () => {
     }
 
     return (
-        <Screen>
+        <Screen safeBottom>
             <LiAHeader safeTop title='Ví của tôi' />
             <Column
                 padding={8 * 2}
@@ -145,7 +203,6 @@ const InfoWalletNewAffiliate = () => {
                         color={RED}>
                         Hoa hồng: {formatMonney(wallet?.commissionAmount)} vnd
                     </Text>
-
                 </Row>
 
             </Column>
@@ -161,16 +218,18 @@ const InfoWalletNewAffiliate = () => {
                     </Text>
                 </View>
                 <Column height={8 * 4} />
-                <FlatList
-                    data={wallet?.walletHistoryArr}
-                    renderItem={_renderItem}
-                    keyExtractor={(item, index) => item?.id}
-                    ListFooterComponent={() => {
-                        return (
-                            <View style={{ height: 200 }} />
-                        )
-                    }}
-                />
+                {
+                    isLoadingHistoryWallet ?
+                        <LoadingIndicator />
+                        :
+                        <FlatList
+                            contentContainerStyle={{ flexGrow: 1 }}
+                            ListEmptyComponent={<EmptyResultData />}
+                            data={historyWallet}
+                            renderItem={_renderItem}
+                            keyExtractor={(item, index) => item?.id} />
+                }
+
 
             </Column>
         </Screen>

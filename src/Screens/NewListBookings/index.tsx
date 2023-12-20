@@ -5,29 +5,30 @@ import ListBookings from "./ListBookings";
 import { useDispatch, useSelector } from "react-redux";
 import { getStateActionSheetBottom } from "@Redux/modal/selectors";
 import ActionSheetBottom from "@Components/ModalBottom/ActionSheetBottom";
-import { openActionSheetBottom } from "@Redux/modal/actions";
+import { closeActionSheetBottom, openActionSheetBottom } from "@Redux/modal/actions";
 import LinearGradient from "react-native-linear-gradient";
 import { BASE_COLOR } from "@Constant/Color";
 import LiAHeader from "@Components/Header/LiAHeader";
+import { useNavigate } from "src/Hooks/useNavigation";
+import ScreenKey from "@Navigation/ScreenKey";
 
 const NewListBookings = () => {
   const dispatch = useDispatch();
-
+  const { navigate } = useNavigate()
   const { showActionSheetBottom } = useSelector(getStateActionSheetBottom);
 
-  console.log({ showActionSheetBottom });
 
   const _handleOnCloseActionSheetBottom = () => {
-    dispatch(
-      openActionSheetBottom({
-        flag: false,
-        data: {},
-      })
-    );
+    dispatch(closeActionSheetBottom({}));
   };
 
   const _handleConfirm = (data) => {
-    console.log({ data });
+    if (data?.type == 'edit') {
+      navigate(ScreenKey.CREATE_BOOKING, {
+        type: 'edit',
+        dataBookingEdit: showActionSheetBottom?.data
+      })()
+    }
   };
 
   return (

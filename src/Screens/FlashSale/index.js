@@ -95,7 +95,7 @@ const FlashSale = (props) => {
                     }]}
                     getLabelText={({ route }) => route.title}
                     renderLabel={({ route, focused, color }) => (
-                       
+
                         <Text>
                             {route?.title}
                         </Text>

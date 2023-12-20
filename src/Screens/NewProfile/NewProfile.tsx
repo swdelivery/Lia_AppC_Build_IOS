@@ -41,7 +41,7 @@ const NewProfile = () => {
                   name: "Thanh toán",
                   icon: <IconProfilePayment />,
                 },
-                { name: "Chăm sóc", icon: <IconProfileCare /> },
+                { flag: 'takecare', name: "Chăm sóc", icon: <IconProfileCare /> },
                 { name: "Hoàn tiền", icon: <IconProfileCoin /> },
                 { name: "Bảo hành", icon: <IconProfileShield /> },
                 { name: "Đánh giá", icon: <IconProfileStar /> },
@@ -70,6 +70,7 @@ const NewProfile = () => {
               title={"Phụng sự"}
               data={[
                 {
+                  flag: "charity",
                   name: "Lá lành\nđùm lá rách",
                   icon: <IconProfileHandHeartIn />,
                 },

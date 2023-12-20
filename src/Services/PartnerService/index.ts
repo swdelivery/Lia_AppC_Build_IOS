@@ -45,7 +45,9 @@ const getServices = (
   pageSize = configs.apiPageSize
 ): Promise<ApiResponse<Service[]>> => {
   const query = encodeParams({
-    ...payload,
+    condition: {
+      ...payload,
+    },
     sort: {
       orderNumber: -1,
     },
@@ -67,8 +69,8 @@ const getServicesFilter = (payload: any) => {
     .then(({ data }) => data.data);
 };
 
-const getServiceDetails = (serviceId: string): Promise<any> =>
-  axios.get(`/service/${serviceId}`).then(({ data }) => data.data);
+const getServiceDetails = (serviceId: string): Promise<Service> =>
+  axios.get(`/service/${serviceId}`).then(({ data }) => (data?.data ?? [])[0]);
 
 const getBranchList = (
   payload: any,
@@ -228,6 +230,9 @@ const takeVoucher = (payload: any) => {
 
 const createPartnerBooking = (payload: any) => {
   return axios.post("/booking", payload).then(({ data }) => data);
+};
+const updatePartnerBooking = (payload: any) => {
+  return axios.put(`/booking/${payload?.idBooking}`, payload?.data).then(({ data }) => data);
 };
 
 const getInsuranceList = (): Promise<ApiResponse<Insurance[]>> =>
@@ -417,13 +422,58 @@ const createReactionPost = (payload: any) => {
   return axios.post(`/partner-post-reaction`, payload).then(({ data }) => data);
 };
 
+const createReactionComment = (payload: any) => {
+  return axios.post(`/partner-comment-reaction`, payload).then(({ data }) => data);
+};
+
 const getWallet = (payload: any) => {
   return axios.get(`/wallet`, {}).then(({ data }) => data);
+};
+const getHistoryWallet = (payload: any) => {
+  const query = encodeParams({
+    ...payload,
+  });
+  return axios.get(`/wallet-history?${query}`, {}).then(({ data }) => data);
 };
 
 const getEyeLabel = (payload: any) => {
   return axios.get(`/eye-label`, {}).then(({ data }) => data);
 };
+
+// Takecare
+const getListPartnerTreatment = (payload: any) => {
+  return axios.get(`/partners/treatment-detail`, {}).then(({ data }) => data);
+};
+const getListPostoperative = (payload: any) => {
+  return axios.get(`/daily-diary/${payload?.idPartnerTreatment}/postoperative`, {}).then(({ data }) => data);
+};
+const updateDailyDiary = (payload: any) => {
+  return axios.put(`/daily-diary/${payload?.id}`, payload?.data).then(({ data }) => data);
+};
+
+// Notification
+const getPartnerNotifications = (payload: any) => {
+  const query = encodeParams({
+    ...payload,
+  });
+  return axios.get(`/partner-notification?${query}`, {}).then(({ data }) => data);
+};
+
+// Category
+const getServiceFilterCategory = (payload: any) => {
+  const query = encodeParams({
+    ...payload,
+  });
+  return axios
+    .get(`/service?${query}`)
+    .then(({ data }) => data);
+};
+const getDataForModalFilterService = (payload: any) => {
+  return axios
+    .get(`/service/${payload?._id}/data-filter`)
+    .then(({ data }) => data);
+};
+
 
 export default {
   partnerLogout,
@@ -460,6 +510,7 @@ export default {
   getInsuranceDetails,
   // Booking
   createPartnerBooking,
+  updatePartnerBooking,
   getBookingList,
 
   getBookingDetails,
@@ -495,10 +546,24 @@ export default {
   getChildCommentsPost,
   createCommentPost,
   createReactionPost,
+  createReactionComment,
 
   // Wallet
   getWallet,
+  getHistoryWallet,
 
   // EyeLabel
-  getEyeLabel
+  getEyeLabel,
+
+  // Takecare
+  getListPartnerTreatment,
+  getListPostoperative,
+  updateDailyDiary,
+
+  // Notification
+  getPartnerNotifications,
+
+  // Category
+  getServiceFilterCategory,
+  getDataForModalFilterService
 };

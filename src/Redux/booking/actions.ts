@@ -23,6 +23,9 @@ import {
   CREAT_PARTNER_BOOKING,
   CLEAR_DATA_CREATE_BOOKING,
   GetListServiceForBookingParams,
+  CHANGE_BRANCH_LIST_FOR_BOOKING_BY_SERVICE,
+  SET_INSURANCE,
+  UPDATE_PARTNER_BOOKING,
 } from "./types";
 import { Service } from "@typings/serviceGroup";
 import { Review } from "@typings/review";
@@ -52,6 +55,7 @@ export const getListServiceFilter = generateActionsGroup<
 >(GET_LIST_SERVICE_FILTER);
 
 export const createPartnerBooking = generateActionsGroup(CREAT_PARTNER_BOOKING);
+export const updatePartnerBooking = generateActionsGroup(UPDATE_PARTNER_BOOKING);
 
 export const openModalAddServiceToBooking = (data) => ({
   type: OPEN_MODAL_ADD_SERVICE_TO_BOOKING,
@@ -95,6 +99,10 @@ export const selectInsurance = (data) => ({
   type: SELECT_INSURANCE,
   payload: data,
 });
+export const setInsurance = (data) => ({
+  type: SET_INSURANCE,
+  payload: data,
+});
 export const selectDescription = (data) => ({
   type: SELECT_DESCRIPTION,
   payload: data,
@@ -113,4 +121,10 @@ export const clearCoupon = (data) => ({
 });
 export const clearDataCreateBooking = () => ({
   type: CLEAR_DATA_CREATE_BOOKING,
+});
+
+// CHANGE
+export const changeBranchListForBookingByService = (data) => ({
+  type: CHANGE_BRANCH_LIST_FOR_BOOKING_BY_SERVICE,
+  payload: data,
 });

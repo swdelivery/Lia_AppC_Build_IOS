@@ -5,6 +5,12 @@ import React from "react";
 import { View, StyleSheet, StyleProp, ViewStyle } from "react-native";
 import DoctorItem from "./components/DoctorItem";
 import { ScrollView } from "react-native-gesture-handler";
+import { TouchableOpacity } from "react-native";
+import { IconRightArrow, IconRightArrowBase } from "@Components/Icon/Icon";
+import Column from "@Components/Column";
+import { BASE_COLOR } from "@Constant/Color";
+import { useNavigate } from "src/Hooks/useNavigation";
+import ScreenKey from "@Navigation/ScreenKey";
 
 type Props = {
   title?: string;
@@ -17,6 +23,9 @@ export default function HorizontalDoctors({
   items,
   containerStyle,
 }: Props) {
+
+  const { navigate } = useNavigate()
+
   function renderItem(item: Doctor, index: number) {
     return <DoctorItem item={item} key={item._id} />;
   }
@@ -40,6 +49,21 @@ export default function HorizontalDoctors({
           horizontal
         >
           {items?.map(renderItem)}
+
+          <TouchableOpacity
+            onPress={navigate(ScreenKey.DOCTOR_LIST)}
+            style={styles.btnSeeAll}>
+            <Column
+              alignItems="center"
+              gap={8}>
+              <IconRightArrowBase />
+              <Text
+                color={BASE_COLOR}
+                size={12}>
+                Xem tất cả
+              </Text>
+            </Column>
+          </TouchableOpacity>
         </ScrollView>
       </View>
     </View>
@@ -47,5 +71,10 @@ export default function HorizontalDoctors({
 }
 
 const styles = StyleSheet.create({
-  contentContainer: { paddingHorizontal: 8*2, gap: 8 },
+  btnSeeAll: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 8 * 2
+  },
+  contentContainer: { paddingHorizontal: 8 * 2, gap: 8 },
 });

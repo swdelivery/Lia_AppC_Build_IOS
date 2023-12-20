@@ -26,8 +26,8 @@ import {
 import { styleElement } from "@Constant/StyleElement";
 import CardBranch from "./CardBranch";
 import Column from "@Components/Column";
-import { getBranchListForBookingState } from "@Redux/booking/selectors";
-import { getBranchListForBooking } from "@Redux/booking/actions";
+import { getBranchListForBookingState, getDataCreateBookingState } from "@Redux/booking/selectors";
+import { changeBranchListForBookingByService, getBranchListForBooking } from "@Redux/booking/actions";
 
 const HEIGHT_MODAL = _heightScale(650);
 
@@ -39,6 +39,7 @@ type Props = {
 const ModalListBranch = ({ visible, onClose }: Props) => {
   const dispatch = useDispatch();
   const { data } = useSelector(getBranchListForBookingState);
+  const { dataServices } = useSelector(getDataCreateBookingState)
 
   const opacityBackDrop = useSharedValue(0);
   const tranYModal = useSharedValue(0);
@@ -47,9 +48,21 @@ const ModalListBranch = ({ visible, onClose }: Props) => {
     if (visible) {
       tranYModal.value = withTiming(-HEIGHT_MODAL, { duration: 200 });
       opacityBackDrop.value = withTiming(1, { duration: 300 });
-      dispatch(getBranchListForBooking.request());
+      _checkGetBranchList()
     }
   }, [visible]);
+
+  const _checkGetBranchList = () => {
+    if (dataServices?.length > 0) {
+      if (dataServices[0]?.branchServices?.length > 0) {
+        let branches = dataServices[0]?.branchServices?.map(item => item?.branch);
+        console.log({ branches });
+        dispatch(changeBranchListForBookingByService(branches))
+      }
+    } else {
+      dispatch(getBranchListForBooking.request());
+    }
+  }
 
   const animTranY = useAnimatedStyle(() => {
     return {

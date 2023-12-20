@@ -1,9 +1,10 @@
+import Column from "@Components/Column";
 import Image from "@Components/Image";
 import CountStar2 from "@Components/NewCountStar/CountStar";
 import Text from "@Components/Text";
 import { Doctor } from "@typings/doctor";
 import React, { useCallback } from "react";
-import { StyleSheet, Pressable } from "react-native";
+import { StyleSheet, Pressable, View } from "react-native";
 import useDoctorDetailsNavigation from "src/Hooks/navigation/useDoctorDetailsNavigation";
 
 type Props = {
@@ -24,9 +25,10 @@ export default function DoctorItem({ item }: Props) {
       style={styles.doctorItem}
     >
       <Image style={styles.image} avatar={item.avatar} />
-      <Text weight="bold" size={12} top={4}>
+      <Text numberOfLines={2} weight="bold" size={12} top={4}>
         {item.name}
       </Text>
+      <Column flex={1} />
       <CountStar2
         size={10}
         rating={item.averageRating}

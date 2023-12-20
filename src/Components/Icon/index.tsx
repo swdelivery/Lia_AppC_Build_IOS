@@ -82,6 +82,11 @@ type Props = IconProps & {
   name?: string;
   color?: string;
   size?: number;
+  top?: number;
+  left?: number;
+  right?: number;
+  bottom?: number;
+
   style?: StyleProp<ViewStyle>;
 };
 
@@ -92,10 +97,30 @@ export default function Icon(props: Props) {
     color = "black",
     size = 24,
     style,
+    top,
+    left,
+    right,
+    bottom,
     ...rest
   } = props;
+
+  const containerStyle = useMemo(() => {
+    return {
+      marginTop: top,
+      marginLeft: left,
+      marginRight: right,
+      marginBottom: bottom,
+    };
+  }, [top, left, right, bottom]);
+
   const VIcon = IconFromType(type);
   return (
-    <VIcon name={name} color={color} style={style} size={size} {...rest} />
+    <VIcon
+      name={name}
+      color={color}
+      style={[containerStyle, style]}
+      size={size}
+      {...rest}
+    />
   );
 }

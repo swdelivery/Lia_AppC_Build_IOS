@@ -46,23 +46,28 @@ const LiAHeader = ({
       borderBottomWidth={bottomBorderColor ? StyleSheet.hairlineWidth : 0}
       borderBottomColor={bottomBorderColor}
     >
-      <StatusBar translucent barStyle={barStyle || "light-content"} />
+      <StatusBar
+        translucent
+        backgroundColor={"transparent"}
+        barStyle={barStyle || "light-content"}
+      />
       <View style={styles.header__box}>
         <View style={styleElement.flex}>
           {!backDisable && (
-            <TouchableOpacity onPress={navigation.goBack}>
-              <TouchableOpacity onPress={navigation.goBack}>
-                <BackIcon
-                  color={bg === WHITE ? BASE_COLOR : "white"}
-                  width={24}
-                  height={24}
-                />
-              </TouchableOpacity>
+            <TouchableOpacity
+              hitSlop={styleElement.hitslopSm}
+              onPress={navigation.goBack}
+            >
+              <BackIcon
+                color={bg === WHITE ? BASE_COLOR : "white"}
+                width={24}
+                height={24}
+              />
             </TouchableOpacity>
           )}
         </View>
         <Column flex={4} alignItems="center">
-          <Text weight="bold" size={16} color={titleColor}>
+          <Text numberOfLines={1} weight="bold" size={16} color={titleColor}>
             {title}
           </Text>
         </Column>

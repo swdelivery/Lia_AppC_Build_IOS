@@ -12,11 +12,14 @@ import { getServiceGroupState } from "@Redux/home/selectors";
 import Image from "@Components/Image";
 import Text from "@Components/Text";
 import { useNavigate } from "src/Hooks/useNavigation";
+import LinearGradient from "react-native-linear-gradient";
+import { WHITE } from "@Constant/Color";
+// import { navigation } from "rootNavigation";
 
 const OptionService = () => {
   const { data } = useSelector(getServiceGroupState);
   const dispatch = useDispatch();
-  const { navigate } = useNavigate();
+  const { navigate, navigation } = useNavigate();
 
   useEffect(() => {
     _getData();
@@ -39,23 +42,31 @@ const OptionService = () => {
     dispatch(getServiceGroup.request(condition));
   }, []);
 
+  const _handleGoCategory = useCallback((item) => {
+    navigation.navigate(ScreenKey.NEW_CATEGORY, { parentCodeParam: item })
+  }, [])
+
   return (
     <View style={styles.container}>
+      <LinearGradient
+        style={[StyleSheet.absoluteFill, { borderRadius: 8 }]}
+        start={{ x: 1, y: 0 }}
+        end={{ x: 0, y: 0 }}
+        colors={["#f01311", "#861000"]}
+      />
       {data.map((item, index) => {
         return (
           <TouchableOpacity
             key={item._id}
-            onPress={navigate(ScreenKey.LIST_SERVICE, {
-              currServiceGr: item,
-            })}
-            style={styles.itemContainer}
-          >
+            onPress={() => _handleGoCategory(item)}
+            style={styles.itemContainer}>
             <Image
               style={styles.item__option}
               avatar={item?.fileAvatar}
-              placeholderColors={["white", "white"]}
-            />
-            <Text weight="bold" size={12}>
+              placeholderColors={["white", "white"]} />
+            <Text
+              color={WHITE}
+              weight="bold" size={12}>
               {item.name}
             </Text>
           </TouchableOpacity>
@@ -86,7 +97,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: _widthScale(65),
     marginTop: _moderateScale(4),
-    backgroundColor: "white",
+    // backgroundColor: "white",
   },
 });
 

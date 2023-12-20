@@ -10,12 +10,14 @@ type Props = {
   title?: string;
   onPress?: () => void;
   disabled?: boolean;
+  colors?: any;
 };
 
-const ActionButton = ({ title, onPress, disabled }: Props) => {
+const ActionButton = ({ title, onPress, disabled, colors }: Props) => {
   return (
     <View style={styles.container}>
       <Button.Gradient
+        colors={colors}
         title={title}
         onPress={onPress}
         disabled={disabled}
