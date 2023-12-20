@@ -105,6 +105,7 @@ const PLATINUM = "#658ACB";
 const MAIN_RED = "#e3161d";
 const MAIN_RED_100 = "#f39fa2";
 const MAIN_RED_500 = "#bb0e00";
+const MAIN_RED_600 = "#ca0000";
 
 export {
   TEXT_BASE,
@@ -174,4 +175,5 @@ export {
   MAIN_RED,
   MAIN_RED_100,
   MAIN_RED_500,
+  MAIN_RED_600,
 };

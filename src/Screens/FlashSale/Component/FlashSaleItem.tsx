@@ -34,7 +34,7 @@ export default function FlashSaleItem({ item }: Props) {
     <Column
       flex={1}
       width={_width / 2}
-      height={240}
+      height={250}
       paddingLeft={4}
       paddingRight={4}
       marginBottom={8}
@@ -48,45 +48,45 @@ export default function FlashSaleItem({ item }: Props) {
         style={styleElement.shadow}
       >
         <Image avatar={item.avatar} style={styles.image} />
-        <Column paddingHorizontal={4}>
-          <Text size={12} numberOfLines={2}>
+        <Column flex={1} paddingHorizontal={4}>
+          <Text size={12} numberOfLines={2} top={4}>
             {item.name}
           </Text>
-          <Row justifyContent="space-between">
-            <Text weight="bold" color={MAIN_RED} size={16}>
-              {formatMonney(item.price * 0.8)}
-            </Text>
-            <Text size={12} textDecorationLine="line-through">
-              {formatMonney(item.price)}
-            </Text>
-          </Row>
-          <Column marginTop={4} paddingTop={8}>
-            <HorizontalProgress
-              percent={40}
-              height={12}
-              colors={[MAIN_RED_500, MAIN_RED_500]}
-              backgroundColor={MAIN_RED_100}
+        </Column>
+        <Row justifyContent="space-between">
+          <Text weight="bold" color={MAIN_RED} size={16}>
+            {formatMonney(item.price * 0.8)}
+          </Text>
+          <Text size={12} textDecorationLine="line-through">
+            {formatMonney(item.price)}
+          </Text>
+        </Row>
+        <Column marginTop={4} paddingTop={8}>
+          <HorizontalProgress
+            percent={40}
+            height={12}
+            colors={[MAIN_RED_500, MAIN_RED_500]}
+            backgroundColor={MAIN_RED_100}
+          />
+          <Text
+            top={8}
+            removePadding
+            size={10}
+            weight="bold"
+            color={"white"}
+            style={styles.progress}
+          >
+            70/100
+          </Text>
+          <Row style={StyleSheet.absoluteFill}>
+            <Column flex={0.4} />
+            <Icon
+              name="fire"
+              size={24}
+              color={"#fec400"}
+              style={styles.fireIcon}
             />
-            <Text
-              top={8}
-              removePadding
-              size={10}
-              weight="bold"
-              color={"white"}
-              style={styles.progress}
-            >
-              70/100
-            </Text>
-            <Row style={StyleSheet.absoluteFill}>
-              <Column flex={0.4} />
-              <Icon
-                name="fire"
-                size={24}
-                color={"#fec400"}
-                style={styles.fireIcon}
-              />
-            </Row>
-          </Column>
+          </Row>
         </Column>
         <Column
           borderWidth={1}
@@ -96,7 +96,7 @@ export default function FlashSaleItem({ item }: Props) {
           paddingHorizontal={8}
           paddingBottom={4}
           paddingTop={2}
-          marginTop={12}
+          marginVertical={8}
         >
           <Text color={TITLE_GREY}>{"Đặt hẹn"}</Text>
         </Column>

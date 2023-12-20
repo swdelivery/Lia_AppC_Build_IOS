@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { ScrollView, StatusBar, StyleSheet, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { _moderateScale, _width, _widthScale } from "../../Constant/Scale";
@@ -32,6 +32,7 @@ import { useNavigate } from "src/Hooks/useNavigation";
 import RecommendServices from "./Components/RecommendServices";
 import RelatedServices from "./Components/RelatedServices";
 import FlashSale from "./Components/FlashSale";
+import { isEmpty } from "lodash";
 
 const DetailService = () => {
   const { navigate } = useNavigate();
@@ -56,6 +57,12 @@ const DetailService = () => {
     };
   });
 
+  const bannerImages = useMemo(() => {
+    return isEmpty(service?.representationServiceFileArr)
+      ? [service.avatar]
+      : service.representationServiceFileArr;
+  }, [service]);
+
   return (
     <Screen safeBottom safeTop style={styles.container}>
       <StatusBar
@@ -66,10 +73,7 @@ const DetailService = () => {
       <Header />
       <AfterTimeoutFragment placeholder={<Placeholder />} timeout={1000}>
         <ScrollView style={styles.content}>
-          <HorizonListImage
-            images={service?.representationServiceFileArr ?? []}
-            getColors={getColors}
-          />
+          <HorizonListImage images={bannerImages} getColors={getColors} />
           <View style={styles.body}>
             <Animated.View style={[styles.bodyBg2, animatedStyle]} />
             <LinearGradient

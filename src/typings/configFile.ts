@@ -5,6 +5,7 @@ export enum ConfigFileCode {
   ImageVoucherHome = "IMAGE_VOUCHER_HOME",
   ImageFlashSaleHome = "IMAGE_FLASHSALE_HOME",
   FlashSaleRule = "FLASH_SALE_RULE",
+  FlashSaleTitle = "IMAGE_FLASHSALE_TITLE",
 }
 
 export type ConfigFile = {

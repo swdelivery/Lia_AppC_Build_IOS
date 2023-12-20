@@ -1,11 +1,10 @@
 import Column from "@Components/Column";
 import LinearGradient from "@Components/LinearGradient";
-import NumberTicker from "@Components/NumberTicker";
 import Row from "@Components/Row";
 import Text from "@Components/Text";
-import { MAIN_RED, MAIN_RED_500 } from "@Constant/Color";
+import { MAIN_RED_500, MAIN_RED_600 } from "@Constant/Color";
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import FlashSaleEnds from "./FlashSaleEnds";
 
 type Props = {};
@@ -15,7 +14,7 @@ export default function FlashSaleTimes({}: Props) {
     <Column>
       <LinearGradient
         style={StyleSheet.absoluteFill}
-        colors={["#b40000", "#c90000"]}
+        colors={[MAIN_RED_600, MAIN_RED_500]}
       />
       <Row paddingBottom={8} paddingHorizontal={20} gap={30}>
         <Column
