@@ -21,5 +21,6 @@ export function* rootSaga() {
     fork(require("./wallet/sagas").default),
     fork(require("./takecare/sagas").default),
     fork(require("./category/sagas").default),
+    fork(require("./charity/sagas").default),
   ]);
 }

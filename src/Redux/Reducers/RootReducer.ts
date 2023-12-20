@@ -45,6 +45,7 @@ import newfeeds from "../newfeeds/reducers";
 import wallet from "../wallet/reducers";
 import takecare from "../takecare/reducers";
 import category from "../category/reducers"
+import charity from "../charity/reducers"
 
 const rootReducer = combineReducers({
   newsReducer,
@@ -91,7 +92,8 @@ const rootReducer = combineReducers({
   newfeeds,
   wallet,
   takecare,
-  category
+  category,
+  charity
 });
 
 // const rootReducer = (state, action) => {

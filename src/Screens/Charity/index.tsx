@@ -7,15 +7,24 @@ import { FocusAwareStatusBar } from '@Components/StatusBar'
 import Text from '@Components/Text'
 import { NEW_BASE_COLOR } from '@Constant/Color'
 import Placeholder from "@Screens/NewDetailService/Components/Placeholder"
-import React, { useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { FlatList, StyleSheet } from 'react-native'
 import CardInfoCharity from './Components/CardInfoCharity'
 import Header from './Components/Header'
 import ListUsers from './Components/ListUsers'
 import { IconOptions } from '@Components/Icon/Icon'
+import { useDispatch, useSelector } from 'react-redux'
+import { getListCampain } from '@Redux/charity/actions'
+import { getListCampainState } from '@Redux/charity/selectors'
 
 const Charity = () => {
   const [listCharity, setListCharity] = useState([1, 2, 3, 4, 5, 6])
+  const dispatch = useDispatch()
+  const { data } = useSelector(getListCampainState)
+
+  useEffect(() => {
+    dispatch(getListCampain.request())
+  }, [])
 
   const _renderListHeaderFlatlist = () => {
     return (
@@ -35,11 +44,16 @@ const Charity = () => {
       </Column>
     )
   }
-  const _renderItemCardCharity = () => {
+  const _renderItemCardCharity = ({ item, index }) => {
     return (
-      <CardInfoCharity />
+      <CardInfoCharity data={item} />
     )
   }
+
+  const _awesomeChildListKeyExtractor = useCallback(
+    (item) => `awesome-child-key-${item._id}`,
+    []
+  );
   return (
     <Screen
       safeBottom
@@ -51,8 +65,8 @@ const Charity = () => {
           contentContainerStyle={{ gap: 8 * 2 }}
           ListHeaderComponent={_renderListHeaderFlatlist}
           renderItem={_renderItemCardCharity}
-          keyExtractor={(item, index) => index}
-          data={listCharity}
+          keyExtractor={_awesomeChildListKeyExtractor}
+          data={data}
         />
       </AfterTimeoutFragment>
     </Screen>

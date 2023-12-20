@@ -474,6 +474,13 @@ const getDataForModalFilterService = (payload: any) => {
     .then(({ data }) => data);
 };
 
+// Charity
+const getListCampain = (payload: any) => {
+  return axios
+    .get(`/volunteer`)
+    .then(({ data }) => data);
+};
+
 
 export default {
   partnerLogout,
@@ -565,5 +572,8 @@ export default {
 
   // Category
   getServiceFilterCategory,
-  getDataForModalFilterService
+  getDataForModalFilterService,
+
+  // Charity
+  getListCampain
 };
