@@ -1,5 +1,5 @@
 import React, { memo, useEffect } from "react";
-import { TouchableOpacity, View } from "react-native";
+import { View } from "react-native";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -12,6 +12,7 @@ import {
   _width,
   _widthScale,
 } from "../../../Constant/Scale";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const EachImage = memo((props) => {
   const widthImg = useSharedValue(380);
