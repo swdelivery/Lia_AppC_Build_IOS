@@ -495,6 +495,11 @@ const getListCompanionRequest = (payload: any) => {
     .get(`/volunteer-companion`, {})
     .then(({ data }) => data);
 };
+const createVolunteerDonate = (payload: any) => {
+  return axios
+    .post(`/donate-volunteer-request/donate`, payload)
+    .then(({ data }) => data);
+};
 
 
 export default {
@@ -593,5 +598,6 @@ export default {
   getListCampain,
   getDetailCampain,
   createVolunteerCompanion,
-  getListCompanionRequest
+  getListCompanionRequest,
+  createVolunteerDonate
 };

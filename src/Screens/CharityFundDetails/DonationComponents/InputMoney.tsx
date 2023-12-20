@@ -1,29 +1,38 @@
-import { StyleSheet, TextInput, TouchableOpacity, View } from 'react-native'
-import React, { useCallback, useState } from 'react'
-import Text from '@Components/Text'
 import Column from '@Components/Column'
-import { stylesFont } from '@Constant/Font'
-import { BORDER_COLOR, GREY, NEW_BASE_COLOR, WHITE } from '@Constant/Color'
 import Row from '@Components/Row'
+import Text from '@Components/Text'
+import { BORDER_COLOR, GREY, NEW_BASE_COLOR, RED, WHITE } from '@Constant/Color'
+import { stylesFont } from '@Constant/Font'
+import { selectAmount } from '@Redux/charity/actions'
+import React, { useCallback, useState } from 'react'
+import { StyleSheet, TextInput, TouchableOpacity } from 'react-native'
+import { useDispatch } from 'react-redux'
 
 const InputMoney = () => {
+  const dispatch = useDispatch()
   const [valueMoney, setValueMoney] = useState('')
 
   const _handleOnchangeText = (value) => {
     setValueMoney(value.split('.').join("").toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."))
   }
 
+  const _handleOnBlur = useCallback(() => {
+    dispatch(selectAmount(valueMoney))
+  }, [valueMoney])
+
   const _handleSetMoney = useCallback((value) => () => {
-    console.log({ value });
+    dispatch(selectAmount(value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")))
     setValueMoney(value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."))
   }, [valueMoney])
 
   return (
-    <Column>
-      <Column top={-8 * 2}>
+    <Column
+      gap={8 * 2}
+      marginTop={8 * 2}>
+      <Column >
         <Column marginLeft={8 * 2}>
           <Text>
-            Nhập số tiền ủng hộ
+            Nhập số tiền ủng hộ <Text weight='bold' color={RED}>*</Text>
           </Text>
         </Column>
       </Column>
@@ -32,6 +41,7 @@ const InputMoney = () => {
         marginHorizontal={8 * 2}
         justifyContent='center'>
         <TextInput
+          onBlur={_handleOnBlur}
           value={valueMoney}
           onChangeText={_handleOnchangeText}
           keyboardType='number-pad'
@@ -46,7 +56,7 @@ const InputMoney = () => {
       </Column>
 
       <Row
-        marginTop={8 * 2}
+        marginTop={8 * 1}
         paddingHorizontal={8 * 2}
         gap={8}>
         <TouchableOpacity
@@ -108,12 +118,12 @@ const styles = StyleSheet.create({
   textInput: {
     padding: 0,
     paddingHorizontal: 8 * 2,
-    paddingVertical: 8,
+    paddingVertical: 8 * 2,
     borderRadius: 8,
     borderWidth: 1,
     borderColor: BORDER_COLOR,
     color: NEW_BASE_COLOR,
-    fontSize: 16,
+    fontSize: 18,
     paddingRight: 8 * 3,
     backgroundColor: WHITE
   }

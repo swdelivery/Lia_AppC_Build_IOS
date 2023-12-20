@@ -8,15 +8,19 @@ import { useNavigate } from 'src/Hooks/useNavigation'
 import { IconBackWhite } from '@Components/Icon/Icon'
 import Text from '@Components/Text'
 import LinearGradient from 'react-native-linear-gradient'
+import { getDetailCampainState } from '@Redux/charity/selectors'
+import { useSelector } from 'react-redux'
+import { URL_ORIGINAL } from '@Constant/Url'
 
 const Banner = () => {
   const { top } = useSafeAreaInsets();
   const { navigation } = useNavigate()
+  const { data: { bannerFileArr } } = useSelector(getDetailCampainState)
 
   return (
     <ImageBackground
       style={styles.imageBG}
-      source={{ uri: `https://ninhbinh.edu.vn/upload/46569/fck/files/2021_02_28_09_22_181.png` }}>
+      source={{ uri: `${URL_ORIGINAL}${bannerFileArr[0]?.link}` }}>
 
       <LinearGradient
         style={StyleSheet.absoluteFill}

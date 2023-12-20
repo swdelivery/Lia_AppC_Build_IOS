@@ -1,17 +1,24 @@
 import { StyleSheet, TextInput, TouchableOpacity, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import Text from '@Components/Text'
 import Column from '@Components/Column'
 import { stylesFont } from '@Constant/Font'
 import { BORDER_COLOR, GREY, NEW_BASE_COLOR, WHITE } from '@Constant/Color'
 import Row from '@Components/Row'
+import { useDispatch } from 'react-redux'
+import { selectDescription } from '@Redux/charity/actions'
 
 const InputWish = () => {
-  const [valueMoney, setValueMoney] = useState('')
+  const dispatch = useDispatch()
+  const [value, setValue] = useState('')
 
   const _handleOnchangeText = (value) => {
-    setValueMoney(value.split('.').join("").toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."))
+    setValue(value)
   }
+
+  const _handleOnBlur = useCallback(() => {
+    dispatch(selectDescription(value))
+  }, [value])
 
   return (
     <Column
@@ -26,7 +33,8 @@ const InputWish = () => {
         marginHorizontal={8 * 2}
         justifyContent='center'>
         <TextInput
-          value={valueMoney}
+          value={value}
+          onBlur={_handleOnBlur}
           onChangeText={_handleOnchangeText}
           style={[styles.textInput, stylesFont.fontNolan]}
           placeholder='Cùng nhau trao gửi những lời yêu thương' />

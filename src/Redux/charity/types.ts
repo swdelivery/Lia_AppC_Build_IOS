@@ -7,6 +7,13 @@ export const GET_LIST_COMPANION_REQUEST = generateActionTypes("@charity/get-list
 
 // // SELECT
 export const SELECT_CAMPAIN = "@charity/select-campain"
+export const SELECT_VOLUNTEER_ID = "@charity/select-volunteer-id"
+export const SELECT_PAYMENT_METHOD_CODE = "@charity/select-payment-method-code"
+export const SELECT_AMOUNT = "@charity/select-amount"
+export const SELECT_HIDE_NAME = "@charity/select-hide-name"
+export const SELECT_DESCRIPTION = "@charity/select-description"
+export const SELECT_IMAGE = "@charity/select-image"
 
 // CREATE
 export const CREATE_VOLUNTEER_COMPANION = generateActionTypes("@charity/create-volunteer-companion");
+export const CREATE_VOLUNTEER_DONATE = generateActionTypes("@charity/create-volunteer-donate");
