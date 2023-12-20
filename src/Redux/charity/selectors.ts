@@ -1,6 +1,5 @@
 import { AppState } from "../Reducers/RootReducer";
 
 export const getListCampainState = (state: AppState) => state.charity.listCampain;
-// export const getInfoPostState = (state: AppState) => state.newfeeds.infoPost;
-// export const getPartnerDiaryState = (state: AppState) => state.newfeeds.partnerDiary;
-// export const getListCommentsState = (state: AppState) => state.newfeeds.listComments;
+export const getDetailCampainState = (state: AppState) => state.charity.detailCampain;
+export const getListCompanionRequestState = (state: AppState) => state.charity.listCompanionRequest;

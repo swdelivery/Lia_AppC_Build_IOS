@@ -8,24 +8,34 @@ import { BLACK_OPACITY_4, NEW_BASE_COLOR } from "@Constant/Color";
 import { _width } from "@Constant/Scale";
 import { formatMonney } from "@Constant/Utils";
 import ScreenKey from "@Navigation/ScreenKey";
-import React from "react";
+import { getDetailCampainState } from "@Redux/charity/selectors";
+import React, { useMemo } from "react";
 import { TouchableOpacity } from "react-native";
+import { useSelector } from "react-redux";
 import { useNavigate } from "src/Hooks/useNavigation";
 
 const ITEMS_COUNT = Math.floor((_width - 32) / 40) - 1;
 
 export default function DonationInfo() {
   const { navigate } = useNavigate()
+  const { data: {
+    fundCurrent,
+    fundTarget,
+  } } = useSelector(getDetailCampainState)
+
+  const percent = useMemo(() => {
+    return parseFloat((fundCurrent / fundTarget * 100).toFixed(2))
+  }, [fundTarget, fundCurrent])
 
   return (
     <Column paddingHorizontal={16}>
-      <HorizontalProgress percent={80} />
+      <HorizontalProgress percent={percent} />
       <Row marginTop={4}>
         <Text>Đã đạt được </Text>
         <Text weight="bold" color={NEW_BASE_COLOR} flex={1}>
-          {formatMonney(36238232, true)}
+          {formatMonney(fundCurrent, true)}
         </Text>
-        <Text weight="bold">80%</Text>
+        <Text weight="bold">{percent}%</Text>
       </Row>
       <Row gap={8} justifyContent="space-between" marginTop={20}>
         {Array.from(Array(ITEMS_COUNT).keys()).map((_, index) => {

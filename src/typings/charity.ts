@@ -1,4 +1,5 @@
 import { FileAvatar } from "./common";
+import { Partner } from "./partner";
 
 export type Campain = {
   orderNumber: number;
@@ -28,5 +29,22 @@ export type Campain = {
   // NOTICE
   bannerFileArr: any;
   currency: any;
+  id: string;
+}
+
+export type CompanionRequest = {
+  targetDeposit: number;
+  currentDeposit: number;
+  status: string;
+  isDelete: boolean;
+  _id: string;
+  volunteerId: string;
+  code: string;
+  partnerId: string;
+  created: string;
+  updated: string;
+  __v: number;
+  partner: Partner;
+  volunteer: Campain;
   id: string;
 }

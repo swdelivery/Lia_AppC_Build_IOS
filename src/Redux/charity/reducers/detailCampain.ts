@@ -1,21 +1,18 @@
 import { createReducer } from "@Redux/helper";
 import { Handler } from "@Redux/types";
-import { ApiMeta } from "@typings/api";
 import { Campain } from "@typings/charity";
-import { GET_LIST_CAMPAIN } from "../types";
+import { GET_DETAIL_CAMPAIN, SELECT_CAMPAIN } from "../types";
 
 export type State = {
   isLoading: boolean;
   isLoadingMore: boolean;
-  data: Campain[];
-  meta: ApiMeta
+  data: Campain;
 };
 
 const INITIAL_STATE: State = {
   isLoading: false,
   isLoadingMore: false,
-  data: [],
-  meta: null
+  data: {},
 };
 
 const request: Handler<State> = (state, { payload }) => ({
@@ -28,11 +25,18 @@ const success: Handler<State> = (state, { payload }) => {
     ...state,
     isLoading: false,
     data: payload?.data?.data,
-    meta: payload?.data?.meta
+  }
+}
+
+const selectCampain: Handler<State> = (state, { payload }) => {
+  return {
+    ...state,
+    data: payload,
   }
 }
 
 export default createReducer(INITIAL_STATE, {
-  [GET_LIST_CAMPAIN.REQUEST]: request,
-  [GET_LIST_CAMPAIN.SUCCESS]: success,
+  [GET_DETAIL_CAMPAIN.REQUEST]: request,
+  [GET_DETAIL_CAMPAIN.SUCCESS]: success,
+  [SELECT_CAMPAIN]: selectCampain,
 });

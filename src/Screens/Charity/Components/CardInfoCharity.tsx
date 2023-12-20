@@ -7,10 +7,12 @@ import Text from '@Components/Text'
 import { BORDER_COLOR, NEW_BASE_COLOR, WHITE } from '@Constant/Color'
 import { formatMonney } from '@Constant/Utils'
 import ScreenKey from '@Navigation/ScreenKey'
+import { selectCampain } from '@Redux/charity/actions'
 import { Campain } from '@typings/charity'
 import moment from 'moment'
-import React, { useMemo } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { StyleSheet, TouchableOpacity } from 'react-native'
+import { useDispatch } from 'react-redux'
 import { useNavigate } from 'src/Hooks/useNavigation'
 
 
@@ -20,6 +22,7 @@ type Props = {
 
 const CardInfoCharity = ({ data }: Props) => {
   const { navigate } = useNavigate()
+  const dispatch = useDispatch()
   const { name, createBy, fundTarget, fundCurrent, avatar, endDate } = data
 
   const percent = useMemo(() => {
@@ -29,6 +32,11 @@ const CardInfoCharity = ({ data }: Props) => {
   const dayLeft = useMemo(() => {
     return moment(endDate).diff(moment(), 'days')
   }, [endDate])
+
+  const _handleGoToDetail = useCallback(() => {
+    dispatch(selectCampain(data))
+    navigate(ScreenKey.CHARITY_FUND_DETAILS, { campain: data })()
+  }, [data])
 
   return (
     <Column
@@ -53,7 +61,7 @@ const CardInfoCharity = ({ data }: Props) => {
           {dayLeft} Ngày
         </Text>
       </Column>
-      <TouchableOpacity onPress={navigate(ScreenKey.CHARITY_FUND_DETAILS)}>
+      <TouchableOpacity onPress={_handleGoToDetail}>
         <Row gap={8}>
           <Image
             avatar={avatar}

@@ -14,7 +14,7 @@ import Header from './Components/Header'
 import ListUsers from './Components/ListUsers'
 import { IconOptions } from '@Components/Icon/Icon'
 import { useDispatch, useSelector } from 'react-redux'
-import { getListCampain } from '@Redux/charity/actions'
+import { getListCampain, getListCompanionRequest } from '@Redux/charity/actions'
 import { getListCampainState } from '@Redux/charity/selectors'
 
 const Charity = () => {
@@ -24,6 +24,7 @@ const Charity = () => {
 
   useEffect(() => {
     dispatch(getListCampain.request())
+    dispatch(getListCompanionRequest.request())
   }, [])
 
   const _renderListHeaderFlatlist = () => {

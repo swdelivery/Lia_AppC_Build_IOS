@@ -4,12 +4,27 @@ import Row from "@Components/Row";
 import Text from "@Components/Text";
 import { BLACK_OPACITY_7, NEW_BASE_COLOR } from "@Constant/Color";
 import { formatMonney } from "@Constant/Utils";
-import React from "react";
+import { getDetailCampainState } from "@Redux/charity/selectors";
+import moment from "moment";
+import React, { useMemo } from "react";
 import { StyleSheet } from "react-native";
+import { useSelector } from "react-redux";
 
 type Props = {};
 
 export default function FundInfo({ }: Props) {
+
+  const { data: {
+    fundTarget,
+    endDate,
+    name,
+    createBy
+  } } = useSelector(getDetailCampainState)
+
+  const dayLeft = useMemo(() => {
+    return moment(endDate).diff(moment(), 'days')
+  }, [endDate])
+
   return (
     <Column paddingHorizontal={16} paddingVertical={20}>
       <Row>
@@ -28,7 +43,7 @@ export default function FundInfo({ }: Props) {
             <Text size={12} color={BLACK_OPACITY_7}>
               Mục tiêu chiến dịch
             </Text>
-            <Text weight="bold">{formatMonney(120000000, true)}</Text>
+            <Text weight="bold">{formatMonney(fundTarget, true)}</Text>
           </Column>
         </Row>
         <Row gap={8}>
@@ -46,12 +61,12 @@ export default function FundInfo({ }: Props) {
             <Text size={12} color={BLACK_OPACITY_7}>
               Thời gian còn lại
             </Text>
-            <Text weight="bold">79 ngày</Text>
+            <Text weight="bold">{dayLeft} ngày</Text>
           </Column>
         </Row>
       </Row>
       <Text weight="bold" top={20} size={16}>
-        Chiến dịch thiện nguyện mang Nhà vệ sinh đến tre em mầm non vùng cao!
+        {name}
       </Text>
       <Row alignItems="flex-start" gap={4} marginTop={6}>
         <Icon
@@ -67,7 +82,7 @@ export default function FundInfo({ }: Props) {
       <Row marginTop={12}>
         <Text size={12}>Tạo bởi </Text>
         <Text size={12} weight="bold" color={NEW_BASE_COLOR}>
-          QUỸ THIỆN NGUYỆN SINH VIÊN
+          {createBy}
         </Text>
         <Icon name="check-circle" size={16} color={NEW_BASE_COLOR} left={4} />
       </Row>

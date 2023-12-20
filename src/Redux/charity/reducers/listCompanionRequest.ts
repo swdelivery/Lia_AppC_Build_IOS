@@ -1,13 +1,13 @@
 import { createReducer } from "@Redux/helper";
 import { Handler } from "@Redux/types";
 import { ApiMeta } from "@typings/api";
-import { Campain } from "@typings/charity";
-import { GET_LIST_CAMPAIN } from "../types";
+import { CompanionRequest } from "@typings/charity";
+import { CREATE_VOLUNTEER_COMPANION, GET_LIST_COMPANION_REQUEST } from "../types";
 
 export type State = {
   isLoading: boolean;
   isLoadingMore: boolean;
-  data: Campain[];
+  data: CompanionRequest[];
   meta: ApiMeta
 };
 
@@ -32,7 +32,16 @@ const success: Handler<State> = (state, { payload }) => {
   }
 }
 
+const createSuccess: Handler<State> = (state, { payload }) => {
+  return {
+    ...state,
+    isLoading: false,
+    data: [payload?.data?.data, ...state.data],
+  }
+}
+
 export default createReducer(INITIAL_STATE, {
-  [GET_LIST_CAMPAIN.REQUEST]: request,
-  [GET_LIST_CAMPAIN.SUCCESS]: success,
+  [GET_LIST_COMPANION_REQUEST.REQUEST]: request,
+  [GET_LIST_COMPANION_REQUEST.SUCCESS]: success,
+  [CREATE_VOLUNTEER_COMPANION.SUCCESS]: createSuccess,
 });

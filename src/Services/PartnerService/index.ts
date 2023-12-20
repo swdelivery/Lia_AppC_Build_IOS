@@ -480,6 +480,21 @@ const getListCampain = (payload: any) => {
     .get(`/volunteer`)
     .then(({ data }) => data);
 };
+const getDetailCampain = (payload: any) => {
+  return axios
+    .get(`/volunteer/${payload}`)
+    .then(({ data }) => data);
+};
+const createVolunteerCompanion = (payload: any) => {
+  return axios
+    .post(`/volunteer-companion`, payload)
+    .then(({ data }) => data);
+};
+const getListCompanionRequest = (payload: any) => {
+  return axios
+    .get(`/volunteer-companion`, {})
+    .then(({ data }) => data);
+};
 
 
 export default {
@@ -575,5 +590,8 @@ export default {
   getDataForModalFilterService,
 
   // Charity
-  getListCampain
+  getListCampain,
+  getDetailCampain,
+  createVolunteerCompanion,
+  getListCompanionRequest
 };
