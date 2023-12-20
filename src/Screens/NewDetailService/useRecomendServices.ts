@@ -10,10 +10,12 @@ export default function useRecomendServices(service: Service) {
     if (!service) {
       return;
     }
-    getData({
-      codeGroup: {
-        notIn: service.codeGroup,
-      },
+    requestAnimationFrame(() => {
+      getData({
+        codeGroup: {
+          notIn: service.codeGroup,
+        },
+      });
     });
   }, [...(service?.codeGroup || [])]);
 
