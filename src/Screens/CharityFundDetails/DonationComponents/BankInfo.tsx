@@ -2,27 +2,16 @@ import Column from '@Components/Column'
 import Row from '@Components/Row'
 import Text from '@Components/Text'
 import { NEW_BASE_COLOR } from '@Constant/Color'
-import { getConfigData } from '@Redux/Action/OrtherAction'
-import React, { useEffect, useState } from 'react'
+import { ConfigDataCode } from '@typings/configData'
+import React from 'react'
 import { StyleSheet } from 'react-native'
+import useConfigData from 'src/Hooks/useConfigData'
 
 const BankInfo = () => {
-  const [bankName, setBankName] = useState(null)
-  const [bankNumber, setBankNumber] = useState(null)
-  const [bankOwner, setBankOwner] = useState(null)
 
-  useEffect(() => {
-    _getDataConfig()
-  }, [])
-
-  const _getDataConfig = async () => {
-    let resultName = await getConfigData("BANK_NAME");
-    let resultNumber = await getConfigData("BANK_NUMBER");
-    let resultOwnerName = await getConfigData("BANK_OWNER");
-    setBankName(resultName?.value)
-    setBankNumber(resultNumber?.value)
-    setBankOwner(resultOwnerName?.value)
-  }
+  const bankName = useConfigData(ConfigDataCode.BankName);
+  const bankNumber = useConfigData(ConfigDataCode.BankNumber);
+  const bankOwner = useConfigData(ConfigDataCode.BankOwner);
 
   return (
     <Column
@@ -36,7 +25,7 @@ const BankInfo = () => {
           Ngân hàng:
         </Text>
         <Text>
-          {bankName}
+          {bankName?.value}
         </Text>
       </Row>
       <Row gap={4}>
@@ -44,7 +33,7 @@ const BankInfo = () => {
           Số tài khoản LIA:
         </Text>
         <Text>
-          {bankNumber}
+          {bankNumber?.value}
         </Text>
       </Row>
       <Row gap={4}>
@@ -52,7 +41,7 @@ const BankInfo = () => {
           Tên người thụ hưởng:
         </Text>
         <Text>
-          {bankOwner}
+          {bankOwner?.value}
         </Text>
       </Row>
     </Column>

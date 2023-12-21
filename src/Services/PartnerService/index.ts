@@ -24,6 +24,7 @@ import { ServiceTreatment } from "@typings/treatment";
 import { PaymentRequest } from "@typings/payment";
 import { Service } from "@typings/serviceGroup";
 import { Material } from "@typings/material";
+import { ConfigData } from "@typings/configData";
 
 const axios = createAxios(URL_FOR_PARTNER);
 
@@ -157,6 +158,11 @@ const getDiaryList = (
 const getConfigFileByCode = (code: string): Promise<ConfigFile> =>
   axios
     .get("/config-file/get-by-code?code=" + code)
+    .then(({ data }) => data.data);
+
+const getConfigDataByCode = (code: string): Promise<ConfigData> =>
+  axios
+    .get("/configuration-data/get-by-code?code=" + code)
     .then(({ data }) => data.data);
 
 const getMaterial = (
@@ -522,6 +528,7 @@ export default {
   getDiaryList,
 
   getConfigFileByCode,
+  getConfigDataByCode,
 
   // Material
   getMaterial,
