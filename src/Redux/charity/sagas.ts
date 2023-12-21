@@ -3,7 +3,7 @@ import { Alert } from "react-native";
 import { all, call, put, takeLatest } from "redux-saga/effects";
 import PartnerService from "src/Services/PartnerService";
 import * as actions from "./actions";
-import { CREATE_VOLUNTEER_COMPANION, CREATE_VOLUNTEER_DONATE, GET_DETAIL_CAMPAIN, GET_LIST_CAMPAIN, GET_LIST_COMPANION_REQUEST, GET_VOLUNTEER_HISTORY, SEARCH_CAMPAIN } from "./types";
+import { CREATE_VOLUNTEER_COMPANION, CREATE_VOLUNTEER_DONATE, GET_DETAIL_CAMPAIN, GET_LIST_CAMPAIN, GET_LIST_COMPANION_BY_USER, GET_LIST_COMPANION_REQUEST, GET_LIST_COMPANION_REQUEST_ACCEPT, GET_VOLUNTEER_HISTORY, SEARCH_CAMPAIN } from "./types";
 
 function* getListCampain({ }: BaseAction<string>) {
   try {
@@ -49,6 +49,32 @@ function* getListCompanionRequest({ payload }: BaseAction<string>) {
     const data = yield call(PartnerService.getListCompanionRequest, payload);
     yield put(
       actions.getListCompanionRequest.success({
+        data,
+      })
+    );
+  } catch (error: any) {
+    Alert.alert(error.message)
+  }
+}
+
+function* getListCompanionRequestAccept({ payload }: BaseAction<string>) {
+  try {
+    const data = yield call(PartnerService.getListCompanionRequest, payload);
+    yield put(
+      actions.getListCompanionRequestAccept.success({
+        data,
+      })
+    );
+  } catch (error: any) {
+    Alert.alert(error.message)
+  }
+}
+
+function* getListCompanionByUser({ payload }: BaseAction<string>) {
+  try {
+    const data = yield call(PartnerService.getListCompanionRequest, payload);
+    yield put(
+      actions.getListCompanionByUser.success({
         data,
       })
     );
@@ -103,6 +129,8 @@ export default function* sagas() {
     takeLatest(GET_DETAIL_CAMPAIN.REQUEST, getDetailCampain),
     takeLatest(CREATE_VOLUNTEER_COMPANION.REQUEST, createVolunteerCompanion),
     takeLatest(GET_LIST_COMPANION_REQUEST.REQUEST, getListCompanionRequest),
+    takeLatest(GET_LIST_COMPANION_REQUEST_ACCEPT.REQUEST, getListCompanionRequestAccept),
+    takeLatest(GET_LIST_COMPANION_BY_USER.REQUEST, getListCompanionByUser),
     takeLatest(CREATE_VOLUNTEER_DONATE.REQUEST, createVolunteerDonate),
     takeLatest(SEARCH_CAMPAIN.REQUEST, searchCampain),
     takeLatest(GET_VOLUNTEER_HISTORY.REQUEST, getVolunteerHistory),

@@ -6,7 +6,9 @@ import {
   CREATE_VOLUNTEER_DONATE,
   GET_DETAIL_CAMPAIN,
   GET_LIST_CAMPAIN,
+  GET_LIST_COMPANION_BY_USER,
   GET_LIST_COMPANION_REQUEST,
+  GET_LIST_COMPANION_REQUEST_ACCEPT,
   GET_VOLUNTEER_HISTORY,
   SEARCH_CAMPAIN,
   SELECT_AMOUNT,
@@ -43,6 +45,16 @@ export const getListCompanionRequest = generateActionsGroup<
   any,
   ApiResponse<CompanionRequest[]>
 >(GET_LIST_COMPANION_REQUEST);
+
+export const getListCompanionRequestAccept = generateActionsGroup<
+  any,
+  ApiResponse<CompanionRequest[]>
+>(GET_LIST_COMPANION_REQUEST_ACCEPT);
+
+export const getListCompanionByUser = generateActionsGroup<
+  any,
+  ApiResponse<CompanionRequest[]>
+>(GET_LIST_COMPANION_BY_USER);
 
 export const searchCampain = generateActionsGroup<
   any,

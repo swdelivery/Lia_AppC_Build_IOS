@@ -1,13 +1,14 @@
-import { StyleSheet, View } from 'react-native'
-import React from 'react'
-import Text from '@Components/Text'
-import Row from '@Components/Row'
-import Column from '@Components/Column'
-import { BORDER_COLOR, NEW_BASE_COLOR, WHITE } from '@Constant/Color'
-import { styleElement } from '@Constant/StyleElement'
 import Avatar from '@Components/Avatar'
+import Column from '@Components/Column'
+import Row from '@Components/Row'
+import Text from '@Components/Text'
+import { NEW_BASE_COLOR, WHITE } from '@Constant/Color'
+import { styleElement } from '@Constant/StyleElement'
+import { formatMonney } from '@Constant/Utils'
+import React from 'react'
+import { StyleSheet } from 'react-native'
 
-const Report = () => {
+const Report = ({ data }) => {
   return (
     <Column gap={8 * 2}>
       <Row
@@ -24,7 +25,7 @@ const Report = () => {
             Mục tiêu đồng hành
           </Text>
           <Text weight='bold' color={WHITE}>
-            100.000.000 VND
+            {formatMonney(data?.targetDeposit, true)}
           </Text>
         </Column>
 
@@ -40,7 +41,7 @@ const Report = () => {
             Số tiền đã đạt
           </Text>
           <Text weight='bold' color={NEW_BASE_COLOR}>
-            42.000.000 VND
+            {formatMonney(data?.currentDeposit, true)}
           </Text>
         </Column>
       </Row>

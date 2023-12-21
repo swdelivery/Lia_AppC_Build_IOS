@@ -1,55 +1,89 @@
-import { ImageBackground, StyleSheet, View } from 'react-native'
-import React from 'react'
-import Text from '@Components/Text'
-import { BLACK_OPACITY_7, NEW_BASE_COLOR, WHITE } from '@Constant/Color'
-import LinearGradient from 'react-native-linear-gradient'
+import Avatar from '@Components/Avatar'
 import Column from '@Components/Column'
 import Row from '@Components/Row'
-import Avatar from '@Components/Avatar'
+import Text from '@Components/Text'
+import { BLACK_OPACITY_7, NEW_BASE_COLOR, WHITE } from '@Constant/Color'
+import ScreenKey from '@Navigation/ScreenKey'
+import { selectCampain } from '@Redux/charity/actions'
+import { CompanionRequest } from '@typings/charity'
+import moment from 'moment'
+import React, { useCallback, useMemo } from 'react'
+import { ImageBackground, StyleSheet, TouchableOpacity } from 'react-native'
+import LinearGradient from 'react-native-linear-gradient'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'src/Hooks/useNavigation'
+import { getImageAvataUrl } from 'src/utils/avatar'
 
-const CardCampaign = () => {
+type Props = {
+  data: CompanionRequest
+}
+
+const CardCampaign = ({ data }: Props) => {
+  const dispatch = useDispatch()
+  const { navigate } = useNavigate()
+  const { volunteer: {
+    endDate,
+    bannerFileArr,
+    name,
+    createBy,
+    avatar
+  } } = data
+
+  const dayLeft = useMemo(() => {
+    return moment(endDate).diff(moment(), 'days')
+  }, [endDate])
+
+  const _handleGoToDetailCampain = useCallback(() => {
+    dispatch(selectCampain(data?.volunteer))
+    navigate(ScreenKey.CHARITY_FUND_DETAILS, { campain: data?.volunteer })()
+  }, [data])
+
   return (
-    <ImageBackground
-      imageStyle={{ borderRadius: 8 }}
-      style={styles.imgBG}
-      source={{ uri: `https://ninhbinh.edu.vn/upload/46569/fck/files/2021_02_28_09_22_181.png` }}>
-      <LinearGradient
-        style={[StyleSheet.absoluteFill, { borderRadius: 8 }]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 0, y: 1 }}
-        colors={["transparent", BLACK_OPACITY_7]} />
+    <TouchableOpacity
+      onPress={_handleGoToDetailCampain}
+      activeOpacity={.5}>
+      <ImageBackground
+        imageStyle={{ borderRadius: 8 }}
+        style={styles.imgBG}
+        source={{ uri: getImageAvataUrl(bannerFileArr[0]) }}>
+        <LinearGradient
+          style={[StyleSheet.absoluteFill, { borderRadius: 8 }]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 0, y: 1 }}
+          colors={["transparent", BLACK_OPACITY_7]} />
 
-      <Column
-        top={8}
-        left={8}
-        position='absolute'
-        paddingVertical={2}
-        borderRadius={8}
-        backgroundColor={WHITE}
-        paddingHorizontal={8}>
-        <Text size={12} color={NEW_BASE_COLOR}>
-          70 Ngày
-        </Text>
-      </Column>
+        <Column
+          top={8}
+          left={8}
+          position='absolute'
+          paddingVertical={2}
+          borderRadius={8}
+          backgroundColor={WHITE}
+          paddingHorizontal={8}>
+          <Text size={12} color={NEW_BASE_COLOR}>
+            {dayLeft} Ngày
+          </Text>
+        </Column>
 
-      <Column
-        gap={8}
-        position='absolute'
-        bottom={8}
-        marginHorizontal={8 * 2}>
-        <Text
-          weight='bold'
-          color={WHITE}>
-          Chiến dịch mang nhà vệ sinh đến trẻ em vùng cao
-        </Text>
-        <Row gap={8}>
-          <Avatar size={8 * 3} avatar={null} />
+        <Column
+          gap={8}
+          position='absolute'
+          bottom={8}
+          marginHorizontal={8 * 2}>
           <Text
-            color={WHITE}
-            weight='bold'>Quỹ thiện nguyện sinh viên</Text>
-        </Row>
-      </Column>
-    </ImageBackground>
+            weight='bold'
+            color={WHITE}>
+            {name}
+          </Text>
+          <Row gap={8}>
+            <Avatar circle size={8 * 3} avatar={avatar} />
+            <Text
+              color={WHITE}
+              weight='bold'>{createBy}</Text>
+          </Row>
+        </Column>
+      </ImageBackground>
+    </TouchableOpacity>
   )
 }
 

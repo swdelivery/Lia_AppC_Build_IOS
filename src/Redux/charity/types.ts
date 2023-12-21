@@ -5,6 +5,8 @@ export const GET_LIST_CAMPAIN = generateActionTypes("@charity/get-list-campain")
 export const SEARCH_CAMPAIN = generateActionTypes("@charity/search-campain");
 export const GET_DETAIL_CAMPAIN = generateActionTypes("@charity/get-detail-campain");
 export const GET_LIST_COMPANION_REQUEST = generateActionTypes("@charity/get-list-companion-request");
+export const GET_LIST_COMPANION_REQUEST_ACCEPT = generateActionTypes("@charity/get-list-companion-request-accept");
+export const GET_LIST_COMPANION_BY_USER = generateActionTypes("@charity/get-list-companion-by-user");
 export const GET_VOLUNTEER_HISTORY = generateActionTypes("@charity/get-volunteer-history");
 
 // // SELECT

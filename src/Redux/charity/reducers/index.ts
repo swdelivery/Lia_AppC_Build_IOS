@@ -2,9 +2,11 @@ import { combineReducers } from 'redux';
 import listCampain from "./listCampain";
 import detailCampain from "./detailCampain";
 import listCompanionRequest from "./listCompanionRequest";
+import listCompanionRequestAccept from "./listCompanionRequestAccept";
 import dataCreateDonateRequest from "./dataCreateDonateRequest";
 import listCampainFilter from "./listCampainFilter";
 import volunteerHistory from "./volunteerHistory";
+import listCompanionByUser from "./listCompanionByUser";
 
 export default combineReducers({
   listCampain,
@@ -12,5 +14,7 @@ export default combineReducers({
   listCompanionRequest,
   dataCreateDonateRequest,
   listCampainFilter,
-  volunteerHistory
+  volunteerHistory,
+  listCompanionRequestAccept,
+  listCompanionByUser
 });

@@ -1,27 +1,27 @@
-import { StyleSheet, View } from 'react-native'
-import React from 'react'
-import Text from '@Components/Text'
 import Column from '@Components/Column'
+import Icon from '@Components/Icon'
 import Row from '@Components/Row'
+import Text from '@Components/Text'
 import { BORDER_COLOR, GREY, WHITE } from '@Constant/Color'
 import { styleElement } from '@Constant/StyleElement'
-import Icon from '@Components/Icon'
+import React from 'react'
+import { StyleSheet } from 'react-native'
 
-const Quotes = () => {
+const Quotes = ({ data }) => {
   return (
     <Column>
       <Column
         gap={4}
         marginHorizontal={8 * 6}>
-        <Text size={12}>
-          Đồng hành cùng NGUYEN HOANG ANH ủng hộ cho chiến dịch
+        <Text style={{ textAlign: 'center' }} size={12}>
+          Đồng hành cùng {data?.partner?.name} ủng hộ cho chiến dịch
         </Text>
         <Text
           style={{ textAlign: 'center' }}
           weight='bold'
           color={GREY}
           size={12}>
-          "Chiến dịch thiện nguyện mang nhà vệ sinh đến trẻ em mầm non vùng cao"
+          "{data?.volunteer?.name}"
         </Text>
       </Column>
 

@@ -1,19 +1,42 @@
-import { ScrollView, StyleSheet, View } from 'react-native'
-import React from 'react'
-import Text from '@Components/Text'
+import ActionButton from '@Components/ActionButton/ActionButton'
+import Avatar from '@Components/Avatar'
+import Column from '@Components/Column'
+import LiAHeader from '@Components/Header/LiAHeader'
+import HorizontalProgress from '@Components/HoriontalProgress'
+import Icon from '@Components/Icon'
+import Row from '@Components/Row'
 import Screen from '@Components/Screen'
 import { FocusAwareStatusBar } from '@Components/StatusBar'
-import LiAHeader from '@Components/Header/LiAHeader'
-import { BACKGROUND_COLOR, BLACK_OPACITY_7, GREY, NEW_BASE_COLOR } from '@Constant/Color'
-import Column from '@Components/Column'
-import Row from '@Components/Row'
-import Icon from '@Components/Icon'
+import Text from '@Components/Text'
+import { BACKGROUND_COLOR, BLACK_OPACITY_7, NEW_BASE_COLOR } from '@Constant/Color'
 import { formatMonney } from '@Constant/Utils'
-import HorizontalProgress from '@Components/HoriontalProgress'
-import Avatar from '@Components/Avatar'
-import ActionButton from '@Components/ActionButton/ActionButton'
+import ScreenKey from '@Navigation/ScreenKey'
+import { getDetailCampainState, getListCompanionRequestAcceptState } from '@Redux/charity/selectors'
+import moment from 'moment'
+import React, { useMemo } from 'react'
+import { ScrollView, StyleSheet } from 'react-native'
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'src/Hooks/useNavigation'
 
 const ListCompanion = () => {
+  const { navigate } = useNavigate()
+  const { data: dataCompanionAccept } = useSelector(getListCompanionRequestAcceptState)
+
+  const { data: {
+    fundCurrent,
+    fundTarget,
+    name,
+    endDate
+  } } = useSelector(getDetailCampainState)
+
+  const dayLeft = useMemo(() => {
+    return moment(endDate).diff(moment(), 'days')
+  }, [endDate])
+
+  const percent = useMemo(() => {
+    return parseFloat((fundCurrent / fundTarget * 100).toFixed(2))
+  }, [fundTarget, fundCurrent])
+
   return (
     <Screen
       safeBottom
@@ -29,7 +52,7 @@ const ListCompanion = () => {
             size={16}
             weight='bold'
             color={NEW_BASE_COLOR}>
-            Chiến dịch tình nguyện mang nhà vệ sinh đến trẻ em vùng cao  mầm non!
+            {name}
           </Text>
         </Column>
         <Row marginHorizontal={8 * 2}>
@@ -47,7 +70,7 @@ const ListCompanion = () => {
               <Text size={12} color={BLACK_OPACITY_7}>
                 Mục tiêu chiến dịch
               </Text>
-              <Text weight="bold">{formatMonney(120000000, true)}</Text>
+              <Text weight="bold">{formatMonney(fundTarget, true)}</Text>
             </Column>
           </Row>
           <Row gap={8}>
@@ -64,36 +87,39 @@ const ListCompanion = () => {
               <Text size={12} color={BLACK_OPACITY_7}>
                 Thời gian còn lại
               </Text>
-              <Text weight="bold">79 ngày</Text>
+              <Text weight="bold">{dayLeft} ngày</Text>
             </Column>
           </Row>
         </Row>
         <Column margin={8 * 2}>
-          <HorizontalProgress percent={80} />
+          <HorizontalProgress percent={percent} />
           <Row marginTop={8}>
             <Text>Đã kêu gọi được </Text>
             <Text weight="bold" color={NEW_BASE_COLOR} flex={1}>
-              {formatMonney(100000000, true)}
+              {formatMonney(fundCurrent, true)}
             </Text>
-            <Text weight="bold">80%</Text>
+            <Text weight="bold">{percent}%</Text>
           </Row>
         </Column>
         <Column
           gap={8 * 2}
           margin={8 * 2}>
           <Text weight='bold'>
-            Danh sách tài khoản đồng hành (4)
+            Danh sách tài khoản đồng hành ({dataCompanionAccept?.length})
           </Text>
-          <ItemPerson />
-          <ItemPerson />
-          <ItemPerson />
-          <ItemPerson />
+          {
+            dataCompanionAccept?.map((item, index) => {
+              return (
+                <ItemPerson data={item} key={item?._id} />
+              )
+            })
+          }
         </Column>
 
       </ScrollView>
       <ActionButton
         colors={["#34759b", "#1a3e67"]}
-        onPress={() => { }}
+        onPress={navigate(ScreenKey.CHARITY_COMPANION)}
         title='Đồng hành' />
 
     </Screen>
@@ -102,7 +128,7 @@ const ListCompanion = () => {
 
 export default ListCompanion
 
-const ItemPerson = () => {
+const ItemPerson = ({ data }) => {
   return (
     <Row gap={8}>
       <Avatar
@@ -112,15 +138,15 @@ const ItemPerson = () => {
         <Text
           color={NEW_BASE_COLOR}
           weight='bold'>
-          Hoàng Oanh
+          {data?.partner?.name}
         </Text>
         <Text fontStyle='italic'>
-          Đã kêu gọi 10.000 VND
+          Đã kêu gọi {formatMonney(data?.targetDeposit, true)}
         </Text>
         <Text
           size={12}
           fontStyle='italic'>
-          Ngày bắt đầu 18/12/2023
+          Ngày bắt đầu {moment(data?.created).format('DD/MM/YYYY')}
         </Text>
       </Column>
     </Row>

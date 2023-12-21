@@ -497,8 +497,11 @@ const createVolunteerCompanion = (payload: any) => {
     .then(({ data }) => data);
 };
 const getListCompanionRequest = (payload: any) => {
+  const query = encodeParams({
+    ...payload,
+  });
   return axios
-    .get(`/volunteer-companion`, {})
+    .get(`/volunteer-companion?${query}`, {})
     .then(({ data }) => data);
 };
 const createVolunteerDonate = (payload: any) => {
