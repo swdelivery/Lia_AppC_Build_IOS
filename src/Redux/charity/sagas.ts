@@ -3,7 +3,7 @@ import { Alert } from "react-native";
 import { all, call, put, takeLatest } from "redux-saga/effects";
 import PartnerService from "src/Services/PartnerService";
 import * as actions from "./actions";
-import { CREATE_VOLUNTEER_COMPANION, CREATE_VOLUNTEER_DONATE, GET_DETAIL_CAMPAIN, GET_LIST_CAMPAIN, GET_LIST_COMPANION_REQUEST } from "./types";
+import { CREATE_VOLUNTEER_COMPANION, CREATE_VOLUNTEER_DONATE, GET_DETAIL_CAMPAIN, GET_LIST_CAMPAIN, GET_LIST_COMPANION_REQUEST, SEARCH_CAMPAIN } from "./types";
 
 function* getListCampain({ }: BaseAction<string>) {
   try {
@@ -70,6 +70,19 @@ function* createVolunteerDonate({ payload }: BaseAction<string>) {
   }
 }
 
+function* searchCampain({ payload }: BaseAction<string>) {
+  try {
+    const data = yield call(PartnerService.searchCampain, payload);
+    yield put(
+      actions.searchCampain.success({
+        data,
+      })
+    );
+  } catch (error: any) {
+    Alert.alert(error.message)
+  }
+}
+
 
 export default function* sagas() {
   yield all([
@@ -78,5 +91,6 @@ export default function* sagas() {
     takeLatest(CREATE_VOLUNTEER_COMPANION.REQUEST, createVolunteerCompanion),
     takeLatest(GET_LIST_COMPANION_REQUEST.REQUEST, getListCompanionRequest),
     takeLatest(CREATE_VOLUNTEER_DONATE.REQUEST, createVolunteerDonate),
+    takeLatest(SEARCH_CAMPAIN.REQUEST, searchCampain),
   ]);
 }

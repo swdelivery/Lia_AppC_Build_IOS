@@ -7,6 +7,7 @@ import {
   GET_DETAIL_CAMPAIN,
   GET_LIST_CAMPAIN,
   GET_LIST_COMPANION_REQUEST,
+  SEARCH_CAMPAIN,
   SELECT_AMOUNT,
   SELECT_CAMPAIN,
   SELECT_DESCRIPTION,
@@ -41,6 +42,11 @@ export const getListCompanionRequest = generateActionsGroup<
   any,
   ApiResponse<CompanionRequest[]>
 >(GET_LIST_COMPANION_REQUEST);
+
+export const searchCampain = generateActionsGroup<
+  any,
+  ApiResponse<Campain[]>
+>(SEARCH_CAMPAIN);
 
 // SELECT
 export const selectCampain = (data) => ({

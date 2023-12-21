@@ -5,15 +5,40 @@ import Row from '@Components/Row'
 import Text from '@Components/Text'
 import { BG_BEAUTY, GREY, NEW_BASE_COLOR, WHITE } from '@Constant/Color'
 import { styleElement } from '@Constant/StyleElement'
-import React, { useState } from 'react'
+import AsyncStorage from '@react-native-community/async-storage'
+import React, { useCallback, useState } from 'react'
 import { StyleSheet, TouchableOpacity } from 'react-native'
+import { useFocused } from 'src/Hooks/useNavigation'
 
-const ListSuggestKey = () => {
+type Props = {
+  onChoice: (value) => void
+}
+
+const ListSuggestKey = ({ onChoice }: Props) => {
   const [listKeyHistory, setListKeyHistory] = useState([
     'Mang nhà vệ sinh đến trẻ em vùng cao',
     'Ta thêm lòng tiếp sức để bớt cuộc chia ly',
     'Gấp đôi yêu thương',
   ])
+  const [listKeyRecent, setListKeyRecent] = useState([]);
+
+  useFocused(() => {
+    _getListHistorySearchKey()
+  })
+
+  const _getListHistorySearchKey = async () => {
+    let result = await AsyncStorage.getItem("ListHistorySearchKeyCampain");
+    setListKeyRecent(JSON.parse(result));
+  };
+
+  const _handleClear = useCallback(async () => {
+    await AsyncStorage.removeItem("ListHistorySearchKeyCampain");
+    setListKeyRecent([])
+  }, [])
+
+  const _handleChoice = useCallback((data) => () => {
+    onChoice(data)
+  }, [])
 
   return (
     <Column>
@@ -57,7 +82,9 @@ const ListSuggestKey = () => {
           <Text>
             Lịch sử tìm kiếm
           </Text>
-          <TouchableOpacity hitSlop={styleElement.hitslopSm}>
+          <TouchableOpacity
+            onPress={_handleClear}
+            hitSlop={styleElement.hitslopSm}>
             <IconTrashRed />
           </TouchableOpacity>
         </Row>
@@ -66,9 +93,11 @@ const ListSuggestKey = () => {
           paddingHorizontal={8 * 2}
           flexWrap='wrap'>
           {
-            listKeyHistory?.map((item, index) => {
+            listKeyRecent?.map((item, index) => {
               return (
-                <TouchableOpacity key={index} style={styles.btnKeyHistory}>
+                <TouchableOpacity
+                  onPress={_handleChoice(item)}
+                  key={index} style={styles.btnKeyHistory}>
                   <Text
                     size={12}
                     color={GREY}>

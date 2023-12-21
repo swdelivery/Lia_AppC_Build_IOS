@@ -506,6 +506,14 @@ const createVolunteerDonate = (payload: any) => {
     .post(`/donate-volunteer-request/donate`, payload)
     .then(({ data }) => data);
 };
+const searchCampain = (payload: any) => {
+  const query = encodeParams({
+    ...payload,
+  });
+  return axios
+    .get(`/volunteer?${query}`)
+    .then(({ data }) => data);
+};
 
 
 export default {
@@ -606,5 +614,6 @@ export default {
   getDetailCampain,
   createVolunteerCompanion,
   getListCompanionRequest,
-  createVolunteerDonate
+  createVolunteerDonate,
+  searchCampain
 };

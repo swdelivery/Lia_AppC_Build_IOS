@@ -1,11 +1,18 @@
 import Column from '@Components/Column'
 import Text from '@Components/Text'
-import { NEW_BASE_COLOR } from '@Constant/Color'
+import { GREY, NEW_BASE_COLOR } from '@Constant/Color'
 import React from 'react'
 import { ScrollView, StyleSheet } from 'react-native'
 import CardInfoCharity from '../Components/CardInfoCharity'
+import { Campain } from '@typings/charity'
+import { useSelector } from 'react-redux'
+import { getListCampainFilterState } from '@Redux/charity/selectors'
+import { styleElement } from '@Constant/StyleElement'
+
 
 const ListCharityPopular = () => {
+  const { data } = useSelector(getListCampainFilterState)
+
   return (
     <Column>
       <Column marginHorizontal={8 * 2}>
@@ -17,12 +24,26 @@ const ListCharityPopular = () => {
         style={{ marginTop: 8 * 2 }}
         contentContainerStyle={{ gap: 8 * 2 }}>
         {
-          [1, 2, 3, 4, 5, 6, 7, 8]?.map((item, index) => {
-            return (
-              <CardInfoCharity key={index} />
-            )
-          })
+          data?.length > 0 ?
+            <>
+              {
+                data?.map((item) => {
+                  return (
+                    <CardInfoCharity data={item} key={item?._id} />
+                  )
+                })
+              }
+            </>
+            :
+            <Column flex={1} style={styleElement.centerChild}>
+              <Text
+                fontStyle='italic'
+                color={GREY}>
+                Không tìm thấy kết quả phù hợp
+              </Text>
+            </Column>
         }
+
       </ScrollView>
     </Column>
   )
