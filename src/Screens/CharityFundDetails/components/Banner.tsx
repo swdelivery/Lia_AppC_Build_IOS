@@ -6,10 +6,12 @@ import {
   BLACK_OPACITY_4,
   NEW_BASE_COLOR,
 } from "@Constant/Color";
+import { getDetailCampainState } from "@Redux/charity/selectors";
 import HorizonListImage from "@Screens/NewDetailService/Components/HorizonListImage";
 import React from "react";
 import { StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useSelector } from "react-redux";
 import { useNavigate } from "src/Hooks/useNavigation";
 
 type Props = {};
@@ -17,10 +19,11 @@ type Props = {};
 export default function Banner({ }: Props) {
   const { top } = useSafeAreaInsets();
   const { navigation } = useNavigate()
+  const { data: { bannerFileArr } } = useSelector(getDetailCampainState)
 
   return (
     <Column backgroundColor={BG_MAIN_OPACITY}>
-      <HorizonListImage images={[]} />
+      <HorizonListImage images={bannerFileArr} />
 
       <Column
         onPress={navigation.goBack}

@@ -1,41 +1,46 @@
-import { StyleSheet, TouchableOpacity, View } from 'react-native'
-import React, { useCallback, useState } from 'react'
-import Text from '@Components/Text'
+import CircleTick from '@Components/CircleTick/CircleTick'
 import Column from '@Components/Column'
 import Row from '@Components/Row'
-import CircleTick from '@Components/CircleTick/CircleTick'
+import Text from '@Components/Text'
 import { NEW_BASE_COLOR } from '@Constant/Color'
+import { selectPaymentMethodCode } from '@Redux/charity/actions'
+import { getDataCreateDonateState } from '@Redux/charity/selectors'
+import React, { useCallback } from 'react'
+import { StyleSheet, TouchableOpacity } from 'react-native'
+import { useDispatch, useSelector } from 'react-redux'
 
 const TypeDonate = () => {
-  const [type, setType] = useState(null)
+  const dispatch = useDispatch()
+  const { paymentMethodCode } = useSelector(getDataCreateDonateState)
 
   const _handleSetType = useCallback((data) => () => {
-    setType(data)
-  }, [type])
+    dispatch(selectPaymentMethodCode(data))
+  }, [])
 
   return (
     <Column
+      top={-8 * 2}
       gap={8 * 2}
-      marginTop={8 * 4}
-      margin={8 * 2}>
+      marginHorizontal={8 * 2}>
       <Text>Hình thức ủng hộ</Text>
-
-      <TouchableOpacity onPress={_handleSetType('transfer')}>
-        <Row gap={8}>
-          <CircleTick isTicked={type == "transfer"} color={NEW_BASE_COLOR} />
-          <Text>
-            Chuyển khoản
-          </Text>
-        </Row>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={_handleSetType('wallet')}>
-        <Row gap={8}>
-          <CircleTick isTicked={type == "wallet"} color={NEW_BASE_COLOR} />
-          <Text>
-            Ví LiA
-          </Text>
-        </Row>
-      </TouchableOpacity>
+      <Row gap={8 * 4}>
+        <TouchableOpacity onPress={_handleSetType('BANK_TRANSFER')}>
+          <Row gap={8}>
+            <CircleTick isTicked={paymentMethodCode == "BANK_TRANSFER"} color={NEW_BASE_COLOR} />
+            <Text>
+              Chuyển khoản
+            </Text>
+          </Row>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={_handleSetType('WALLET_TRANSFER')}>
+          <Row gap={8}>
+            <CircleTick isTicked={paymentMethodCode == "WALLET_TRANSFER"} color={NEW_BASE_COLOR} />
+            <Text>
+              Ví LiA
+            </Text>
+          </Row>
+        </TouchableOpacity>
+      </Row>
     </Column>
   )
 }

@@ -5,13 +5,38 @@ import Image from '@Components/Image'
 import Row from '@Components/Row'
 import Text from '@Components/Text'
 import { BORDER_COLOR, NEW_BASE_COLOR, WHITE } from '@Constant/Color'
+import { formatMonney } from '@Constant/Utils'
 import ScreenKey from '@Navigation/ScreenKey'
-import React from 'react'
+import { selectCampain } from '@Redux/charity/actions'
+import { Campain } from '@typings/charity'
+import moment from 'moment'
+import React, { useCallback, useMemo } from 'react'
 import { StyleSheet, TouchableOpacity } from 'react-native'
+import { useDispatch } from 'react-redux'
 import { useNavigate } from 'src/Hooks/useNavigation'
 
-const CardInfoCharity = () => {
+
+type Props = {
+  data: Campain
+}
+
+const CardInfoCharity = ({ data }: Props) => {
   const { navigate } = useNavigate()
+  const dispatch = useDispatch()
+  const { name, createBy, fundTarget, fundCurrent, avatar, endDate } = data
+
+  const percent = useMemo(() => {
+    return parseFloat((fundCurrent / fundTarget * 100).toFixed(2))
+  }, [fundTarget, fundCurrent])
+
+  const dayLeft = useMemo(() => {
+    return moment(endDate).diff(moment(), 'days')
+  }, [endDate])
+
+  const _handleGoToDetail = useCallback(() => {
+    dispatch(selectCampain(data))
+    navigate(ScreenKey.CHARITY_FUND_DETAILS, { campain: data })()
+  }, [data])
 
   return (
     <Column
@@ -33,17 +58,19 @@ const CardInfoCharity = () => {
         <Text
           color={WHITE}
           size={10}>
-          420 Ngày
+          {dayLeft} Ngày
         </Text>
       </Column>
-      <TouchableOpacity onPress={navigate(ScreenKey.CHARITY_FUND_DETAILS)}>
+      <TouchableOpacity onPress={_handleGoToDetail}>
         <Row gap={8}>
-          <Image style={styles.image} />
+          <Image
+            avatar={avatar}
+            style={styles.image} />
           <Column flex={1}>
             <Text
               weight='bold'
               numberOfLines={2}>
-              Chiến dịch thiện nguyện mang nhà vệ sinh đến trẻ em mầm non các vùng núi phía Bắc
+              {name}
             </Text>
             <Row flex={1} gap={4}>
               <Text>
@@ -53,12 +80,12 @@ const CardInfoCharity = () => {
                 weight='bold'
                 color={NEW_BASE_COLOR}
                 numberOfLines={1}>
-                Quỹ thiện nguyện LiA
+                {createBy}
               </Text>
               <IconVerify width={8 * 2} height={8 * 2} />
             </Row>
             <Column gap={4}>
-              <HorizontalProgress height={4} percent={80} />
+              <HorizontalProgress height={4} percent={percent} />
               <Row justifyContent='space-between'>
                 <Row gap={4}>
                   <Text>
@@ -67,13 +94,13 @@ const CardInfoCharity = () => {
                   <Text
                     color={NEW_BASE_COLOR}
                     weight='bold'>
-                    100.000.000 VNĐ
+                    {formatMonney(fundTarget)} VNĐ
                   </Text>
                 </Row>
                 <Text
                   color={NEW_BASE_COLOR}
                   weight='bold'>
-                  80%
+                  {percent}%
                 </Text>
               </Row>
             </Column>

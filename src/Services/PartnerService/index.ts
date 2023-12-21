@@ -24,6 +24,7 @@ import { ServiceTreatment } from "@typings/treatment";
 import { PaymentRequest } from "@typings/payment";
 import { Service } from "@typings/serviceGroup";
 import { Material } from "@typings/material";
+import { ConfigData } from "@typings/configData";
 
 const axios = createAxios(URL_FOR_PARTNER);
 
@@ -157,6 +158,11 @@ const getDiaryList = (
 const getConfigFileByCode = (code: string): Promise<ConfigFile> =>
   axios
     .get("/config-file/get-by-code?code=" + code)
+    .then(({ data }) => data.data);
+
+const getConfigDataByCode = (code: string): Promise<ConfigData> =>
+  axios
+    .get("/configuration-data/get-by-code?code=" + code)
     .then(({ data }) => data.data);
 
 const getMaterial = (
@@ -474,6 +480,33 @@ const getDataForModalFilterService = (payload: any) => {
     .then(({ data }) => data);
 };
 
+// Charity
+const getListCampain = (payload: any) => {
+  return axios
+    .get(`/volunteer`)
+    .then(({ data }) => data);
+};
+const getDetailCampain = (payload: any) => {
+  return axios
+    .get(`/volunteer/${payload}`)
+    .then(({ data }) => data);
+};
+const createVolunteerCompanion = (payload: any) => {
+  return axios
+    .post(`/volunteer-companion`, payload)
+    .then(({ data }) => data);
+};
+const getListCompanionRequest = (payload: any) => {
+  return axios
+    .get(`/volunteer-companion`, {})
+    .then(({ data }) => data);
+};
+const createVolunteerDonate = (payload: any) => {
+  return axios
+    .post(`/donate-volunteer-request/donate`, payload)
+    .then(({ data }) => data);
+};
+
 
 export default {
   partnerLogout,
@@ -495,6 +528,7 @@ export default {
   getDiaryList,
 
   getConfigFileByCode,
+  getConfigDataByCode,
 
   // Material
   getMaterial,
@@ -565,5 +599,12 @@ export default {
 
   // Category
   getServiceFilterCategory,
-  getDataForModalFilterService
+  getDataForModalFilterService,
+
+  // Charity
+  getListCampain,
+  getDetailCampain,
+  createVolunteerCompanion,
+  getListCompanionRequest,
+  createVolunteerDonate
 };

@@ -14,14 +14,21 @@ import { NEW_BASE_COLOR } from "@Constant/Color";
 import { FocusAwareStatusBar } from "@Components/StatusBar";
 import { useNavigate, useNavigationParams } from "src/Hooks/useNavigation";
 import ScreenKey from "@Navigation/ScreenKey";
+import { useDispatch } from "react-redux";
+import { getDetailCampain } from "@Redux/charity/actions";
 
 export default function CharityFundDetails() {
-  const { id } = useNavigationParams();
+  const { id, campain } = useNavigationParams();
   const { navigate } = useNavigate()
+  const dispatch = useDispatch()
 
   useEffect(() => {
     // This is id from app link
   }, [id]);
+
+  useEffect(() => {
+    dispatch(getDetailCampain.request(campain?._id))
+  }, [campain])
 
   return (
     <Screen safeBottom>
@@ -29,8 +36,7 @@ export default function CharityFundDetails() {
       <AfterTimeoutFragment placeholder={<Placeholder />} timeout={500}>
         <ScrollView
           style={styles.content}
-          contentContainerStyle={styles.contentContainer}
-        >
+          contentContainerStyle={styles.contentContainer}>
           <Banner />
           <FundInfo />
           <DonationInfo />

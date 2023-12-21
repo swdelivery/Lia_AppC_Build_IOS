@@ -1,22 +1,26 @@
-import { ImageBackground, StyleSheet, View } from 'react-native'
-import React from 'react'
-import { BG_BEAUTY, BLACK, BLACK_OPACITY_4, BLACK_OPACITY_7, WHITE } from '@Constant/Color'
-import { _width } from '@Constant/Scale'
 import Column from '@Components/Column'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { useNavigate } from 'src/Hooks/useNavigation'
 import { IconBackWhite } from '@Components/Icon/Icon'
 import Text from '@Components/Text'
+import { BG_BEAUTY, BLACK_OPACITY_4, BLACK_OPACITY_7, WHITE } from '@Constant/Color'
+import { _width } from '@Constant/Scale'
+import { getDetailCampainState } from '@Redux/charity/selectors'
+import React from 'react'
+import { ImageBackground, StyleSheet, View } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'src/Hooks/useNavigation'
+import { getImageAvataUrl } from 'src/utils/avatar'
 
 const Banner = () => {
   const { top } = useSafeAreaInsets();
   const { navigation } = useNavigate()
+  const { data: { bannerFileArr } } = useSelector(getDetailCampainState)
 
   return (
     <ImageBackground
       style={styles.imageBG}
-      source={{ uri: `https://ninhbinh.edu.vn/upload/46569/fck/files/2021_02_28_09_22_181.png` }}>
+      source={{ uri: getImageAvataUrl(bannerFileArr[0]) }}>
 
       <LinearGradient
         style={StyleSheet.absoluteFill}

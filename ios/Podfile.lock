@@ -1206,7 +1206,7 @@ PODS:
     - React-Core
   - RNCAsyncStorage (1.12.1):
     - React-Core
-  - RNCClipboard (1.12.1):
+  - RNCClipboard (1.13.1):
     - React-Core
   - RNCMaskedView (0.3.1):
     - React-Core
@@ -1701,7 +1701,7 @@ SPEC CHECKSUMS:
   rn-fetch-blob: f065bb7ab7fb48dd002629f8bdcb0336602d3cba
   RNBootSplash: 578bffadc64719c710d30780ec6ace905b0daf07
   RNCAsyncStorage: b03032fdbdb725bea0bd9e5ec5a7272865ae7398
-  RNCClipboard: d77213bfa269013bf4b857b7a9ca37ee062d8ef1
+  RNCClipboard: 90e241893de33a2f5962fc34d76ada4576033e49
   RNCMaskedView: 090213d32d8b3bb83a4dcb7d12c18f0152591906
   RNCPicker: b18aaf30df596e9b1738e7c1f9ee55402a229dca
   RNCPushNotificationIOS: 64218f3c776c03d7408284a819b2abfda1834bc8
