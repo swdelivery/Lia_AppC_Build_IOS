@@ -4,7 +4,7 @@ import { BASE_COLOR, BG_BEAUTY, SECOND_COLOR, WHITE } from "@Constant/Color";
 import { FileAvatar } from "@typings/common";
 import React, { useMemo } from "react";
 import { StyleProp, StyleSheet, View } from "react-native";
-import { ImageStyle } from "react-native-fast-image";
+import { ImageStyle, ResizeMode } from "react-native-fast-image";
 import { getImageAvataUrl } from "src/utils/avatar";
 
 type Props = {
@@ -13,6 +13,7 @@ type Props = {
   style?: StyleProp<ImageStyle>;
   placeholderComponent?: React.ReactNode;
   placeholderColors?: string[];
+  resizeMode?: ResizeMode;
 };
 
 export default function Image({
@@ -20,6 +21,7 @@ export default function Image({
   auto = false,
   style,
   placeholderColors = [BG_BEAUTY, WHITE],
+  resizeMode,
 }: Props) {
   const uri = useMemo(() => {
     return getImageAvataUrl(avatar, "");
@@ -49,6 +51,7 @@ export default function Image({
         style={[style, autoStyle]}
         uri={uri}
         placeholderComponent={<DefaultPlaceholder colors={placeholderColors} />}
+        resizeMode={resizeMode}
       />
     </View>
   );

@@ -35,6 +35,7 @@ import user from "../user/reducers";
 import voucher from "../voucher/reducers";
 import insurance from "../insurance/reducers";
 import chat from "../chat/reducers";
+import flashSale from "../flashSale/reducers";
 import { resetable } from "@Redux/resettableReducer";
 import modal from "../modal/reducers";
 import resultcanningeyes from "../resultcanningeyes/reducers";
@@ -84,6 +85,7 @@ const rootReducer = combineReducers({
   voucher,
   insurance,
   chat,
+  flashSale,
   user: resetable(user),
   modal,
   resultcanningeyes,
@@ -93,7 +95,7 @@ const rootReducer = combineReducers({
   wallet,
   takecare,
   category,
-  charity
+  charity,
 });
 
 // const rootReducer = (state, action) => {

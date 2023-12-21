@@ -3,23 +3,44 @@ import NumberTicker from "@Components/NumberTicker";
 import Row from "@Components/Row";
 import Text from "@Components/Text";
 import { useInterval } from "@r0b0t3d/react-native-hooks";
-import React, { useMemo, useState } from "react";
+import { FlashSale } from "@typings/flashsale";
+import moment from "moment";
+import React, { useEffect, useMemo, useState } from "react";
 import { View, StyleSheet } from "react-native";
 import { formatDuration } from "src/utils/date";
 
 type Props = {
-  endDate: Date;
+  flashSale: FlashSale;
+  onFlashSaleEnd: () => void;
 };
 
-export default function FlashSaleTimer({ endDate }: Props) {
+export default function FlashSaleTimer({ flashSale, onFlashSaleEnd }: Props) {
   const [timer, setTimer] = useState(1000 * 60 * 30);
 
   useInterval(
     () => {
-      setTimer((prev) => prev - 1000);
+      setTimer((prev) => {
+        if (prev - 1000 <= 0) {
+          onFlashSaleEnd();
+        }
+        return prev - 1000;
+      });
     },
     timer > 0 ? 1000 : -1
   );
+
+  const endTimestamp = useMemo(() => {
+    const { hour, minute } = flashSale.timeRange.to;
+    return moment(flashSale.dateRange.to)
+      .add(hour, "hours")
+      .add(minute, "minutes")
+      .toDate()
+      .getTime();
+  }, [flashSale]);
+
+  useEffect(() => {
+    setTimer(endTimestamp - Date.now());
+  }, [endTimestamp]);
 
   const { hours, minutes, seconds } = useMemo(() => {
     return formatDuration(timer);

@@ -1,5 +1,5 @@
 import Lottie from "lottie-react-native";
-import React, { memo, useMemo } from "react";
+import React, { memo, useCallback, useEffect, useMemo } from "react";
 import { StyleSheet } from "react-native";
 import { _widthScale } from "../../../../Constant/Scale";
 import Text from "@Components/Text";
@@ -16,11 +16,33 @@ import useConfigFile from "src/Hooks/useConfigFile";
 import { ConfigFileCode } from "@typings/configFile";
 import Image from "@Components/Image";
 import { head } from "lodash";
+import useRequestAnimationFrame from "src/Hooks/useRequestAnimationFrame";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  checkFlashSale,
+  getCurrentFlashSaleServices,
+} from "@Redux/flashSale/actions";
+import {
+  getCurrentFlashSaleServicesState,
+  getFlashSaleState,
+} from "@Redux/flashSale/selectors";
 
 const FlashSale = memo(() => {
+  const dispatch = useDispatch();
   const { navigate } = useNavigate();
-  const flashSaleConfig = useConfigFile(ConfigFileCode.ImageFlashSaleHome);
-  const services = useRecomendServices({ codeGroup: ["MAT"] });
+  const { image, currentFlashSale } = useSelector(getFlashSaleState);
+  const { data: services } = useSelector(getCurrentFlashSaleServicesState);
+
+  const refreshFlashSale = useCallback(() => {
+    dispatch(checkFlashSale.request());
+    dispatch(getCurrentFlashSaleServices.request());
+  }, []);
+
+  useEffect(() => {
+    requestAnimationFrame(() => {
+      refreshFlashSale();
+    });
+  }, []);
 
   const data = useMemo(() => {
     return services.slice(0, 10);
@@ -29,6 +51,10 @@ const FlashSale = memo(() => {
   const _renderItem = (item: any) => {
     return <FlashSaleItem key={item._id} item={item} />;
   };
+
+  if (!currentFlashSale) {
+    return null;
+  }
 
   return (
     <Row style={styles.container} gap={8}>
@@ -39,9 +65,18 @@ const FlashSale = memo(() => {
         onPress={navigate(ScreenKey.FLASHSALE_SCREEN)}
       >
         <Column flex={1} justifyContent="center" alignItems="center">
-          <Image avatar={head(flashSaleConfig?.fileArr)} style={styles.image} />
+          {image && (
+            <Image
+              avatar={head(image.fileArr)}
+              style={styles.image}
+              resizeMode="contain"
+            />
+          )}
         </Column>
-        <FlashSaleTimer />
+        <FlashSaleTimer
+          flashSale={currentFlashSale}
+          onFlashSaleEnd={refreshFlashSale}
+        />
       </Column>
       <Row flex={1}>
         <ScrollView
