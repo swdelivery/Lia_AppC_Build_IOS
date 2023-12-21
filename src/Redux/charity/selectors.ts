@@ -5,3 +5,4 @@ export const getListCampainFilterState = (state: AppState) => state.charity.list
 export const getDetailCampainState = (state: AppState) => state.charity.detailCampain;
 export const getListCompanionRequestState = (state: AppState) => state.charity.listCompanionRequest;
 export const getDataCreateDonateState = (state: AppState) => state.charity.dataCreateDonateRequest;
+export const getVolunteerHistoryState = (state: AppState) => state.charity.volunteerHistory;

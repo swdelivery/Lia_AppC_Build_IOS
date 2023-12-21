@@ -5,26 +5,47 @@ import Row from '@Components/Row'
 import Text from '@Components/Text'
 import { BG_BEAUTY, GREY, NEW_BASE_COLOR, WHITE } from '@Constant/Color'
 import { styleElement } from '@Constant/StyleElement'
+import ScreenKey from '@Navigation/ScreenKey'
+import { selectCampain } from '@Redux/charity/actions'
+import { getListCampainState } from '@Redux/charity/selectors'
 import AsyncStorage from '@react-native-community/async-storage'
-import React, { useCallback, useState } from 'react'
+import { isEmpty } from 'lodash'
+import React, { useCallback, useEffect, useState } from 'react'
 import { StyleSheet, TouchableOpacity } from 'react-native'
-import { useFocused } from 'src/Hooks/useNavigation'
+import { useDispatch, useSelector } from 'react-redux'
+import { useFocused, useNavigate } from 'src/Hooks/useNavigation'
 
 type Props = {
   onChoice: (value) => void
 }
 
 const ListSuggestKey = ({ onChoice }: Props) => {
-  const [listKeyHistory, setListKeyHistory] = useState([
-    'Mang nhà vệ sinh đến trẻ em vùng cao',
-    'Ta thêm lòng tiếp sức để bớt cuộc chia ly',
-    'Gấp đôi yêu thương',
-  ])
+  const dispatch = useDispatch()
+  const { navigate } = useNavigate()
   const [listKeyRecent, setListKeyRecent] = useState([]);
+  const { data: dataListCampain } = useSelector(getListCampainState)
+
+  const [campainHot, setCampainHot] = useState(null)
+  const [campainFavourite, setCampainFavourite] = useState(null)
 
   useFocused(() => {
     _getListHistorySearchKey()
   })
+
+  useEffect(() => {
+    if (!isEmpty(dataListCampain)) {
+      let arrTemp = [...dataListCampain];
+      let findIndexCampainHot = arrTemp?.findIndex(item => item?.isHot);
+      if (findIndexCampainHot !== -1) {
+        setCampainHot(arrTemp[findIndexCampainHot])
+        arrTemp.splice(findIndexCampainHot, 1)
+      }
+      let findIndexCampainFavourite = arrTemp?.findIndex(item => item?.favourite);
+      if (findIndexCampainFavourite !== -1) {
+        setCampainFavourite(arrTemp[findIndexCampainFavourite])
+      }
+    }
+  }, [dataListCampain])
 
   const _getListHistorySearchKey = async () => {
     let result = await AsyncStorage.getItem("ListHistorySearchKeyCampain");
@@ -40,6 +61,11 @@ const ListSuggestKey = ({ onChoice }: Props) => {
     onChoice(data)
   }, [])
 
+  const _handleGoToDetailCampain = useCallback((data) => () => {
+    dispatch(selectCampain(data))
+    navigate(ScreenKey.CHARITY_FUND_DETAILS, { campain: data })()
+  }, [campainHot, campainFavourite])
+
   return (
     <Column>
 
@@ -48,7 +74,8 @@ const ListSuggestKey = ({ onChoice }: Props) => {
         paddingHorizontal={8 * 4}
         padding={8 * 2}>
 
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={_handleGoToDetailCampain(campainHot)}>
           <Row alignItems='flex-start' gap={8}>
             <Column style={styles.tag}>
               <Text
@@ -58,11 +85,12 @@ const ListSuggestKey = ({ onChoice }: Props) => {
                 HOT
               </Text>
             </Column>
-            <Text style={styleElement.flex}>HiGreen - Bình minh</Text>
+            <Text style={styleElement.flex}>{campainHot?.name}</Text>
           </Row>
         </TouchableOpacity>
 
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={_handleGoToDetailCampain(campainFavourite)}>
           <Row alignItems='flex-start' gap={8}>
             <Column style={styles.tag}>
               <Row>
@@ -71,7 +99,7 @@ const ListSuggestKey = ({ onChoice }: Props) => {
                 <Icon name={'heart'} color={WHITE} size={10} />
               </Row>
             </Column>
-            <Text style={styleElement.flex}>Như chưa hề có cuộc chia ly</Text>
+            <Text style={styleElement.flex}>{campainFavourite?.name}</Text>
           </Row>
         </TouchableOpacity>
       </Column>

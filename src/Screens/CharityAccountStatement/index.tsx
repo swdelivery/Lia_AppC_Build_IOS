@@ -12,16 +12,31 @@ import Header from './Components/Header'
 import MoneyIn from './Components/MoneyIn'
 import MoneyOut from './Components/MoneyOut'
 import StickyHeader from './Components/StickyHeader'
+import { useDispatch, useSelector } from 'react-redux'
+import { getDetailCampainState } from '@Redux/charity/selectors'
+import { getVolunteerHistory } from '@Redux/charity/actions'
 
 const CharityAccountStatement = () => {
+  const dispatch = useDispatch()
   const [rootTime, setRootTime] = useState(Date.now());
   const scrollableTabViewRef = useRef();
   const { top } = useSafeAreaInsets()
   const [currIndexTab, setCurrIndexTab] = useState(0)
+  const { data: { _id: idVolunteer } } = useSelector(getDetailCampainState)
 
   useEffect(() => {
     scrollableTabViewRef?.current?.toTabView(currIndexTab)
   }, [currIndexTab])
+
+  useEffect(() => {
+    if (idVolunteer) {
+      dispatch(getVolunteerHistory.request({
+        condition: {
+          "volunteerId": { "equal": idVolunteer }
+        }
+      }))
+    }
+  }, [idVolunteer])
 
   const STACKS = [
     {

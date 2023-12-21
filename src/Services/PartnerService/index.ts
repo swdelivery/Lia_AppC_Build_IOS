@@ -514,6 +514,14 @@ const searchCampain = (payload: any) => {
     .get(`/volunteer?${query}`)
     .then(({ data }) => data);
 };
+const getVolunteerHistory = (payload: any) => {
+  const query = encodeParams({
+    ...payload,
+  });
+  return axios
+    .get(`/volunteer-fund-history?${query}`)
+    .then(({ data }) => data);
+};
 
 
 export default {
@@ -615,5 +623,6 @@ export default {
   createVolunteerCompanion,
   getListCompanionRequest,
   createVolunteerDonate,
-  searchCampain
+  searchCampain,
+  getVolunteerHistory
 };

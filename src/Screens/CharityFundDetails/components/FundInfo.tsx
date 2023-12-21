@@ -18,7 +18,8 @@ export default function FundInfo({ }: Props) {
     fundTarget,
     endDate,
     name,
-    createBy
+    createBy,
+    address
   } } = useSelector(getDetailCampainState)
 
   const dayLeft = useMemo(() => {
@@ -68,17 +69,23 @@ export default function FundInfo({ }: Props) {
       <Text weight="bold" top={20} size={16}>
         {name}
       </Text>
-      <Row alignItems="flex-start" gap={4} marginTop={6}>
-        <Icon
-          name="map-marker-outline"
-          color={BLACK_OPACITY_7}
-          size={12}
-          top={4}
-        />
-        <Text size={12} color={BLACK_OPACITY_7}>
-          Ubnd Mèo Vạc, Thị trấn Mèo Vạc, Huyện Mèo Vạc, Tỉnh Hà Giang
-        </Text>
-      </Row>
+      {
+        address?.fullAddress ?
+          <Row alignItems="flex-start" gap={4} marginTop={6}>
+            <Icon
+              name="map-marker-outline"
+              color={BLACK_OPACITY_7}
+              size={12}
+              top={4}
+            />
+            <Text size={12} color={BLACK_OPACITY_7}>
+              {address?.fullAddress}
+            </Text>
+          </Row>
+          :
+          <></>
+      }
+
       <Row marginTop={12}>
         <Text size={12}>Tạo bởi </Text>
         <Text size={12} weight="bold" color={NEW_BASE_COLOR}>

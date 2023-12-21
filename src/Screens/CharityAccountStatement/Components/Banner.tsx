@@ -1,12 +1,56 @@
 import Column from '@Components/Column'
 import Row from '@Components/Row'
 import Text from '@Components/Text'
-import { NEW_BASE_COLOR, WHITE } from '@Constant/Color'
+import { GREEN, GREEN_SUCCESS, NEW_BASE_COLOR, RED, WHITE } from '@Constant/Color'
 import { _heightScale, _width, _widthScale } from '@Constant/Scale'
-import React from 'react'
+import { styleElement } from '@Constant/StyleElement'
+import { formatMonney } from '@Constant/Utils'
+import { getDetailCampainState, getVolunteerHistoryState } from '@Redux/charity/selectors'
+import moment from 'moment'
+import React, { useMemo } from 'react'
 import { ImageBackground, StyleSheet, View } from 'react-native'
+import { useSelector } from 'react-redux'
 
 const Banner = () => {
+  const { data: dataHistory } = useSelector(getVolunteerHistoryState)
+  const { data: infoCampain } = useSelector(getDetailCampainState)
+
+  const totalMoney = useMemo(() => {
+    let total = dataHistory.reduce((sum, { depositAmount, status }) => {
+      if (status == 'INCREASE') {
+        return sum + depositAmount
+      } else {
+        return sum - depositAmount
+      }
+    }, 0)
+    return total
+  }, [dataHistory])
+
+  const totalMoneyIn = useMemo(() => {
+    let temp = [...dataHistory];
+    let total = temp?.filter(item => item?.status == 'INCREASE').reduce((sum, { depositAmount }) => {
+      return sum + depositAmount
+    }, 0)
+    return total
+  }, [dataHistory])
+
+  const totalMoneyOut = useMemo(() => {
+    let temp = [...dataHistory];
+    let total = temp?.filter(item => item?.status == 'REDUCE').reduce((sum, { depositAmount }) => {
+      return sum + depositAmount
+    }, 0)
+    return total
+  }, [dataHistory])
+
+  const lastedUpdate = useMemo(() => {
+    let lasted = dataHistory[0]?.created;
+    return moment(lasted).format('DD/MM/YYYY')
+  }, [dataHistory])
+
+  const dayCreatedCampain = useMemo(() => {
+    return moment(infoCampain?.created).format('DD/MM/YYYY')
+  }, [infoCampain])
+
   return (
     <ImageBackground
       style={styles.imageBackground}
@@ -31,12 +75,12 @@ const Banner = () => {
               weight='bold'
               size={20}
               color={WHITE}>
-              420.000.000
+              {formatMonney(totalMoney, true)}
             </Text>
             <Text
               size={12}
               color={WHITE}>
-              Cập nhật gần nhất 12/12/2023
+              Cập nhật gần nhất {lastedUpdate}
             </Text>
 
             <Row marginTop={8}>
@@ -52,7 +96,7 @@ const Banner = () => {
                   <Text
                     color={WHITE}
                     weight='bold'>
-                    + 500.000.000
+                    <Text weight='bold' color={GREEN_SUCCESS}>+</Text> {formatMonney(totalMoneyIn, true)}
                   </Text>
                 </Column>
               </Column>
@@ -73,23 +117,26 @@ const Banner = () => {
                   <Text
                     color={WHITE}
                     weight='bold'>
-                    - 80.000.000
+                    <Text weight='bold' color={RED}>-</Text> {formatMonney(totalMoneyOut, true)}
                   </Text>
                 </Column>
               </Column>
             </Row>
             <Row
+              gap={8 * 2}
               paddingHorizontal={8 * 2}
               width={'100%'}
               bottom={8 * 1.5}
               position='absolute'
               justifyContent='space-between'>
               <Text
+                style={styleElement.flex}
+                numberOfLines={1}
                 color={WHITE}>
-                Full Name User
+                {infoCampain?.createBy}
               </Text>
               <Text color={WHITE}>
-                12/23
+                {dayCreatedCampain}
               </Text>
             </Row>
           </Column>
