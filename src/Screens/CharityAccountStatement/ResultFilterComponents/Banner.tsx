@@ -5,8 +5,11 @@ import Text from '@Components/Text'
 import { BORDER_COLOR, NEW_BASE_COLOR } from '@Constant/Color'
 import React from 'react'
 import { StyleSheet, TouchableOpacity } from 'react-native'
+import { useNavigate } from 'src/Hooks/useNavigation'
 
 const Banner = () => {
+  const { navigation } = useNavigate()
+
   return (
     <Column>
       <Row
@@ -16,7 +19,9 @@ const Banner = () => {
           weight='bold'>
           Danh sách giao dịch
         </Text>
-        <TouchableOpacity style={styles.btnFilter}>
+        <TouchableOpacity
+          onPress={navigation.goBack}
+          style={styles.btnFilter}>
           <Icon name="filter-variant" color={NEW_BASE_COLOR} size={24} />
         </TouchableOpacity>
       </Row>

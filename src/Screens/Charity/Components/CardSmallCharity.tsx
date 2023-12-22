@@ -1,22 +1,47 @@
-import { StyleSheet, View } from 'react-native'
-import React from 'react'
-import Column from '@Components/Column'
-import Text from '@Components/Text'
-import Image from '@Components/Image'
-import { GREY, NEW_BASE_COLOR, WHITE } from '@Constant/Color'
 import Button from '@Components/Button/Button'
+import Column from '@Components/Column'
+import Image from '@Components/Image'
+import Text from '@Components/Text'
+import { GREY, NEW_BASE_COLOR, WHITE } from '@Constant/Color'
+import ScreenKey from '@Navigation/ScreenKey'
+import { selectCampain } from '@Redux/charity/actions'
+import { Campain } from '@typings/charity'
+import moment from 'moment'
+import React, { useCallback, useMemo } from 'react'
+import { StyleSheet } from 'react-native'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'src/Hooks/useNavigation'
 
-const CardSmallCharity = () => {
+type Props = {
+  data: Campain
+}
+
+const CardSmallCharity = ({ data }: Props) => {
+  const dispatch = useDispatch()
+  const { navigate, navigation } = useNavigate()
+
+  const dayLeft = useMemo(() => {
+    return moment(data?.endDate).diff(moment(), 'days')
+  }, [data?.endDate])
+
+  const _handleGoToDetail = useCallback(() => {
+    navigation.goBack()
+    dispatch(selectCampain(data))
+    navigate(ScreenKey.CHARITY_FUND_DETAILS, { campain: data })()
+  }, [data])
+
   return (
     <Column
       alignItems='center'
       gap={8}
+      width={8 * 16}
       alignSelf='flex-start'>
       <Text
+        numberOfLines={1}
         weight='bold'
         color={GREY}
         size={12}
-        style={{ textAlign: 'center' }}>Dự án {`\n`} nổi bật 1</Text>
+        style={{ textAlign: 'center' }}>{data?.createBy}</Text>
       <Column
         borderRadius={8}
         backgroundColor={'#F4F4F4'}
@@ -34,15 +59,15 @@ const CardSmallCharity = () => {
           <Text
             color={WHITE}
             size={10}>
-            420 Ngày
+            {dayLeft} Ngày
           </Text>
         </Column>
         <Image
           style={styles.avatar}
-          avatar={null} />
+          avatar={data?.avatar} />
       </Column>
       <Button.Gradient
-        onPress={() => { }}
+        onPress={_handleGoToDetail}
         title="Ủng hộ"
         titleSize={12}
         height={8 * 3}

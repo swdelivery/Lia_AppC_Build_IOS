@@ -2,17 +2,18 @@ import Column from '@Components/Column'
 import Row from '@Components/Row'
 import Text from '@Components/Text'
 import { NEW_BASE_COLOR } from '@Constant/Color'
+import { getListCampainState, getVolunteerHistoryState } from '@Redux/charity/selectors'
 import CardSmallCharity from '@Screens/Charity/Components/CardSmallCharity'
+import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
-import CardCash from './CardCash'
 import { useSelector } from 'react-redux'
-import { getVolunteerHistoryState } from '@Redux/charity/selectors'
-import moment from 'moment'
+import CardCash from './CardCash'
 
 const MoneyIn = () => {
   const { data: dataHistory } = useSelector(getVolunteerHistoryState)
+  const { data: listCampain } = useSelector(getListCampainState)
   const [listHistoryMoneyIn, setListHistoryMoneyIn] = useState([])
 
   useEffect(() => {
@@ -78,9 +79,9 @@ const MoneyIn = () => {
         showsHorizontalScrollIndicator={false}
         horizontal>
         {
-          [1, 2, 3, 5, 6]?.map((item, index) => {
+          listCampain?.length > 0 && listCampain?.map((item, index) => {
             return (
-              <CardSmallCharity key={index} />
+              <CardSmallCharity data={item} key={index} />
             )
           })
         }

@@ -2,6 +2,7 @@ import { generateActionsGroup } from "@Redux/helper";
 import { ApiResponse } from "@typings/api";
 import { Campain, CompanionRequest, Donate, Transaction } from "@typings/charity";
 import {
+  CLEAR_DATA_DONATION,
   CREATE_VOLUNTEER_COMPANION,
   CREATE_VOLUNTEER_COMPANION_DONATE,
   CREATE_VOLUNTEER_DONATE,
@@ -14,13 +15,20 @@ import {
   GET_LIST_PARTNER_DONATE_TO_VOLUNTEER_COMPANION,
   GET_TOP_DONATE,
   GET_VOLUNTEER_HISTORY,
+  GET_VOLUNTEER_REPORT_HISTORY_FILTER,
   SEARCH_CAMPAIN,
   SELECT_AMOUNT,
   SELECT_CAMPAIN,
+  SELECT_DATE_FORM,
+  SELECT_DATE_TO,
+  SELECT_DEPOSIT,
   SELECT_DESCRIPTION,
   SELECT_HIDE_NAME,
+  SELECT_ID_VOLUNTEER,
   SELECT_IMAGE,
+  SELECT_PAYMENT_METHOD,
   SELECT_PAYMENT_METHOD_CODE,
+  SELECT_SEARCH_VALUE,
   SELECT_VOLUNTEER_ID
 } from "./types";
 
@@ -89,6 +97,11 @@ export const getListPartnerDonateToVolunteer = generateActionsGroup<
   ApiResponse<CompanionRequest[]>
 >(GET_LIST_PARTNER_DONATE_TO_VOLUNTEER);
 
+export const getVolunteerReportHistoryFilter = generateActionsGroup<
+  any,
+  ApiResponse<Transaction>
+>(GET_VOLUNTEER_REPORT_HISTORY_FILTER);
+
 // SELECT
 export const selectCampain = (data) => ({
   type: SELECT_CAMPAIN,
@@ -117,4 +130,34 @@ export const selectDescription = (data) => ({
 export const selectImage = (data) => ({
   type: SELECT_IMAGE,
   payload: data,
+});
+export const selectSearchValue = (data) => ({
+  type: SELECT_SEARCH_VALUE,
+  payload: data,
+});
+export const selectDateFrom = (data) => ({
+  type: SELECT_DATE_FORM,
+  payload: data,
+});
+export const selectDateTo = (data) => ({
+  type: SELECT_DATE_TO,
+  payload: data,
+});
+export const selectPaymentMethod = (data) => ({
+  type: SELECT_PAYMENT_METHOD,
+  payload: data,
+});
+export const selectDeposit = (data) => ({
+  type: SELECT_DEPOSIT,
+  payload: data,
+});
+export const selectIdVolunteer = (data) => ({
+  type: SELECT_ID_VOLUNTEER,
+  payload: data,
+});
+
+
+// CLEAR
+export const clearDataDonation = () => ({
+  type: CLEAR_DATA_DONATION,
 });

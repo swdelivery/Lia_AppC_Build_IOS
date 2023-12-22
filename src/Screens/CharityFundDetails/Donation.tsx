@@ -1,33 +1,28 @@
-import { Alert, KeyboardAvoidingView, ScrollView, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import Text from '@Components/Text'
+import ActionButton from '@Components/ActionButton/ActionButton'
+import Row from '@Components/Row'
 import Screen from '@Components/Screen'
 import { FocusAwareStatusBar } from '@Components/StatusBar'
-import Banner from './DonationComponents/Banner'
-import { _width } from '@Constant/Scale'
-import Column from '@Components/Column'
-import { stylesFont } from '@Constant/Font'
-import { BORDER_COLOR, GREY, NEW_BASE_COLOR, WHITE } from '@Constant/Color'
-import Row from '@Components/Row'
+import Text from '@Components/Text'
 import Toggle from '@Components/Toggle/Toggle'
+import { formatMonney } from '@Constant/Utils'
+import { uploadModule } from '@Redux/Action/BookingAction'
+import { getInfoUserReducer } from '@Redux/Selectors'
+import { clearDataDonation, createVolunteerCompanionDonate, createVolunteerDonate, selectHideName, selectVolunteerId } from '@Redux/charity/actions'
+import { getDataCreateDonateState, getDetailCampainState } from '@Redux/charity/selectors'
+import { isEmpty } from 'lodash'
+import React, { useCallback, useEffect, useMemo } from 'react'
+import { Alert, KeyboardAvoidingView, ScrollView, StyleSheet } from 'react-native'
+import { useDispatch, useSelector } from 'react-redux'
+import useConfirmation from 'src/Hooks/useConfirmation'
+import { useNavigate, useNavigationParams } from 'src/Hooks/useNavigation'
+import { isIos } from 'src/utils/platform'
+import BankInfo from './DonationComponents/BankInfo'
+import Banner from './DonationComponents/Banner'
+import ImageUpload from './DonationComponents/ImageUpload'
 import InputMoney from './DonationComponents/InputMoney'
 import InputWish from './DonationComponents/InputWish'
 import TypeDonate from './DonationComponents/TypeDonate'
-import ActionButton from '@Components/ActionButton/ActionButton'
-import { useDispatch, useSelector } from 'react-redux'
-import { openModalThanks } from '@Redux/modal/actions'
-import { getDataCreateDonateState, getDetailCampainState } from '@Redux/charity/selectors'
-import { createVolunteerDonate, selectHideName, selectVolunteerId, createVolunteerCompanionDonate } from '@Redux/charity/actions'
-import BankInfo from './DonationComponents/BankInfo'
-import { isIos } from 'src/utils/platform'
 import WalletInfo from './DonationComponents/WalletInfo'
-import ImageUpload from './DonationComponents/ImageUpload'
-import { isEmpty } from 'lodash'
-import { uploadModule } from '@Redux/Action/BookingAction'
-import { getInfoUserReducer } from '@Redux/Selectors'
-import { formatMonney } from '@Constant/Utils'
-import useConfirmation from 'src/Hooks/useConfirmation'
-import { useNavigate, useNavigationParams } from 'src/Hooks/useNavigation'
 
 const Donation = () => {
   const { volunteerCompanion } = useNavigationParams();
@@ -45,6 +40,12 @@ const Donation = () => {
     description,
     images
   } = useSelector(getDataCreateDonateState)
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearDataDonation())
+    };
+  }, [])
 
   const _handleConfirm = useCallback(async () => {
     const numberRegex = /^[1-9]\d*$/;

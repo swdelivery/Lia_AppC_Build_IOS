@@ -7,16 +7,17 @@ import { BORDER_COLOR, GREY, NEW_BASE_COLOR } from '@Constant/Color'
 import Icon from "@Components/Icon";
 import { styleElement } from '@Constant/StyleElement'
 import moment from 'moment'
+import { useSelector } from 'react-redux'
+import { getDataFilterReportState } from '@Redux/charity/selectors'
 
-// NOTICE
 type Props = {
   calendarPickerFrom: any;
   calendarPickerTo: any;
-  valueTimeFrom: any;
-  valueTimeTo: any;
 };
 
-const RangeDateInput = ({ calendarPickerFrom, calendarPickerTo, valueTimeFrom, valueTimeTo }: Props) => {
+const RangeDateInput = ({ calendarPickerFrom, calendarPickerTo }: Props) => {
+  const { dateFrom, dateTo } = useSelector(getDataFilterReportState)
+
   return (
     <Column
       gap={8}
@@ -39,12 +40,12 @@ const RangeDateInput = ({ calendarPickerFrom, calendarPickerTo, valueTimeFrom, v
           height={8 * 6}
           flex={1}>
           {
-            valueTimeFrom ?
+            dateFrom ?
               <Text
                 weight='bold'
                 color={NEW_BASE_COLOR}
                 style={styleElement.flex}>
-                {moment(valueTimeFrom).format('DD/MM/YYYY')}
+                {moment(dateFrom).format('DD/MM/YYYY')}
               </Text>
               :
               <Text style={styleElement.flex}>
@@ -65,12 +66,12 @@ const RangeDateInput = ({ calendarPickerFrom, calendarPickerTo, valueTimeFrom, v
           height={8 * 6}
           flex={1}>
           {
-            valueTimeTo ?
+            dateTo ?
               <Text
                 weight='bold'
                 color={NEW_BASE_COLOR}
                 style={styleElement.flex}>
-                {moment(valueTimeTo).format('DD/MM/YYYY')}
+                {moment(dateTo).format('DD/MM/YYYY')}
               </Text>
               :
               <Text style={styleElement.flex}>

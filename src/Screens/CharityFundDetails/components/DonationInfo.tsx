@@ -100,8 +100,9 @@ export default function DonationInfo() {
           </Column>
         </Column> */}
       </Row>
+
       {
-        _renderMountDonate()
+        listPartnerDonateToVolunteer?.length > 0 && _renderMountDonate()
       }
       <TouchableOpacity onPress={navigate(ScreenKey.CHARITY_ACCOUNT_STATEMENT)}>
         <Row alignSelf="flex-end" marginTop={12}>

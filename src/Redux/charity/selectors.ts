@@ -8,6 +8,8 @@ export const getListCompanionRequestAcceptState = (state: AppState) => state.cha
 export const getListCompanionByUserState = (state: AppState) => state.charity.listCompanionByUser;
 export const getDataCreateDonateState = (state: AppState) => state.charity.dataCreateDonateRequest;
 export const getVolunteerHistoryState = (state: AppState) => state.charity.volunteerHistory;
+export const getVolunteerHistoryFilterState = (state: AppState) => state.charity.volunteerHistoryFilter;
 export const getTopDonateState = (state: AppState) => state.charity.listTopDonate;
 export const getListPartnerDonateToVolunteerCompanionState = (state: AppState) => state.charity.listPartnerDonateToVolunteerCompanion;
 export const getListPartnerDonateToVolunteerState = (state: AppState) => state.charity.listPartnerDonateToVolunteer;
+export const getDataFilterReportState = (state: AppState) => state.charity.dataFilterReport;
