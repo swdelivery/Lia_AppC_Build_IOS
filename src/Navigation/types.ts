@@ -7,7 +7,7 @@ import { Practitioner } from "@typings/practitioner";
 import { Booking } from "@typings/booking";
 import { Insurance } from "@typings/insurance";
 import { Conversation } from "@typings/chat";
-import { Campain } from "@typings/charity";
+import { Campain, CompanionRequest } from "@typings/charity";
 
 type valueof<T> = T[keyof T];
 type Screens = valueof<typeof ScreenKey>;
@@ -44,6 +44,9 @@ type ScreenParams = {
   };
   [ScreenKey.CHARITY_FUND_DETAILS]: {
     campain: Campain;
+  };
+  [ScreenKey.CHARITY_DONATION]: {
+    volunteerCompanion: CompanionRequest;
   };
 };
 

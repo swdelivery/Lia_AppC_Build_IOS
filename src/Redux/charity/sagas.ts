@@ -3,7 +3,7 @@ import { Alert } from "react-native";
 import { all, call, put, takeLatest } from "redux-saga/effects";
 import PartnerService from "src/Services/PartnerService";
 import * as actions from "./actions";
-import { CREATE_VOLUNTEER_COMPANION, CREATE_VOLUNTEER_DONATE, GET_DETAIL_CAMPAIN, GET_LIST_CAMPAIN, GET_LIST_COMPANION_BY_USER, GET_LIST_COMPANION_REQUEST, GET_LIST_COMPANION_REQUEST_ACCEPT, GET_VOLUNTEER_HISTORY, SEARCH_CAMPAIN } from "./types";
+import { CREATE_VOLUNTEER_COMPANION, CREATE_VOLUNTEER_COMPANION_DONATE, CREATE_VOLUNTEER_DONATE, GET_DETAIL_CAMPAIN, GET_LIST_CAMPAIN, GET_LIST_COMPANION_BY_USER, GET_LIST_COMPANION_REQUEST, GET_LIST_COMPANION_REQUEST_ACCEPT, GET_TOP_DONATE, GET_VOLUNTEER_HISTORY, SEARCH_CAMPAIN } from "./types";
 
 function* getListCampain({ }: BaseAction<string>) {
   try {
@@ -85,12 +85,25 @@ function* getListCompanionByUser({ payload }: BaseAction<string>) {
 
 function* createVolunteerDonate({ payload }: BaseAction<string>) {
   try {
-    const data = yield call(PartnerService.createVolunteerDonate, payload);
-    // yield put(
-    //   actions.createVolunteerDonate.success({
-    //     data,
-    //   })
-    // );
+    const data = yield call(PartnerService.createVolunteerDonate, payload?.dataFetch);
+    yield put(
+      actions.createVolunteerDonate.success({
+        data: payload?.dataShowModal,
+      })
+    );
+  } catch (error: any) {
+    Alert.alert(error.message)
+  }
+}
+
+function* createVolunteerCompanionDonate({ payload }: BaseAction<string>) {
+  try {
+    const data = yield call(PartnerService.createVolunteerCompanionDonate, payload?.dataFetch);
+    yield put(
+      actions.createVolunteerCompanionDonate.success({
+        data: payload?.dataShowModal,
+      })
+    );
   } catch (error: any) {
     Alert.alert(error.message)
   }
@@ -122,6 +135,19 @@ function* getVolunteerHistory({ payload }: BaseAction<string>) {
   }
 }
 
+function* getTopDonate({ payload }: BaseAction<string>) {
+  try {
+    const data = yield call(PartnerService.getTopDonate, payload);
+    yield put(
+      actions.getTopDonate.success({
+        data,
+      })
+    );
+  } catch (error: any) {
+    Alert.alert(error.message)
+  }
+}
+
 
 export default function* sagas() {
   yield all([
@@ -132,7 +158,9 @@ export default function* sagas() {
     takeLatest(GET_LIST_COMPANION_REQUEST_ACCEPT.REQUEST, getListCompanionRequestAccept),
     takeLatest(GET_LIST_COMPANION_BY_USER.REQUEST, getListCompanionByUser),
     takeLatest(CREATE_VOLUNTEER_DONATE.REQUEST, createVolunteerDonate),
+    takeLatest(CREATE_VOLUNTEER_COMPANION_DONATE.REQUEST, createVolunteerCompanionDonate),
     takeLatest(SEARCH_CAMPAIN.REQUEST, searchCampain),
     takeLatest(GET_VOLUNTEER_HISTORY.REQUEST, getVolunteerHistory),
+    takeLatest(GET_TOP_DONATE.REQUEST, getTopDonate),
   ]);
 }

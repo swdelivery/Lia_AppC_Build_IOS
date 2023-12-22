@@ -1,14 +1,16 @@
 import { generateActionsGroup } from "@Redux/helper";
 import { ApiResponse } from "@typings/api";
-import { Campain, CompanionRequest, Transaction } from "@typings/charity";
+import { Campain, CompanionRequest, Donate, Transaction } from "@typings/charity";
 import {
   CREATE_VOLUNTEER_COMPANION,
+  CREATE_VOLUNTEER_COMPANION_DONATE,
   CREATE_VOLUNTEER_DONATE,
   GET_DETAIL_CAMPAIN,
   GET_LIST_CAMPAIN,
   GET_LIST_COMPANION_BY_USER,
   GET_LIST_COMPANION_REQUEST,
   GET_LIST_COMPANION_REQUEST_ACCEPT,
+  GET_TOP_DONATE,
   GET_VOLUNTEER_HISTORY,
   SEARCH_CAMPAIN,
   SELECT_AMOUNT,
@@ -29,6 +31,10 @@ export const createVolunteerDonate = generateActionsGroup<
   any,
   ApiResponse<any>
 >(CREATE_VOLUNTEER_DONATE);
+export const createVolunteerCompanionDonate = generateActionsGroup<
+  any,
+  ApiResponse<any>
+>(CREATE_VOLUNTEER_COMPANION_DONATE);
 
 // GET
 export const getListCampain = generateActionsGroup<
@@ -65,6 +71,11 @@ export const getVolunteerHistory = generateActionsGroup<
   any,
   ApiResponse<Transaction>
 >(GET_VOLUNTEER_HISTORY);
+
+export const getTopDonate = generateActionsGroup<
+  any,
+  ApiResponse<Donate[]>
+>(GET_TOP_DONATE);
 
 // SELECT
 export const selectCampain = (data) => ({

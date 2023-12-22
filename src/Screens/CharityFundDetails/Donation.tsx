@@ -17,7 +17,7 @@ import ActionButton from '@Components/ActionButton/ActionButton'
 import { useDispatch, useSelector } from 'react-redux'
 import { openModalThanks } from '@Redux/modal/actions'
 import { getDataCreateDonateState, getDetailCampainState } from '@Redux/charity/selectors'
-import { createVolunteerDonate, selectHideName, selectVolunteerId } from '@Redux/charity/actions'
+import { createVolunteerDonate, selectHideName, selectVolunteerId, createVolunteerCompanionDonate } from '@Redux/charity/actions'
 import BankInfo from './DonationComponents/BankInfo'
 import { isIos } from 'src/utils/platform'
 import WalletInfo from './DonationComponents/WalletInfo'
@@ -27,9 +27,10 @@ import { uploadModule } from '@Redux/Action/BookingAction'
 import { getInfoUserReducer } from '@Redux/Selectors'
 import { formatMonney } from '@Constant/Utils'
 import useConfirmation from 'src/Hooks/useConfirmation'
-import { useNavigate } from 'src/Hooks/useNavigation'
+import { useNavigate, useNavigationParams } from 'src/Hooks/useNavigation'
 
 const Donation = () => {
+  const { volunteerCompanion } = useNavigationParams();
   const { navigation } = useNavigate()
   const dispatch = useDispatch()
   const { data: { _id, createBy, name } } = useSelector(getDetailCampainState)
@@ -74,7 +75,6 @@ const Donation = () => {
           let listIdImageHasUpload = resultUploadImage?.data?.data.map(item => item._id);
 
           let dataFetchCreateDonateRequest = {
-            volunteerId: volunteerId,
             amount: Number(amount?.split('.')?.join('')),
             paymentMethodCode: paymentMethodCode,
             isHideName: isHideName,
@@ -82,10 +82,33 @@ const Donation = () => {
             description: description,
             images: listIdImageHasUpload
           }
-          dispatch(createVolunteerDonate.request(dataFetchCreateDonateRequest))
+          if (volunteerCompanion?.code) {
+            dataFetchCreateDonateRequest['volunteerCompanionCode'] = volunteerCompanion?.code
+            dispatch(createVolunteerCompanionDonate.request({
+              dataFetch: dataFetchCreateDonateRequest,
+              dataShowModal: {
+                type: 'donation',
+                price: formatMonney(amount),
+                name: infoUser?.name,
+                campainName: name,
+                ownerName: createBy
+              }
+            }))
+          } else {
+            dataFetchCreateDonateRequest['volunteerId'] = volunteerId
+            dispatch(createVolunteerDonate.request({
+              dataFetch: dataFetchCreateDonateRequest,
+              dataShowModal: {
+                type: 'donation',
+                price: formatMonney(amount),
+                name: infoUser?.name,
+                campainName: name,
+                ownerName: createBy
+              }
+            }))
+          }
         } else {
           let dataFetchCreateDonateRequest = {
-            volunteerId: volunteerId,
             amount: Number(amount?.split('.')?.join('')),
             paymentMethodCode: paymentMethodCode,
             isHideName: isHideName,
@@ -93,19 +116,33 @@ const Donation = () => {
             description: description,
             images: []
           }
-          dispatch(createVolunteerDonate.request(dataFetchCreateDonateRequest))
-        }
-        navigation.goBack()
-        dispatch(openModalThanks({
-          visible: true,
-          data: {
-            type: 'donation',
-            price: formatMonney(amount),
-            name: infoUser?.name,
-            campainName: name,
-            ownerName: createBy
+          if (volunteerCompanion?.code) {
+            dataFetchCreateDonateRequest['volunteerCompanionCode'] = volunteerCompanion?.code
+            dispatch(createVolunteerCompanionDonate.request({
+              dataFetch: dataFetchCreateDonateRequest,
+              dataShowModal: {
+                type: 'donation',
+                price: formatMonney(amount),
+                name: infoUser?.name,
+                campainName: name,
+                ownerName: createBy
+              }
+            }))
+          } else {
+            dataFetchCreateDonateRequest['volunteerId'] = volunteerId
+            dispatch(createVolunteerDonate.request({
+              dataFetch: dataFetchCreateDonateRequest,
+              dataShowModal: {
+                type: 'donation',
+                price: formatMonney(amount),
+                name: infoUser?.name,
+                campainName: name,
+                ownerName: createBy
+              }
+            }))
           }
-        }))
+        }
+        return navigation.goBack()
       }
     );
 

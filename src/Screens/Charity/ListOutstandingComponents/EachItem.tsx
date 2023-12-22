@@ -5,15 +5,16 @@ import { _width } from '@Constant/Scale';
 import Image from '@Components/Image';
 import Avatar from '@Components/Avatar';
 import Text from '@Components/Text';
+import { Donate } from '@typings/charity';
 
 type Props = {
-  data: any;
+  data: Donate;
 };
 
 const WIDTH_ITEM = _width / 3
 
 const EachItem = ({ data }: Props) => {
-  const { name } = data
+  const { partner: { name, fileAvatar } } = data
 
   return (
     <Column
@@ -23,8 +24,9 @@ const EachItem = ({ data }: Props) => {
       gap={8}
       alignItems='center'>
       <Avatar
+        circle
         size={8 * 8}
-        avatar={null} />
+        avatar={fileAvatar} />
       <Text
         style={{ textAlign: 'center' }}
         numberOfLines={2}

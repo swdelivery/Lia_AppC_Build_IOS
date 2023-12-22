@@ -4,12 +4,26 @@ import Row from '@Components/Row'
 import Text from '@Components/Text'
 import { NEW_BASE_COLOR } from '@Constant/Color'
 import ScreenKey from '@Navigation/ScreenKey'
+import { getTopDonate } from '@Redux/charity/actions'
+import { getTopDonateState } from '@Redux/charity/selectors'
+import { isEmpty } from 'lodash'
 import React from 'react'
 import { ScrollView, StyleSheet, TouchableOpacity } from 'react-native'
-import { useNavigate } from 'src/Hooks/useNavigation'
+import { useDispatch, useSelector } from 'react-redux'
+import { useFocused, useNavigate } from 'src/Hooks/useNavigation'
 
 const ListUsers = () => {
   const { navigate } = useNavigate()
+  const dispatch = useDispatch()
+  const { data: listTopDonate } = useSelector(getTopDonateState)
+
+  useFocused(() => {
+    dispatch(getTopDonate.request({
+      limit: 50
+    }))
+  })
+
+  if (isEmpty(listTopDonate)) return null
 
   return (
     <Column
@@ -32,7 +46,7 @@ const ListUsers = () => {
         contentContainerStyle={{ gap: 8 * 2 }}
         horizontal>
         {
-          [1, 2, 3, 4, 5]?.map((item, index) => {
+          listTopDonate?.slice(0, 10)?.map((item, index) => {
             return (
               <Column
                 width={8 * 8}
@@ -41,8 +55,8 @@ const ListUsers = () => {
                 <Avatar
                   style={styles.borderAvatar}
                   size={8 * 5}
-                  avatar={null} />
-                <Text numberOfLines={1} size={12}>NameUser</Text>
+                  avatar={item?.partner?.fileAvatar} />
+                <Text numberOfLines={1} size={12}>{item?.partner?.name}</Text>
               </Column>
             )
           })

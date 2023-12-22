@@ -9,26 +9,23 @@ import { FlatList, StyleSheet } from 'react-native'
 import slugify from 'slugify'
 import EachItem from './ListOutstandingComponents/EachItem'
 import HeaderSearch from './ListOutstandingComponents/HeaderSearch'
+import { useSelector } from 'react-redux'
+import { getTopDonateState } from '@Redux/charity/selectors'
 
 const ListOutstanding = () => {
-  const [listData, setListData] = useState(Array.from(new Array(50), (x, i) => {
-    return {
-      _id: `_id${i}`,
-      name: `Hội chữ thập đỏ Việt Nam-${i}`
-    }
-  }))
+  const { data: listTopDonate } = useSelector(getTopDonateState)
   const [listDataFilter, setListDataFilter] = useState([])
   const [valueSearch, setValueSearch] = useState('')
 
   useEffect(() => {
-    filterByNames(listData, valueSearch)
+    filterByNames(listTopDonate, valueSearch)
   }, [valueSearch])
 
   const filterByNames = (data, inputValue) => {
     const re = new RegExp(escapeRegExp(inputValue), "i");
     const results = data.filter((item) => {
-      if (item?.name) {
-        if (re.test(slugify(item?.name, ' '))) {
+      if (item?.partner?.name) {
+        if (re.test(slugify(item?.partner?.name, ' '))) {
           return true;
         }
         else {
@@ -45,7 +42,8 @@ const ListOutstanding = () => {
     return (
       <EachItem data={item} />
     )
-  }, [listData])
+  }, [listTopDonate])
+
   const _awesomeChildListKeyExtractor = useCallback(
     (item) => `awesome-child-key-${item._id}`,
     []
@@ -75,7 +73,7 @@ const ListOutstanding = () => {
         numColumns={3}
         renderItem={_renderItem}
         keyExtractor={_awesomeChildListKeyExtractor}
-        data={!isEmpty(listDataFilter) ? listDataFilter : listData}
+        data={!isEmpty(listDataFilter) ? listDataFilter : listTopDonate}
       />
 
     </Screen>

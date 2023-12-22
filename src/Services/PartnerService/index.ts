@@ -509,6 +509,11 @@ const createVolunteerDonate = (payload: any) => {
     .post(`/donate-volunteer-request/donate`, payload)
     .then(({ data }) => data);
 };
+const createVolunteerCompanionDonate = (payload: any) => {
+  return axios
+    .post(`/donate-volunteer-request/companion`, payload)
+    .then(({ data }) => data);
+};
 const searchCampain = (payload: any) => {
   const query = encodeParams({
     ...payload,
@@ -523,6 +528,14 @@ const getVolunteerHistory = (payload: any) => {
   });
   return axios
     .get(`/volunteer-fund-history?${query}`)
+    .then(({ data }) => data);
+};
+const getTopDonate = (payload: any) => {
+  const query = encodeParams({
+    ...payload,
+  });
+  return axios
+    .get(`/donate-volunteer-request/top-donate?${query}`)
     .then(({ data }) => data);
 };
 
@@ -626,6 +639,8 @@ export default {
   createVolunteerCompanion,
   getListCompanionRequest,
   createVolunteerDonate,
+  createVolunteerCompanionDonate,
   searchCampain,
-  getVolunteerHistory
+  getVolunteerHistory,
+  getTopDonate
 };
