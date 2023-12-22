@@ -8,6 +8,8 @@ import listCampainFilter from "./listCampainFilter";
 import volunteerHistory from "./volunteerHistory";
 import listCompanionByUser from "./listCompanionByUser";
 import listTopDonate from "./listTopDonate";
+import listPartnerDonateToVolunteerCompanion from "./listPartnerDonateToVolunteerCompanion";
+import listPartnerDonateToVolunteer from "./listPartnerDonateToVolunteer";
 
 export default combineReducers({
   listCampain,
@@ -18,5 +20,7 @@ export default combineReducers({
   volunteerHistory,
   listCompanionRequestAccept,
   listCompanionByUser,
-  listTopDonate
+  listTopDonate,
+  listPartnerDonateToVolunteerCompanion,
+  listPartnerDonateToVolunteer
 });

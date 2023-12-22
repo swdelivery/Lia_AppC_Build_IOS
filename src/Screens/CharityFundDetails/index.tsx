@@ -1,7 +1,7 @@
 import { AfterTimeoutFragment } from "@Components/AfterTimeoutFragment";
 import Screen from "@Components/Screen";
 import Placeholder from "@Screens/NewDetailService/Components/Placeholder";
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import { StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import Banner from "./components/Banner";
@@ -14,13 +14,18 @@ import { NEW_BASE_COLOR } from "@Constant/Color";
 import { FocusAwareStatusBar } from "@Components/StatusBar";
 import { useNavigate, useNavigationParams } from "src/Hooks/useNavigation";
 import ScreenKey from "@Navigation/ScreenKey";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getDetailCampain } from "@Redux/charity/actions";
+import { getDetailCampainState, getListCompanionRequestState } from "@Redux/charity/selectors";
+import { getInfoUserReducer } from "@Redux/Selectors";
 
 export default function CharityFundDetails() {
   const { id, campain } = useNavigationParams();
   const { navigate } = useNavigate()
   const dispatch = useDispatch()
+  const { data: listCompanionRequest } = useSelector(getListCompanionRequestState)
+  const { infoUser } = useSelector(getInfoUserReducer);
+  const { data: { _id: volunteerId } } = useSelector(getDetailCampainState)
 
   useEffect(() => {
     // This is id from app link
@@ -29,6 +34,21 @@ export default function CharityFundDetails() {
   useEffect(() => {
     dispatch(getDetailCampain.request(campain?._id))
   }, [campain])
+
+  const _handleGoToCompanion = useCallback(() => {
+    let find = listCompanionRequest?.find(item => {
+      if (item?.volunteerId == volunteerId && infoUser?._id == item?.partner?._id && item?.status == "ACCEPT") {
+        return true
+      } else {
+        return false
+      }
+    })
+    if (find?._id) {
+      navigate(ScreenKey.CHARITY_INFO_CO_FOUNDER, { data: find })()
+    } else {
+      navigate(ScreenKey.CHARITY_COMPANION)()
+    }
+  }, [listCompanionRequest])
 
   return (
     <Screen safeBottom>
@@ -44,7 +64,7 @@ export default function CharityFundDetails() {
         </ScrollView>
         <Row paddingHorizontal={16} paddingVertical={8} gap={8}>
           <Button.Outline
-            onPress={navigate(ScreenKey.CHARITY_COMPANION)}
+            onPress={_handleGoToCompanion}
             flex={1}
             title="Đồng hành"
             borderColor={NEW_BASE_COLOR}

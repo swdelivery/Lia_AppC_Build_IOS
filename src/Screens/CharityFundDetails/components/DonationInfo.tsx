@@ -4,28 +4,72 @@ import HorizontalProgress from "@Components/HoriontalProgress";
 import Icon from "@Components/Icon";
 import Row from "@Components/Row";
 import Text from "@Components/Text";
-import { BLACK_OPACITY_4, NEW_BASE_COLOR } from "@Constant/Color";
+import { NEW_BASE_COLOR } from "@Constant/Color";
 import { _width } from "@Constant/Scale";
 import { formatMonney } from "@Constant/Utils";
 import ScreenKey from "@Navigation/ScreenKey";
-import { getDetailCampainState } from "@Redux/charity/selectors";
-import React, { useMemo } from "react";
+import { getListPartnerDonateToVolunteer } from "@Redux/charity/actions";
+import { getDetailCampainState, getListPartnerDonateToVolunteerState } from "@Redux/charity/selectors";
+import React, { useCallback, useMemo } from "react";
 import { TouchableOpacity } from "react-native";
-import { useSelector } from "react-redux";
-import { useNavigate } from "src/Hooks/useNavigation";
+import { useDispatch, useSelector } from "react-redux";
+import { useFocused, useNavigate } from "src/Hooks/useNavigation";
 
 const ITEMS_COUNT = Math.floor((_width - 32) / 40) - 1;
 
 export default function DonationInfo() {
+  const dispatch = useDispatch()
   const { navigate } = useNavigate()
   const { data: {
     fundCurrent,
     fundTarget,
+    _id: volunteerId
   } } = useSelector(getDetailCampainState)
+
+  const {
+    data: listPartnerDonateToVolunteer,
+    meta
+  } = useSelector(getListPartnerDonateToVolunteerState)
 
   const percent = useMemo(() => {
     return parseFloat((fundCurrent / fundTarget * 100).toFixed(2))
   }, [fundTarget, fundCurrent])
+
+  useFocused(() => {
+    dispatch(getListPartnerDonateToVolunteer.request({
+      condition: {
+        "volunteerId": { "equal": volunteerId }, "status": { "equal": "ACCEPT" }
+      },
+      limit: 10
+    }))
+  })
+
+  const _renderMountDonate = useCallback(() => {
+    if (listPartnerDonateToVolunteer?.length > 2) {
+      return (
+        <Text size={12} weight="bold" top={8}>
+          {
+            listPartnerDonateToVolunteer?.slice(0, 2)?.map((item, index) => {
+              return `${item?.partnerInfo?.name}, `
+            })
+          }
+          <Text size={12}>và {meta?.totalDocuments - 2} người khác đã ủng hộ</Text>
+        </Text>
+      )
+    } else {
+      return (
+        <Text size={12} weight="bold" top={8}>
+          {
+            listPartnerDonateToVolunteer?.map((item, index) => {
+              return `${item?.partnerInfo?.name}, `
+            })
+          }
+          <Text size={12}>đã ủng hộ</Text>
+        </Text>
+      )
+
+    }
+  }, [listPartnerDonateToVolunteer])
 
   return (
     <Column paddingHorizontal={16}>
@@ -37,11 +81,11 @@ export default function DonationInfo() {
         </Text>
         <Text weight="bold">{percent}%</Text>
       </Row>
-      <Row gap={8} justifyContent="space-between" marginTop={20}>
-        {Array.from(Array(ITEMS_COUNT).keys()).map((_, index) => {
-          return <Avatar size={32} key={index} />;
+      <Row gap={8} marginTop={20}>
+        {listPartnerDonateToVolunteer.map((item, index) => {
+          return <Avatar circle avatar={item?.partnerInfo?.fileAvatar} size={32} key={index} />;
         })}
-        <Column borderRadius={16} width={32} aspectRatio={1}>
+        {/* <Column borderRadius={16} width={32} aspectRatio={1}>
           <Avatar size={32} />
           <Column
             width={32}
@@ -54,12 +98,11 @@ export default function DonationInfo() {
           >
             <Icon name="dots-horizontal" color="white" size={18} />
           </Column>
-        </Column>
+        </Column> */}
       </Row>
-      <Text size={12} weight="bold" top={8}>
-        Nguyễn Đình Mạnh, NGUYEN HUONG GIANG{" "}
-        <Text size={12}>và 2.421 người khác đã ủng hộ</Text>
-      </Text>
+      {
+        _renderMountDonate()
+      }
       <TouchableOpacity onPress={navigate(ScreenKey.CHARITY_ACCOUNT_STATEMENT)}>
         <Row alignSelf="flex-end" marginTop={12}>
           <Text size={12} color={NEW_BASE_COLOR}>

@@ -9,6 +9,8 @@ export const GET_LIST_COMPANION_REQUEST_ACCEPT = generateActionTypes("@charity/g
 export const GET_LIST_COMPANION_BY_USER = generateActionTypes("@charity/get-list-companion-by-user");
 export const GET_VOLUNTEER_HISTORY = generateActionTypes("@charity/get-volunteer-history");
 export const GET_TOP_DONATE = generateActionTypes("@charity/get-top-donate");
+export const GET_LIST_PARTNER_DONATE_TO_VOLUNTEER_COMPANION = generateActionTypes("@charity/get-list-partner-donate-to-volunteer-companion");
+export const GET_LIST_PARTNER_DONATE_TO_VOLUNTEER = generateActionTypes("@charity/get-list-partner-donate-to-volunteer");
 
 // // SELECT
 export const SELECT_CAMPAIN = "@charity/select-campain"

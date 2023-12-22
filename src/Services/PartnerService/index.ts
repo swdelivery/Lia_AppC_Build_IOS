@@ -538,6 +538,14 @@ const getTopDonate = (payload: any) => {
     .get(`/donate-volunteer-request/top-donate?${query}`)
     .then(({ data }) => data);
 };
+const getListPartnerDonateToVolunteerCompanion = (payload: any) => {
+  const query = encodeParams({
+    ...payload,
+  });
+  return axios
+    .get(`/donate-volunteer-request/get-by-volunteerId?${query}`)
+    .then(({ data }) => data);
+};
 
 
 export default {
@@ -642,5 +650,6 @@ export default {
   createVolunteerCompanionDonate,
   searchCampain,
   getVolunteerHistory,
-  getTopDonate
+  getTopDonate,
+  getListPartnerDonateToVolunteerCompanion
 };

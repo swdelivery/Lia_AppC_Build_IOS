@@ -5,10 +5,18 @@ import Text from '@Components/Text'
 import { NEW_BASE_COLOR, WHITE } from '@Constant/Color'
 import { styleElement } from '@Constant/StyleElement'
 import { formatMonney } from '@Constant/Utils'
+import { getListPartnerDonateToVolunteerCompanionState } from '@Redux/charity/selectors'
 import React from 'react'
 import { StyleSheet } from 'react-native'
+import { useSelector } from 'react-redux'
 
 const Report = ({ data }) => {
+
+  const {
+    data: listPartnerDonateToVolunteerCompanion,
+    meta
+  } = useSelector(getListPartnerDonateToVolunteerCompanionState)
+
   return (
     <Column gap={8 * 2}>
       <Row
@@ -50,12 +58,20 @@ const Report = ({ data }) => {
         gap={8}
         margin={8 * 2}>
         <Row gap={8}>
-          <Avatar size={8 * 5} avatar={null} />
-          <Avatar size={8 * 5} avatar={null} />
-          <Avatar size={8 * 5} avatar={null} />
+          {
+            listPartnerDonateToVolunteerCompanion?.map((item, index) => {
+              return (
+                <Avatar
+                  key={item?._id}
+                  circle
+                  size={8 * 5}
+                  avatar={item?.partnerInfo?.fileAvatar} />
+              )
+            })
+          }
         </Row>
         <Text size={12}>
-          3 Người đã ủng hộ
+          {meta?.totalDocuments} Người đã ủng hộ
         </Text>
       </Column>
 

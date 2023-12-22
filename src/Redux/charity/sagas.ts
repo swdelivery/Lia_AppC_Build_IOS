@@ -3,7 +3,7 @@ import { Alert } from "react-native";
 import { all, call, put, takeLatest } from "redux-saga/effects";
 import PartnerService from "src/Services/PartnerService";
 import * as actions from "./actions";
-import { CREATE_VOLUNTEER_COMPANION, CREATE_VOLUNTEER_COMPANION_DONATE, CREATE_VOLUNTEER_DONATE, GET_DETAIL_CAMPAIN, GET_LIST_CAMPAIN, GET_LIST_COMPANION_BY_USER, GET_LIST_COMPANION_REQUEST, GET_LIST_COMPANION_REQUEST_ACCEPT, GET_TOP_DONATE, GET_VOLUNTEER_HISTORY, SEARCH_CAMPAIN } from "./types";
+import { CREATE_VOLUNTEER_COMPANION, CREATE_VOLUNTEER_COMPANION_DONATE, CREATE_VOLUNTEER_DONATE, GET_DETAIL_CAMPAIN, GET_LIST_CAMPAIN, GET_LIST_COMPANION_BY_USER, GET_LIST_COMPANION_REQUEST, GET_LIST_COMPANION_REQUEST_ACCEPT, GET_LIST_PARTNER_DONATE_TO_VOLUNTEER, GET_LIST_PARTNER_DONATE_TO_VOLUNTEER_COMPANION, GET_TOP_DONATE, GET_VOLUNTEER_HISTORY, SEARCH_CAMPAIN } from "./types";
 
 function* getListCampain({ }: BaseAction<string>) {
   try {
@@ -148,6 +148,32 @@ function* getTopDonate({ payload }: BaseAction<string>) {
   }
 }
 
+function* getListPartnerDonateToVolunteerCompanion({ payload }: BaseAction<string>) {
+  try {
+    const data = yield call(PartnerService.getListPartnerDonateToVolunteerCompanion, payload);
+    yield put(
+      actions.getListPartnerDonateToVolunteerCompanion.success({
+        data,
+      })
+    );
+  } catch (error: any) {
+    Alert.alert(error.message)
+  }
+}
+
+function* getListPartnerDonateToVolunteer({ payload }: BaseAction<string>) {
+  try {
+    const data = yield call(PartnerService.getListPartnerDonateToVolunteerCompanion, payload);
+    yield put(
+      actions.getListPartnerDonateToVolunteer.success({
+        data,
+      })
+    );
+  } catch (error: any) {
+    Alert.alert(error.message)
+  }
+}
+
 
 export default function* sagas() {
   yield all([
@@ -162,5 +188,7 @@ export default function* sagas() {
     takeLatest(SEARCH_CAMPAIN.REQUEST, searchCampain),
     takeLatest(GET_VOLUNTEER_HISTORY.REQUEST, getVolunteerHistory),
     takeLatest(GET_TOP_DONATE.REQUEST, getTopDonate),
+    takeLatest(GET_LIST_PARTNER_DONATE_TO_VOLUNTEER_COMPANION.REQUEST, getListPartnerDonateToVolunteerCompanion),
+    takeLatest(GET_LIST_PARTNER_DONATE_TO_VOLUNTEER.REQUEST, getListPartnerDonateToVolunteer),
   ]);
 }

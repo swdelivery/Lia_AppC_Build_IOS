@@ -6,8 +6,8 @@ import Spacer from '@Components/Spacer'
 import { FocusAwareStatusBar } from '@Components/StatusBar'
 import Text from '@Components/Text'
 import { BACKGROUND_COLOR, NEW_BASE_COLOR } from '@Constant/Color'
-import { getListCompanionByUser } from '@Redux/charity/actions'
-import { getListCompanionByUserState } from '@Redux/charity/selectors'
+import { getListCompanionByUser, getListPartnerDonateToVolunteerCompanion } from '@Redux/charity/actions'
+import { getListCompanionByUserState, getListPartnerDonateToVolunteerCompanionState } from '@Redux/charity/selectors'
 import React, { useCallback, useEffect } from 'react'
 import { ScrollView, StyleSheet } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
@@ -24,7 +24,9 @@ const InfoCoFounder = () => {
   const dispatch = useDispatch();
   const { data: listCompanionByUser } = useSelector(getListCompanionByUserState)
 
+
   useEffect(() => {
+
     if (data?._id) {
       dispatch(getListCompanionByUser.request({
         condition: {
@@ -32,6 +34,15 @@ const InfoCoFounder = () => {
         }
       }))
     }
+
+    if (data?.code) {
+      dispatch(getListPartnerDonateToVolunteerCompanion.request({
+        condition: {
+          "volunteerCompanionCode": { "equal": data?.code }
+        }
+      }))
+    }
+
   }, [data])
 
   const _handleConfirm = useCallback(() => {

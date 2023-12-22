@@ -10,6 +10,8 @@ import {
   GET_LIST_COMPANION_BY_USER,
   GET_LIST_COMPANION_REQUEST,
   GET_LIST_COMPANION_REQUEST_ACCEPT,
+  GET_LIST_PARTNER_DONATE_TO_VOLUNTEER,
+  GET_LIST_PARTNER_DONATE_TO_VOLUNTEER_COMPANION,
   GET_TOP_DONATE,
   GET_VOLUNTEER_HISTORY,
   SEARCH_CAMPAIN,
@@ -76,6 +78,16 @@ export const getTopDonate = generateActionsGroup<
   any,
   ApiResponse<Donate[]>
 >(GET_TOP_DONATE);
+
+export const getListPartnerDonateToVolunteerCompanion = generateActionsGroup<
+  any,
+  ApiResponse<CompanionRequest[]>
+>(GET_LIST_PARTNER_DONATE_TO_VOLUNTEER_COMPANION);
+
+export const getListPartnerDonateToVolunteer = generateActionsGroup<
+  any,
+  ApiResponse<CompanionRequest[]>
+>(GET_LIST_PARTNER_DONATE_TO_VOLUNTEER);
 
 // SELECT
 export const selectCampain = (data) => ({
