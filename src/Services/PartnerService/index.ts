@@ -497,13 +497,32 @@ const createVolunteerCompanion = (payload: any) => {
     .then(({ data }) => data);
 };
 const getListCompanionRequest = (payload: any) => {
+  const query = encodeParams({
+    ...payload,
+  });
   return axios
-    .get(`/volunteer-companion`, {})
+    .get(`/volunteer-companion?${query}`, {})
     .then(({ data }) => data);
 };
 const createVolunteerDonate = (payload: any) => {
   return axios
     .post(`/donate-volunteer-request/donate`, payload)
+    .then(({ data }) => data);
+};
+const searchCampain = (payload: any) => {
+  const query = encodeParams({
+    ...payload,
+  });
+  return axios
+    .get(`/volunteer?${query}`)
+    .then(({ data }) => data);
+};
+const getVolunteerHistory = (payload: any) => {
+  const query = encodeParams({
+    ...payload,
+  });
+  return axios
+    .get(`/volunteer-fund-history?${query}`)
     .then(({ data }) => data);
 };
 
@@ -606,5 +625,7 @@ export default {
   getDetailCampain,
   createVolunteerCompanion,
   getListCompanionRequest,
-  createVolunteerDonate
+  createVolunteerDonate,
+  searchCampain,
+  getVolunteerHistory
 };

@@ -70,7 +70,18 @@ const Companion = () => {
   }, [valueMoney, _id])
 
   const hasRequested = useMemo(() => {
-    return listCompanionRequest?.find(item => item?.volunteerId == _id)
+    let result = listCompanionRequest?.findIndex(item => {
+      if (item?.volunteerId == _id && infoUser?._id == item?.partner?._id) {
+        return true
+      } else {
+        return false
+      }
+    })
+    if (result !== -1) {
+      return true
+    } else {
+      return false
+    }
   }, [_id, listCompanionRequest])
 
   return (
@@ -208,8 +219,6 @@ const Companion = () => {
                 </TouchableOpacity>
               </Row>
             </Column>
-
-
         }
 
 

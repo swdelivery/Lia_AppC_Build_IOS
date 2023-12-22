@@ -6,8 +6,9 @@ import { NEW_BASE_COLOR, WHITE } from '@Constant/Color'
 import Avatar from '@Components/Avatar'
 import Column from '@Components/Column'
 import Icon from '@Components/Icon'
+import moment from 'moment'
 
-const InfoPerson = () => {
+const InfoPerson = ({ data }) => {
   return (
     <Row
       alignItems='flex-start'
@@ -18,7 +19,8 @@ const InfoPerson = () => {
       margin={8 * 2}>
       <Avatar
         size={8 * 8}
-        avatar={null} />
+        circle
+        avatar={data?.partner?.fileAvatar} />
       <Column
         flex={1}
         gap={2}>
@@ -28,15 +30,15 @@ const InfoPerson = () => {
         <Text
           weight='bold'
           color={NEW_BASE_COLOR}>
-          NGUYEN HOANG ANH
+          {data?.partner?.name}
         </Text>
         <Text fontStyle='italic' size={12}>
-          Ngày bắt đầu 18/12/2023
+          Ngày bắt đầu {moment(data?.created).format('DD/MM/YYYY')}
         </Text>
       </Column>
-      <TouchableOpacity>
+      {/* <TouchableOpacity>
         <Icon name="share-variant" color={NEW_BASE_COLOR} size={18} />
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </Row>
   )
 }

@@ -30,6 +30,7 @@ export type Campain = {
   bannerFileArr: any;
   currency: any;
   id: string;
+  address: any;
 }
 
 export type CompanionRequest = {
@@ -48,3 +49,23 @@ export type CompanionRequest = {
   volunteer: Campain;
   id: string;
 }
+
+export type Transaction = {
+  depositAmount: number;
+  message: string;
+  isDelete: boolean;
+  _id: string;
+  volunteerId: string;
+  userCreate: string;
+  paymentMethodCode: string;
+  status: string;
+  created: string;
+  updated: string;
+  __v: number;
+  creater: any;
+  partner: Partner;
+  volunteer: Campain;
+  volunteerCompanion: any;
+  id: string;
+}
+
