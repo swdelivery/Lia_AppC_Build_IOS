@@ -1,15 +1,11 @@
 import Column from "@Components/Column";
 import Row from "@Components/Row";
 import Text, { TextProps } from "@Components/Text";
-import { range, reverse } from "lodash";
-import React, { useCallback, useEffect, useMemo } from "react";
-import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
-import Animated, {
-  SharedValue,
+import React, { useCallback, useEffect, useMemo, useRef } from "react";
+import { ScrollView, StyleProp, ViewStyle } from "react-native";
+import {
   runOnJS,
   useAnimatedReaction,
-  useAnimatedRef,
-  useDerivedValue,
   useSharedValue,
 } from "react-native-reanimated";
 
@@ -66,7 +62,7 @@ function Digit({
   textSize: number;
   height: number;
 }) {
-  const aref = useAnimatedRef<Animated.ScrollView>();
+  const aref = useRef<ScrollView>(null);
   const number = useSharedValue(value);
 
   useEffect(() => {
@@ -75,7 +71,6 @@ function Digit({
 
   const scrollToDigit = useCallback((value: number, animated = true) => {
     if (aref.current) {
-      // @ts-ignore
       aref.current.scrollTo({ x: 0, y: value, animated });
     }
   }, []);
@@ -99,8 +94,7 @@ function Digit({
 
   return (
     <Column>
-      <Animated.ScrollView
-        // @ts-ignore
+      <ScrollView
         ref={aref}
         scrollEnabled={false}
         showsVerticalScrollIndicator={false}
@@ -117,7 +111,7 @@ function Digit({
             </Text>
           </Column>
         ))}
-      </Animated.ScrollView>
+      </ScrollView>
     </Column>
   );
 }

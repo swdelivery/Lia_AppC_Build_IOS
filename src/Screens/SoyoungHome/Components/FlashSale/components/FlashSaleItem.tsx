@@ -10,16 +10,25 @@ import { SERVICE_BANNER_RATIO } from "@Constant/image";
 import { FlashSaleService } from "@typings/flashsale";
 import React from "react";
 import { StyleSheet } from "react-native";
+import useServiceDetailsNavigation from "src/Hooks/navigation/useServiceDetailsNavigation";
+import useCallbackItem from "src/Hooks/useCallbackItem";
 
 const IMAGE_HEIGHT = 60;
 
 type Props = {
   item: FlashSaleService;
+  isUpcoming: boolean;
 };
 
-export default function FlashSaleItem({ item }: Props) {
+export default function FlashSaleItem({ item, isUpcoming }: Props) {
+  const trigger = useCallbackItem(item.service);
+  const handleServicePress = useServiceDetailsNavigation();
+  
   return (
-    <Column width={IMAGE_HEIGHT / SERVICE_BANNER_RATIO}>
+    <Column
+      width={IMAGE_HEIGHT / SERVICE_BANNER_RATIO}
+      onPress={trigger(handleServicePress)}
+    >
       <Image avatar={item.service.avatar} style={styles.image} />
       <Text size={10} weight="bold" numberOfLines={1}>
         {item.service.name}
@@ -38,7 +47,13 @@ export default function FlashSaleItem({ item }: Props) {
       </Row>
       <Column marginTop={2}>
         <HorizontalProgress
-          percent={item.limit ? item.usage / item.limit : 30}
+          percent={
+            isUpcoming || item.usage === 0
+              ? 0
+              : item.limit
+              ? item.usage / item.limit
+              : 30
+          }
           height={12}
           colors={[MAIN_RED, MAIN_RED]}
           backgroundColor={MAIN_RED_100}

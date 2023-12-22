@@ -18,6 +18,7 @@ export function formatDuration(milliseconds: number) {
   seconds %= 3600;
   const minutes = Math.floor(seconds / 60);
   const remainingSeconds = seconds % 60;
+
   return {
     hours: getTwoDigits(hours),
     minutes: getTwoDigits(minutes),

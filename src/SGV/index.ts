@@ -10,5 +10,7 @@ export { default as UploadIcon } from "./upload.svg";
 export { default as ThumbsUpIcon } from "./thumbsup.svg";
 export { default as PersonsIcon } from "./persons.svg";
 export { default as LocationIcon } from "./location.svg";
+export { default as FlameIcon } from "./flame.svg";
+export { default as FlashIcon } from "./flash.svg";
 export { default as ChervonRightIcon } from "./chervon_right.svg";
 export { default as Diamond1Icon } from "./diamond_1.svg";

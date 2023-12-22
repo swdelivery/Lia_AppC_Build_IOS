@@ -1,22 +1,15 @@
-import Lottie from "lottie-react-native";
-import React, { memo, useCallback, useEffect, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import { StyleSheet } from "react-native";
 import { _widthScale } from "../../../../Constant/Scale";
-import Text from "@Components/Text";
 import Column from "@Components/Column";
-import { TouchableOpacity } from "react-native";
-import { useNavigate } from "src/Hooks/useNavigation";
+import { useFocused, useNavigate } from "src/Hooks/useNavigation";
 import ScreenKey from "@Navigation/ScreenKey";
 import FlashSaleTimer from "./components/FlashSaleTimer";
-import useRecomendServices from "@Screens/NewDetailService/useRecomendServices";
 import Row from "@Components/Row";
 import FlashSaleItem from "./components/FlashSaleItem";
 import { ScrollView } from "react-native-gesture-handler";
-import useConfigFile from "src/Hooks/useConfigFile";
-import { ConfigFileCode } from "@typings/configFile";
 import Image from "@Components/Image";
 import { head } from "lodash";
-import useRequestAnimationFrame from "src/Hooks/useRequestAnimationFrame";
 import { useDispatch, useSelector } from "react-redux";
 import {
   checkFlashSale,
@@ -26,35 +19,37 @@ import {
   getCurrentFlashSaleServicesState,
   getFlashSaleState,
 } from "@Redux/flashSale/selectors";
+import { FlashSale } from "@typings/flashsale";
+import Text from "@Components/Text";
+import { MAIN_RED_500 } from "@Constant/Color";
 
-const FlashSale = memo(() => {
+const FlashSaleBanner = ({ flashSale }: { flashSale: FlashSale }) => {
   const dispatch = useDispatch();
   const { navigate } = useNavigate();
-  const { image, currentFlashSale } = useSelector(getFlashSaleState);
+  const { image } = useSelector(getFlashSaleState);
   const { data: services } = useSelector(getCurrentFlashSaleServicesState);
 
-  const refreshFlashSale = useCallback(() => {
-    dispatch(checkFlashSale.request());
-    dispatch(getCurrentFlashSaleServices.request());
-  }, []);
-
-  useEffect(() => {
-    requestAnimationFrame(() => {
-      refreshFlashSale();
-    });
-  }, []);
+  useFocused(() => {
+    dispatch(getCurrentFlashSaleServices.request(flashSale._id));
+  });
 
   const data = useMemo(() => {
     return services.slice(0, 10);
   }, [services]);
 
-  const _renderItem = (item: any) => {
-    return <FlashSaleItem key={item._id} item={item} />;
-  };
+  const refreshFlashSale = useCallback(() => {
+    dispatch(checkFlashSale.request());
+  }, []);
 
-  if (!currentFlashSale) {
-    return null;
-  }
+  const _renderItem = (item: any) => {
+    return (
+      <FlashSaleItem
+        key={item._id}
+        item={item}
+        isUpcoming={flashSale.isUpcoming}
+      />
+    );
+  };
 
   return (
     <Row style={styles.container} gap={8}>
@@ -70,12 +65,18 @@ const FlashSale = memo(() => {
               avatar={head(image.fileArr)}
               style={styles.image}
               resizeMode="contain"
+              placeholderColors={["white", "white"]}
             />
           )}
         </Column>
+        {flashSale.isUpcoming && (
+          <Text size={8} color={MAIN_RED_500}>
+            Sắp diễn ra
+          </Text>
+        )}
         <FlashSaleTimer
-          flashSale={currentFlashSale}
-          onFlashSaleEnd={refreshFlashSale}
+          flashSale={flashSale}
+          onFlashSaleUpdate={refreshFlashSale}
         />
       </Column>
       <Row flex={1}>
@@ -89,9 +90,31 @@ const FlashSale = memo(() => {
       </Row>
     </Row>
   );
-});
+};
 
-export default FlashSale;
+function FlashSaleWrapper() {
+  const dispatch = useDispatch();
+  const { currentFlashSale, nextFlashSale } = useSelector(getFlashSaleState);
+
+  useFocused(() => {
+    dispatch(checkFlashSale.request());
+  });
+
+  const flashSale = useMemo(() => {
+    if (currentFlashSale) {
+      return currentFlashSale;
+    }
+    return nextFlashSale[0] ? { ...nextFlashSale[0], isUpcoming: true } : null;
+  }, [currentFlashSale, ...nextFlashSale]);
+
+  if (!flashSale) {
+    return null;
+  }
+
+  return <FlashSaleBanner flashSale={flashSale} />;
+}
+
+export default FlashSaleWrapper;
 
 const styles = StyleSheet.create({
   btnFls: {

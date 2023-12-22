@@ -3,32 +3,38 @@ import React from "react";
 import { _moderateScale, _widthScale } from "../../../Constant/Scale";
 import CountStar2 from "../../../Components/NewCountStar/CountStar";
 import Text from "@Components/Text";
-import { INFO_COLOR, MAIN_RED, MAIN_RED_500, RED } from "@Constant/Color";
+import {
+  INFO_COLOR,
+  MAIN_RED,
+  MAIN_RED_500,
+  MAIN_RED_600,
+} from "@Constant/Color";
 import Column from "@Components/Column";
 import { formatMonney } from "@Constant/Utils";
 import Row from "@Components/Row";
 import Icon from "@Components/Icon";
 import { Service } from "@typings/serviceGroup";
 import FlashSaleEnds from "@Screens/FlashSale/Component/FlashSaleEnds";
+import { FlashIcon } from "src/SGV";
 
 type Props = {
   service: Service;
 };
 
 const NameService = ({ service }: Props) => {
-  const isFlashSaleStarted = false; //Math.random() < 0.5;
+  const isFlashSaleStarted = Math.random() < 0.5;
   const isFlashSaleIncoming = !isFlashSaleStarted;
 
   return (
     <Column style={styles.infoService} gap={8}>
       {isFlashSaleStarted ? (
         <Row
-          backgroundColor={MAIN_RED_500}
+          backgroundColor={MAIN_RED_600}
           padding={8}
           justifyContent="space-between"
           overflow="hidden"
         >
-          <Icon name="flash" style={styles.flashIcon} color="#cb4700" />
+          <FlashIcon style={styles.flashIcon} width={100} />
           <Column>
             <Text weight="bold" color={"white"}>
               Flash Sale
@@ -47,14 +53,32 @@ const NameService = ({ service }: Props) => {
               </Text>
             </Row>
           </Column>
-          <FlashSaleEnds />
+          <FlashSaleEnds
+            flashSale={{
+              isUpcoming: false,
+              dateRange: {
+                from: "2023-12-22T00:00:00.000Z",
+                to: "2023-12-22T00:00:00.000Z",
+              },
+              timeRange: {
+                from: {
+                  hour: 9,
+                  minute: 50,
+                },
+                to: {
+                  hour: 23,
+                  minute: 55,
+                },
+              },
+            }}
+          />
         </Row>
       ) : (
         <Column gap={8}>
           {isFlashSaleIncoming && (
             <Row paddingTop={8} paddingHorizontal={8} gap={4}>
-              <Column backgroundColor={MAIN_RED_500}>
-                <Icon name="flash" color={INFO_COLOR} />
+              <Column backgroundColor={MAIN_RED_600} marginRight={4}>
+                <FlashIcon width={22} height={22} />
               </Column>
               <Text weight="bold" color={MAIN_RED_500}>
                 Flash Sale
@@ -62,7 +86,7 @@ const NameService = ({ service }: Props) => {
               <Text color={MAIN_RED_500}>bắt đầu lúc 00:00, 20 tháng 12</Text>
             </Row>
           )}
-          <Text size={18} weight="bold" color={RED} left={8}>
+          <Text size={18} weight="bold" color={MAIN_RED} left={8}>
             {formatMonney(service?.price, true)}
           </Text>
         </Column>
@@ -109,5 +133,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     fontSize: 100,
     right: 0,
+    opacity: 0.6,
   },
 });

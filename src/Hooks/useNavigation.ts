@@ -10,6 +10,7 @@ import {
 import { RootStackParamsList, ScreenRouteProp } from "@Navigation/types";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import useSavedCallback from "./useSavedCallback";
+import { useAppState } from "@r0b0t3d/react-native-hooks";
 
 export function useNavigationParam<
   T extends RouteProp<ParamListBase>,
@@ -101,6 +102,14 @@ export function useFocused(callback: () => void, ignoreFirst = false) {
       });
     }
   }, [isFocused]);
+
+  useAppState((state) => {
+    if (state === "active") {
+      requestAnimationFrame(() => {
+        savedCallback.current();
+      });
+    }
+  });
 }
 
 export function useScreenExit(callback: () => void) {

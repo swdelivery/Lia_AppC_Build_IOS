@@ -36,7 +36,7 @@ const ModalThele = memo((props) => {
       isVisible={props.show}
       useNativeDriver={true}
       // onModalShow={_getData}
-      coverScreen={Platform.OS == "ios" ? false : true}
+      // coverScreen={Platform.OS == "ios" ? false : true}
       onBackButtonPress={() => {
         props?.hide();
         setIsFirstLoad(false);
@@ -81,12 +81,14 @@ const ModalThele = memo((props) => {
           </View>
         </View>
         <ScrollView style={{ paddingHorizontal: _moderateScale(8 * 2) }}>
-          <RenderHtml
-            contentWidth={_width - _widthScale(8 * 4)}
-            source={{ html: `${props?.data?.value}` }}
-            enableExperimentalBRCollapsing={true}
-            enableExperimentalMarginCollapsing={true}
-          />
+          {props?.data && (
+            <RenderHtml
+              contentWidth={_width - _widthScale(8 * 4)}
+              source={{ html: `${props?.data?.value}` }}
+              enableExperimentalBRCollapsing={true}
+              enableExperimentalMarginCollapsing={true}
+            />
+          )}
         </ScrollView>
       </View>
     </Modal>

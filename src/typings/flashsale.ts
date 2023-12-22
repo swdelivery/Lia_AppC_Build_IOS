@@ -27,6 +27,9 @@ export type FlashSale = {
   __v: number;
   userUpdate: any;
   id: string;
+
+  // local props
+  isUpcoming: boolean;
 } & Timestamp;
 
 export type FlashSaleService = {

@@ -1,7 +1,6 @@
 import { FlatList, StyleSheet, View } from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
 import LinearGradient from "react-native-linear-gradient";
-import { ScrollView } from "react-native-gesture-handler";
 import { _moderateScale, _width, _widthScale } from "../../../Constant/Scale";
 import { WHITE } from "../../../Constant/Color";
 import { styleElement } from "../../../Constant/StyleElement";
@@ -17,7 +16,6 @@ import { useFocused, useNavigate } from "src/Hooks/useNavigation";
 import { getInfoUserReducer } from "@Redux/Selectors";
 import useVisible from "src/Hooks/useVisible";
 import moment from "moment";
-import { useAppState } from "@r0b0t3d/react-native-hooks";
 import useRequireLoginCallback from "src/Hooks/useRequireLoginAction";
 import useListFilter from "src/Hooks/useListFilter";
 import { getVouchersState } from "@Redux/voucher/selectors";
@@ -58,12 +56,6 @@ const ListVoucher = ({ animatedSecondColor }: Props) => {
 
   useFocused(() => {
     refreshData();
-  });
-
-  useAppState((state) => {
-    if (state === "active") {
-      refreshData();
-    }
   });
 
   const handleViewDetails = useCallback((item) => {

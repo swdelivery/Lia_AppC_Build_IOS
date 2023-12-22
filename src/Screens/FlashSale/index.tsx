@@ -1,43 +1,37 @@
-import React from "react";
-import { Dimensions, StyleSheet, FlatList } from "react-native";
-import { TabView } from "react-native-tab-view";
-import { MAIN_RED_500, WHITE } from "../../Constant/Color";
+import React, { useCallback, useState } from "react";
 import { _moderateScale } from "../../Constant/Scale";
 import Screen from "@Components/Screen";
 import Header from "./Component/Header";
-import Column from "@Components/Column";
 import FlashSaleTimes from "./Component/FlashSaleTimes";
-import useRecomendServices from "@Screens/NewDetailService/useRecomendServices";
-import FlashSaleItem from "./Component/FlashSaleItem";
-import { RenderItemProps } from "@typings/common";
-import { Service } from "@typings/serviceGroup";
+import { useDispatch } from "react-redux";
+import { useFocused } from "src/Hooks/useNavigation";
+import { checkFlashSale } from "@Redux/flashSale/actions";
+import { FlashSale } from "@typings/flashsale";
+import FlashSaleServices from "./Component/FlashSaleServices";
 
-const FlashSale = (props) => {
-  const services = useRecomendServices({ codeGroup: ["MAT"] });
+const FlashSaleList = () => {
+  const dispatch = useDispatch();
+  const [selectedFlashSale, setSelectedFlashSale] = useState<FlashSale>();
 
-  function renderItem({ item }: RenderItemProps<Service>) {
-    return <FlashSaleItem item={item} />;
-  }
+  useFocused(() => {
+    dispatch(checkFlashSale.request());
+  });
+
+  const refreshFlashSale = useCallback(() => {
+    dispatch(checkFlashSale.request());
+  }, []);
 
   return (
     <Screen>
       <Header />
-      <FlashSaleTimes />
-      <FlatList
-        data={services}
-        renderItem={renderItem}
-        numColumns={2}
-        contentContainerStyle={styles.contentContainer}
+      <FlashSaleTimes
+        selectedFlashSale={selectedFlashSale}
+        onFlashSaleSelect={setSelectedFlashSale}
+        onFlashSaleUpdate={refreshFlashSale}
       />
+      <FlashSaleServices flashSale={selectedFlashSale} />
     </Screen>
   );
 };
 
-const styles = StyleSheet.create({
-  contentContainer: {
-    paddingHorizontal: 4,
-    paddingTop: 8,
-  },
-});
-
-export default FlashSale;
+export default FlashSaleList;
