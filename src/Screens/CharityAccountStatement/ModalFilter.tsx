@@ -9,72 +9,80 @@ import { NEW_BASE_COLOR } from '@Constant/Color'
 import { styleElement } from '@Constant/StyleElement'
 import ScreenKey from '@Navigation/ScreenKey'
 import moment from 'moment'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { ScrollView, StyleSheet, TouchableOpacity } from 'react-native'
 import { useNavigate } from 'src/Hooks/useNavigation'
 import useVisible from 'src/Hooks/useVisible'
 import MultiPickerColumn from './ModalFilterComponents/MultiPickerColumn'
 import RangeDateInput from './ModalFilterComponents/RangeDateInput'
 import SearchInput from './ModalFilterComponents/SearchInput'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectDateFrom, selectDateTo, selectDeposit, selectIdVolunteer, selectPaymentMethod, selectSearchValue } from '@Redux/charity/actions'
+import { getDataFilterReportState, getDetailCampainState } from '@Redux/charity/selectors'
 
 const ModalFilter = () => {
   const { navigation } = useNavigate()
+  const dispatch = useDispatch()
+  const { dateFrom, paymentMethodCode, depositAmount } = useSelector(getDataFilterReportState)
+  const { data: { _id: idVolunteer } } = useSelector(getDetailCampainState)
+
+  useEffect(() => {
+    if (idVolunteer) {
+      dispatch(selectIdVolunteer(idVolunteer))
+    }
+  }, [idVolunteer])
 
   const [dataType, setDataType] = useState([
-    { name: "Chuyển khoản", code: 'CK' },
-    { name: "Trích hoá đơn dịch vụ", code: 'HD' },
-    { name: "Khác", code: 'KHAC' },
+    { name: "Chuyển khoản", code: 'BANK_TRANSFER' },
+    { name: "Trích hoá đơn dịch vụ", code: 'SERVICE_EXCERPT' },
+    { name: "Khác", code: 'OTHER' },
   ])
-  const [choicedDataType, setChoicedDataType] = useState([])
 
   const [dataMoney, setDataMoney] = useState([
-    { name: "< 200.000", code: '1' },
-    { name: "Từ 200.000 - 1.000.000", code: '2' },
-    { name: "Từ 1.000.000 - 10.000.000", code: '3' },
-    { name: "Lớn hơn 10.000.000", code: '4' },
+    { name: "< 200.000", code: 'OPTION_1', data: { from: 0, to: 200000 } },
+    { name: "Từ 200.000 - 1.000.000", code: 'OPTION_2', data: { from: 200000, to: 1000000 } },
+    { name: "Từ 1.000.000 - 10.000.000", code: 'OPTION_3', data: { from: 1000000, to: 10000000 } },
+    { name: "Lớn hơn 10.000.000", code: '4', data: { from: 10000000, to: 1000000000 } },
   ])
-  const [choicedDataMoney, setChoicedDataMoney] = useState([])
 
   const calendarPickerFrom = useVisible()
   const calendarPickerTo = useVisible()
 
-  const [valueTimeFrom, setValueTimeFrom] = useState(null)
-  const [valueTimeTo, setValueTimeTo] = useState(null)
-
   const _handleConfirmPickDateFrom = useCallback((date) => {
-    setValueTimeFrom(moment(date))
+    dispatch(selectDateFrom(moment(date)))
   }, []);
   const _handleConfirmPickDateTo = useCallback((date) => {
-    setValueTimeTo(moment(date))
+    dispatch(selectDateTo(moment(date)))
   }, []);
 
   const _handleChangeType = useCallback((data) => {
-    let arrTemp = [...choicedDataType];
+    let arrTemp = [...paymentMethodCode];
     let indexFinded = arrTemp?.findIndex(item => item?.code == data?.code);
     if (indexFinded !== -1) {
       arrTemp.splice(indexFinded, 1);
     } else {
       arrTemp.push(data);
     }
-    setChoicedDataType(arrTemp)
-  }, [choicedDataType])
+    dispatch(selectPaymentMethod(arrTemp))
+  }, [paymentMethodCode])
 
   const _handleChangeMoney = useCallback((data) => {
-    let arrTemp = [...choicedDataMoney];
+    let arrTemp = [...depositAmount];
     let indexFinded = arrTemp?.findIndex(item => item?.code == data?.code);
     if (indexFinded !== -1) {
       arrTemp.splice(indexFinded, 1);
     } else {
-      arrTemp.push(data);
+      arrTemp = [data]
     }
-    setChoicedDataMoney(arrTemp)
-  }, [choicedDataMoney])
+    dispatch(selectDeposit(arrTemp))
+  }, [depositAmount])
 
   const _handleChangeToInitialState = useCallback(() => {
-    setChoicedDataType([])
-    setChoicedDataMoney([])
-    setValueTimeFrom(null)
-    setValueTimeTo(null)
+    dispatch(selectSearchValue(''))
+    dispatch(selectDateFrom(''))
+    dispatch(selectDateTo(''))
+    dispatch(selectPaymentMethod([]))
+    dispatch(selectDeposit([]))
   }, [])
 
   const _handleGoResultFilter = useCallback(() => {
@@ -101,20 +109,18 @@ const ModalFilter = () => {
         <SearchInput />
 
         <RangeDateInput
-          valueTimeFrom={valueTimeFrom}
-          valueTimeTo={valueTimeTo}
           calendarPickerFrom={calendarPickerFrom}
           calendarPickerTo={calendarPickerTo} />
 
         <MultiPickerColumn
           onChange={_handleChangeType}
-          choiced={choicedDataType}
+          choiced={paymentMethodCode}
           title="Loại giao dịch"
           data={dataType}
         />
         <MultiPickerColumn
           onChange={_handleChangeMoney}
-          choiced={choicedDataMoney}
+          choiced={depositAmount}
           title="Số tiền"
           data={dataMoney}
         />
@@ -156,7 +162,7 @@ const ModalFilter = () => {
         colors={["#34759b", "#1a3e67"]}
         onConfirm={_handleConfirmPickDateTo}
         maxDate={moment()}
-        minDate={moment(valueTimeFrom)}
+        minDate={moment(dateFrom)}
         visible={calendarPickerTo.visible}
         onClose={calendarPickerTo.hide} />
 

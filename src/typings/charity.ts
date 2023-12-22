@@ -69,3 +69,9 @@ export type Transaction = {
   id: string;
 }
 
+export type Donate = {
+  partnerId: string;
+  partner: Partner;
+  totalAmount: number;
+}
+

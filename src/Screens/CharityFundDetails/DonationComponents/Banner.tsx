@@ -15,7 +15,7 @@ import { getImageAvataUrl } from 'src/utils/avatar'
 const Banner = () => {
   const { top } = useSafeAreaInsets();
   const { navigation } = useNavigate()
-  const { data: { bannerFileArr } } = useSelector(getDetailCampainState)
+  const { data: { bannerFileArr, name } } = useSelector(getDetailCampainState)
 
   return (
     <ImageBackground
@@ -45,7 +45,7 @@ const Banner = () => {
         <Text
           weight='bold'
           color={WHITE}>
-          Chiến dịch thiện nguyện mang nhà vệ sinh đến trẻ em mầm non vùng cao
+          {name}
         </Text>
       </Column>
 

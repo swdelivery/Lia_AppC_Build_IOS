@@ -1,6 +1,6 @@
 import { createReducer } from "@Redux/helper";
 import { Handler } from "@Redux/types";
-import { SELECT_AMOUNT, SELECT_DESCRIPTION, SELECT_HIDE_NAME, SELECT_IMAGE, SELECT_PAYMENT_METHOD_CODE, SELECT_VOLUNTEER_ID } from "../types";
+import { CLEAR_DATA_DONATION, SELECT_AMOUNT, SELECT_DESCRIPTION, SELECT_HIDE_NAME, SELECT_IMAGE, SELECT_PAYMENT_METHOD_CODE, SELECT_VOLUNTEER_ID } from "../types";
 
 export type State = {
   volunteerId: string;
@@ -58,6 +58,9 @@ const selectImage: Handler<State> = (state, { payload }) => {
     images: payload
   }
 }
+const clearDataDonation: Handler<State> = (state, { payload }) => {
+  return INITIAL_STATE
+}
 
 
 export default createReducer(INITIAL_STATE, {
@@ -67,4 +70,5 @@ export default createReducer(INITIAL_STATE, {
   [SELECT_HIDE_NAME]: selectHideName,
   [SELECT_DESCRIPTION]: selectDescription,
   [SELECT_IMAGE]: selectImage,
+  [CLEAR_DATA_DONATION]: clearDataDonation,
 });

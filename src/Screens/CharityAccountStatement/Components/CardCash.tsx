@@ -19,7 +19,8 @@ const CardCash = ({ data }: Props) => {
     status,
     partner,
     message,
-    isHide,
+    donateVolunteerRequest,
+    volunteerFundRequest,
     depositAmount,
     created
   } = data
@@ -39,18 +40,31 @@ const CardCash = ({ data }: Props) => {
       borderRadius={8}
       backgroundColor={"#F4F4F4"}>
       <Row gap={8}>
-        <Text>
-          {isCashIn ? 'Từ' : "Đến"}
-        </Text>
         {
-          isHide ?
-            <Text numberOfLines={1} flex={1} weight='bold'>
-              Ủng hộ ẩn danh
-            </Text>
+          isCashIn ?
+            <>
+              <Text>
+                Từ
+              </Text>
+              {
+                donateVolunteerRequest?.isHideName ?
+                  <Text numberOfLines={1} flex={1} weight='bold'>
+                    Ủng hộ ẩn danh
+                  </Text>
+                  :
+                  <Text numberOfLines={1} flex={1} weight='bold'>
+                    {partner?.name}
+                  </Text>
+              }
+            </>
             :
-            <Text numberOfLines={1} flex={1} weight='bold'>
-              {partner?.name}
-            </Text>
+            <>
+              <Text numberOfLines={1} flex={1} weight='bold'>
+                {
+                  volunteerFundRequest?.title
+                }
+              </Text>
+            </>
         }
 
         {

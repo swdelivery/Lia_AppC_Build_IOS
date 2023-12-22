@@ -4,22 +4,64 @@ import { FocusAwareStatusBar } from '@Components/StatusBar'
 import { FONT_WEIGHTS } from '@Components/Text'
 import { NEW_BASE_COLOR, WHITE } from '@Constant/Color'
 import { _heightScale, _width } from '@Constant/Scale'
+import { getVolunteerReportHistoryFilter } from '@Redux/charity/actions'
+import { getDataFilterReportState } from '@Redux/charity/selectors'
 import ScrollableTabView from "@itenl/react-native-scrollable-tabview"
+import { isEmpty } from 'lodash'
 import React, { useEffect, useRef, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
+import { useDispatch, useSelector } from 'react-redux'
 import StickyHeader from './Components/StickyHeader'
 import Banner from './ResultFilterComponents/Banner'
 import HistoryCashIn from './ResultFilterComponents/HistoryCashIn'
 import HistoryCashOut from './ResultFilterComponents/HistoryCashOut'
 
 const ResultFilter = () => {
+  const dispatch = useDispatch()
   const [currIndexTab, setCurrIndexTab] = useState(0)
   const [rootTime, setRootTime] = useState(Date.now());
   const scrollableTabViewRef = useRef();
 
+  const {
+    volunteerId,
+    search,
+    dateFrom,
+    dateTo,
+    paymentMethodCode,
+    depositAmount
+  } = useSelector(getDataFilterReportState)
+
   useEffect(() => {
     scrollableTabViewRef?.current?.toTabView(currIndexTab)
   }, [currIndexTab])
+
+  useEffect(() => {
+
+    let condition = {
+      volunteerId: { equal: volunteerId },
+    }
+    if (!isEmpty(dateFrom) && !isEmpty(dateTo)) {
+      condition['created'] = {
+        from: dateFrom,
+        to: dateTo
+      }
+    }
+    if (!isEmpty(paymentMethodCode) && !paymentMethodCode.find(item => item?.code == "OTHER")) {
+      condition['paymentMethodCode'] = {
+        in: paymentMethodCode?.map(item => item?.code)
+      }
+    }
+    if (!isEmpty(depositAmount)) {
+      condition['depositAmount'] = {
+        from: depositAmount[0]?.data?.from,
+        to: depositAmount[0]?.data?.to
+      }
+    }
+    dispatch(getVolunteerReportHistoryFilter.request({
+      condition: condition,
+      search: search
+    }))
+  }, [])
 
   const STACKS = [
     {

@@ -1,73 +1,80 @@
 import Column from '@Components/Column'
 import Row from '@Components/Row'
 import Text from '@Components/Text'
-import React from 'react'
+import { getVolunteerHistoryFilterState } from '@Redux/charity/selectors'
+import { isEmpty } from 'lodash'
+import moment from 'moment'
+import React, { useEffect, useState } from 'react'
 import { StyleSheet } from 'react-native'
+import { useSelector } from 'react-redux'
 import CardCash from '../Components/CardCash'
 
 const HistoryCashOut = () => {
+  const { data: dataHistory } = useSelector(getVolunteerHistoryFilterState)
+  const [listHistoryMoneyOut, setListHistoryMoneyOut] = useState([])
+
+  useEffect(() => {
+    let historyMoneyIn = dataHistory?.filter(item => item?.status == 'REDUCE');
+    const groupedTransactions = historyMoneyIn.reduce((grouped, transaction) => {
+      const date = moment(transaction.created).format('YYYY-MM-DD');
+      if (!grouped[date]) {
+        grouped[date] = { date: transaction.created, data: [] };
+      }
+      grouped[date].data.push(transaction);
+      return grouped;
+    }, {});
+    const groupedTransactionsArray = Object.values(groupedTransactions);
+    setListHistoryMoneyOut(groupedTransactionsArray)
+  }, [dataHistory])
+
   return (
-    <Column gap={8 * 2}>
-      <Column>
-        <Row
-          margin={8 * 2}
-          justifyContent='space-between'>
-          <Text weight='bold'>
-            Ngày 18 tháng 12
-          </Text>
-          <Text>
-            1 Giao dịch
-          </Text>
-        </Row>
-        <Column
-          borderRadius={8}
-          backgroundColor={"#F4F4F4"}
-          marginHorizontal={8 * 2}>
-          <CardCash />
-        </Column>
-      </Column>
-      <Column>
-        <Row
-          margin={8 * 2}
-          justifyContent='space-between'>
-          <Text weight='bold'>
-            Ngày 19 tháng 12
-          </Text>
-          <Text>
-            4 Giao dịch
-          </Text>
-        </Row>
-        <Column
-          borderRadius={8}
-          backgroundColor={"#F4F4F4"}
-          marginHorizontal={8 * 2}>
-          <CardCash />
-          <CardCash />
-          <CardCash />
-          <CardCash />
-        </Column>
-      </Column>
-      <Column>
-        <Row
-          margin={8 * 2}
-          justifyContent='space-between'>
-          <Text weight='bold'>
-            Ngày 21 tháng 12
-          </Text>
-          <Text>
-            4 Giao dịch
-          </Text>
-        </Row>
-        <Column
-          borderRadius={8}
-          backgroundColor={"#F4F4F4"}
-          marginHorizontal={8 * 2}>
-          <CardCash />
-          <CardCash />
-          <CardCash />
-          <CardCash />
-        </Column>
-      </Column>
+
+    <Column>
+      {
+        !isEmpty(listHistoryMoneyOut) ?
+          <>
+            {
+              listHistoryMoneyOut?.map((i, idx) => {
+                return (
+                  <Column>
+                    <Row
+                      padding={8 * 2}
+                      justifyContent='space-between'>
+                      <Text
+                        weight='bold'>
+                        Ngày {moment(i?.date).format('DD/MM/YYYY')}
+                      </Text>
+                      <Text>
+                        {i?.data?.length} Giao dịch
+                      </Text>
+                    </Row>
+
+                    <Column
+                      borderRadius={8}
+                      backgroundColor={'#F4F4F4'}
+                      marginHorizontal={8 * 2}>
+                      {
+                        i?.data?.map((item, index) => {
+                          return (
+                            <CardCash data={item} key={index} />
+                          )
+                        })
+                      }
+                    </Column>
+                  </Column>
+                )
+              })
+            }
+          </>
+          :
+          <>
+            <Column margin={8 * 2}>
+              <Text fontStyle='italic'>
+                Không tìm thấy dữ liệu trùng khớp
+              </Text>
+            </Column>
+          </>
+      }
     </Column>
   )
 }
