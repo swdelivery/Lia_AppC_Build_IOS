@@ -16,6 +16,7 @@ import Icon from "@Components/Icon";
 import { Service } from "@typings/serviceGroup";
 import FlashSaleEnds from "@Screens/FlashSale/Component/FlashSaleEnds";
 import { FlashIcon } from "src/SGV";
+import { useServiceDetailsContext } from "../context";
 
 type Props = {
   service: Service;
@@ -24,6 +25,7 @@ type Props = {
 const NameService = ({ service }: Props) => {
   const isFlashSaleStarted = Math.random() < 0.5;
   const isFlashSaleIncoming = !isFlashSaleStarted;
+  const { refreshService } = useServiceDetailsContext();
 
   return (
     <Column style={styles.infoService} gap={8}>
@@ -71,6 +73,7 @@ const NameService = ({ service }: Props) => {
                 },
               },
             }}
+            onFlashSaleUpdate={refreshService}
           />
         </Row>
       ) : (

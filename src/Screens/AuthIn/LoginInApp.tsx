@@ -120,7 +120,7 @@ const Login = (props) => {
           <Image
             resizeMode={"contain"}
             style={{ width: "70%", height: "70%" }}
-            source={require("../../NewImage/NewLogoLogin.png")}
+            source={require("../../NewImage/logoLiA.png")}
           />
         </Column>
 

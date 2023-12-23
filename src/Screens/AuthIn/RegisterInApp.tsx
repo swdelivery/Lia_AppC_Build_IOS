@@ -18,7 +18,6 @@ import {
 import { navigation } from "../../../rootNavigation";
 import ScreenKey from "../../Navigation/ScreenKey";
 import { sizeIcon } from "../../Constant/Icon";
-import { alertCustomNotAction } from "../../Constant/Utils";
 import { partnerAccountRegister } from "../../Redux/Action/AuthAction";
 import { styleElement } from "../../Constant/StyleElement";
 import { getPartnerByCollaboratorCode } from "../../Redux/Action/ProfileAction";
@@ -34,6 +33,7 @@ import { isValidPhoneNumber } from "react-phone-number-input";
 import Column from "@Components/Column";
 import PasswordInput from "@Components/PasswordInput";
 import PhoneInput from "@Components/PhoneInput";
+import { StatusBar } from "@Components/StatusBar";
 
 const RegisterInApp = (props) => {
   const [phoneNumber, setphoneNumber] = useState("");
@@ -185,6 +185,7 @@ const RegisterInApp = (props) => {
 
   return (
     <Screen safeTop style={styles.container}>
+      <StatusBar />
       <Header title="Đăng ký tài khoản" onBack={navigation.goBack} />
       <KeyboardAwareScrollView
         bounces={false}
@@ -196,7 +197,7 @@ const RegisterInApp = (props) => {
           <Image
             resizeMode={"contain"}
             style={{ width: "70%", height: "70%" }}
-            source={require("../../NewImage/NewLogoLogin.png")}
+            source={require("../../NewImage/logoLiA.png")}
           />
         </View>
 

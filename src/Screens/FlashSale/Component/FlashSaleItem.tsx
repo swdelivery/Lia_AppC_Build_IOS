@@ -14,11 +14,14 @@ import { _width } from "@Constant/Scale";
 import { styleElement } from "@Constant/StyleElement";
 import { formatMonney } from "@Constant/Utils";
 import { SERVICE_BANNER_RATIO } from "@Constant/image";
+import ScreenKey from "@Navigation/ScreenKey";
 import { FlashSaleService } from "@typings/flashsale";
 import React, { useMemo } from "react";
 import { StyleSheet } from "react-native";
 import useServiceDetailsNavigation from "src/Hooks/navigation/useServiceDetailsNavigation";
 import useCallbackItem from "src/Hooks/useCallbackItem";
+import { useNavigate } from "src/Hooks/useNavigation";
+import useRequireLoginCallback from "src/Hooks/useRequireLoginAction";
 import { FlameIcon } from "src/SGV";
 
 const IMAGE_WIDTH = _width / 2 - 8 * 2 + 1;
@@ -29,6 +32,7 @@ type Props = {
 };
 
 export default function FlashSaleItem({ item, isUpcoming }: Props) {
+  const { navigation } = useNavigate();
   const trigger = useCallbackItem(item.service);
   const handleServicePress = useServiceDetailsNavigation();
 
@@ -44,12 +48,18 @@ export default function FlashSaleItem({ item, isUpcoming }: Props) {
     return item.limit && item.usage === item.limit;
   }, [item]);
 
+  const canBook = !isOutOfStock && !isUpcoming;
+
   const saleProgress = useMemo(() => {
     if (isOutOfStock) {
       return "Đã hết ưu đãi";
     }
     return `Đã bán ${item.usage}${item.limit ? `/${item.limit}` : ""}`;
   }, [item, isOutOfStock]);
+
+  const handleBooking = useRequireLoginCallback(() => {
+    navigation.navigate(ScreenKey.CREATE_BOOKING, { service: item.service });
+  }, [item]);
 
   return (
     <Column
@@ -106,17 +116,16 @@ export default function FlashSaleItem({ item, isUpcoming }: Props) {
         </Column>
         <Column
           borderWidth={1}
-          borderColor={isOutOfStock ? TITLE_GREY : MAIN_RED_600}
+          borderColor={!canBook ? TITLE_GREY : MAIN_RED_600}
           borderRadius={4}
           alignSelf="center"
           paddingHorizontal={8}
           paddingBottom={4}
           paddingTop={2}
           marginVertical={8}
+          onPress={handleBooking}
         >
-          <Text color={isOutOfStock ? TITLE_GREY : MAIN_RED_600}>
-            {"Đặt hẹn"}
-          </Text>
+          <Text color={!canBook ? TITLE_GREY : MAIN_RED_600}>{"Đặt hẹn"}</Text>
         </Column>
       </Column>
     </Column>

@@ -143,6 +143,7 @@ const styles = StyleSheet.create({
     borderTopColor: BORDER_COLOR,
     justifyContent: "center",
     marginHorizontal: _moderateScale(8 * 2),
+    marginBottom: 8,
   },
   contentContainer: {},
 });

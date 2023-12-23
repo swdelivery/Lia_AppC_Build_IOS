@@ -1,18 +1,20 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import ScreenKey from "@Navigation/ScreenKey";
 import { Service } from "@typings/serviceGroup";
 import { createContext, useContext, useMemo } from "react";
 import useApi from "src/Hooks/services/useApi";
-import { useNavigationParams } from "src/Hooks/useNavigation";
+import { useFocused, useNavigationParams } from "src/Hooks/useNavigation";
 import PartnerService from "src/Services/PartnerService";
 
 export type ServiceDetailsContextType = {
   service: Service;
+  refreshService: () => void;
 };
 
-export const ServiceDetailsContext = createContext<ServiceDetailsContextType>({
-  service: null,
-});
+export const ServiceDetailsContext = createContext<ServiceDetailsContextType>(
+  // @ts-ignore
+  {}
+);
 
 export function useServiceDetailsContext() {
   const ctx = useContext(ServiceDetailsContext);
@@ -31,23 +33,28 @@ export function withServiceDetailsContext<T>(
 ) {
   return (props: T) => {
     const { service } = useNavigationParams<ScreenK>();
-    const { data, isLoading, performRequest } = useApi(
+    const { data, performRequest } = useApi(
       PartnerService.getServiceDetails,
       service
     );
 
-    useEffect(() => {
+    const refreshService = useCallback(() => {
       if (!service) {
         return;
       }
       performRequest(service._id);
     }, [service]);
 
+    useFocused(() => {
+      refreshService();
+    });
+
     const context = useMemo(() => {
       return {
         service: data,
+        refreshService,
       };
-    }, [data]);
+    }, [data, refreshService]);
 
     return (
       <ServiceDetailsContext.Provider value={context}>

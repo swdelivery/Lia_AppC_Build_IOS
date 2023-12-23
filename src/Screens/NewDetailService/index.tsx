@@ -12,14 +12,11 @@ import NameService from "./Components/NameService";
 import OverViewFeedBack from "./Components/OverViewFeedBack";
 import Screen from "@Components/Screen";
 import Spacer from "@Components/Spacer";
-import ListBottomService from "@Components/ListBottomService/ListBottomService";
 import BottomAction from "./Components/BottomAction";
 import BeautyInsurance from "./Components/BeautyInsurance";
 import { useServiceDetailsContext, withServiceDetailsContext } from "./context";
 import { AfterTimeoutFragment } from "@Components/AfterTimeoutFragment";
 import useServiceReviews from "./useServiceReviews";
-import useRecomendServices from "./useRecomendServices";
-import HorizontalServicesV2 from "@Components/HorizontalServicesV2";
 import Placeholder from "./Components/Placeholder";
 import useImageColors from "src/Hooks/useImageColors";
 import Animated, {
@@ -31,7 +28,6 @@ import ScreenKey from "@Navigation/ScreenKey";
 import { useNavigate } from "src/Hooks/useNavigation";
 import RecommendServices from "./Components/RecommendServices";
 import RelatedServices from "./Components/RelatedServices";
-import FlashSale from "./Components/FlashSale";
 import { isEmpty } from "lodash";
 
 const DetailService = () => {
