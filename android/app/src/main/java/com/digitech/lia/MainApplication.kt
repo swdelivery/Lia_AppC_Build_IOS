@@ -1,4 +1,4 @@
-package com.liaappc
+package com.digitech.lia
 
 import android.app.Application
 import com.facebook.react.PackageList

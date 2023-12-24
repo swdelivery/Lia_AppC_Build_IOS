@@ -28,6 +28,9 @@ import { ConfigData } from "@typings/configData";
 
 const axios = createAxios(URL_FOR_PARTNER);
 
+console.log({ URL_FOR_PARTNER });
+
+
 const partnerLogout = (payload: any) => {
   return axios
     .post("partner-account/logout", payload)

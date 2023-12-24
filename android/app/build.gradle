@@ -86,7 +86,7 @@ android {
     compileSdk rootProject.ext.compileSdkVersion
 
 
-    namespace "com.liaappc"
+    namespace "com.digitech.lia"
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion

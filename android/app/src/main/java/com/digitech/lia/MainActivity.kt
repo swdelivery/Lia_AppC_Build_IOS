@@ -1,4 +1,4 @@
-package com.liaappc
+package com.digitech.lia
 
 import android.annotation.TargetApi
 import android.app.Activity
