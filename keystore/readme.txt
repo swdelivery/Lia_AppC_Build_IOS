@@ -1,12 +1,11 @@
 # Production
 
-FileName: my-upload-key.keystore
-Alias: my-key-alias
-Password: P@ssw0rd2023
-Name: Digitechs Solution
-Company Unit: Digitechs Solution
-Company: Digitechs Solution
-City: Ho Chi Minh
+Alias: ecomkey
+Password: P@ssw0rd2021
+Name: cuongpq
+Company Unit: digitechsolutions
+Company: digitechsolutions
+City: Ho Chi Minh City
 State (Province): Ho Chi Minh
 Country code: VN
 

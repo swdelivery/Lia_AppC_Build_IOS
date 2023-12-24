@@ -460,7 +460,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = EPJFRX9T32;
+				DEVELOPMENT_TEAM = 263F8XJ79V;
 				ENABLE_BITCODE = NO;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 i386";
 				INFOPLIST_FILE = LiaAppC/Info.plist;
@@ -474,7 +474,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.liaappc;
+				PRODUCT_BUNDLE_IDENTIFIER = com.digitech.lia;
 				PRODUCT_NAME = LiaAppC;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -494,7 +494,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = EPJFRX9T32;
+				DEVELOPMENT_TEAM = 263F8XJ79V;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 i386";
 				INFOPLIST_FILE = LiaAppC/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -507,7 +507,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.liaappc;
+				PRODUCT_BUNDLE_IDENTIFIER = com.digitech.lia;
 				PRODUCT_NAME = LiaAppC;
 				PROVISIONING_PROFILE = "a88831bf-f3bb-4bbd-9bfa-b45312c80cfb";
 				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc com.liaappc";

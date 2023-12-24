@@ -126,7 +126,6 @@ android {
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
-            signingConfig signingConfigs.debug
             signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
@@ -135,15 +134,15 @@ android {
     flavorDimensions "default"
     productFlavors {
         dev {
-            applicationId "com.liaappc"
+            applicationId "com.digitech.lia"
             signingConfig signingConfigs.debug
         }
         staging {
-            applicationId "com.liaappc"
+            applicationId "com.digitech.lia"
             signingConfig signingConfigs.staging
         }
         prod {
-            applicationId "com.liaappc"
+            applicationId "com.digitech.lia"
             signingConfig signingConfigs.release
         }
     }

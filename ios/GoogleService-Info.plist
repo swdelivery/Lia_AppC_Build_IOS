@@ -9,7 +9,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.liaappc</string>
+	<string>com.digitech.lia</string>
 	<key>PROJECT_ID</key>
 	<string>liaproject-28d76</string>
 	<key>STORAGE_BUCKET</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:785409828152:ios:6dd38699953b0b5a490dcd</string>
+	<string>1:785409828152:ios:b6cb611b8785d2b4490dcd</string>
 </dict>
 </plist>
