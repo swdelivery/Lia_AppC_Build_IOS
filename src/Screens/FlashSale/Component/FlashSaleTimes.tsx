@@ -1,7 +1,7 @@
 import Column from "@Components/Column";
 import Text from "@Components/Text";
 import { MAIN_RED_500, MAIN_RED_700 } from "@Constant/Color";
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import FlashSaleEnds from "./FlashSaleEnds";
 import { getFlashSaleState } from "@Redux/flashSale/selectors";
@@ -10,7 +10,7 @@ import { FlashSale } from "@typings/flashsale";
 import Fade from "@Components/Fade";
 import LinearGradient from "react-native-linear-gradient";
 import moment from "moment";
-import { fromUtc } from "src/utils/date";
+import { fromUtc, getTwoDigits } from "src/utils/date";
 
 type Props = {
   selectedFlashSale?: FlashSale;
@@ -47,6 +47,13 @@ export default function FlashSaleTimes({
     return result;
   }, [currentFlashSale, ...nextFlashSale]);
 
+  const handleSelectFlashSale = useCallback(
+    (item: FlashSale) => () => {
+      onFlashSaleSelect(item);
+    },
+    [onFlashSaleSelect]
+  );
+
   function renderItem(item: FlashSale) {
     return (
       <Column
@@ -55,9 +62,12 @@ export default function FlashSaleTimes({
         borderColor={"white"}
         alignItems="center"
         paddingVertical={6}
+        onPress={handleSelectFlashSale(item)}
       >
         <Text weight="bold" color={"white"}>
-          {`${item.timeRange.from.hour}:${item.timeRange.from.minute}`}
+          {`${getTwoDigits(item.timeRange.from.hour)}:${getTwoDigits(
+            item.timeRange.from.minute
+          )}`}
         </Text>
         <Text weight="bold" size={10} color={"white"}>
           {item.isUpcoming ? "Sắp diễn ra" : "Đang diễn ra"}

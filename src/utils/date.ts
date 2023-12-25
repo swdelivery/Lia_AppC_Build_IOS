@@ -8,7 +8,7 @@ export const fromUtc = (datestr: string | Date) => {
   return new Date(dt.valueOf() + dt.getTimezoneOffset() * 60 * 1000);
 };
 
-function getTwoDigits(number: number): string {
+export function getTwoDigits(number: number): string {
   return number.toString().padStart(2, "0");
 }
 

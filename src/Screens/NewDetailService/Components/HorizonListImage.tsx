@@ -27,8 +27,6 @@ const HorizonListImage = ({
     handlePageChange(0);
   }, []);
 
-  console.log({ images });
-
   const handlePageChange = useCallback(
     (index: number) => {
       if (images[index] && getColors) {

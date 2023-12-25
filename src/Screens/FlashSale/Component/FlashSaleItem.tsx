@@ -65,7 +65,7 @@ export default function FlashSaleItem({ item, isUpcoming }: Props) {
     <Column
       flex={1 / 2}
       width={_width / 2}
-      height={250}
+      height={230}
       paddingLeft={4}
       paddingRight={4}
       marginBottom={8}
@@ -86,7 +86,7 @@ export default function FlashSaleItem({ item, isUpcoming }: Props) {
         </Column>
         <Row justifyContent="space-between" paddingHorizontal={4}>
           <Text weight="bold" color={MAIN_RED} size={16}>
-            {formatMonney(item.finalPrice)}
+            {`${isUpcoming ? "?" : ""}${formatMonney(item.finalPrice)}`}
           </Text>
           <Text size={12} textDecorationLine="line-through">
             {formatMonney(item.originalPrice)}
