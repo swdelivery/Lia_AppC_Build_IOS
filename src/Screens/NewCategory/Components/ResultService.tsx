@@ -9,6 +9,7 @@ import React, { useCallback, useEffect } from 'react';
 import { FlatList, StyleSheet } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import ItemService from './ItemService';
+import Spacer from '@Components/Spacer';
 
 const ResultService = () => {
   const dispatch = useDispatch()
@@ -143,17 +144,14 @@ const ResultService = () => {
     <AfterTimeoutFragment timeout={200}>
       <Column
         flex={1}
-        alignItems='center'>
-        {/* {
-          isLoading ?
-            <LoadingIndicator />
-            : */}
+        marginLeft={8}>
         <FlatList
           ListEmptyComponent={isLoading ? <LoadingIndicator /> : <EmptyResultData title='Không tìm thấy dữ liệu' />}
           contentContainerStyle={{ justifyContent: 'space-between', paddingVertical: 8 }}
           renderItem={_renderItemService}
           keyExtractor={_awesomeChildListKeyExtractor}
           numColumns={2}
+          ListFooterComponent={<Spacer top={100} />}
           data={dataResultListService} />
         {/* } */}
 

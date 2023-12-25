@@ -41,7 +41,7 @@ const VideoPlayer = memo((props) => {
 
     useEffect(() => {
 
-        
+
     }, [])
 
     useEffect(() => {
@@ -138,7 +138,7 @@ const VideoPlayer = memo((props) => {
             height: Platform.OS == 'ios' ? _height : _height,
         }}>
 
-            <View style={styles.rightBox}>
+            {/* <View style={styles.rightBox}>
                 <Image
                     style={styles.avatar}
                     source={{
@@ -189,7 +189,7 @@ const VideoPlayer = memo((props) => {
                         68
                     </Text>
                 </TouchableOpacity>
-            </View>
+            </View> */}
 
             <TouchableOpacity
                 activeOpacity={1}

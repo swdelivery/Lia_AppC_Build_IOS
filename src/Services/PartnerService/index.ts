@@ -25,6 +25,7 @@ import { PaymentRequest } from "@typings/payment";
 import { Service } from "@typings/serviceGroup";
 import { Material } from "@typings/material";
 import { ConfigData } from "@typings/configData";
+import { isArray } from "lodash";
 
 const axios = createAxios(URL_FOR_PARTNER);
 
@@ -74,7 +75,14 @@ const getServicesFilter = (payload: any) => {
 };
 
 const getServiceDetails = (serviceId: string): Promise<Service> =>
-  axios.get(`/service/${serviceId}`).then(({ data }) => (data?.data ?? [])[0]);
+  // axios.get(`/service/${serviceId}`).then(({ data }) => (data?.data ?? [])[0]);
+  axios.get(`/service/${serviceId}`).then(({ data }) => {
+    if (isArray(data?.data)) {
+      return data?.data[0]
+    } else {
+      return data?.data
+    }
+  });
 
 const getBranchList = (
   payload: any,

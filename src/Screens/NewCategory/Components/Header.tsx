@@ -130,9 +130,9 @@ const Header = () => {
                 <IconFindGrey style={sizeIcon.lg} />
               </TouchableOpacity>
           }
-          <TouchableOpacity style={{ opacity: .6 }}>
+          {/* <TouchableOpacity style={{ opacity: 0 }}>
             <IconLike />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </Row>
       </Row>
     </View>

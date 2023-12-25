@@ -1014,7 +1014,7 @@ PODS:
     - React-Core
   - react-native-render-html (6.3.4):
     - React-Core
-  - react-native-safe-area-context (4.8.1):
+  - react-native-safe-area-context (4.8.2):
     - React-Core
   - react-native-slider (4.5.0):
     - glog
@@ -1202,11 +1202,11 @@ PODS:
   - RecaptchaInterop (100.0.0)
   - rn-fetch-blob (0.12.0):
     - React-Core
-  - RNBootSplash (5.1.4):
+  - RNBootSplash (5.2.0):
     - React-Core
   - RNCAsyncStorage (1.12.1):
     - React-Core
-  - RNCClipboard (1.13.1):
+  - RNCClipboard (1.13.2):
     - React-Core
   - RNCMaskedView (0.3.1):
     - React-Core
@@ -1671,7 +1671,7 @@ SPEC CHECKSUMS:
   react-native-netinfo: 48c5f79a84fbc3ba1d28a8b0d04adeda72885fa8
   react-native-pager-view: d81ab2060b9caf57ca8c3a0d57467ff407cdb825
   react-native-render-html: 984dfe2294163d04bf5fe25d7c9f122e60e05ebe
-  react-native-safe-area-context: cd1169d797a2ef722a00bfc5af10748d5b6c94f9
+  react-native-safe-area-context: 0ee144a6170530ccc37a0fd9388e28d06f516a89
   react-native-slider: 7d387c7e8dd0b4c12bf49c975c8666435f082a33
   react-native-version-check: 6cd36aad4e30b8e3216747e3b4ddeb09e0647af8
   react-native-video: c26780b224543c62d5e1b2a7244a5cd1b50e8253
@@ -1699,9 +1699,9 @@ SPEC CHECKSUMS:
   ReactCommon: ddb128564dcbfa0287d3d1a2d10f8c7457c971f6
   RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
   rn-fetch-blob: f065bb7ab7fb48dd002629f8bdcb0336602d3cba
-  RNBootSplash: 578bffadc64719c710d30780ec6ace905b0daf07
+  RNBootSplash: a4e3ae9e08ba15465f59e033592919b7091f79cb
   RNCAsyncStorage: b03032fdbdb725bea0bd9e5ec5a7272865ae7398
-  RNCClipboard: 90e241893de33a2f5962fc34d76ada4576033e49
+  RNCClipboard: 60fed4b71560d7bfe40e9d35dea9762b024da86d
   RNCMaskedView: 090213d32d8b3bb83a4dcb7d12c18f0152591906
   RNCPicker: b18aaf30df596e9b1738e7c1f9ee55402a229dca
   RNCPushNotificationIOS: 64218f3c776c03d7408284a819b2abfda1834bc8

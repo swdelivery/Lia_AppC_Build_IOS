@@ -41,15 +41,15 @@ const SliderPrice = ({ selectedPrice, setSelectedPrice }: Props) => {
           onValueChange={_handleValueChange}
           style={styles.slider}
           minimumValue={0}
-          step={500000}
+          step={100000}
           thumbTintColor={Platform.OS == 'ios' ? null : NEW_BASE_COLOR}
-          maximumValue={30000000}
+          maximumValue={50000000}
           minimumTrackTintColor={NEW_BASE_COLOR}
           maximumTrackTintColor={'#C7CBD8'}
         />
         <Row justifyContent='space-between'>
           <Text color={NEW_BASE_COLOR}>0 VNĐ</Text>
-          <Text color={NEW_BASE_COLOR}>30.000.000 VNĐ</Text>
+          <Text color={NEW_BASE_COLOR}>50.000.000 VNĐ</Text>
         </Row>
       </Column>
     </Column>

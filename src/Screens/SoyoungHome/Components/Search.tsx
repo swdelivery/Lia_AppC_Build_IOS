@@ -59,21 +59,22 @@ const Search = (props) => {
   }, [top]);
 
   const _handleQR = () => {
-    ImagePicker.openPicker({
-      multiple: false,
-      waitAnimationEnd: false,
-      includeExif: true,
-      forceJpg: true,
-      mediaType: "photo",
-      compressImageQuality: 0.5,
-      compressImageMaxWidth: 700,
-    })
-      .then(async (images) => {
-        console.log({ images });
-        let result = await scanningEyes(images);
-        // GlobalStore.socket.emit(CSS_SEND_MESSAGE, data)
-      })
-      .catch((e) => {});
+    navigation.navigate(ScreenKey.QR_CODE)
+    // ImagePicker.openPicker({
+    //   multiple: false,
+    //   waitAnimationEnd: false,
+    //   includeExif: true,
+    //   forceJpg: true,
+    //   mediaType: "photo",
+    //   compressImageQuality: 0.5,
+    //   compressImageMaxWidth: 700,
+    // })
+    //   .then(async (images) => {
+    //     console.log({ images });
+    //     let result = await scanningEyes(images);
+    //     // GlobalStore.socket.emit(CSS_SEND_MESSAGE, data)
+    //   })
+    //   .catch((e) => {});
   };
 
   return (
