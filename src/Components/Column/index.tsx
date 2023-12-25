@@ -14,6 +14,7 @@ type Props = ViewStyle & {
   children?: ReactNode;
   onLayout?: ViewProps["onLayout"];
   onPress?: () => void | Promise<void>;
+  disabled?: boolean;
 };
 
 export default function Column({
@@ -21,6 +22,7 @@ export default function Column({
   children,
   onLayout,
   onPress,
+  disabled,
   ...props
 }: Props) {
   const containerStyle = useMemo(() => {
@@ -29,7 +31,7 @@ export default function Column({
 
   return (
     <Pressable
-      disabled={!onPress}
+      disabled={!onPress || disabled}
       onPress={onPress}
       style={[styles.container, containerStyle, style]}
     >

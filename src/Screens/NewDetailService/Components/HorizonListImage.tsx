@@ -18,10 +18,16 @@ type Props = {
   getColors?: (url: string) => void;
 };
 
-const HorizonListImage = ({ images, getColors, containerStyle }: Props) => {
+const HorizonListImage = ({
+  images = [],
+  getColors,
+  containerStyle,
+}: Props) => {
   useEffect(() => {
     handlePageChange(0);
   }, []);
+
+  console.log({ images });
 
   const handlePageChange = useCallback(
     (index: number) => {
@@ -37,7 +43,7 @@ const HorizonListImage = ({ images, getColors, containerStyle }: Props) => {
     return <Image style={styles.image} avatar={item} />;
   };
 
-  const { keyExtractor } = useItemExtractor<FileAvatar>((item) => item._id);
+  const { keyExtractor } = useItemExtractor<FileAvatar>((item) => item?._id);
 
   return (
     <View>

@@ -6,6 +6,7 @@ import FlashSaleItem from "./FlashSaleItem";
 import useApi from "src/Hooks/services/useApi";
 import FlashSaleService from "src/Services/FlashSaleService";
 import { AfterTimeoutFragment } from "@Components/AfterTimeoutFragment";
+import ListEmpty from "@Components/ListEmpty";
 
 type Props = {
   flashSale: FlashSale;
@@ -24,18 +25,19 @@ export default function FlashSaleServices({ flashSale }: Props) {
   }, [flashSale]);
 
   function renderItem({ item }: RenderItemProps<Service>) {
-    return <FlashSaleItem item={item} isUpcoming={flashSale.isUpcoming} />;
+    return <FlashSaleItem item={item} isUpcoming={flashSale?.isUpcoming} />;
   }
 
   return (
     <AfterTimeoutFragment>
       <FlatList
-        data={data}
+        data={flashSale ? data : []}
         renderItem={renderItem}
         numColumns={2}
         contentContainerStyle={styles.contentContainer}
         refreshing={isLoading}
         onRefresh={refresh}
+        ListEmptyComponent={<ListEmpty title="Không có thông tin flash sale" />}
       />
     </AfterTimeoutFragment>
   );

@@ -9,6 +9,8 @@ import { useSelector } from "react-redux";
 import { FlashSale } from "@typings/flashsale";
 import Fade from "@Components/Fade";
 import LinearGradient from "react-native-linear-gradient";
+import moment from "moment";
+import { fromUtc } from "src/utils/date";
 
 type Props = {
   selectedFlashSale?: FlashSale;
@@ -26,7 +28,15 @@ export default function FlashSaleTimes({
   const flashSales = useMemo(() => {
     const result: FlashSale[] = [];
     if (currentFlashSale) {
-      result.push(currentFlashSale);
+      const { hour, minute } = currentFlashSale.timeRange.to;
+      const endTimestamp = moment(fromUtc(currentFlashSale.dateRange.to))
+        .add(hour, "hours")
+        .add(minute, "minutes")
+        .toDate()
+        .getTime();
+      if (Date.now() < endTimestamp) {
+        result.push(currentFlashSale);
+      }
     }
     result.push(
       ...(nextFlashSale || []).map((item) => ({ ...item, isUpcoming: true }))
@@ -40,6 +50,7 @@ export default function FlashSaleTimes({
   function renderItem(item: FlashSale) {
     return (
       <Column
+        key={item._id}
         borderBottomWidth={selectedFlashSale?._id === item._id ? 1 : 0}
         borderColor={"white"}
         alignItems="center"

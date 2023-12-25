@@ -63,7 +63,7 @@ export default function FlashSaleItem({ item, isUpcoming }: Props) {
 
   return (
     <Column
-      flex={1}
+      flex={1 / 2}
       width={_width / 2}
       height={250}
       paddingLeft={4}
@@ -124,6 +124,7 @@ export default function FlashSaleItem({ item, isUpcoming }: Props) {
           paddingTop={2}
           marginVertical={8}
           onPress={handleBooking}
+          disabled={!canBook}
         >
           <Text color={!canBook ? TITLE_GREY : MAIN_RED_600}>{"Đặt hẹn"}</Text>
         </Column>

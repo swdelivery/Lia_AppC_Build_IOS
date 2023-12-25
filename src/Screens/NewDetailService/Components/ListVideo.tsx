@@ -30,10 +30,8 @@ const ListVideo = ({ service }: Props) => {
         {
           service?.guideVideo?.map((_i, idx) => {
             return (
-              <ItemVideo
-                onPress={_handleNavigate}
-                data={_i} />
-            )
+              <ItemVideo key={_i._id} onPress={_handleNavigate} data={_i} />
+            );
           })
         }
       </ScrollView>
