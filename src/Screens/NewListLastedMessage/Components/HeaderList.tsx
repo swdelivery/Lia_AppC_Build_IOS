@@ -3,16 +3,19 @@ import Row from "@Components/Row";
 import Text from "@Components/Text";
 import { BLACK } from "@Constant/Color";
 import { _moderateScale } from "@Constant/Scale";
-import React from "react";
+import React, { ReactNode } from "react";
 
-type Props = {};
+type Props = {
+  icon: ReactNode;
+  title: string;
+};
 
-export default function HeaderList({}: Props) {
+export default function HeaderList({ icon, title }: Props) {
   return (
-    <Row gap={_moderateScale(8)} marginTop={_moderateScale(8 * 2)}>
-      <IconChat />
+    <Row gap={_moderateScale(8)} marginVertical={16}>
+      {icon}
       <Text weight="bold" color={BLACK}>
-        Cuộc trò chuyện
+        {title}
       </Text>
     </Row>
   );

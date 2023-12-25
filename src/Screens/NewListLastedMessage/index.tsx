@@ -1,4 +1,4 @@
-import { IconAI } from '@Components/Icon/Icon';
+import { IconAI, IconChat } from "@Components/Icon/Icon";
 import PlaceholderSkeletons from "@Components/PlaceholderSkeletons";
 import Screen from "@Components/Screen";
 import { BASE_COLOR, WHITE } from "@Constant/Color";
@@ -12,8 +12,13 @@ import {
 import { getPartnerConversationsState } from "@Redux/chat/selectors";
 import { Conversation } from "@typings/chat";
 import { RenderItemProps } from "@typings/common";
-import React, { useCallback } from "react";
-import { FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useCallback, useMemo } from "react";
+import {
+  FlatList,
+  SectionList,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import useItemExtractor from "src/Hooks/useItemExtractor";
 import useListFilter from "src/Hooks/useListFilter";
 import { useFocused, useNavigate } from "src/Hooks/useNavigation";
@@ -23,6 +28,8 @@ import ItemLastedMessage, {
   PLACEHOLDER_HEIGHT,
   Placeholder,
 } from "./Components/ItemLastedMessage";
+import Icon from "@Components/Icon";
+import { FlashList } from "@shopify/flash-list";
 
 const NewListLastedMessage = () => {
   const { navigation } = useNavigate();
@@ -36,6 +43,20 @@ const NewListLastedMessage = () => {
     refreshData();
   });
 
+  const conversations = useMemo(() => {
+    const result = [];
+    result.push({
+      id: "lia",
+      title: "Trò chuyện với LiA",
+      data: [
+        {
+          id: "ai_chat",
+        },
+      ],
+    });
+    return result;
+  }, [data]);
+
   const handleOpenChat = useCallback((item: Conversation) => {
     navigation.navigate(ScreenKey.CHATTING, {
       conversation: item,
@@ -43,7 +64,7 @@ const NewListLastedMessage = () => {
     });
   }, []);
   const handleOpenAIChat = useCallback(() => {
-    navigation.navigate(ScreenKey.AI_CHATTING)
+    navigation.navigate(ScreenKey.AI_CHATTING);
   }, []);
 
   const _renderItem = ({ item, index }: RenderItemProps<Conversation>) => {
@@ -55,8 +76,10 @@ const NewListLastedMessage = () => {
   return (
     <Screen safeTop style={styles.container}>
       <Header />
-      <FlatList
-        ListHeaderComponent={<HeaderList />}
+      <FlashList
+        ListHeaderComponent={
+          <HeaderList icon={<IconChat />} title="Cuộc trò chuyện" />
+        }
         contentContainerStyle={styles.contentContainerStyle}
         style={styles.flatlistStyle}
         data={data}
@@ -66,6 +89,7 @@ const NewListLastedMessage = () => {
         onRefresh={refreshData}
         onEndReached={loadMoreData}
         onEndReachedThreshold={0.2}
+        estimatedItemSize={50}
         ListEmptyComponent={
           isLoading ? (
             <>
@@ -78,42 +102,41 @@ const NewListLastedMessage = () => {
       />
       <TouchableOpacity
         onPress={handleOpenAIChat}
-        style={[styles.btnAI, shadow]}>
+        style={[styles.btnAI, shadow]}
+      >
         <IconAI width={8 * 8} height={8 * 8} />
       </TouchableOpacity>
-
     </Screen>
   );
 };
 
-export default NewListLastedMessage
+export default NewListLastedMessage;
 
 const styles = StyleSheet.create({
   btnAI: {
     width: 8 * 8,
     height: 8 * 8,
     borderRadius: 8 * 4,
-    position: 'absolute',
+    position: "absolute",
     zIndex: 1,
     right: 8 * 3,
     bottom: 8 * 3,
-    backgroundColor: WHITE
+    backgroundColor: WHITE,
   },
   contentContainerStyle: {
-    gap: _moderateScale(8 * 2)
+    paddingHorizontal: _moderateScale(8 * 2),
   },
   flatlistStyle: {
-    paddingHorizontal: _moderateScale(8 * 2)
+    paddingHorizontal: _moderateScale(8 * 2),
   },
   body: {
-    flex: 1
+    flex: 1,
   },
   container: {
     flex: 1,
-    backgroundColor: WHITE
-  }
-})
-
+    backgroundColor: WHITE,
+  },
+});
 
 const shadow = {
   shadowColor: BASE_COLOR,

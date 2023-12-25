@@ -5,10 +5,10 @@ import { OPEN_ACTION_SHEET_BOTTOM, OPEN_ACTION_SHEET_ICON, SELECT_ITEM_ACTION_SH
 
 export type State = {
   showActionSheetIcon: {
-    flag: false,
-    data: []
-  },
-  dataChoice: {}
+    flag: boolean;
+    data: any[];
+  };
+  dataChoice: any;
 };
 
 const INITIAL_STATE: State = {

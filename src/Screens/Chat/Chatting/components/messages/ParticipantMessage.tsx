@@ -36,12 +36,16 @@ export default function ParticipantMessage({
 
   const shouldShowAvatar = useMemo(() => {
     if (nextMessage) {
+      const isSameMinute =
+        new Date(nextMessage.created).getMinutes() ===
+        new Date(item.created).getMinutes();
       return (
         nextMessage.senderId !== item.senderId ||
         ((nextMessage.type === "chatgpt" || item.type === "chatgpt") &&
           nextMessage.type !== item.type) ||
+        !isSameMinute ||
         ((nextMessage.type === "template" || item.type === "template") &&
-          nextMessage.type !== item.type)
+          (nextMessage.type !== item.type || !isSameMinute))
       );
     }
     return true;
@@ -113,6 +117,7 @@ const styles = StyleSheet.create({
     borderRadius: _moderateScale(15),
     borderWidth: _moderateScale(1),
     borderColor: BG_GREY_OPACITY,
+    backgroundColor: "white",
   },
   onlineIndicator: {
     position: "absolute",

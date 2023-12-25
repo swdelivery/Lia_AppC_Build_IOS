@@ -67,7 +67,11 @@ const Header = () => {
       >
         <Column>
           <TouchableOpacity>
-            <Avatar style={styles.avatar} avatar={infoUser.fileAvatar} />
+            <Avatar
+              size={32}
+              style={styles.avatar}
+              avatar={infoUser.fileAvatar}
+            />
           </TouchableOpacity>
         </Column>
         <Column flex={1}>
@@ -108,15 +112,13 @@ const styles = StyleSheet.create({
   },
   textInputStyle: {
     width: "100%",
-    height: _moderateScale(8 * 5),
+    height: 35,
     borderWidth: 1,
     paddingHorizontal: _moderateScale(8),
     borderRadius: 4,
     borderColor: BORDER_COLOR,
   },
   avatar: {
-    width: _moderateScale(8 * 4),
-    height: _moderateScale(8 * 4),
     borderRadius: _moderateScale(8 * 2),
   },
 });

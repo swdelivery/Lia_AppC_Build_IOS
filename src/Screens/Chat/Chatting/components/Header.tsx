@@ -166,6 +166,7 @@ const styles = StyleSheet.create({
     height: _moderateScale(8 * 5),
     borderRadius: _moderateScale((8 * 5) / 2),
     borderColor: Color.BG_GREY_OPACITY,
+    backgroundColor: "white",
   },
   roomInfo: {
     flex: 1,
