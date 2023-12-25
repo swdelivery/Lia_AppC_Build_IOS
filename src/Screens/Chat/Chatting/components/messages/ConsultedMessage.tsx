@@ -16,8 +16,6 @@ type Props = {
 export default function ConsultedMessage({ item }: Props) {
   const { navigation } = useNavigate();
 
-  console.log({ item });
-
   const handleDetails = useCallback(() => {
     if (item.template.data.bookingStatus === "CANCEL") {
       navigation.navigate(ScreenKey.LIST_TREATMENT_DETAIL);
