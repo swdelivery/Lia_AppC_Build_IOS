@@ -51,22 +51,20 @@ export default function ParticipantMessage({
     return conversation.assignedUsers.find((u) => u.userId === item.senderId);
   }, [conversation]);
 
+  const isRootAccount = user?.name === "root root";
+
   function renderAvatar() {
-    if (item.type === "chatgpt" || item.type === "template") {
+    if (item.type === "chatgpt" || item.type === "template" || isRootAccount) {
       return (
         <FastImage
-          style={[styles.avatarSm]}
-          source={require("src/Icon/a_timeline.png")}
+          style={styles.avatarSm}
+          source={require("src/NewImage/logoLiA.png")}
         />
       );
     }
     return (
       <>
-        <Avatar
-          avatar={user?.profile?.fileAvatar}
-          size={30}
-          circle
-        />
+        <Avatar avatar={user?.profile?.fileAvatar} size={30} circle />
         {isOnline && <View style={styles.onlineIndicator} />}
       </>
     );
@@ -77,7 +75,7 @@ export default function ParticipantMessage({
       <Column
         width={35}
         height={30}
-        right={10}
+        marginRight={10}
         marginTop={shouldShowName ? 15 : 0}
       >
         {shouldShowAvatar && renderAvatar()}
@@ -86,14 +84,14 @@ export default function ParticipantMessage({
         <Column marginRight={30}>
           {shouldShowName && (
             <Text weight="bold" size={12} bottom={2}>
-              {user?.name}
+              {isRootAccount ? "LiA" : user?.name}
             </Text>
           )}
           <Column
             backgroundColor={
               item.type !== "image" &&
-                item.type !== "video" &&
-                item.type !== "document"
+              item.type !== "video" &&
+              item.type !== "document"
                 ? WHITE
                 : "transparent"
             }

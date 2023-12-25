@@ -19,8 +19,24 @@ export type TemplateData = {
     | "NEWS"
     | "BOOKING"
     | "COLLABORATOR"
-    | "SPIN_WHEEL";
-  data: any;
+    | "SPIN_WHEEL"
+    | "WAS_CONSULTED"
+    | "CREATE_BOOKING"
+    | "REMIND_BOOKING"
+    | "COMPLETE_PROGRESS"
+    | "THANK_YOU_LETTER";
+  data: {
+    partnerName: string;
+    created: string;
+    services: string[];
+    totalAmount: number;
+    status: string;
+    bookingId: string;
+
+    // for consulted
+    branchName: string;
+    bookingStatus: string;
+  };
 };
 
 export type Message = {

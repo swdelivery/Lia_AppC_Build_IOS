@@ -6,6 +6,7 @@ import Text from "@Components/Text";
 import { _width } from "@Constant/Scale";
 import { styleElement } from "@Constant/StyleElement";
 import { Booking } from "@typings/booking";
+import { head } from "lodash";
 import moment from "moment";
 import React, { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
@@ -18,11 +19,14 @@ type Props = {
 
 const Banner = ({ booking }: Props) => {
   const service = useMemo(() => {
-    return booking.servicesNeedCare[0];
-  }, [booking]);  
+    return head(booking?.servicesNeedCare);
+  }, [booking]);
 
   const appointmentDate = useMemo(() => {
     const aptDate = booking.appointmentDateFinal;
+    if (!aptDate) {
+      return "";
+    }
     const from = moment(fromUtc(aptDate.from.dateTime));
     const to = moment(fromUtc(aptDate.to.dateTime));
     return `${from.format("HH:mm")} - ${to.format("HH:mm")} | ${from.format(
@@ -32,10 +36,7 @@ const Banner = ({ booking }: Props) => {
 
   return (
     <View style={styles.container}>
-      <Image
-        style={styleElement.flex}
-        avatar={service?.representationFileArr[0]}
-      />
+      <Image style={styleElement.flex} avatar={service?.avatar} />
       <Column
         backgroundColor={"rgba(0,0,0,0.5)"}
         style={StyleSheet.absoluteFillObject}
@@ -47,7 +48,7 @@ const Banner = ({ booking }: Props) => {
               <ServiceIcon />
             </Column>
             <Text weight="bold" color={"white"} size={16}>
-              {service.name}
+              {service?.name}
             </Text>
           </Row>
           <Row>
@@ -63,7 +64,7 @@ const Banner = ({ booking }: Props) => {
               <IconLocation color={"white"} width={20} height={20} />
             </Column>
             <Text weight="bold" color={"white"} size={16}>
-              {booking.branch.address}
+              {booking?.branch?.address}
             </Text>
           </Row>
         </Column>

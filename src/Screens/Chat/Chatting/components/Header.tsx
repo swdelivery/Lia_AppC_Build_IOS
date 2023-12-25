@@ -60,7 +60,7 @@ const Header = ({ conversation }: Props) => {
           {conversation?.type === "consultation" && (
             <Image
               resizeMode="cover"
-              source={require("../../../../NewIcon/tuvan.png")}
+              source={require("src/NewImage/logoLiA.png")}
               style={styles.icon}
             />
           )}
@@ -143,7 +143,7 @@ function DoctorInfo({ conversation }: { conversation: any }) {
 const styles = StyleSheet.create({
   header: {
     width: _width,
-    backgroundColor: Color.BASE_COLOR,
+    backgroundColor: "#1c5579",
     zIndex: 1,
     borderBottomWidth: _moderateScale(0.5),
     borderBottomColor: Color.BG_GREY_OPACITY_5,

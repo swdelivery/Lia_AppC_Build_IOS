@@ -83,57 +83,57 @@ const ItemMessage = (props => {
 
 
     return (
-        <TouchableOpacity
-            onPress={() => {
-                props.navigateToChatting()
-            }}
-            style={[styleElement.rowAliCenter, { marginTop: _moderateScale(8 * 2.5) }]}>
-            <View style={{ marginHorizontal: _moderateScale(24) }}>
-                {
-                    !isEmpty(props?.data) && props?.data?.type == "treatment" ?
-                        // <Avatar
-                        //     url={
-                        //         `https://image.shutterstock.com/image-vector/doctor-vector-illustration-260nw-512904655.jpg`
-                        //     }
-                        //     isOnline={true}
-                        //     name={''}
-                        //     notName />
-                        _renderAvatarDoctor()
-                        :
-                        <>
-                        </>
-                }
-                {
-                    !isEmpty(props?.data) && props?.data?.type == "consultation" ?
-                        <Image
-                            resizeMode="cover"
-                            source={require('../../../../NewIcon/tuvan.png')}
-                            style={{
-                                width: _moderateScale(56),
-                                height: _moderateScale(56),
-                                borderRadius: _moderateScale(28),
-                                backgroundColor: Color.BG_GREY_OPACITY_5
-                            }} />
-                        :
-                        <>
-                        </>
-                }
-                {
-                    !isEmpty(props?.data) && props?.data?.type == "videoCallRequest" ?
-                        <Image
-                            resizeMode="cover"
-                            source={require('../../../../NewIcon/noteCall.png')}
-                            style={{
-                                width: _moderateScale(56),
-                                height: _moderateScale(56),
-                                borderRadius: _moderateScale(28),
-                                backgroundColor: Color.BG_GREY_OPACITY_5
-                            }} />
-                        :
-                        <>
-                        </>
-                }
-                {/* {
+      <TouchableOpacity
+        onPress={() => {
+          props.navigateToChatting();
+        }}
+        style={[
+          styleElement.rowAliCenter,
+          { marginTop: _moderateScale(8 * 2.5) },
+        ]}
+      >
+        <View style={{ marginHorizontal: _moderateScale(24) }}>
+          {!isEmpty(props?.data) && props?.data?.type == "treatment" ? (
+            // <Avatar
+            //     url={
+            //         `https://image.shutterstock.com/image-vector/doctor-vector-illustration-260nw-512904655.jpg`
+            //     }
+            //     isOnline={true}
+            //     name={''}
+            //     notName />
+            _renderAvatarDoctor()
+          ) : (
+            <></>
+          )}
+          {!isEmpty(props?.data) && props?.data?.type == "consultation" ? (
+            <Image
+              resizeMode="cover"
+              source={require("src/NewImage/logoLiA.png")}
+              style={{
+                width: _moderateScale(56),
+                height: _moderateScale(56),
+                borderRadius: _moderateScale(28),
+                backgroundColor: Color.BG_GREY_OPACITY_5,
+              }}
+            />
+          ) : (
+            <></>
+          )}
+          {!isEmpty(props?.data) && props?.data?.type == "videoCallRequest" ? (
+            <Image
+              resizeMode="cover"
+              source={require("../../../../NewIcon/noteCall.png")}
+              style={{
+                width: _moderateScale(56),
+                height: _moderateScale(56),
+                borderRadius: _moderateScale(28),
+                backgroundColor: Color.BG_GREY_OPACITY_5,
+              }}
+            />
+          ) : (
+            <></>
+          )}
+          {/* {
                     !isEmpty(props?.data) && props?.data?.groupChat?.type == 'multiple' ?
                         <View style={{ justifyContent: 'center', flexDirection: 'row', flexWrap: 'wrap', width: _widthScale(60) }}>
                             {
@@ -178,143 +178,208 @@ const ItemMessage = (props => {
                         <>
                         </>
                 } */}
-            </View>
-            <View style={{ flex: 1, paddingRight: _moderateScale(16) }}>
-                <View style={[styleElement.rowAliCenter]}>
+        </View>
+        <View style={{ flex: 1, paddingRight: _moderateScale(16) }}>
+          <View style={[styleElement.rowAliCenter]}>
+            {props?.data?.type == "consultation" ? (
+              <Text
+                style={[
+                  stylesFont.fontNolan500,
+                  {
+                    flex: 1,
+                    marginRight: _moderateScale(16),
+                    fontSize: _moderateScale(15),
+                    color: Color.GREY,
+                  },
+                  !props.isSeen && [
+                    stylesFont.fontNolanBold,
+                    { fontSize: _moderateScale(15), color: Color.BLACK },
+                  ],
+                ]}
+                numberOfLines={1}
+              >
+                {props?.data?.name?.length > 0 ? props?.data?.name : "Tư vấn"}
+              </Text>
+            ) : (
+              <></>
+            )}
+            {props?.data?.type == "treatment" ? _renderNameDoctor() : <></>}
+            {props?.data?.type == "videoCallRequest" ? (
+              <Text
+                style={[
+                  stylesFont.fontNolan500,
+                  {
+                    flex: 1,
+                    marginRight: _moderateScale(16),
+                    fontSize: _moderateScale(15),
+                    color: Color.GREY,
+                  },
+                  !props.isSeen && [
+                    stylesFont.fontNolanBold,
+                    { fontSize: _moderateScale(15), color: Color.BLACK },
+                  ],
+                ]}
+                numberOfLines={1}
+              >
+                Yêu cầu Video Call
+              </Text>
+            ) : (
+              <></>
+            )}
+
+            <Text
+              style={[
+                stylesFont.fontNolan,
+                { color: Color.GREY, fontSize: _moderateScale(11) },
+                !props.isSeen && [
+                  stylesFont.fontNolanBold,
+                  { color: Color.BLACK },
+                ],
+              ]}
+            >
+              {moment(props?.data?.latestMessage?.created)
+                .startOf("minute")
+                .fromNow()}
+            </Text>
+          </View>
+          <View style={{ height: _moderateScale(4) }} />
+          <View>
+            {props?.data?.isActive ? (
+              <>
+                {!_isEmpty(props?.data?.latestMessage) ? (
+                  <>
+                    {props?.data?.latestMessage?.type === "text" ||
+                    props?.data?.latestMessage?.type === "template" ? (
+                      <Text
+                        style={[
+                          stylesFont.fontNolan500,
+                          {
+                            fontSize: _moderateScale(12),
+                            color: Color.GREY,
+                          },
+                          !props.isSeen && [
+                            stylesFont.fontNolanBold,
+                            {
+                              fontSize: _moderateScale(12),
+                              color: Color.BLACK,
+                            },
+                          ],
+                        ]}
+                        numberOfLines={1}
+                      >
+                        {/* {_substringMaxValue(props?.data?.content, '', 200, '')} */}
+                        {props?.data?.latestMessage?.content
+                          ? props?.data?.latestMessage?.content
+                          : `Bạn có tin nhắn mới`}
+                      </Text>
+                    ) : (
+                      <></>
+                    )}
+                  </>
+                ) : (
+                  <Text
+                    style={[
+                      stylesFont.fontNolan500,
+                      {
+                        fontSize: _moderateScale(12),
+                        color: Color.GREY,
+                      },
+                      !props.isSeen && [
+                        stylesFont.fontNolanBold,
+                        { fontSize: _moderateScale(12), color: Color.BLACK },
+                      ],
+                    ]}
+                    numberOfLines={1}
+                  >
+                    Hãy bắt đầu cuộc trò chuyện
+                  </Text>
+                )}
+
+                {props?.data?.latestMessage?.type === "image" ? (
+                  <Text
+                    style={[
+                      stylesFont.fontNolan500,
+                      {
+                        fontSize: _moderateScale(12),
+                        color: Color.GREY,
+                      },
+                      !props.isSeen && [
+                        stylesFont.fontNolanBold,
+                        { fontSize: _moderateScale(12), color: Color.BLACK },
+                      ],
+                    ]}
+                    numberOfLines={1}
+                  >
+                    [Hình ảnh]
+                  </Text>
+                ) : (
+                  <></>
+                )}
+                {props?.data?.latestMessage?.type === "video" ? (
+                  <Text
+                    style={[
+                      stylesFont.fontNolan500,
+                      {
+                        fontSize: _moderateScale(12),
+                        color: Color.GREY,
+                      },
+                      !props.isSeen && [
+                        stylesFont.fontNolanBold,
+                        { fontSize: _moderateScale(12), color: Color.BLACK },
+                      ],
+                    ]}
+                    numberOfLines={1}
+                  >
+                    [Video]
+                  </Text>
+                ) : (
+                  <></>
+                )}
+
+                {props?.data?.latestMessage?.type === "document" ? (
+                  <Text
+                    style={[
+                      stylesFont.fontNolan500,
+                      {
+                        fontSize: _moderateScale(12),
+                        color: Color.GREY,
+                      },
+                      !props.isSeen && [
+                        stylesFont.fontNolanBold,
+                        { fontSize: _moderateScale(12), color: Color.BLACK },
+                      ],
+                    ]}
+                    numberOfLines={1}
+                  >
+                    [Tệp tin]
+                  </Text>
+                ) : (
+                  <></>
+                )}
+              </>
+            ) : (
+              <>
+                <Text
+                  style={[
+                    stylesFont.fontNolan500,
                     {
-                        props?.data?.type == "consultation" ?
-                            <Text
-                                style={[stylesFont.fontNolan500, { flex: 1, marginRight: _moderateScale(16), fontSize: _moderateScale(15), color: Color.GREY }, !props.isSeen && [stylesFont.fontNolanBold, { fontSize: _moderateScale(15), color: Color.BLACK }]]}
-                                numberOfLines={1}>
-                                {props?.data?.name?.length > 0 ? props?.data?.name : 'Tư vấn'}
-                            </Text>
-                            : <></>
-
-                    }
-                    {
-                        props?.data?.type == "treatment" ?
-                            _renderNameDoctor()
-                            : <></>
-                    }
-                    {
-                        props?.data?.type == "videoCallRequest" ?
-                            <Text
-                                style={[stylesFont.fontNolan500, { flex: 1, marginRight: _moderateScale(16), fontSize: _moderateScale(15), color: Color.GREY }, !props.isSeen && [stylesFont.fontNolanBold, { fontSize: _moderateScale(15), color: Color.BLACK }]]}
-                                numberOfLines={1}>
-                                Yêu cầu Video Call
-                            </Text>
-                            : <></>
-                    }
-
-                    <Text style={[stylesFont.fontNolan, { color: Color.GREY, fontSize: _moderateScale(11) }, !props.isSeen && [stylesFont.fontNolanBold, { color: Color.BLACK }]]}>
-                        {
-                            moment(props?.data?.latestMessage?.created).startOf('minute').fromNow()
-                        }
-                    </Text>
-                </View>
-                <View style={{ height: _moderateScale(4) }} />
-                <View >
-                    {
-                        props?.data?.isActive ?
-                            <>
-
-                                {
-                                    !_isEmpty(props?.data?.latestMessage) ?
-                                        <>
-                                            {
-                                                props?.data?.latestMessage?.type === "text" || props?.data?.latestMessage?.type === "template" ?
-                                                    <Text
-                                                        style={[stylesFont.fontNolan500, {
-                                                            fontSize: _moderateScale(12),
-                                                            color: Color.GREY
-                                                        }, !props.isSeen && [stylesFont.fontNolanBold, { fontSize: _moderateScale(12), color: Color.BLACK }]]}
-                                                        numberOfLines={1}>
-                                                        {/* {_substringMaxValue(props?.data?.content, '', 200, '')} */}
-                                                        {
-                                                            props?.data?.latestMessage?.content ? 
-                                                            props?.data?.latestMessage?.content
-                                                            :
-                                                            `Bạn có tin nhắn mới`
-                                                        }
-                                                    </Text>
-                                                    :
-                                                    <>
-                                                    </>
-                                            }
-                                        </>
-                                        :
-                                        <Text
-                                            style={[stylesFont.fontNolan500, {
-                                                fontSize: _moderateScale(12),
-                                                color: Color.GREY
-                                            }, !props.isSeen && [stylesFont.fontNolanBold, { fontSize: _moderateScale(12), color: Color.BLACK }]]}
-                                            numberOfLines={1}>
-                                            Hãy bắt đầu cuộc trò chuyện
-                                        </Text>
-                                }
-
-
-                                {
-                                    props?.data?.latestMessage?.type === "image" ?
-                                        <Text
-                                            style={[stylesFont.fontNolan500, {
-                                                fontSize: _moderateScale(12),
-                                                color: Color.GREY
-                                            }, !props.isSeen && [stylesFont.fontNolanBold, { fontSize: _moderateScale(12), color: Color.BLACK }]]}
-                                            numberOfLines={1}>
-                                            [Hình ảnh]
-                                        </Text>
-                                        :
-                                        <>
-                                        </>
-                                }
-                                {
-                                    props?.data?.latestMessage?.type === "video" ?
-                                        <Text
-                                            style={[stylesFont.fontNolan500, {
-                                                fontSize: _moderateScale(12),
-                                                color: Color.GREY
-                                            }, !props.isSeen && [stylesFont.fontNolanBold, { fontSize: _moderateScale(12), color: Color.BLACK }]]}
-                                            numberOfLines={1}>
-                                            [Video]
-                                        </Text>
-                                        :
-                                        <>
-                                        </>
-                                }
-
-                                {
-                                    props?.data?.latestMessage?.type === "document" ?
-                                        <Text
-                                            style={[stylesFont.fontNolan500, {
-                                                fontSize: _moderateScale(12),
-                                                color: Color.GREY
-                                            }, !props.isSeen && [stylesFont.fontNolanBold, { fontSize: _moderateScale(12), color: Color.BLACK }]]}
-                                            numberOfLines={1}>
-                                            [Tệp tin]
-                                        </Text>
-                                        :
-                                        <>
-                                        </>
-                                }
-                            </>
-                            :
-                            <>
-                                <Text
-                                    style={[stylesFont.fontNolan500, {
-                                        fontSize: _moderateScale(12),
-                                        color: Color.GREY
-                                    }, !props.isSeen && [stylesFont.fontNolanBold, { fontSize: _moderateScale(12), color: Color.BLACK }]]}
-                                    numberOfLines={1}>
-                                    [Tin nhắn thu hồi]
-                                    </Text>
-                            </>
-                    }
-
-
-                </View>
-            </View>
-        </TouchableOpacity>
+                      fontSize: _moderateScale(12),
+                      color: Color.GREY,
+                    },
+                    !props.isSeen && [
+                      stylesFont.fontNolanBold,
+                      { fontSize: _moderateScale(12), color: Color.BLACK },
+                    ],
+                  ]}
+                  numberOfLines={1}
+                >
+                  [Tin nhắn thu hồi]
+                </Text>
+              </>
+            )}
+          </View>
+        </View>
+      </TouchableOpacity>
     );
 })
 

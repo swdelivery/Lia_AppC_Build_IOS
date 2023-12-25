@@ -11,6 +11,8 @@ import TemplateReviewMessage from "./TemplateReviewMessage";
 import TemplateService from "./TemplateService";
 import TemplateNews from "./TemplateNews";
 import TemplateOnlyAction from "./TemplateOnlyAction";
+import ConsultedMessage from "./ConsultedMessage";
+import BookingCreatedMessage from "./BookingCreatedMessage";
 
 type Props = {
   item: Message;
@@ -20,8 +22,6 @@ type Props = {
 export default function MessageContent({ item, isMyMessage = false }: Props) {
   function renderContent() {
     if (item.type === "template") {
-      console.log({ template: item?.template });
-
       switch (item?.template?.type) {
         case "SERVICE_REVIEW":
         case "REVIEW_DETAIL":
@@ -31,6 +31,10 @@ export default function MessageContent({ item, isMyMessage = false }: Props) {
           return <TemplateService item={item} />;
         case "NEWS":
           return <TemplateNews item={item} />;
+        case "WAS_CONSULTED":
+          return <ConsultedMessage item={item} />;
+        case "CREATE_BOOKING":
+          return <BookingCreatedMessage item={item} />;
         case "BOOKING":
         case "COLLABORATOR":
         case "SPIN_WHEEL":

@@ -38,7 +38,7 @@ const ItemLastedMessage = ({ item, onPress }: Props) => {
         {item?.type === "consultation" ? (
           <Image
             resizeMode="cover"
-            source={require("src/NewIcon/tuvan.png")}
+            source={require("src/NewImage/logoLiA.png")}
             style={styles.avatar}
           />
         ) : (
