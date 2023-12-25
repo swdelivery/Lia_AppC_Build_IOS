@@ -56,6 +56,10 @@
             android:name="com.dieam.reactnativepushnotification.notification_color"
             android:resource="@color/white" /> <!-- or @android:color/{name} to use a standard color -->
 
+        <meta-data
+          android:name="com.google.mlkit.vision.DEPENDENCIES"
+          android:value="barcode" />
+
         <receiver android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationActions" />
         <receiver android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationPublisher" />
         <receiver

@@ -58,7 +58,7 @@ export type Service = {
   totalProgress: number;
   parameterDescription: string;
   advantageDescription: string;
-  precedureDescription: string;
+  procedureDescription: string;
   reviewCount: number;
   averageRating: number;
   materialCodeArr: string[];

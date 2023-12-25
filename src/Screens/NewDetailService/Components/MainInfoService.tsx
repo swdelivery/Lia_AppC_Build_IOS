@@ -1,22 +1,31 @@
-import { StyleSheet, View } from "react-native";
-import React, { memo } from "react";
-import { _moderateScale, _widthScale } from "../../../Constant/Scale";
-import Text from "@Components/Text";
 import Column from "@Components/Column";
-import { useSelector } from "react-redux";
-import { getServiceDetailsState } from "@Redux/service/selectors";
-import { Service } from "@typings/serviceGroup";
+import Text from "@Components/Text";
 import { GREY } from "@Constant/Color";
+import { Service } from "@typings/serviceGroup";
+import React from "react";
+import { StyleSheet } from "react-native";
+import { _moderateScale, _widthScale } from "../../../Constant/Scale";
+import AnimatedParameter from "./AnimatedParameter";
 
 type Props = {
   service: Service;
 };
 
 const MainInfoService = ({ service }: Props) => {
+
   return (
     <Column style={styles.container} gap={8}>
       <Text weight="bold">Thông tin</Text>
       <Text color={GREY}>{service?.description}</Text>
+      {
+        service?.parameterDescription && <AnimatedParameter currentService={service} htmlData={service?.parameterDescription} />
+      }
+      {
+        service?.advantageDescription && <AnimatedParameter currentService={service} htmlData={service?.advantageDescription} />
+      }
+      {
+        service?.procedureDescription && <AnimatedParameter currentService={service} htmlData={service?.procedureDescription} />
+      }
     </Column>
   );
 };
