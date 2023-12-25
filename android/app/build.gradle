@@ -94,6 +94,8 @@ android {
         versionName project.hasProperty('versionName') ? project.property('versionName') : "0.1"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true // <-- ADD THIS in the defaultConfig section
+
+        resConfigs "vn"
     }
     signingConfigs {
         debug {
