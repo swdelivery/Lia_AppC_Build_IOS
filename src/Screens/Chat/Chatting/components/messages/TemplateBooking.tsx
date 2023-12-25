@@ -14,8 +14,7 @@ import { IconDoubleRightArrow } from "@Components/Icon/Icon";
 type Props = { item: Message };
 
 const TemplateBooking = ({ item }: Props) => {
-  const { navigate } = useNavigate()
-  console.log({ item });
+  const { navigate } = useNavigate();
 
   const { template, content } = item
 

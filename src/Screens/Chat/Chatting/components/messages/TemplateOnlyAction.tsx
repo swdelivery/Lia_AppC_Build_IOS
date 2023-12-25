@@ -20,9 +20,8 @@ import { IconDoubleRightArrow } from "@Components/Icon/Icon";
 type Props = { item: Message };
 
 const TemplateOnlyAction = ({ item }: Props) => {
-  const { navigate } = useNavigate()
-  console.log({ item });
-
+  const { navigate } = useNavigate();
+  
   const { template, content } = item
 
   const _renderActionName = (template) => {

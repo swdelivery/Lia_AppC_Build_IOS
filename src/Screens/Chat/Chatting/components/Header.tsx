@@ -77,7 +77,7 @@ const Header = ({ conversation }: Props) => {
               <DoctorInfo conversation={conversation} />
             )}
             {conversation?.type === "consultation" && (
-              <Text weight="bold" numberOfLines={1} size={16}>
+              <Text weight="bold" numberOfLines={1} size={16} color={"white"}>
                 {conversation?.name}
               </Text>
             )}

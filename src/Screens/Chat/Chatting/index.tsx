@@ -14,6 +14,7 @@ import { getConversationDetails } from "@Redux/chat/actions";
 import useVisible from "src/Hooks/useVisible";
 import SocketInstance from "SocketInstance";
 import { CSS_SEND_MESSAGE } from "src/Sockets/type";
+import { StatusBar } from "@Components/StatusBar";
 
 type ScreenK = typeof ScreenKey.CHATTING;
 
@@ -34,6 +35,7 @@ const Chatting = () => {
       style={styles.content}
     >
       <Screen safeBottom>
+        <StatusBar />
         <Header conversation={conversation} />
         <ListMessages conversation={conversation} />
         <InputChat />

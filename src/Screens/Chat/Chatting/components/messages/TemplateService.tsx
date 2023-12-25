@@ -14,8 +14,7 @@ import { styleElement } from '@Constant/StyleElement';
 type Props = { item: Message };
 
 const TemplateService = ({ item }: Props) => {
-  const { navigate } = useNavigate()
-  console.log({ item });
+  const { navigate } = useNavigate();
 
   const { template: { data: { fileAvatar, name, price, description, _id } } } = item
 

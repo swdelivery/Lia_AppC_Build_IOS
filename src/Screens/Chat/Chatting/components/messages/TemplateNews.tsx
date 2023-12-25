@@ -17,8 +17,7 @@ import ScreenKey from "@Navigation/ScreenKey";
 type Props = { item: Message };
 
 const TemplateNews = ({ item }: Props) => {
-  const { navigate } = useNavigate()
-  console.log({ item });
+  const { navigate } = useNavigate();
 
   const { template: { data: { fileAvatar, title, price, description, _id } } } = item
 

@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, View } from "react-native";
+import { Image, Pressable, StyleSheet, View } from "react-native";
 import React, { useMemo } from "react";
 import Text from "@Components/Text";
 import { _moderateScale } from "@Constant/Scale";
@@ -35,13 +35,23 @@ const ItemLastedMessage = ({ item, onPress }: Props) => {
   return (
     <Pressable onPress={trigger(onPress)}>
       <Row gap={_moderateScale(8 * 2)} paddingVertical={8}>
-        <Avatar
-          size={_moderateScale(8 * 5)}
-          style={styles.avatar}
-          avatar={assignedUser?.profile?.fileAvatar}
-        />
+        {item?.type === "consultation" ? (
+          <Image
+            resizeMode="cover"
+            source={require("src/NewIcon/tuvan.png")}
+            style={styles.avatar}
+          />
+        ) : (
+          <Avatar
+            size={_moderateScale(8 * 5)}
+            style={styles.avatar}
+            avatar={assignedUser?.profile?.fileAvatar}
+          />
+        )}
         <Column gap={_moderateScale(4)} flex={1}>
-          <Text weight={item.latestMessage?.isPartnerSeen ? "regular" : "bold"}>{assignedUser?.name}</Text>
+          <Text weight={item.latestMessage?.isPartnerSeen ? "regular" : "bold"}>
+            {item.type === "consultation" ? item.name : assignedUser?.name}
+          </Text>
           <Text
             size={12}
             weight={item.latestMessage?.isPartnerSeen ? "regular" : "bold"}
@@ -51,22 +61,23 @@ const ItemLastedMessage = ({ item, onPress }: Props) => {
           </Text>
         </Column>
         <Column gap={_moderateScale(4)} alignItems="flex-end">
-          <Text weight={item.latestMessage?.isPartnerSeen ? "regular" : "bold"} size={12}>
+          <Text
+            weight={item.latestMessage?.isPartnerSeen ? "regular" : "bold"}
+            size={12}
+          >
             {item.latestMessage?.created
               ? moment(item.latestMessage?.created).fromNow()
               : ""}
           </Text>
-          {
-            !item.latestMessage?.isPartnerSeen ?
-              <View style={styles.countBox}>
-                <Text weight="bold" size={12} color={WHITE}>
-                  Mới
-                </Text>
-              </View>
-              :
-              <View style={styles.countBoxBlank} />
-          }
-
+          {!item.latestMessage?.isPartnerSeen ? (
+            <View style={styles.countBox}>
+              <Text weight="bold" size={12} color={WHITE}>
+                Mới
+              </Text>
+            </View>
+          ) : (
+            <View style={styles.countBoxBlank} />
+          )}
         </Column>
       </Row>
     </Pressable>

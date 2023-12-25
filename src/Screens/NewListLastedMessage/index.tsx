@@ -26,7 +26,7 @@ import ItemLastedMessage, {
 
 const NewListLastedMessage = () => {
   const { navigation } = useNavigate();
-  const { isLoading, data, getData, refreshData, loadMoreData } = useListFilter(
+  const { isLoading, data, refreshData, loadMoreData } = useListFilter(
     getPartnerConversationsState,
     getPartnerConversations,
     loadMorePartnerConversations
