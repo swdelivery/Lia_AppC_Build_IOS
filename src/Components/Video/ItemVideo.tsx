@@ -10,14 +10,21 @@ import { _moderateScale } from '@Constant/Scale'
 import Column from '@Components/Column'
 import { sizeIcon } from '@Constant/Icon'
 
-const ItemVideo = ({ data = null }) => {
+
+type Props = {
+  data: any;
+  onPress: (item) => void;
+};
+
+const ItemVideo = ({ data = null, onPress }: Props) => {
   return (
     <TouchableOpacity
+      onPress={onPress}
       activeOpacity={.5}
       style={styles.container}>
       <Image
         style={styles.image}
-        avatar={null} />
+        avatar={data?.avatar} />
       <LinearGradient
         style={[
           StyleSheet.absoluteFillObject,
@@ -42,7 +49,7 @@ const ItemVideo = ({ data = null }) => {
           <IconPlayWhite style={sizeIcon.md} />
         </View>
 
-        <View style={{ margin: 8 * 2 }}>
+        <View style={{ margin: 8 }}>
           <Column gap={4}>
             <Text numberOfLines={1} weight="bold" color={"white"}>
               {data?.name}

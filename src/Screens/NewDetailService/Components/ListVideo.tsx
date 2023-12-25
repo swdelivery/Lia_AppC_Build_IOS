@@ -4,9 +4,23 @@ import Text from '@Components/Text'
 import { _moderateScale, _widthScale } from '@Constant/Scale'
 import Column from '@Components/Column'
 import ItemVideo from '@Components/Video/ItemVideo'
+import { Service } from '@typings/serviceGroup'
+import { useNavigate } from 'src/Hooks/useNavigation'
+import ScreenKey from '@Navigation/ScreenKey'
 
-const ListVideo = () => {
 
+type Props = {
+  service: Service;
+};
+
+const ListVideo = ({ service }: Props) => {
+  const { navigate } = useNavigate();
+
+  const _handleNavigate = useCallback(() => {
+    navigate(ScreenKey.VERTICAL_VIDEO_PLAYER, {
+      data: service?.guideVideo,
+    })()
+  }, [service])
 
   return (
     <Column style={styles.container} gap={8}>
@@ -14,9 +28,11 @@ const ListVideo = () => {
 
       <ScrollView contentContainerStyle={{ gap: 8 }} horizontal>
         {
-          [1, 2, 3, 4]?.map((_i, idx) => {
+          service?.guideVideo?.map((_i, idx) => {
             return (
-              <ItemVideo />
+              <ItemVideo
+                onPress={_handleNavigate}
+                data={_i} />
             )
           })
         }

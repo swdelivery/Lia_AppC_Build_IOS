@@ -89,7 +89,7 @@ const DetailService = () => {
             {/* <FlashSale /> */}
           </View>
           <InfoBranch service={service} />
-          <ListVideo />
+          <ListVideo service={service} />
           <Material service={service} />
           <BeautyInsurance
             onViewMore={navigate(ScreenKey.LIST_BEAUTY_INSURANCE)}
