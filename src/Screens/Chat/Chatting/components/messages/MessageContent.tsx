@@ -13,6 +13,7 @@ import TemplateNews from "./TemplateNews";
 import TemplateOnlyAction from "./TemplateOnlyAction";
 import ConsultedMessage from "./ConsultedMessage";
 import BookingCreatedMessage from "./BookingCreatedMessage";
+import RemindBookingMessage from "./RemindBookingMessage";
 
 type Props = {
   item: Message;
@@ -35,12 +36,15 @@ export default function MessageContent({ item, isMyMessage = false }: Props) {
           return <ConsultedMessage item={item} />;
         case "CREATE_BOOKING":
           return <BookingCreatedMessage item={item} />;
+        case "REMIND_BOOKING":
+          return <RemindBookingMessage item={item} />;
         case "BOOKING":
         case "COLLABORATOR":
         case "SPIN_WHEEL":
           return <TemplateOnlyAction item={item} />;
 
         default:
+          console.log("template not found", item.template.type);
           return null;
       }
     }

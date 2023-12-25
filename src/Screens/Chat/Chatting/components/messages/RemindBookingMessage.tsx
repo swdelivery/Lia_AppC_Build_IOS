@@ -2,83 +2,76 @@ import Column from "@Components/Column";
 import Icon from "@Components/Icon";
 import Row from "@Components/Row";
 import Text from "@Components/Text";
-import { formatMonney } from "@Constant/Utils";
+import { ORANGE } from "@Constant/Color";
 import ScreenKey from "@Navigation/ScreenKey";
 import { Message } from "@typings/chat";
 import moment from "moment";
 import React, { useCallback } from "react";
+import { View, StyleSheet } from "react-native";
 import { useNavigate } from "src/Hooks/useNavigation";
 
 type Props = {
   item: Message;
 };
 
-export default function BookingCreatedMessage({ item }: Props) {
+export default function RemindBookingMessage({ item }: Props) {
+  console.log({ item });
+
   const { navigation } = useNavigate();
-  const template = item.template;
 
   const handleBookingDetails = useCallback(() => {
     // @ts-ignore
     navigation.navigate(ScreenKey.DETAIL_BOOKING, {
       booking: {
-        _id: template?.data?.bookingId,
+        _id: item.template?.data?.bookingId,
       },
     });
-  }, [template?.data?.bookingId]);
+  }, [item.template?.data?.bookingId]);
 
   return (
     <Column padding={8} gap={4}>
+      <Row gap={4}>
+        <Icon name="bell" color={ORANGE} size={18} />
+        <Text size={12} weight="bold">
+          NHẮC NHỞ NHỎ
+        </Text>
+      </Row>
       <Text
         size={12}
-        weight="bold"
-      >{`Xin chào Khách hàng ${template?.data?.partnerName}, cảm ơn bạn đã tin tưởng và lựa chọn dịch vụ tại LiA`}</Text>
-      <Text size={12} fontStyle="italic">
-        Lịch đặt hẹn của bạn đã được xác nhận thành công với thông tin sau
-      </Text>
-      <Row gap={8}>
+      >{`Xin chào Khách hàng ${item.template.data.partnerName}, bạn đừng quên chúng ta có hẹn làm đẹp với nhau vào lúc:`}</Text>
+      <Row alignItems="flex-start" gap={20}>
         <Column>
           <Text size={12} fontStyle="italic">
-            Khách Hàng
+            Thời Gian:
           </Text>
-          <Text size={12} fontStyle="italic">
-            Thời gian
-          </Text>
-          <Text size={12} fontStyle="italic">
-            Dịch vụ đã chọn
-          </Text>
-          {template.data.services?.map((item) => (
+          {item.template.data.services.map((item, index) => (
             <Text size={12} fontStyle="italic" key={item}>
-              {"• Dịch vụ"}
+              {index === 0 ? "Dịch vụ:" : ""}
             </Text>
           ))}
           <Text size={12} fontStyle="italic">
-            Tổng giá trị
-          </Text>
-          <Text size={12} fontStyle="italic">
-            Trạng thái thanh toán
+            Địa điểm
           </Text>
         </Column>
-        <Column>
+        <Column flex={1}>
           <Text size={12} fontStyle="italic">
-            {template.data.partnerName}
+            {moment(item.template.data.created).format("DD/MM/YYYY, HH:mm")}
           </Text>
-          <Text size={12} fontStyle="italic">
-            {moment(template.data.created).format("DD/MM/YYYY, HH:mm")}
-          </Text>
-          <Text size={12} fontStyle="italic"></Text>
-          {template.data.services?.map((item) => (
-            <Text size={12} fontStyle="italic" key={item} numberOfLines={1}>
+          {item.template.data.services.map((item) => (
+            <Text size={12} fontStyle="italic" key={item}>
               {item}
             </Text>
           ))}
           <Text size={12} fontStyle="italic">
-            {formatMonney(template.data.totalAmount, true)}
-          </Text>
-          <Text size={12} fontStyle="italic" numberOfLines={1}>
-            {template.data.status}
+            {item.template.data.branchName}
           </Text>
         </Column>
       </Row>
+      <Text size={10} fontStyle="italic">
+        Chúng tôi rất mong chờ để phục vụ bạn vào ngày hôm ấy! Nếu có bất kỳ
+        điều gì cần thay đổi hoặc bạn có nhu cầu đặc biệt, đừng ngần ngại liên
+        hệ với chúng tôi
+      </Text>
       <Row
         backgroundColor={"#8a0086"}
         alignSelf="flex-start"
@@ -96,3 +89,7 @@ export default function BookingCreatedMessage({ item }: Props) {
     </Column>
   );
 }
+
+const styles = StyleSheet.create({
+  //
+});
