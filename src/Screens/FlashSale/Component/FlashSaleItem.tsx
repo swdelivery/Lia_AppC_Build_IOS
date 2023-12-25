@@ -84,7 +84,7 @@ export default function FlashSaleItem({ item, isUpcoming }: Props) {
             {item.service.name}
           </Text>
         </Column>
-        <Row justifyContent="space-between">
+        <Row justifyContent="space-between" paddingHorizontal={4}>
           <Text weight="bold" color={MAIN_RED} size={16}>
             {formatMonney(item.finalPrice)}
           </Text>
@@ -92,7 +92,7 @@ export default function FlashSaleItem({ item, isUpcoming }: Props) {
             {formatMonney(item.originalPrice)}
           </Text>
         </Row>
-        <Column marginTop={4} paddingTop={8}>
+        <Column marginTop={4} paddingTop={8} paddingHorizontal={4}>
           <HorizontalProgress
             percent={percentage}
             height={12}

@@ -105,7 +105,7 @@ function FlashSaleWrapper() {
       return currentFlashSale;
     }
     return nextFlashSale[0] ? { ...nextFlashSale[0], isUpcoming: true } : null;
-  }, [currentFlashSale, ...nextFlashSale]);
+  }, [currentFlashSale, ...nextFlashSale]);  
 
   if (!flashSale) {
     return null;
