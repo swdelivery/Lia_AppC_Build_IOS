@@ -36,6 +36,13 @@ export type TemplateData = {
     // for consulted
     branchName: string;
     bookingStatus: string;
+
+    // thank you
+    volunteerName: string;
+    volunteerBanner: string[];
+    amount: number;
+    volunteerId: string;
+    ß;
   };
 };
 

@@ -14,6 +14,7 @@ import TemplateOnlyAction from "./TemplateOnlyAction";
 import ConsultedMessage from "./ConsultedMessage";
 import BookingCreatedMessage from "./BookingCreatedMessage";
 import RemindBookingMessage from "./RemindBookingMessage";
+import ThankYouMessage from "./ThankYouMessage";
 
 type Props = {
   item: Message;
@@ -38,6 +39,8 @@ export default function MessageContent({ item, isMyMessage = false }: Props) {
           return <BookingCreatedMessage item={item} />;
         case "REMIND_BOOKING":
           return <RemindBookingMessage item={item} />;
+        case "THANK_YOU_LETTER":
+          return <ThankYouMessage template={item.template} />;
         case "BOOKING":
         case "COLLABORATOR":
         case "SPIN_WHEEL":
