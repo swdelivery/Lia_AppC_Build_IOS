@@ -6,7 +6,7 @@ import { MAIN_RED_500 } from "@Constant/Color";
 import { useInterval } from "@r0b0t3d/react-native-hooks";
 import { FlashSale } from "@typings/flashsale";
 import moment from "moment";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { ColorValue, StyleSheet } from "react-native";
 import { formatDuration, fromUtc } from "src/utils/date";
 
@@ -47,21 +47,19 @@ export default function FlashSaleTimer({
       .getTime();
   }, [flashSale]);
 
-  useInterval(
-    () => {
-      let timer = 0;
-      if (Date.now() < startTimestamp) {
-        timer = startTimestamp - Date.now();
-      } else {
-        timer = endTimestamp - Date.now();
-      }
-      setTimer(timer);
-      if (timer <= 0) {
-        onFlashSaleUpdate();
-      }
-    },
-    timer >= 0 ? 1000 : -1
-  );
+  useInterval(() => {
+    let timer = 0;
+    if (Date.now() < startTimestamp) {
+      timer = startTimestamp - Date.now();
+    } else {
+      timer = endTimestamp - Date.now();
+    }
+    setTimer(timer);
+  }, 1000);
+
+  useEffect(() => {
+    onFlashSaleUpdate();
+  }, [timer < 0]);
 
   const { hours, minutes, seconds } = useMemo(() => {
     return formatDuration(timer);

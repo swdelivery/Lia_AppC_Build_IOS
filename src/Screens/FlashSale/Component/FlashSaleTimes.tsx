@@ -11,6 +11,7 @@ import Fade from "@Components/Fade";
 import LinearGradient from "react-native-linear-gradient";
 import moment from "moment";
 import { fromUtc, getTwoDigits } from "src/utils/date";
+import useFlashSales from "@Screens/SoyoungHome/Components/useFlashSale";
 
 type Props = {
   selectedFlashSale?: FlashSale;
@@ -23,29 +24,11 @@ export default function FlashSaleTimes({
   selectedFlashSale,
   onFlashSaleUpdate,
 }: Props) {
-  const { currentFlashSale, nextFlashSale } = useSelector(getFlashSaleState);
-
-  const flashSales = useMemo(() => {
-    const result: FlashSale[] = [];
-    if (currentFlashSale) {
-      const { hour, minute } = currentFlashSale.timeRange.to;
-      const endTimestamp = moment(fromUtc(currentFlashSale.dateRange.to))
-        .add(hour, "hours")
-        .add(minute, "minutes")
-        .toDate()
-        .getTime();
-      if (Date.now() < endTimestamp) {
-        result.push(currentFlashSale);
-      }
-    }
-    result.push(
-      ...(nextFlashSale || []).map((item) => ({ ...item, isUpcoming: true }))
-    );
+  const flashSales = useFlashSales((fs) => {
     if (onFlashSaleSelect) {
-      onFlashSaleSelect(result[0]);
+      onFlashSaleSelect(fs[0]);
     }
-    return result;
-  }, [currentFlashSale, ...nextFlashSale]);
+  });
 
   const handleSelectFlashSale = useCallback(
     (item: FlashSale) => () => {

@@ -12,10 +12,11 @@ import {
 } from "@Constant/Color";
 import { _width } from "@Constant/Scale";
 import { styleElement } from "@Constant/StyleElement";
-import { formatMonney } from "@Constant/Utils";
+import { formatMonney, replaceFirstCharacter } from "@Constant/Utils";
 import { SERVICE_BANNER_RATIO } from "@Constant/image";
 import ScreenKey from "@Navigation/ScreenKey";
 import { FlashSaleService } from "@typings/flashsale";
+import { head } from "lodash";
 import React, { useMemo } from "react";
 import { StyleSheet } from "react-native";
 import useServiceDetailsNavigation from "src/Hooks/navigation/useServiceDetailsNavigation";
@@ -78,7 +79,12 @@ export default function FlashSaleItem({ item, isUpcoming }: Props) {
         padding={1}
         style={styleElement.shadow}
       >
-        <Image avatar={item.service.avatar} style={styles.image} />
+        <Image
+          avatar={
+            item.service.avatar ?? head(item.service.representationFileArr)
+          }
+          style={styles.image}
+        />
         <Column flex={1} paddingHorizontal={4}>
           <Text size={12} numberOfLines={2} top={4}>
             {item.service.name}
@@ -86,7 +92,11 @@ export default function FlashSaleItem({ item, isUpcoming }: Props) {
         </Column>
         <Row justifyContent="space-between" paddingHorizontal={4}>
           <Text weight="bold" color={MAIN_RED} size={16}>
-            {`${isUpcoming ? "?" : ""}${formatMonney(item.finalPrice)}`}
+            {`${
+              isUpcoming
+                ? replaceFirstCharacter(formatMonney(item.finalPrice), "?")
+                : formatMonney(item.finalPrice)
+            }`}
           </Text>
           <Text size={12} textDecorationLine="line-through">
             {formatMonney(item.originalPrice)}

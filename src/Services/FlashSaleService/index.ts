@@ -10,10 +10,16 @@ const checkFlashSale = () => {
 const getFlashSaleCurrent = () =>
   axios.get("/promotion/flash-sale").then(({ data }) => data.data);
 
-const getFlashSaleServices = (flashSaleId: string) =>
-  axios
-    .get("/promotion/" + flashSaleId + "/service-promotion")
+const getFlashSaleServices = (flashSaleId: string) => {
+  const params = {
+    sort: { orderNumber: 1 },
+  };
+  return axios
+    .get("/promotion/" + flashSaleId + "/service-promotion", {
+      params,
+    })
     .then(({ data }) => data.data);
+};
 
 export default {
   checkFlashSale,

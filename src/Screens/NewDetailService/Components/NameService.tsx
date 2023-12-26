@@ -23,7 +23,7 @@ type Props = {
 };
 
 const NameService = ({ service }: Props) => {
-  const isFlashSaleStarted = Math.random() < 0.5;
+  const isFlashSaleStarted = false;
   const isFlashSaleIncoming = !isFlashSaleStarted;
   const { refreshService } = useServiceDetailsContext();
 

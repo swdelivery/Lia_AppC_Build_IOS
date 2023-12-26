@@ -305,6 +305,14 @@ export const formatMonney = (data, withUnit = false) => {
   return withUnit ? `${value} VNĐ` : value;
 };
 
+export function replaceFirstCharacter(inputString, newCharacter) {
+  if (inputString.length > 0) {
+    return newCharacter + inputString.slice(1);
+  } else {
+    return inputString; // Handle empty string case if needed
+  }
+}
+
 export const parseFloatNumber = (number, fixed = 0) => {
     return parseFloat(Number(number).toFixed(fixed))
 }

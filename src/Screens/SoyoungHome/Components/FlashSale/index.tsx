@@ -24,6 +24,7 @@ import Text from "@Components/Text";
 import { MAIN_RED_500 } from "@Constant/Color";
 import moment from "moment";
 import { fromUtc } from "src/utils/date";
+import useFlashSales from "../useFlashSale";
 
 const FlashSaleBanner = ({ flashSale }: { flashSale: FlashSale }) => {
   const dispatch = useDispatch();
@@ -95,33 +96,13 @@ const FlashSaleBanner = ({ flashSale }: { flashSale: FlashSale }) => {
 };
 
 function FlashSaleWrapper() {
-  const dispatch = useDispatch();
-  const { currentFlashSale, nextFlashSale } = useSelector(getFlashSaleState);
+  const flashSales = useFlashSales();
 
-  useFocused(() => {
-    dispatch(checkFlashSale.request());
-  });
-
-  const flashSale = useMemo(() => {
-    if (currentFlashSale) {
-      const { hour, minute } = currentFlashSale.timeRange.to;
-      const endTimestamp = moment(fromUtc(currentFlashSale.dateRange.to))
-        .add(hour, "hours")
-        .add(minute, "minutes")
-        .toDate()
-        .getTime();
-      if (Date.now() < endTimestamp) {
-        return currentFlashSale;
-      }
-    }
-    return nextFlashSale[0] ? { ...nextFlashSale[0], isUpcoming: true } : null;
-  }, [currentFlashSale, ...nextFlashSale]);
-
-  if (!flashSale) {
+  if (!flashSales[0]) {
     return null;
   }
 
-  return <FlashSaleBanner flashSale={flashSale} />;
+  return <FlashSaleBanner flashSale={flashSales[0]} />;
 }
 
 export default FlashSaleWrapper;

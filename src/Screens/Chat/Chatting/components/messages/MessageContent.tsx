@@ -44,7 +44,7 @@ export default function MessageContent({ item, isMyMessage = false }: Props) {
           return <TemplateOnlyAction item={item} />;
 
         default:
-          console.log("template not found", item.template.type);
+          console.log("template not found", item?.template?.type);
           return null;
       }
     }

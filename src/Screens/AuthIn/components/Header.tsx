@@ -6,6 +6,7 @@ import Text from "@Components/Text";
 import { sizeIcon } from "@Constant/Icon";
 import { _moderateScale } from "@Constant/Scale";
 import Row from "@Components/Row";
+import { StatusBar } from "@Components/StatusBar";
 
 type Props = {
   title: string;
@@ -15,6 +16,7 @@ type Props = {
 export default function Header({ title, onBack }: Props) {
   return (
     <Row style={[styleElement.rowAliCenter, styles.headerContainer]}>
+      <StatusBar barStyle="dark-content" />
       <TouchableOpacity onPress={onBack} hitSlop={styleElement.hitslopSm}>
         <IconBackBlack width={20} height={20} />
       </TouchableOpacity>

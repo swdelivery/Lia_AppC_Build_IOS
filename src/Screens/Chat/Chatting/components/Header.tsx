@@ -1,12 +1,6 @@
 import { isEmpty } from "lodash";
 import React, { useMemo } from "react";
-import {
-  Image,
-  StatusBar,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import * as Color from "../../../../Constant/Color";
 import {
   _moderateScale,
@@ -24,6 +18,7 @@ import Avatar from "@Components/Avatar";
 import { Conversation } from "@typings/chat";
 import { useNavigate } from "src/Hooks/useNavigation";
 import Column from "@Components/Column";
+import { StatusBar } from "@Components/StatusBar";
 
 type Props = {
   conversation: Conversation;
