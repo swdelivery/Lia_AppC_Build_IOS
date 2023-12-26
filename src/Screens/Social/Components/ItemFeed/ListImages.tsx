@@ -48,12 +48,10 @@ const ListImages = ({ data }: Props) => {
         {
           images?.map((item, index) => {
             return (
-              <TouchableOpacity>
-                <Image
-                  style={styles.otherImage}
-                  avatar={item} />
+              <TouchableOpacity key={item._id}>
+                <Image style={styles.otherImage} avatar={item} />
               </TouchableOpacity>
-            )
+            );
           })
         }
       </ScrollView>

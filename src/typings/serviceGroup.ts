@@ -1,6 +1,7 @@
 import type { Branch } from "./branch";
 import type { FileAvatar, Timestamp } from "./common";
 import type { Doctor } from "./doctor";
+import { FlashSale } from "./flashsale";
 
 export type ServiceGroup = {
   parentCode: string;
@@ -88,4 +89,23 @@ export type Service = {
     branch: Branch;
   }[];
   guideVideo: any;
+  isOnFlashSale: boolean;
+  currentFlashSale?: FlashSale;
+  preferentialInCurrentFlashSale?: {
+    limit: number;
+    usage: number;
+    _id: string;
+    orderNumber: number;
+    isActive: boolean;
+    isDelete: boolean;
+    promotionId: string;
+    serviceCode: string;
+    discountType: "percent";
+    discountAmount: number;
+    originalPrice: number;
+    finalPrice: number;
+    userCreate: string;
+    userUpdate: string;
+    __v: number;
+  };
 } & Timestamp;

@@ -31,6 +31,7 @@ export default function useFlashSales(
       }
     }
     const firstNextFlashSale = nextFlashSale[0];
+
     if (!!firstNextFlashSale) {
       // Check first next flash sale to see if it is current flash sale
       const { hour, minute } = firstNextFlashSale.timeRange.from;

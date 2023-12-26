@@ -38,9 +38,11 @@ const CountCommentLike = ({ data }: Props) => {
               partnersReaction?.map((item, index) => {
                 return (
                   <Image
+                    key={item._id}
                     style={styles.image}
-                    avatar={item?.partner?.fileAvatar} />
-                )
+                    avatar={item?.partner?.fileAvatar}
+                  />
+                );
               })
             }
           </Row>

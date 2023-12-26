@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import { View, StyleSheet } from "react-native";
 import { _width } from "@Constant/Scale";
 import { formatMonney } from "@Constant/Utils";
@@ -16,6 +16,7 @@ import Icon from "@Components/Icon";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import ContentLoader, { Rect } from "react-content-loader/native";
 import { SERVICE_BANNER_RATIO } from "@Constant/image";
+import FlashSale from "./FlashSale";
 
 const IMAGE_WIDTH = _width / 2 - 8 - 8 / 2;
 const IMAGE_HEIGHT = IMAGE_WIDTH * SERVICE_BANNER_RATIO;
@@ -33,6 +34,12 @@ export default function ServiceItem({ item }: Props) {
     });
   }, [item]);
 
+  // const {} = useMemo(() => {
+  //   if (item.currentFlashSale) {
+  //     return { item };
+  //   }
+  // }, [item]);
+
   return (
     <TouchableOpacity
       activeOpacity={0.8}
@@ -40,7 +47,10 @@ export default function ServiceItem({ item }: Props) {
       style={styles.card}
     >
       <View style={styles.content}>
-        <Image style={styles.image} avatar={item.avatar} />
+        <Column>
+          <Image style={styles.image} avatar={item.avatar} />
+          {item.isOnFlashSale && <FlashSale width={IMAGE_WIDTH} />}
+        </Column>
         <Column style={styles.info}>
           <Column height={35}>
             <Text numberOfLines={2} size={12} weight="bold">
