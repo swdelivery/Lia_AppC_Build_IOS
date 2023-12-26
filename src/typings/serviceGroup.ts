@@ -87,4 +87,5 @@ export type Service = {
     branchCode: string;
     branch: Branch;
   }[];
+  guideVideo: any;
 } & Timestamp;

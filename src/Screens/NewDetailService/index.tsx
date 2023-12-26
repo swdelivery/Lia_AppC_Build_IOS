@@ -89,7 +89,9 @@ const DetailService = () => {
             {/* <FlashSale /> */}
           </View>
           <InfoBranch service={service} />
-          <ListVideo service={service} />
+          {
+            service?.guideVideo?.length > 0 && <ListVideo service={service} />
+          }
           <Material service={service} />
           <BeautyInsurance
             onViewMore={navigate(ScreenKey.LIST_BEAUTY_INSURANCE)}

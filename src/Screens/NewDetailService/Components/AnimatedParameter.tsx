@@ -1,9 +1,9 @@
 import { IconDArrowDownBase } from '@Components/Icon/Icon';
+import RenderHTML from '@Components/RenderHTML/RenderHTML';
 import React, { useState } from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import Collapsible from 'react-native-collapsible';
 import LinearGradient from 'react-native-linear-gradient';
-import RenderHTML from 'react-native-render-html';
 import { BASE_COLOR, GREY } from '../../../Constant/Color';
 import { _heightScale, _moderateScale } from '../../../Constant/Scale';
 
@@ -15,11 +15,7 @@ const AnimatedParameter = (props) => {
     const _renderParameterDescription = (htmlContent) => {
         if (htmlContent?.length > 0) {
             return (
-                <RenderHTML
-                    source={{ html: htmlContent }}
-                    enableExperimentalBRCollapsing={true}
-                    enableExperimentalMarginCollapsing={true}
-                />
+                <RenderHTML data={htmlContent} />
             )
         } else {
             return (<></>)

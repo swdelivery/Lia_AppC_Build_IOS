@@ -23,5 +23,6 @@ export function* rootSaga() {
     fork(require("./takecare/sagas").default),
     fork(require("./category/sagas").default),
     fork(require("./charity/sagas").default),
+    fork(require("./qrCheckin/sagas").default),
   ]);
 }

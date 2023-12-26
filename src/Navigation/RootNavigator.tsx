@@ -201,6 +201,7 @@ import Donation from "@Screens/CharityFundDetails/Donation";
 import InfoCoFounder from "@Screens/CharityFundDetails/InfoCoFounder";
 import ListCompanion from "@Screens/CharityFundDetails/ListCompanion";
 import NewQRCode from "@Screens/NewQRCode";
+import PickUtilities from "@Screens/NewQRCode/PickUtilities";
 
 const rootStack = createStackNavigator();
 
@@ -787,6 +788,11 @@ const RootNavigator = () => {
             options={optionsModal}
             name={ScreenKey.QR_CODE}
             component={NewQRCode}
+          />
+          <rootStack.Screen
+            options={optionsModal}
+            name={ScreenKey.PICK_UTILITIES}
+            component={PickUtilities}
           />
 
           <rootStack.Screen

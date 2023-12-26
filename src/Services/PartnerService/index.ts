@@ -558,6 +558,17 @@ const getListPartnerDonateToVolunteerCompanion = (payload: any) => {
     .then(({ data }) => data);
 };
 
+// Checkin by qr
+const getInfoBranchByCode = (payload: any) => {
+  return axios
+    .get(`/branch/get-by-code/${payload}`)
+    .then(({ data }) => data);
+};
+const partnerCheckInBooking = (payload: any) => {
+  return axios
+    .put(`/booking/${payload?._id}/check-in`, payload?.data)
+    .then(({ data }) => data);
+};
 
 export default {
   partnerLogout,
@@ -662,5 +673,9 @@ export default {
   searchCampain,
   getVolunteerHistory,
   getTopDonate,
-  getListPartnerDonateToVolunteerCompanion
+  getListPartnerDonateToVolunteerCompanion,
+
+  // CheckIn By QR
+  getInfoBranchByCode,
+  partnerCheckInBooking
 };
