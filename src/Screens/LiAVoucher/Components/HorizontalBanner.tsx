@@ -158,7 +158,7 @@ const HorizontalBanner = ({
       // </View>
       <EachImage
         handlePress={() => {
-          navigation.navigate(ScreenKey.DETAIL_NEWS_VOUCHER, {});
+          // navigation.navigate(ScreenKey.DETAIL_NEWS_VOUCHER, {});
         }}
         currIndexBanner={currIndexBanner}
         data={item}

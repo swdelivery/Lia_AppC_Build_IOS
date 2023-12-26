@@ -1,5 +1,5 @@
-import { Alert, StyleSheet, TouchableOpacity, View } from 'react-native'
-import React, { useCallback, useMemo, useState } from 'react'
+import { Alert, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import Screen from '@Components/Screen'
 import Row from '@Components/Row'
 import Text from '@Components/Text'
@@ -10,16 +10,22 @@ import { FocusAwareStatusBar } from '@Components/StatusBar'
 import { Camera, useCameraDevice, useCodeScanner } from 'react-native-vision-camera'
 import Column from '@Components/Column'
 import { styleElement } from '@Constant/StyleElement'
-import { getBookingDataForPartner } from '@Redux/Action/BookingAction'
+import { createCheckinBookingForPartner, getBookingDataForPartner } from '@Redux/Action/BookingAction'
 import { isEmpty } from 'lodash'
 import { BORDER_COLOR } from '@Constant/Color'
 import Image from '@Components/Image'
 import Toggle from '@Components/Toggle/Toggle'
+import moment from 'moment'
+import ActionButton from '@Components/ActionButton/ActionButton'
+import ScreenKey from '@Navigation/ScreenKey'
+import { useDispatch } from 'react-redux'
+import { selectBookingForCheckin } from '@Redux/qrCheckin/actions'
 
 const maskRowHeight = 100
 const maskColWidth = 500;
 
 const NewQRCode = () => {
+  const dispatch = useDispatch()
   const { navigation } = useNavigate()
   const device = useCameraDevice("back");
 
@@ -28,7 +34,6 @@ const NewQRCode = () => {
     show: false,
     data: []
   })
-
   const [choiceBooking, setChoiceBooking] = useState(null)
 
   const parseMyJson = (data) => {
@@ -59,6 +64,9 @@ const NewQRCode = () => {
     let resultGetBookingDataForPartner = await getBookingDataForPartner(
       {
         condition: {
+          branchCode: {
+            in: [obj?.branchCode]
+          },
           status: {
             in: ['WAIT']
           }
@@ -93,12 +101,12 @@ const NewQRCode = () => {
           },
           {
             text: "Đồng ý", onPress: async () => {
-              // let resultCreateCheckinBookingForPartner = await createCheckinBookingForPartner({
-              //   branchCode: obj?.branchCode
-              // })
-              // if (resultCreateCheckinBookingForPartner?.isAxiosError) return
-              // navigation.goBack()
-              // navigation.navigate(ScreenKey.LIST_BOOKING)
+              let resultCreateCheckinBookingForPartner = await createCheckinBookingForPartner({
+                branchCode: obj?.branchCode
+              })
+              if (resultCreateCheckinBookingForPartner?.isAxiosError) return
+              navigation.goBack()
+              navigation.navigate(ScreenKey.LIST_BOOKING)()
             }
           }
         ],
@@ -107,12 +115,21 @@ const NewQRCode = () => {
     }
   }
 
+  const _handleConfirm = useCallback(() => {
+    dispatch(selectBookingForCheckin(choiceBooking))
+    navigation.navigate(ScreenKey.PICK_UTILITIES)
+  }, [choiceBooking])
+
 
   const ItemBooking = ({ data }) => {
     const { services } = data
 
     const _handlePress = useCallback(() => {
-      setChoiceBooking(data)
+      if (choiceBooking?._id == data?._id) {
+        setChoiceBooking(null)
+      } else {
+        setChoiceBooking(data)
+      }
     }, [])
 
     const isActive = useMemo(() => {
@@ -134,10 +151,23 @@ const NewQRCode = () => {
           <Image
             style={styles.avatarService}
             avatar={services[0]?.service?.representationFileArr[0]} />
-          <Column flex={1}>
-            <Text style={styleElement.flex}>
+          <Column
+            gap={8}
+            flex={1}>
+            <Text
+              size={12}
+              numberOfLines={2}>
               {services[0]?.service?.name}
             </Text>
+            <Row>
+              <Text size={12}>
+                {moment(data?.appointmentDateFinal?.date).format('DD/MM/YYYY')}
+              </Text>
+              <Text>-</Text>
+              <Text size={12}>
+                {moment(data?.appointmentDateFinal?.from?.dateTime).format('HH:mm')}
+              </Text>
+            </Row>
           </Column>
           <Toggle
             onPress={_handlePress}
@@ -148,7 +178,9 @@ const NewQRCode = () => {
   }
 
   return (
-    <Screen safeTop>
+    <Screen
+      safeBottom
+      safeTop>
       <FocusAwareStatusBar barStyle='dark-content' />
       <Row
         marginVertical={8 * 2}
@@ -167,18 +199,25 @@ const NewQRCode = () => {
       {
         scanningSuccess ?
           <Column flex={1}>
-            <Text
-              weight='bold'
-              margin={8 * 2}>
-              Danh sách booking
-            </Text>
-            {
-              currDataBooking?.data?.map((_i, idx) => {
-                return (
-                  <ItemBooking data={_i} key={_i?._id} />
-                )
-              })
-            }
+            <ScrollView>
+              <Text
+                weight='bold'
+                margin={8 * 2}>
+                Danh sách booking
+              </Text>
+              {
+                currDataBooking?.data?.map((_i, idx) => {
+                  return (
+                    <ItemBooking data={_i} key={_i?._id} />
+                  )
+                })
+              }
+            </ScrollView>
+            <ActionButton
+              onPress={_handleConfirm}
+              colors={["#34759b", "#1a3e67"]}
+              disabled={!choiceBooking?._id}
+              title='Check in Booking' />
           </Column>
           :
           <Column flex={1}>

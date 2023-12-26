@@ -47,6 +47,7 @@ import wallet from "../wallet/reducers";
 import takecare from "../takecare/reducers";
 import category from "../category/reducers"
 import charity from "../charity/reducers"
+import qrCheckin from "../qrCheckin/reducers"
 
 const rootReducer = combineReducers({
   newsReducer,
@@ -96,6 +97,7 @@ const rootReducer = combineReducers({
   takecare,
   category,
   charity,
+  qrCheckin
 });
 
 // const rootReducer = (state, action) => {
