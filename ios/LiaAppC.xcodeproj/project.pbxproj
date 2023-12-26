@@ -509,8 +509,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.digitech.lia;
 				PRODUCT_NAME = LiaAppC;
-				PROVISIONING_PROFILE = "5baedfba-7e50-4804-a149-5b0b08bdc1f0";
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.digitech.lia";
+				PROVISIONING_PROFILE = "7fe4498b-595c-4103-a31f-3a0ebefda2f0";
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc com.digitech.lia";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
