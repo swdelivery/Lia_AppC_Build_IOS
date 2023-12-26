@@ -25,10 +25,7 @@ export default function Image({
 }: Props) {
   const uri = useMemo(() => {
     return getImageAvataUrl(avatar, "");
-  }, [avatar]);
-
-  console.log({ uri });
-  
+  }, [avatar]);  
 
   const autoStyle = useMemo(() => {
     if (!avatar || !auto) {
