@@ -5,11 +5,10 @@ import Image from "@Components/Image";
 import Row from "@Components/Row";
 import { StatusBar } from "@Components/StatusBar";
 import { MAIN_RED_500 } from "@Constant/Color";
-import { getConfigData } from "@Redux/Action/OrtherAction";
 import ModalThele from "@Screens/WheelSpin/ModalThele";
 import { ConfigFileCode } from "@typings/configFile";
 import { isEmpty } from "lodash";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import useConfigFile from "src/Hooks/useConfigFile";
@@ -38,7 +37,12 @@ export default function Header({}: Props) {
         <BackIcon />
       </IconButton>
       {flashSaleTitle && !isEmpty(flashSaleTitle.fileArr) && (
-        <Image avatar={flashSaleTitle.fileArr[0]} />
+        <Image
+          auto
+          avatar={flashSaleTitle.fileArr[0]}
+          style={styles.image}
+          resizeMode="contain"
+        />
       )}
       <IconButton onPress={infoModal.show}>
         <Icon name="information-outline" color="white" />
@@ -54,5 +58,7 @@ export default function Header({}: Props) {
 }
 
 const styles = StyleSheet.create({
-  //
+  image: {
+    height: 20,
+  },
 });

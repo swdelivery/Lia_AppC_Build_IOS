@@ -27,6 +27,9 @@ export default function Image({
     return getImageAvataUrl(avatar, "");
   }, [avatar]);
 
+  console.log({ uri });
+  
+
   const autoStyle = useMemo(() => {
     if (!avatar || !auto) {
       return undefined;
