@@ -13,7 +13,7 @@ import Text from '@Components/Text'
 
 
 type Props = {
-    title: string;
+    title?: string;
     visible: boolean;
     onClose: () => void;
     onConfirm: (item) => void;

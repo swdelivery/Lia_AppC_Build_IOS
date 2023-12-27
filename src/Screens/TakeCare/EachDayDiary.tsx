@@ -1,7 +1,7 @@
 import ActionButton from '@Components/ActionButton/ActionButton';
 import Column from '@Components/Column';
 import { IconCheckList, IconGallery, IconPlayWhite, IconRightArrowBase, IconTick } from '@Components/Icon/Icon';
-import Image from '@Components/Image';
+// import Image from '@Components/Image';
 import Row from '@Components/Row';
 import SquareTick from '@Components/SquareTick/SquareTick';
 import Text from '@Components/Text';
@@ -14,12 +14,16 @@ import { uploadModule } from '@Redux/Action/BookingAction';
 import { updateDailyDiary } from '@Redux/takecare/actions';
 import moment from 'moment';
 import React, { useEffect, useMemo, useState } from 'react';
-import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
+import { Image, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
 import { useDispatch } from 'react-redux';
 import useConfirmation from 'src/Hooks/useConfirmation';
 import { useNavigate } from 'src/Hooks/useNavigation';
 import InputDesciption from './EachDayDiaryComponents/InputDesciption';
+import ActionSheetBottom from '@Components/ModalBottom/ActionSheetBottom';
+import useVisible from 'src/Hooks/useVisible';
+import { isEmpty } from 'lodash';
+import { getImageAvataUrl } from 'src/utils/avatar';
 
 const EachDayDiary = ({ data }) => {
   const dispatch = useDispatch()
@@ -27,6 +31,9 @@ const EachDayDiary = ({ data }) => {
   const { showConfirmation } = useConfirmation();
 
   const [disabledEdit, setDisabledEdit] = useState(false)
+  const [currTypeImageUpload, setCurrTypeImageUpload] = useState(null)
+  const cameraPicker = useVisible();
+
 
   const activityArr = data?.activityArr ?? [];
   const isComplete = data?.isComplete ?? false;
@@ -90,63 +97,7 @@ const EachDayDiary = ({ data }) => {
 
   const EachImage = ({ title = "", hideTitle = false, type = '', image, small = false }) => {
 
-    const _handlPickImage = () => {
-      ImagePicker.openPicker({
-        multiple: true,
-        waitAnimationEnd: false,
-        includeExif: true,
-        forceJpg: true,
-        maxFiles: type == 'other' ? 6 : 1,
-        mediaType: 'photo',
-        cropping: true,
-        width: 500,
-        height: 500,
-        compressImageQuality: 0.5,
-        compressImageMaxWidth: 700,
-      }).then(async (images) => {
-        let listImages = images.map((i, index) => {
-          return {
-            uri: i.path,
-            width: i.width,
-            height: i.height,
-            mime: i.mime,
-            type: i.mime,
-            name: `${i.modificationDate}_${index}`
-          };
-        })
-        let resultUploadImage = await uploadModule({
-          moduleName: 'dailyDiary',
-          files: listImages
-        })
-        if (resultUploadImage?.isAxiosError) return
-        let dataTemp = { ...dataFetch };
 
-        if (type == 'other') {
-          dataTemp['images'] = [
-            ...dataTemp.images,
-            ...resultUploadImage?.data?.data?.map(item => {
-              return {
-                type,
-                image: item
-              }
-            })
-          ]
-          setDataFetch(dataTemp)
-        } else {
-          let findIndexExistType = dataTemp?.images?.findIndex(itemFind => itemFind?.type == type);
-          if (findIndexExistType !== -1) {
-            dataTemp['images'][findIndexExistType] = { image: resultUploadImage?.data?.data[0], type: type }
-          } else {
-            dataTemp['images'] = [
-              ...dataTemp.images,
-              { image: resultUploadImage?.data?.data[0], type: type }
-            ]
-          }
-          setDataFetch(dataTemp)
-        }
-      }).catch(e => {
-      });
-    }
 
     const _handleRemoveImage = () => {
       let dataTemp = { ...dataFetch };
@@ -170,7 +121,11 @@ const EachDayDiary = ({ data }) => {
         }
         <TouchableOpacity
           disabled={disabledEdit}
-          onPress={_handlPickImage}
+          // onPress={_handlPickImage}
+          onPress={() => {
+            setCurrTypeImageUpload(type)
+            cameraPicker.show()
+          }}
           style={[styles.containerBtnAddImg, small && {
             height: 75,
             width: 75,
@@ -183,7 +138,7 @@ const EachDayDiary = ({ data }) => {
                   height: '100%',
                   borderRadius: 8
                 }}
-                avatar={image?.image} />
+                source={{ uri: getImageAvataUrl(image?.image) }} />
               :
               <IconGallery />
           }
@@ -237,6 +192,128 @@ const EachDayDiary = ({ data }) => {
       return true
     }
   }, [dataFetch]);
+
+  const _handleConfirmActionSheet = (data) => {
+    console.log({ data, currTypeImageUpload });
+    if (data?.type == "gallery") {
+      _handlePickGallery(currTypeImageUpload);
+    }
+    if (data?.type == "camera") {
+      _handlePickCamera(currTypeImageUpload);
+    }
+  }
+
+  const _handlePickGallery = (currTypeImageUpload) => {
+    ImagePicker.openPicker({
+      multiple: true,
+      waitAnimationEnd: false,
+      includeExif: true,
+      forceJpg: true,
+      maxFiles: currTypeImageUpload == 'other' ? 6 : 1,
+      mediaType: 'photo',
+      cropping: true,
+      width: 500,
+      height: 500,
+      compressImageQuality: 0.5,
+      compressImageMaxWidth: 700,
+    }).then(async (images) => {
+      let listImages = images.map((i, index) => {
+        return {
+          uri: i.path,
+          width: i.width,
+          height: i.height,
+          mime: i.mime,
+          type: i.mime,
+          name: `${i.modificationDate}_${index}`
+        };
+      })
+      let resultUploadImage = await uploadModule({
+        moduleName: 'dailyDiary',
+        files: listImages
+      })
+      if (resultUploadImage?.isAxiosError) return
+      let dataTemp = { ...dataFetch };
+
+      if (currTypeImageUpload == 'other') {
+        dataTemp['images'] = [
+          ...dataTemp.images,
+          ...resultUploadImage?.data?.data?.map(item => {
+            return {
+              type: currTypeImageUpload,
+              image: item
+            }
+          })
+        ]
+        setDataFetch(dataTemp)
+      } else {
+        let findIndexExistType = dataTemp?.images?.findIndex(itemFind => itemFind?.type == currTypeImageUpload);
+        if (findIndexExistType !== -1) {
+          dataTemp['images'][findIndexExistType] = { image: resultUploadImage?.data?.data[0], type: currTypeImageUpload }
+        } else {
+          dataTemp['images'] = [
+            ...dataTemp.images,
+            { image: resultUploadImage?.data?.data[0], type: currTypeImageUpload }
+          ]
+        }
+        setDataFetch(dataTemp)
+      }
+    }).catch(e => {
+    });
+  }
+
+  const _handlePickCamera = (currTypeImageUpload) => {
+    ImagePicker.openCamera({
+      mediaType: "photo",
+      width: 500,
+      height: 500,
+      multiple: false,
+    })
+      .then(async (image) => {
+        let newImage = {
+          uri: image.path,
+          width: image.width,
+          height: image.height,
+          mime: image.mime,
+          type: image.mime,
+          name: `${image.modificationDate}_${0}`,
+          isLocal: true,
+        };
+        if (!isEmpty(newImage)) {
+          let listImages = [newImage];
+          let resultUploadImage = await uploadModule({
+            moduleName: "dailyDiary",
+            files: listImages,
+          });
+          if (resultUploadImage.isAxiosError) return;
+          let dataTemp = { ...dataFetch };
+
+          if (currTypeImageUpload == 'other') {
+            dataTemp['images'] = [
+              ...dataTemp.images,
+              ...resultUploadImage?.data?.data?.map(item => {
+                return {
+                  type: currTypeImageUpload,
+                  image: item
+                }
+              })
+            ]
+            setDataFetch(dataTemp)
+          } else {
+            let findIndexExistType = dataTemp?.images?.findIndex(itemFind => itemFind?.type == currTypeImageUpload);
+            if (findIndexExistType !== -1) {
+              dataTemp['images'][findIndexExistType] = { image: resultUploadImage?.data?.data[0], type: currTypeImageUpload }
+            } else {
+              dataTemp['images'] = [
+                ...dataTemp.images,
+                { image: resultUploadImage?.data?.data[0], type: currTypeImageUpload }
+              ]
+            }
+            setDataFetch(dataTemp)
+          }
+        }
+      })
+      .catch((e) => { });
+  };
 
   const _handleConfirm = () => {
     showConfirmation(
@@ -312,7 +389,7 @@ const EachDayDiary = ({ data }) => {
             {
               videoGuideArr?.length > 0 ?
                 <Column marginTop={8}>
-                  <ScrollView horizontal>
+                  <ScrollView contentContainerStyle={{ flexGrow: 1, gap: 8 }} horizontal>
                     {
                       videoGuideArr?.map((itemVideo, iVideo) => {
                         return (
@@ -344,7 +421,7 @@ const EachDayDiary = ({ data }) => {
                               </View>
                               <Image
                                 style={styles.cardVideo}
-                                avatar={itemVideo?.avatar} />
+                                source={{ uri: getImageAvataUrl(itemVideo?.avatar) }} />
                             </Column>
                           </TouchableOpacity>
                         )
@@ -501,6 +578,17 @@ const EachDayDiary = ({ data }) => {
             onPress={_handleConfirm}
             title={`Xác nhận hoàn thành ngày ${data?.index}`} />
       }
+
+      <ActionSheetBottom
+        onConfirm={_handleConfirmActionSheet}
+        indexRed={2}
+        options={[
+          { name: "Mở camera", type: "camera" },
+          { name: "Chọn ảnh từ thư viện", type: "gallery" },
+        ]}
+        onClose={cameraPicker.hide}
+        visible={cameraPicker?.visible}
+      />
 
     </KeyboardAvoidingView>
   )
