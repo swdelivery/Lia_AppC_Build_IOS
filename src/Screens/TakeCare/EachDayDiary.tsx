@@ -552,7 +552,7 @@ const EachDayDiary = ({ data }) => {
                   Sản phầm cần thiết
                 </Text>
 
-                <ScrollView horizontal>
+                <ScrollView contentContainerStyle={{ gap: 8, flexGrow: 1 }} horizontal>
                   {
                     productArr?.map((item, index) => {
                       return (
