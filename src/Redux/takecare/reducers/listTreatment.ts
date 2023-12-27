@@ -17,6 +17,12 @@ const INITIAL_STATE: State = {
 };
 
 
+const request: Handler<State> = (state, { payload }) => {
+  return {
+    ...state,
+    isLoading: true,
+  }
+}
 const success: Handler<State> = (state, { payload }) => {
   return {
     ...state,
@@ -27,5 +33,6 @@ const success: Handler<State> = (state, { payload }) => {
 }
 
 export default createReducer(INITIAL_STATE, {
+  [GET_LIST_PARTNER_TREATMENT.REQUEST]: request,
   [GET_LIST_PARTNER_TREATMENT.SUCCESS]: success,
 });
