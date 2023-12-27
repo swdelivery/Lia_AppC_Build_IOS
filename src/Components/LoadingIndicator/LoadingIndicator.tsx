@@ -4,15 +4,20 @@ import { GREY } from '@Constant/Color'
 import React from 'react'
 import { ActivityIndicator } from 'react-native'
 
-const LoadingIndicator = () => {
+type Props = {
+  title?: string;
+  color?: any;
+}
+
+const LoadingIndicator = ({ title = "Đang tải dữ liệu", color = GREY }: Props) => {
   return (
     <Column
       alignItems='center'
       justifyContent='center'
       gap={8}
       flex={1}>
-      <ActivityIndicator color={GREY} />
-      <Text color={GREY}>Đang tải dữ liệu</Text>
+      <ActivityIndicator color={color} />
+      <Text color={color}>{title}</Text>
     </Column>
   )
 }

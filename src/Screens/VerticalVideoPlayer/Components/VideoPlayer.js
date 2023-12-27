@@ -13,6 +13,7 @@ import { URL_ORIGINAL } from '@Constant/Url';
 import LottieView from 'lottie-react-native';
 import { Gesture, GestureDetector, PanGestureHandler } from 'react-native-gesture-handler';
 import { styleElement } from '@Constant/StyleElement';
+import LoadingIndicator from '@Components/LoadingIndicator/LoadingIndicator';
 
 const AnimatedLottieView = Animated.createAnimatedComponent(LottieView)
 
@@ -33,6 +34,7 @@ const VideoPlayer = memo((props) => {
     const [startHeartedAnimation, setStartHeartedAnimation] = useState(null)
 
     const [onEndSwipSeekVideo, setOnEndSwipSeekVideo] = useState(null)
+    const [onLoadDone, setOnLoadDone] = useState(false)
 
     const tranDotX = useSharedValue(0)
 
@@ -217,10 +219,19 @@ const VideoPlayer = memo((props) => {
                 }
             </TouchableOpacity>
 
+            {
+                !onLoadDone ?
+                    <View style={[StyleSheet.absoluteFillObject, { ...styleElement.centerChild, zIndex: 10 }]}>
+                        <LoadingIndicator color={WHITE} title={'Đang tải Video...'} />
+                    </View>
+                    : <></>
+            }
+
             <Video
                 ref={videoRef}
                 onLoad={(e) => {
                     setCurrVideoData(e)
+                    setOnLoadDone(true)
                 }}
                 source={{ uri: `${URL_ORIGINAL}${data?.video?.link}` }}
                 // source={{ uri: `${data?.uri}` }}

@@ -16,9 +16,10 @@ type Props = {
 const ListVideo = ({ service }: Props) => {
   const { navigate } = useNavigate();
 
-  const _handleNavigate = useCallback(() => {
+  const _handleNavigate = useCallback((idx) => () => {
     navigate(ScreenKey.VERTICAL_VIDEO_PLAYER, {
       data: service?.guideVideo,
+      idx: idx
     })()
   }, [service])
 
@@ -30,7 +31,7 @@ const ListVideo = ({ service }: Props) => {
         {
           service?.guideVideo?.map((_i, idx) => {
             return (
-              <ItemVideo key={_i._id} onPress={_handleNavigate} data={_i} />
+              <ItemVideo key={_i._id} onPress={_handleNavigate(idx)} data={_i} />
             );
           })
         }

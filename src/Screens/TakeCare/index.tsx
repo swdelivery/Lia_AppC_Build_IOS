@@ -7,10 +7,12 @@ import React, { useCallback, useEffect } from 'react'
 import { FlatList, StyleSheet } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import ItemTreatment from './Components/ItemTreatment'
+import LoadingIndicator from '@Components/LoadingIndicator/LoadingIndicator'
+import EmptyResultData from '@Components/LoadingIndicator/EmptyResultData'
 
 const TakeCare = () => {
   const dispatch = useDispatch()
-  const { data: dataListPartnerTreatment } = useSelector(getListPartnerTreatmentState)
+  const { data: dataListPartnerTreatment, isLoading } = useSelector(getListPartnerTreatmentState)
 
   useEffect(() => {
     dispatch(getListPartnerTreatment.request())
@@ -36,6 +38,7 @@ const TakeCare = () => {
         safeTop
         title='Lịch sử điều trị' />
       <FlatList
+        ListEmptyComponent={isLoading ? <LoadingIndicator /> : <EmptyResultData title='Không có dữ liệu lịch sử điều trị' />}
         contentContainerStyle={styles.contentContainerStyle}
         renderItem={_renderItem}
         keyExtractor={_awesomeChildListKeyExtractor}

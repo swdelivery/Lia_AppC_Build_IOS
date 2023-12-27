@@ -25,12 +25,12 @@ import ImagePicker from "react-native-image-crop-picker";
 import { scanningEyes } from "../../../Redux/Action/FaceAiAction";
 import Text from "@Components/Text";
 import Row from "@Components/Row";
+import useRequireLoginCallback from "src/Hooks/useRequireLoginAction";
+import { getServiceGroupState } from "@Redux/home/selectors";
 
 const Search = (props) => {
   const { top } = useSafeAreaInsets();
-  const listServiceGroupRedux = useSelector(
-    (state) => state.serviceGroupReducer?.listServiceGroup
-  );
+  const { data } = useSelector(getServiceGroupState);
 
   const heightExpandServiceGr = useSharedValue(0);
 
@@ -58,24 +58,9 @@ const Search = (props) => {
     };
   }, [top]);
 
-  const _handleQR = () => {
+  const _handleQR = useRequireLoginCallback(() => {
     navigation.navigate(ScreenKey.QR_CODE)
-    // ImagePicker.openPicker({
-    //   multiple: false,
-    //   waitAnimationEnd: false,
-    //   includeExif: true,
-    //   forceJpg: true,
-    //   mediaType: "photo",
-    //   compressImageQuality: 0.5,
-    //   compressImageMaxWidth: 700,
-    // })
-    //   .then(async (images) => {
-    //     console.log({ images });
-    //     let result = await scanningEyes(images);
-    //     // GlobalStore.socket.emit(CSS_SEND_MESSAGE, data)
-    //   })
-    //   .catch((e) => {});
-  };
+  }, []);
 
   return (
     <Row style={[styles.container, containerStyle]} gap={8}>
@@ -85,13 +70,11 @@ const Search = (props) => {
             setExpandServiceGr(false);
           }}
           onSelect={(item) => {
-            // _handleChoiceItemFilter(item)
-            // navigation.navigate(ScreenKey.SEARCHING_HOME)
             navigation.navigate(ScreenKey.SEARCHING_HOME, {
               keySearch: item?.name,
             });
           }}
-          data={listServiceGroupRedux?.length > 0 ? listServiceGroupRedux : []}
+          data={data?.length > 0 ? data : []}
           show={expandServiceGr}
         />
 
@@ -116,23 +99,11 @@ const Search = (props) => {
           onPress={() => {
             setExpandServiceGr((old) => !old);
           }}
-          // onPress={props?.press}
           style={[
             styles.search_down_icon,
-            {
-              // transform: [
-              //     {
-              //         rotate: '90deg'
-              //     }
-              // ]
-            },
           ]}
         >
           <IconArrowDown style={sizeIcon.sm} />
-
-          {/* <IconRight
-                    width={8 * 1.7}
-                    height={8 * 1.7} /> */}
         </TouchableOpacity>
         <View style={{ width: 8 }} />
 

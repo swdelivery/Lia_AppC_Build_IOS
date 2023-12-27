@@ -43,7 +43,7 @@
 		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>Your own description of the purpose</string>
+	<string>Camera được sử dụng cho các chức năng quét gương thần, quét QR code CheckIn, gửi hình ảnh hậu phẫu.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
 	<key>NSMicrophoneUsageDescription</key>
