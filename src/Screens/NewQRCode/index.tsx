@@ -7,7 +7,7 @@ import { IconCancelGrey } from '@Components/Icon/Icon'
 import { sizeIcon } from '@Constant/Icon'
 import { useNavigate } from 'src/Hooks/useNavigation'
 import { FocusAwareStatusBar } from '@Components/StatusBar'
-import { Camera, useCameraDevice, useCodeScanner } from 'react-native-vision-camera'
+import { Camera, useCameraDevice, useCameraPermission, useCodeScanner } from 'react-native-vision-camera'
 import Column from '@Components/Column'
 import { styleElement } from '@Constant/StyleElement'
 import { createCheckinBookingForPartner, getBookingDataForPartner } from '@Redux/Action/BookingAction'
@@ -20,11 +20,15 @@ import ActionButton from '@Components/ActionButton/ActionButton'
 import ScreenKey from '@Navigation/ScreenKey'
 import { useDispatch } from 'react-redux'
 import { selectBookingForCheckin } from '@Redux/qrCheckin/actions'
+import useConfirmation from 'src/Hooks/useConfirmation'
+import { Linking } from 'react-native'
 
 const maskRowHeight = 100
 const maskColWidth = 500;
 
 const NewQRCode = () => {
+  const { hasPermission, requestPermission } = useCameraPermission();
+  const { showConfirmation } = useConfirmation();
   const dispatch = useDispatch()
   const { navigation } = useNavigate()
   const device = useCameraDevice("back");
@@ -35,6 +39,27 @@ const NewQRCode = () => {
     data: []
   })
   const [choiceBooking, setChoiceBooking] = useState(null)
+
+  //ASK PERMISSION CAMERA
+  useEffect(() => {
+    _checkPermission();
+  }, []);
+
+  const _checkPermission = async () => {
+    let isEnablePerCamera = hasPermission;
+    if (!isEnablePerCamera) {
+      let result = await requestPermission();
+      if (!result) {
+        showConfirmation(
+          "Cấp quyền truy cập",
+          "Hãy bật quyền truy cập máy ảnh để sử dụng chức năng này nhé?",
+          async () => {
+            await Linking.openSettings();
+          }
+        );
+      }
+    }
+  };
 
   const parseMyJson = (data) => {
     try {
