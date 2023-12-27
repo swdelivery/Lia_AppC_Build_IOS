@@ -1,7 +1,6 @@
 import ActionButton from '@Components/ActionButton/ActionButton';
 import Column from '@Components/Column';
 import { IconCheckList, IconGallery, IconPlayWhite, IconRightArrowBase, IconTick } from '@Components/Icon/Icon';
-// import Image from '@Components/Image';
 import Row from '@Components/Row';
 import SquareTick from '@Components/SquareTick/SquareTick';
 import Text from '@Components/Text';
@@ -24,6 +23,7 @@ import ActionSheetBottom from '@Components/ModalBottom/ActionSheetBottom';
 import useVisible from 'src/Hooks/useVisible';
 import { isEmpty } from 'lodash';
 import { getImageAvataUrl } from 'src/utils/avatar';
+import EnhancedImageViewing from "react-native-image-viewing/dist/ImageViewing";
 
 const EachDayDiary = ({ data }) => {
   const dispatch = useDispatch()
@@ -96,7 +96,7 @@ const EachDayDiary = ({ data }) => {
   };
 
   const EachImage = ({ title = "", hideTitle = false, type = '', image, small = false }) => {
-
+    const imageViewer = useVisible<number>();
 
 
     const _handleRemoveImage = () => {
@@ -120,11 +120,16 @@ const EachDayDiary = ({ data }) => {
             : <></>
         }
         <TouchableOpacity
-          disabled={disabledEdit}
-          // onPress={_handlPickImage}
+          activeOpacity={disabledEdit ? 1 : .5}
           onPress={() => {
-            setCurrTypeImageUpload(type)
-            cameraPicker.show()
+            if (disabledEdit) {
+              if (image) {
+                imageViewer.show()
+              }
+            } else {
+              setCurrTypeImageUpload(type)
+              cameraPicker.show()
+            }
           }}
           style={[styles.containerBtnAddImg, small && {
             height: 75,
@@ -154,6 +159,13 @@ const EachDayDiary = ({ data }) => {
               : <></>
           }
         </TouchableOpacity>
+
+        <EnhancedImageViewing
+          images={[{ uri: getImageAvataUrl(image?.image) }]}
+          onRequestClose={imageViewer.hide}
+          visible={imageViewer.visible}
+        />
+
       </Column>
     )
   }
