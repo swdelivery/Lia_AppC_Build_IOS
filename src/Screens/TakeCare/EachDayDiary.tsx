@@ -530,7 +530,8 @@ const styles = StyleSheet.create({
   contentContainerStyleScrollView: {
     gap: 8,
     paddingTop: 8 * 2,
-    paddingRight: 8 * 2
+    paddingRight: 8 * 2,
+    flexGrow: 1
   },
   imageProduct: {
     width: 150,

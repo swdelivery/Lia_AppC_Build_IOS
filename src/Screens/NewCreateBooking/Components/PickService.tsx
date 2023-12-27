@@ -49,7 +49,7 @@ const PickService = () => {
       <View style={{ height: _moderateScale(8 * 2) }} />
 
       <ScrollView
-        contentContainerStyle={{ gap: 8 * 2, paddingVertical: 8 * 2 }}
+        contentContainerStyle={{ gap: 8 * 2, paddingVertical: 8 * 2, flexGrow: 1 }}
         horizontal
         showsHorizontalScrollIndicator={false}
       >
