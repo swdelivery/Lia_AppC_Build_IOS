@@ -30,7 +30,7 @@ export default function ThankYouMessage({ template }: Props) {
       <Text
         weight="bold"
         size={12}
-      >{`CÁM ƠN BẠN ĐÃ ĐÓNG GÓP CHO DỰ ÁN "${template.data.volunteerName.toUpperCase()}"`}</Text>
+      >{`CÁM ƠN BẠN ĐÃ ĐÓNG GÓP CHO DỰ ÁN "${template.data?.volunteerName?.toUpperCase()}"`}</Text>
       <Text size={12}>
         <Icon name="leaf" color={GREEN_SUCCESS} size={18} /> Chân thành cám ơn
         <Text weight="bold" size={12}>

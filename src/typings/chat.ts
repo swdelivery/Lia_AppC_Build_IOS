@@ -24,7 +24,8 @@ export type TemplateData = {
     | "CREATE_BOOKING"
     | "REMIND_BOOKING"
     | "COMPLETE_PROGRESS"
-    | "THANK_YOU_LETTER";
+    | "THANK_YOU_LETTER"
+    | "COMPLETE_PROGRESS";
   data: {
     partnerName: string;
     created: string;
@@ -42,7 +43,9 @@ export type TemplateData = {
     volunteerBanner: string[];
     amount: number;
     volunteerId: string;
-    ß;
+
+    serviceName: string[];
+    completedAt: string;
   };
 };
 

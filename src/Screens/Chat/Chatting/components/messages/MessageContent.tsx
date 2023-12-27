@@ -15,6 +15,7 @@ import ConsultedMessage from "./ConsultedMessage";
 import BookingCreatedMessage from "./BookingCreatedMessage";
 import RemindBookingMessage from "./RemindBookingMessage";
 import ThankYouMessage from "./ThankYouMessage";
+import CompleteProcessMessage from "./CompleteProcessMessage";
 
 type Props = {
   item: Message;
@@ -34,13 +35,15 @@ export default function MessageContent({ item, isMyMessage = false }: Props) {
         case "NEWS":
           return <TemplateNews item={item} />;
         case "WAS_CONSULTED":
-          return <ConsultedMessage item={item} />;
+          return <ConsultedMessage template={item.template} />;
         case "CREATE_BOOKING":
           return <BookingCreatedMessage item={item} />;
         case "REMIND_BOOKING":
           return <RemindBookingMessage item={item} />;
         case "THANK_YOU_LETTER":
           return <ThankYouMessage template={item.template} />;
+        case "COMPLETE_PROGRESS":
+          return <CompleteProcessMessage template={item.template} />;
         case "BOOKING":
         case "COLLABORATOR":
         case "SPIN_WHEEL":
