@@ -19,6 +19,7 @@ import ImagePicker from 'react-native-image-crop-picker';
 import { useDispatch } from 'react-redux';
 import useConfirmation from 'src/Hooks/useConfirmation';
 import { useNavigate } from 'src/Hooks/useNavigation';
+import InputDesciption from './EachDayDiaryComponents/InputDesciption';
 
 const EachDayDiary = ({ data }) => {
   const dispatch = useDispatch()
@@ -445,28 +446,10 @@ const EachDayDiary = ({ data }) => {
             </Column>
           </Column>
 
-          <Column gap={8}>
-            <Text
-              color={GREY_FOR_TITLE}
-              weight='bold'>
-              Ghi chú cho bác sĩ
-            </Text>
-            <View style={styles.inputContainer}>
-              <TextInput
-                editable={disabledEdit ? false : true}
-                value={dataFetch?.description}
-                onChangeText={(e) => {
-                  setDataFetch(old => {
-                    return {
-                      ...old,
-                      description: e
-                    }
-                  })
-                }}
-                placeholder={"Nhập ghi chú"}
-                multiline />
-            </View>
-          </Column>
+          <InputDesciption
+            dataFetch={dataFetch}
+            setDataFetch={setDataFetch}
+            disabledEdit={disabledEdit} />
 
           <Column gap={8}>
             <Text
