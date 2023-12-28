@@ -38,9 +38,9 @@ export default function MessageContent({ item, isMyMessage = false }: Props) {
         case "WAS_CONSULTED":
           return <ConsultedMessage template={item.template} />;
         case "CREATE_BOOKING":
-          return <BookingCreatedMessage item={item} />;
+          return <BookingCreatedMessage template={item.template} />;
         case "REMIND_BOOKING":
-          return <RemindBookingMessage item={item} />;
+          return <RemindBookingMessage template={item.template} />;
         case "THANK_YOU_LETTER":
           return <ThankYouMessage template={item.template} />;
         case "COMPLETE_PROGRESS":
