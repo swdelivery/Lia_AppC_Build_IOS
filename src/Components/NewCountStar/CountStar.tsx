@@ -2,7 +2,7 @@ import React from "react";
 import Row from "@Components/Row";
 import Text from "@Components/Text";
 import Icon from "@Components/Icon";
-import { BASE_COLOR, BASE_COLOR, TITLE_GREY } from "@Constant/Color";
+import { BASE_COLOR, TITLE_GREY } from "@Constant/Color";
 import { PersonsIcon } from "src/SGV";
 
 type Props = {

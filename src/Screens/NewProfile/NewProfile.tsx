@@ -41,10 +41,14 @@ const NewProfile = () => {
                   name: "Thanh toán",
                   icon: <IconProfilePayment />,
                 },
-                { flag: 'takecare', name: "Chăm sóc", icon: <IconProfileCare /> },
-                { name: "Hoàn tiền", icon: <IconProfileCoin /> },
-                { name: "Bảo hành", icon: <IconProfileShield /> },
-                { name: "Đánh giá", icon: <IconProfileStar /> },
+                {
+                  flag: "takecare",
+                  name: "Chăm sóc",
+                  icon: <IconProfileCare />,
+                },
+                // { name: "Hoàn tiền", icon: <IconProfileCoin /> },
+                // { name: "Bảo hành", icon: <IconProfileShield /> },
+                // { name: "Đánh giá", icon: <IconProfileStar /> },
               ]}
             />
             <Menu
@@ -61,8 +65,8 @@ const NewProfile = () => {
                   name: "Kho Voucher",
                   icon: <IconProfileVoucher />,
                 },
-                { name: "LPay Later", icon: <IconProfilePayLater /> },
-                { name: "Bảo hiểm", icon: <IconProfileInsurance /> },
+                // { name: "LPay Later", icon: <IconProfilePayLater /> },
+                // { name: "Bảo hiểm", icon: <IconProfileInsurance /> },
               ]}
             />
             <Menu
@@ -74,12 +78,12 @@ const NewProfile = () => {
                   name: "Lá lành\nđùm lá rách",
                   icon: <IconProfileHandHeartIn />,
                 },
-                {
-                  name: "Quỹ thiện\nnguyện LiA",
-                  icon: <IconProfileLoveCare />,
-                },
-                { name: "Tuyển dụng", icon: <IconProfileFindJob /> },
-                { name: "Đào tạo", icon: <IconProfileEducation /> },
+                // {
+                //   name: "Quỹ thiện\nnguyện LiA",
+                //   icon: <IconProfileLoveCare />,
+                // },
+                // { name: "Tuyển dụng", icon: <IconProfileFindJob /> },
+                // { name: "Đào tạo", icon: <IconProfileEducation /> },
               ]}
             />
             <Menu
@@ -96,7 +100,7 @@ const NewProfile = () => {
                   name: "Chính sách bảo mật",
                   icon: <IconProfileProtect />,
                 },
-                { name: "Liên hệ hợp tác", icon: <IconProfilePartnerShip /> },
+                // { name: "Liên hệ hợp tác", icon: <IconProfilePartnerShip /> },
               ]}
             />
             {/* <View style={{ height: 100 }} /> */}
