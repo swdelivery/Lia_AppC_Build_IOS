@@ -10,7 +10,7 @@ import Separator from "@Components/Separator/Separator";
 import { ScrollView } from "react-native-gesture-handler";
 import Column from "@Components/Column";
 import Image from "@Components/Image";
-import { GREY } from "@Constant/Color";
+import { BASE_COLOR, GREY } from "@Constant/Color";
 import Avatar from "@Components/Avatar";
 import { Service } from "@typings/serviceGroup";
 import { Doctor } from "@typings/doctor";
@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
   more: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#4BA888",
+    backgroundColor: BASE_COLOR,
     paddingHorizontal: 8,
     paddingVertical: 2,
     borderRadius: 8 * 2,

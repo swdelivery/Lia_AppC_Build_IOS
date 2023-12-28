@@ -10,22 +10,22 @@ import Text from "@Components/Text";
 import { Service } from "@typings/serviceGroup";
 import { useNavigate } from "src/Hooks/useNavigation";
 import ScreenKey from "@Navigation/ScreenKey";
+import { BASE_COLOR } from "@Constant/Color";
 
 type Props = {
   service?: Service;
 };
 
 const BottomAction = ({ service }: Props) => {
-
-  const { navigate } = useNavigate()
+  const { navigate } = useNavigate();
 
   const handleBooking = useRequireLoginCallback(() => {
     navigate(ScreenKey.CREATE_BOOKING, { service })();
   }, [service]);
 
-  const handlePhonePress = useCallback(() => { }, [service]);
+  const handlePhonePress = useCallback(() => {}, [service]);
 
-  const handleChatPress = useRequireLoginCallback(() => { }, []);
+  const handleChatPress = useRequireLoginCallback(() => {}, []);
 
   return (
     <View style={styles.container}>
@@ -75,8 +75,7 @@ const styles = StyleSheet.create({
     borderRadius: _moderateScale(8 * 2),
     alignItems: "center",
     justifyContent: "center",
-    // borderColor: '#1E463E',
-    backgroundColor: "#876947",
+    backgroundColor: BASE_COLOR,
     flexDirection: "row",
     gap: 8,
   },
@@ -95,7 +94,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderColor: "#1E463E",
-    backgroundColor: "#B99A60",
+    backgroundColor: BASE_COLOR,
     flexDirection: "row",
     gap: 8,
   },

@@ -66,6 +66,11 @@ import SVGPlusGrey from "../../SGV/plusGrey.svg";
 import { _moderateScale } from "../../Constant/Scale";
 import { SvgProps } from "react-native-svg";
 
+export { default as RightArrowIcon } from "../../SGV/rightArrow.svg";
+export { default as HandIcon } from "../../SGV/hand.svg";
+export { default as CommentIcon } from "../../SGV/comment.svg";
+export { default as AffiliateIcon } from "../../SGV/affiliate.svg";
+export { default as MirrorIcon } from "../../SGV/mirror.svg";
 export { default as BackIcon } from "../../SGV/back.svg";
 export { default as IconOclock } from "../../SGV/oclock.svg";
 export { default as IconLocation } from "../../SGV/locationBase.svg";

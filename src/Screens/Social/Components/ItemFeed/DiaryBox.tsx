@@ -2,7 +2,12 @@ import Column from '@Components/Column'
 import { IconRightWhite } from '@Components/Icon/Icon'
 import Row from '@Components/Row'
 import Text from '@Components/Text'
-import { WHITE } from '@Constant/Color'
+import {
+  BASE_COLOR,
+  BASE_COLOR_LIGHT,
+  NEW_BASE_COLOR,
+  WHITE,
+} from "@Constant/Color";
 import { sizeIcon } from '@Constant/Icon'
 import ScreenKey from '@Navigation/ScreenKey'
 import { selectPost } from '@Redux/newfeeds/actions'
@@ -30,26 +35,27 @@ const DiaryBox = ({ data }: Props) => {
   }
 
   return (
-    <TouchableOpacity
-      onPress={_handleGoToDetail}>
+    <TouchableOpacity onPress={_handleGoToDetail}>
       <LinearGradient
         style={[StyleSheet.absoluteFill]}
         start={{ x: 1, y: 0 }}
         end={{ x: 0, y: 1 }}
-        colors={["#007B5E", "#4AB19A"]}
+        colors={[BASE_COLOR, NEW_BASE_COLOR]}
       />
-      <Row
-        padding={8 * 2}
-        paddingVertical={8}>
+      <Row padding={8 * 2} paddingVertical={8}>
         <Column gap={4} flex={1}>
-          <Text weight='bold' color={WHITE}>{serviceName}</Text>
-          <Text color={WHITE}>Thời gian: {moment(dateTime).format('DD-MM-YYYY')}</Text>
+          <Text weight="bold" color={WHITE}>
+            {serviceName}
+          </Text>
+          <Text color={WHITE}>
+            Thời gian: {moment(dateTime).format("DD-MM-YYYY")}
+          </Text>
           <Text color={WHITE}>Điều trị tại {`${branchName}`}</Text>
         </Column>
         <IconRightWhite style={sizeIcon.llg} />
       </Row>
     </TouchableOpacity>
-  )
+  );
 }
 
 export default DiaryBox

@@ -1,29 +1,17 @@
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import React, { memo, useEffect, useState } from "react";
+import { StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
+import React, { memo } from "react";
 import { BASE_COLOR, RED, WHITE } from "../../../Constant/Color";
 import { _moderateScale } from "../../../Constant/Scale";
 import {
-  IconBXH,
-  IconBackBase,
-  IconBackGrey,
-  IconBackWhite,
+  BackIcon,
   IconCancelWhite,
   IconFindGrey,
-  IconWallet,
 } from "../../../Components/Icon/Icon";
 import { stylesFont } from "../../../Constant/Font";
 import { navigation } from "../../../../rootNavigation";
-import ScreenKey from "../../../Navigation/ScreenKey";
 import { sizeIcon } from "../../../Constant/Icon";
 import { styleElement } from "../../../Constant/StyleElement";
-import { getDataSuggestionSearch } from "../../../Redux/Action/Service";
+import Text from "@Components/Text";
 
 const Header = memo((props) => {
   return (
@@ -31,7 +19,7 @@ const Header = memo((props) => {
       <View style={styles.header__box}>
         <View style={{}}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
-            <IconBackGrey style={sizeIcon.lllg} />
+            <BackIcon color={BASE_COLOR} />
           </TouchableOpacity>
         </View>
         <View style={styles.input}>
@@ -44,6 +32,7 @@ const Header = memo((props) => {
             style={{
               flex: 1,
               marginLeft: _moderateScale(8),
+              paddingVertical: 0,
             }}
             placeholder="Nhập nội dung tìm kiếm..."
           />
@@ -77,7 +66,7 @@ const Header = memo((props) => {
             style={[
               {
                 width: _moderateScale(8 * 7),
-                height: _moderateScale(8 * 4),
+                height: 8 * 4,
                 borderRadius: _moderateScale(4),
                 backgroundColor: BASE_COLOR,
               },
@@ -107,11 +96,11 @@ export default Header;
 
 const styles = StyleSheet.create({
   input: {
-    height: _moderateScale(8 * 5),
-    paddingHorizontal: _moderateScale(8),
-    marginHorizontal: _moderateScale(8),
+    height: 8 * 5,
+    paddingHorizontal: 8,
+    paddingVertical: 0,
     flex: 1,
-    borderWidth: 2,
+    borderWidth: 1,
     flexDirection: "row",
     borderColor: BASE_COLOR,
     borderRadius: _moderateScale(8),

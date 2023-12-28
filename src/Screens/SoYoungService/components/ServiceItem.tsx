@@ -72,7 +72,7 @@ export default function ServiceItem({
               <Column backgroundColor={MAIN_RED_600} marginRight={2}>
                 <FlashIcon width={10} height={10} />
               </Column>
-              <Text size={8} color={MAIN_RED_600}>
+              <Text size={6} color={MAIN_RED_600}>
                 Flash Sale bắt đầu lúc{" "}
                 {formatTime(item.nextFlashSale.timeRange.from)}
               </Text>

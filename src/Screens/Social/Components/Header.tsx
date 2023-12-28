@@ -10,6 +10,7 @@ import React from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useDispatch, useSelector } from "react-redux";
+import Column from "@Components/Column";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -21,8 +22,7 @@ const Header = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={{ height: top }} />
+    <Column style={styles.container} paddingTop={top}>
       <View style={styles.header__box}>
         <Row gap={8 * 2} paddingHorizontal={8 * 2}>
           <Avatar size={8 * 4} circle avatar={infoUser?.fileAvatar} />
@@ -36,7 +36,7 @@ const Header = () => {
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.containerBtnAdd}>
-            <IconPlusBase />
+            <IconPlusBase color={BASE_COLOR} />
           </TouchableOpacity>
 
           <TouchableOpacity onPress={_handleShowRightNoti}>
@@ -44,7 +44,7 @@ const Header = () => {
           </TouchableOpacity>
         </Row>
       </View>
-    </View>
+    </Column>
   );
 };
 

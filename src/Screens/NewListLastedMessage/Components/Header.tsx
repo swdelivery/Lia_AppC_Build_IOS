@@ -110,6 +110,7 @@ const styles = StyleSheet.create({
   },
   textInputStyle__input: {
     flex: 1,
+    paddingVertical: 0,
   },
   textInputStyle: {
     width: "100%",

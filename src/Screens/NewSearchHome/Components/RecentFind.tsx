@@ -1,20 +1,27 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import React, { memo, useEffect, useState } from "react";
 import { _moderateScale } from "../../../Constant/Scale";
 import { stylesFont } from "../../../Constant/Font";
 import { getDataSuggestionSearch } from "../../../Redux/Action/Service";
 import {
+  AffiliateIcon,
+  CommentIcon,
+  HandIcon,
   IconAffiliate,
   IconComment,
   IconHand,
   IconMirror,
   IconTrash,
+  MirrorIcon,
 } from "../../../Components/Icon/Icon";
 import { sizeIcon } from "../../../Constant/Icon";
 import AsyncStorage from "@react-native-community/async-storage";
 import ScreenKey from "../../../Navigation/ScreenKey";
 import useRequireLoginCallback from "src/Hooks/useRequireLoginAction";
 import { useNavigate } from "src/Hooks/useNavigation";
+import Text from "@Components/Text";
+import SVGTrash from "src/SGV/trash.svg";
+import { BASE_COLOR } from "@Constant/Color";
 
 const RecentFind = memo((props) => {
   const { navigation } = useNavigate();
@@ -54,7 +61,7 @@ const RecentFind = memo((props) => {
             setListRecent([]);
           }}
         >
-          <IconTrash style={sizeIcon.lg} />
+          <SVGTrash color={BASE_COLOR} />
         </TouchableOpacity>
       </View>
 
@@ -106,31 +113,31 @@ const RecentFind = memo((props) => {
           style={styles.btnRecommend}
         >
           <View style={styles.btnRecommend__box}>
-            <IconMirror />
+            <MirrorIcon color={BASE_COLOR} />
           </View>
           <Text style={styles.btnRecommend__text}>Gương thần</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={handleAffiliate} style={styles.btnRecommend}>
           <View style={styles.btnRecommend__box}>
-            <IconAffiliate />
+            <AffiliateIcon color={BASE_COLOR} />
           </View>
           <Text style={styles.btnRecommend__text}>Tri Ân</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.btnRecommend}>
           <View style={styles.btnRecommend__box}>
-            <IconComment />
+            <CommentIcon color={BASE_COLOR} />
           </View>
           <Text style={styles.btnRecommend__text}>Hồ sơ{`\n`}điện tử</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.btnRecommend}>
           <View style={styles.btnRecommend__box}>
-            <IconComment />
+            <CommentIcon color={BASE_COLOR} />
           </View>
           <Text style={styles.btnRecommend__text}>Nhật ký{`\n`}điều trị</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.btnRecommend}>
           <View style={styles.btnRecommend__box}>
-            <IconHand />
+            <HandIcon color={BASE_COLOR} />
           </View>
           <Text style={styles.btnRecommend__text}>Ví LiA</Text>
         </TouchableOpacity>
