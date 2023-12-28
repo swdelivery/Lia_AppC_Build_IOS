@@ -178,7 +178,7 @@ const Banner = () => {
       </View>
       <OptionService />
       <Voucher />
-      {/* <FlashSale /> */}
+      <FlashSale />
       <ListDoctor />
     </Animated.View>
   );
