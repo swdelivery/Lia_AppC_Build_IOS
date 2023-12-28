@@ -1,3 +1,5 @@
+import { FlashSaleTime } from "@typings/flashsale";
+
 /**
  * Convert date from utc to local and keep the date and time value
  * @param datestr date string
@@ -24,4 +26,8 @@ export function formatDuration(milliseconds: number) {
     minutes: getTwoDigits(minutes),
     seconds: getTwoDigits(remainingSeconds),
   };
+}
+
+export function formatTime(time: FlashSaleTime) {
+  return `${getTwoDigits(time.hour)}:${getTwoDigits(time.minute)}`;
 }

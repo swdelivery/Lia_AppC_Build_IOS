@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import React from "react";
+import React, { useMemo } from "react";
 import { _moderateScale, _widthScale } from "../../../Constant/Scale";
 import CountStar2 from "../../../Components/NewCountStar/CountStar";
 import Text from "@Components/Text";
@@ -17,15 +17,26 @@ import { Service } from "@typings/serviceGroup";
 import FlashSaleEnds from "@Screens/FlashSale/Component/FlashSaleEnds";
 import { FlashIcon } from "src/SGV";
 import { useServiceDetailsContext } from "../context";
+import { formatTime, fromUtc } from "src/utils/date";
+import moment from "moment";
 
 type Props = {
   service: Service;
 };
 
 const NameService = ({ service }: Props) => {
-  const isFlashSaleStarted = false;
-  const isFlashSaleIncoming = !isFlashSaleStarted;
+  const isFlashSaleStarted = service.isOnFlashSale;
+  const isFlashSaleIncoming = !service.isOnFlashSale && service.nextFlashSale;
   const { refreshService } = useServiceDetailsContext();
+
+  const flashSaleStartTime = useMemo(() => {
+    return service.nextFlashSale
+      ? moment(fromUtc(service.nextFlashSale.dateRange.from)).add(
+          service.nextFlashSale.timeRange.from.unixTime,
+          "seconds"
+        )
+      : moment();
+  }, [service]);
 
   return (
     <Column style={styles.infoService} gap={8}>
@@ -43,7 +54,10 @@ const NameService = ({ service }: Props) => {
             </Text>
             <Row alignItems="flex-end" gap={4}>
               <Text weight="bold" color={INFO_COLOR} size={17}>
-                {formatMonney(service.price * 0.8)}
+                {formatMonney(
+                  service.preferentialInCurrentFlashSale.finalPrice,
+                  true
+                )}
               </Text>
               <Text
                 size={12}
@@ -56,23 +70,7 @@ const NameService = ({ service }: Props) => {
             </Row>
           </Column>
           <FlashSaleEnds
-            flashSale={{
-              isUpcoming: false,
-              dateRange: {
-                from: "2023-12-22T00:00:00.000Z",
-                to: "2023-12-22T00:00:00.000Z",
-              },
-              timeRange: {
-                from: {
-                  hour: 9,
-                  minute: 50,
-                },
-                to: {
-                  hour: 23,
-                  minute: 55,
-                },
-              },
-            }}
+            flashSale={service.currentFlashSale}
             onFlashSaleUpdate={refreshService}
           />
         </Row>
@@ -86,7 +84,10 @@ const NameService = ({ service }: Props) => {
               <Text weight="bold" color={MAIN_RED_500}>
                 Flash Sale
               </Text>
-              <Text color={MAIN_RED_500}>bắt đầu lúc 00:00, 20 tháng 12</Text>
+              <Text color={MAIN_RED_500}>
+                bắt đầu lúc {formatTime(service.nextFlashSale.timeRange.from)},{" "}
+                {flashSaleStartTime.format("DD [tháng] MM")}
+              </Text>
             </Row>
           )}
           <Text size={18} weight="bold" color={MAIN_RED} left={8}>

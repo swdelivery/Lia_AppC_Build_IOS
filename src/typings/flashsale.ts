@@ -7,9 +7,10 @@ type FlashSaleDateRange = {
   to: string;
 };
 
-type FlashSaleTime = {
+export type FlashSaleTime = {
   hour: number;
   minute: number;
+  unixTime: number; //seconds
 };
 
 export type FlashSale = {

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
-import { _width } from "../../Constant/Scale";
+import { _moderateScale, _width } from "../../Constant/Scale";
 import ServiceItem, {
   PLACEHOLDER_HEIGHT,
   Placeholder,
@@ -15,10 +15,12 @@ import useItemExtractor from "src/Hooks/useItemExtractor";
 import PlaceholderSkeletons from "@Components/PlaceholderSkeletons";
 import Column from "@Components/Column";
 import Text from "@Components/Text";
-import { BASE_COLOR_LIGHT } from "@Constant/Color";
+import { BASE_COLOR, BASE_COLOR_LIGHT } from "@Constant/Color";
 import ScreenKey from "@Navigation/ScreenKey";
 import { useNavigate } from "src/Hooks/useNavigation";
 import { AfterTimeoutFragment } from "@Components/AfterTimeoutFragment";
+import { isTablet } from "src/utils/platform";
+import Spacer from "@Components/Spacer";
 
 const SoYoungService = ({ tabIndex, isFocused }: any) => {
   const dispatch = useDispatch();
@@ -33,8 +35,15 @@ const SoYoungService = ({ tabIndex, isFocused }: any) => {
     }
   }, [tabIndex, isFocused]);
 
-  function renderItem({ item }: RenderItemProps<Service>) {
-    return <ServiceItem item={item} />;
+  function renderItem({ item, index }: RenderItemProps<Service>) {
+    const numColumns = isTablet ? 3 : 2;
+    return (
+      <ServiceItem
+        item={item}
+        numColumns={numColumns}
+        isFirstInRow={index % numColumns === 0}
+      />
+    );
   }
 
   const { keyExtractor } = useItemExtractor<Service>((item) => item._id);
@@ -53,19 +62,18 @@ const SoYoungService = ({ tabIndex, isFocused }: any) => {
           style={styles.viewAll}
           onPress={navigate(ScreenKey.SERVICE_LIST)}
         >
-          <Text
-            color={BASE_COLOR_LIGHT}
-            fontStyle="italic"
-          >{`Xem tất cả >>`}</Text>
+          <Text color={BASE_COLOR} fontStyle="italic">{`Xem tất cả >>`}</Text>
         </Pressable>
       </Column>
       <FlatList
+        style={styles.list}
         contentContainerStyle={styles.container}
         scrollEnabled={false}
-        numColumns={2}
+        numColumns={isTablet ? 3 : 2}
         data={data}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
+        ItemSeparatorComponent={() => <Spacer left={8} />}
         ListEmptyComponent={
           isLoading ? (
             <PlaceholderSkeletons count={5} itemHeight={PLACEHOLDER_HEIGHT}>
@@ -82,11 +90,14 @@ const SoYoungService = ({ tabIndex, isFocused }: any) => {
 export default SoYoungService;
 
 const styles = StyleSheet.create({
+  list: {
+    backgroundColor: "#F5F9FA",
+  },
   container: {
     paddingTop: 8,
     paddingBottom: 60,
-    paddingRight: 8,
-    backgroundColor: "#F5F9FA",
+    marginHorizontal: _moderateScale(10),
+    gap: 8,
   },
   viewAll: {
     alignItems: "flex-end",

@@ -24,6 +24,7 @@ import SoYoungPractitioner from "@Screens/SoYoungPractitioner";
 import { AfterTimeoutFragment } from "@Components/AfterTimeoutFragment";
 import { FocusAwareStatusBar } from "@Components/StatusBar";
 import { useIsFocused } from "@react-navigation/native";
+import { BASE_COLOR } from "@Constant/Color";
 
 const STACKS = [
   {
@@ -143,7 +144,7 @@ const styles = StyleSheet.create({
     fontFamily: FONT_WEIGHTS["bold"],
   },
   tabUnderlineStyle: {
-    backgroundColor: "#4BA888",
+    backgroundColor: BASE_COLOR,
     top: 8 * 4,
     height: 3,
   },
@@ -155,7 +156,7 @@ const styles = StyleSheet.create({
   },
   tabInnerStyle: { width: "100%" },
   textActiveStyle: {
-    color: "#4BA888",
+    color: BASE_COLOR,
     fontWeight: Platform.OS === "ios" ? "bold" : undefined,
   },
 });

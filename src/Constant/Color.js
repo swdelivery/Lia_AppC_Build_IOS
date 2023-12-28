@@ -73,7 +73,7 @@ const PATTERN_CHART = [
 ];
 
 // NEW COLOR
-const BASE_COLOR = "#4A9F80";
+const BASE_COLOR = "#1C5579";
 const NEW_BASE_COLOR = "#366792";
 const BACKGROUND_COLOR = "#F4F4F4";
 const BASE_COLOR_LIGHT = "#01AB84";

@@ -14,7 +14,7 @@ import {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
-import { WHITE } from "../../../Constant/Color";
+import { BASE_COLOR, WHITE } from "../../../Constant/Color";
 import { stylesFont } from "../../../Constant/Font";
 import { useSelector } from "react-redux";
 import ModalPickSingleNotSearch from "../../../Components/ModalPickSingleNotSearch/ModalPickSingleNotSearch";
@@ -102,7 +102,7 @@ const Search = (props) => {
       </Row>
 
       <TouchableOpacity onPress={_handleQR} style={[styles.qrButton, shadow]}>
-        <SVGQRScaner style={sizeIcon.lg} />
+        <SVGQRScaner color={BASE_COLOR} />
       </TouchableOpacity>
     </Row>
   );

@@ -108,4 +108,5 @@ export type Service = {
     userUpdate: string;
     __v: number;
   };
+  nextFlashSale?: FlashSale;
 } & Timestamp;

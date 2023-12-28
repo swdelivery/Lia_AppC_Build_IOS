@@ -9,7 +9,7 @@ type Props = {
   rating: number;
   count?: number;
   countPartner?: number;
-  size?: 10 | 12 | 14 | 16;
+  size?: 9 | 10 | 12 | 14 | 16;
   larger?: boolean;
   lightContent?: boolean;
 };
@@ -23,7 +23,7 @@ const CountStar2 = ({
 }: Props) => {
   const iconSize = size + 4;
   return (
-    <Row gap={4}>
+    <Row gap={3}>
       <Row gap={-3} marginTop={3}>
         <Icon
           name={rating >= 1 ? "star-box" : "star-box-outline"}
