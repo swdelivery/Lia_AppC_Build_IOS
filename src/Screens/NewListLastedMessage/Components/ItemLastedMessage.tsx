@@ -102,20 +102,20 @@ export default ItemLastedMessage;
 
 const styles = StyleSheet.create({
   countBoxBlank: {
-    width: _moderateScale(8 * 5),
-    height: _moderateScale(8 * 2),
+    width: 8 * 5,
+    height: 8 * 2,
   },
   countBox: {
-    width: _moderateScale(8 * 5),
-    height: _moderateScale(8 * 2),
-    borderRadius: _moderateScale(4),
+    width: 8 * 5,
+    height: 8 * 2,
+    borderRadius: 4,
     backgroundColor: "#EB4303",
     justifyContent: "center",
     alignItems: "center",
   },
   avatar: {
-    width: _moderateScale(8 * 5),
-    height: _moderateScale(8 * 5),
-    borderRadius: _moderateScale((8 * 5) / 2),
+    width: 8 * 5,
+    height: 8 * 5,
+    borderRadius: (8 * 5) / 2,
   },
 });

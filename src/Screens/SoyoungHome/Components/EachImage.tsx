@@ -13,6 +13,7 @@ import {
   _widthScale,
 } from "../../../Constant/Scale";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import Column from "@Components/Column";
 
 const EachImage = memo((props) => {
   const widthImg = useSharedValue(380);
@@ -43,33 +44,26 @@ const EachImage = memo((props) => {
 
   return (
     <TouchableOpacity onPress={props?.handlePress} activeOpacity={0.9}>
-      <View
-        style={{
-          width: _width,
-          alignItems: "center",
-        }}
-      >
-        <View
-          style={{
-            borderRadius: 16,
-            overflow: "hidden",
-            width: _widthScale(350),
-            height: _heightScale(140),
-            alignItems: "center",
-          }}
+      <Column width={_width} alignItems={"center"}>
+        <Column
+          borderRadius={16}
+          overflow={"hidden"}
+          marginHorizontal={_moderateScale(20)}
+          height={_heightScale(140)}
+          alignItems={"center"}
         >
           <Animated.Image
             style={[
               {
-                width: _widthScale(350),
+                width: _width - _moderateScale(20) * 2,
                 height: _heightScale(140),
               },
               animSizeImg,
             ]}
             source={{ uri: `${props?.data?.url}` }}
           />
-        </View>
-      </View>
+        </Column>
+      </Column>
     </TouchableOpacity>
   );
 });

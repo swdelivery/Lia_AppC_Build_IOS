@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect, useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import { StyleSheet } from "react-native";
-import { _widthScale } from "../../../../Constant/Scale";
+import { _moderateScale, _widthScale } from "../../../../Constant/Scale";
 import Column from "@Components/Column";
 import { useFocused, useNavigate } from "src/Hooks/useNavigation";
 import ScreenKey from "@Navigation/ScreenKey";
@@ -22,8 +22,6 @@ import {
 import { FlashSale } from "@typings/flashsale";
 import Text from "@Components/Text";
 import { MAIN_RED_500 } from "@Constant/Color";
-import moment from "moment";
-import { fromUtc } from "src/utils/date";
 import useFlashSales from "../useFlashSale";
 
 const FlashSaleBanner = ({ flashSale }: { flashSale: FlashSale }) => {
@@ -121,7 +119,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   container: {
-    marginHorizontal: 12,
+    marginHorizontal: _moderateScale(20),
     paddingHorizontal: 8,
     height: 120,
     alignSelf: "center",

@@ -87,7 +87,7 @@ const SoyoungHome = () => {
           titleArgs={{
             interpolateHeight: {
               inputRange: [0, 160 + top],
-              outputRange: [0, 55 + top],
+              outputRange: [0, 65 + top],
               extrapolate: "clamp",
             },
           }}

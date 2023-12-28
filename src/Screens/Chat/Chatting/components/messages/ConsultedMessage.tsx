@@ -35,16 +35,18 @@ export default function ConsultedMessage({ template }: Props) {
             THÔNG BÁO
           </Text>
           <Text
-            size={12}
+            size={14}
             color={GREEN_2}
           >{`CHÀO BẠN ${template.data.partnerName}`}</Text>
         </Column>
       </Row>
-      <Text>
+      <Text size={14}>
         Chúc mừng bạn vừa hoàn thành tư vấn dịch vụ tại{" "}
         <Text weight="bold">{template.data.branchName}</Text>
       </Text>
-      <Text weight="bold">Xem chi tiết thông tin tư vấn tại đây!!</Text>
+      <Text weight="bold" size={14}>
+        Xem chi tiết thông tin tư vấn tại đây!!
+      </Text>
       <Row
         backgroundColor={GREEN_2}
         alignSelf="center"
@@ -54,7 +56,7 @@ export default function ConsultedMessage({ template }: Props) {
         marginTop={8}
         onPress={handleDetails}
       >
-        <Text size={12} color={"white"} weight="bold" bottom={2}>
+        <Text size={14} color={"white"} weight="bold" bottom={2}>
           Chi tiết thông tin tư vấn
         </Text>
         <Icon name="chevron-double-right" color="white" size={18} />

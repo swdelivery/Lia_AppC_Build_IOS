@@ -31,10 +31,10 @@ export default function PasswordInput({label, content, errorMessage, onBlur, onC
         <></>
       )}
       <Row
-        paddingVertical={_moderateScale(8 * 2)}
-        borderRadius={_moderateScale(8)}
+        paddingVertical={8 * 2}
+        borderRadius={8}
         borderColor={
-            errorMessage
+          errorMessage
             ? Color.ERROR_COLOR
             : content
             ? Color.BORDER_INPUT_TEXT_FOCUSED
@@ -89,17 +89,17 @@ const styles = StyleSheet.create({
     position: "absolute", // Needed to be able to precisely overlap label with border
     top: -12, // Vertical position of label. Eyeball it to see where label intersects border.
   },
-  error_text:{
+  error_text: {
     color: Color.ERROR_COLOR,
     marginHorizontal: 10,
-    fontStyle: 'italic',
-    marginVertical: 5
+    fontStyle: "italic",
+    marginVertical: 5,
   },
-  input_text:{
+  input_text: {
     ...stylesFont.fontNolan,
-    fontSize: _moderateScale(14),
+    fontSize: 14,
     paddingVertical: 0,
     flex: 1,
-    color: Color.BLACK
+    color: Color.BLACK,
   },
 });

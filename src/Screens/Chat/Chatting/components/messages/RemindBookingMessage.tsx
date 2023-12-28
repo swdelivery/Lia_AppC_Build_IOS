@@ -32,42 +32,42 @@ export default function RemindBookingMessage({ item }: Props) {
     <Column padding={8} gap={4}>
       <Row gap={4}>
         <Icon name="bell" color={ORANGE} size={18} />
-        <Text size={12} weight="bold">
+        <Text size={14} weight="bold">
           NHẮC NHỞ NHỎ
         </Text>
       </Row>
       <Text
-        size={12}
+        size={14}
       >{`Xin chào Khách hàng ${item.template.data.partnerName}, bạn đừng quên chúng ta có hẹn làm đẹp với nhau vào lúc:`}</Text>
       <Row alignItems="flex-start" gap={20}>
         <Column>
-          <Text size={12} fontStyle="italic">
+          <Text size={14} fontStyle="italic">
             Thời Gian:
           </Text>
           {item.template.data.services.map((item, index) => (
-            <Text size={12} fontStyle="italic" key={item}>
+            <Text size={14} fontStyle="italic" key={item}>
               {index === 0 ? "Dịch vụ:" : ""}
             </Text>
           ))}
-          <Text size={12} fontStyle="italic">
+          <Text size={14} fontStyle="italic">
             Địa điểm
           </Text>
         </Column>
         <Column flex={1}>
-          <Text size={12} fontStyle="italic">
+          <Text size={14} fontStyle="italic">
             {moment(item.template.data.created).format("DD/MM/YYYY, HH:mm")}
           </Text>
           {item.template.data.services.map((item) => (
-            <Text size={12} fontStyle="italic" key={item}>
+            <Text size={14} fontStyle="italic" key={item}>
               {item}
             </Text>
           ))}
-          <Text size={12} fontStyle="italic">
+          <Text size={14} fontStyle="italic">
             {item.template.data.branchName}
           </Text>
         </Column>
       </Row>
-      <Text size={10} fontStyle="italic">
+      <Text size={14} fontStyle="italic">
         Chúng tôi rất mong chờ để phục vụ bạn vào ngày hôm ấy! Nếu có bất kỳ
         điều gì cần thay đổi hoặc bạn có nhu cầu đặc biệt, đừng ngần ngại liên
         hệ với chúng tôi
@@ -81,7 +81,7 @@ export default function RemindBookingMessage({ item }: Props) {
         marginTop={8}
         onPress={handleBookingDetails}
       >
-        <Text size={12} color={"white"} weight="bold" bottom={2}>
+        <Text size={14} color={"white"} weight="bold" bottom={2}>
           Chi tiết lịch hẹn
         </Text>
         <Icon name="chevron-right" color="white" />

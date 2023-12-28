@@ -6,7 +6,7 @@ import { View, StyleSheet, StyleProp, ViewStyle } from "react-native";
 import DoctorItem from "./components/DoctorItem";
 import { ScrollView } from "react-native-gesture-handler";
 import { TouchableOpacity } from "react-native";
-import { IconRightArrow, IconRightArrowBase } from "@Components/Icon/Icon";
+import { IconRightArrowBase } from "@Components/Icon/Icon";
 import Column from "@Components/Column";
 import { BASE_COLOR } from "@Constant/Color";
 import { useNavigate } from "src/Hooks/useNavigation";

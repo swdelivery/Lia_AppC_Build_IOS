@@ -61,7 +61,7 @@ const MainTab = (props) => {
           left: _width / 10 / 1.25,
         },
         tabBarLabelStyle: {
-          fontSize: _moderateScale(12),
+          fontSize: 12,
           fontFamily: FONT_WEIGHTS["regular"],
           textTransform: "capitalize",
           margin: 0,
@@ -107,7 +107,7 @@ const MainTab = (props) => {
         }}
         name={ScreenKey.TAB_TIMELINE}
         component={TimelineTab}
-      // component={infoUser?._id ? TimelineTab : () => <></>}
+        // component={infoUser?._id ? TimelineTab : () => <></>}
       />
 
       {/* <Tab.Screen

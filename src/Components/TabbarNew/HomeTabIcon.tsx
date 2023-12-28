@@ -12,15 +12,9 @@ const HomeTabIcon = memo((props: Props) => {
   return (
     <>
       {props?.focused ? (
-        <IconAHome
-          width={_moderateScale(8 * 3)}
-          height={_moderateScale(8 * 3)}
-        />
+        <IconAHome width={24} height={24} />
       ) : (
-        <IconIHome
-          width={_moderateScale(8 * 3)}
-          height={_moderateScale(8 * 3)}
-        />
+        <IconIHome width={24} height={24} />
       )}
     </>
   );

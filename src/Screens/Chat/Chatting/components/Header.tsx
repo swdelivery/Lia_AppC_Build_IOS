@@ -19,6 +19,7 @@ import { Conversation } from "@typings/chat";
 import { useNavigate } from "src/Hooks/useNavigation";
 import Column from "@Components/Column";
 import { StatusBar } from "@Components/StatusBar";
+import SVGBackWhite from "src/SGV/backWhite.svg";
 
 type Props = {
   conversation: Conversation;
@@ -41,7 +42,7 @@ const Header = ({ conversation }: Props) => {
           hitSlop={styleElement.hitslopSm}
           onPress={navigation.goBack}
         >
-          <IconBackWhite />
+          <SVGBackWhite />
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -140,26 +141,26 @@ const styles = StyleSheet.create({
     width: _width,
     backgroundColor: "#1c5579",
     zIndex: 1,
-    borderBottomWidth: _moderateScale(0.5),
+    borderBottomWidth: 0.5,
     borderBottomColor: Color.BG_GREY_OPACITY_5,
   },
   avatar: {
-    width: _moderateScale(40),
-    height: _moderateScale(40),
-    borderRadius: _moderateScale(20),
+    width: 40,
+    height: 40,
+    borderRadius: 20,
     // borderColor: Color.BG_GREY_OPACITY
   },
   dot: {
-    width: _moderateScale(8),
-    height: _moderateScale(8),
-    borderRadius: _moderateScale(4),
-    marginRight: _moderateScale(4),
-    top: _moderateScale(1),
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    marginRight: 4,
+    top: 1,
   },
   icon: {
-    width: _moderateScale(8 * 5),
-    height: _moderateScale(8 * 5),
-    borderRadius: _moderateScale((8 * 5) / 2),
+    width: 8 * 5,
+    height: 8 * 5,
+    borderRadius: (8 * 5) / 2,
     borderColor: Color.BG_GREY_OPACITY,
     backgroundColor: "white",
   },

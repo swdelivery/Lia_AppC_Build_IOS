@@ -117,7 +117,7 @@ const Banner = () => {
         end={{ x: 0, y: 1 }}
         colors={["transparent", "#9a0000"]}
       />
-      <Spacer top={top + 50} />
+      <Spacer top={top + 65} />
       <View>
         <FlatList
           ref={FlatListRef}

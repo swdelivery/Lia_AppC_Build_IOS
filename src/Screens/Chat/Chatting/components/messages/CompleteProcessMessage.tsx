@@ -45,32 +45,32 @@ export default function CompleteProcessMessage({ template }: Props) {
           >{`ĐÃ HOÀN THÀNH DỊCH VỤ\n${services.toUpperCase()} TẠI ${template.data.branchName?.toUpperCase()}`}</Text>
         </Column>
       </Row>
-      <Text size={12}>
+      <Text size={14}>
         Chân thành cám ơn Anh/Chị đã chọn thực hiện dịch vụ
-        <Text size={12} weight="bold">
+        <Text size={14} weight="bold">
           {` ${services} `}
         </Text>
         tại
-        <Text size={12} weight="bold">
+        <Text size={14} weight="bold">
           {` ${template.data.branchName} `}
         </Text>
       </Text>
-      <Text size={12}>
+      <Text size={14}>
         Dịch vụ đã được thực hiện thành công vào lúc
-        <Text weight="bold" size={12}>
+        <Text weight="bold" size={14}>
           {` ${moment(template.data.completedAt).format("HH:mm")} ngày ${moment(
             template.data.completedAt
           ).format("DD/MM/YYYY")} `}
         </Text>
       </Text>
-      <Text size={12}>
+      <Text size={14}>
         Đừng quên tuân thủ{" "}
-        <Text size={12} weight="bold">
+        <Text size={14} weight="bold">
           hướng dẫn chăm sóc hậu phẫu
         </Text>
         của Bác sĩ hoặc xem thêm các hướng dẫn chăm sóc tại đây
       </Text>
-      <Text size={12}>
+      <Text size={14}>
         Trong quá trình nghỉ dưỡng và chăm sóc tại nhà, nếu có bất cứ biểu hiện
         khác lạ, Anh/Chị {template.data.partnerName} hãy liên hệ ngay với
         HOTLINE để được tư vấn nhanh chóng
@@ -84,7 +84,7 @@ export default function CompleteProcessMessage({ template }: Props) {
           marginTop={8}
           onPress={handleDetails}
         >
-          <Text size={12} color={"white"} weight="bold" bottom={2}>
+          <Text size={14} color={"white"} weight="bold" bottom={2}>
             Chia sẻ cho người thân
           </Text>
           <Icon name="chevron-double-right" color="white" size={18} />
@@ -98,7 +98,7 @@ export default function CompleteProcessMessage({ template }: Props) {
           marginTop={8}
           onPress={navigate(ScreenKey.TAKECARE)}
         >
-          <Text size={12} color={"white"} weight="bold" bottom={2}>
+          <Text size={14} color={"white"} weight="bold" bottom={2}>
             Chăm sóc
           </Text>
           <Icon name="chevron-double-right" color="white" size={18} />

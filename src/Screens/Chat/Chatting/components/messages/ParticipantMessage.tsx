@@ -75,7 +75,12 @@ export default function ParticipantMessage({
   }
 
   return (
-    <Row alignItems="flex-start" paddingHorizontal={15} marginBottom={15}>
+    <Row
+      alignItems="flex-start"
+      paddingHorizontal={15}
+      marginBottom={15}
+      width={"80%"}
+    >
       <Column
         width={35}
         height={30}
@@ -112,23 +117,23 @@ export default function ParticipantMessage({
 
 const styles = StyleSheet.create({
   avatarSm: {
-    width: _moderateScale(30),
-    height: _moderateScale(30),
-    borderRadius: _moderateScale(15),
-    borderWidth: _moderateScale(1),
+    width: 30,
+    height: 30,
+    borderRadius: 15,
+    borderWidth: 1,
     borderColor: BG_GREY_OPACITY,
     backgroundColor: "white",
   },
   onlineIndicator: {
     position: "absolute",
     zIndex: 1,
-    bottom: _moderateScale(-2),
-    right: _moderateScale(-2),
-    width: _moderateScale(8 * 1.75),
-    height: _moderateScale(8 * 1.75),
-    borderWidth: _moderateScale(2),
+    bottom: -2,
+    right: -2,
+    width: 8 * 1.75,
+    height: 8 * 1.75,
+    borderWidth: 2,
     borderColor: WHITE,
-    borderRadius: _moderateScale(9),
+    borderRadius: 9,
     backgroundColor: ONLINE,
   },
 });

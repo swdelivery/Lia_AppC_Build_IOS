@@ -16,6 +16,7 @@ import BookingCreatedMessage from "./BookingCreatedMessage";
 import RemindBookingMessage from "./RemindBookingMessage";
 import ThankYouMessage from "./ThankYouMessage";
 import CompleteProcessMessage from "./CompleteProcessMessage";
+import Column from "@Components/Column";
 
 type Props = {
   item: Message;

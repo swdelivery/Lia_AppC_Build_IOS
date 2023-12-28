@@ -36,7 +36,7 @@ export default function Header({}: Props) {
       <IconButton onPress={navigation.goBack}>
         <BackIcon />
       </IconButton>
-      {flashSaleTitle && !isEmpty(flashSaleTitle.fileArr) && (
+      {flashSaleTitle?.isActive && !isEmpty(flashSaleTitle.fileArr) && (
         <Image
           auto
           avatar={flashSaleTitle.fileArr[0]}
