@@ -28,12 +28,10 @@ const SoYoungBranch = ({ tabIndex, isFocused }: any) => {
   );
 
   useEffect(() => {
-    if (tabIndex === 1 && isFocused) {
-      requestAnimationFrame(() => {
-        refreshData();
-      });
-    }
-  }, [tabIndex, isFocused]);
+    requestAnimationFrame(() => {
+      refreshData();
+    });
+  }, []);
 
   function renderItem({ item }: RenderItemProps<any>) {
     return <BranchItem item={item} />;

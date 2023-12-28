@@ -24,12 +24,11 @@ const SoYoungPractitioner = memo(({ tabIndex, isFocused }: any) => {
   const { isLoading, data } = useSelector(getPractitionerListState);
 
   useEffect(() => {
-    if (tabIndex === 3 && isFocused) {
-      requestAnimationFrame(() => {
-        dispatch(getPractitionerList.request());
-      });
-    }
-  }, [tabIndex, isFocused]);
+    // requestAnimationFrame(() => {
+    //   dispatch(getPractitionerList.request());
+    // });
+    dispatch(getPractitionerList.request());
+  }, []);
 
   function renderItem({ item }: RenderItemProps<any>) {
     return <PractitionerItem item={item} />;

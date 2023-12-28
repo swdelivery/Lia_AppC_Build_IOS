@@ -26,12 +26,11 @@ const SoYoungService = ({ tabIndex, isFocused }: any) => {
   const { isLoading, data } = useSelector(getServiceListState);
 
   useEffect(() => {
-    if (tabIndex === 0 && isFocused) {
-      requestAnimationFrame(() => {
-        dispatch(getServices.request());
-      });
-    }
-  }, [tabIndex, isFocused]);
+    // requestAnimationFrame(() => {
+    //   dispatch(getServices.request());
+    // });
+    dispatch(getServices.request());
+  }, []);
 
   function renderItem({ item }: RenderItemProps<Service>) {
     return <ServiceItem item={item} />;
