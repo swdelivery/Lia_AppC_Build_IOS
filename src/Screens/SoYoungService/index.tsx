@@ -69,7 +69,8 @@ const SoYoungService = ({ tabIndex, isFocused }: any) => {
         style={styles.list}
         contentContainerStyle={styles.container}
         scrollEnabled={false}
-        numColumns={isTablet ? 3 : 2}
+        numColumns={2}
+        // numColumns={isTablet ? 3 : 2}
         data={data}
         renderItem={renderItem}
         keyExtractor={keyExtractor}
