@@ -17,7 +17,7 @@ import Column from "@Components/Column";
 import Text from "@Components/Text";
 import { BASE_COLOR_LIGHT } from "@Constant/Color";
 import ScreenKey from "@Navigation/ScreenKey";
-import { useNavigate } from "src/Hooks/useNavigation";
+import { useFocused, useNavigate } from "src/Hooks/useNavigation";
 import { AfterTimeoutFragment } from "@Components/AfterTimeoutFragment";
 
 const SoYoungService = ({ tabIndex, isFocused }: any) => {
@@ -25,12 +25,11 @@ const SoYoungService = ({ tabIndex, isFocused }: any) => {
   const { navigate } = useNavigate();
   const { isLoading, data } = useSelector(getServiceListState);
 
-  useEffect(() => {
-    // requestAnimationFrame(() => {
-    //   dispatch(getServices.request());
-    // });
-    dispatch(getServices.request());
-  }, []);
+  useFocused(() => {
+    requestAnimationFrame(() => {
+      dispatch(getServices.request());
+    });
+  });
 
   function renderItem({ item }: RenderItemProps<Service>) {
     return <ServiceItem item={item} />;
