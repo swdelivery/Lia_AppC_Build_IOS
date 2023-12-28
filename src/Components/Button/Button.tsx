@@ -215,7 +215,7 @@ const Outline = ({
 };
 
 const Gradient = ({
-  colors = ["#01AB84", "#186A57"],
+  colors = [Color.BASE_COLOR, Color.NEW_BASE_COLOR],
   horizontal = false,
   titleColor = "white",
   ...props

@@ -167,7 +167,8 @@ const ModalRequireLogin = (props) => {
 
 const styles = StyleSheet.create({
   modalFilter: {
-    width: _widthScale(160),
+    width: "80%",
+    maxWidth: 400,
     backgroundColor: Color.WHITE,
     borderRadius: 8 * 2,
     paddingVertical: 8 * 2,

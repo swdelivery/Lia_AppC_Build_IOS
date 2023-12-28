@@ -5,7 +5,7 @@ import Icon from "@Components/Icon";
 import CountStar2 from "@Components/NewCountStar/CountStar";
 import Row from "@Components/Row";
 import Text from "@Components/Text";
-import { RED } from "@Constant/Color";
+import { BASE_COLOR, RED } from "@Constant/Color";
 import { _width } from "@Constant/Scale";
 import { styleElement } from "@Constant/StyleElement";
 import ScreenKey from "@Navigation/ScreenKey";
@@ -67,7 +67,8 @@ export default function DoctorItem({ item }: Props) {
             <TouchableOpacity
               hitSlop={styleElement.hitslopSm}
               onPress={handleStartChat}
-              style={styles.consultButton}>
+              style={styles.consultButton}
+            >
               <Text size={12} weight="bold" color={"white"}>
                 Tư vấn
               </Text>
@@ -135,7 +136,7 @@ const styles = StyleSheet.create({
   consultButton: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#4BA888",
+    backgroundColor: BASE_COLOR,
     paddingHorizontal: 8,
     paddingVertical: 2,
     borderRadius: 8 * 2,
