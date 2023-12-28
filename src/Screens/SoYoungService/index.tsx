@@ -60,7 +60,7 @@ const SoYoungService = ({ tabIndex, isFocused }: any) => {
       <Column backgroundColor={"#F5F9FA"} paddingHorizontal={8} paddingTop={8}>
         <Pressable
           style={styles.viewAll}
-          onPress={navigate(ScreenKey.SERVICE_LIST)}
+          onPress={navigate(ScreenKey.NEW_CATEGORY, {})}
         >
           <Text color={BASE_COLOR} fontStyle="italic">{`Xem tất cả >>`}</Text>
         </Pressable>

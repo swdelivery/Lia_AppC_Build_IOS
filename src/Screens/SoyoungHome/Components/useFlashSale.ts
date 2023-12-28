@@ -30,7 +30,13 @@ export default function useFlashSales(
         result.push(currentFlashSale);
       }
     }
-    const firstNextFlashSale = nextFlashSale[0];
+    const validFlashSales = nextFlashSale.filter((item) => {
+      const endTimestamp = moment(fromUtc(item.dateRange.to))
+        .add(item.timeRange.to.unixTime, "seconds")
+        .valueOf();
+      return Date.now() < endTimestamp;
+    });
+    const firstNextFlashSale = validFlashSales[0];
 
     if (!!firstNextFlashSale) {
       // Check first next flash sale to see if it is current flash sale
@@ -46,7 +52,7 @@ export default function useFlashSales(
         isUpcoming,
       });
       // Append the rest
-      const rest = nextFlashSale.slice(1);
+      const rest = validFlashSales.slice(1);
       if (!isEmpty(rest)) {
         result.push(...rest.map((item) => ({ ...item, isUpcoming: true })));
       }

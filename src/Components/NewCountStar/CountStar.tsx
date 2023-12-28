@@ -23,7 +23,7 @@ const CountStar2 = ({
 }: Props) => {
   const iconSize = size + 4;
   return (
-    <Row gap={3}>
+    <Row gap={size / 5}>
       <Row gap={-3} marginTop={3}>
         <Icon
           name={rating >= 1 ? "star-box" : "star-box-outline"}
