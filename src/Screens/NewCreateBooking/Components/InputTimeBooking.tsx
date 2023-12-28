@@ -140,7 +140,7 @@ const InputTimeBooking = memo(
                       style={StyleSheet.absoluteFillObject}
                       start={{ x: 0, y: 0 }}
                       end={{ x: 0, y: 1 }}
-                      colors={["#01AB84", "#186A57"]}
+                      colors={["#1C5579", "#186A57"]}
                     />
                   ) : (
                     <></>
@@ -198,7 +198,7 @@ const InputTimeBooking = memo(
                     style={[StyleSheet.absoluteFillObject, { borderRadius: 4 }]}
                     start={{ x: 0, y: 0 }}
                     end={{ x: 0, y: 1 }}
-                    colors={["#01AB84", "#186A57"]}
+                    colors={["#1C5579", "#186A57"]}
                   />
                   <Text color={WHITE} weight="bold">
                     {item?.time?.hour}:{item?.time?.minute}
@@ -246,7 +246,7 @@ const InputTimeBooking = memo(
                     style={[StyleSheet.absoluteFillObject, { borderRadius: 4 }]}
                     start={{ x: 0, y: 0 }}
                     end={{ x: 0, y: 1 }}
-                    colors={["#01AB84", "#186A57"]}
+                    colors={["#1C5579", "#186A57"]}
                   />
                   <Text color={WHITE} weight="bold">
                     {item?.from}

@@ -124,7 +124,7 @@ const NewPickerServiceBooking = () => {
           <Button.Gradient
             start={{ x: 0, y: 0 }}
             end={{ x: 0, y: 1 }}
-            colors={["#01AB84", "#186A57"]}
+            colors={["#1C5579", "#186A57"]}
             title={`Xác nhận ${formatMonney(totalAmount)}  VNĐ`}
             onPress={_handleConfirmOrder}
             height={40}

@@ -71,114 +71,156 @@ const ModalConfirmService = memo((props) => {
     }
 
     return (
-        <>
-            {
-                props?.isShow ?
-                    <View style={{
-                        width: _width,
-                        height: _height,
-                        position: 'absolute',
-                        zIndex: 100,
-                        bottom: 0
-                    }}>
-                        <Animated.View style={[{
-                            width: _width,
-                            height: _height,
-                        }, {
-                            backgroundColor: 'rgba(0,0,0,.7)'
-                        }, animOpacityBackDrop]}>
-                            <TouchableOpacity onPress={() => _handleHideModal()} style={[StyleSheet.absoluteFillObject]} />
-                        </Animated.View>
+      <>
+        {props?.isShow ? (
+          <View
+            style={{
+              width: _width,
+              height: _height,
+              position: "absolute",
+              zIndex: 100,
+              bottom: 0,
+            }}
+          >
+            <Animated.View
+              style={[
+                {
+                  width: _width,
+                  height: _height,
+                },
+                {
+                  backgroundColor: "rgba(0,0,0,.7)",
+                },
+                animOpacityBackDrop,
+              ]}
+            >
+              <TouchableOpacity
+                onPress={() => _handleHideModal()}
+                style={[StyleSheet.absoluteFillObject]}
+              />
+            </Animated.View>
 
-                        <Animated.View style={[styles.modal, { paddingBottom: bottom }, animTranY]}>
-                            <View style={styles.header}>
-                                <View style={{ justifyContent: 'center', alignItems: 'center', width: _width, height: _moderateScale(8 * 6) }}>
-                                    <Text style={[stylesFont.fontNolanBold, { fontSize: _moderateScale(14) }]}>
-                                        Chọn dịch vụ
-                                    </Text>
-                                    <TouchableOpacity
-                                        hitSlop={styleElement.hitslopSm}
-                                        onPress={_handleHideModal}
-                                        style={{
-                                            position: 'absolute',
-                                            right: _moderateScale(8 * 3),
-                                            zIndex: 100,
-                                            top: _moderateScale(8 * 2)
-                                        }}>
-                                        <IconCancelGrey style={sizeIcon.sm} />
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
-                            <ScrollView>
-                                <Row gap={8 * 2} alignItems={'flex-start'} style={{ paddingHorizontal: 8 * 2, marginTop: 8 * 2 }}>
-                                    <View>
-                                        <Image style={styles.avatar} avatar={data?.representationFileArr[0]} />
-                                    </View>
-                                    <View style={{ flex: 1 }}>
-                                        <Column gap={4}>
-                                            <Text style={sizeText.normal_bold}>
-                                                {data?.name}
-                                            </Text>
-                                            <Text style={[sizeText.normal_bold, { color: PRICE_ORANGE }]} >
-                                                {formatMonney(data?.price)} VNĐ
-                                            </Text>
-                                            {
-                                                isCollapDescription ?
-                                                    <Text style={sizeText.normal_500}>
-                                                        {data?.description?.slice(0, 85)}... {` `}
-                                                        <Text
-                                                            style={{ color: BLUE_FB, marginLeft: _moderateScale(8 * 2) }}
-                                                            onPress={() => {
-                                                                setIsCollapDescription(false)
-                                                                LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-                                                            }}>
-                                                            Xem thêm
-                                                        </Text>
-                                                    </Text>
-                                                    :
-                                                    <Text style={sizeText.normal_500}>
-                                                        {data?.description} {` `}
-                                                        <Text
-                                                            style={{ color: BLACK, marginLeft: _moderateScale(8 * 2) }}
-                                                            onPress={() => {
-                                                                setIsCollapDescription(true)
-                                                                LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-                                                            }}>
-                                                            Thu gọn
-                                                        </Text>
-                                                    </Text>
-                                            }
-                                        </Column>
-                                    </View>
-                                </Row>
-                                <View style={{ height: 8 * 3 }} />
-                                <ListTopping data={data} />
-                                <View style={{ height: 100 }} />
-                            </ScrollView>
-                            <View style={styles.bottomAction}>
-                                <TouchableOpacity
-                                    onPress={_handleConfirmAddService}
-                                    style={styles.btnAction}>
-                                    <LinearGradient
-                                        style={[StyleSheet.absoluteFillObject, { borderRadius: 8, }]}
-                                        start={{ x: 0, y: 0 }}
-                                        end={{ x: 0, y: 1 }}
-                                        colors={["#01AB84", "#186A57"]}
-                                    />
-                                    <Text style={[sizeText.normal_bold, { color: WHITE }]}>
-                                        Xác nhận ( {formatMonney(data?.price)} VNĐ )
-                                    </Text>
-                                </TouchableOpacity>
-                            </View>
-                        </Animated.View>
-                    </View>
-                    :
-                    <></>
-            }
-        </>
-
-
-    )
+            <Animated.View
+              style={[styles.modal, { paddingBottom: bottom }, animTranY]}
+            >
+              <View style={styles.header}>
+                <View
+                  style={{
+                    justifyContent: "center",
+                    alignItems: "center",
+                    width: _width,
+                    height: _moderateScale(8 * 6),
+                  }}
+                >
+                  <Text
+                    style={[
+                      stylesFont.fontNolanBold,
+                      { fontSize: _moderateScale(14) },
+                    ]}
+                  >
+                    Chọn dịch vụ
+                  </Text>
+                  <TouchableOpacity
+                    hitSlop={styleElement.hitslopSm}
+                    onPress={_handleHideModal}
+                    style={{
+                      position: "absolute",
+                      right: _moderateScale(8 * 3),
+                      zIndex: 100,
+                      top: _moderateScale(8 * 2),
+                    }}
+                  >
+                    <IconCancelGrey style={sizeIcon.sm} />
+                  </TouchableOpacity>
+                </View>
+              </View>
+              <ScrollView>
+                <Row
+                  gap={8 * 2}
+                  alignItems={"flex-start"}
+                  style={{ paddingHorizontal: 8 * 2, marginTop: 8 * 2 }}
+                >
+                  <View>
+                    <Image
+                      style={styles.avatar}
+                      avatar={data?.representationFileArr[0]}
+                    />
+                  </View>
+                  <View style={{ flex: 1 }}>
+                    <Column gap={4}>
+                      <Text style={sizeText.normal_bold}>{data?.name}</Text>
+                      <Text
+                        style={[sizeText.normal_bold, { color: PRICE_ORANGE }]}
+                      >
+                        {formatMonney(data?.price)} VNĐ
+                      </Text>
+                      {isCollapDescription ? (
+                        <Text style={sizeText.normal_500}>
+                          {data?.description?.slice(0, 85)}... {` `}
+                          <Text
+                            style={{
+                              color: BLUE_FB,
+                              marginLeft: _moderateScale(8 * 2),
+                            }}
+                            onPress={() => {
+                              setIsCollapDescription(false);
+                              LayoutAnimation.configureNext(
+                                LayoutAnimation.Presets.easeInEaseOut
+                              );
+                            }}
+                          >
+                            Xem thêm
+                          </Text>
+                        </Text>
+                      ) : (
+                        <Text style={sizeText.normal_500}>
+                          {data?.description} {` `}
+                          <Text
+                            style={{
+                              color: BLACK,
+                              marginLeft: _moderateScale(8 * 2),
+                            }}
+                            onPress={() => {
+                              setIsCollapDescription(true);
+                              LayoutAnimation.configureNext(
+                                LayoutAnimation.Presets.easeInEaseOut
+                              );
+                            }}
+                          >
+                            Thu gọn
+                          </Text>
+                        </Text>
+                      )}
+                    </Column>
+                  </View>
+                </Row>
+                <View style={{ height: 8 * 3 }} />
+                <ListTopping data={data} />
+                <View style={{ height: 100 }} />
+              </ScrollView>
+              <View style={styles.bottomAction}>
+                <TouchableOpacity
+                  onPress={_handleConfirmAddService}
+                  style={styles.btnAction}
+                >
+                  <LinearGradient
+                    style={[StyleSheet.absoluteFillObject, { borderRadius: 8 }]}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 0, y: 1 }}
+                    colors={["#1C5579", "#186A57"]}
+                  />
+                  <Text style={[sizeText.normal_bold, { color: WHITE }]}>
+                    Xác nhận ( {formatMonney(data?.price)} VNĐ )
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </Animated.View>
+          </View>
+        ) : (
+          <></>
+        )}
+      </>
+    );
 })
 
 

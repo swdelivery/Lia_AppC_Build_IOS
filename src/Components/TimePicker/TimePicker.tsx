@@ -72,48 +72,66 @@ const TimePicker = memo((props) => {
     }
 
     return (
+      <>
+        {props?.isShow ? (
+          <View
+            style={{
+              width: _width,
+              height: _height,
+              position: "absolute",
+              zIndex: 100,
+              bottom: 0,
+            }}
+          >
+            <Animated.View
+              style={[
+                {
+                  width: _width,
+                  height: _height,
+                },
+                {
+                  backgroundColor: "rgba(0,0,0,.7)",
+                },
+                animOpacityBackDrop,
+              ]}
+            >
+              <TouchableOpacity
+                onPress={() => _handleHideModal()}
+                style={[StyleSheet.absoluteFillObject]}
+              />
+            </Animated.View>
 
-        <>
-            {
-                props?.isShow ?
-                    <View style={{
-                        width: _width,
-                        height: _height,
-                        position: 'absolute',
-                        zIndex: 100,
-                        bottom: 0
-                    }}>
-                        <Animated.View style={[{
-                            width: _width,
-                            height: _height,
-                        }, {
-                            backgroundColor: 'rgba(0,0,0,.7)'
-                        }, animOpacityBackDrop]}>
-                            <TouchableOpacity onPress={() => _handleHideModal()} style={[StyleSheet.absoluteFillObject]} />
-                        </Animated.View>
+            <Animated.View
+              style={[
+                {
+                  width: _width,
+                  backgroundColor: WHITE,
+                  borderRadius: _moderateScale(8 * 2),
+                  borderBottomLeftRadius: 0,
+                  borderBottomRightRadius: 0,
+                  paddingBottom: _moderateScale(8 * 2),
+                  position: "absolute",
+                  bottom: -HEIGHT_MODAL,
+                  height: HEIGHT_MODAL,
+                },
+                animTranY,
+              ]}
+            >
+              <View style={{ marginTop: _moderateScale(8 * 2) }} />
 
-                        <Animated.View style={[{
-                            width: _width,
-                            backgroundColor: WHITE,
-                            borderRadius: _moderateScale(8 * 2),
-                            borderBottomLeftRadius: 0,
-                            borderBottomRightRadius: 0,
-                            paddingBottom: _moderateScale(8 * 2),
-                            position: 'absolute',
-                            bottom: -HEIGHT_MODAL,
-                            height: HEIGHT_MODAL,
-                        }, animTranY]}>
-                            <View style={{ marginTop: _moderateScale(8 * 2) }} />
+              <Text
+                color={BASE_COLOR}
+                style={{ margin: _moderateScale(8 * 2) }}
+                weight="bold"
+                size={16}
+              >
+                Chọn giờ đặt hẹn
+              </Text>
+              <View style={{ marginTop: _moderateScale(8 * 2) }} />
 
-                            <Text color={BASE_COLOR} style={{margin:_moderateScale(8*2)}} weight='bold' size={16}>
-                            Chọn giờ đặt hẹn
-                            </Text>
-                            <View style={{ marginTop: _moderateScale(8 * 2) }} />
+              <TimePickerCustom bottom={bottom} />
 
-
-                            <TimePickerCustom bottom={bottom}/>
-
-                            {/* <View style={{flex:1,justifyContent:'flex-end', paddingBottom:bottom}}>
+              {/* <View style={{flex:1,justifyContent:'flex-end', paddingBottom:bottom}}>
                                 <Row gap={16} style={{
                                     paddingHorizontal: _moderateScale(8 * 2),
                                     bottom: _moderateScale(0)
@@ -124,7 +142,7 @@ const TimePicker = memo((props) => {
                                             style={[StyleSheet.absoluteFillObject, { borderRadius: 8 }]}
                                             start={{ x: 0, y: 0 }}
                                             end={{ x: 0, y: 1 }}
-                                            colors={["#01AB84", "#186A57"]}
+                                            colors={["#1C5579", "#186A57"]}
                                         />
 
                                         <Text weight='bold' size={14} color={WHITE}>
@@ -140,17 +158,13 @@ const TimePicker = memo((props) => {
 
                                 </Row>
                             </View> */}
-
-                        </Animated.View>
-
-                    </View>
-                    :
-                    <></>
-            }
-        </>
-
-
-    )
+            </Animated.View>
+          </View>
+        ) : (
+          <></>
+        )}
+      </>
+    );
 })
 
 

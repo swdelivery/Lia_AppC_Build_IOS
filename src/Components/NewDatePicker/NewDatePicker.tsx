@@ -167,7 +167,9 @@ const NewDatePicker = memo(
                   "Tháng 11",
                   "Tháng 12",
                 ]}
-                selectedDayColor={selectedDayColor ? selectedDayColor : BASE_COLOR}
+                selectedDayColor={
+                  selectedDayColor ? selectedDayColor : BASE_COLOR
+                }
                 selectedDayTextColor={WHITE}
                 selectedDayTextStyle={[stylesFont.fontNolanBold]}
                 textStyle={[stylesFont.fontNolan]}
@@ -203,7 +205,7 @@ const NewDatePicker = memo(
                       ]}
                       start={{ x: 0, y: 0 }}
                       end={{ x: 0, y: 1 }}
-                      colors={colors ? colors : ["#01AB84", "#186A57"]}
+                      colors={colors ? colors : ["#1C5579", "#186A57"]}
                     />
 
                     <Text weight="bold" size={14} color={WHITE}>

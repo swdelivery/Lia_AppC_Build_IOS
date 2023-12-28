@@ -137,15 +137,10 @@ const ActionBottom = ({ isEditBooking, editBookingId }: Props) => {
           style={[StyleSheet.absoluteFillObject, { borderRadius: 8 }]}
           start={{ x: 0, y: 0 }}
           end={{ x: 0, y: 1 }}
-          colors={["#01AB84", "#186A57"]}
+          colors={["#1C5579", "#186A57"]}
         />
         <Text color={WHITE} weight="bold" size={14}>
-          {
-            isEditBooking ?
-              `Cập nhật lịch hẹn`
-              :
-              `Xác nhận lịch hẹn`
-          }
+          {isEditBooking ? `Cập nhật lịch hẹn` : `Xác nhận lịch hẹn`}
         </Text>
       </TouchableOpacity>
     </View>
