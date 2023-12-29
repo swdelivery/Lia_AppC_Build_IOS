@@ -38,6 +38,14 @@ const NameService = ({ service }: Props) => {
       : moment();
   }, [service]);
 
+  const isOutOfStock = useMemo(() => {
+    return (
+      service.preferentialInCurrentFlashSale &&
+      service.preferentialInCurrentFlashSale.limit ===
+        service.preferentialInCurrentFlashSale.usage
+    );
+  }, [service]);
+
   return (
     <Column style={styles.infoService} gap={8}>
       {isFlashSaleStarted ? (
@@ -69,10 +77,16 @@ const NameService = ({ service }: Props) => {
               </Text>
             </Row>
           </Column>
-          <FlashSaleEnds
-            flashSale={service.currentFlashSale}
-            onFlashSaleUpdate={refreshService}
-          />
+          {isOutOfStock ? (
+            <Text weight="bold" color={"white"}>
+              Đã bán hết
+            </Text>
+          ) : (
+            <FlashSaleEnds
+              flashSale={service.currentFlashSale}
+              onFlashSaleUpdate={refreshService}
+            />
+          )}
         </Row>
       ) : (
         <Column gap={8}>

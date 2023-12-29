@@ -79,9 +79,10 @@ const ActionBottom = ({ isEditBooking, editBookingId }: Props) => {
       dataFetch["services"] = dataServices?.map(
         (item) => {
           return {
-            "serviceCode": item?.code,//bắt buộc
-            "options": []
-          }
+            serviceCode: item?.code, //bắt buộc
+            promotionId: item.currentFlashSale?._id,
+            options: [],
+          };
         }
       );
     }

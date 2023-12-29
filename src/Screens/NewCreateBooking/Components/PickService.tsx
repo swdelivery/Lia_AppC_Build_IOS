@@ -90,7 +90,9 @@ const ItemService = ({ data }) => {
 
       <Column>
         <Image style={styles.image} avatar={data?.representationFileArr[0]} />
-        {data.isOnFlashSale && <FlashSale width={ITEM_SERVICE_WIDTH} />}
+        {data.isOnFlashSale && (
+          <FlashSale item={data} width={ITEM_SERVICE_WIDTH} />
+        )}
       </Column>
 
       <Column

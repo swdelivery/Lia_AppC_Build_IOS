@@ -72,7 +72,7 @@ export default function FlashSaleTimer({
 
   const { hours, minutes, seconds } = useMemo(() => {
     if (!timer) {
-      return { hours: 0, minutes: 0, seconds: 0 };
+      return { hours: "00", minutes: "00", seconds: "00" };
     }
     return formatDuration(timer);
   }, [timer]);

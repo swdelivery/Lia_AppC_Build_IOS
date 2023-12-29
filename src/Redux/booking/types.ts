@@ -1,4 +1,5 @@
 import { generateActionTypes } from "@Redux/helper";
+import { Condition } from "src/Services/types";
 
 
 export const OPEN_MODAL_ADD_SERVICE_TO_BOOKING = "@booking/open-modal-add-service-to-booking";
@@ -55,9 +56,9 @@ export type GetPractitionerListByBranchCodeParams = {
 };
 
 export type GetListServiceForBookingParams = {
-  treatmentDoctorCode?: string;
-  practitionerCode: string;
-  branchCode: string;
+  treatmentDoctorCode?: Condition;
+  practitionerCode: Condition;
+  branchCode: Condition;
 };
 
 // PUT

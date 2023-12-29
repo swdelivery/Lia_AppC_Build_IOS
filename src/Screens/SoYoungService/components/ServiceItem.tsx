@@ -47,7 +47,9 @@ export default function ServiceItem({
     >
       <Column overflow="hidden">
         <Image style={styles.image} avatar={item.avatar} />
-        {item.isOnFlashSale && <FlashSale width={_width / numColumns} />}
+        {item.isOnFlashSale && (
+          <FlashSale item={item} width={_width / numColumns} />
+        )}
       </Column>
       <Column style={styles.info}>
         <Column height={35}>

@@ -23,6 +23,9 @@ import Button from "@Components/Button/Button";
 import LiAHeader from "@Components/Header/LiAHeader";
 import useFlashSales from "@Screens/SoyoungHome/Components/useFlashSale";
 import { head } from "lodash";
+import { getServicePrice } from "@Constant/service";
+import { RenderItemProps } from "@typings/common";
+import { Service } from "@typings/serviceGroup";
 
 const NewPickerServiceBooking = () => {
   const dispatch = useDispatch();
@@ -34,11 +37,9 @@ const NewPickerServiceBooking = () => {
     getDataCreateBookingState
   );
   const flashSales = useFlashSales();
-  const currentFlashSale = !!head(flashSales)?.isUpcoming
+  const currentFlashSale = !head(flashSales)?.isUpcoming
     ? head(flashSales)
     : null;
-
-  console.log({ currentFlashSale });
 
   const { selectedItems, isItemSelected, toggleItem } = useSelectedItems(
     dataListService,
@@ -85,17 +86,6 @@ const NewPickerServiceBooking = () => {
     navigation.goBack();
   }, [selectedItems]);
 
-  const _renderItem = ({ item, index }) => {
-    const isSelected = isItemSelected(item);
-    return (
-      <ItemService
-        data={item}
-        isSelected={isSelected}
-        onToggleSelection={toggleItem}
-      />
-    );
-  };
-
   const listServices = useMemo(() => {
     if (index === 0) {
       return dataListService;
@@ -106,13 +96,46 @@ const NewPickerServiceBooking = () => {
 
   const totalAmount = useMemo(() => {
     return Object.values(selectedItems).reduce((acc, item) => {
-      return acc + item.price;
+      return acc + getServicePrice(item);
     }, 0);
   }, [selectedItems]);
+
+  const selectedFlashSale = useMemo(() => {
+    if (!currentFlashSale) {
+      return;
+    }
+    return Object.values(selectedItems).find((item) => {
+      if (
+        item.currentFlashSale &&
+        item.currentFlashSale._id === currentFlashSale._id &&
+        (!item.preferentialInCurrentFlashSale.limit ||
+          item.preferentialInCurrentFlashSale.limit >
+            item.preferentialInCurrentFlashSale.usage)
+      ) {
+        return true;
+      }
+      return false;
+    });
+  }, [selectedItems, currentFlashSale]);
 
   const hasItemSelected = useMemo(() => {
     return Object.keys(selectedItems).length > 0;
   }, [selectedItems]);
+
+  const _renderItem = ({ item, index }: RenderItemProps<Service>) => {
+    const isSelected = isItemSelected(item);
+    const canSelect = !(
+      selectedFlashSale && currentFlashSale?._id === item.currentFlashSale?._id
+    );
+    return (
+      <ItemService
+        data={item}
+        isSelected={isSelected}
+        canSelect={canSelect}
+        onToggleSelection={toggleItem}
+      />
+    );
+  };
 
   return (
     <Screen safeBottom>

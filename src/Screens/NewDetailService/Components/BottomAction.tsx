@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { _moderateScale, _width } from "../../../Constant/Scale";
 import IconCalendar from "../../../SGV/calendar.svg";
@@ -11,6 +11,7 @@ import { Service } from "@typings/serviceGroup";
 import { useNavigate } from "src/Hooks/useNavigation";
 import ScreenKey from "@Navigation/ScreenKey";
 import { BASE_COLOR } from "@Constant/Color";
+import Toast from "react-native-toast-message";
 
 type Props = {
   service?: Service;
@@ -20,6 +21,17 @@ const BottomAction = ({ service }: Props) => {
   const { navigate } = useNavigate();
 
   const handleBooking = useRequireLoginCallback(() => {
+    const isOutOfStock =
+      service.preferentialInCurrentFlashSale?.limit &&
+      service.preferentialInCurrentFlashSale.limit ===
+        service.preferentialInCurrentFlashSale.usage;
+    if (isOutOfStock) {
+      Toast.show({
+        type: "error",
+        text1: "Dịch vụ đã hết số lượng ưu đãi",
+      });
+      return;
+    }
     navigate(ScreenKey.CREATE_BOOKING, { service })();
   }, [service]);
 

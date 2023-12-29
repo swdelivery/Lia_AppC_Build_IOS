@@ -11,16 +11,18 @@ import {
   GREY_FOR_TITLE,
   MAIN_RED_600,
   PRICE_ORANGE,
+  RED,
   WHITE,
 } from "@Constant/Color";
 import { _moderateScale, _width, _widthScale } from "@Constant/Scale";
+import { styleElement } from "@Constant/StyleElement";
 import { formatMonney } from "@Constant/Utils";
 import FlashSale from "@Screens/SoYoungService/components/FlashSale";
 import { Service } from "@typings/serviceGroup";
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
+import Toast, { ErrorToast } from "react-native-toast-message";
 import useServiceDetailsNavigation from "src/Hooks/navigation/useServiceDetailsNavigation";
-import useCallbackItem from "src/Hooks/useCallbackItem";
 import { FlashIcon } from "src/SGV";
 import { formatTime } from "src/utils/date";
 
@@ -29,24 +31,57 @@ const ITEM_WIDTH = _width / 2 - 8;
 type Props = {
   data: Service;
   isSelected: boolean;
+  canSelect: boolean;
   onToggleSelection: (item: Service) => void;
 };
 
-const ItemService = ({ isSelected, data, onToggleSelection }: Props) => {
-  const trigger = useCallbackItem(data);
-
+const ItemService = ({
+  isSelected,
+  canSelect,
+  data,
+  onToggleSelection,
+}: Props) => {
   const handleGoDetailService = useServiceDetailsNavigation();
 
   const _handleGoDetailService = useCallback(() => {
     handleGoDetailService(data);
   }, [data]);
 
+  const isOutOfStock = useMemo(() => {
+    return (
+      data.preferentialInCurrentFlashSale?.limit &&
+      data.preferentialInCurrentFlashSale.limit ===
+        data.preferentialInCurrentFlashSale.usage
+    );
+  }, [data]);
+
+  const handleSelectService = useCallback(() => {
+    let error = "";
+    if (!canSelect && !isSelected) {
+      error =
+        "Bạn chỉ được chọn 1 dịch vụ đang trong quá trình diễn ra Flash Sale";
+    }
+    if (isOutOfStock) {
+      error = "Dịch vụ đã hết số lượng ưu đãi";
+    }
+    if (!!error) {
+      Toast.show({
+        type: "error",
+        text1: error,
+        visibilityTime: 3000,
+        position: "bottom",
+      });
+      return;
+    }
+    onToggleSelection(data);
+  }, [data, isSelected, canSelect, onToggleSelection, isOutOfStock]);
+
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={_handleGoDetailService} style={styles.item}>
         <Column overflow="hidden">
           <Image style={styles.avatar} avatar={data?.avatar} />
-          {data.isOnFlashSale && <FlashSale width={_width / 2} />}
+          {data.isOnFlashSale && <FlashSale item={data} width={_width / 2} />}
         </Column>
 
         <View style={styles.item__body}>
@@ -71,9 +106,27 @@ const ItemService = ({ isSelected, data, onToggleSelection }: Props) => {
               </Row>
 
               <Row justifyContent="space-between">
-                <Text color={PRICE_ORANGE} weight="bold" size={14}>
-                  {formatMonney(data?.price)} VNĐ
-                </Text>
+                {data.isOnFlashSale && data?.preferentialInCurrentFlashSale ? (
+                  <Row flex={1} alignItems="flex-end" gap={4}>
+                    <Text size={14} weight="bold" color={RED}>
+                      {`${formatMonney(
+                        data?.preferentialInCurrentFlashSale?.finalPrice
+                      )}`}
+                    </Text>
+                    <Text size={8} textDecorationLine="line-through" bottom={1}>
+                      {formatMonney(data.price)}
+                    </Text>
+                  </Row>
+                ) : (
+                  <Text
+                    size={14}
+                    weight="bold"
+                    color={RED}
+                    style={styleElement.flex}
+                  >
+                    {`${formatMonney(data?.price)}`}
+                  </Text>
+                )}
 
                 <Row>
                   <Icon name="account-multiple" size={14} color="grey" />
@@ -84,10 +137,11 @@ const ItemService = ({ isSelected, data, onToggleSelection }: Props) => {
               </Row>
             </Column>
             <TouchableOpacity
-              onPress={trigger(onToggleSelection)}
+              onPress={handleSelectService}
               style={[
                 styles.item__body__btnAdd,
-                isSelected && styles.item__body__btnAdd_selected,
+                (isSelected || !canSelect || isOutOfStock) &&
+                  styles.item__body__btnAdd_selected,
               ]}
             >
               <Text color={WHITE} weight="bold">

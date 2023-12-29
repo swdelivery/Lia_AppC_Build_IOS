@@ -81,7 +81,12 @@ const ItemService = ({ data }: Props) => {
             avatar={avatar}
           />
           {data.isOnFlashSale && (
-            <FlashSale height={18} width={_width / 2 - 20} textSize={10} />
+            <FlashSale
+              item={data}
+              height={18}
+              width={_width / 2 - 20}
+              textSize={10}
+            />
           )}
         </Column>
         <Column
