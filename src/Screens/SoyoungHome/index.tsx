@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect } from "react";
-import { View, StyleSheet, Platform, StatusBar } from "react-native";
+import React from "react";
+import { View, StyleSheet, Platform } from "react-native";
 import Banner from "./Components/Banner";
 import Search from "./Components/Search";
 import {
@@ -14,7 +14,6 @@ import { useState } from "react";
 import SoYoungService from "../SoYoungService/index";
 import SoYoungBranch from "../SoYoungBranch/index";
 import SoYoungDoctor from "../SoYoungDoctor/index";
-import { useSharedValue, withTiming } from "react-native-reanimated";
 import Screen from "../../Components/Screen";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { styleElement } from "../../Constant/StyleElement";
@@ -23,7 +22,6 @@ import SoYoungMaterial from "@Screens/SoYoungMaterial";
 import SoYoungPractitioner from "@Screens/SoYoungPractitioner";
 import { AfterTimeoutFragment } from "@Components/AfterTimeoutFragment";
 import { FocusAwareStatusBar } from "@Components/StatusBar";
-import { useIsFocused } from "@react-navigation/native";
 import { BASE_COLOR } from "@Constant/Color";
 
 const STACKS = [
@@ -51,19 +49,8 @@ const STACKS = [
 
 const SoyoungHome = () => {
   const { top } = useSafeAreaInsets();
-  const heightExpandServiceGr = useSharedValue(0);
-  const [expandServiceGr, setExpandServiceGr] = useState(true);
   const [tabIndex, setTabIndex] = useState(0);
   // const isFocused = useIsFocused();
-
-
-  useEffect(() => {
-    if (expandServiceGr) {
-      heightExpandServiceGr.value = withTiming(200, { duration: 300 });
-    } else {
-      heightExpandServiceGr.value = withTiming(0, { duration: 0 });
-    }
-  }, [expandServiceGr]);
 
   // const handleTabViewChnaged = useCallback((index, tabLabel) => {
   //   setTabIndex(index);
@@ -77,11 +64,7 @@ const SoyoungHome = () => {
         translucent
       />
       <View style={styles.searchContainer}>
-        <Search
-          press={() => {
-            setExpandServiceGr((old) => !old);
-          }}
-        />
+        <Search />
       </View>
       <AfterTimeoutFragment>
         <ScrollableTabView
@@ -95,10 +78,12 @@ const SoyoungHome = () => {
           }}
           stacks={STACKS}
           // onTabviewChanged={handleTabViewChnaged}
-          mappingProps={{
-            // tabIndex,
-            // isFocused,
-          }}
+          mappingProps={
+            {
+              // tabIndex,
+              // isFocused,
+            }
+          }
           tabWrapStyle={styleElement.flex}
           tabInnerStyle={styles.tabInnerStyle}
           tabActiveOpacity={1}
