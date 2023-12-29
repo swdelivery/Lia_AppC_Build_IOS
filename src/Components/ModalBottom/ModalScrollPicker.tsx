@@ -155,84 +155,90 @@ const ModalScrollPicker = memo(({ visible, onClose, onConfirm, title, unit, data
         />
       </Animated.View>
 
-      <Animated.View style={[styles.mainView, animTranY, { paddingBottom: bottom }]}>
+      <Animated.View
+        style={[styles.mainView, animTranY, { paddingBottom: bottom }]}
+      >
         <View style={styles.header}>
           <View style={styles.header__child}>
-            <Text weight="bold" size={16}>{title}</Text>
+            <Text weight="bold" size={16}>
+              {title}
+            </Text>
           </View>
         </View>
 
         <Row marginTop={8 * 2} gap={8 * 2} alignSelf="center">
-          <View style={{
-            height: WIDTH_ITEM * 3,
-            alignSelf: 'center',
-          }}>
-
+          <View
+            style={{
+              height: WIDTH_ITEM * 3,
+              alignSelf: "center",
+            }}
+          >
             <Animated.FlatList
               ref={RefFlatlistInteger}
               showsVerticalScrollIndicator={false}
               style={{ width: 100 }}
-              contentContainerStyle={{ alignItems: 'center' }}
+              contentContainerStyle={{ alignItems: "center" }}
               onMomentumScrollEnd={handleMomentumScrollEndInteger}
               snapToInterval={WIDTH_ITEM}
               pagingEnabled
               data={listValueInteger}
               scrollEventThrottle={16}
-              renderItem={({ item, index }) => <Item item={item} index={index} scrollY={scrollYInteger} />}
+              renderItem={({ item, index }) => (
+                <Item item={item} index={index} scrollY={scrollYInteger} />
+              )}
               onScroll={scrollHandlerInteger}
             />
           </View>
 
           <View style={styles.dot} />
 
-          <View style={{
-            height: WIDTH_ITEM * 3,
-            alignSelf: 'center',
-          }}>
-
+          <View
+            style={{
+              height: WIDTH_ITEM * 3,
+              alignSelf: "center",
+            }}
+          >
             <Animated.FlatList
               ref={RefFlatlistDecimal}
               showsVerticalScrollIndicator={false}
               style={{ width: 100 }}
-              contentContainerStyle={{ alignItems: 'center' }}
+              contentContainerStyle={{ alignItems: "center" }}
               onMomentumScrollEnd={handleMomentumScrollEndDecimal}
               snapToInterval={WIDTH_ITEM}
               pagingEnabled
               data={listValueDecimal}
               scrollEventThrottle={16}
-              renderItem={({ item, index }) => <Item item={item} index={index} scrollY={scrollYDecimal} />}
+              renderItem={({ item, index }) => (
+                <Item item={item} index={index} scrollY={scrollYDecimal} />
+              )}
               onScroll={scrollHandlerDecimal}
             />
           </View>
 
-          {
-            unit ?
-              <View style={styles.containerUnit}>
-                <Text weight="bold" size={40}>
-                  {unit}
-                </Text>
-              </View>
-              : <></>
-          }
-
-
+          {unit ? (
+            <View style={styles.containerUnit}>
+              <Text weight="bold" size={40}>
+                {unit}
+              </Text>
+            </View>
+          ) : (
+            <></>
+          )}
         </Row>
-        <View style={{ flex: 1, justifyContent: 'flex-end' }}>
-          <Row
-            gap={8 * 2}
-            paddingHorizontal={8 * 3}>
+        <View style={{ flex: 1, justifyContent: "flex-end" }}>
+          <Row gap={8 * 2} paddingHorizontal={8 * 3}>
             <Button.Gradient
               containerStyle={{ flex: 1 }}
               start={{ x: 0, y: 0 }}
               end={{ x: 0, y: 1 }}
-              colors={["#01AB84", "#186A57"]}
+              colors={["#1C5579", "#186A57"]}
               title={`Xác nhận`}
               onPress={_handleConfirm}
               height={40}
             />
             <View style={{ width: 100 }}>
               <Button.Custom
-                bgColor={'#F2F2F5'}
+                bgColor={"#F2F2F5"}
                 colorText={{ color: WHITE }}
                 title={`Huỷ`}
                 onPress={_handleHideModal}
@@ -241,7 +247,6 @@ const ModalScrollPicker = memo(({ visible, onClose, onConfirm, title, unit, data
             </View>
           </Row>
         </View>
-
       </Animated.View>
     </View>
   );

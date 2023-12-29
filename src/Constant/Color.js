@@ -44,7 +44,7 @@ const BLACK_OPACITY_4 = "rgba(0,0,0,0.4)";
 const BLACK_OPACITY_3 = "rgba(0,0,0,0.3)";
 const MAIN_OPACITY_8 = "rgba(208,253,241,0.85)";
 
-const SENDER_BG = "#01AB8433";
+const SENDER_BG = "#1C557933";
 const SENDER_COLOR_TEXT = "#040D15";
 const BLUE_FB = "#0875E7";
 const BLUE_TITLE = "#002147";
@@ -73,10 +73,10 @@ const PATTERN_CHART = [
 ];
 
 // NEW COLOR
-const BASE_COLOR = "#4A9F80";
+const BASE_COLOR = "#1C5579";
 const NEW_BASE_COLOR = "#366792";
 const BACKGROUND_COLOR = "#F4F4F4";
-const BASE_COLOR_LIGHT = "#01AB84";
+const BASE_COLOR_LIGHT = "#1C5579";
 const BG_GREY_OPACITY_5 = "rgba(229,229,229,.5)";
 const SECOND_COLOR = "#7d3da8";
 const THIRD_COLOR = "#F4B986";

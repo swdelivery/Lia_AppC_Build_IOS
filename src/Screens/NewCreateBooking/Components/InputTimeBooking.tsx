@@ -7,6 +7,7 @@ import {
   BLACK,
   BORDER_COLOR,
   GREY,
+  NEW_BASE_COLOR,
   RED,
   WHITE,
 } from "@Constant/Color";
@@ -140,7 +141,7 @@ const InputTimeBooking = memo(
                       style={StyleSheet.absoluteFillObject}
                       start={{ x: 0, y: 0 }}
                       end={{ x: 0, y: 1 }}
-                      colors={["#01AB84", "#186A57"]}
+                      colors={[BASE_COLOR, NEW_BASE_COLOR]}
                     />
                   ) : (
                     <></>
@@ -157,16 +158,24 @@ const InputTimeBooking = memo(
           })}
         </Row>
 
-        <Row alignItems="flex-end" marginTop={8 * 2} justifyContent={"space-between"}>
+        <Row
+          alignItems="flex-end"
+          marginTop={8 * 2}
+          justifyContent={"space-between"}
+        >
           <Column gap={8 * 2}>
             <Text color={GREY}>Chọn khung giờ</Text>
-            {
-              dataTime ?
-                <Text>
-                  Đã chọn: <Text color={BASE_COLOR} weight="bold"> {`${dataTime?.hour} : ${dataTime?.minute}`}</Text>
+            {dataTime ? (
+              <Text>
+                Đã chọn:{" "}
+                <Text color={BASE_COLOR} weight="bold">
+                  {" "}
+                  {`${dataTime?.hour} : ${dataTime?.minute}`}
                 </Text>
-                : <></>
-            }
+              </Text>
+            ) : (
+              <></>
+            )}
           </Column>
           <TouchableOpacity onPress={_handleShowModalTimePicker}>
             <Text color={BASE_COLOR}>+ Chọn giờ khác</Text>
@@ -198,7 +207,7 @@ const InputTimeBooking = memo(
                     style={[StyleSheet.absoluteFillObject, { borderRadius: 4 }]}
                     start={{ x: 0, y: 0 }}
                     end={{ x: 0, y: 1 }}
-                    colors={["#01AB84", "#186A57"]}
+                    colors={[BASE_COLOR, NEW_BASE_COLOR]}
                   />
                   <Text color={WHITE} weight="bold">
                     {item?.time?.hour}:{item?.time?.minute}
@@ -246,7 +255,7 @@ const InputTimeBooking = memo(
                     style={[StyleSheet.absoluteFillObject, { borderRadius: 4 }]}
                     start={{ x: 0, y: 0 }}
                     end={{ x: 0, y: 1 }}
-                    colors={["#01AB84", "#186A57"]}
+                    colors={["#1C5579", "#186A57"]}
                   />
                   <Text color={WHITE} weight="bold">
                     {item?.from}

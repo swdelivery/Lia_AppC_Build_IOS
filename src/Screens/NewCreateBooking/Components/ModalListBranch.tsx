@@ -55,8 +55,9 @@ const ModalListBranch = ({ visible, onClose }: Props) => {
   const _checkGetBranchList = () => {
     if (dataServices?.length > 0) {
       if (dataServices[0]?.branchServices?.length > 0) {
-        let branches = dataServices[0]?.branchServices?.map(item => item?.branch);
-        console.log({ branches });
+        let branches = dataServices[0]?.branchServices?.map(
+          (item) => item?.branch
+        );
         dispatch(changeBranchListForBookingByService(branches))
       }
     } else {

@@ -22,6 +22,7 @@ import { Service } from "@typings/serviceGroup";
 import { pickBy } from "lodash";
 import { navigation } from "rootNavigation";
 import ScreenKey from "@Navigation/ScreenKey";
+import { ApiResponse } from "@typings/api";
 
 function* getBranchListForBooking({ payload }: BaseAction<any>) {
   try {
@@ -86,9 +87,11 @@ function* getListServiceFilter({
   payload,
 }: BaseAction<GetListServiceForBookingParams>) {
   try {
-    const data: Service[] = yield call(
-      PartnerService.getServicesFilter,
-      pickBy(payload, (i) => i != undefined)
+    const { data }: ApiResponse<Service[]> = yield call(
+      PartnerService.getServices,
+      pickBy(payload, (i) => i != undefined),
+      1,
+      100
     );
     yield put(actions.getListServiceFilter.success(data));
   } catch (error: any) {

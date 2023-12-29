@@ -3,7 +3,6 @@ import {
   Image,
   Platform,
   StyleSheet,
-  Text,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -17,13 +16,13 @@ import {
   _moderateScale,
 } from "../../Constant/Scale";
 import * as ActionType from "../../Redux/Constants/ActionType";
-import Store from "../../Redux/store";
 import { styleElement } from "../../Constant/StyleElement";
 import { sizeIcon } from "../../Constant/Icon";
 import ScreenKey from "../../Navigation/ScreenKey";
 import { navigation } from "../../../rootNavigation";
-import LinearGradient from "react-native-linear-gradient";
 import Button from "../Button/Button";
+import Text from "@Components/Text";
+import { Colors } from "react-native/Libraries/NewAppScreen";
 
 const ModalRequireLogin = (props) => {
   const dispatch = useDispatch();
@@ -73,7 +72,7 @@ const ModalRequireLogin = (props) => {
         <View
           style={{
             alignItems: "flex-end",
-            paddingRight: _moderateScale(8 * 2),
+            paddingRight: 16,
           }}
         >
           <TouchableOpacity
@@ -81,41 +80,32 @@ const ModalRequireLogin = (props) => {
               closeModal();
             }}
             style={{
-              padding: _moderateScale(8),
+              padding: 8,
               backgroundColor: "#C4C4C4",
               borderRadius: 100,
             }}
           >
             <Image
-              style={sizeIcon.xxxxs}
+              style={styles.close}
               source={require("../../NewIcon/xWhite.png")}
             />
           </TouchableOpacity>
         </View>
         <Image
           style={{
-            width: _widthScale(160),
-            height: _widthScale(160),
+            width: 160,
+            height: 160,
             resizeMode: "contain",
             alignSelf: "center",
-            marginVertical: _moderateScale(8 * 2),
+            marginVertical: 8 * 2,
           }}
           source={require("../../NewImage/requireLogin.png")}
         />
         <View style={styles.viewContent}>
-          <Text
-            style={[
-              stylesFont.fontNolan500,
-              {
-                fontSize: _widthScale(18),
-                marginBottom: _heightScale(8),
-                color: Color.BLACK_OPACITY_8,
-              },
-            ]}
-          >
+          <Text weight="bold" size={18} color={Color.BLACK_OPACITY_8}>
             Đăng nhập để sử dụng tính năng này
           </Text>
-          <Text style={[stylesFont.fontNolan500, styles.content]}>
+          <Text weight="bold" size={14} color={Color.GREY}>
             Bạn cần đăng nhập hoặc đăng kí tài khoản để sử dụng tính năng này
           </Text>
           {/* <TouchableOpacity
@@ -154,7 +144,7 @@ const ModalRequireLogin = (props) => {
               <Text
                 style={{
                   ...stylesFont.fontNolan500,
-                  fontSize: _moderateScale(14),
+                  fontSize: 14,
                   color: Color.BLACK_OPACITY_7,
                 }}
               >
@@ -177,13 +167,14 @@ const ModalRequireLogin = (props) => {
 
 const styles = StyleSheet.create({
   modalFilter: {
-    width: "85%",
+    width: "80%",
+    maxWidth: 400,
     backgroundColor: Color.WHITE,
-    borderRadius: _widthScale(8 * 2),
-    paddingVertical: _heightScale(8 * 2),
+    borderRadius: 8 * 2,
+    paddingVertical: 8 * 2,
   },
   viewContent: {
-    paddingHorizontal: _widthScale(8 * 3),
+    paddingHorizontal: 20,
   },
   content: {
     fontSize: _widthScale(14),
@@ -193,16 +184,20 @@ const styles = StyleSheet.create({
   cancelBtn: {
     alignSelf: "flex-end",
     padding: _widthScale(8),
-    marginTop: _heightScale(8),
+    marginTop: 8,
   },
   cancelBtn__text: {
-    fontSize: _widthScale(16),
+    fontSize: 16,
     color: Color.BASE_COLOR,
   },
   button: {
     backgroundColor: Color.SECOND_COLOR,
     width: "48%",
-    borderRadius: _moderateScale(8),
+    borderRadius: 8,
+  },
+  close: {
+    width: 18,
+    height: 18,
   },
 });
 

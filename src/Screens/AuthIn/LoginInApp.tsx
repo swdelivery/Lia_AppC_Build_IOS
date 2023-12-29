@@ -153,15 +153,15 @@ const Login = (props) => {
             }}
             style={[
               {
-                height: _moderateScale(8 * 6),
-                borderRadius: _moderateScale(8),
+                height: 8 * 6,
+                borderRadius: 8,
                 justifyContent: "center",
                 alignItems: "center",
                 backgroundColor: Color.BG_LOGIN_BUTTON,
               },
             ]}
           >
-            <Text weight="bold" size={_moderateScale(16)} color={Color.WHITE}>
+            <Text weight="bold" size={16} color={Color.WHITE}>
               Đăng nhập
             </Text>
           </TouchableOpacity>
@@ -187,7 +187,7 @@ const Login = (props) => {
               style={[
                 stylesFont.fontNolanBold,
                 {
-                  fontSize: _moderateScale(14),
+                  fontSize: 14,
                   color: Color.TEXT_COLOR_FORGET_PASS,
                 },
               ]}
@@ -230,7 +230,7 @@ const Login = (props) => {
           <Text
             style={[
               stylesFont.fontDinTextPro,
-              { color: Color.BLACK, fontSize: _moderateScale(12) },
+              { color: Color.BLACK, fontSize: 12 },
             ]}
           >
             Copyright © Lia Beauty 2023.

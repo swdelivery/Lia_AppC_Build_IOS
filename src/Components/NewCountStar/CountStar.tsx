@@ -2,14 +2,14 @@ import React from "react";
 import Row from "@Components/Row";
 import Text from "@Components/Text";
 import Icon from "@Components/Icon";
-import { GREEN_SUCCESS, TITLE_GREY } from "@Constant/Color";
+import { BASE_COLOR, TITLE_GREY } from "@Constant/Color";
 import { PersonsIcon } from "src/SGV";
 
 type Props = {
   rating: number;
   count?: number;
   countPartner?: number;
-  size?: 10 | 12 | 14 | 16;
+  size?: 9 | 10 | 12 | 14 | 16;
   larger?: boolean;
   lightContent?: boolean;
 };
@@ -23,31 +23,31 @@ const CountStar2 = ({
 }: Props) => {
   const iconSize = size + 4;
   return (
-    <Row gap={4}>
+    <Row gap={size / 5}>
       <Row gap={-3} marginTop={3}>
         <Icon
           name={rating >= 1 ? "star-box" : "star-box-outline"}
-          color={rating >= 1 ? GREEN_SUCCESS : TITLE_GREY}
+          color={rating >= 1 ? BASE_COLOR : TITLE_GREY}
           size={iconSize}
         />
         <Icon
           name={rating >= 2 ? "star-box" : "star-box-outline"}
-          color={rating >= 2 ? GREEN_SUCCESS : TITLE_GREY}
+          color={rating >= 2 ? BASE_COLOR : TITLE_GREY}
           size={iconSize}
         />
         <Icon
           name={rating >= 3 ? "star-box" : "star-box-outline"}
-          color={rating >= 3 ? GREEN_SUCCESS : TITLE_GREY}
+          color={rating >= 3 ? BASE_COLOR : TITLE_GREY}
           size={iconSize}
         />
         <Icon
           name={rating >= 4 ? "star-box" : "star-box-outline"}
-          color={rating >= 4 ? GREEN_SUCCESS : TITLE_GREY}
+          color={rating >= 4 ? BASE_COLOR : TITLE_GREY}
           size={iconSize}
         />
         <Icon
           name={rating >= 5 ? "star-box" : "star-box-outline"}
-          color={rating >= 5 ? GREEN_SUCCESS : TITLE_GREY}
+          color={rating >= 5 ? BASE_COLOR : TITLE_GREY}
           size={iconSize}
         />
       </Row>

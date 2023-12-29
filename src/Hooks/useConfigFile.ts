@@ -1,7 +1,6 @@
 import PartnerService from "src/Services/PartnerService";
 import useApi from "./services/useApi";
 import { ConfigFileCode } from "@typings/configFile";
-import { useFocused } from "./useNavigation";
 import { useEffect } from "react";
 
 export default function useConfigFile(code: ConfigFileCode) {

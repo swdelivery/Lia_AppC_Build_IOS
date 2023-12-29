@@ -136,7 +136,7 @@ const NewSettingApp = () => {
           <TouchableOpacity onPress={_handleDeleteAccount}>
             <Row justifyContent="space-between" style={styles.btnDeleteAccount}>
               <Text>Yêu cầu xoá tài khoản</Text>
-              <IconRightArrowBase />
+              <IconRightArrowBase color={BASE_COLOR} />
             </Row>
           </TouchableOpacity>
         </Column>

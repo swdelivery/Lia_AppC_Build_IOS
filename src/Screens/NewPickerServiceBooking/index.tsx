@@ -1,7 +1,7 @@
 import { FlatList, StyleSheet, View } from "react-native";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import Screen from "@Components/Screen";
-import { BORDER_COLOR } from "@Constant/Color";
+import { BASE_COLOR, BORDER_COLOR, NEW_BASE_COLOR } from "@Constant/Color";
 import { _moderateScale, _width } from "@Constant/Scale";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -35,19 +35,23 @@ const NewPickerServiceBooking = () => {
   const { selectedItems, isItemSelected, toggleItem } = useSelectedItems(
     dataListService,
     {
-      keyExtractor: (item) => item.id,
+      keyExtractor: (item) => item._id,
       initialSelectedItems: dataServices,
     }
   );
 
-  useEffect(() => { }, [dataServices]);
+  useEffect(() => {}, [dataServices]);
 
   useEffect(() => {
     dispatch(
       getListServiceFilter.request({
-        treatmentDoctorCode: dataDoctor?.code,
-        practitionerCode: dataPractitioner?.code,
-        branchCode: dataBranch?.code,
+        treatmentDoctorCode: dataDoctor?.code
+          ? { equal: dataDoctor?.code }
+          : undefined,
+        practitionerCode: dataPractitioner
+          ? { equal: dataPractitioner.code }
+          : undefined,
+        branchCode: dataBranch ? { equal: dataBranch?.code } : undefined,
       })
     );
   }, []);
@@ -124,7 +128,7 @@ const NewPickerServiceBooking = () => {
           <Button.Gradient
             start={{ x: 0, y: 0 }}
             end={{ x: 0, y: 1 }}
-            colors={["#01AB84", "#186A57"]}
+            colors={[BASE_COLOR, NEW_BASE_COLOR]}
             title={`Xác nhận ${formatMonney(totalAmount)}  VNĐ`}
             onPress={_handleConfirmOrder}
             height={40}

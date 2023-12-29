@@ -188,7 +188,7 @@ const ModalListBeautyInsurance = memo(({ visible, onClose }: Props) => {
             )} VNĐ)`}
             start={{ x: 0, y: 0 }}
             end={{ x: 0, y: 1 }}
-            colors={["#01AB84", "#186A57"]}
+            colors={["#1C5579", "#186A57"]}
             onPress={_handleHideModal}
           />
         </Column>

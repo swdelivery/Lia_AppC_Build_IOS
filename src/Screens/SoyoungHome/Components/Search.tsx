@@ -1,36 +1,37 @@
-import { View, StyleSheet, TouchableOpacity } from "react-native";
-import React, { memo, useEffect, useMemo, useState } from "react";
-import IconRight from "../../../SGV/right.svg";
+import { StyleSheet, TouchableOpacity } from "react-native";
+import React, { useEffect, useMemo, useState } from "react";
 import IconFind from "../../../SGV/find_grey.svg";
 import {
   _heightScale,
   _moderateScale,
+  _width,
   _widthScale,
 } from "../../../Constant/Scale";
 import { navigation } from "../../../../rootNavigation";
 import ScreenKey from "../../../Navigation/ScreenKey";
-import Animated, {
+import {
   useAnimatedStyle,
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
-import { WHITE } from "../../../Constant/Color";
+import { BASE_COLOR, WHITE } from "../../../Constant/Color";
 import { stylesFont } from "../../../Constant/Font";
 import { useSelector } from "react-redux";
 import ModalPickSingleNotSearch from "../../../Components/ModalPickSingleNotSearch/ModalPickSingleNotSearch";
-import { IconArrowDown, IconQRScaner } from "../../../Components/Icon/Icon";
 import { sizeIcon } from "../../../Constant/Icon";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import ImagePicker from "react-native-image-crop-picker";
-import { scanningEyes } from "../../../Redux/Action/FaceAiAction";
 import Text from "@Components/Text";
 import Row from "@Components/Row";
 import useRequireLoginCallback from "src/Hooks/useRequireLoginAction";
 import { getServiceGroupState } from "@Redux/home/selectors";
+import SVGArrowDown from "src/SGV/arrowDown.svg";
+import { useNavigate } from "src/Hooks/useNavigation";
+import SVGQRScaner from "src/SGV/qrScaner.svg";
 
 const Search = (props) => {
   const { top } = useSafeAreaInsets();
   const { data } = useSelector(getServiceGroupState);
+  const { navigate } = useNavigate();
 
   const heightExpandServiceGr = useSharedValue(0);
 
@@ -59,12 +60,12 @@ const Search = (props) => {
   }, [top]);
 
   const _handleQR = useRequireLoginCallback(() => {
-    navigation.navigate(ScreenKey.QR_CODE)
+    navigation.navigate(ScreenKey.QR_CODE);
   }, []);
 
   return (
     <Row style={[styles.container, containerStyle]} gap={8}>
-      <Row style={[styles.search, shadow]}>
+      <Row style={[styles.search, shadow]} gap={8}>
         <ModalPickSingleNotSearch
           hide={() => {
             setExpandServiceGr(false);
@@ -77,57 +78,31 @@ const Search = (props) => {
           data={data?.length > 0 ? data : []}
           show={expandServiceGr}
         />
-
-        <View style={{ width: 8 }} />
         <TouchableOpacity
           onPress={() => {
             setExpandServiceGr((old) => !old);
           }}
         >
-          <View style={styles.search__option}>
-            <Text
-              style={[
-                stylesFont.fontNolan500,
-                { fontSize: _moderateScale(12) },
-              ]}
-            >
+          <Row style={styles.search__option} gap={8} marginHorizontal={8}>
+            <Text size={12} style={stylesFont.fontNolan500}>
               Mắt
             </Text>
-          </View>
+            <SVGArrowDown width={16} height={16} />
+          </Row>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => {
-            setExpandServiceGr((old) => !old);
-          }}
-          style={[
-            styles.search_down_icon,
-          ]}
-        >
-          <IconArrowDown style={sizeIcon.sm} />
-        </TouchableOpacity>
-        <View style={{ width: 8 }} />
-
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate(ScreenKey.SEARCHING_HOME);
-          }}
+          onPress={navigate(ScreenKey.SEARCHING_HOME)}
           style={styles.search__input}
         >
           <IconFind width={8 * 2} height={8 * 2} />
-          <View style={{ width: 8 }} />
-          <Text
-            style={{
-              fontSize: 13,
-              color: "#454444",
-            }}
-          >
+          <Text size={13} color={"#454444"} left={8}>
             Nhập thông tin tìm kiếm
           </Text>
         </TouchableOpacity>
       </Row>
 
       <TouchableOpacity onPress={_handleQR} style={[styles.qrButton, shadow]}>
-        <IconQRScaner style={sizeIcon.lg} />
+        <SVGQRScaner color={BASE_COLOR} />
       </TouchableOpacity>
     </Row>
   );
@@ -136,6 +111,7 @@ const Search = (props) => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
+    width: _width - _moderateScale(16) * 2,
   },
   search__input: {
     // width: _widthScale(250),
@@ -161,21 +137,21 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   search: {
-    width: _widthScale(310),
-    height: _moderateScale(8 * 4.5),
+    flex: 1,
+    height: 45,
     borderRadius: 8,
     backgroundColor: "white",
     flexDirection: "row",
     alignItems: "center",
-    paddingRight: _moderateScale(8 * 1),
+    paddingHorizontal: 8,
   },
   qrButton: {
-    height: _moderateScale(8 * 4.5),
-    width: _moderateScale(8 * 4.5),
+    height: 45,
+    width: 45,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: WHITE,
-    borderRadius: _moderateScale(8),
+    borderRadius: 8,
   },
 });
 

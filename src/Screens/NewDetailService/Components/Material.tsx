@@ -8,12 +8,11 @@ import {
 import Text from "@Components/Text";
 import Column from "@Components/Column";
 import Row from "@Components/Row";
-import { IconEyeBase } from "@Components/Icon/Icon";
-import { sizeIcon } from "@Constant/Icon";
 import { navigation } from "rootNavigation";
 import ScreenKey from "@Navigation/ScreenKey";
 import { Service } from "@typings/serviceGroup";
-import { GREY } from "@Constant/Color";
+import { BASE_COLOR, GREY } from "@Constant/Color";
+import SVGEyeBase from "src/SGV/eyeBase.svg";
 
 type Props = {
   service: Service;
@@ -34,11 +33,11 @@ const Material = ({ service }: Props) => {
       </Text>
       <Column gap={8}>
         <View style={styles.box__header}>
-          <Text color={"#4DA887"} weight="bold">
+          <Text color={BASE_COLOR} weight="bold">
             Thông tin vật liệu
           </Text>
 
-          <Text color={"#4DA887"} weight="bold">
+          <Text color={BASE_COLOR} weight="bold">
             {service?.materialArr?.length} Loại
           </Text>
         </View>
@@ -60,7 +59,7 @@ const Material = ({ service }: Props) => {
                     {item?.name}
                   </Text>
 
-                  <IconEyeBase style={sizeIcon.md} />
+                  <SVGEyeBase color={BASE_COLOR} />
                 </Row>
               </TouchableOpacity>
             );

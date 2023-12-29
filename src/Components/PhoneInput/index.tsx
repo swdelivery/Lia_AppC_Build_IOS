@@ -20,6 +20,7 @@ import {
   CountryCode,
   CallingCode,
 } from "react-native-country-picker-modal/lib/types";
+import Column from "@Components/Column";
 
 type Props = ViewStyle & {
   label: string;
@@ -51,7 +52,7 @@ export default function PhoneInput({
     onSelectionCallingCode(country.callingCode[0]);
   };
   return (
-    <View style={{ marginTop: marginTop }}>
+    <Column marginTop={marginTop}>
       {content ? (
         <View style={styles.labelContainer}>
           <Text size={14} color={Color.GREY}>
@@ -62,8 +63,8 @@ export default function PhoneInput({
         <></>
       )}
       <Row
-        paddingVertical={_moderateScale(8 * 2)}
-        borderRadius={_moderateScale(8)}
+        paddingVertical={8 * 2}
+        borderRadius={8}
         borderColor={
           errorMessage
             ? Color.ERROR_COLOR
@@ -74,7 +75,7 @@ export default function PhoneInput({
         borderWidth={1}
         paddingHorizontal={10}
       >
-        <View style={{ height: _moderateScale(8 * 3) }}>
+        <Column height={8 * 3}>
           <CountryPicker
             withFilter={true}
             withFlag={true}
@@ -86,7 +87,7 @@ export default function PhoneInput({
             onSelect={onSelect}
             visible={false}
           />
-        </View>
+        </Column>
         <Text>+{countryCallingCode}</Text>
         <TextInput
           value={content}
@@ -103,7 +104,7 @@ export default function PhoneInput({
       ) : (
         <></>
       )}
-    </View>
+    </Column>
   );
 }
 
@@ -131,7 +132,7 @@ const styles = StyleSheet.create({
   },
   input_text: {
     ...stylesFont.fontNolan,
-    fontSize: _moderateScale(14),
+    fontSize: 14,
     paddingVertical: 0,
     flex: 1,
     color: Color.BLACK,

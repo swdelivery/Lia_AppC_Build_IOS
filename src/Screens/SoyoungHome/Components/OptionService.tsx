@@ -3,6 +3,7 @@ import { StyleSheet, TouchableOpacity, View } from "react-native";
 import {
   _heightScale,
   _moderateScale,
+  _width,
   _widthScale,
 } from "../../../Constant/Scale";
 import { useDispatch, useSelector } from "react-redux";
@@ -43,8 +44,8 @@ const OptionService = () => {
   }, []);
 
   const _handleGoCategory = useCallback((item) => {
-    navigation.navigate(ScreenKey.NEW_CATEGORY, { parentCodeParam: item })
-  }, [])
+    navigation.navigate(ScreenKey.NEW_CATEGORY, { parentCodeParam: item });
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -59,14 +60,14 @@ const OptionService = () => {
           <TouchableOpacity
             key={item._id}
             onPress={() => _handleGoCategory(item)}
-            style={styles.itemContainer}>
+            style={styles.itemContainer}
+          >
             <Image
               style={styles.item__option}
               avatar={item?.fileAvatar}
-              placeholderColors={["white", "white"]} />
-            <Text
-              color={WHITE}
-              weight="bold" size={12}>
+              placeholderColors={["white", "white"]}
+            />
+            <Text color={WHITE} weight="bold" size={12}>
               {item.name}
             </Text>
           </TouchableOpacity>
@@ -86,17 +87,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     paddingVertical: 8,
-    marginHorizontal: 12,
+    width: _width - _moderateScale(16) * 2,
   },
   item__option: {
-    width: _widthScale(8 * 5),
-    height: _widthScale(8 * 5),
-    borderRadius: _widthScale((8 * 5) / 2),
+    width: 45,
+    height: 45,
+    borderRadius: 30,
   },
   itemContainer: {
     alignItems: "center",
-    width: _widthScale(65),
-    marginTop: _moderateScale(4),
+    width: 65,
+    marginTop: 4,
     // backgroundColor: "white",
   },
 });

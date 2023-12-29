@@ -2,12 +2,15 @@ import React, { useCallback } from "react";
 import { Message, TemplateData } from "@typings/chat";
 import Column from "@Components/Column";
 import Icon from "@Components/Icon";
-import { GREEN, GREEN_2, GREEN_SUCCESS } from "@Constant/Color";
+import { BASE_COLOR, GREEN, GREEN_2, GREEN_SUCCESS } from "@Constant/Color";
 import Row from "@Components/Row";
 import Text from "@Components/Text";
 import { useNavigate } from "src/Hooks/useNavigation";
 import ScreenKey from "@Navigation/ScreenKey";
 import { formatMonney } from "@Constant/Utils";
+import Image from "@Components/Image";
+import { head } from "lodash";
+import { StyleSheet } from "react-native";
 
 type Props = {
   template: TemplateData;
@@ -15,6 +18,7 @@ type Props = {
 
 export default function ThankYouMessage({ template }: Props) {
   const { navigation } = useNavigate();
+  console.log({ template });
 
   const handleDetails = useCallback(() => {
     // @ts-ignore
@@ -29,28 +33,32 @@ export default function ThankYouMessage({ template }: Props) {
     <Column paddingHorizontal={16} paddingVertical={8} gap={8}>
       <Text
         weight="bold"
-        size={12}
-      >{`CÁM ƠN BẠN ĐÃ ĐÓNG GÓP CHO DỰ ÁN "${template.data.volunteerName.toUpperCase()}"`}</Text>
-      <Text size={12}>
+        size={14}
+      >{`CÁM ƠN BẠN ĐÃ ĐÓNG GÓP CHO DỰ ÁN "${template.data?.volunteerName?.toUpperCase()}"`}</Text>
+      <Image
+        style={styles.image}
+        avatar={head(template.data.volunteerBanner)}
+      ></Image>
+      <Text size={14}>
         <Icon name="leaf" color={GREEN_SUCCESS} size={18} /> Chân thành cám ơn
-        <Text weight="bold" size={12}>
+        <Text weight="bold" size={14}>
           {` Anh/Chị ${template.data.partnerName} `}
         </Text>
         đã tin tưởng sử dụng dịch vụ tại LiA và đóng góp
-        <Text weight="bold" size={12}>
+        <Text weight="bold" size={14}>
           {` ${formatMonney(template.data.amount, true)} `}
         </Text>
         cho Dự án
-        <Text weight="bold" size={12}>
+        <Text weight="bold" size={14}>
           {` ${template.data.volunteerName} `}
         </Text>
       </Text>
-      <Text size={12}>
+      <Text size={14}>
         <Icon name="leaf" color={GREEN_SUCCESS} size={18} /> Đây là một nghĩa cử
         vô cùng cao đẹp góp phần động viên, chia sẻ và giúp đỡ các hoàn cảnh khó
         khăn ở khắp Việt Nam.
       </Text>
-      <Text size={12}>
+      <Text size={14}>
         <Icon name="leaf" color={GREEN_SUCCESS} size={18} /> LiA xin hứa sẽ quản
         lý, sử dụng số tiền trên đúng mục đích, đúng đối tượng, thiết thực và
         hiệu quả. Hy vọng sẽ tiếp tục nhận được sự giúp đỡ và huỏng ứng nhiệt
@@ -58,7 +66,7 @@ export default function ThankYouMessage({ template }: Props) {
         nguyện tiếp theo.
       </Text>
       <Row
-        backgroundColor={GREEN_2}
+        backgroundColor={BASE_COLOR}
         alignSelf="center"
         borderRadius={12}
         paddingHorizontal={8}
@@ -66,7 +74,7 @@ export default function ThankYouMessage({ template }: Props) {
         marginTop={8}
         onPress={handleDetails}
       >
-        <Text size={12} color={"white"} weight="bold" bottom={2}>
+        <Text size={14} color={"white"} weight="bold" bottom={2}>
           XEM THÊM VỀ DỰ ÁN
         </Text>
         <Icon name="chevron-double-right" color="white" size={18} />
@@ -74,3 +82,9 @@ export default function ThankYouMessage({ template }: Props) {
     </Column>
   );
 }
+
+const styles = StyleSheet.create({
+  image: {
+    height: 100,
+  },
+});

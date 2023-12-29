@@ -66,6 +66,7 @@ const DetailBranch = () => {
               <HorizontalServices
                 title="Dịch vụ phổ biến"
                 items={data.branchServices}
+                containerStyle={styles.services}
               />
             )}
             <Feedback branch={data} />
@@ -96,5 +97,8 @@ const styles = StyleSheet.create({
     width: _width,
     height: 200,
     borderWidth: 1,
+  },
+  services: {
+    marginHorizontal: 16,
   },
 });

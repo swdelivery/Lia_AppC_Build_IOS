@@ -22,6 +22,7 @@ import ScreenKey from "@Navigation/ScreenKey";
 import { getInfoUserReducer } from "@Redux/Selectors";
 import Avatar from "@Components/Avatar";
 import { FocusAwareStatusBar } from "@Components/StatusBar";
+import SVGFindGrey from "src/SGV/findGrey.svg";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -76,7 +77,7 @@ const Header = () => {
         </Column>
         <Column flex={1}>
           <Row gap={_moderateScale(8)} style={styles.textInputStyle}>
-            <IconFindGrey style={sizeIcon.llg} />
+            <SVGFindGrey />
             <TextInput
               placeholder="Tìm kiếm"
               style={styles.textInputStyle__input}
@@ -102,13 +103,14 @@ export default Header;
 
 const styles = StyleSheet.create({
   dot: {
-    width: _moderateScale(4),
-    height: _moderateScale(4),
-    borderRadius: _moderateScale(2),
+    width: 4,
+    height: 4,
+    borderRadius: 2,
     backgroundColor: GREY,
   },
   textInputStyle__input: {
     flex: 1,
+    paddingVertical: 0,
   },
   textInputStyle: {
     width: "100%",

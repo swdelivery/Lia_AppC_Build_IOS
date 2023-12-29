@@ -16,7 +16,7 @@ import Text from "@Components/Text";
 import Column from "@Components/Column";
 import { useNavigate } from "src/Hooks/useNavigation";
 import ScreenKey from "@Navigation/ScreenKey";
-import { BASE_COLOR_LIGHT } from "@Constant/Color";
+import { BASE_COLOR, BASE_COLOR_LIGHT } from "@Constant/Color";
 import { AfterTimeoutFragment } from "@Components/AfterTimeoutFragment";
 
 const SoYoungDoctor = ({ tabIndex, isFocused }: any) => {
@@ -51,10 +51,7 @@ const SoYoungDoctor = ({ tabIndex, isFocused }: any) => {
           style={styles.viewAll}
           onPress={navigate(ScreenKey.DOCTOR_LIST)}
         >
-          <Text
-            color={BASE_COLOR_LIGHT}
-            fontStyle="italic"
-          >{`Xem tất cả >>`}</Text>
+          <Text color={BASE_COLOR} fontStyle="italic">{`Xem tất cả >>`}</Text>
         </Pressable>
       </Column>
       <FlatList

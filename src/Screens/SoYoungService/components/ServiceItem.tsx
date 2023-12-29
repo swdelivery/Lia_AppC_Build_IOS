@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback } from "react";
 import { View, StyleSheet } from "react-native";
 import { _width } from "@Constant/Scale";
 import { formatMonney } from "@Constant/Utils";
@@ -9,23 +9,27 @@ import Text from "@Components/Text";
 import CountStar2 from "@Components/NewCountStar/CountStar";
 import { Service } from "@typings/serviceGroup";
 import Column from "@Components/Column";
-import { GREY, RED } from "@Constant/Color";
+import { GREY, MAIN_RED_600, RED } from "@Constant/Color";
 import Row from "@Components/Row";
 import { styleElement } from "@Constant/StyleElement";
 import Icon from "@Components/Icon";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import ContentLoader, { Rect } from "react-content-loader/native";
 import { SERVICE_BANNER_RATIO } from "@Constant/image";
 import FlashSale from "./FlashSale";
-
-const IMAGE_WIDTH = _width / 2 - 8 - 8 / 2;
-const IMAGE_HEIGHT = IMAGE_WIDTH * SERVICE_BANNER_RATIO;
+import { FlashIcon } from "src/SGV";
+import { formatTime } from "src/utils/date";
 
 type Props = {
   item: Service;
+  numColumns: number;
+  isFirstInRow: boolean;
 };
 
-export default function ServiceItem({ item }: Props) {
+export default function ServiceItem({
+  item,
+  numColumns = 2,
+  isFirstInRow,
+}: Props) {
   const { navigation } = useNavigate();
 
   const _handleGoDetailService = useCallback(() => {
@@ -41,41 +45,62 @@ export default function ServiceItem({ item }: Props) {
   // }, [item]);
 
   return (
-    <TouchableOpacity
-      activeOpacity={0.8}
+    <Column
+      style={styles.content}
       onPress={_handleGoDetailService}
-      style={styles.card}
+      flex={1 / numColumns}
+      marginLeft={isFirstInRow ? 0 : 8}
     >
-      <View style={styles.content}>
-        <Column>
-          <Image style={styles.image} avatar={item.avatar} />
-          {item.isOnFlashSale && <FlashSale width={IMAGE_WIDTH} />}
+      <Column overflow="hidden">
+        <Image style={styles.image} avatar={item.avatar} />
+        {item.isOnFlashSale && <FlashSale width={_width / numColumns} />}
+      </Column>
+      <Column style={styles.info}>
+        <Column height={35}>
+          <Text numberOfLines={2} size={12} weight="bold">
+            {item?.name}
+          </Text>
         </Column>
-        <Column style={styles.info}>
-          <Column height={35}>
-            <Text numberOfLines={2} size={12} weight="bold">
-              {item?.name}
-            </Text>
-          </Column>
+        <Row gap={4}>
           <CountStar2
             rating={item.averageRating}
             count={item.reviewCount}
-            size={10}
+            size={9}
           />
-          <Row>
+          {!item.isOnFlashSale && !!item.nextFlashSale && (
+            <Row>
+              <Column backgroundColor={MAIN_RED_600} marginRight={2}>
+                <FlashIcon width={10} height={10} />
+              </Column>
+              <Text size={6} color={MAIN_RED_600}>
+                Flash Sale bắt đầu lúc{" "}
+                {formatTime(item.nextFlashSale.timeRange.from)}
+              </Text>
+            </Row>
+          )}
+        </Row>
+        <Row>
+          {item.isOnFlashSale && item?.preferentialInCurrentFlashSale ? (
+            <Row flex={1} alignItems="flex-end" gap={4}>
+              <Text size={12} weight="bold" color={RED}>
+                {`${formatMonney(
+                  item?.preferentialInCurrentFlashSale?.finalPrice
+                )}`}
+              </Text>
+              <Text size={8} textDecorationLine="line-through" bottom={1}>
+                {formatMonney(item.price)}
+              </Text>
+            </Row>
+          ) : (
             <Text size={12} weight="bold" color={RED} style={styleElement.flex}>
-              {`${formatMonney(item?.price, true)}`}
+              {`${formatMonney(item?.price)}`}
             </Text>
-            <Icon name="account-multiple" size={14} color={GREY} />
-            <Text
-              size={10}
-              bottom={2}
-              left={2}
-            >{`(${item.countPartner})`}</Text>
-          </Row>
-        </Column>
-      </View>
-    </TouchableOpacity>
+          )}
+          <Icon name="account-multiple" size={14} color={GREY} />
+          <Text size={10} bottom={2} left={2}>{`(${item.countPartner})`}</Text>
+        </Row>
+      </Column>
+    </Column>
   );
 }
 
@@ -105,25 +130,17 @@ export function Placeholder() {
 }
 
 const styles = StyleSheet.create({
-  card: {
-    width: _width / 2 - 4,
-    marginBottom: 8,
-  },
   container: {
-    // flex: 1,
-    paddingTop: 8 * 2,
     backgroundColor: "#F5F9FA",
   },
   content: {
-    // height: IMAGE_HEIGHT + 80,
-    marginLeft: 8,
     backgroundColor: "white",
     borderRadius: 8,
     ...styleElement.shadow,
   },
   image: {
-    width: IMAGE_WIDTH,
-    height: IMAGE_HEIGHT,
+    width: "100%",
+    aspectRatio: 1 / SERVICE_BANNER_RATIO,
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
   },

@@ -3,8 +3,7 @@ import { createStackNavigator, TransitionPresets } from '@react-navigation/stack
 import React from 'react';
 import OverViewProfileTab from '../../../Screens/Profile/Profile';
 import ScreenKey from '../../ScreenKey';
-import TreatmentRecord from '../../../Screens/TreatmentRecord/index';
-import ListDiary from '../../../Screens/ListDiaryOfPartner'
+import TreatmentRecord from "../../../Screens/TreatmentRecord/index";
 import ListDiaryOfPartnerChild from '../../../Screens/ListDiaryOfPartnerChild'
 import PickTreatmentDiary from '../../../Screens/ListDiaryOfPartner/Components/PickTreatmentToDiary'
 import ListAllHistoryTreatment from '../../../Screens/Profile/ListAllHistoryTreatment';
@@ -37,11 +36,6 @@ const ProfileTab = () => {
         options={{ ...TransitionPresets.SlideFromRightIOS }}
         name={ScreenKey.PICK_TREATMENT_TO_BOOKING}
         component={PickTreatmentDiary}
-      />
-      <rootStack.Screen
-        options={{ ...TransitionPresets.SlideFromRightIOS }}
-        name={ScreenKey.LIST_PARTNER_DIARY}
-        component={ListDiary}
       />
       <rootStack.Screen
         options={{ ...TransitionPresets.SlideFromRightIOS }}

@@ -11,6 +11,7 @@ import linking from "src/utils/linking";
 import Text from "@Components/Text";
 import { Branch } from "@typings/branch";
 import { useNavigate } from "src/Hooks/useNavigation";
+import { BASE_COLOR } from "@Constant/Color";
 
 type Props = {
   branch: Branch;
@@ -87,8 +88,7 @@ const styles = StyleSheet.create({
     borderRadius: _moderateScale(8 * 2),
     alignItems: "center",
     justifyContent: "center",
-    // borderColor: '#1E463E',
-    backgroundColor: "#876947",
+    backgroundColor: BASE_COLOR,
     flexDirection: "row",
     gap: 8,
   },
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderColor: "#1E463E",
-    backgroundColor: "#B99A60",
+    backgroundColor: BASE_COLOR,
     flexDirection: "row",
     gap: 8,
   },

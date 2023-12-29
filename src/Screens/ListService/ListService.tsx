@@ -101,8 +101,6 @@ const ListService = memo((props) => {
   const [showModalPickFilter, setShowModalPickFilter] = useState(false);
 
   useEffect(() => {
-    console.log({ props });
-
     if (props?.currGrChoice?.parentCode) {
       console.log({ ALOOOO: props?.currGrChoice?.parentCode });
 

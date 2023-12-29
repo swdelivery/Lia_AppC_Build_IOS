@@ -1,18 +1,7 @@
-import React, { memo, useEffect, useMemo, useState } from "react";
-import {
-  FlatList,
-  Image,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import { _moderateScale, _widthScale } from "../../../Constant/Scale";
-import { navigation } from "../../../../rootNavigation";
-import ScreenKey from "../../../Navigation/ScreenKey";
+import React, { useMemo } from "react";
+import { StyleSheet } from "react-native";
+import { _moderateScale, _width, _widthScale } from "../../../Constant/Scale";
 import { useSelector } from "react-redux";
-import { URL_ORIGINAL } from "../../../Constant/Url";
-import CountStar2 from "@Components/NewCountStar/CountStar";
 import HorizontalDoctors from "@Components/HorizontalDoctors";
 
 const ListDoctor = () => {
@@ -27,7 +16,9 @@ const ListDoctor = () => {
   return (
     <HorizontalDoctors
       title="Đội ngũ Bác sĩ nhiều năm kinh nghiệm"
-      items={doctors} containerStyle={styles.container} />
+      items={doctors}
+      containerStyle={styles.container}
+    />
   );
 };
 
@@ -53,13 +44,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   container: {
-    width: _widthScale(350),
+    width: _width - _moderateScale(16) * 2,
     // height: _widthScale(170),
     alignSelf: "center",
     borderRadius: 8,
     backgroundColor: "rgba(255,255,255,1)",
     paddingVertical: 8,
-    paddingRight: 8 * 2
+    paddingRight: 8 * 2,
     // flexDirection: "row",
   },
 });

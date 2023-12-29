@@ -104,7 +104,7 @@ const NewListLastedMessage = () => {
         onPress={handleOpenAIChat}
         style={[styles.btnAI, shadow]}
       >
-        <IconAI width={8 * 8} height={8 * 8} />
+        <IconAI width={8 * 8} height={8 * 8} color={BASE_COLOR} />
       </TouchableOpacity>
     </Screen>
   );

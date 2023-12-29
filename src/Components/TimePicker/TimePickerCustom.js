@@ -82,106 +82,140 @@ class TimePickerCustom extends Component {
 
     render() {
         return (
-            <>
+          <>
+            {Platform.OS == "ios" ? (
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-evenly",
+                  paddingHorizontal: _widthScale(30),
+                }}
+              >
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                  <Picker
+                    itemStyle={[
+                      stylesFont.fontDinTextProBold,
+                      { color: BASE_COLOR, fontSize: _moderateScale(24) },
+                    ]}
+                    selectedValue={this.state.selectedItem}
+                    style={{ width: _widthScale(100) }}
+                    onValueChange={(itemValue, itemIndex) =>
+                      this.setSelectedValue(itemValue, itemIndex)
+                    }
+                  >
+                    {wheelPickerHours &&
+                      wheelPickerHours.length > 0 &&
+                      wheelPickerHours.map((item, index) => {
+                        return (
+                          <Picker.Item
+                            key={index}
+                            label={item.label}
+                            value={item.value}
+                          />
+                        );
+                      })}
+                  </Picker>
 
-                {
-                    Platform.OS == 'ios' ?
-                        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-evenly", paddingHorizontal: _widthScale(30) }}>
-                            <View style={{ flexDirection: 'row', alignItems: "center" }}>
-                                <Picker
-                                    itemStyle={[stylesFont.fontDinTextProBold, { color: BASE_COLOR, fontSize: _moderateScale(24) }]}
-                                    selectedValue={this.state.selectedItem}
-                                    style={{ width: _widthScale(100) }}
-                                    onValueChange={(itemValue, itemIndex) => this.setSelectedValue(itemValue, itemIndex)}
-                                >
-                                    {
-                                        wheelPickerHours && wheelPickerHours.length > 0 &&
-                                        wheelPickerHours.map((item, index) => {
-                                            return (
-                                                <Picker.Item key={index} label={item.label} value={item.value} />
-                                            )
-                                        })
-                                    }
-                                </Picker>
+                  <Text
+                    style={{
+                      fontSize: _moderateScale(16),
+                      color: BASE_COLOR,
+                      fontWeight: "bold",
+                      marginHorizontal: _widthScale(20),
+                    }}
+                  >
+                    :
+                  </Text>
 
-                                <Text style={{
-                                    fontSize: _moderateScale(16),
-                                    color: BASE_COLOR,
-                                    fontWeight: "bold",
-                                    marginHorizontal: _widthScale(20)
-                                }}>
-                                    :
-                                </Text>
-
-                                <Picker
-                                    itemStyle={[stylesFont.fontDinTextProBold, { color: BASE_COLOR, fontSize: _moderateScale(24) }]}
-                                    selectedValue={this.state.selectedItemMinutes}
-                                    style={{ width: _widthScale(100) }}
-                                    onValueChange={(itemValue, itemIndex) => this.setSelectedValueMinutes(itemValue, itemIndex)}
-                                >
-                                    {
-                                        wheelPickerMinutes && wheelPickerMinutes.length > 0 &&
-                                        wheelPickerMinutes.map((item, index) => {
-                                            return (
-                                                <Picker.Item key={index} label={item.label} value={item.value} />
-                                            )
-
-
-                                        })
-                                    }
-                                </Picker>
-                            </View>
-                        </View>
-                        :
-                        <View style={{ flexDirection: "row", alignItems: "center", marginHorizontal: _widthScale(100) }}>
-                            <TimePicker
-                                // itemTextColor={'rgba(78, 55, 211, 0.35)'}
-                                itemTextColor={'#E5E5E5'}
-                                itemTextSize={_widthScale(24)}
-                                selectedItemTextSize={_widthScale(24)}
-                                selectedItemTextColor={BASE_COLOR}
-                                // hideIndicator={true}
-                                indicatorColor={BORDER_COLOR}
-                                onTimeSelected={(time) => this.onTimeSelected(time)}
-                                itemStyle={{ color: 'red' }}
-                                format24={true}
-                                minutes={['00', '15', '30', '45']}
-                            />
-                        </View>
-
-                }
-
-                <View style={{ flex: 1, justifyContent: 'flex-end', paddingBottom: this.props.bottom }}>
-                    <Row gap={16} style={{
-                        paddingHorizontal: _moderateScale(8 * 2),
-                        bottom: _moderateScale(0)
-                    }}>
-                        <TouchableOpacity
-                            onPress={this._handleAcceptTime}
-                            style={styles.leftBtn}>
-
-                            <LinearGradient
-                                style={[StyleSheet.absoluteFillObject, { borderRadius: 8 }]}
-                                start={{ x: 0, y: 0 }}
-                                end={{ x: 0, y: 1 }}
-                                colors={["#01AB84", "#186A57"]}
-                            />
-
-                            <Text weight='bold' size={14} color={WHITE}>
-                                Xác nhận
-                            </Text>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity style={styles.rightBtn}>
-                            <Text weight='bold' size={14} color={GREY_FOR_TITLE}>
-                                Huỷ
-                            </Text>
-                        </TouchableOpacity>
-
-                    </Row>
+                  <Picker
+                    itemStyle={[
+                      stylesFont.fontDinTextProBold,
+                      { color: BASE_COLOR, fontSize: _moderateScale(24) },
+                    ]}
+                    selectedValue={this.state.selectedItemMinutes}
+                    style={{ width: _widthScale(100) }}
+                    onValueChange={(itemValue, itemIndex) =>
+                      this.setSelectedValueMinutes(itemValue, itemIndex)
+                    }
+                  >
+                    {wheelPickerMinutes &&
+                      wheelPickerMinutes.length > 0 &&
+                      wheelPickerMinutes.map((item, index) => {
+                        return (
+                          <Picker.Item
+                            key={index}
+                            label={item.label}
+                            value={item.value}
+                          />
+                        );
+                      })}
+                  </Picker>
                 </View>
+              </View>
+            ) : (
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  marginHorizontal: _widthScale(100),
+                }}
+              >
+                <TimePicker
+                  // itemTextColor={'rgba(78, 55, 211, 0.35)'}
+                  itemTextColor={"#E5E5E5"}
+                  itemTextSize={_widthScale(24)}
+                  selectedItemTextSize={_widthScale(24)}
+                  selectedItemTextColor={BASE_COLOR}
+                  // hideIndicator={true}
+                  indicatorColor={BORDER_COLOR}
+                  onTimeSelected={(time) => this.onTimeSelected(time)}
+                  itemStyle={{ color: "red" }}
+                  format24={true}
+                  minutes={["00", "15", "30", "45"]}
+                />
+              </View>
+            )}
 
-                {/* <View style={{ flexDirection: "row", justifyContent: "space-between", paddingHorizontal: _widthScale(30), marginBottom: _heightScale(5), marginTop: _heightScale(15) }}>
+            <View
+              style={{
+                flex: 1,
+                justifyContent: "flex-end",
+                paddingBottom: this.props.bottom,
+              }}
+            >
+              <Row
+                gap={16}
+                style={{
+                  paddingHorizontal: _moderateScale(8 * 2),
+                  bottom: _moderateScale(0),
+                }}
+              >
+                <TouchableOpacity
+                  onPress={this._handleAcceptTime}
+                  style={styles.leftBtn}
+                >
+                  <LinearGradient
+                    style={[StyleSheet.absoluteFillObject, { borderRadius: 8 }]}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 0, y: 1 }}
+                    colors={["#1C5579", "#186A57"]}
+                  />
+
+                  <Text weight="bold" size={14} color={WHITE}>
+                    Xác nhận
+                  </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.rightBtn}>
+                  <Text weight="bold" size={14} color={GREY_FOR_TITLE}>
+                    Huỷ
+                  </Text>
+                </TouchableOpacity>
+              </Row>
+            </View>
+
+            {/* <View style={{ flexDirection: "row", justifyContent: "space-between", paddingHorizontal: _widthScale(30), marginBottom: _heightScale(5), marginTop: _heightScale(15) }}>
                     <TouchableOpacity
                         onPress={this.props._handleExit}
                         style={{ padding: _widthScale(10) }}
@@ -206,7 +240,7 @@ class TimePickerCustom extends Component {
                         </Text>
                     </TouchableOpacity>
                 </View> */}
-            </>
+          </>
         );
     }
 }

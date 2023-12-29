@@ -34,14 +34,10 @@ export default function FlashSaleItem({ item, isUpcoming }: Props) {
         {item.service.name}
       </Text>
       <Row justifyContent="space-between" alignItems="flex-end">
-        <Text size={_widthScale(10)} weight="bold" color={MAIN_RED}>
+        <Text size={10} weight="bold" color={MAIN_RED}>
           {formatMonney(item.finalPrice)}
         </Text>
-        <Text
-          size={_widthScale(8)}
-          textDecorationLine="line-through"
-          bottom={1}
-        >
+        <Text size={8} textDecorationLine="line-through" bottom={1}>
           {formatMonney(item.originalPrice)}
         </Text>
       </Row>

@@ -9,7 +9,7 @@ import Row from "@Components/Row";
 import CountStar2 from "@Components/NewCountStar/CountStar";
 import Certificate, { Certificates } from "@Components/Certificate/Certificate";
 import Icon from "@Components/Icon";
-import { RED } from "@Constant/Color";
+import { BASE_COLOR, RED } from "@Constant/Color";
 import HorizontalServices from "@Components/HorizontalServices";
 import { Branch } from "@typings/branch";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
   adviseBtn: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#4BA888",
+    backgroundColor: BASE_COLOR,
     paddingHorizontal: 8,
     paddingVertical: 2,
     borderRadius: 8 * 2,

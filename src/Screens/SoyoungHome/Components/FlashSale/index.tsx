@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect, useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import { StyleSheet } from "react-native";
-import { _widthScale } from "../../../../Constant/Scale";
+import { _moderateScale, _widthScale } from "../../../../Constant/Scale";
 import Column from "@Components/Column";
 import { useFocused, useNavigate } from "src/Hooks/useNavigation";
 import ScreenKey from "@Navigation/ScreenKey";
@@ -23,12 +23,14 @@ import { FlashSale } from "@typings/flashsale";
 import Text from "@Components/Text";
 import { MAIN_RED_500 } from "@Constant/Color";
 import useFlashSales from "../useFlashSale";
+import useConfigFile from "src/Hooks/useConfigFile";
+import { ConfigFileCode } from "@typings/configFile";
 
 const FlashSaleBanner = ({ flashSale }: { flashSale: FlashSale }) => {
   const dispatch = useDispatch();
   const { navigate } = useNavigate();
-  const { image } = useSelector(getFlashSaleState);
   const { data: services } = useSelector(getCurrentFlashSaleServicesState);
+  const flashSaleImage = useConfigFile(ConfigFileCode.ImageFlashSaleHome);
 
   useEffect(() => {
     dispatch(getCurrentFlashSaleServices.request(flashSale._id));
@@ -61,9 +63,9 @@ const FlashSaleBanner = ({ flashSale }: { flashSale: FlashSale }) => {
         onPress={navigate(ScreenKey.FLASHSALE_SCREEN)}
       >
         <Column flex={1} justifyContent="center" alignItems="center">
-          {image && (
+          {flashSaleImage && (
             <Image
-              avatar={head(image.fileArr)}
+              avatar={head(flashSaleImage.fileArr)}
               style={styles.image}
               resizeMode="contain"
               placeholderColors={["white", "white"]}
@@ -119,7 +121,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   container: {
-    marginHorizontal: 12,
+    marginHorizontal: _moderateScale(16),
     paddingHorizontal: 8,
     height: 120,
     alignSelf: "center",
