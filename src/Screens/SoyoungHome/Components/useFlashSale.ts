@@ -1,3 +1,4 @@
+import { isValidFlasSale } from "@Constant/service";
 import { checkFlashSale } from "@Redux/flashSale/actions";
 import { getFlashSaleState } from "@Redux/flashSale/selectors";
 import { FlashSale } from "@typings/flashsale";
@@ -20,15 +21,8 @@ export default function useFlashSales(
 
   const flashSales = useMemo(() => {
     const result: FlashSale[] = [];
-    if (currentFlashSale) {
-      const { hour, minute } = currentFlashSale.timeRange.to;
-      const endTimestamp = moment(fromUtc(currentFlashSale.dateRange.to))
-        .add(hour, "hours")
-        .add(minute, "minutes")
-        .valueOf();
-      if (Date.now() < endTimestamp) {
-        result.push(currentFlashSale);
-      }
+    if (isValidFlasSale(currentFlashSale)) {
+      result.push(currentFlashSale);
     }
     const validFlashSales = nextFlashSale.filter((item) => {
       const endTimestamp = moment(fromUtc(item.dateRange.to))

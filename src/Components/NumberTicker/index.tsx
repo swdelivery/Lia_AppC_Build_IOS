@@ -53,7 +53,7 @@ export default function NumberTicker({
 }
 
 function Digit({
-  value,
+  value = 0,
   textSize,
   height,
   ...props
@@ -98,6 +98,7 @@ function Digit({
         ref={aref}
         scrollEnabled={false}
         showsVerticalScrollIndicator={false}
+        pagingEnabled
       >
         {digits.map((i, idx) => (
           <Column

@@ -38,12 +38,6 @@ export default function ServiceItem({
     });
   }, [item]);
 
-  // const {} = useMemo(() => {
-  //   if (item.currentFlashSale) {
-  //     return { item };
-  //   }
-  // }, [item]);
-
   return (
     <Column
       style={styles.content}

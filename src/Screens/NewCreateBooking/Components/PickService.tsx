@@ -5,6 +5,7 @@ import {
   BORDER_COLOR,
   GREY,
   GREY_FOR_TITLE,
+  MAIN_RED_600,
   PRICE_ORANGE,
   RED,
 } from "@Constant/Color";
@@ -25,10 +26,24 @@ import { Alert } from "react-native";
 import ButtonDelete from "@Components/ButtonDelete/ButtonDelete";
 import useHapticCallback from "src/Hooks/useHapticCallback";
 import { removeService, selectCoupon } from "@Redux/booking/actions";
+import { SERVICE_BANNER_RATIO } from "@Constant/image";
+import FlashSale from "@Screens/SoYoungService/components/FlashSale";
+import { FlashIcon } from "src/SGV";
+import { formatTime } from "src/utils/date";
+import useFlashSales from "@Screens/SoyoungHome/Components/useFlashSale";
+import { head } from "lodash";
+
+const ITEM_SERVICE_WIDTH = 8 * 22;
 
 const PickService = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const { dataServices, dataBranch } = useSelector(getDataCreateBookingState);
+  const flashSales = useFlashSales();
+  const currentFlashSale = !!head(flashSales)?.isUpcoming
+    ? head(flashSales)
+    : null;
+
+  console.log({ currentFlashSale });
 
   const _handleGoPickerService = useCallback(() => {
     if (!dataBranch?.code) {
@@ -38,8 +53,8 @@ const PickService = () => {
   }, [dataBranch?.code]);
 
   useEffect(() => {
-    dispatch(selectCoupon(null))
-  }, [dataServices])
+    dispatch(selectCoupon(null));
+  }, [dataServices]);
 
   return (
     <View style={styles.container}>
@@ -49,7 +64,7 @@ const PickService = () => {
       <View style={{ height: _moderateScale(8 * 2) }} />
 
       <ScrollView
-        contentContainerStyle={{ gap: 8 * 2, paddingVertical: 8 * 2, flexGrow: 1 }}
+        contentContainerStyle={styles.contentContainer}
         horizontal
         showsHorizontalScrollIndicator={false}
       >
@@ -71,25 +86,23 @@ const PickService = () => {
 export default PickService;
 
 const ItemService = ({ data }) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const _handleRemoveService = useHapticCallback(() => {
-    dispatch(removeService(data))
-  }, [])
+    dispatch(removeService(data));
+  }, []);
 
   return (
-    <Column width={_moderateScale(8 * 22)} borderRadius={8}>
-
-      <View style={{
-        position: 'absolute',
-        zIndex: 1,
-        top: -8,
-        right: -8
-      }}>
+    <Column width={ITEM_SERVICE_WIDTH} borderRadius={8}>
+      <Column position={"absolute"} zIndex={1} top={-8} right={-8}>
         <ButtonDelete onPress={_handleRemoveService} />
-      </View>
+      </Column>
 
-      <Image style={styles.image} avatar={data?.representationFileArr[0]} />
+      <Column>
+        <Image style={styles.image} avatar={data?.representationFileArr[0]} />
+        {data.isOnFlashSale && <FlashSale width={ITEM_SERVICE_WIDTH} />}
+      </Column>
+
       <Column
         borderWidth={1}
         borderTopWidth={0}
@@ -100,12 +113,38 @@ const ItemService = ({ data }) => {
         <Text weight="bold" color={GREY_FOR_TITLE}>
           {data?.name}
         </Text>
-        <View style={{ flex: 1 }} />
-        <CountStar2 size={10} count={data?.reviewCount} rating={5} />
+        <Column flex={1} />
+        <Row gap={4}>
+          <CountStar2 size={9} count={data?.reviewCount} rating={5} />
+          {!data.isOnFlashSale && !!data.nextFlashSale && (
+            <Row>
+              <Column backgroundColor={MAIN_RED_600} marginRight={2}>
+                <FlashIcon width={8} height={8} />
+              </Column>
+              <Text size={6} color={MAIN_RED_600}>
+                Flash Sale bắt đầu lúc{" "}
+                {formatTime(data.nextFlashSale.timeRange.from)}
+              </Text>
+            </Row>
+          )}
+        </Row>
         <Row marginTop={2} justifyContent="space-between">
-          <Text color={PRICE_ORANGE} weight="bold" size={14}>
-            {formatMonney(data?.price)} VND
-          </Text>
+          {data.isOnFlashSale && data?.preferentialInCurrentFlashSale ? (
+            <Row flex={1} alignItems="flex-end" gap={4}>
+              <Text size={14} weight="bold" color={RED}>
+                {`${formatMonney(
+                  data?.preferentialInCurrentFlashSale?.finalPrice
+                )}`}
+              </Text>
+              <Text size={8} textDecorationLine="line-through" bottom={1}>
+                {formatMonney(data.price)}
+              </Text>
+            </Row>
+          ) : (
+            <Text size={14} weight="bold" color={RED} style={styleElement.flex}>
+              {`${formatMonney(data?.price)}`}
+            </Text>
+          )}
 
           <Row>
             <Icon name="account-multiple" size={14} color="grey" />
@@ -120,6 +159,11 @@ const ItemService = ({ data }) => {
 };
 
 const styles = StyleSheet.create({
+  contentContainer: {
+    gap: 8 * 2,
+    paddingVertical: 8 * 2,
+    flexGrow: 1,
+  },
   btnAddService: {
     width: _moderateScale(8 * 10),
     height: _moderateScale(8 * 13),
@@ -131,9 +175,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: _moderateScale(8 * 2),
   },
   image: {
-    width: _moderateScale(8 * 22),
-    height: (_moderateScale(8 * 22) * 9) / 16,
+    width: ITEM_SERVICE_WIDTH,
+    height: ITEM_SERVICE_WIDTH * SERVICE_BANNER_RATIO,
     borderTopLeftRadius: 8,
-    borderTopRightRadius: 8
+    borderTopRightRadius: 8,
   },
 });

@@ -9,16 +9,20 @@ import {
   BORDER_COLOR,
   GREY,
   GREY_FOR_TITLE,
+  MAIN_RED_600,
   PRICE_ORANGE,
   WHITE,
 } from "@Constant/Color";
 import { _moderateScale, _width, _widthScale } from "@Constant/Scale";
 import { formatMonney } from "@Constant/Utils";
+import FlashSale from "@Screens/SoYoungService/components/FlashSale";
 import { Service } from "@typings/serviceGroup";
 import React, { useCallback } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import useServiceDetailsNavigation from "src/Hooks/navigation/useServiceDetailsNavigation";
 import useCallbackItem from "src/Hooks/useCallbackItem";
+import { FlashIcon } from "src/SGV";
+import { formatTime } from "src/utils/date";
 
 const ITEM_WIDTH = _width / 2 - 8;
 
@@ -40,15 +44,31 @@ const ItemService = ({ isSelected, data, onToggleSelection }: Props) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={_handleGoDetailService} style={styles.item}>
-        <Image style={styles.avatar} avatar={data?.avatar} />
+        <Column overflow="hidden">
+          <Image style={styles.avatar} avatar={data?.avatar} />
+          {data.isOnFlashSale && <FlashSale width={_width / 2} />}
+        </Column>
+
         <View style={styles.item__body}>
           <Column padding={8}>
             <Column gap={0}>
               <Text numberOfLines={1} weight="bold" color={GREY_FOR_TITLE}>
                 {data.name}
               </Text>
-
-              <CountStar2 size={10} count={data?.reviewCount} rating={5} />
+              <Row gap={4}>
+                <CountStar2 size={10} count={data?.reviewCount} rating={5} />
+                {!data.isOnFlashSale && !!data.nextFlashSale && (
+                  <Row>
+                    <Column backgroundColor={MAIN_RED_600} marginRight={2}>
+                      <FlashIcon width={10} height={10} />
+                    </Column>
+                    <Text size={7} color={MAIN_RED_600}>
+                      Flash Sale bắt đầu lúc{" "}
+                      {formatTime(data.nextFlashSale.timeRange.from)}
+                    </Text>
+                  </Row>
+                )}
+              </Row>
 
               <Row justifyContent="space-between">
                 <Text color={PRICE_ORANGE} weight="bold" size={14}>
