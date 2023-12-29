@@ -1,8 +1,8 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import { StyleSheet } from "react-native";
 import { _moderateScale, _widthScale } from "../../../../Constant/Scale";
 import Column from "@Components/Column";
-import { useFocused, useNavigate } from "src/Hooks/useNavigation";
+import { useNavigate } from "src/Hooks/useNavigation";
 import ScreenKey from "@Navigation/ScreenKey";
 import FlashSaleTimer from "./components/FlashSaleTimer";
 import Row from "@Components/Row";
@@ -15,10 +15,7 @@ import {
   checkFlashSale,
   getCurrentFlashSaleServices,
 } from "@Redux/flashSale/actions";
-import {
-  getCurrentFlashSaleServicesState,
-  getFlashSaleState,
-} from "@Redux/flashSale/selectors";
+import { getCurrentFlashSaleServicesState } from "@Redux/flashSale/selectors";
 import { FlashSale } from "@typings/flashsale";
 import Text from "@Components/Text";
 import { MAIN_RED_500 } from "@Constant/Color";
