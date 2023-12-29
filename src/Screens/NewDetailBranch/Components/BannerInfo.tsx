@@ -25,8 +25,6 @@ const BannerInfo = ({ branch }: Props) => {
     []
   );
 
-  console.log({ branch });
-
   const handleOpenMap = useCallback(() => {
     if (branch.address) {
       linking.openMap(branch.address);

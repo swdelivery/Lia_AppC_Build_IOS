@@ -24,7 +24,7 @@ export default function DiaryItem({ item, onPress }: Props) {
     <TouchableOpacity
       activeOpacity={0.9}
       onPress={trigger(onPress)}
-      style={[styles.box__diary]}
+      style={styles.box__diary}
     >
       <Row gap={8}>
         <Avatar avatar={item.partner.fileAvatar} size={40} circle />
@@ -38,9 +38,15 @@ export default function DiaryItem({ item, onPress }: Props) {
         </View>
       </Row>
 
-      <Row gap={8}>
+      <Row gap={8} height={50} alignItems="flex-start">
         <View style={styles.verticalLine} />
-        <Text style={styles.box__diary__nameService}>{item.serviceName}</Text>
+        <Text
+          weight="bold"
+          style={styles.box__diary__nameService}
+          numberOfLines={2}
+        >
+          {item.serviceName}
+        </Text>
       </Row>
 
       <View style={styles.imagesContainer}>
@@ -79,10 +85,10 @@ const styles = StyleSheet.create({
     marginBottom: _moderateScale(8),
   },
   box__diary__nameService: {
-    fontSize: _moderateScale(14),
-    fontWeight: "500",
+    fontSize: 14,
   },
   verticalLine: {
+    marginTop: 4,
     width: _moderateScale(2),
     height: _moderateScale(8 * 3),
     backgroundColor: "red",

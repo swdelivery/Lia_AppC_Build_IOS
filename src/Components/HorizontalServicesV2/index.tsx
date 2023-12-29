@@ -9,7 +9,6 @@ import { formatMonney } from "@Constant/Utils";
 import useCallbackItem from "src/Hooks/useCallbackItem";
 import { ViewStyle } from "react-native";
 import Image from "@Components/Image";
-import { first } from "lodash";
 import { Service } from "@typings/serviceGroup";
 import useServiceDetailsNavigation from "src/Hooks/navigation/useServiceDetailsNavigation";
 import { SERVICE_BANNER_RATIO } from "@Constant/image";

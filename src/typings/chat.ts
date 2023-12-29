@@ -40,7 +40,7 @@ export type TemplateData = {
 
     // thank you
     volunteerName: string;
-    volunteerBanner: string[];
+    volunteerBanner: FileAvatar[];
     amount: number;
     volunteerId: string;
 

@@ -22,10 +22,6 @@ const RenderHTML = (props) => {
   const [isExpaned, setIsExpaned] = useState(true);
   const rotateIcon = useSharedValue(0);
 
-  useEffect(() => {
-    console.log({ props });
-  }, []);
-
   const getVideoId = (url) => {
     const regExp =
       /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;

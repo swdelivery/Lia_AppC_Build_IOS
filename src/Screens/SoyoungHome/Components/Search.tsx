@@ -111,7 +111,7 @@ const Search = (props) => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    width: _width - _moderateScale(20) * 2,
+    width: _width - _moderateScale(16) * 2,
   },
   search__input: {
     // width: _widthScale(250),

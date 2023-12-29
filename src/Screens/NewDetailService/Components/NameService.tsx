@@ -53,14 +53,14 @@ const NameService = ({ service }: Props) => {
               Flash Sale
             </Text>
             <Row alignItems="flex-end" gap={4}>
-              <Text weight="bold" color={INFO_COLOR} size={17}>
+              <Text weight="bold" color={INFO_COLOR} size={16}>
                 {formatMonney(
                   service.preferentialInCurrentFlashSale.finalPrice,
                   true
                 )}
               </Text>
               <Text
-                size={12}
+                size={10}
                 color={"white"}
                 bottom={1}
                 textDecorationLine="line-through"

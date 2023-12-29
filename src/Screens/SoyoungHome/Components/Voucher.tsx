@@ -43,7 +43,7 @@ export default Voucher;
 
 const styles = StyleSheet.create({
   image: {
-    width: _width - _moderateScale(20) * 2,
+    width: _width - _moderateScale(16) * 2,
     borderRadius: _moderateScale(8),
   },
 });
