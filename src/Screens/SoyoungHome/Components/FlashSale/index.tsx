@@ -22,22 +22,17 @@ import {
 import { FlashSale } from "@typings/flashsale";
 import Text from "@Components/Text";
 import { MAIN_RED_500 } from "@Constant/Color";
-import moment from "moment";
-import { fromUtc } from "src/utils/date";
 import useFlashSales from "../useFlashSale";
-import useConfigFile from "src/Hooks/useConfigFile";
-import { ConfigFileCode } from "@typings/configFile";
 
 const FlashSaleBanner = ({ flashSale }: { flashSale: FlashSale }) => {
   const dispatch = useDispatch();
   const { navigate } = useNavigate();
   const { image } = useSelector(getFlashSaleState);
   const { data: services } = useSelector(getCurrentFlashSaleServicesState);
-  const avatarVoucherHome = useConfigFile(ConfigFileCode.AvatarVoucherHome);
 
   useEffect(() => {
     dispatch(getCurrentFlashSaleServices.request(flashSale._id));
-  }, []);
+  }, [flashSale._id]);
 
   const data = useMemo(() => {
     return services.slice(0, 10);
@@ -66,9 +61,9 @@ const FlashSaleBanner = ({ flashSale }: { flashSale: FlashSale }) => {
         onPress={navigate(ScreenKey.FLASHSALE_SCREEN)}
       >
         <Column flex={1} justifyContent="center" alignItems="center">
-          {avatarVoucherHome && (
+          {image && (
             <Image
-              avatar={head(avatarVoucherHome.fileArr)}
+              avatar={head(image.fileArr)}
               style={styles.image}
               resizeMode="contain"
               placeholderColors={["white", "white"]}

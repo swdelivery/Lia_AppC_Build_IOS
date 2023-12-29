@@ -3,7 +3,7 @@ import { getFlashSaleState } from "@Redux/flashSale/selectors";
 import { FlashSale } from "@typings/flashsale";
 import { isEmpty } from "lodash";
 import moment from "moment";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useFocused } from "src/Hooks/useNavigation";
 import { fromUtc } from "src/utils/date";
@@ -14,9 +14,9 @@ export default function useFlashSales(
   const dispatch = useDispatch();
   const { currentFlashSale, nextFlashSale } = useSelector(getFlashSaleState);
 
-  useEffect(() => {
+  useFocused(() => {
     dispatch(checkFlashSale.request());
-  }, []);
+  });
 
   const flashSales = useMemo(() => {
     const result: FlashSale[] = [];
