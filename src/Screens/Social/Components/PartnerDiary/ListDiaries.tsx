@@ -5,8 +5,11 @@ import { _moderateScale } from '@Constant/Scale';
 import { URL_ORIGINAL } from '@Constant/Url';
 import { PartnerDiary } from '@typings/newfeeds';
 import moment from 'moment';
-import React from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import EnhancedImageViewing from 'react-native-image-viewing/dist/ImageViewing';
+import useVisible from 'src/Hooks/useVisible';
+import { getImageAvataUrl } from 'src/utils/avatar';
 
 
 type Props = {
@@ -15,6 +18,47 @@ type Props = {
 
 const ListDiaries = ({ data }: Props) => {
   const { dailyDiaryArr } = data
+
+
+  const ListImage = useCallback((images) => {
+    const imageViewer = useVisible<number>();
+    const listImageToViewing = useMemo(() => {
+      return images?.data?.map(item => {
+        return {
+          uri: getImageAvataUrl(item)
+        }
+      })
+    }, [])
+    const _handlePressImage = useCallback((idx: number) => () => {
+      imageViewer.show(idx)
+    }, [])
+
+    return (
+      <View style={styles.containerImages}>
+        {
+          images?.data?.map((itemMap, index) => {
+            return (
+              <TouchableOpacity
+                onPress={_handlePressImage(index)}
+                key={itemMap?._id} style={styles.imageBox}>
+                <Image
+                  style={styles.image}
+                  source={{ uri: `${URL_ORIGINAL}${itemMap?.link}` }}
+                />
+              </TouchableOpacity>
+            )
+          })
+        }
+        <EnhancedImageViewing
+          images={listImageToViewing}
+          imageIndex={imageViewer.selectedItem.current}
+          onRequestClose={imageViewer.hide}
+          visible={imageViewer.visible}
+        />
+      </View>
+    )
+  }, [dailyDiaryArr])
+
   return (
     <View>
       {
@@ -37,23 +81,24 @@ const ListDiaries = ({ data }: Props) => {
                 }
                 {
                   item?.images?.length > 0 ?
-                    <View style={styles.containerImages}>
-                      {
-                        item?.images?.map((itemMap, index) => {
-                          return (
-                            <TouchableOpacity
-                              onPress={() => {
-                              }}
-                              key={itemMap?._id} style={styles.imageBox}>
-                              <Image
-                                style={styles.image}
-                                source={{ uri: `${URL_ORIGINAL}${itemMap?.link}` }}
-                              />
-                            </TouchableOpacity>
-                          )
-                        })
-                      }
-                    </View>
+                    <ListImage data={item?.images} />
+                    // <View style={styles.containerImages}>
+                    //   {
+                    //     item?.images?.map((itemMap, index) => {
+                    //       return (
+                    //         <TouchableOpacity
+                    //           onPress={() => {
+                    //           }}
+                    //           key={itemMap?._id} style={styles.imageBox}>
+                    //           <Image
+                    //             style={styles.image}
+                    //             source={{ uri: `${URL_ORIGINAL}${itemMap?.link}` }}
+                    //           />
+                    //         </TouchableOpacity>
+                    //       )
+                    //     })
+                    //   }
+                    // </View>
                     : <></>
                 }
                 <View style={styles.blankView} />

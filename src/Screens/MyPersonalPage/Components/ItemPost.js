@@ -36,14 +36,19 @@ const ItemPost = memo((props) => {
                 marginHorizontal: _moderateScale(8 * 2),
                 backgroundColor: WHITE
             }, shadow]}>
-            <Text numberOfLines={1} style={{ ...stylesFont.fontNolan500, fontSize: _moderateScale(14), color: BLACK }}>
-                {props?.data?.content}
-            </Text>
+            {
+                props?.data?.content ?
+                    <Text numberOfLines={1} style={{ ...stylesFont.fontNolan500, fontSize: _moderateScale(14), color: BLACK }}>
+                        {props?.data?.content}
+                    </Text>
+                    : <></>
+            }
 
-            <View style={{ marginTop: _moderateScale(8), flexDirection: 'row' }}>
+
+            <View style={{ marginTop: _moderateScale(8), flexDirection: 'row', gap: 8 * 2 }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
                     <Image style={sizeIcon.xs} source={require('../../../Image/component/share.png')} />
-                    <Text style={{ marginLeft: _moderateScale(4), ...stylesFont.fontNolan500, color: BASE_COLOR }}>
+                    <Text style={{ flex: 1, marginLeft: _moderateScale(4), ...stylesFont.fontNolan500, color: BASE_COLOR }}>
                         {
                             props?.data?.template?.data?.serviceName
                         }
@@ -56,12 +61,12 @@ const ItemPost = memo((props) => {
                         style={[styleElement.rowAliCenter]}>
                         <Text style={{ ...stylesFont.fontNolan500, fontSize: _moderateScale(14), marginRight: _moderateScale(4), top: -2 }}>
                             {props?.data?.reactionCount}
-                        </Text> 
+                        </Text>
                         <Image style={[sizeIcon.xxs]} source={require('../../../NewIcon/heartRed.png')} />
 
                     </View>
 
-                    <View style={{ width: _moderateScale(8 * 3) }} />
+                    <View style={{ width: _moderateScale(8 * 2) }} />
 
                     <View
                         style={[styleElement.rowAliCenter]}>

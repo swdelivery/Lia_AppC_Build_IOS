@@ -22,7 +22,7 @@ export default function useRequireLoginCallback<T extends Function>(
             currRouteName: route?.name,
           },
         });
-        return () => {};
+        return () => { };
       }
       return callback(params);
     },

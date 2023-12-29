@@ -27,18 +27,18 @@ import { stylesFont } from "../../Constant/Font";
 import Collapsible from "react-native-collapsible";
 import { getServiceGroupv2 } from "../../Redux/Action/ServiceGroup";
 import { getListBranchV2 } from "../../Redux/Action/BranchAction";
-import { getAllDoctorv2 } from "../../Redux/Action/DoctorAction";
+import { getAllDoctorv2, getPractitioner } from "../../Redux/Action/DoctorAction";
 import { getEncyclopedia } from "../../Redux/Action/News";
 import { styleElement } from "../../Constant/StyleElement";
 import ListService from "./Components/ListService";
 import ListBranch from "./Components/ListBranch";
-import ListProduct from "./Components/ListProduct";
 import ListDoctor from "./Components/ListDoctor";
 import { sizeIcon } from "../../Constant/Icon";
 import { getAllProductv2 } from "../../Redux/Action/Product";
 import AsyncStorage from "@react-native-community/async-storage";
 import Screen from "../../Components/Screen";
 import { StatusBar } from "@Components/StatusBar";
+import ListPractitioner from "./Components/ListPractitioner";
 
 const NewSearchHome = memo((props) => {
   const [keySearch, setKeySearch] = useState("");
@@ -51,6 +51,7 @@ const NewSearchHome = memo((props) => {
   const [list5Branch, setList5Branch] = useState([]);
   const [list5Doctor, setList5Doctor] = useState([]);
   const [list5Product, setList5Product] = useState([]);
+  const [list5Practitioner, setList5Practitioner] = useState([]);
   const [list5Bachkhoa, setList5Bachkhoa] = useState([]);
 
   const [showResult, setShowResult] = useState(false);
@@ -154,12 +155,12 @@ const NewSearchHome = memo((props) => {
       setList5Doctor(result?.data);
     }
     if (true) {
-      let result = await getAllProductv2({
+      let result = await getPractitioner({
         page: 1,
         search: key,
       });
       if (result?.isAxiosError) return;
-      setList5Product(result?.data);
+      setList5Practitioner(result?.data);
     }
     if (true) {
       let result = await getEncyclopedia({
@@ -308,7 +309,7 @@ const NewSearchHome = memo((props) => {
       </Collapsible>
 
       {showResult ? (
-        <View>
+        <View style={styleElement.flex}>
           <View>
             <View>
               <View
@@ -432,23 +433,23 @@ const NewSearchHome = memo((props) => {
 
                 <TouchableOpacity
                   onPress={() => {
-                    setCurrOption("SP");
+                    setCurrOption("CV");
                   }}
                 >
                   <Text
                     style={[
                       styles.titleTab,
-                      currOption == "SP" && styles.titleTabActive,
+                      currOption == "CV" && styles.titleTabActive,
                     ]}
                   >
-                    Sản phẩm
+                    Chuyên viên
                   </Text>
-                  {currOption == "SP" ? (
+                  {currOption == "CV" ? (
                     <View style={styles.lineActive} />
                   ) : (
                     <></>
                   )}
-                  {list5Product?.data?.length > 0 ? (
+                  {list5Practitioner?.data?.length > 0 ? (
                     <View style={styles.dotCount}>
                       <Text
                         style={{
@@ -457,7 +458,7 @@ const NewSearchHome = memo((props) => {
                           fontSize: _moderateScale(12),
                         }}
                       >
-                        {list5Product?.data?.length}
+                        {list5Practitioner?.data?.length}
                       </Text>
                     </View>
                   ) : (
@@ -465,7 +466,7 @@ const NewSearchHome = memo((props) => {
                   )}
                 </TouchableOpacity>
 
-                <TouchableOpacity
+                {/* <TouchableOpacity
                   onPress={() => {
                     setCurrOption("BK");
                   }}
@@ -498,7 +499,7 @@ const NewSearchHome = memo((props) => {
                   ) : (
                     <></>
                   )}
-                </TouchableOpacity>
+                </TouchableOpacity> */}
               </View>
             </View>
           </View>
@@ -508,34 +509,7 @@ const NewSearchHome = memo((props) => {
               <>
                 <View style={{ height: _moderateScale(8) }} />
                 {list5Service?.data?.length > 0 ? (
-                  <View
-                    style={{
-                      alignItems: "flex-end",
-                      paddingHorizontal: _moderateScale(8 * 2),
-                    }}
-                  >
-                    <TouchableOpacity
-                      onPress={() => {
-                        navigation.navigate(ScreenKey.LIST_SERVICE);
-                      }}
-                      style={[styleElement.rowAliCenter]}
-                    >
-                      <Text
-                        style={{
-                          ...stylesFont.fontNolan500,
-                          fontSize: _moderateScale(14),
-                          color: BLACK_OPACITY_8,
-                        }}
-                      >
-                        Xem tất cả dịch vụ
-                      </Text>
-
-                      <Image
-                        style={sizeIcon.md}
-                        source={require("../../Icon/arrowRight_grey.png")}
-                      />
-                    </TouchableOpacity>
-                  </View>
+                  <></>
                 ) : (
                   <View
                     style={{
@@ -567,34 +541,6 @@ const NewSearchHome = memo((props) => {
                 <View style={{ height: _moderateScale(8) }} />
                 {list5Branch?.data?.length > 0 ? (
                   <>
-                    <View
-                      style={{
-                        alignItems: "flex-end",
-                        paddingHorizontal: _moderateScale(8 * 2),
-                      }}
-                    >
-                      <TouchableOpacity
-                        onPress={() => {
-                          navigation.navigate(ScreenKey.LIST_BRANCH);
-                        }}
-                        style={[styleElement.rowAliCenter]}
-                      >
-                        <Text
-                          style={{
-                            ...stylesFont.fontNolan500,
-                            fontSize: _moderateScale(14),
-                            color: BLACK_OPACITY_8,
-                          }}
-                        >
-                          Xem tất cả phòng khám
-                        </Text>
-
-                        <Image
-                          style={sizeIcon.md}
-                          source={require("../../Icon/arrowRight_grey.png")}
-                        />
-                      </TouchableOpacity>
-                    </View>
                   </>
                 ) : (
                   <View
@@ -628,36 +574,6 @@ const NewSearchHome = memo((props) => {
                 <View style={{ height: _moderateScale(8) }} />
                 {list5Doctor?.data?.length > 0 ? (
                   <>
-                    <View
-                      style={{
-                        alignItems: "flex-end",
-                        paddingHorizontal: _moderateScale(8 * 2),
-                      }}
-                    >
-                      <TouchableOpacity
-                        onPress={() => {
-                          Platform.OS == "ios"
-                            ? navigation.navigate(ScreenKey.LIST_DOCTOR_IOS)
-                            : navigation.navigate(ScreenKey.LIST_DOCTOR);
-                        }}
-                        style={[styleElement.rowAliCenter]}
-                      >
-                        <Text
-                          style={{
-                            ...stylesFont.fontNolan500,
-                            fontSize: _moderateScale(14),
-                            color: BLACK_OPACITY_8,
-                          }}
-                        >
-                          Xem tất cả bác sĩ
-                        </Text>
-
-                        <Image
-                          style={sizeIcon.md}
-                          source={require("../../Icon/arrowRight_grey.png")}
-                        />
-                      </TouchableOpacity>
-                    </View>
                   </>
                 ) : (
                   <View
@@ -686,38 +602,12 @@ const NewSearchHome = memo((props) => {
             ) : (
               <></>
             )}
-            {currOption == "SP" ? (
+            {currOption == "CV" ? (
               <>
                 <View style={{ height: _moderateScale(8) }} />
-                {list5Product?.data?.length > 0 ? (
-                  <View
-                    style={{
-                      alignItems: "flex-end",
-                      paddingHorizontal: _moderateScale(8 * 2),
-                    }}
-                  >
-                    <TouchableOpacity
-                      onPress={() => {
-                        navigation.navigate(ScreenKey.LIST_PRODUCT);
-                      }}
-                      style={[styleElement.rowAliCenter]}
-                    >
-                      <Text
-                        style={{
-                          ...stylesFont.fontNolan500,
-                          fontSize: _moderateScale(14),
-                          color: BLACK_OPACITY_8,
-                        }}
-                      >
-                        Xem tất cả sản phẩm
-                      </Text>
-
-                      <Image
-                        style={sizeIcon.md}
-                        source={require("../../Icon/arrowRight_grey.png")}
-                      />
-                    </TouchableOpacity>
-                  </View>
+                {list5Practitioner?.data?.length > 0 ? (
+                  <>
+                  </>
                 ) : (
                   <View
                     style={{
@@ -739,11 +629,13 @@ const NewSearchHome = memo((props) => {
                     </Text>
                   </View>
                 )}
-                <ListProduct data={list5Product} />
+                <View style={{ height: _moderateScale(8) }} />
+                <ListPractitioner data={list5Practitioner} />
               </>
             ) : (
               <></>
             )}
+
             {currOption == "BK" ? (
               <>
                 <View style={{ height: _moderateScale(8) }} />
@@ -807,7 +699,7 @@ const NewSearchHome = memo((props) => {
               <></>
             )}
 
-            <View style={{ height: 500 }} />
+            <View style={{ height: 200 }} />
           </ScrollView>
         </View>
       ) : (

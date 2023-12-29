@@ -73,7 +73,7 @@ export type CommentPost = {
   id: string;
   parentInfo: any;
   reactionCount: number;
-
+  reaction: any;
   // Local
   childComments: any;
 } & Timestamp;

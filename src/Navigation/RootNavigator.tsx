@@ -723,7 +723,7 @@ const RootNavigator = () => {
           />
 
           <rootStack.Screen
-            options={{ ...TransitionPresets.ModalPresentationIOS }}
+            options={optionsModal}
             name={ScreenKey.CREATE_NEW_FEED}
             component={CreateNewFeed}
           />

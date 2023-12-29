@@ -25,6 +25,25 @@ export const getAllDoctorv2 = (params) => {
         })
 }
 
+export const getPractitioner = (params) => {
+
+    var esc = encodeURIComponent;
+    var query = Object.keys(params)
+        .map(k => esc(k) + '=' + esc(JSON.stringify(params[k])))
+        .join('&');
+
+    return Axios.get(`${URL_FOR_PARTNER}/practitioner?${query}`)
+        .then(res => {
+            console.log(useLogStyle + '----FETCHING SUCCESS: ', setLogStyle('green'), { getPractitioner: res });
+            return res
+        })
+        .catch(err => {
+            console.log(useLogStyle + '----FETCHING FAIL: ', setLogStyle('red'), { getPractitioner: err });
+            _checkError(err)
+            return err
+        })
+}
+
 export const getAllDoctor = () => {
     return async dispatch => {
         Axios.get(`${URL_FOR_PARTNER}/treatment-doctor/`, {

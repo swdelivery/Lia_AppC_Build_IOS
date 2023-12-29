@@ -28,7 +28,8 @@ const EachComment = ({ data }: Props) => {
     commentsCount,
     _id,
     childComments,
-    reactionCount
+    reactionCount,
+    reaction
   } = data
 
   useEffect(() => {
@@ -53,11 +54,17 @@ const EachComment = ({ data }: Props) => {
     dispatch(selectCommentToReply(data))
   }
   const _handleLikeComment = useHapticCallback(() => {
-    dispatch(createReactionComment.request({
-      "commentId": data?._id,
-      "type": "LIKE"
-    }))
-  }, [])
+    if (reaction?._id) {
+      dispatch(createReactionComment.request({
+        "commentId": data?._id,
+      }))
+    } else {
+      dispatch(createReactionComment.request({
+        "commentId": data?._id,
+        "type": "LIKE"
+      }))
+    }
+  }, [reaction])
 
   return (
     <View>
@@ -107,7 +114,7 @@ const EachComment = ({ data }: Props) => {
               onPress={_handleLikeComment}>
               <Row gap={4}>
                 {
-                  reactionCount ?
+                  reaction?._id ?
                     <IconLikeFilled />
                     :
                     <IconLike />

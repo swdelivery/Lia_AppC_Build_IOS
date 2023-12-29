@@ -1,3 +1,4 @@
+import Avatar from '@Components/Avatar';
 import Column from '@Components/Column';
 import Image from '@Components/Image';
 import Row from '@Components/Row';
@@ -37,7 +38,8 @@ const CountCommentLike = ({ data }: Props) => {
             {
               partnersReaction?.map((item, index) => {
                 return (
-                  <Image
+                  <Avatar
+                    circle
                     key={item._id}
                     style={styles.image}
                     avatar={item?.partner?.fileAvatar}

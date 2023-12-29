@@ -4,23 +4,51 @@ import Row from '@Components/Row'
 import { WHITE } from '@Constant/Color'
 import { stylesFont } from '@Constant/Font'
 import { Post } from "@typings/newfeeds"
-import React from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import EnhancedImageViewing from "react-native-image-viewing/dist/ImageViewing";
+import useVisible from 'src/Hooks/useVisible'
+import { getImageAvataUrl } from 'src/utils/avatar'
 
 type Props = {
   data: Post
 };
 
 const ListImages = ({ data }: Props) => {
+  const imageViewer = useVisible<number>();
+  const imageViewerMore = useVisible<number>();
+
   const { imageBeforeTreatment, imageAfterTreatment } = data?.template?.data
   const { images } = data
+
+
+  const _handlePressImage = useCallback((idx: number) => () => {
+    imageViewer.show(idx)
+  }, [])
+  const _handlePressImageMore = useCallback((idx: number) => () => {
+    imageViewerMore.show(idx)
+  }, [])
+
+  const listImage = useMemo(() => {
+    return [{ uri: getImageAvataUrl(imageBeforeTreatment[0]) }, { uri: getImageAvataUrl(imageAfterTreatment[0]) }]
+  }, [imageBeforeTreatment, imageAfterTreatment])
+
+  const listImageMore = useMemo(() => {
+    return images?.map(item => {
+      return {
+        uri: getImageAvataUrl(item)
+      }
+    })
+  }, [images])
 
   return (
     <Column gap={8 * 2}>
       <Row
         marginHorizontal={8 * 2}
         gap={8 * 2}>
-        <TouchableOpacity style={styles.containerImage}>
+        <TouchableOpacity
+          onPress={_handlePressImage(0)}
+          style={styles.containerImage}>
           <Image
             style={styles.image}
             avatar={imageBeforeTreatment[0]} />
@@ -30,7 +58,9 @@ const ListImages = ({ data }: Props) => {
             </Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.containerImage}>
+        <TouchableOpacity
+          onPress={_handlePressImage(1)}
+          style={styles.containerImage}>
           <Image
             style={styles.image}
             avatar={imageAfterTreatment[0]} />
@@ -48,13 +78,28 @@ const ListImages = ({ data }: Props) => {
         {
           images?.map((item, index) => {
             return (
-              <TouchableOpacity key={item._id}>
+              <TouchableOpacity
+                onPress={_handlePressImageMore(index)}
+                key={item._id}>
                 <Image style={styles.otherImage} avatar={item} />
               </TouchableOpacity>
             );
           })
         }
       </ScrollView>
+
+      <EnhancedImageViewing
+        images={listImage}
+        imageIndex={imageViewer.selectedItem.current}
+        onRequestClose={imageViewer.hide}
+        visible={imageViewer.visible}
+      />
+      <EnhancedImageViewing
+        imageIndex={imageViewerMore.selectedItem.current}
+        images={listImageMore}
+        onRequestClose={imageViewerMore.hide}
+        visible={imageViewerMore.visible}
+      />
     </Column>
   )
 }

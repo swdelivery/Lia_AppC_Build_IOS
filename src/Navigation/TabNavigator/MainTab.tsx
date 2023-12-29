@@ -2,7 +2,7 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import { createStackNavigator } from "@react-navigation/stack";
 // import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from "react";
-import { Dimensions, Image, Platform } from "react-native";
+import { Dimensions, Image, Platform, View } from "react-native";
 import { useSelector } from "react-redux";
 import TabbarMessageIcon from "../../Components/TabbarNew/ChatTabIcon";
 import TabbarTaskIcon from "../../Components/Tabbar/TaskTabIcon";
@@ -44,6 +44,7 @@ const MainTab = (props) => {
       // swipeEnabled={false}
       // tabBarOptions={tabBarOptions}
       screenOptions={{
+        lazy: true,
         swipeEnabled: false,
         tabBarActiveTintColor: BASE_COLOR,
         tabBarInactiveTintColor: GREY,
@@ -107,7 +108,7 @@ const MainTab = (props) => {
         }}
         name={ScreenKey.TAB_TIMELINE}
         component={TimelineTab}
-        // component={infoUser?._id ? TimelineTab : () => <></>}
+      // component={infoUser?._id ? TimelineTab : () => <></>}
       />
 
       {/* <Tab.Screen

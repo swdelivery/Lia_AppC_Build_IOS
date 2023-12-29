@@ -1,3 +1,4 @@
+import Avatar from '@Components/Avatar'
 import Column from '@Components/Column'
 import { IconEarth } from '@Components/Icon/Icon'
 import Image from '@Components/Image'
@@ -19,7 +20,7 @@ const AvatarName = ({ data }: Props) => {
       gap={8 * 2}
       marginTop={8 * 2}
       marginHorizontal={8 * 2}>
-      <Image
+      <Avatar
         style={styles.containerAvatar}
         avatar={data?.partner?.fileAvatar} />
       <Column
