@@ -104,14 +104,14 @@ export default function DonationInfo() {
       {
         listPartnerDonateToVolunteer?.length > 0 && _renderMountDonate()
       }
-      <TouchableOpacity onPress={navigate(ScreenKey.CHARITY_ACCOUNT_STATEMENT)}>
+      {/* <TouchableOpacity onPress={navigate(ScreenKey.CHARITY_ACCOUNT_STATEMENT)}>
         <Row alignSelf="flex-end" marginTop={12}>
           <Text size={12} color={NEW_BASE_COLOR}>
             Xem sao kê tài khoản
           </Text>
           <Icon name="arrow-right-thin" color={NEW_BASE_COLOR} size={18} />
         </Row>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </Column>
   );
 }
