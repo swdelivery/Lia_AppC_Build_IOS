@@ -21,6 +21,8 @@ import useSelectedItems from "src/Hooks/useSelectedItems";
 import ItemService from "./Components/ItemService";
 import Button from "@Components/Button/Button";
 import LiAHeader from "@Components/Header/LiAHeader";
+import useFlashSales from "@Screens/SoyoungHome/Components/useFlashSale";
+import { head } from "lodash";
 
 const NewPickerServiceBooking = () => {
   const dispatch = useDispatch();
@@ -31,6 +33,12 @@ const NewPickerServiceBooking = () => {
   const { isShowModalAddServiceToBooking } = useSelector(
     getDataCreateBookingState
   );
+  const flashSales = useFlashSales();
+  const currentFlashSale = !!head(flashSales)?.isUpcoming
+    ? head(flashSales)
+    : null;
+
+  console.log({ currentFlashSale });
 
   const { selectedItems, isItemSelected, toggleItem } = useSelectedItems(
     dataListService,

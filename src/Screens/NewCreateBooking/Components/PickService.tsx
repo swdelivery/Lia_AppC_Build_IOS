@@ -3,10 +3,8 @@ import React, { useCallback, useEffect } from "react";
 import Text from "@Components/Text";
 import {
   BORDER_COLOR,
-  GREY,
   GREY_FOR_TITLE,
   MAIN_RED_600,
-  PRICE_ORANGE,
   RED,
 } from "@Constant/Color";
 import { _moderateScale } from "@Constant/Scale";
@@ -30,20 +28,12 @@ import { SERVICE_BANNER_RATIO } from "@Constant/image";
 import FlashSale from "@Screens/SoYoungService/components/FlashSale";
 import { FlashIcon } from "src/SGV";
 import { formatTime } from "src/utils/date";
-import useFlashSales from "@Screens/SoyoungHome/Components/useFlashSale";
-import { head } from "lodash";
 
 const ITEM_SERVICE_WIDTH = 8 * 22;
 
 const PickService = () => {
   const dispatch = useDispatch();
   const { dataServices, dataBranch } = useSelector(getDataCreateBookingState);
-  const flashSales = useFlashSales();
-  const currentFlashSale = !!head(flashSales)?.isUpcoming
-    ? head(flashSales)
-    : null;
-
-  console.log({ currentFlashSale });
 
   const _handleGoPickerService = useCallback(() => {
     if (!dataBranch?.code) {
