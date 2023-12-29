@@ -33,16 +33,16 @@ export const getAllProduct = () => {
         //     }
         // })
 
-        Axios.get(`${URL_FOR_PARTNER}/product/`,{
-            params:{
-                limit:5
+        Axios.get(`${URL_FOR_PARTNER}/product/`, {
+            params: {
+                limit: 5
             }
         })
             .then(res => {
                 console.log(useLogStyle + '----FETCHING SUCCESS: ', setLogStyle('green'), { getAllProduct: res.data.data });
 
                 dispatch({
-                    type: ActionType.SET_PRODUCT_HOME, 
+                    type: ActionType.SET_PRODUCT_HOME,
                     payload: res.data.data
                 })
                 // dispatch({
@@ -60,14 +60,14 @@ export const getAllProduct = () => {
                 // })
                 _checkError(err)
             })
-    } 
+    }
 }
 
 
 export const getDataProductFiles = (id, query) => {
 
-    return Axios.get(`${URL_FOR_PARTNER}/product/${id}/files`, { 
-        params: query 
+    return Axios.get(`${URL_FOR_PARTNER}/product/${id}/files`, {
+        params: query
     })
         .then(res => {
             console.log(useLogStyle + '----FETCHING SUCCESS: ', setLogStyle('green'), { getDataProductFiles: res });
@@ -81,23 +81,23 @@ export const getDataProductFiles = (id, query) => {
 }
 
 export const getProductById = (id) => {
-        
-        return Axios.get(`${URL_FOR_PARTNER}/product/${id}`)
-            .then(res => {
-                console.log(useLogStyle + '----FETCHING SUCCESS: ', setLogStyle('green'), { getProductById: res });
-                return res.data.data
-            })
-            .catch(error => {
-                // _checkError(err)
-                console.log(useLogStyle + '----FETCHING FAIL: ', setLogStyle('red'), { getProductById: error.response });
-                return error
-            })
+
+    return Axios.get(`${URL_FOR_PARTNER}/product/${id}`)
+        .then(res => {
+            console.log(useLogStyle + '----FETCHING SUCCESS: ', setLogStyle('green'), { getProductById: res });
+            return res.data.data
+        })
+        .catch(error => {
+            // _checkError(err)
+            console.log(useLogStyle + '----FETCHING FAIL: ', setLogStyle('red'), { getProductById: error.response });
+            return error
+        })
 }
 
 export const getServiceReviewByCode = (id, more = null) => {
     var params = {
         "condition": {
-            "serviceCode":{
+            "serviceCode": {
                 "equal": id
             }
         },
@@ -107,12 +107,11 @@ export const getServiceReviewByCode = (id, more = null) => {
         "limit": 10,
         "page": 1
     };
-    if(more !==null)
-    {
+    if (more !== null) {
         params.condition.after = more
     }
 
-    return Axios.get(`${URL_FOR_PARTNER}/review/`,{params})
+    return Axios.get(`${URL_FOR_PARTNER}/review/`, { params })
         .then(res => {
             console.log(useLogStyle + '----FETCHING SUCCESS: ', setLogStyle('green'), { getServiceReviewByCode: res });
             return res.data.data
@@ -168,7 +167,7 @@ const _checkError = (err) => {
     }
 
     return Alert.alert(
-        "Lỗi", 
+        "Lỗi",
         `${JSON.stringify(err?.response?.data?.error)}`,
         [
             { text: "OK", onPress: () => console.log("OK Pressed") }

@@ -24,6 +24,8 @@ import ModalEditDescriptionDailyDiary from './Component/ModalEditDescriptionDail
 import ModalPickSingleNotSearch from '../../Components/ModalPickSingleNotSearch/ModalPickSingleNotSearch';
 import { createPost } from '../../Redux/Action/PostAction';
 import ScreenKey from '../../Navigation/ScreenKey';
+import Screen from '@Components/Screen';
+import { FocusAwareStatusBar } from '@Components/StatusBar';
 
 
 const DiaryOfTreatment = (props) => {
@@ -67,7 +69,7 @@ const DiaryOfTreatment = (props) => {
 
     useEffect(() => {
         if (props?.route?.params?.currPartnerDiary?._id) {
-            console.log({x:props?.route?.params?.currPartnerDiary});
+            console.log({ x: props?.route?.params?.currPartnerDiary });
             setCurrPartnerDiary(props?.route?.params?.currPartnerDiary)
             setTimeout(() => {
                 setIndex(1)
@@ -982,7 +984,8 @@ const DiaryOfTreatment = (props) => {
     };
 
     return (
-        <View style={styles.container}>
+        <Screen safeTop style={styles.container}>
+            <FocusAwareStatusBar barStyle='dark-content' />
 
             <ModalEditDescriptionDailyDiary
                 confirmEditDescription={_handleConfirmEditDescription}
@@ -1081,7 +1084,7 @@ const DiaryOfTreatment = (props) => {
                 lazy
             />
 
-        </View>
+        </Screen>
     );
 };
 

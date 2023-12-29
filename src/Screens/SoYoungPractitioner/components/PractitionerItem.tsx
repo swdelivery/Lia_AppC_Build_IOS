@@ -1,5 +1,5 @@
 import Avatar from "@Components/Avatar";
-import Certificate from "@Components/Certificate/Certificate";
+import Certificate, { Certificates } from "@Components/Certificate/Certificate";
 import HorizontalServices from "@Components/HorizontalServices";
 import Icon from "@Components/Icon";
 import CountStar2 from "@Components/NewCountStar/CountStar";
@@ -67,13 +67,7 @@ export default function DoctorItem({ item }: Props) {
           </Row>
           {item?.practitionerFileArr?.length > 0 && (
             <Row marginTop={4} flexWrap={"wrap"} gap={4} marginBottom={8}>
-              {item?.practitionerFileArr.map((item, i) => (
-                <Certificate
-                  key={item._id}
-                  item={item}
-                  backgroundColor={i % 2 === 0 ? "#414378" : "#151617"}
-                />
-              ))}
+              <Certificates data={item.practitionerFileArr} />
             </Row>
           )}
         </View>

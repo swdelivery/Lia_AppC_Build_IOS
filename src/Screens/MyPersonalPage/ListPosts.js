@@ -25,10 +25,11 @@ import ItemPost from './Components/ItemPost';
 import ItemDiary from './Components/ItemDiary';
 import { getPartnerDiaryv2 } from '../../Redux/Action/Diary';
 import ActionSheet from 'react-native-actionsheet';
+import { selectPost } from '@Redux/newfeeds/actions';
 
 
 const ListPosts = memo((props) => {
-
+    const dispatch = useDispatch()
     const [listPartnerPost, setListPartnerPost] = useState([])
 
     const ActionSheetRef = useRef()
@@ -64,7 +65,8 @@ const ListPosts = memo((props) => {
                 onPress={(index) => {
                     switch (index) {
                         case 0:
-                            navigation.navigate(ScreenKey.DETAIL_NEW_FEED, { idPost: currIdPostAction })
+                            // navigation.navigate(ScreenKey.DETAIL_NEW_FEED, { idPost: currIdPostAction })
+                            navigation.navigate(ScreenKey.DETAIL_POST)
                             break;
                         case 1:
                             // pickVideo()
@@ -112,7 +114,10 @@ const ListPosts = memo((props) => {
                             {
                                 listPartnerPost?.map((item, index) => {
                                     return (
-                                        <ItemPost onPress={_openActionSheet} key={item?._id} data={item} />
+                                        <ItemPost onPress={(data) => {
+                                            dispatch(selectPost(item))
+                                            _openActionSheet(data)
+                                        }} key={item?._id} data={item} />
                                     )
                                 })
                             }

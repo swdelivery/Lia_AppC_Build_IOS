@@ -94,15 +94,21 @@ const selectCommentToReply: Handler<State> = (state, { payload }) => {
 
 
 const createReactionCommentSuccess: Handler<State> = (state, { payload }) => {
+
+
   let dataTemp = [...state.data]
+  console.log({ payload, dataTemp });
+
   let indexFind = dataTemp?.findIndex(item => item?._id == payload?.commentId);
   if (indexFind !== -1) {
     dataTemp[indexFind]['reactionCount'] = payload?.data?.data?.reactionCount
+    dataTemp[indexFind]['reaction'] = payload?.data?.data?.reaction
   } else {
     dataTemp?.map((itemMap, indexMap) => {
       let indexFindCmtChild = itemMap?.childComments?.findIndex(childCmt => childCmt?._id == payload?.commentId);
       if (indexFindCmtChild !== -1) {
         dataTemp[indexMap]['childComments'][indexFindCmtChild]['reactionCount'] = payload?.data?.data?.reactionCount
+        dataTemp[indexMap]['childComments'][indexFindCmtChild]['reaction'] = payload?.data?.data?.reaction
       }
     })
   }

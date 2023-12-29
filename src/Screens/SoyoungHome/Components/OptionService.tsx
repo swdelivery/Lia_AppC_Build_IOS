@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from "react";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { FlatList, StyleSheet, TouchableOpacity, View } from "react-native";
 import {
   _heightScale,
   _moderateScale,
@@ -16,6 +16,8 @@ import { useNavigate } from "src/Hooks/useNavigation";
 import LinearGradient from "react-native-linear-gradient";
 import { WHITE } from "@Constant/Color";
 // import { navigation } from "rootNavigation";
+
+const WIDTH_ITEM = (_width - _widthScale(16) * 2) / 5
 
 const OptionService = () => {
   const { data } = useSelector(getServiceGroupState);
@@ -47,7 +49,31 @@ const OptionService = () => {
     navigation.navigate(ScreenKey.NEW_CATEGORY, { parentCodeParam: item });
   }, []);
 
+  const _renderItem = useCallback(({ item, index }) => {
+    return (
+      <TouchableOpacity
+        key={item._id}
+        onPress={() => _handleGoCategory(item)}
+        style={styles.itemContainer}
+      >
+        <Image
+          style={styles.item__option}
+          avatar={item?.fileAvatar}
+          placeholderColors={["white", "white"]}
+        />
+        <Text color={WHITE} weight="bold" size={12}>
+          {item.name}
+        </Text>
+      </TouchableOpacity>
+    )
+  }, [])
+
   return (
+    // <FlatList
+    //   horizontal
+    //   numColumns={2}
+    //   renderItem={_renderItem}
+    //   data={data} />
     <View style={styles.container}>
       <LinearGradient
         style={[StyleSheet.absoluteFill, { borderRadius: 8 }]}
@@ -85,9 +111,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     alignItems: "center",
-    justifyContent: "space-between",
+    // justifyContent: "space-between",
     paddingVertical: 8,
-    width: _width - _moderateScale(16) * 2,
+    width: _width - _widthScale(16) * 2,
   },
   item__option: {
     width: 45,
@@ -96,7 +122,7 @@ const styles = StyleSheet.create({
   },
   itemContainer: {
     alignItems: "center",
-    width: 65,
+    width: WIDTH_ITEM,
     marginTop: 4,
     // backgroundColor: "white",
   },
