@@ -62,7 +62,7 @@ export default function CharityFundDetails() {
           <DonationInfo />
           <CoFounders />
         </ScrollView>
-        <Row paddingHorizontal={16} paddingVertical={8} gap={8}>
+        {/* <Row paddingHorizontal={16} paddingVertical={8} gap={8}>
           <Button.Outline
             onPress={_handleGoToCompanion}
             flex={1}
@@ -83,7 +83,7 @@ export default function CharityFundDetails() {
             horizontal
             colors={["#1a3e67", "#34759b"]}
           />
-        </Row>
+        </Row> */}
       </AfterTimeoutFragment>
     </Screen>
   );

@@ -79,11 +79,11 @@ const InfoCoFounder = () => {
         </Column>
         <Spacer top={100} />
       </ScrollView>
-      <ActionButton
+      {/* <ActionButton
         colors={["#34759b", "#1a3e67"]}
         onPress={_handleConfirm}
         title="Ủng hộ"
-      />
+      /> */}
     </Screen>
   )
 }
