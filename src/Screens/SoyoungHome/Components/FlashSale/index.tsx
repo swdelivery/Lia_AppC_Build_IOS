@@ -1,8 +1,8 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import { StyleSheet } from "react-native";
 import { _moderateScale, _widthScale } from "../../../../Constant/Scale";
 import Column from "@Components/Column";
-import { useFocused, useNavigate } from "src/Hooks/useNavigation";
+import { useNavigate } from "src/Hooks/useNavigation";
 import ScreenKey from "@Navigation/ScreenKey";
 import FlashSaleTimer from "./components/FlashSaleTimer";
 import Row from "@Components/Row";
@@ -15,24 +15,23 @@ import {
   checkFlashSale,
   getCurrentFlashSaleServices,
 } from "@Redux/flashSale/actions";
-import {
-  getCurrentFlashSaleServicesState,
-  getFlashSaleState,
-} from "@Redux/flashSale/selectors";
+import { getCurrentFlashSaleServicesState } from "@Redux/flashSale/selectors";
 import { FlashSale } from "@typings/flashsale";
 import Text from "@Components/Text";
 import { MAIN_RED_500 } from "@Constant/Color";
 import useFlashSales from "../useFlashSale";
+import useConfigFile from "src/Hooks/useConfigFile";
+import { ConfigFileCode } from "@typings/configFile";
 
 const FlashSaleBanner = ({ flashSale }: { flashSale: FlashSale }) => {
   const dispatch = useDispatch();
   const { navigate } = useNavigate();
-  const { image } = useSelector(getFlashSaleState);
   const { data: services } = useSelector(getCurrentFlashSaleServicesState);
+  const flashSaleImage = useConfigFile(ConfigFileCode.ImageFlashSaleHome);
 
-  useFocused(() => {
+  useEffect(() => {
     dispatch(getCurrentFlashSaleServices.request(flashSale._id));
-  });
+  }, [flashSale._id]);
 
   const data = useMemo(() => {
     return services.slice(0, 10);
@@ -61,9 +60,9 @@ const FlashSaleBanner = ({ flashSale }: { flashSale: FlashSale }) => {
         onPress={navigate(ScreenKey.FLASHSALE_SCREEN)}
       >
         <Column flex={1} justifyContent="center" alignItems="center">
-          {image && (
+          {flashSaleImage && (
             <Image
-              avatar={head(image.fileArr)}
+              avatar={head(flashSaleImage.fileArr)}
               style={styles.image}
               resizeMode="contain"
               placeholderColors={["white", "white"]}
@@ -119,7 +118,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   container: {
-    marginHorizontal: _moderateScale(20),
+    marginHorizontal: _moderateScale(16),
     paddingHorizontal: 8,
     height: 120,
     alignSelf: "center",

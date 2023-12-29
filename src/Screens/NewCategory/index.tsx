@@ -22,6 +22,7 @@ import ResultMaterial from './Components/ResultMaterial'
 import ResultPractitioner from './Components/ResultPractitioner'
 import ResultService from './Components/ResultService'
 import ModalFilter from './ModalFilter'
+import { BASE_COLOR } from "@Constant/Color";
 
 
 const NewCategory = () => {
@@ -48,42 +49,62 @@ const NewCategory = () => {
 
   return (
     <Screen safeBottom>
-      <FocusAwareStatusBar
-        barStyle="dark-content" />
+      <FocusAwareStatusBar barStyle="dark-content" />
       <Header />
-      <Row
-        justifyContent='space-between'
-        marginHorizontal={8 * 2}>
-        <BtnCategory onPress={_handleChoiceCategory} flag='service' isActive={categoryChoice == "service"} title='Dịch vụ' />
-        <BtnCategory onPress={_handleChoiceCategory} flag='branch' isActive={categoryChoice == "branch"} title='Phòng khám' />
-        <BtnCategory onPress={_handleChoiceCategory} flag='doctor' isActive={categoryChoice == "doctor"} title='Bác sĩ' />
-        <BtnCategory onPress={_handleChoiceCategory} flag='practitioner' isActive={categoryChoice == "practitioner"} title='Chuyên viên' />
-        <BtnCategory onPress={_handleChoiceCategory} flag='material' isActive={categoryChoice == "material"} title='Vật liệu' />
+      <Row justifyContent="space-between" marginHorizontal={8 * 2}>
+        <BtnCategory
+          onPress={_handleChoiceCategory}
+          flag="service"
+          isActive={categoryChoice == "service"}
+          title="Dịch vụ"
+        />
+        <BtnCategory
+          onPress={_handleChoiceCategory}
+          flag="branch"
+          isActive={categoryChoice == "branch"}
+          title="Phòng khám"
+        />
+        <BtnCategory
+          onPress={_handleChoiceCategory}
+          flag="doctor"
+          isActive={categoryChoice == "doctor"}
+          title="Bác sĩ"
+        />
+        <BtnCategory
+          onPress={_handleChoiceCategory}
+          flag="practitioner"
+          isActive={categoryChoice == "practitioner"}
+          title="Chuyên viên"
+        />
+        <BtnCategory
+          onPress={_handleChoiceCategory}
+          flag="material"
+          isActive={categoryChoice == "material"}
+          title="Vật liệu"
+        />
       </Row>
       <HorizontalLine style={styles.horizontalLine} />
       <Row
         paddingVertical={8}
-        justifyContent='space-between'
+        justifyContent="space-between"
         paddingHorizontal={8 * 2}
-        backgroundColor={"#366792"}>
-
+        backgroundColor={BASE_COLOR}
+      >
         <BtnPopover
-          icon={<IconExpand
-            width={8 * 1.5}
-            height={8 * 1.5} />}
+          icon={<IconExpand width={8 * 1.5} height={8 * 1.5} />}
           isActive
-          title='Giới thiệu' />
+          title="Giới thiệu"
+        />
 
         <BtnMostPopular />
 
         <BtnChangePrice />
 
         <BtnFilter
-          icon={<IconFilter
-            width={8 * 1.5}
-            height={8 * 1.5} />}
+          icon={<IconFilter width={8 * 1.5} height={8 * 1.5} />}
           onPress={visibleModalFilter.show}
-          title='Bộ lọc' />
+          title="Bộ lọc"
+        />
       </Row>
 
       <Row flex={1}>
@@ -91,39 +112,19 @@ const NewCategory = () => {
         <ListServiceGroup />
 
         {/* RIGHT RESULT */}
-        {
-          categoryChoice == 'service' ?
-            <ResultService />
-            : <></>
-        }
-        {
-          categoryChoice == 'branch' ?
-            <ResultBranch />
-            : <></>
-        }
-        {
-          categoryChoice == 'doctor' ?
-            <ResultDoctor />
-            : <></>
-        }
-        {
-          categoryChoice == 'practitioner' ?
-            <ResultPractitioner />
-            : <></>
-        }
-        {
-          categoryChoice == 'material' ?
-            <ResultMaterial />
-            : <></>
-        }
+        {categoryChoice == "service" ? <ResultService /> : <></>}
+        {categoryChoice == "branch" ? <ResultBranch /> : <></>}
+        {categoryChoice == "doctor" ? <ResultDoctor /> : <></>}
+        {categoryChoice == "practitioner" ? <ResultPractitioner /> : <></>}
+        {categoryChoice == "material" ? <ResultMaterial /> : <></>}
       </Row>
 
       <ModalFilter
         onClose={visibleModalFilter.hide}
-        visible={visibleModalFilter.visible} />
-
+        visible={visibleModalFilter.visible}
+      />
     </Screen>
-  )
+  );
 }
 
 export default NewCategory

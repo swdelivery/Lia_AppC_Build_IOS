@@ -2,12 +2,15 @@ import React, { useCallback } from "react";
 import { Message, TemplateData } from "@typings/chat";
 import Column from "@Components/Column";
 import Icon from "@Components/Icon";
-import { GREEN, GREEN_2, GREEN_SUCCESS } from "@Constant/Color";
+import { BASE_COLOR, GREEN, GREEN_2, GREEN_SUCCESS } from "@Constant/Color";
 import Row from "@Components/Row";
 import Text from "@Components/Text";
 import { useNavigate } from "src/Hooks/useNavigation";
 import ScreenKey from "@Navigation/ScreenKey";
 import { formatMonney } from "@Constant/Utils";
+import Image from "@Components/Image";
+import { head } from "lodash";
+import { StyleSheet } from "react-native";
 
 type Props = {
   template: TemplateData;
@@ -15,6 +18,7 @@ type Props = {
 
 export default function ThankYouMessage({ template }: Props) {
   const { navigation } = useNavigate();
+  console.log({ template });
 
   const handleDetails = useCallback(() => {
     // @ts-ignore
@@ -31,6 +35,10 @@ export default function ThankYouMessage({ template }: Props) {
         weight="bold"
         size={14}
       >{`CÁM ƠN BẠN ĐÃ ĐÓNG GÓP CHO DỰ ÁN "${template.data?.volunteerName?.toUpperCase()}"`}</Text>
+      <Image
+        style={styles.image}
+        avatar={head(template.data.volunteerBanner)}
+      ></Image>
       <Text size={14}>
         <Icon name="leaf" color={GREEN_SUCCESS} size={18} /> Chân thành cám ơn
         <Text weight="bold" size={14}>
@@ -58,7 +66,7 @@ export default function ThankYouMessage({ template }: Props) {
         nguyện tiếp theo.
       </Text>
       <Row
-        backgroundColor={GREEN_2}
+        backgroundColor={BASE_COLOR}
         alignSelf="center"
         borderRadius={12}
         paddingHorizontal={8}
@@ -74,3 +82,9 @@ export default function ThankYouMessage({ template }: Props) {
     </Column>
   );
 }
+
+const styles = StyleSheet.create({
+  image: {
+    height: 100,
+  },
+});

@@ -28,12 +28,11 @@ const SoYoungDoctor = ({ tabIndex, isFocused }: any) => {
   );
 
   useEffect(() => {
-    if (tabIndex === 2 && isFocused) {
-      requestAnimationFrame(() => {
-        refreshData();
-      });
-    }
-  }, [tabIndex, isFocused]);
+    // requestAnimationFrame(() => {
+    //   refreshData();
+    // });
+    refreshData();
+  }, []);
 
   function renderItem({ item }: RenderItemProps<any>) {
     return <DoctorItem item={item} />;

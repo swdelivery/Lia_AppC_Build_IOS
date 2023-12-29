@@ -2,22 +2,22 @@ import Column from "@Components/Column";
 import Icon from "@Components/Icon";
 import Row from "@Components/Row";
 import Text from "@Components/Text";
+import { BASE_COLOR } from "@Constant/Color";
 import { _widthScale } from "@Constant/Scale";
 import { formatMonney } from "@Constant/Utils";
 import ScreenKey from "@Navigation/ScreenKey";
-import { Message } from "@typings/chat";
+import { Message, TemplateData } from "@typings/chat";
 import moment from "moment";
 import React, { useCallback } from "react";
 import { useNavigate } from "src/Hooks/useNavigation";
 
 const LEFT_WIDTH = _widthScale(120);
 type Props = {
-  item: Message;
+  template: TemplateData;
 };
 
-export default function BookingCreatedMessage({ item }: Props) {
+export default function BookingCreatedMessage({ template }: Props) {
   const { navigation } = useNavigate();
-  const template = item.template;
 
   const handleBookingDetails = useCallback(() => {
     // @ts-ignore
@@ -93,7 +93,7 @@ export default function BookingCreatedMessage({ item }: Props) {
         </Text>
       </Row>
       <Row
-        backgroundColor={"#8a0086"}
+        backgroundColor={BASE_COLOR}
         alignSelf="flex-start"
         borderRadius={8}
         paddingHorizontal={8}

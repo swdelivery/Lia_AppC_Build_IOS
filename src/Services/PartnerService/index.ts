@@ -570,6 +570,18 @@ const partnerCheckInBooking = (payload: any) => {
     .then(({ data }) => data);
 };
 
+// WheelSpin
+const getCurrActiveWheelSpin = (payload: any) => {
+  return axios
+    .get(`/config-lucky-wheel/current-active-wheel`)
+    .then(({ data }) => data);
+};
+const getPartnerWheelTurn = (payload: any) => {
+  return axios
+    .get(`/partner-wheel-turn/mine`)
+    .then(({ data }) => data);
+};
+
 export default {
   partnerLogout,
 
@@ -677,5 +689,9 @@ export default {
 
   // CheckIn By QR
   getInfoBranchByCode,
-  partnerCheckInBooking
+  partnerCheckInBooking,
+
+  // WheelSpin
+  getCurrActiveWheelSpin,
+  getPartnerWheelTurn
 };

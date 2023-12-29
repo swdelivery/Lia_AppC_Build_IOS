@@ -1,11 +1,31 @@
-import Column from '@Components/Column'
-import { IconProfileBooking, IconProfileCare, IconProfileCoin, IconProfileEducation, IconProfileFindJob, IconProfileHandHeartIn, IconProfileHistory, IconProfileInsurance, IconProfileLoveCare, IconProfileMedical, IconProfilePartnerShip, IconProfilePayLater, IconProfilePayment, IconProfilePolicy, IconProfileProtect, IconProfileShield, IconProfileStar, IconProfileVoucher, IconProfileWallet } from '@Components/Icon/Icon'
-import Screen from '@Components/Screen'
-import React from 'react'
-import { ScrollView, StatusBar, StyleSheet, View } from 'react-native'
-import Banner from './Components/Banner'
-import MainList from './Components/MainList'
-import Menu from './Components/Menu'
+import Column from "@Components/Column";
+import {
+  IconProfileBooking,
+  IconProfileCare,
+  IconProfileCoin,
+  IconProfileEducation,
+  IconProfileFindJob,
+  IconProfileHandHeartIn,
+  IconProfileHistory,
+  IconProfileInsurance,
+  IconProfileLoveCare,
+  IconProfileMedical,
+  IconProfilePartnerShip,
+  IconProfilePayLater,
+  IconProfilePayment,
+  IconProfilePolicy,
+  IconProfileProtect,
+  IconProfileShield,
+  IconProfileStar,
+  IconProfileVoucher,
+  IconProfileWallet,
+} from "@Components/Icon/Icon";
+import Screen from "@Components/Screen";
+import React from "react";
+import { ScrollView, StatusBar, StyleSheet, View } from "react-native";
+import Banner from "./Components/Banner";
+import MainList from "./Components/MainList";
+import Menu from "./Components/Menu";
 import { FocusAwareStatusBar } from "@Components/StatusBar";
 
 const NewProfile = () => {
@@ -109,13 +129,13 @@ const NewProfile = () => {
       </ScrollView>
     </Screen>
   );
-}
+};
 
-export default NewProfile
+export default NewProfile;
 
 const styles = StyleSheet.create({
   body: {
     backgroundColor: "#E8F4F1",
-    paddingBottom: 100
-  }
-})
+    paddingBottom: 100,
+  },
+});

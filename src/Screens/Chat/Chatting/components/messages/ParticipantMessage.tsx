@@ -75,12 +75,7 @@ export default function ParticipantMessage({
   }
 
   return (
-    <Row
-      alignItems="flex-start"
-      paddingHorizontal={15}
-      marginBottom={15}
-      width={"80%"}
-    >
+    <Row alignItems="flex-start" paddingHorizontal={15} marginBottom={15}>
       <Column
         width={35}
         height={30}

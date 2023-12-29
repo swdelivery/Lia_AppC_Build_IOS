@@ -54,7 +54,8 @@ const SoyoungHome = () => {
   const heightExpandServiceGr = useSharedValue(0);
   const [expandServiceGr, setExpandServiceGr] = useState(true);
   const [tabIndex, setTabIndex] = useState(0);
-  const isFocused = useIsFocused();
+  // const isFocused = useIsFocused();
+
 
   useEffect(() => {
     if (expandServiceGr) {
@@ -64,9 +65,9 @@ const SoyoungHome = () => {
     }
   }, [expandServiceGr]);
 
-  const handleTabViewChnaged = useCallback((index, tabLabel) => {
-    setTabIndex(index);
-  }, []);
+  // const handleTabViewChnaged = useCallback((index, tabLabel) => {
+  //   setTabIndex(index);
+  // }, []);
 
   return (
     <Screen style={styles.container}>
@@ -93,10 +94,10 @@ const SoyoungHome = () => {
             },
           }}
           stacks={STACKS}
-          onTabviewChanged={handleTabViewChnaged}
+          // onTabviewChanged={handleTabViewChnaged}
           mappingProps={{
-            tabIndex,
-            isFocused,
+            // tabIndex,
+            // isFocused,
           }}
           tabWrapStyle={styleElement.flex}
           tabInnerStyle={styles.tabInnerStyle}
@@ -111,7 +112,7 @@ const SoyoungHome = () => {
           useScroll={true}
           toTabsOnTab={true}
           oneTabHidden={true}
-          enableCachePage={true}
+          enableCachePage={false}
           tabsEnableAnimatedUnderlineWidth={40}
           tabsEnableAnimated={true}
         />

@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     paddingVertical: 8,
-    width: _width - _moderateScale(20) * 2,
+    width: _width - _moderateScale(16) * 2,
   },
   item__option: {
     width: 45,

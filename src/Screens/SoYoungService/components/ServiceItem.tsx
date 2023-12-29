@@ -131,8 +131,6 @@ export function Placeholder() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    paddingTop: 8 * 2,
     backgroundColor: "#F5F9FA",
   },
   content: {

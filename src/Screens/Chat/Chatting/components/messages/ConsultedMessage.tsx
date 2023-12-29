@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 import { Message, TemplateData } from "@typings/chat";
 import Column from "@Components/Column";
 import Icon from "@Components/Icon";
-import { GREEN_2, GREEN_SUCCESS } from "@Constant/Color";
+import { BASE_COLOR, GREEN_2, GREEN_SUCCESS } from "@Constant/Color";
 import Row from "@Components/Row";
 import Text from "@Components/Text";
 import { useNavigate } from "src/Hooks/useNavigation";
@@ -48,7 +48,7 @@ export default function ConsultedMessage({ template }: Props) {
         Xem chi tiết thông tin tư vấn tại đây!!
       </Text>
       <Row
-        backgroundColor={GREEN_2}
+        backgroundColor={BASE_COLOR}
         alignSelf="center"
         borderRadius={12}
         paddingHorizontal={8}

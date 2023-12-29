@@ -48,14 +48,14 @@ const EachImage = memo((props) => {
         <Column
           borderRadius={16}
           overflow={"hidden"}
-          marginHorizontal={_moderateScale(20)}
+          marginHorizontal={_moderateScale(16)}
           height={_heightScale(140)}
           alignItems={"center"}
         >
           <Animated.Image
             style={[
               {
-                width: _width - _moderateScale(20) * 2,
+                width: _width - _moderateScale(16) * 2,
                 height: _heightScale(140),
               },
               animSizeImg,

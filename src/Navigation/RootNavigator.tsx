@@ -202,6 +202,7 @@ import InfoCoFounder from "@Screens/CharityFundDetails/InfoCoFounder";
 import ListCompanion from "@Screens/CharityFundDetails/ListCompanion";
 import NewQRCode from "@Screens/NewQRCode";
 import PickUtilities from "@Screens/NewQRCode/PickUtilities";
+import NewWheelSpin from "@Screens/NewWheelSpin";
 import ListDiary from "@Screens/ListDiaryOfPartner";
 
 const rootStack = createStackNavigator();
@@ -782,7 +783,7 @@ const RootNavigator = () => {
           <rootStack.Screen
             options={{ ...TransitionPresets.SlideFromRightIOS }}
             name={ScreenKey.WHEEL_SPIN}
-            component={WheelSpin}
+            component={NewWheelSpin}
           />
 
           <rootStack.Screen

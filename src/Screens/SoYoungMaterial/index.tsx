@@ -21,12 +21,11 @@ const SoYoungMaterial = ({ tabIndex, isFocused }: any) => {
   );
 
   useEffect(() => {
-    if (tabIndex === 4 && isFocused) {
-      requestAnimationFrame(() => {
-        refreshData();
-      });
-    }
-  }, [tabIndex, isFocused]);
+    // requestAnimationFrame(() => {
+    //   refreshData();
+    // });
+    refreshData();
+  }, []);
 
   const _renderItem = ({ item, index }) => {
     return <MaterialItem item={item} />;

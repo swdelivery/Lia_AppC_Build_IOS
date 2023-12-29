@@ -339,7 +339,7 @@ const InputChat = ({ }: Props) => {
         borderColor={Color.BORDER_COLOR}
       >
         <IconButton onPress={handleChatGptPress}>
-          <ChatGptIcon />
+          <ChatGptIcon color={Color.BASE_COLOR} />
         </IconButton>
         <Column
           borderWidth={1}

@@ -1,5 +1,10 @@
 import Text from "@Components/Text";
-import { BORDER_COLOR, WHITE } from "@Constant/Color";
+import {
+  BASE_COLOR,
+  BORDER_COLOR,
+  NEW_BASE_COLOR,
+  WHITE,
+} from "@Constant/Color";
 import { _moderateScale, _width } from "@Constant/Scale";
 import { createPartnerBooking, updatePartnerBooking } from "@Redux/booking/actions";
 import { getDataCreateBookingState } from "@Redux/booking/selectors";
@@ -137,7 +142,7 @@ const ActionBottom = ({ isEditBooking, editBookingId }: Props) => {
           style={[StyleSheet.absoluteFillObject, { borderRadius: 8 }]}
           start={{ x: 0, y: 0 }}
           end={{ x: 0, y: 1 }}
-          colors={["#1C5579", "#186A57"]}
+          colors={[BASE_COLOR, NEW_BASE_COLOR]}
         />
         <Text color={WHITE} weight="bold" size={14}>
           {isEditBooking ? `Cập nhật lịch hẹn` : `Xác nhận lịch hẹn`}

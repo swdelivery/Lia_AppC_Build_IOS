@@ -17,7 +17,7 @@ import Column from "@Components/Column";
 import Text from "@Components/Text";
 import { BASE_COLOR, BASE_COLOR_LIGHT } from "@Constant/Color";
 import ScreenKey from "@Navigation/ScreenKey";
-import { useNavigate } from "src/Hooks/useNavigation";
+import { useFocused, useNavigate } from "src/Hooks/useNavigation";
 import { AfterTimeoutFragment } from "@Components/AfterTimeoutFragment";
 import { isTablet } from "src/utils/platform";
 import Spacer from "@Components/Spacer";
@@ -27,13 +27,11 @@ const SoYoungService = ({ tabIndex, isFocused }: any) => {
   const { navigate } = useNavigate();
   const { isLoading, data } = useSelector(getServiceListState);
 
-  useEffect(() => {
-    if (tabIndex === 0 && isFocused) {
-      requestAnimationFrame(() => {
-        dispatch(getServices.request());
-      });
-    }
-  }, [tabIndex, isFocused]);
+  useFocused(() => {
+    requestAnimationFrame(() => {
+      dispatch(getServices.request());
+    });
+  });
 
   function renderItem({ item, index }: RenderItemProps<Service>) {
     const numColumns = isTablet ? 3 : 2;
@@ -60,7 +58,7 @@ const SoYoungService = ({ tabIndex, isFocused }: any) => {
       <Column backgroundColor={"#F5F9FA"} paddingHorizontal={8} paddingTop={8}>
         <Pressable
           style={styles.viewAll}
-          onPress={navigate(ScreenKey.SERVICE_LIST)}
+          onPress={navigate(ScreenKey.NEW_CATEGORY, {})}
         >
           <Text color={BASE_COLOR} fontStyle="italic">{`Xem tất cả >>`}</Text>
         </Pressable>
