@@ -8,11 +8,6 @@ import { FlashSalePayload } from "@typings/flashsale";
 function* checkFlashSale() {
   try {
     const data: FlashSalePayload = yield call(FlashSaleService.checkFlashSale);
-    if (data.currentFlashSale) {
-      yield put(
-        actions.getCurrentFlashSaleServices.request(data.currentFlashSale._id)
-      );
-    }
     yield put(actions.checkFlashSale.success(data));
   } catch (error: any) {
     yield put(actions.checkFlashSale.failure(error.message));

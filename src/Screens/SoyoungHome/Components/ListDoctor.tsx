@@ -9,14 +9,10 @@ const ListDoctor = () => {
     (state) => state?.bookingReducer?.listDoctor
   );
 
-  const doctors = useMemo(() => {
-    return listDoctorRedux?.slice(0, 5) || [];
-  }, [listDoctorRedux]);
-
   return (
     <HorizontalDoctors
-      title="Đội ngũ Bác sĩ nhiều năm kinh nghiệm"
-      items={doctors}
+      title="Bác sĩ/Chuyên viên hàng đầu"
+      items={listDoctorRedux}
       containerStyle={styles.container}
     />
   );

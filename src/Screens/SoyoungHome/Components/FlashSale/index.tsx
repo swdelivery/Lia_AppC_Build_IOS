@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import { _moderateScale, _widthScale } from "../../../../Constant/Scale";
 import Column from "@Components/Column";
 import { useNavigate } from "src/Hooks/useNavigation";
@@ -21,8 +21,9 @@ import {
 } from "@Redux/flashSale/selectors";
 import { FlashSale } from "@typings/flashsale";
 import Text from "@Components/Text";
-import { MAIN_RED_500 } from "@Constant/Color";
+import { BASE_COLOR, MAIN_RED_500 } from "@Constant/Color";
 import useFlashSales from "../useFlashSale";
+import { IconRightArrowBase } from "@Components/Icon/Icon";
 
 const FlashSaleBanner = ({ flashSale }: { flashSale: FlashSale }) => {
   const dispatch = useDispatch();
@@ -37,6 +38,10 @@ const FlashSaleBanner = ({ flashSale }: { flashSale: FlashSale }) => {
   const refreshFlashSale = useCallback(() => {
     dispatch(checkFlashSale.request());
   }, []);
+
+  useEffect(() => {
+    dispatch(getCurrentFlashSaleServices.request(flashSale._id));
+  }, [flashSale]);
 
   const _renderItem = (item: any) => {
     return (
@@ -83,6 +88,17 @@ const FlashSaleBanner = ({ flashSale }: { flashSale: FlashSale }) => {
           showsHorizontalScrollIndicator={false}
         >
           {data.map(_renderItem)}
+          <TouchableOpacity
+            onPress={navigate(ScreenKey.FLASHSALE_SCREEN)}
+            style={styles.btnSeeAll}
+          >
+            <Column alignItems="center" gap={8}>
+              <IconRightArrowBase color={BASE_COLOR} />
+              <Text color={BASE_COLOR} size={12}>
+                Xem tất cả
+              </Text>
+            </Column>
+          </TouchableOpacity>
         </ScrollView>
       </Row>
     </Row>
@@ -142,5 +158,10 @@ const styles = StyleSheet.create({
   },
   services: {
     gap: 8,
+  },
+  btnSeeAll: {
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 8 * 2,
   },
 });

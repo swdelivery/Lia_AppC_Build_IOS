@@ -4,7 +4,7 @@ import { _width } from "@Constant/Scale";
 import ScrollableTabView from "@itenl/react-native-scrollable-tabview";
 import React, { useEffect } from "react";
 import { StatusBar, StyleSheet, View } from "react-native";
-import { isAndroid } from "src/utils/platform";
+import { isAndroid, isIos } from "src/utils/platform";
 import Banner from "./Components/Banner";
 import TabImages from "./Components/TabImages";
 import TabInfo from "./Components/TabInfo";
@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getBookingDetails } from "@Redux/user/actions";
 import { getBookingDetailsState } from "@Redux/user/selectors";
 import LiAHeader from "@Components/Header/LiAHeader";
+import { BASE_COLOR } from "@Constant/Color";
 
 const STACKS = [
   {
@@ -98,12 +99,14 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     color: "black",
-    fontWeight: "500",
     fontSize: 14,
     fontFamily: FONT_WEIGHTS["bold"],
+    fontWeight: isIos ? "bold" : undefined,
+    paddingVertical: 0,
+    lineHeight: 15,
   },
   tabUnderlineStyle: {
-    backgroundColor: "#4BA888",
+    backgroundColor: BASE_COLOR,
     top: 8 * 4,
     height: 3,
   },
@@ -115,7 +118,7 @@ const styles = StyleSheet.create({
   },
   tabInnerStyle: { width: "100%" },
   textActiveStyle: {
-    color: "#4BA888",
-    fontWeight: "bold",
+    color: BASE_COLOR,
+    fontFamily: FONT_WEIGHTS["bold"],
   },
 });

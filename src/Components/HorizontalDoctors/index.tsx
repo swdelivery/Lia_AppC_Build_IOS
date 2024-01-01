@@ -1,7 +1,7 @@
 import Text from "@Components/Text";
 import { _moderateScale } from "@Constant/Scale";
 import { Doctor } from "@typings/doctor";
-import React from "react";
+import React, { useMemo } from "react";
 import { View, StyleSheet, StyleProp, ViewStyle } from "react-native";
 import DoctorItem from "./components/DoctorItem";
 import { ScrollView } from "react-native-gesture-handler";
@@ -23,8 +23,11 @@ export default function HorizontalDoctors({
   items,
   containerStyle,
 }: Props) {
+  const { navigate } = useNavigate();
 
-  const { navigate } = useNavigate()
+  const doctors = useMemo(() => {
+    return items?.slice(0, 10) || [];
+  }, [items]);
 
   function renderItem(item: Doctor, index: number) {
     return <DoctorItem item={item} key={item._id} />;
@@ -39,7 +42,7 @@ export default function HorizontalDoctors({
           left={_moderateScale(8 * 2)}
           bottom={8}
         >
-          Đội ngũ bác sĩ nhiều năm kinh nghiệm
+          {title}
         </Text>
       )}
       <View>
@@ -48,18 +51,15 @@ export default function HorizontalDoctors({
           contentContainerStyle={styles.contentContainer}
           horizontal
         >
-          {items?.map(renderItem)}
+          {doctors?.map(renderItem)}
 
           <TouchableOpacity
             onPress={navigate(ScreenKey.DOCTOR_LIST)}
-            style={styles.btnSeeAll}>
-            <Column
-              alignItems="center"
-              gap={8}>
-              <IconRightArrowBase />
-              <Text
-                color={BASE_COLOR}
-                size={12}>
+            style={styles.btnSeeAll}
+          >
+            <Column alignItems="center" gap={8}>
+              <IconRightArrowBase color={BASE_COLOR} />
+              <Text color={BASE_COLOR} size={12}>
                 Xem tất cả
               </Text>
             </Column>

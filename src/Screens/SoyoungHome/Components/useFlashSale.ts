@@ -13,13 +13,14 @@ export default function useFlashSales(
   onUpdate?: (flashSales: FlashSale[]) => void
 ) {
   const dispatch = useDispatch();
-  const { currentFlashSale, nextFlashSale } = useSelector(getFlashSaleState);
+  const fsState = useSelector(getFlashSaleState);
 
   useFocused(() => {
     dispatch(checkFlashSale.request());
   });
 
   const flashSales = useMemo(() => {
+    const { currentFlashSale, nextFlashSale } = fsState;
     const result: FlashSale[] = [];
     if (isValidFlasSale(currentFlashSale)) {
       result.push(currentFlashSale);
@@ -55,7 +56,7 @@ export default function useFlashSales(
       onUpdate(result);
     }
     return result;
-  }, [currentFlashSale, ...nextFlashSale]);
+  }, [fsState]);
 
   return flashSales;
 }
