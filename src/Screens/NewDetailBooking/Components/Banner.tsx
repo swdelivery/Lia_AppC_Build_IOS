@@ -40,15 +40,15 @@ const Banner = ({ booking }: Props) => {
         justifyContent="center"
       >
         <Column paddingHorizontal={16} gap={8}>
-          <Row gap={8}>
+          <Row gap={8} alignItems="flex-start">
             <Column width={30}>
               <ServiceIcon />
             </Column>
-            <Text weight="bold" color={"white"} size={16}>
+            <Text weight="bold" color={"white"} size={16} flex={1}>
               {service?.name}
             </Text>
           </Row>
-          <Row>
+          <Row gap={8}>
             <Column width={30} alignItems={"center"}>
               <ClockIcon color={"white"} width={20} height={20} />
             </Column>
@@ -56,7 +56,7 @@ const Banner = ({ booking }: Props) => {
               {appointmentDate}
             </Text>
           </Row>
-          <Row alignItems="flex-start">
+          <Row alignItems="flex-start" gap={8}>
             <Column width={30} alignItems={"center"} top={3}>
               <IconLocation color={"white"} width={20} height={20} />
             </Column>
