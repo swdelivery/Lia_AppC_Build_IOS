@@ -7,11 +7,10 @@ import { _width } from "@Constant/Scale";
 import { styleElement } from "@Constant/StyleElement";
 import { Booking } from "@typings/booking";
 import { head } from "lodash";
-import moment from "moment";
 import React, { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import { ClockIcon, ServiceIcon } from "src/SGV";
-import { fromUtc } from "src/utils/date";
+import { fromBookingDate, fromUtc } from "src/utils/date";
 
 type Props = {
   booking: Booking;
@@ -27,11 +26,9 @@ const Banner = ({ booking }: Props) => {
     if (!aptDate) {
       return "";
     }
-    const from = moment(fromUtc(aptDate.from.dateTime));
-    const to = moment(fromUtc(aptDate.to.dateTime));
-    return `${from.format("HH:mm")} - ${to.format("HH:mm")} | ${from.format(
-      "DD/MM/YYYY"
-    )}`;
+
+    const from = fromBookingDate(aptDate.from);
+    return `${from.format("HH:mm")} | ${from.format("DD/MM/YYYY")}`;
   }, [booking]);
 
   return (

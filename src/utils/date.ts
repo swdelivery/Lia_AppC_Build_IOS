@@ -1,4 +1,6 @@
+import { AppointmentDate, BookingDate } from "@typings/booking";
 import { FlashSaleTime } from "@typings/flashsale";
+import moment from "moment";
 
 /**
  * Convert date from utc to local and keep the date and time value
@@ -30,4 +32,10 @@ export function formatDuration(milliseconds: number) {
 
 export function formatTime(time: FlashSaleTime) {
   return `${getTwoDigits(time.hour)}:${getTwoDigits(time.minute)}`;
+}
+
+export function fromBookingDate(date: BookingDate) {
+  return moment(fromUtc(date.dateTime))
+    .set("hours", date.hour)
+    .set("minutes", date.minute);
 }
