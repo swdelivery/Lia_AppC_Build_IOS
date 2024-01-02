@@ -23,6 +23,10 @@ type Props = ViewStyle & {
 
 const ModalBottom = ({ visible, heightModal, onClose, children, ...props }: Props) => {
 
+  const containerStyle = useMemo(() => {
+    return { ...props };
+  }, [props]);
+
   const opacityBackDrop = useSharedValue(0);
   const tranYModal = useSharedValue(0);
 
@@ -31,6 +35,8 @@ const ModalBottom = ({ visible, heightModal, onClose, children, ...props }: Prop
       tranYModal.value = withTiming(-heightModal, { duration: 200 })
       opacityBackDrop.value = withTiming(1, { duration: 300 })
     } else {
+      tranYModal.value = 0
+      opacityBackDrop.value = 0
     }
   }, [visible, heightModal])
 
@@ -57,9 +63,6 @@ const ModalBottom = ({ visible, heightModal, onClose, children, ...props }: Prop
     return null;
   }
 
-  const containerStyle = useMemo(() => {
-    return { ...props };
-  }, [props]);
 
   return (
     <View style={styles.container}>

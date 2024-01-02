@@ -25,7 +25,9 @@ import Animated, {
 import RightEffectDotEye from "./Components/RightEffectDotEye";
 import {
   Camera,
+  Templates,
   useCameraDevice,
+  useCameraFormat,
   useCameraPermission,
 } from "react-native-vision-camera";
 import RightEffectTextEye from "./Components/RightEffectTextEye";
@@ -51,6 +53,8 @@ const EYE_INDICATOR_SIZE = 10;
 const FaceAI = () => {
   const { hasPermission, requestPermission } = useCameraPermission();
   const device = useCameraDevice("front");
+  // const format = useCameraFormat(device, Templates.Instagram)
+
   const refCamera = useRef<Camera>(null);
   const { showConfirmation } = useConfirmation();
 
@@ -81,13 +85,13 @@ const FaceAI = () => {
   const [showBackDropOpacity, setShowBackDropOpacity] = useState(null);
 
   // FIXME: This code is used for testing on emulator
-  __DEV__ &&
-    useImagePicker((image) => {
-      console.log({ image });
-      processImage({
-        path: image,
-      });
-    });
+  // __DEV__ &&
+  //   useImagePicker((image) => {
+  //     console.log({ image });
+  //     processImage({
+  //       path: image,
+  //     });
+  //   });
 
   const volumne = isAndroid ? useVolume() : -1;
 
@@ -299,7 +303,11 @@ const FaceAI = () => {
   const _handleTakePhoto = async () => {
     const photo = await refCamera.current.takePhoto({
       enableShutterSound: volumne !== 0,
+      qualityPrioritization: 'quality'
     });
+    // await CameraRoll.save(`file://${photo.path}`, {
+    //   type: 'photo',
+    // })
     processImage(photo);
   };
 
@@ -473,12 +481,17 @@ const FaceAI = () => {
               }}
             >
               <Camera
+                enableHighQualityPhotos={true}
                 orientation={"portrait"}
                 ref={refCamera}
                 style={StyleSheet.absoluteFill}
                 device={device}
                 isActive={true}
                 photo={true}
+                // photoHdr={true}
+                enableDepthData={true}
+                enablePortraitEffectsMatteDelivery={true}
+              // format={format}
               />
               <View
                 style={{

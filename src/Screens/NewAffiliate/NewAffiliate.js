@@ -141,18 +141,18 @@ const NewAffiliate = memo(() => {
 export default NewAffiliate
 
 const styles = StyleSheet.create({
-    btnInvite: {
-        width: _moderateScale(350),
-        height: _moderateScale(8 * 5),
-        backgroundColor: BASE_COLOR,
-        alignSelf: 'center',
-        marginTop: _moderateScale(8 * 4),
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: _moderateScale(8)
-    },
-    container: {
-        flex: 1,
-        backgroundColor: 'white'
-    }
+  btnInvite: {
+    width: _moderateScale(350),
+    height: _moderateScale(8 * 5),
+    backgroundColor: BASE_COLOR,
+    alignSelf: 'center',
+    marginTop: _moderateScale(8 * 4),
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: _moderateScale(8)
+  },
+  container: {
+    flex: 1,
+    backgroundColor: 'white'
+  }
 })

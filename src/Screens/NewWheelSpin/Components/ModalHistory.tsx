@@ -1,4 +1,5 @@
 import Column from '@Components/Column'
+import Image from '@Components/Image'
 import EmptyResultData from '@Components/LoadingIndicator/EmptyResultData'
 import LoadingIndicator from '@Components/LoadingIndicator/LoadingIndicator'
 import ModalBottom from '@Components/ModalBottom/ModalBottom'
@@ -11,7 +12,7 @@ import { getHistorySpin } from '@Redux/Action/SpinWheelAction'
 import { first } from 'lodash'
 import moment from 'moment'
 import React, { useCallback, useEffect, useState } from 'react'
-import { Image, ScrollView, StyleSheet } from 'react-native'
+import { ScrollView, StyleSheet } from 'react-native'
 
 type Props = {
   visibleListHistory: any
@@ -22,8 +23,10 @@ const ModalHistory = ({ visibleListHistory }: Props) => {
   const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
-    _getListHistoryReward()
-  }, [visibleListHistory])
+    if (visibleListHistory.visible) {
+      _getListHistoryReward()
+    }
+  }, [visibleListHistory.visible])
 
   const _getListHistoryReward = async () => {
     setIsLoading(true)
@@ -54,7 +57,7 @@ const ModalHistory = ({ visibleListHistory }: Props) => {
           <Image
             resizeMode='contain'
             style={styles.avatarReward}
-            source={{ uri: `https://i.ibb.co/Z6yckpr/1-2.png` }} />
+            avatar={award?.imageReward} />
           <Column flex={1}>
             <Text
               numberOfLines={1}
