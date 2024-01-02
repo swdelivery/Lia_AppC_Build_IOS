@@ -6,7 +6,7 @@ import { BASE_COLOR } from "@Constant/Color";
 import { _widthScale } from "@Constant/Scale";
 import { formatMonney } from "@Constant/Utils";
 import ScreenKey from "@Navigation/ScreenKey";
-import { Message, TemplateData } from "@typings/chat";
+import { TemplateData } from "@typings/chat";
 import moment from "moment";
 import React, { useCallback } from "react";
 import { useNavigate } from "src/Hooks/useNavigation";
