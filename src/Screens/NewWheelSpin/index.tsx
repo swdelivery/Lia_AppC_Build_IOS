@@ -9,7 +9,7 @@ import Animated, { Easing, interpolate, runOnJS, useAnimatedStyle, useSharedValu
 import { getSpinWheelv2 } from '@Redux/Action/SpinWheelAction'
 import { getImageAvataUrl } from 'src/utils/avatar'
 import Row from '@Components/Row'
-import { WHITE } from '@Constant/Color'
+import { BLACK_OPACITY_4, WHITE } from '@Constant/Color'
 import ModalBottom from '@Components/ModalBottom/ModalBottom'
 import ModalHistory from './Components/ModalHistory'
 import useVisible from 'src/Hooks/useVisible'
@@ -17,14 +17,16 @@ import ModalMissions from './Components/ModalMissions'
 import { useDispatch, useSelector } from 'react-redux'
 import { getCurrActiveWheelSpin, getPartnerWheelTurn } from '@Redux/wheelSpin/actions'
 import { getCurrActiveWheelSpinState, getPartnerWheelTurnState } from '@Redux/wheelSpin/selectors'
-import { IconQuestion } from '@Components/Icon/Icon'
+import { IconBackWhite, IconQuestion } from '@Components/Icon/Icon'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { styleElement } from '@Constant/StyleElement'
 import ModalInfo from './Components/ModalInfo'
+import ModalReward from './Components/ModalReward'
+import { useNavigate } from 'src/Hooks/useNavigation'
 
 const NewWheelSpin = () => {
   const dispatch = useDispatch()
-
+  const { navigation } = useNavigate()
   const { top } = useSafeAreaInsets()
 
   const { data: currActiveWheel } = useSelector(getCurrActiveWheelSpinState)
@@ -36,6 +38,7 @@ const NewWheelSpin = () => {
   const visibleListHistory = useVisible()
   const visibleListMission = useVisible()
   const visibleModalInfo = useVisible()
+  const visibleModalReward = useVisible()
 
   useEffect(() => {
     dispatch(getCurrActiveWheelSpin.request())
@@ -45,6 +48,8 @@ const NewWheelSpin = () => {
 
   // FUNCTION
   const _startSpin = useCallback(async () => {
+    // visibleModalReward.show()
+    // return
     let result = await getSpinWheelv2();
     let findIndex = currActiveWheel?.details?.findIndex(item => item?._id == result?.data?.data?.awards?._id);
 
@@ -56,16 +61,24 @@ const NewWheelSpin = () => {
         easing: Easing.out(Easing.quad)
       }, (fns) => {
         if (fns) {
-          runOnJS(_handleSpinDone)()
+          runOnJS(_handleSpinDone)(result)
         }
       })
     }
   }, [currActiveWheel])
 
-  _handleSpinDone = () => {
+  _handleSpinDone = (result) => {
+    console.log({ result });
+    visibleModalReward.show(result?.data?.data)
+
     setIsSpinning(false)
     dispatch(getPartnerWheelTurn.request())
   }
+
+  const _handleGetReward = useCallback(() => {
+    visibleModalReward.hide()
+    // visibleListHistory.show()
+  }, [])
 
   // ANIMATION
   const animCircle = useAnimatedStyle(() => {
@@ -82,6 +95,16 @@ const NewWheelSpin = () => {
         resizeMode='stretch'
         style={styles.bg}
         source={require('../../Image/newWheelSpin/bg.png')} >
+
+        <Column
+          onPress={navigation.goBack}
+          backgroundColor={BLACK_OPACITY_4}
+          top={top + 8}
+          borderRadius={8 * 10}
+          left={20}
+          position="absolute">
+          <IconBackWhite />
+        </Column>
 
         <TouchableOpacity
           onPress={visibleModalInfo.show}
@@ -182,24 +205,15 @@ const NewWheelSpin = () => {
             </Column>
           </TouchableOpacity>
         </Row>
-        {
-          visibleListHistory.visible ?
-            <ModalHistory
-              visibleListHistory={visibleListHistory} />
-            : <></>
-        }
-        {
-          visibleListMission.visible ?
-            <ModalMissions
-              visibleListMission={visibleListMission} />
-            : <></>
-        }
-        {
-          visibleModalInfo.visible ?
-            <ModalInfo
-              visibleModalInfo={visibleModalInfo} />
-            : <></>
-        }
+        <ModalHistory
+          visibleListHistory={visibleListHistory} />
+        <ModalMissions
+          visibleListMission={visibleListMission} />
+        <ModalInfo
+          visibleModalInfo={visibleModalInfo} />
+        <ModalReward
+          onPress={_handleGetReward}
+          visible={visibleModalReward} />
       </ImageBackground>
     </Screen>
   )

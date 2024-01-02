@@ -27,8 +27,10 @@ const ModalMissions = ({ visibleListMission }: Props) => {
   const [listMissions, setListMissions] = useState([]);
 
   useEffect(() => {
-    _getListMissions()
-  }, [visibleListMission])
+    if (visibleListMission.visible) {
+      _getListMissions()
+    }
+  }, [visibleListMission.visible])
 
   const _getListMissions = async () => {
     let result = await getListMissions();
@@ -49,7 +51,7 @@ const ModalMissions = ({ visibleListMission }: Props) => {
   };
 
   const ItemMission = useCallback(({ data }) => {
-    const { name } = data?.bonusEvent
+    const { name, awards } = data?.bonusEvent
     const { recievedAmt, usage } = data
 
     const _handleTakeAward = useCallback(async () => {
@@ -68,8 +70,6 @@ const ModalMissions = ({ visibleListMission }: Props) => {
     const _handleActionMission = useCallback(() => {
       console.log({ data });
       switch (data?.bonusEventCode) {
-        case "REGISTER":
-          return;
         case "COMPLETE_VIDEO_CALL":
           return;
         case "COMPLETE_DAILY_DIARY":
@@ -152,6 +152,18 @@ const ModalMissions = ({ visibleListMission }: Props) => {
           );
         case "REGISTER":
           return Alert.alert("Nhận phần thưởng khi bạn đăng kí thành công");
+        case "RECHARGE_LIA_500k":
+          return navigation.navigate(ScreenKey.RECHARGE_TO_WALLET);
+        case "RECHARGE_LIA_200k":
+          return navigation.navigate(ScreenKey.RECHARGE_TO_WALLET);
+        case "RECHARGE_LIA":
+          return navigation.navigate(ScreenKey.RECHARGE_TO_WALLET);
+        case "INVITE_5_PARTNER":
+          return navigation.navigate(ScreenKey.NEW_AFFILIATE);
+        case "INVITE_1_PARTNER":
+          return navigation.navigate(ScreenKey.NEW_AFFILIATE);
+        case "REGISTER_COLLABORATOR":
+          return navigation.navigate(ScreenKey.NEW_AFFILIATE);
         default:
           return;
       }
@@ -191,7 +203,7 @@ const ModalMissions = ({ visibleListMission }: Props) => {
                 size={12}
                 numberOfLines={1}
                 weight='bold'>
-                +1 Lượt quay
+                +{awards[0]?.amount} Lượt quay
               </Text>
             </Row>
           </Column>
