@@ -305,9 +305,9 @@ const FaceAI = () => {
       enableShutterSound: volumne !== 0,
       qualityPrioritization: 'quality'
     });
-    await CameraRoll.save(`file://${photo.path}`, {
-      type: 'photo',
-    })
+    // await CameraRoll.save(`file://${photo.path}`, {
+    //   type: 'photo',
+    // })
     processImage(photo);
   };
 
