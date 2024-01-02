@@ -1,9 +1,9 @@
-import Image from '@Components/Image'
+// import Image from '@Components/Image'
 import ModalBottom from '@Components/ModalBottom/ModalBottom'
 import Text from '@Components/Text'
 import { _height, _moderateScale } from '@Constant/Scale'
 import React, { useCallback, useEffect } from 'react'
-import { TouchableOpacity } from 'react-native'
+import { Image, TouchableOpacity } from 'react-native'
 import { StyleSheet, View } from 'react-native'
 import Animated, { useAnimatedStyle, useSharedValue, withRepeat, withSequence, withSpring, withTiming } from 'react-native-reanimated'
 import { getImageAvataUrl } from 'src/utils/avatar'
@@ -52,7 +52,7 @@ const ModalReward = ({ visible, onPress }: Props) => {
         <Image
           resizeMode='contain'
           style={styles.imageReward}
-          avatar={visible.selectedItem.current?.awards?.imageReward} />
+          source={{ uri: getImageAvataUrl(visible.selectedItem.current?.awards?.imageReward) }} />
 
         <TouchableOpacity onPress={onPress}>
           <Animated.Image
