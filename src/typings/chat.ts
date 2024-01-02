@@ -46,6 +46,8 @@ export type TemplateData = {
 
     serviceName: string[];
     completedAt: string;
+    date: string;
+    time: string;
   };
 };
 

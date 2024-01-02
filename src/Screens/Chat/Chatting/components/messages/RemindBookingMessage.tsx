@@ -4,11 +4,13 @@ import Row from "@Components/Row";
 import Text from "@Components/Text";
 import { BASE_COLOR, ORANGE } from "@Constant/Color";
 import ScreenKey from "@Navigation/ScreenKey";
-import { Message, TemplateData } from "@typings/chat";
+import { TemplateData } from "@typings/chat";
 import moment from "moment";
 import React, { useCallback } from "react";
-import { View, StyleSheet } from "react-native";
 import { useNavigate } from "src/Hooks/useNavigation";
+import { fromTemplateData } from "src/utils/date";
+
+const LEFT_WIDTH = 80;
 
 type Props = {
   template: TemplateData;
@@ -16,6 +18,7 @@ type Props = {
 
 export default function RemindBookingMessage({ template }: Props) {
   const { navigation } = useNavigate();
+  console.log({ template });
 
   const handleBookingDetails = useCallback(() => {
     // @ts-ignore
@@ -37,33 +40,38 @@ export default function RemindBookingMessage({ template }: Props) {
       <Text
         size={14}
       >{`Xin chào Khách hàng ${template.data.partnerName}, bạn đừng quên chúng ta có hẹn làm đẹp với nhau vào lúc:`}</Text>
-      <Row alignItems="flex-start" gap={20}>
-        <Column>
+      <Row>
+        <Column width={LEFT_WIDTH}>
           <Text size={14} fontStyle="italic">
             Thời Gian:
           </Text>
-          {template.data.services.map((item, index) => (
+        </Column>
+        <Text size={14} fontStyle="italic">
+          {fromTemplateData(template.data)}
+        </Text>
+      </Row>
+
+      {template.data.services.map((item, index) => (
+        <Row alignItems="flex-start">
+          <Column width={LEFT_WIDTH}>
             <Text size={14} fontStyle="italic" key={item}>
               {index === 0 ? "Dịch vụ:" : ""}
             </Text>
-          ))}
+          </Column>
+          <Text size={14} fontStyle="italic" key={item} flex={1}>
+            {item}
+          </Text>
+        </Row>
+      ))}
+      <Row alignItems="flex-start">
+        <Column width={LEFT_WIDTH}>
           <Text size={14} fontStyle="italic">
-            Địa điểm
+            Địa điểm:
           </Text>
         </Column>
-        <Column flex={1}>
-          <Text size={14} fontStyle="italic">
-            {moment(template.data.created).format("DD/MM/YYYY, HH:mm")}
-          </Text>
-          {template.data.services.map((item) => (
-            <Text size={14} fontStyle="italic" key={item}>
-              {item}
-            </Text>
-          ))}
-          <Text size={14} fontStyle="italic">
-            {template.data.branchName}
-          </Text>
-        </Column>
+        <Text size={14} fontStyle="italic" flex={1}>
+          {template.data.branchName}
+        </Text>
       </Row>
       <Text size={14} fontStyle="italic">
         Chúng tôi rất mong chờ để phục vụ bạn vào ngày hôm ấy! Nếu có bất kỳ
@@ -88,6 +96,3 @@ export default function RemindBookingMessage({ template }: Props) {
   );
 }
 
-const styles = StyleSheet.create({
-  //
-});

@@ -1,4 +1,5 @@
 import { AppointmentDate, BookingDate } from "@typings/booking";
+import { TemplateData } from "@typings/chat";
 import { FlashSaleTime } from "@typings/flashsale";
 import moment from "moment";
 
@@ -38,4 +39,14 @@ export function fromBookingDate(date: BookingDate) {
   return moment(fromUtc(date.dateTime))
     .set("hours", date.hour)
     .set("minutes", date.minute);
+}
+
+export function fromTemplateData(data: TemplateData["data"]) {
+  if (data.date && data.time) {
+    const [hour, minute] = data.time.split(":");
+    return moment(data.date, "DD/MM/YYYY")
+      .set({ hour: parseInt(hour), minute: parseInt(minute) })
+      .format("DD/MM/YYYY, HH:mm");
+  }
+  return "Invalid date";
 }
