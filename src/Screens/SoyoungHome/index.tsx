@@ -128,6 +128,7 @@ const styles = StyleSheet.create({
     fontWeight: Platform.OS === "ios" ? "bold" : undefined,
     fontSize: 14,
     fontFamily: FONT_WEIGHTS["bold"],
+    lineHeight: 15,
   },
   tabUnderlineStyle: {
     backgroundColor: BASE_COLOR,
