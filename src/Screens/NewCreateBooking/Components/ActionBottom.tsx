@@ -54,7 +54,7 @@ const ActionBottom = ({ isEditBooking, editBookingId }: Props) => {
     if (isEmpty(dataServices)) {
       return Alert.alert("Vui lòng chọn dịch vụ");
     }
-    let dataFetch = {};
+    let dataFetch: any = {};
     dataFetch["partnerId"] = infoUserRedux?.infoUser?._id;
     if (!isEmpty(dataDate) && !isEmpty(dataTime)) {
       dataFetch["appointmentDate"] = {
@@ -69,23 +69,20 @@ const ActionBottom = ({ isEditBooking, editBookingId }: Props) => {
         },
       };
     }
-    if (!isEmpty(dataBranch)) {
-      dataFetch["branchCode"] = dataBranch.code;
-    }
-    if (!isEmpty(dataServices)) {
-      dataFetch["serviceNeedCareCodeArr"] = dataServices?.map(
-        (item) => item.code
-      );
-      dataFetch["services"] = dataServices?.map(
-        (item) => {
-          return {
-            serviceCode: item?.code, //bắt buộc
-            promotionId: item.currentFlashSale?._id,
-            options: [],
-          };
-        }
-      );
-    }
+    dataFetch["branchCode"] = dataBranch.code;
+    dataFetch["serviceNeedCareCodeArr"] = dataServices?.map(
+      (item) => item.code
+    );
+    dataFetch["services"] = dataServices?.map((item) => {
+      return {
+        serviceCode: item?.code, //bắt buộc
+        options: [],
+      };
+    });
+    const isFlashSale =
+      dataServices.findIndex((service) => !!service.currentFlashSale) >= 0;
+
+    dataFetch.type = isFlashSale ? "FLASH_SALE" : "DEFAULT";
     dataFetch["partnerPhone"] = {
       nationCode: infoUserRedux?.infoUser?.phone[0]?.nationCode,
       phoneNumber: infoUserRedux?.infoUser?.phone[0]?.phoneNumber,

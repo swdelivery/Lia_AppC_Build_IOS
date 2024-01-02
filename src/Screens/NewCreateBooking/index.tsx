@@ -1,51 +1,40 @@
 import Column from "@Components/Column";
 import NewDatePicker from "@Components/NewDatePicker/NewDatePicker";
 import Screen from "@Components/Screen";
-import TimePicker from "@Components/TimePicker/TimePicker";
 import { WHITE } from "@Constant/Color";
 import { _heightScale } from "@Constant/Scale";
 import {
-  changeBranchListForBookingByService,
   clearDataCreateBooking,
   clearDoctor,
   clearPractitioner,
-  getBranchListForBooking,
-  getDoctorListByBranchCode,
-  getPractitionerListByBranchCode,
   selectBranch,
   selectCoupon,
   selectDate,
   selectDescription,
   selectDoctor,
-  selectInsurance,
   selectPractitioner,
   selectServices,
   selectTime,
   setInsurance,
 } from "@Redux/booking/actions";
 import { getDataCreateBookingState } from "@Redux/booking/selectors";
-import {
-  getInsuranceList,
-  loadMoreInsuranceList,
-} from "@Redux/insurance/actions";
+import { getInsuranceList } from "@Redux/insurance/actions";
 import { getInsuranceListState } from "@Redux/insurance/selectors";
 import { TimeForBooking } from "@typings/booking";
 import moment from "moment";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   Alert,
   KeyboardAvoidingView,
   Platform,
   StatusBar,
   StyleSheet,
-  View,
 } from "react-native";
 import Animated, {
   useAnimatedScrollHandler,
   useSharedValue,
 } from "react-native-reanimated";
 import { useDispatch, useSelector } from "react-redux";
-import useListFilter from "src/Hooks/useListFilter";
 import useVisible from "src/Hooks/useVisible";
 import ActionBottom from "./Components/ActionBottom";
 import Bill from "./Components/Bill";
@@ -62,7 +51,6 @@ import Notes from "./Components/Notes";
 import PickService from "./Components/PickService";
 import ScreenKey from "@Navigation/ScreenKey";
 import { useNavigationParams } from "src/Hooks/useNavigation";
-import { getBranchList } from "@Redux/branch/actions";
 import { AfterTimeoutFragment } from "@Components/AfterTimeoutFragment";
 import ModalScrollPicker from "@Components/ModalBottom/ModalScrollPicker";
 import { formatMonney } from "@Constant/Utils";
@@ -135,11 +123,18 @@ type ScreenK = typeof ScreenKey.CREATE_BOOKING;
 
 const NewCreateBooking = () => {
   const dispatch = useDispatch();
-  const { doctor, branch, practitioner, service, coupon, type, dataBookingEdit } = useNavigationParams<ScreenK>();
+  const {
+    doctor,
+    branch,
+    practitioner,
+    service,
+    coupon,
+    type,
+    dataBookingEdit,
+  } = useNavigationParams<ScreenK>();
   const scrollY = useSharedValue(0);
-  const { dataBranch, dataDoctor, dataPractitioner, dataServices } = useSelector(
-    getDataCreateBookingState
-  );
+  const { dataBranch, dataDoctor, dataPractitioner, dataServices } =
+    useSelector(getDataCreateBookingState);
   const listDoctorRedux = useSelector(
     (state) => state?.bookingReducer?.listDoctor
   );
@@ -152,20 +147,20 @@ const NewCreateBooking = () => {
   const timePicker = useVisible();
   const insurancePicker = useVisible();
 
-  const [isEditBooking, setIsEditBooking] = useState(false)
-  const [editBookingId, setEditBookingId] = useState(null)
+  const [isEditBooking, setIsEditBooking] = useState(false);
+  const [editBookingId, setEditBookingId] = useState(null);
 
   useEffect(() => {
-    dispatch(getInsuranceList.request())
+    dispatch(getInsuranceList.request());
     return () => {
-      dispatch(clearDataCreateBooking())
+      dispatch(clearDataCreateBooking());
     };
-  }, [])
+  }, []);
 
   useEffect(() => {
-    if (type == 'edit') {
-      setIsEditBooking(true)
-      setEditBookingId(dataBookingEdit?._id)
+    if (type == "edit") {
+      setIsEditBooking(true);
+      setEditBookingId(dataBookingEdit?._id);
       const {
         branch,
         assignedDoctorCode,
@@ -173,14 +168,16 @@ const NewCreateBooking = () => {
         servicesNeedCare,
         partnerCouponIdArr,
         insuranceCodeArr,
-        description
-      } = dataBookingEdit
+        description,
+      } = dataBookingEdit;
 
       dispatch(selectBranch(branch));
       if (assignedDoctorCode) {
-        let findDoctor = listDoctorRedux?.find(item => item?.code == assignedDoctorCode);
+        let findDoctor = listDoctorRedux?.find(
+          (item) => item?.code == assignedDoctorCode
+        );
         if (findDoctor?.code) {
-          dispatch(selectDoctor(findDoctor))
+          dispatch(selectDoctor(findDoctor));
         }
       }
       if (appointmentDateFinal?.date) {
@@ -196,26 +193,30 @@ const NewCreateBooking = () => {
         dispatch(selectServices(servicesNeedCare));
       }
       if (partnerCouponIdArr?.length > 0) {
-        let findCoupon = listMyCoupon?.find(item => item?._id == partnerCouponIdArr[0])
+        let findCoupon = listMyCoupon?.find(
+          (item) => item?._id == partnerCouponIdArr[0]
+        );
         if (findCoupon?._id) {
-          dispatch(selectCoupon(findCoupon))
+          dispatch(selectCoupon(findCoupon));
         }
       }
       if (insuranceCodeArr?.length > 0) {
         let listInsuranceFinded = [];
-        dataListInsurance?.map(item => {
-          let finded = insuranceCodeArr?.find(itemFind => itemFind == item?.code)
+        dataListInsurance?.map((item) => {
+          let finded = insuranceCodeArr?.find(
+            (itemFind) => itemFind == item?.code
+          );
           if (finded) {
-            listInsuranceFinded.push(item)
+            listInsuranceFinded.push(item);
           }
-        })
-        dispatch(setInsurance(listInsuranceFinded))
+        });
+        dispatch(setInsurance(listInsuranceFinded));
       }
       if (description) {
-        dispatch(selectDescription(description))
+        dispatch(selectDescription(description));
       }
     }
-  }, [type, listMyCoupon, dataListInsurance])
+  }, [type, listMyCoupon, dataListInsurance]);
 
   useEffect(() => {
     if (branch) {
@@ -231,11 +232,11 @@ const NewCreateBooking = () => {
 
   useEffect(() => {
     if (service?._id) {
-      let branches = (service?.branchServices || []).map(item => item.branch);
+      let branches = (service?.branchServices || []).map((item) => item.branch);
       dispatch(selectBranch(branches[0]));
       dispatch(selectServices([service]));
     }
-  }, [service])
+  }, [service]);
 
   useEffect(() => {
     if (practitioner) {
@@ -245,14 +246,21 @@ const NewCreateBooking = () => {
 
   useEffect(() => {
     if (coupon?._id) {
-      let totalPriceSerive = dataServices?.reduce((sum, { price }) => sum + price, 0);
+      let totalPriceSerive = dataServices?.reduce(
+        (sum, { price }) => sum + price,
+        0
+      );
       if (totalPriceSerive == 0) return;
       if (totalPriceSerive < coupon?.coupon?.minRequiredOrderAmount) {
-        return Alert.alert(`Bạn cần đạt giá trị đơn hàng tối thiểu ${formatMonney(coupon?.coupon?.minRequiredOrderAmount)} để sử dụng Voucher này`)
+        return Alert.alert(
+          `Bạn cần đạt giá trị đơn hàng tối thiểu ${formatMonney(
+            coupon?.coupon?.minRequiredOrderAmount
+          )} để sử dụng Voucher này`
+        );
       }
-      dispatch(selectCoupon(coupon))
+      dispatch(selectCoupon(coupon));
     }
-  }, [coupon])
+  }, [coupon]);
 
   useEffect(() => {
     if (dataBranch?.code) {
@@ -271,6 +279,7 @@ const NewCreateBooking = () => {
   const _handleConfirmPickDate = useCallback((date) => {
     dispatch(selectDate(moment(date)));
   }, []);
+
   const _handleConfirmPickTime = useCallback((data) => {
     dispatch(
       selectTime({
@@ -278,7 +287,7 @@ const NewCreateBooking = () => {
         minute: `${data?.valueDecimal}`,
       })
     );
-  }, [])
+  }, []);
 
   const scrollHandler = useAnimatedScrollHandler({
     onScroll: (event, ctx) => {
@@ -340,7 +349,8 @@ const NewCreateBooking = () => {
         </KeyboardAvoidingView>
         <ActionBottom
           editBookingId={editBookingId}
-          isEditBooking={isEditBooking} />
+          isEditBooking={isEditBooking}
+        />
       </AfterTimeoutFragment>
       <ModalListBranch
         visible={listBranchPicker.visible}

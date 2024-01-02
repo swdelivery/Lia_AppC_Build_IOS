@@ -24,6 +24,9 @@ import { navigation } from "rootNavigation";
 import ScreenKey from "@Navigation/ScreenKey";
 import { ApiResponse } from "@typings/api";
 
+const PROMOTION_DATETIME_HAS_ENDED = 42565;
+const PROMOTION_SERVICE_LIMIT = 42562;
+
 function* getBranchListForBooking({ payload }: BaseAction<any>) {
   try {
     const data: Branch[] = yield call(PartnerService.getBranchList, payload);
@@ -112,7 +115,21 @@ function* createPartnerBooking({ payload }: BaseAction<any>) {
     navigation.goBack();
     navigation.navigate(ScreenKey.LIST_BOOKING);
   } catch (error: any) {
-    Alert.alert(error?.message);
+    const showCustomButton = [
+      PROMOTION_DATETIME_HAS_ENDED,
+      PROMOTION_SERVICE_LIMIT,
+    ].includes(error?.error?.apiCode);
+    const buttons = showCustomButton
+      ? [
+          {
+            text: "OK",
+            onPress: () => {
+              navigation.goBack();
+            },
+          },
+        ]
+      : undefined;
+    Alert.alert(error?.message, "", buttons);
     yield put(actions.createPartnerBooking.failure(error));
   }
 }

@@ -73,7 +73,9 @@ const setupAxios = (instance: AxiosInstance) => {
         SocketInstance?.socketConn?.disconnect();
         SocketInstance.socketConn = null;
       }
-      throw new Error(response?.data?.message);
+      const error: any = new Error(response?.data?.message);
+      error.error = response.data?.error;
+      throw error;
     }
   );
 };
