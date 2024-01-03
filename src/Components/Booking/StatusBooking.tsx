@@ -8,7 +8,7 @@ import { BLUE_FB, GREEN_SUCCESS, GREY } from "@Constant/Color";
 
 const STATUS: Record<BookingStatus, { name: string; color: string }> = {
   WAIT: {
-    name: "Chưa Check in",
+    name: "Chưa Check-In",
     color: GREY,
   },
   WAIT_CONSULTATION: {
