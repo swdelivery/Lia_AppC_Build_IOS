@@ -4,12 +4,12 @@ import Row from "@Components/Row";
 import Text from "@Components/Text";
 import Column from "@Components/Column";
 import { BookingStatus } from "@typings/booking";
-import { BLUE_FB, GREEN_SUCCESS } from "@Constant/Color";
+import { BLUE_FB, GREEN_SUCCESS, GREY } from "@Constant/Color";
 
 const STATUS: Record<BookingStatus, { name: string; color: string }> = {
   WAIT: {
     name: "Chưa Check in",
-    color: "red",
+    color: GREY,
   },
   WAIT_CONSULTATION: {
     name: "Đang chờ",
