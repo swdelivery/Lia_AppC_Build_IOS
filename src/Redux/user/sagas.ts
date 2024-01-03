@@ -1,5 +1,6 @@
 import { all, call, delay, put, takeLatest } from "redux-saga/effects";
 import {
+  CANCEL_PARTNER_BOOKING,
   GET_BOOKING_DEPOSITS,
   GET_BOOKING_DETAILS,
   GET_MY_BOOKING,
@@ -159,6 +160,16 @@ function* logOut() {
   }
 }
 
+function* cancelPartnerBooking({ payload }: BaseAction<string>) {
+  try {
+    yield call(PartnerService.cancelPartnerBooking, payload);
+    yield put(actions.cancelPartnerBooking.success());
+    yield put(actions.getMyBooking.request());
+  } catch (error: any) {
+    yield put(actions.cancelPartnerBooking.failure(error.message));
+  }
+}
+
 export default function* sagas() {
   yield all([
     takeLatest(GET_MY_COUPONS.REQUEST, getMyCoupons),
@@ -169,7 +180,7 @@ export default function* sagas() {
     takeLatest(GET_BOOKING_DEPOSITS.REQUEST, getBookingDeposits),
     takeLatest(GET_ORDER_DETAILS.REQUEST, getOrderDetails),
     takeLatest(GET_ORDER_PAYMENTS.REQUEST, getOrderPayments),
-
+    takeLatest(CANCEL_PARTNER_BOOKING.REQUEST, cancelPartnerBooking),
     takeLatest(LOG_OUT, logOut),
   ]);
 }

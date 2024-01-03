@@ -28,7 +28,6 @@ import {
   UPDATE_PARTNER_BOOKING,
 } from "./types";
 import { Service } from "@typings/serviceGroup";
-import { Review } from "@typings/review";
 import { DataPagingPayload } from "@typings/api";
 import { Branch } from "@typings/branch";
 import { Doctor } from "@typings/doctor";
@@ -55,7 +54,10 @@ export const getListServiceFilter = generateActionsGroup<
 >(GET_LIST_SERVICE_FILTER);
 
 export const createPartnerBooking = generateActionsGroup(CREAT_PARTNER_BOOKING);
-export const updatePartnerBooking = generateActionsGroup(UPDATE_PARTNER_BOOKING);
+
+export const updatePartnerBooking = generateActionsGroup(
+  UPDATE_PARTNER_BOOKING
+);
 
 export const openModalAddServiceToBooking = (data) => ({
   type: OPEN_MODAL_ADD_SERVICE_TO_BOOKING,

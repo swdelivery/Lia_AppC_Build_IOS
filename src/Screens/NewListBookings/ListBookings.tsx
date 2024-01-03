@@ -7,28 +7,38 @@ import { getMyBooking, loadMoreMyBooking } from "@Redux/user/actions";
 import { useFocused } from "src/Hooks/useNavigation";
 import { RenderItemProps } from "@typings/common";
 import { Booking } from "@typings/booking";
+import { FlashList } from "@shopify/flash-list";
+import { useSelector } from "react-redux";
 
 const ListBookings = () => {
-  const { getData, data, refreshData } = useListFilter(
+  const { isLoading, data, refreshData } = useListFilter(
     getMyBookingState,
     getMyBooking,
     loadMoreMyBooking
   );
+  const { processingBooking } = useSelector(getMyBookingState);
 
   useFocused(() => {
-    refreshData()
+    refreshData();
   });
 
+  console.log({ processingBooking });
+
   const _renderItem = ({ item }: RenderItemProps<Booking>) => {
-    return <CardBooking item={item} />;
+    const isProcessing = processingBooking === item._id;
+    return <CardBooking item={item} isProcessing={isProcessing} />;
   };
 
   return (
-    <FlatList
+    <FlashList
       data={data}
       contentContainerStyle={styles.styleContent}
       renderItem={_renderItem}
       keyExtractor={(item, index) => item._id}
+      refreshing={isLoading}
+      onRefresh={refreshData}
+      estimatedItemSize={100}
+      extraData={processingBooking}
     />
   );
 };
@@ -36,5 +46,5 @@ const ListBookings = () => {
 export default ListBookings;
 
 const styles = StyleSheet.create({
-  styleContent: { gap: 8, paddingTop: 8 * 2, paddingBottom: 8 * 10 },
+  styleContent: { paddingTop: 8 * 2, paddingBottom: 8 * 10 },
 });

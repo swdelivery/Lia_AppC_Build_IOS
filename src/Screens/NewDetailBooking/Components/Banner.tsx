@@ -18,7 +18,7 @@ type Props = {
 
 const Banner = ({ booking }: Props) => {
   const service = useMemo(() => {
-    return head(booking?.services).service;
+    return head(booking?.services)?.service;
   }, [booking]);
 
   const appointmentDate = useMemo(() => {

@@ -11,6 +11,7 @@ import { BASE_COLOR } from "@Constant/Color";
 import LiAHeader from "@Components/Header/LiAHeader";
 import { useNavigate } from "src/Hooks/useNavigation";
 import ScreenKey from "@Navigation/ScreenKey";
+import { cancelPartnerBooking } from "@Redux/user/actions";
 
 const NewListBookings = () => {
   const dispatch = useDispatch();
@@ -28,6 +29,10 @@ const NewListBookings = () => {
         type: 'edit',
         dataBookingEdit: showActionSheetBottom?.data
       })()
+    } else if (data?.type === 'cancel') {
+      dispatch(
+        cancelPartnerBooking.request(showActionSheetBottom?.data?._id)
+      );
     }
   };
 

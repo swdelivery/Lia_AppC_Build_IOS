@@ -5,9 +5,9 @@ import { CLOSE_ACTION_SHEET_BOTTOM, OPEN_ACTION_SHEET_BOTTOM } from "../types";
 
 export type State = {
   showActionSheetBottom: {
-    flag: false,
-    data: {}
-  }
+    flag: false;
+    data: any;
+  };
 };
 
 const INITIAL_STATE: State = {

@@ -15,21 +15,22 @@ import { _moderateScale } from "@Constant/Scale"
 import { styleElement } from "@Constant/StyleElement"
 import ScreenKey from "@Navigation/ScreenKey"
 import { openActionSheetBottom } from "@Redux/modal/actions"
-import { Booking } from "@typings/booking"
-import moment from "moment"
-import React, { useCallback, useMemo } from "react"
-import { StyleSheet, TouchableOpacity, View } from "react-native"
-import { useDispatch } from "react-redux"
-import { useNavigate } from "src/Hooks/useNavigation"
-import { OptionDotsIcon } from "src/SGV"
+import { Booking } from "@typings/booking";
+import React, { useCallback, useMemo } from "react";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "src/Hooks/useNavigation";
+import { OptionDotsIcon } from "src/SGV";
 import { fromBookingDate, fromUtc } from "src/utils/date";
 import StatusBooking from "./StatusBooking";
+import { LoadingView } from "@Components/Loading/LoadingView";
 
 type Props = {
   item: Booking;
+  isProcessing: boolean;
 };
 
-const CardBooking = ({ item }: Props) => {
+const CardBooking = ({ item, isProcessing }: Props) => {
   const dispatch = useDispatch();
   const { navigate } = useNavigate();
 
@@ -78,13 +79,15 @@ const CardBooking = ({ item }: Props) => {
           </Text>
           <StatusBooking status={item.status} />
         </Column>
-        <TouchableOpacity
-          hitSlop={styleElement.hitslopSm}
-          onPress={_handleActionSheetBottom}
-          style={styles.action}
-        >
-          <OptionDotsIcon />
-        </TouchableOpacity>
+        {item.status === "WAIT" && (
+          <TouchableOpacity
+            hitSlop={styleElement.hitslopSm}
+            onPress={_handleActionSheetBottom}
+            style={styles.action}
+          >
+            <OptionDotsIcon />
+          </TouchableOpacity>
+        )}
       </Row>
       <View style={styles.horizonLine} />
       <Column gap={8} style={styles.infoBottom}>
@@ -97,6 +100,7 @@ const CardBooking = ({ item }: Props) => {
           <Text>{item?.branch?.address}</Text>
         </Row>
       </Column>
+      {isProcessing && <LoadingView style={styles.overlay} />}
     </TouchableOpacity>
   );
 };
@@ -131,10 +135,16 @@ const styles = StyleSheet.create({
   },
   container: {
     marginHorizontal: _moderateScale(8 * 2),
+    marginBottom: 8,
     // borderWidth: 1,
     borderRadius: 8,
     borderColor: BORDER_COLOR,
     backgroundColor: WHITE,
+  },
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: "rgba(255,255,255,0.5)",
+    borderRadius: 8,
   },
 });
 

@@ -252,6 +252,10 @@ const updatePartnerBooking = (payload: any) => {
   return axios.put(`/booking/${payload?.idBooking}`, payload?.data).then(({ data }) => data);
 };
 
+const cancelPartnerBooking = (bookingId: string): Promise<any> =>
+  axios.put(`/booking/${bookingId}/cancel`).then(({ data }) => data.data);
+
+
 const getInsuranceList = (): Promise<ApiResponse<Insurance[]>> =>
   axios
     .get("/insurance/all", {
@@ -619,6 +623,7 @@ export default {
   // Booking
   createPartnerBooking,
   updatePartnerBooking,
+  cancelPartnerBooking,
   getBookingList,
 
   getBookingDetails,
@@ -693,5 +698,5 @@ export default {
 
   // WheelSpin
   getCurrActiveWheelSpin,
-  getPartnerWheelTurn
+  getPartnerWheelTurn,
 };
