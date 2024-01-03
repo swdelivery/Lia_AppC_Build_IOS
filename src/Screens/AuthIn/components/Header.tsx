@@ -7,6 +7,7 @@ import { sizeIcon } from "@Constant/Icon";
 import { _moderateScale } from "@Constant/Scale";
 import Row from "@Components/Row";
 import { StatusBar } from "@Components/StatusBar";
+import { BASE_COLOR } from "@Constant/Color";
 
 type Props = {
   title: string;
@@ -18,7 +19,7 @@ export default function Header({ title, onBack }: Props) {
     <Row style={[styleElement.rowAliCenter, styles.headerContainer]}>
       <StatusBar barStyle="dark-content" />
       <TouchableOpacity onPress={onBack} hitSlop={styleElement.hitslopSm}>
-        <IconBackBlack width={20} height={20} />
+        <IconBackBlack width={20} height={20} color={BASE_COLOR} />
       </TouchableOpacity>
       <Text size={16} weight="bold">
         {title}

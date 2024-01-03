@@ -8,8 +8,6 @@ import { BASE_COLOR, WHITE } from "@Constant/Color";
 import { Conversation } from "@typings/chat";
 import ContentLoader, { Circle, Rect } from "react-content-loader/native";
 import Avatar from "@Components/Avatar";
-import { useSelector } from "react-redux";
-import { getInfoUserReducer } from "@Redux/Selectors";
 import moment from "moment";
 import useCallbackItem from "src/Hooks/useCallbackItem";
 import { IconAI } from "@Components/Icon/Icon";
