@@ -586,6 +586,16 @@ const getPartnerWheelTurn = (payload: any) => {
     .then(({ data }) => data);
 };
 
+// Affiliate
+const getPartnerLevel = (payload: any) => {
+  const query = encodeParams({
+    ...payload,
+  });
+  return axios
+    .get(`/partner-level?${query}`)
+    .then(({ data }) => data);
+};
+
 export default {
   partnerLogout,
 
@@ -699,4 +709,7 @@ export default {
   // WheelSpin
   getCurrActiveWheelSpin,
   getPartnerWheelTurn,
+
+  // Affiliate
+  getPartnerLevel
 };
