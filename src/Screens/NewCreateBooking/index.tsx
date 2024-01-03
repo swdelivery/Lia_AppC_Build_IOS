@@ -227,6 +227,9 @@ const NewCreateBooking = () => {
   useEffect(() => {
     if (doctor) {
       dispatch(selectDoctor(doctor));
+      if (doctor.branch) {
+        dispatch(selectBranch(doctor.branch));
+      }
     }
   }, [doctor]);
 
@@ -328,7 +331,7 @@ const NewCreateBooking = () => {
                       dataPractitioner?._id ? dataPractitioner : dataDoctor
                     }
                     title={"Chọn bác sĩ"}
-                    onPress={listDoctorPicker.show}
+                    onPress={!doctor ? listDoctorPicker.show : undefined}
                   />
                 ) : (
                   <></>

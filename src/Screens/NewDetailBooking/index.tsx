@@ -16,6 +16,7 @@ import { getBookingDetails } from "@Redux/user/actions";
 import { getBookingDetailsState } from "@Redux/user/selectors";
 import LiAHeader from "@Components/Header/LiAHeader";
 import { BASE_COLOR } from "@Constant/Color";
+import { AfterTimeoutFragment } from "@Components/AfterTimeoutFragment";
 
 const STACKS = [
   {
@@ -49,33 +50,35 @@ const NewDetailBooking = () => {
       <StatusBar barStyle={"light-content"} />
       <LiAHeader safeTop title={"Chi tiết lịch hẹn"} />
 
-      <ScrollableTabView
-        title={<View />}
-        titleArgs={{
-          interpolateHeight: {
-            inputRange: [0, 0],
-            outputRange: [0, 0],
-            extrapolate: "clamp",
-          },
-        }}
-        mappingProps={{
-          booking: data,
-        }}
-        stacks={STACKS}
-        header={<Banner booking={data} />}
-        tabsStyle={styles.tabsStyle}
-        tabStyle={styles.tabStyle}
-        tabsEnableAnimated={true}
-        tabInnerStyle={styles.tabInnerStyle}
-        tabActiveOpacity={1}
-        tabUnderlineStyle={styles.tabUnderlineStyle}
-        textStyle={styles.textStyle}
-        textActiveStyle={styles.textActiveStyle}
-        firstIndex={0}
-        toTabsOnTab={true}
-        oneTabHidden={true}
-        enableCachePage={true}
-      />
+      <AfterTimeoutFragment>
+        <ScrollableTabView
+          title={<View />}
+          titleArgs={{
+            interpolateHeight: {
+              inputRange: [0, 0],
+              outputRange: [0, 0],
+              extrapolate: "clamp",
+            },
+          }}
+          mappingProps={{
+            booking: data,
+          }}
+          stacks={STACKS}
+          header={<Banner booking={data} />}
+          tabsStyle={styles.tabsStyle}
+          tabStyle={styles.tabStyle}
+          tabsEnableAnimated={true}
+          tabInnerStyle={styles.tabInnerStyle}
+          tabActiveOpacity={1}
+          tabUnderlineStyle={styles.tabUnderlineStyle}
+          textStyle={styles.textStyle}
+          textActiveStyle={styles.textActiveStyle}
+          firstIndex={0}
+          toTabsOnTab={true}
+          oneTabHidden={true}
+          enableCachePage={true}
+        />
+      </AfterTimeoutFragment>
     </Screen>
   );
 };
