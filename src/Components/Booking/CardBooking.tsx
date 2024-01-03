@@ -22,8 +22,8 @@ import { StyleSheet, TouchableOpacity, View } from "react-native"
 import { useDispatch } from "react-redux"
 import { useNavigate } from "src/Hooks/useNavigation"
 import { OptionDotsIcon } from "src/SGV"
-import { fromUtc } from "src/utils/date"
-import StatusBooking from "./StatusBooking"
+import { fromBookingDate, fromUtc } from "src/utils/date";
+import StatusBooking from "./StatusBooking";
 
 type Props = {
   item: Booking;
@@ -34,16 +34,13 @@ const CardBooking = ({ item }: Props) => {
   const { navigate } = useNavigate();
 
   const service = useMemo(() => {
-    return item.servicesNeedCare[0];
+    return item.services[0]?.service;
   }, [item]);
 
   const appointmentDate = useMemo(() => {
     const aptDate = item.appointmentDateFinal;
-    const from = moment(fromUtc(aptDate.from.dateTime));
-    const to = moment(fromUtc(aptDate.to.dateTime));
-    return `${from.format("HH:mm")} - ${to.format("HH:mm")} | ${from.format(
-      "DD/MM/YYYY"
-    )}`;
+    const from = fromBookingDate(aptDate.from);
+    return `${from.format("HH:mm")} | ${from.format("DD/MM/YYYY")}`;
   }, [item]);
 
   const _handleActionSheetBottom = useCallback(() => {
@@ -65,7 +62,7 @@ const CardBooking = ({ item }: Props) => {
         <Image
           style={styles.avatar}
           placeholderColors={[BASE_COLOR, "white"]}
-          avatar={service?.representationFileArr[0]}
+          avatar={service?.avatar}
         />
         <Column flex={1} gap={4}>
           <Text

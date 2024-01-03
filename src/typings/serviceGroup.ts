@@ -109,4 +109,6 @@ export type Service = {
     __v: number;
   };
   nextFlashSale?: FlashSale;
+
+  serviceGroupArr: ServiceGroup[];
 } & Timestamp;

@@ -27,6 +27,18 @@ export type BookingStatus =
   | "WAS_CHECK_OUT"
   | "CANCEL";
 
+export type BookingService = {
+  promotionId: string;
+  servicePromotionId: string;
+  extraAmount: number;
+  _id: string;
+  serviceCode: string;
+  originalPrice: number;
+  finalPrice: number;
+  options: any[];
+  service: Service;
+};
+
 export type Booking = {
   type: "DEFAULT";
   sourceCodeArr: any[];
@@ -63,7 +75,6 @@ export type Booking = {
   code: string;
   partnerName: string;
   partnerPhoneNumber: string;
-  services: Service[];
   __v: string;
   referralCode: string;
   queueConsultation: any;
@@ -72,7 +83,9 @@ export type Booking = {
   latestTreatmentQueue: any;
   desiredFoodDrinkArr: any[];
   id: string;
+  totalAmount: number;
   serviceNeedCareCodeArr: string[];
+  services: BookingService[];
   servicesNeedCare: Service[];
   branch: Branch;
   appointmentDateArr: AppointmentDate;
@@ -92,14 +105,27 @@ export type Booking = {
   checkOutAt: string;
   cancelAt: string;
   partnerCoupons: MyVoucher[];
+
+  partnerLevelPromotion: {
+    point: number;
+    description: string;
+    discountRetailService: number;
+    discountComboService: number;
+    discountFriend: number;
+    commissionRate: number;
+    indirectCommissionRate: number;
+    code: string;
+    name: string;
+    id: string;
+  };
 } & Timestamp;
 
 export type TimeForBooking = {
-  _id: string,
-  from: string,
-  to: string,
+  _id: string;
+  from: string;
+  to: string;
   time: {
-    hour: string,
-    minute: string
-  }
-}
+    hour: string;
+    minute: string;
+  };
+};

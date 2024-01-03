@@ -77,6 +77,9 @@ const NewPickerServiceBooking = () => {
     return [{ key: "all", title: "Tất cả" }, ...newArray];
   }, [dataListService]);
 
+  console.log({ dataListService });
+  
+
   const _hideModalConfirmService = useCallback(() => {
     dispatch(openModalAddServiceToBooking(false));
   }, []);
