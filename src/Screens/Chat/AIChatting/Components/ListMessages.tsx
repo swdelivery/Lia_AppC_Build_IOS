@@ -7,30 +7,37 @@ import React, { useCallback } from "react";
 import { FlatList, StyleSheet } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import EachMessage from "./messages/EachMessage";
+import { FlashList } from "@shopify/flash-list";
 
 const ListMessages = () => {
   const dispatch = useDispatch();
-  const { data: messages, meta, isLoading, isLoadingMore } = useSelector(getAIMessagesState);
+  const {
+    data: messages,
+    meta,
+    isLoading,
+    isLoadingMore,
+  } = useSelector(getAIMessagesState);
   const { infoUser } = useSelector(getInfoUserReducer);
 
   const handleListEndReached = () => {
     onLoadMoreMessages();
-  }
+  };
 
   const onLoadMoreMessages = () => {
     if (meta?.page && meta?.page < meta?.totalPage) {
-      dispatch(getMoreAIMessages.request({
-        condition: {
-          "partnerId": { "equal": infoUser?._id }
-        },
-        page: meta?.page + 1,
-        limit: 10
-      }))
+      dispatch(
+        getMoreAIMessages.request({
+          condition: {
+            partnerId: { equal: infoUser?._id },
+          },
+          page: meta?.page + 1,
+          limit: 10,
+        })
+      );
     }
-  }
+  };
 
-  const handleScrollBegin = useCallback(() => {
-  }, []);
+  const handleScrollBegin = useCallback(() => {}, []);
 
   const _renderMessage = ({ item, index }: RenderItemProps<Message>) => {
     return (
@@ -50,7 +57,7 @@ const ListMessages = () => {
 
   return (
     <>
-      <FlatList
+      <FlashList
         inverted
         style={styles.content}
         contentContainerStyle={styles.contentContainer}
@@ -60,6 +67,7 @@ const ListMessages = () => {
         onMomentumScrollBegin={handleScrollBegin}
         onEndReached={handleListEndReached}
         onEndReachedThreshold={0.2}
+        estimatedItemSize={60}
       />
     </>
   );
@@ -69,5 +77,10 @@ export default ListMessages;
 
 const styles = StyleSheet.create({
   content: { backgroundColor: "#EEF2F1" },
-  contentContainer: { flexGrow: 1, paddingBottom: 60, paddingTop: 60 },
+  contentContainer: {
+    flexGrow: 1,
+    paddingBottom: 60,
+    paddingTop: 60,
+    backgroundColor: "#EEF2F1",
+  },
 });

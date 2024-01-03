@@ -1,7 +1,7 @@
-import { IconAI, IconChat } from "@Components/Icon/Icon";
+import { IconChat } from "@Components/Icon/Icon";
 import PlaceholderSkeletons from "@Components/PlaceholderSkeletons";
 import Screen from "@Components/Screen";
-import { BASE_COLOR, WHITE } from "@Constant/Color";
+import { WHITE } from "@Constant/Color";
 import { FROM_GROUP_CHAT_ID } from "@Constant/Flag";
 import { _moderateScale } from "@Constant/Scale";
 import ScreenKey from "@Navigation/ScreenKey";
@@ -13,13 +13,7 @@ import { getPartnerConversationsState } from "@Redux/chat/selectors";
 import { Conversation } from "@typings/chat";
 import { RenderItemProps } from "@typings/common";
 import React, { useCallback, useMemo } from "react";
-import {
-  FlatList,
-  SectionList,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
-import useItemExtractor from "src/Hooks/useItemExtractor";
+import { StyleSheet } from "react-native";
 import useListFilter from "src/Hooks/useListFilter";
 import { useFocused, useNavigate } from "src/Hooks/useNavigation";
 import Header from "./Components/Header";
@@ -44,47 +38,56 @@ const NewListLastedMessage = () => {
   });
 
   const conversations = useMemo(() => {
-    const result = [];
-    result.push({
-      id: "lia",
-      title: "Trò chuyện với LiA",
-      data: [
-        {
-          id: "ai_chat",
-        },
-      ],
-    });
+    const result: any[] = ["lia"];
+    const aiConversation = data.find((item) => item.type === "assistant");
+    const liaConversation = data.find((item) => item.type === "consultation");
+    if (aiConversation) {
+      result.push(aiConversation);
+    }
+    if (liaConversation) {
+      result.push(liaConversation);
+    }
+    result.push("others");
+    result.push(
+      ...data.filter(
+        (item) => item.type !== "assistant" && item.type !== "consultation"
+      )
+    );
     return result;
   }, [data]);
 
   const handleOpenChat = useCallback((item: Conversation) => {
-    navigation.navigate(ScreenKey.CHATTING, {
-      conversation: item,
-      flag: FROM_GROUP_CHAT_ID,
-    });
-  }, []);
-  const handleOpenAIChat = useCallback(() => {
-    navigation.navigate(ScreenKey.AI_CHATTING);
+    if (item.type === "assistant") {
+      navigation.navigate(ScreenKey.AI_CHATTING);
+    } else {
+      navigation.navigate(ScreenKey.CHATTING, {
+        conversation: item,
+        flag: FROM_GROUP_CHAT_ID,
+      });
+    }
   }, []);
 
   const _renderItem = ({ item, index }: RenderItemProps<Conversation>) => {
+    if (typeof item === "string") {
+      return (
+        <HeaderList
+          icon={item === "lia" ? <Icon name="pin" size={20} /> : <IconChat />}
+          title="Cuộc trò chuyện"
+        />
+      );
+    }
     return <ItemLastedMessage item={item} onPress={handleOpenChat} />;
   };
-
-  const { keyExtractor } = useItemExtractor<Conversation>((item) => item._id);
 
   return (
     <Screen safeTop style={styles.container}>
       <Header />
       <FlashList
-        ListHeaderComponent={
-          <HeaderList icon={<IconChat />} title="Cuộc trò chuyện" />
-        }
         contentContainerStyle={styles.contentContainerStyle}
         style={styles.flatlistStyle}
-        data={data}
+        data={conversations}
         renderItem={_renderItem}
-        keyExtractor={keyExtractor}
+        // keyExtractor={keyExtractor}
         refreshing={isLoading}
         onRefresh={refreshData}
         onEndReached={loadMoreData}
@@ -99,13 +102,11 @@ const NewListLastedMessage = () => {
             </>
           ) : null
         }
+        getItemType={(item) => {
+          // To achieve better performance, specify the type based on the item
+          return typeof item === "string" ? "sectionHeader" : "row";
+        }}
       />
-      <TouchableOpacity
-        onPress={handleOpenAIChat}
-        style={[styles.btnAI, shadow]}
-      >
-        <IconAI width={8 * 8} height={8 * 8} color={BASE_COLOR} />
-      </TouchableOpacity>
     </Screen>
   );
 };
@@ -125,6 +126,7 @@ const styles = StyleSheet.create({
   },
   contentContainerStyle: {
     paddingHorizontal: _moderateScale(8 * 2),
+    paddingBottom: 60,
   },
   flatlistStyle: {
     paddingHorizontal: _moderateScale(8 * 2),
@@ -137,15 +139,3 @@ const styles = StyleSheet.create({
     backgroundColor: WHITE,
   },
 });
-
-const shadow = {
-  shadowColor: BASE_COLOR,
-  shadowOffset: {
-    width: 0,
-    height: 0,
-  },
-  shadowOpacity: 0.2,
-  shadowRadius: 10,
-
-  elevation: 2,
-};

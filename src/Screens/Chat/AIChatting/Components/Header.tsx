@@ -37,13 +37,9 @@ const Header = () => {
           <IconBackWhite />
         </TouchableOpacity>
         <Row gap={8 * 2} paddingLeft={8 * 2}>
-          <IconAIWhite />
-          <Text
-            color={Color.WHITE}
-            weight="bold"
-            numberOfLines={1}
-            size={16}>
-            Trợ lý  AI LiA
+          <IconAIWhite color={Color.BASE_COLOR} />
+          <Text color={Color.WHITE} weight="bold" numberOfLines={1} size={16}>
+            Trợ lý AI LiA
           </Text>
         </Row>
       </Row>
