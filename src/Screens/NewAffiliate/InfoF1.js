@@ -179,9 +179,9 @@ const Tab2 = (props) => {
                             </View>
 
                             <View style={{ width: '100%' }}>
-                                <View style={{ flexDirection: 'row', marginTop: _moderateScale(8), alignItems:'center' }}>
-                                    <Text style={{...stylesFont.fontNolan500}}>
-                                        {`Trạng thái: `} 
+                                <View style={{ flexDirection: 'row', marginTop: _moderateScale(8), alignItems: 'center' }}>
+                                    <Text style={{ ...stylesFont.fontNolan500 }}>
+                                        {`Trạng thái: `}
                                     </Text>
                                     {
                                         renderStatusBookingByCode(item?.status)
@@ -203,7 +203,7 @@ const InfoF1 = (props) => {
     const [listOrderServiceInvitee, setListOrderServiceInvitee] = useState([])
     const [listBookingInvitee, setListBookingInvitee] = useState([])
 
-    const {top}  = useSafeAreaInsets()
+    const { top } = useSafeAreaInsets()
 
     const [routes] = useState([
         { key: 'first', title: 'Đơn hàng' },

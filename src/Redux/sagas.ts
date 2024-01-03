@@ -25,5 +25,6 @@ export function* rootSaga() {
     fork(require("./charity/sagas").default),
     fork(require("./qrCheckin/sagas").default),
     fork(require("./wheelSpin/sagas").default),
+    fork(require("./affiliate/sagas").default),
   ]);
 }
