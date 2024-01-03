@@ -89,7 +89,7 @@ const NewProfile = () => {
                 // { name: "Bảo hiểm", icon: <IconProfileInsurance /> },
               ]}
             />
-            <Menu
+            {/* <Menu
               type={"row"}
               title={"Phụng sự"}
               data={[
@@ -105,7 +105,7 @@ const NewProfile = () => {
                 // { name: "Tuyển dụng", icon: <IconProfileFindJob /> },
                 // { name: "Đào tạo", icon: <IconProfileEducation /> },
               ]}
-            />
+            /> */}
             <Menu
               type={"column"}
               title={"Khác"}
