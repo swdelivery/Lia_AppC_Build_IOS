@@ -198,9 +198,14 @@ const ItemTreatmentDetail = memo((props) => {
                     <RowInfo
                         name={"Dịch vụ điều trị:"}
                         value={serviceName} />
-                    <RowInfo
-                        name={"Bác sĩ chính:"}
-                        value={`${listDoctorRedux?.find(itemFind => itemFind?.userId == doctorId)?.name}`} />
+                    {
+                        listDoctorRedux?.find(itemFind => itemFind?.userId == doctorId)?.name ?
+                            <RowInfo
+                                name={"Bác sĩ chính:"}
+                                value={`${listDoctorRedux?.find(itemFind => itemFind?.userId == doctorId)?.name}`} />
+                            : <></>
+                    }
+
                     <RowInfo
                         name={"Thời gian:"}
                         value={`${moment(created).format('LL')} - ${moment(created).format('LT')}`} />

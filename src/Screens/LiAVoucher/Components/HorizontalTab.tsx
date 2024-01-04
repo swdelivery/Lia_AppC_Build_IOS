@@ -26,8 +26,6 @@ const HorizontalTab = ({
   const { navigation } = useNavigate();
 
   const handleLuckyWheelPress = useRequireLoginCallback(() => {
-    console.log("hehehehe");
-
     navigation.navigate(ScreenKey.WHEEL_SPIN);
   }, []);
 
@@ -62,12 +60,6 @@ const HorizontalTab = ({
         </Text>
       </Animated.View>
       <Animated.View style={[styles.tab__child, animBG]}>
-        <IconVoucher style={sizeIcon.lg} />
-        <Text size={12} weight="bold" color={WHITE}>
-          Điểm danh
-        </Text>
-      </Animated.View>
-      <Animated.View style={[styles.tab__child, animBG]}>
         <TouchableOpacity
           onPress={handleLuckyWheelPress}
           style={{ alignItems: "center" }}
@@ -78,6 +70,13 @@ const HorizontalTab = ({
           </Text>
         </TouchableOpacity>
       </Animated.View>
+      <Animated.View style={[styles.tab__child, animBG]}>
+        <IconVoucher style={sizeIcon.lg} />
+        <Text size={12} weight="bold" color={WHITE}>
+          Điểm danh
+        </Text>
+      </Animated.View>
+
       <Animated.View style={[styles.tab__child, animBG]}>
         <IconVoucher style={sizeIcon.lg} />
         <Text size={12} weight="bold" color={WHITE}>
@@ -99,5 +98,6 @@ const styles = StyleSheet.create({
   tab: {
     height: _moderateScale(8 * 7),
     flexDirection: "row",
+    top: 1
   },
 });

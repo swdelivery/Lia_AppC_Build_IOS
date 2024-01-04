@@ -12,7 +12,7 @@ const INITIAL_STATE: State = {
 };
 
 const success: Handler<State> = (state, { payload }) => {
-  let sortArray = payload.data.data.slice(1).sort((a, b) => a.startPoint - b.startPoint);
+  let sortArray = payload.data.data.sort((a, b) => a.startPoint - b.startPoint);
   return {
     ...state,
     data: sortArray,

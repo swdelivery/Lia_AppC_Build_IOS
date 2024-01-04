@@ -87,9 +87,13 @@ const Header = ({ conversation }: Props) => {
             )}
           </Row>
         </TouchableOpacity>
-        <View>
+        <TouchableOpacity
+          disabled={conversation?.type == "videoCallRequest"}
+          onPress={() => {
+            navigation.navigate(ScreenKey.INFO_ROOM_CHAT);
+          }}>
           <OptionDotsVerticalIcon />
-        </View>
+        </TouchableOpacity>
       </Row>
 
       {conversation?.type === "videoCallRequest" &&
