@@ -39,13 +39,14 @@ type Props = {
   maxDate: string;
   colors: any;
   selectedDayColor: any;
+  onNew?: () => void;
   // other props
 };
 
 const HEIGHT_MODAL = _heightScale(420);
 
 const NewDatePicker = memo(
-  ({ visible, onClose, minDate, maxDate, onConfirm, colors, selectedDayColor }: Props) => {
+  ({ visible, onClose, minDate, maxDate, onConfirm, colors, selectedDayColor, onNew }: Props) => {
     const [datePick, setDatePick] = useState(null);
     const opacityBackDrop = useSharedValue(0);
     const tranYModal = useSharedValue(0);
@@ -213,7 +214,7 @@ const NewDatePicker = memo(
                     </Text>
                   </TouchableOpacity>
 
-                  <TouchableOpacity style={styles.rightBtn}>
+                  <TouchableOpacity style={styles.rightBtn} onPress={() => { onNew() }}>
                     <Text weight="bold" size={14} color={GREY_FOR_TITLE}>
                       Làm mới
                     </Text>

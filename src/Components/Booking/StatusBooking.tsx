@@ -11,6 +11,10 @@ const STATUS: Record<BookingStatus, { name: string; color: string }> = {
     name: "Chưa Check-In",
     color: GREY,
   },
+  WAS_CHECK_IN: {
+    name: "Đã Check-In",
+    color: GREY,
+  },
   WAIT_CONSULTATION: {
     name: "Đang chờ",
     color: "orange",
@@ -22,6 +26,10 @@ const STATUS: Record<BookingStatus, { name: string; color: string }> = {
   WAS_CONSULTED: {
     name: "Hoàn thành tư vấn",
     color: "orange",
+  },
+  WAIT_PROGRESS: {
+    name: "Đang chờ điều trị",
+    color: BLUE_FB,
   },
   IN_PROGRESS: {
     name: "Đang điều trị",

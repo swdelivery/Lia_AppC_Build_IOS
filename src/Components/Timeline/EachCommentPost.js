@@ -77,11 +77,8 @@ const EachCommentPost = props => {
         switch (key) {
             case "Chỉnh sửa":
                 setTimeout(() => {
-                    console.log({ data });
-
-                    setDialogVisible(data.content)
-                    setCurrIdCmt(data)
-
+                  setDialogVisible(data.content);
+                  setCurrIdCmt(data);
                 }, 200);
                 return
 

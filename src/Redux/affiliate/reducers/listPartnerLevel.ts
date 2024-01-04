@@ -4,7 +4,7 @@ import { PartnerLevel } from "@typings/affiliate";
 import { GET_PARTNER_LEVEL } from "../types";
 
 export type State = {
-  data: PartnerLevel[],
+  data: PartnerLevel[];
 };
 
 const INITIAL_STATE: State = {
@@ -16,7 +16,7 @@ const success: Handler<State> = (state, { payload }) => {
   return {
     ...state,
     data: sortArray,
-  }
+  };
 };
 
 export default createReducer(INITIAL_STATE, {

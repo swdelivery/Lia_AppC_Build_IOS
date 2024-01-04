@@ -49,7 +49,7 @@ const Certificate = ({
 };
 
 export function Certificates({
-  data,
+  data = [],
   scrollEnabled = true,
   borderColor,
 }: {
@@ -72,7 +72,6 @@ export function Certificates({
     },
     []
   );
-
 
   function renderContent() {
     return (

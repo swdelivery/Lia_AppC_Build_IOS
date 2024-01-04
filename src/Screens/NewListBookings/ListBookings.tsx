@@ -22,8 +22,6 @@ const ListBookings = () => {
     refreshData();
   });
 
-  console.log({ processingBooking });
-
   const _renderItem = ({ item }: RenderItemProps<Booking>) => {
     const isProcessing = processingBooking === item._id;
     return <CardBooking item={item} isProcessing={isProcessing} />;

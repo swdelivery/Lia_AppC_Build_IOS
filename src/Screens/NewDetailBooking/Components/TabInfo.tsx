@@ -38,7 +38,7 @@ const TabInfo = ({ booking }: Props) => {
         <Column marginTop={8 * 2} gap={8 * 2}>
           {statuses?.map((item, index) => {
             const isCancelled = booking.status === "CANCEL";
-            const isActive = activeStatusIndex >= index;
+            const isActive = !!item.time;
             const color =
               !isCancelled && isActive
                 ? BASE_COLOR
@@ -57,7 +57,7 @@ const TabInfo = ({ booking }: Props) => {
                   {item?.name}
                 </Text>
 
-                {!!item.time && isActive && (
+                {!!item.time && (
                   <Text style={styles.timeStatus} weight="regular">
                     {moment(item?.time).format("LT")}-
                     {moment(item?.time).format("DD/MM/YYYY")}

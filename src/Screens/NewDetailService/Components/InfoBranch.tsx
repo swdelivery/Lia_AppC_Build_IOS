@@ -69,7 +69,7 @@ const InfoBranch = ({ service }: Props) => {
                     <Text style={styles.name}>{item?.name}</Text>
                     <CountStar2
                       count={item?.reviewCount}
-                      rating={item.averageRating}
+                      rating={item?.averageRating}
                       size={10}
                     />
                   </Column>

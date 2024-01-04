@@ -1,52 +1,61 @@
-import Column from '@Components/Column'
-import LiAHeader from '@Components/Header/LiAHeader'
-import Screen from '@Components/Screen'
-import Spacer from '@Components/Spacer'
-import { FocusAwareStatusBar } from '@Components/StatusBar'
-import { _heightScale, _width } from '@Constant/Scale'
-import { styleElement } from '@Constant/StyleElement'
-import { getInfoUserReducer } from '@Redux/Selectors'
-import { getPartnerLevel, setCurrPartnerLevel } from '@Redux/affiliate/actions'
-import { getCurrPartnerLevelState, getListPartnerLevelState } from '@Redux/affiliate/selectors'
-import React, { useCallback, useEffect, useState } from 'react'
-import { FlatList, ImageBackground, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
-import { useDispatch, useSelector } from 'react-redux'
-import CardLevel from './Components/CardLevel'
-import InfoUser from './Components/InfoUser'
-import Text from '@Components/Text'
-import { NEW_BASE_COLOR, WHITE } from '@Constant/Color'
-import InfoReward from './Components/InfoReward'
-import TutMakeMoney from './Components/TutMakeMoney'
-import ListF1Btn from './Components/ListF1Btn'
-import CheckOrderBtn from './Components/CheckOrderBtn'
-import QA from './Components/QA'
-import HorizontalLine from '@Components/Line/HorizontalLine'
-import ActionButton from '@Components/ActionButton/ActionButton'
-import Row from '@Components/Row'
-import Icon from '@Components/Icon'
-import { IconBXH, IconWallet } from '@Components/Icon/Icon'
-import { useNavigate } from 'src/Hooks/useNavigation'
-import ScreenKey from '@Navigation/ScreenKey'
-import useHapticCallback from 'src/Hooks/useHapticCallback'
-import { checkStepUnlockAffiliate } from '@Redux/Action/Affiilate'
-import ModalShareCodeAffiliate from './Components/ModalShareCodeAffiliate'
-import ModalRequireBecomeCTV from './Components/ModalRequireBecomeCTV'
-import ModalShowInfoRanked from './Components/ModalShowInfoRanked'
-import ModalPolicy from './Components/ModalPolicy'
-import useVisible from 'src/Hooks/useVisible'
+import Column from "@Components/Column";
+import LiAHeader from "@Components/Header/LiAHeader";
+import Screen from "@Components/Screen";
+import Spacer from "@Components/Spacer";
+import { FocusAwareStatusBar } from "@Components/StatusBar";
+import { _heightScale, _width } from "@Constant/Scale";
+import { styleElement } from "@Constant/StyleElement";
+import { getInfoUserReducer } from "@Redux/Selectors";
+import { getPartnerLevel, setCurrPartnerLevel } from "@Redux/affiliate/actions";
+import {
+  getCurrPartnerLevelState,
+  getListPartnerLevelState,
+} from "@Redux/affiliate/selectors";
+import React, { useCallback, useEffect, useState } from "react";
+import {
+  FlatList,
+  ImageBackground,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import CardLevel from "./Components/CardLevel";
+import InfoUser from "./Components/InfoUser";
+import Text from "@Components/Text";
+import { NEW_BASE_COLOR, WHITE } from "@Constant/Color";
+import InfoReward from "./Components/InfoReward";
+import TutMakeMoney from "./Components/TutMakeMoney";
+import ListF1Btn from "./Components/ListF1Btn";
+import CheckOrderBtn from "./Components/CheckOrderBtn";
+import QA from "./Components/QA";
+import Row from "@Components/Row";
+import Icon from "@Components/Icon";
+import { IconBXH, IconWallet } from "@Components/Icon/Icon";
+import { useNavigate } from "src/Hooks/useNavigation";
+import ScreenKey from "@Navigation/ScreenKey";
+import useHapticCallback from "src/Hooks/useHapticCallback";
+import { checkStepUnlockAffiliate } from "@Redux/Action/Affiilate";
+import ModalShareCodeAffiliate from "./Components/ModalShareCodeAffiliate";
+import ModalRequireBecomeCTV from "./Components/ModalRequireBecomeCTV";
+import ModalShowInfoRanked from "./Components/ModalShowInfoRanked";
+import ModalPolicy from "./Components/ModalPolicy";
+import useVisible from "src/Hooks/useVisible";
 
 const WIDTH_CARD = _width - 8 * 4;
-const WIDTH_PROCESS_BAR = (_width - 8 * 4) - 8 * 4;
+const WIDTH_PROCESS_BAR = _width - 8 * 4 - 8 * 4;
 
 const NewAffiliate = () => {
-  const dispatch = useDispatch()
-  const { navigate } = useNavigate()
-  const { data: listPartnerLevel } = useSelector(getListPartnerLevelState)
-  const { data: currPartnerLevel } = useSelector(getCurrPartnerLevelState)
+  const dispatch = useDispatch();
+  const { navigate } = useNavigate();
+  const { data: listPartnerLevel } = useSelector(getListPartnerLevelState);
+  const { data: currPartnerLevel } = useSelector(getCurrPartnerLevelState);
   const { infoUser } = useSelector(getInfoUserReducer);
 
   const [currIndexCard, setCurrIndexCard] = useState(0);
-  const [flagRequireDoneStepToShareCode, setFlagRequireDoneStepToShareCode] = useState(false);
+  const [flagRequireDoneStepToShareCode, setFlagRequireDoneStepToShareCode] =
+    useState(false);
   const [stepUnlockAffiliate, setStepUnlockAffiliate] = useState({});
   const [showModalShareCodeAffiliate, setShowModalShareCodeAffiliate] =
     useState(false);
@@ -54,21 +63,21 @@ const NewAffiliate = () => {
     useState(false);
   const [showModalInfoRanked, setShowModalInfoRanked] = useState(false);
 
-  const visiblePolicy = useVisible()
+  const visiblePolicy = useVisible();
 
   useEffect(() => {
-    dispatch(getPartnerLevel.request())
+    dispatch(getPartnerLevel.request());
     _checkStep(infoUser?._id);
-  }, [])
+  }, []);
 
   useEffect(() => {
-    let findCurrPartnerLevel = listPartnerLevel.find((item) => item?.code == infoUser?.levelCode);
+    let findCurrPartnerLevel = listPartnerLevel.find(
+      (item) => item?.code == infoUser?.levelCode
+    );
     if (findCurrPartnerLevel) {
-      dispatch(setCurrPartnerLevel(findCurrPartnerLevel))
+      dispatch(setCurrPartnerLevel(findCurrPartnerLevel));
     }
-  }, [listPartnerLevel, infoUser])
-
-
+  }, [listPartnerLevel, infoUser]);
 
   const _checkStep = async (id) => {
     let result = await checkStepUnlockAffiliate(id);
@@ -81,7 +90,6 @@ const NewAffiliate = () => {
     }
   };
 
-
   const _handlePressIntiveBtn = useHapticCallback(() => {
     if (stepUnlockAffiliate?.isCollaburator) {
       setShowModalShareCodeAffiliate((old) => !old);
@@ -93,18 +101,20 @@ const NewAffiliate = () => {
     }
   }, [stepUnlockAffiliate]);
 
-  const _renderItem = useCallback(({ item }) => {
-    return (
-      <Column
-        alignItems='center'
-        width={_width}>
-        <CardLevel
-          showPolicy={visiblePolicy.show}
-          setShowModalInfoRanked={setShowModalInfoRanked}
-          data={item} />
-      </Column>
-    )
-  }, [currPartnerLevel, listPartnerLevel])
+  const _renderItem = useCallback(
+    ({ item }) => {
+      return (
+        <Column alignItems="center" width={_width}>
+          <CardLevel
+            showPolicy={visiblePolicy.show}
+            setShowModalInfoRanked={setShowModalInfoRanked}
+            data={item}
+          />
+        </Column>
+      );
+    },
+    [currPartnerLevel, listPartnerLevel]
+  );
 
   const _awesomeChildListKeyExtractor = useCallback(
     (item) => `awesome-child-key-${item._id}`,
@@ -113,34 +123,39 @@ const NewAffiliate = () => {
 
   return (
     <Screen>
-      <FocusAwareStatusBar barStyle='light-content' />
+      <FocusAwareStatusBar barStyle="light-content" />
       <ImageBackground
-        resizeMode={'stretch'}
+        resizeMode={"stretch"}
         style={styleElement.flex}
-        source={require('../../NewImage/Affiliate/background.png')}>
-
+        source={require("../../NewImage/Affiliate/background.png")}
+      >
         <LiAHeader
           right={
             <Row gap={8 * 2}>
               <TouchableOpacity onPress={navigate(ScreenKey.LIST_RANKED)}>
                 <IconBXH />
               </TouchableOpacity>
-              <TouchableOpacity onPress={navigate(ScreenKey.INFO_WALLET_NEW_AFFILIATE)}>
+              <TouchableOpacity
+                onPress={navigate(ScreenKey.INFO_WALLET_NEW_AFFILIATE)}
+              >
                 <IconWallet />
               </TouchableOpacity>
             </Row>
           }
           safeTop
-          bg={'transparent'}
-          title='TRI   ÂN' />
+          bg={"transparent"}
+          title="TRI   ÂN"
+        />
 
         <ScrollView>
           <InfoUser />
           <Spacer top={_heightScale(8 * 6)} />
           <FlatList
             onMomentumScrollEnd={(event) => {
-              const index = Math.ceil(event.nativeEvent.contentOffset.x /
-                event.nativeEvent.layoutMeasurement.width)
+              const index = Math.ceil(
+                event.nativeEvent.contentOffset.x /
+                  event.nativeEvent.layoutMeasurement.width
+              );
               setCurrIndexCard(index);
             }}
             showsHorizontalScrollIndicator={false}
@@ -148,14 +163,16 @@ const NewAffiliate = () => {
             keyExtractor={_awesomeChildListKeyExtractor}
             horizontal
             renderItem={_renderItem}
-            data={listPartnerLevel} />
+            data={listPartnerLevel}
+          />
           <InfoReward currIndexCard={currIndexCard} />
           <Spacer top={8 * 2} />
 
           <Column
             borderRadius={8}
             marginHorizontal={8 * 2}
-            backgroundColor={"#182128"}>
+            backgroundColor={"#182128"}
+          >
             <TutMakeMoney
               flagRequireDoneStepToShareCode={flagRequireDoneStepToShareCode}
             />
@@ -169,36 +186,30 @@ const NewAffiliate = () => {
 
           <Spacer top={8 * 5} />
 
-          <TouchableOpacity
-            onPress={_handlePressIntiveBtn}>
+          <TouchableOpacity onPress={_handlePressIntiveBtn}>
             <Column
               borderRadius={8 * 3}
               borderWidth={1}
               height={8 * 7}
               borderColor={NEW_BASE_COLOR}
-              backgroundColor={'#182128'}
-              justifyContent='center'
-              alignItems='center'
-              marginHorizontal={8 * 2}>
+              backgroundColor={"#182128"}
+              justifyContent="center"
+              alignItems="center"
+              marginHorizontal={8 * 2}
+            >
               <Row>
-                <Text
-                  color={WHITE}
-                  weight='bold'>
+                <Text color={WHITE} weight="bold">
                   Giới thiệu bạn bè
                 </Text>
               </Row>
 
-              <Column
-                right={8 * 5}
-                position='absolute'>
-                <Icon color={WHITE} name='share' />
+              <Column right={8 * 5} position="absolute">
+                <Icon color={WHITE} name="share" />
               </Column>
-
             </Column>
           </TouchableOpacity>
 
           <Spacer top={8 * 20} />
-
         </ScrollView>
         <ModalShareCodeAffiliate
           isShow={showModalShareCodeAffiliate}
@@ -214,21 +225,20 @@ const NewAffiliate = () => {
         />
         <ModalPolicy visiblePolicy={visiblePolicy} />
       </ImageBackground>
-
     </Screen>
-  )
-}
+  );
+};
 
-export default NewAffiliate
+export default NewAffiliate;
 
 const styles = StyleSheet.create({
   line: {
-    width: '100%',
-    height: .5,
-    backgroundColor: WHITE
+    width: "100%",
+    height: 0.5,
+    backgroundColor: WHITE,
   },
   card: {
     width: WIDTH_CARD,
-    height: WIDTH_CARD * 796 / 1484
-  }
-})
+    height: (WIDTH_CARD * 796) / 1484,
+  },
+});

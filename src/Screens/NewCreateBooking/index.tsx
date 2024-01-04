@@ -280,8 +280,17 @@ const NewCreateBooking = () => {
   }, [dataBranch?.code]);
 
   const _handleConfirmPickDate = useCallback((date) => {
-    dispatch(selectDate(moment(date)));
+    if (date) {
+      dispatch(selectDate(moment(date)));
+    } else {
+      dispatch(selectDate(moment(new Date())));
+    }
   }, []);
+
+  const _handleNew = useCallback(() => {
+    dispatch(selectDate(moment(new Date())));
+    datePicker.hide();
+  }, [])
 
   const _handleConfirmPickTime = useCallback((data) => {
     dispatch(
@@ -301,7 +310,6 @@ const NewCreateBooking = () => {
   return (
     <Screen safeBottom>
       <StatusBar barStyle={"dark-content"} />
-      <Header scrollY={scrollY} title={"Đặt hẹn"} />
       <CoverImage scrollY={scrollY} />
       <AfterTimeoutFragment>
         <KeyboardAvoidingView
@@ -355,6 +363,7 @@ const NewCreateBooking = () => {
           isEditBooking={isEditBooking}
         />
       </AfterTimeoutFragment>
+      <Header scrollY={scrollY} title={"Đặt hẹn"} />
       <ModalListBranch
         visible={listBranchPicker.visible}
         onClose={listBranchPicker.hide}
@@ -369,6 +378,7 @@ const NewCreateBooking = () => {
         minDate={moment()}
         visible={datePicker.visible}
         onClose={datePicker.hide}
+        onNew={_handleNew}
       />
       <ModalListBeautyInsurance
         visible={insurancePicker.visible}
