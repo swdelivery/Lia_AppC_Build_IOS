@@ -20,8 +20,7 @@ import ModalBottomLocation from './ModalBottomLocation'
 import FilterLocation from './ModalFilterComponents/FilterLocation'
 import SliderPrice from './ModalFilterComponents/SliderPrice'
 import WrapList from './ModalFilterComponents/WrapList'
-import WrapListString from './ModalFilterComponents/WrapListString'
-import { isAndroid } from "src/utils/platform";
+import WrapListString from "./ModalFilterComponents/WrapListString";
 
 const WIDTH_MODAL = _width / 1.15
 
@@ -218,7 +217,7 @@ const ModalFilter = ({ visible, onClose }: Props) => {
 
   return (
     <View style={styles.container}>
-      {isAndroid && <Column height={top} backgroundColor={"white"} />}
+      <Column height={top} backgroundColor={"white"} />
       <Animated.View
         style={[
           {

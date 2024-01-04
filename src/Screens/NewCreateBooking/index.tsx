@@ -293,6 +293,8 @@ const NewCreateBooking = () => {
   }, [])
 
   const _handleConfirmPickTime = useCallback((data) => {
+    console.log({ data });
+
     dispatch(
       selectTime({
         hour: `${data?.valueInteger}`,
@@ -310,7 +312,6 @@ const NewCreateBooking = () => {
   return (
     <Screen safeBottom>
       <StatusBar barStyle={"dark-content"} />
-      <Header scrollY={scrollY} title={"Đặt hẹn"} />
       <CoverImage scrollY={scrollY} />
       <AfterTimeoutFragment>
         <KeyboardAvoidingView
@@ -364,6 +365,7 @@ const NewCreateBooking = () => {
           isEditBooking={isEditBooking}
         />
       </AfterTimeoutFragment>
+      <Header scrollY={scrollY} title={"Đặt hẹn"} />
       <ModalListBranch
         visible={listBranchPicker.visible}
         onClose={listBranchPicker.hide}

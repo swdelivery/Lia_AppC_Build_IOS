@@ -2,16 +2,13 @@ import Button from "@Components/Button/Button";
 import Row from "@Components/Row";
 import Text from "@Components/Text";
 import {
+  BASE_COLOR,
+  BASE_COLOR_LIGHT,
   BLACK,
   BORDER_COLOR,
-  WHITE
+  WHITE,
 } from "@Constant/Color";
-import {
-  _height,
-  _heightScale,
-  _moderateScale,
-  _width,
-} from "@Constant/Scale";
+import { _height, _heightScale, _moderateScale, _width } from "@Constant/Scale";
 import React, { memo, useEffect, useRef, useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import Animated, {
@@ -26,7 +23,7 @@ import Animated, {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const HEIGHT_MODAL = _heightScale(300);
-const WIDTH_ITEM = 50
+const WIDTH_ITEM = 50;
 
 type Props = {
   title?: string;
@@ -38,219 +35,224 @@ type Props = {
   dataDecimal: any;
 };
 
-const ModalScrollPicker = memo(({ visible, onClose, onConfirm, title, unit, dataInteger, dataDecimal }: Props) => {
-  const opacityBackDrop = useSharedValue(0);
-  const tranYModal = useSharedValue(0);
+const ModalScrollPicker = memo(
+  ({
+    visible,
+    onClose,
+    onConfirm,
+    title,
+    unit,
+    dataInteger,
+    dataDecimal,
+  }: Props) => {
+    const opacityBackDrop = useSharedValue(0);
+    const tranYModal = useSharedValue(0);
 
-  const { bottom } = useSafeAreaInsets()
+    const { bottom } = useSafeAreaInsets();
 
-  const RefFlatlistInteger = useRef(null)
-  const RefFlatlistDecimal = useRef(null)
+    const RefFlatlistInteger = useRef(null);
+    const RefFlatlistDecimal = useRef(null);
 
-  const [listValueInteger, setListValueInteger] = useState(dataInteger)
-  const [listValueDecimal, setListValueDecimal] = useState(dataDecimal)
+    const [listValueInteger, setListValueInteger] = useState(dataInteger);
+    const [listValueDecimal, setListValueDecimal] = useState(dataDecimal);
 
-  const [valueInteger, setValueInteger] = useState(null);
-  const [valueDecimal, setValueDecimal] = useState(null);
+    const [valueInteger, setValueInteger] = useState(null);
+    const [valueDecimal, setValueDecimal] = useState(null);
 
-  const scrollYInteger = useSharedValue(0);
-  const scrollYDecimal = useSharedValue(0);
+    const scrollYInteger = useSharedValue(0);
+    const scrollYDecimal = useSharedValue(0);
 
-  useEffect(() => {
-    if (visible && listValueInteger?.length > 0) {
-      tranYModal.value = withTiming(-HEIGHT_MODAL, { duration: 200 });
-      opacityBackDrop.value = withTiming(1, { duration: 300 });
-    } else {
-    }
-  }, [visible, listValueInteger]);
-
-  useEffect(() => { }, []);
-
-  const animTranY = useAnimatedStyle(() => {
-    return {
-      transform: [
-        {
-          translateY: tranYModal.value,
-        },
-      ],
-    };
-  });
-
-  const animOpacityBackDrop = useAnimatedStyle(() => {
-    return {
-      opacity: opacityBackDrop.value,
-    };
-  });
-
-  const _handleConfirm = () => {
-    onConfirm({
-      valueInteger: valueInteger ? valueInteger : listValueInteger[1],
-      valueDecimal: valueDecimal ? valueDecimal : listValueDecimal[1]
-    })
-    _handleHideModal()
-  }
-
-  const _handleHideModal = () => {
-
-    scrollYInteger.value = 0
-    scrollYDecimal.value = 0
-    setValueInteger(null)
-    setValueDecimal(null)
-
-    tranYModal.value = withTiming(0, { duration: 200 }, (fnd) => {
-      if (fnd) {
-        runOnJS(onClose)();
+    useEffect(() => {
+      if (visible && listValueInteger?.length > 0) {
+        tranYModal.value = withTiming(-HEIGHT_MODAL, { duration: 200 });
+        opacityBackDrop.value = withTiming(1, { duration: 300 });
+      } else {
       }
-    });
-    opacityBackDrop.value = withTiming(0, { duration: 200 });
-  };
+    }, [visible, listValueInteger]);
 
-  // FUNCTION FOR INTEGER
-  const handleMomentumScrollEndInteger = (event) => {
-    const offsetY = event.nativeEvent.contentOffset.y;
-    const index = Math.ceil(offsetY / WIDTH_ITEM);
-    setValueInteger(listValueInteger[index + 1])
-  };
-  const scrollHandlerInteger = useAnimatedScrollHandler({
-    onScroll: (event, ctx) => {
-      scrollYInteger.value = event.contentOffset.y;
-    },
-    onBeginDrag: (e) => {
-    },
-  });
+    useEffect(() => {}, []);
 
-  // FUNCTION FOR DECIMAL
-  const handleMomentumScrollEndDecimal = (event) => {
-    const offsetY = event.nativeEvent.contentOffset.y;
-    const index = Math.ceil(offsetY / WIDTH_ITEM);
-    setValueDecimal(listValueDecimal[index + 1])
-  };
-  const scrollHandlerDecimal = useAnimatedScrollHandler({
-    onScroll: (event, ctx) => {
-      scrollYDecimal.value = event.contentOffset.y;
-    },
-    onBeginDrag: (e) => {
-    },
-  });
-
-  if (!visible) {
-    return null;
-  }
-
-  return (
-    <View style={styles.container}>
-      <Animated.View
-        style={[
+    const animTranY = useAnimatedStyle(() => {
+      return {
+        transform: [
           {
-            width: _width,
-            height: _height,
+            translateY: tranYModal.value,
           },
-          { backgroundColor: "rgba(0,0,0,.7)" },
-          animOpacityBackDrop,
-        ]}
-      >
-        <TouchableOpacity
-          onPress={_handleHideModal}
-          style={[StyleSheet.absoluteFillObject]}
-        />
-      </Animated.View>
+        ],
+      };
+    });
 
-      <Animated.View
-        style={[styles.mainView, animTranY, { paddingBottom: bottom }]}
-      >
-        <View style={styles.header}>
-          <View style={styles.header__child}>
-            <Text weight="bold" size={16}>
-              {title}
-            </Text>
-          </View>
-        </View>
+    const animOpacityBackDrop = useAnimatedStyle(() => {
+      return {
+        opacity: opacityBackDrop.value,
+      };
+    });
 
-        <Row marginTop={8 * 2} gap={8 * 2} alignSelf="center">
-          <View
-            style={{
-              height: WIDTH_ITEM * 3,
-              alignSelf: "center",
-            }}
-          >
-            <Animated.FlatList
-              ref={RefFlatlistInteger}
-              showsVerticalScrollIndicator={false}
-              style={{ width: 100 }}
-              contentContainerStyle={{ alignItems: "center" }}
-              onMomentumScrollEnd={handleMomentumScrollEndInteger}
-              snapToInterval={WIDTH_ITEM}
-              pagingEnabled
-              data={listValueInteger}
-              scrollEventThrottle={16}
-              renderItem={({ item, index }) => (
-                <Item item={item} index={index} scrollY={scrollYInteger} />
-              )}
-              onScroll={scrollHandlerInteger}
-            />
-          </View>
+    const _handleConfirm = () => {
+      onConfirm({
+        valueInteger: valueInteger ? valueInteger : listValueInteger[1],
+        valueDecimal: valueDecimal ? valueDecimal : listValueDecimal[1],
+      });
+      _handleHideModal();
+    };
 
-          <View style={styles.dot} />
+    const _handleHideModal = () => {
+      scrollYInteger.value = 0;
+      scrollYDecimal.value = 0;
+      setValueInteger(null);
+      setValueDecimal(null);
 
-          <View
-            style={{
-              height: WIDTH_ITEM * 3,
-              alignSelf: "center",
-            }}
-          >
-            <Animated.FlatList
-              ref={RefFlatlistDecimal}
-              showsVerticalScrollIndicator={false}
-              style={{ width: 100 }}
-              contentContainerStyle={{ alignItems: "center" }}
-              onMomentumScrollEnd={handleMomentumScrollEndDecimal}
-              snapToInterval={WIDTH_ITEM}
-              pagingEnabled
-              data={listValueDecimal}
-              scrollEventThrottle={16}
-              renderItem={({ item, index }) => (
-                <Item item={item} index={index} scrollY={scrollYDecimal} />
-              )}
-              onScroll={scrollHandlerDecimal}
-            />
-          </View>
+      tranYModal.value = withTiming(0, { duration: 200 }, (fnd) => {
+        if (fnd) {
+          runOnJS(onClose)();
+        }
+      });
+      opacityBackDrop.value = withTiming(0, { duration: 200 });
+    };
 
-          {unit ? (
-            <View style={styles.containerUnit}>
-              <Text weight="bold" size={40}>
-                {unit}
+    // FUNCTION FOR INTEGER
+    const handleMomentumScrollEndInteger = (event) => {
+      const offsetY = event.nativeEvent.contentOffset.y;
+      const index = Math.ceil(offsetY / WIDTH_ITEM);
+      setValueInteger(listValueInteger[index + 1]);
+    };
+    const scrollHandlerInteger = useAnimatedScrollHandler({
+      onScroll: (event, ctx) => {
+        scrollYInteger.value = event.contentOffset.y;
+      },
+      onBeginDrag: (e) => {},
+    });
+
+    // FUNCTION FOR DECIMAL
+    const handleMomentumScrollEndDecimal = (event) => {
+      const offsetY = event.nativeEvent.contentOffset.y;
+      const index = Math.ceil(offsetY / WIDTH_ITEM);
+      setValueDecimal(listValueDecimal[index + 1]);
+    };
+    const scrollHandlerDecimal = useAnimatedScrollHandler({
+      onScroll: (event, ctx) => {
+        scrollYDecimal.value = event.contentOffset.y;
+      },
+      onBeginDrag: (e) => {},
+    });
+
+    if (!visible) {
+      return null;
+    }
+
+    return (
+      <View style={styles.container}>
+        <Animated.View
+          style={[
+            {
+              width: _width,
+              height: _height,
+            },
+            { backgroundColor: "rgba(0,0,0,.7)" },
+            animOpacityBackDrop,
+          ]}
+        >
+          <TouchableOpacity
+            onPress={_handleHideModal}
+            style={[StyleSheet.absoluteFillObject]}
+          />
+        </Animated.View>
+
+        <Animated.View
+          style={[styles.mainView, animTranY, { paddingBottom: bottom }]}
+        >
+          <View style={styles.header}>
+            <View style={styles.header__child}>
+              <Text weight="bold" size={16}>
+                {title}
               </Text>
             </View>
-          ) : (
-            <></>
-          )}
-        </Row>
-        <View style={{ flex: 1, justifyContent: "flex-end" }}>
-          <Row gap={8 * 2} paddingHorizontal={8 * 3}>
+          </View>
+
+          <Row marginVertical={8} gap={8 * 2} alignSelf="center" flex={1}>
+            <View
+              style={{
+                height: WIDTH_ITEM * 3,
+                alignSelf: "center",
+              }}
+            >
+              <Animated.FlatList
+                ref={RefFlatlistInteger}
+                showsVerticalScrollIndicator={false}
+                style={{ width: 100 }}
+                contentContainerStyle={{ alignItems: "center" }}
+                onMomentumScrollEnd={handleMomentumScrollEndInteger}
+                snapToInterval={WIDTH_ITEM}
+                pagingEnabled
+                data={listValueInteger}
+                scrollEventThrottle={16}
+                renderItem={({ item, index }) => (
+                  <Item item={item} index={index} scrollY={scrollYInteger} />
+                )}
+                onScroll={scrollHandlerInteger}
+              />
+            </View>
+
+            <View style={styles.dot} />
+
+            <View
+              style={{
+                height: WIDTH_ITEM * 3,
+                alignSelf: "center",
+              }}
+            >
+              <Animated.FlatList
+                ref={RefFlatlistDecimal}
+                showsVerticalScrollIndicator={false}
+                style={{ width: 100 }}
+                contentContainerStyle={{ alignItems: "center" }}
+                onMomentumScrollEnd={handleMomentumScrollEndDecimal}
+                snapToInterval={WIDTH_ITEM}
+                pagingEnabled
+                data={listValueDecimal}
+                scrollEventThrottle={16}
+                renderItem={({ item, index }) => (
+                  <Item item={item} index={index} scrollY={scrollYDecimal} />
+                )}
+                onScroll={scrollHandlerDecimal}
+              />
+            </View>
+
+            {unit ? (
+              <View style={styles.containerUnit}>
+                <Text weight="bold" size={40}>
+                  {unit}
+                </Text>
+              </View>
+            ) : (
+              <></>
+            )}
+          </Row>
+
+          <Row gap={8 * 2} paddingHorizontal={8 * 3} marginVertical={8}>
             <Button.Gradient
               containerStyle={{ flex: 1 }}
               start={{ x: 0, y: 0 }}
               end={{ x: 0, y: 1 }}
-              colors={["#1C5579", "#186A57"]}
+              colors={[BASE_COLOR, BASE_COLOR_LIGHT]}
               title={`Xác nhận`}
               onPress={_handleConfirm}
               height={40}
             />
-            <View style={{ width: 100 }}>
-              <Button.Custom
-                bgColor={"#F2F2F5"}
-                colorText={{ color: WHITE }}
-                title={`Huỷ`}
-                onPress={_handleHideModal}
-                height={40}
-              />
-            </View>
+            <Button.Custom
+              bgColor={"#F2F2F5"}
+              colorText={{ color: WHITE }}
+              title={`Huỷ`}
+              containerStyle={{ width: 100 }}
+              onPress={_handleHideModal}
+              height={40}
+            />
           </Row>
-        </View>
-      </Animated.View>
-    </View>
-  );
-});
+        </Animated.View>
+      </View>
+    );
+  }
+);
 
 export default ModalScrollPicker;
 
