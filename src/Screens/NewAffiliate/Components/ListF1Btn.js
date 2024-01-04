@@ -11,14 +11,14 @@ const ListF1Btn = memo(() => {
   return (
     <View style={styles.options}>
       <TouchableOpacity
-      onPress={()=>{
-        navigation.navigate(ScreenKey.LIST_F1)
-      }}
-      style={[styles.options__btn,shadow]}>
-        <IconTeamConnect style={{width:_moderateScale(8*3),height:_moderateScale(8*3)}}/>
+        onPress={() => {
+          navigation.navigate(ScreenKey.LIST_F1)
+        }}
+        style={[styles.options__btn]}>
+        <IconTeamConnect style={{ width: _moderateScale(8 * 3), height: _moderateScale(8 * 3) }} />
 
-        <View style={{width:_moderateScale(8)}}/>
-        <Text style={[{flex:1 , color:BASE_COLOR, fontSize:_moderateScale(14)},stylesFont.fontNolan500]}>
+        <View style={{ width: _moderateScale(8) }} />
+        <Text style={[{ flex: 1, color: WHITE, fontSize: _moderateScale(14) }, stylesFont.fontNolan500]}>
           Danh sách người đã giới thiệu
         </Text>
 
@@ -34,13 +34,15 @@ const styles = StyleSheet.create({
     width: '100%',
     height: _moderateScale(8 * 5),
     borderRadius: _moderateScale(4),
-    flexDirection:'row',
-    alignItems:'center',
-    paddingHorizontal:_moderateScale(8*2),
-    backgroundColor:WHITE
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: _moderateScale(8 * 2),
+    backgroundColor: "#182128",
+
   },
   options: {
-    paddingHorizontal: _moderateScale(8 * 3)
+    paddingVertical: 8
+    // paddingHorizontal: _moderateScale(8 * 2)
   }
 })
 
@@ -48,8 +50,8 @@ const styles = StyleSheet.create({
 const shadow = {
   shadowColor: "#000",
   shadowOffset: {
-      width: 0,
-      height: 0,
+    width: 0,
+    height: 0,
   },
   shadowOpacity: 0.25,
   shadowRadius: 2,
