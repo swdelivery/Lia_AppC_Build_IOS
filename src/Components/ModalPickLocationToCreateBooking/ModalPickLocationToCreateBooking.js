@@ -4,13 +4,13 @@ import Modal from 'react-native-modal';
 import { useSelector, useDispatch } from 'react-redux';
 import * as Color from '../../Constant/Color';
 import { stylesFont } from '../../Constant/Font';
-import { _heightScale, _widthScale, _moderateScale } from '../../Constant/Scale';
-import * as ActionType from '../../Redux/Constants/ActionType';
-import Store from "../../Redux/store";
+import {
+  _heightScale,
+  _widthScale,
+  _moderateScale,
+} from "../../Constant/Scale";
 import { styleElement } from '../../Constant/StyleElement';
-import { sizeIcon } from '../../Constant/Icon';
-import ScreenKey from '../../Navigation/ScreenKey'
-import { navigation } from '../../../rootNavigation';
+import { sizeIcon } from "../../Constant/Icon";
 import { getAllBranch } from '../../Redux/Action/BranchAction';
 import { URL_ORIGINAL } from '../../Constant/Url';
 import CountStar from '../../Components/CountStar/index';
