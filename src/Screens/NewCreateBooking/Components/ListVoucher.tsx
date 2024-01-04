@@ -1,5 +1,5 @@
 import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import React, { useMemo } from 'react'
 import { _moderateScale } from '@Constant/Scale'
 import Text from '@Components/Text'
 import CardVoucher from '@Components/Voucher/CardVoucher'
@@ -25,6 +25,10 @@ const ListVoucher = () => {
         getData();
     });
 
+    const listVoucherAvailable = useMemo(() => {
+        return data?.filter(item => !item?.usedAt);
+    }, [data])
+
     return (
         <View style={{}}>
             <Row style={{ marginHorizontal: _moderateScale(8 * 2), justifyContent: 'space-between' }}>
@@ -40,7 +44,7 @@ const ListVoucher = () => {
             <View style={{ marginTop: 8 }}>
                 <ScrollView showsHorizontalScrollIndicator={false} horizontal contentContainerStyle={{ gap: 4, paddingLeft: _moderateScale(8 * 2) }}>
                     {
-                        data?.map((item, index) => {
+                        listVoucherAvailable?.map((item, index) => {
                             return (
                                 <CardVoucher data={item} key={index} />
                             )

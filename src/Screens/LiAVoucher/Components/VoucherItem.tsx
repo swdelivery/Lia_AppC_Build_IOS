@@ -41,7 +41,7 @@ export default function VoucherItem({
       <View style={styles.voucherBox__left}>
         <Image style={styles.avatarVoucher} avatar={item?.couponImg} />
         <Column flex={1} marginLeft={8}>
-          <Text style={sizeText.small_500}>{item?.name}</Text>
+          <Text numberOfLines={2} style={sizeText.small_500}>{item?.name}</Text>
           <Text numberOfLines={2} style={sizeText.small_bold}>
             {item?.description}
           </Text>

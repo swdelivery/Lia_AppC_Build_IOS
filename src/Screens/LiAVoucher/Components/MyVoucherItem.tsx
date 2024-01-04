@@ -7,7 +7,7 @@ import { styleElement } from "@Constant/StyleElement";
 import { sizeText } from "@Constant/Text";
 import { MyVoucher } from "@typings/voucher";
 import moment from "moment";
-import React from "react";
+import React, { useMemo } from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
 import useCallbackItem from "src/Hooks/useCallbackItem";
 
@@ -19,6 +19,10 @@ type Props = {
 
 export default function MyVoucherItem({ item, onDetails, onUseCoupon }: Props) {
   const trigger = useCallbackItem(item);
+
+  const isUsed = useMemo(() => {
+    return item?.usedAt
+  }, [item])
 
   return (
     <TouchableOpacity onPress={trigger(onDetails)} style={styles.voucherBox}>
@@ -37,14 +41,28 @@ export default function MyVoucherItem({ item, onDetails, onUseCoupon }: Props) {
       </View>
       <View style={styles.dashLine} />
       <View style={styles.voucherBox__right}>
-        <TouchableOpacity
-          onPress={trigger(onUseCoupon)}
-          style={styles.voucherBox__right__btn}
-        >
-          <Text color={WHITE} size={12} weight="bold">
-            Sử dụng
-          </Text>
-        </TouchableOpacity>
+        {
+          isUsed ?
+            <TouchableOpacity
+              disabled
+              onPress={trigger(onUseCoupon)}
+              style={[styles.voucherBox__right__btn, { opacity: .5 }]}
+            >
+              <Text color={WHITE} size={12} weight="bold">
+                Đã sử dụng
+              </Text>
+            </TouchableOpacity>
+            :
+            <TouchableOpacity
+              onPress={trigger(onUseCoupon)}
+              style={styles.voucherBox__right__btn}
+            >
+              <Text color={WHITE} size={12} weight="bold">
+                Sử dụng
+              </Text>
+            </TouchableOpacity>
+        }
+
       </View>
     </TouchableOpacity>
   );

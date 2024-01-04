@@ -56,7 +56,9 @@ const Withdraw = () => {
     }
 
     const isDisabled = useMemo(() => {
-        if (!isEmpty(valueMoney.trim())) {
+        const numberRegex = /^[1-9]\d*$/;
+        let checkIsMoney = numberRegex.test(valueMoney?.split('.')?.join(''));
+        if (!isEmpty(valueMoney.trim()) && checkIsMoney) {
             return false;
         } else {
             return true;

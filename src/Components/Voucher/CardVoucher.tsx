@@ -49,6 +49,7 @@ export default function CardVoucher({ data }: Props) {
     <TouchableOpacity
       onPress={navigate(ScreenKey.DETAIL_LIA_VOUCHER, {
         data: { ...data?.coupon, isTaked: true },
+        infoVoucher: data
       })}
       activeOpacity={.5} style={styles.voucherBox} >
       <View style={[styles.voucherBox__left, shadow]}>
