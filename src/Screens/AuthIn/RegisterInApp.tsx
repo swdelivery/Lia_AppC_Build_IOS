@@ -275,8 +275,8 @@ const RegisterInApp = (props) => {
                 errorName
                   ? Color.ERROR_COLOR
                   : name
-                  ? Color.BORDER_INPUT_TEXT_FOCUSED
-                  : Color.BORDER_INPUT_TEXT
+                    ? Color.BORDER_INPUT_TEXT_FOCUSED
+                    : Color.BORDER_INPUT_TEXT
               }
               borderWidth={1}
               paddingHorizontal={10}

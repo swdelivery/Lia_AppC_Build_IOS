@@ -123,17 +123,19 @@ const RecentFind = memo((props) => {
           </View>
           <Text style={styles.btnRecommend__text}>Tri Ân</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.btnRecommend}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate(ScreenKey.CREATE_BOOKING)}
+          style={styles.btnRecommend}>
           <View style={styles.btnRecommend__box}>
             <CommentIcon color={BASE_COLOR} />
           </View>
-          <Text style={styles.btnRecommend__text}>Hồ sơ{`\n`}điện tử</Text>
+          <Text style={styles.btnRecommend__text}>Đặt lịch</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.btnRecommend}>
           <View style={styles.btnRecommend__box}>
             <CommentIcon color={BASE_COLOR} />
           </View>
-          <Text style={styles.btnRecommend__text}>Nhật ký{`\n`}điều trị</Text>
+          <Text style={styles.btnRecommend__text}>Nhật ký</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.btnRecommend}>
           <View style={styles.btnRecommend__box}>
@@ -166,8 +168,9 @@ const styles = StyleSheet.create({
   },
   btnRecommend: {
     alignItems: "center",
-    marginHorizontal: _moderateScale(8),
-    flex: 1,
+    marginHorizontal: _moderateScale(4),
+    // flex: 1,
+    // borderWidth: 1
   },
   btn: {
     paddingHorizontal: _moderateScale(8 * 2),

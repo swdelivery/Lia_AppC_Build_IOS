@@ -31,7 +31,6 @@ const axios = createAxios(URL_FOR_PARTNER);
 
 console.log({ URL_FOR_PARTNER });
 
-
 const partnerLogout = (payload: any) => {
   return axios
     .post("partner-account/logout", payload)
@@ -78,9 +77,9 @@ const getServiceDetails = (serviceId: string): Promise<Service> =>
   // axios.get(`/service/${serviceId}`).then(({ data }) => (data?.data ?? [])[0]);
   axios.get(`/service/${serviceId}`).then(({ data }) => {
     if (isArray(data?.data)) {
-      return data?.data[0]
+      return data?.data[0];
     } else {
-      return data?.data
+      return data?.data;
     }
   });
 
@@ -249,12 +248,13 @@ const createPartnerBooking = (payload: any) => {
   return axios.post("/booking", payload).then(({ data }) => data);
 };
 const updatePartnerBooking = (payload: any) => {
-  return axios.put(`/booking/${payload?.idBooking}`, payload?.data).then(({ data }) => data);
+  return axios
+    .put(`/booking/${payload?.idBooking}`, payload?.data)
+    .then(({ data }) => data);
 };
 
 const cancelPartnerBooking = (bookingId: string): Promise<any> =>
   axios.put(`/booking/${bookingId}/cancel`).then(({ data }) => data.data);
-
 
 const getInsuranceList = (): Promise<ApiResponse<Insurance[]>> =>
   axios
@@ -328,8 +328,8 @@ const getPartnerConversations = (
   return axios
     .get(
       "/partner-conversation" +
-      "?" +
-      encodeParams({ ...params, limit: pageSize, page })
+        "?" +
+        encodeParams({ ...params, limit: pageSize, page })
     )
     .then(({ data }) => data.data);
 };
@@ -444,7 +444,9 @@ const createReactionPost = (payload: any) => {
 };
 
 const createReactionComment = (payload: any) => {
-  return axios.post(`/partner-comment-reaction`, payload).then(({ data }) => data);
+  return axios
+    .post(`/partner-comment-reaction`, payload)
+    .then(({ data }) => data);
 };
 
 const getWallet = (payload: any) => {
@@ -466,10 +468,14 @@ const getListPartnerTreatment = (payload: any) => {
   return axios.get(`/partners/treatment-detail`, {}).then(({ data }) => data);
 };
 const getListPostoperative = (payload: any) => {
-  return axios.get(`/daily-diary/${payload?.idPartnerTreatment}/postoperative`, {}).then(({ data }) => data);
+  return axios
+    .get(`/daily-diary/${payload?.idPartnerTreatment}/postoperative`, {})
+    .then(({ data }) => data);
 };
 const updateDailyDiary = (payload: any) => {
-  return axios.put(`/daily-diary/${payload?.id}`, payload?.data).then(({ data }) => data);
+  return axios
+    .put(`/daily-diary/${payload?.id}`, payload?.data)
+    .then(({ data }) => data);
 };
 
 // Notification
@@ -477,7 +483,9 @@ const getPartnerNotifications = (payload: any) => {
   const query = encodeParams({
     ...payload,
   });
-  return axios.get(`/partner-notification?${query}`, {}).then(({ data }) => data);
+  return axios
+    .get(`/partner-notification?${query}`, {})
+    .then(({ data }) => data);
 };
 
 // Category
@@ -485,9 +493,7 @@ const getServiceFilterCategory = (payload: any) => {
   const query = encodeParams({
     ...payload,
   });
-  return axios
-    .get(`/service?${query}`)
-    .then(({ data }) => data);
+  return axios.get(`/service?${query}`).then(({ data }) => data);
 };
 const getDataForModalFilterService = (payload: any) => {
   return axios
@@ -497,19 +503,13 @@ const getDataForModalFilterService = (payload: any) => {
 
 // Charity
 const getListCampain = (payload: any) => {
-  return axios
-    .get(`/volunteer`)
-    .then(({ data }) => data);
+  return axios.get(`/volunteer`).then(({ data }) => data);
 };
 const getDetailCampain = (payload: any) => {
-  return axios
-    .get(`/volunteer/${payload}`)
-    .then(({ data }) => data);
+  return axios.get(`/volunteer/${payload}`).then(({ data }) => data);
 };
 const createVolunteerCompanion = (payload: any) => {
-  return axios
-    .post(`/volunteer-companion`, payload)
-    .then(({ data }) => data);
+  return axios.post(`/volunteer-companion`, payload).then(({ data }) => data);
 };
 const getListCompanionRequest = (payload: any) => {
   const query = encodeParams({
@@ -533,17 +533,13 @@ const searchCampain = (payload: any) => {
   const query = encodeParams({
     ...payload,
   });
-  return axios
-    .get(`/volunteer?${query}`)
-    .then(({ data }) => data);
+  return axios.get(`/volunteer?${query}`).then(({ data }) => data);
 };
 const getVolunteerHistory = (payload: any) => {
   const query = encodeParams({
     ...payload,
   });
-  return axios
-    .get(`/volunteer-fund-history?${query}`)
-    .then(({ data }) => data);
+  return axios.get(`/volunteer-fund-history?${query}`).then(({ data }) => data);
 };
 const getTopDonate = (payload: any) => {
   const query = encodeParams({
@@ -564,9 +560,7 @@ const getListPartnerDonateToVolunteerCompanion = (payload: any) => {
 
 // Checkin by qr
 const getInfoBranchByCode = (payload: any) => {
-  return axios
-    .get(`/branch/get-by-code/${payload}`)
-    .then(({ data }) => data);
+  return axios.get(`/branch/get-by-code/${payload}`).then(({ data }) => data);
 };
 const partnerCheckInBooking = (payload: any) => {
   return axios
@@ -581,9 +575,15 @@ const getCurrActiveWheelSpin = (payload: any) => {
     .then(({ data }) => data);
 };
 const getPartnerWheelTurn = (payload: any) => {
-  return axios
-    .get(`/partner-wheel-turn/mine`)
-    .then(({ data }) => data);
+  return axios.get(`/partner-wheel-turn/mine`).then(({ data }) => data);
+};
+
+// Affiliate
+const getPartnerLevel = (payload: any) => {
+  const query = encodeParams({
+    ...payload,
+  });
+  return axios.get(`/partner-level?${query}`).then(({ data }) => data);
 };
 
 export default {
@@ -699,4 +699,7 @@ export default {
   // WheelSpin
   getCurrActiveWheelSpin,
   getPartnerWheelTurn,
+
+  // Affiliate
+  getPartnerLevel,
 };

@@ -40,6 +40,8 @@ const NewAffiliate = memo(() => {
     _checkStep(infoUser?._id);
   }, []);
 
+  console.log({ infoUser });
+
   const _checkStep = async (id) => {
     let result = await checkStepUnlockAffiliate(id);
     if (result?.isAxiosError) return;

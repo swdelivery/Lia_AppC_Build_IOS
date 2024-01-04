@@ -200,7 +200,7 @@ const ModalShowInfoRanked = memo((props) => {
                                             </View>
                                             <View style={{ height: _moderateScale(8 * 3) }} />
 
-                                            <View style={{paddingHorizontal:_moderateScale(8*2)}}>
+                                            <View style={{ paddingHorizontal: _moderateScale(8 * 2) }}>
                                                 <Text>
                                                     {
                                                         configChinhSach?.value

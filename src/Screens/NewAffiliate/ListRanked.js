@@ -25,7 +25,7 @@ const ListRanked = () => {
     const heightRanked2 = useSharedValue(0);
     const heightRanked3 = useSharedValue(0);
 
-    const {top} = useSafeAreaInsets()
+    const { top } = useSafeAreaInsets()
 
     const [listRankedAffiliate, setListRankedAffiliate] = useState([])
 
@@ -155,7 +155,7 @@ const ListRanked = () => {
                 }}
                 ListHeaderComponent={() => {
                     return (
-                        <View style={[{ height: 300, backgroundColor: WHITE, flexDirection: 'row' }]}>
+                        <View style={[{ height: 400, backgroundColor: WHITE, flexDirection: 'row' }]}>
                             <LinearGradient
                                 style={[StyleSheet.absoluteFill]}
                                 start={{ x: 0, y: 0 }}
