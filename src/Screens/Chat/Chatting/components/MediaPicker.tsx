@@ -113,6 +113,7 @@ function MediaPicker({ visible, onClose, onMessage }: Props) {
     })
       .then(async (images) => {
         listVideoForUpload.current = images;
+        await delay(500);
         confirmVideo.show();
       })
       .catch((e) => {});
@@ -120,6 +121,7 @@ function MediaPicker({ visible, onClose, onMessage }: Props) {
 
   const handleConfirmVideo = useCallback(
     async (textInput) => {
+      confirmVideo.hide();
       uploading.show();
 
       let listImages = listVideoForUpload.current.map((i, index) => {
@@ -152,20 +154,21 @@ function MediaPicker({ visible, onClose, onMessage }: Props) {
   );
 
   return (
-    <BottomSheet visible={visible} onClose={onClose}>
-      <BottomSheet.MenuItem title="Mở Camera" center onPress={openCamera} />
-      <BottomSheet.MenuItem
-        title="Chọn Video từ thư viện"
-        center
-        onPress={pickVideo}
-      />
-      <BottomSheet.MenuItem
-        title="Chọn ảnh từ thư viện"
-        center
-        onPress={pickImages}
-      />
-      <BottomSheet.MenuItem title="Hủy" center type="negative" />
-
+    <>
+      <BottomSheet visible={visible} onClose={onClose}>
+        <BottomSheet.MenuItem title="Mở Camera" center onPress={openCamera} />
+        <BottomSheet.MenuItem
+          title="Chọn Video từ thư viện"
+          center
+          onPress={pickVideo}
+        />
+        <BottomSheet.MenuItem
+          title="Chọn ảnh từ thư viện"
+          center
+          onPress={pickImages}
+        />
+        <BottomSheet.MenuItem title="Hủy" center type="negative" />
+      </BottomSheet>
       <DialogConfirmInput
         title={"Tải Video"}
         message={"Nhập tên hiển thị Video \n vào bên dưới"}
@@ -174,7 +177,7 @@ function MediaPicker({ visible, onClose, onMessage }: Props) {
         visible={confirmVideo.visible}
       />
       <LoadingModal visible={uploading.visible} message="Đang gửi Video..." />
-    </BottomSheet>
+    </>
   );
 }
 
