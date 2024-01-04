@@ -13,23 +13,25 @@ import { formatMonney } from '@Constant/Utils';
 import { useSelector } from 'react-redux';
 import { getCurrPartnerLevelState, getListPartnerLevelState } from '@Redux/affiliate/selectors';
 import { getInfoUserReducer } from '@Redux/Selectors';
+import { TouchableOpacity } from 'react-native';
 
 
 const WIDTH_CARD = _width - 8 * 4;
 const WIDTH_PROCESS_BAR = (_width - 8 * 4) - 8 * 4;
 
 type Props = {
-  data: PartnerLevel
+  data: PartnerLevel;
+  setShowModalInfoRanked: (state) => void;
 }
 
-const CardLevel = ({ data }: Props) => {
+const CardLevel = ({ data, setShowModalInfoRanked }: Props) => {
   const { data: listPartnerLevel } = useSelector(getListPartnerLevelState)
   const { data: currPartnerLevel } = useSelector(getCurrPartnerLevelState)
   const { infoUser: { liaPoint } } = useSelector(getInfoUserReducer);
   const { levelImg, startPoint, endPoint, code } = data
 
   const statusProcess = useMemo(() => {
-    let findIndexCurrPartnerLevel = listPartnerLevel.findIndex(item => item?.code == currPartnerLevel.code);
+    let findIndexCurrPartnerLevel = listPartnerLevel.findIndex(item => item?.code == currPartnerLevel?.code);
     let findIndexThisCard = listPartnerLevel.findIndex(item => item?.code == data?.code);
     if (findIndexCurrPartnerLevel == findIndexThisCard) {
       return 'isInProccessing'
@@ -84,118 +86,146 @@ const CardLevel = ({ data }: Props) => {
           weight='bold'>
           Chào mừng quý khách đến với LiA
         </Text>
-        <Row>
-          <Text
-            color={WHITE}
-            weight='bold'>
-            Chính sách
-          </Text>
-          <Column style={{
-            transform: [
-              {
-                rotate: '180deg'
-              }
-            ]
-          }}>
-            <BackIcon
-              height={8 * 2}
-              width={8 * 2}
+        <TouchableOpacity onPress={() => setShowModalInfoRanked(true)}>
+          <Row>
+            <Text
               color={WHITE}
-            />
-          </Column>
-        </Row>
+              weight='bold'>
+              Chính sách
+            </Text>
+            <Column style={{
+              transform: [
+                {
+                  rotate: '180deg'
+                }
+              ]
+            }}>
+              <BackIcon
+                height={8 * 2}
+                width={8 * 2}
+                color={WHITE}
+              />
+            </Column>
+          </Row>
+        </TouchableOpacity>
       </Row>
       <Column flex={1} />
       <Text color={WHITE}>
         {/* {statusProcess} */}
       </Text>
-      <Column margin={8 * 2}>
-        <Column
-          borderRadius={8 * 8}
-          backgroundColor={'rgba(255,255,255,.5)'}
-          height={4}
-          width={WIDTH_PROCESS_BAR}>
-          {
-            statusProcess == 'isInProccessing' ?
-              <Column
-                borderRadius={8 * 8}
-                backgroundColor={generateColor}
-                width={percentProccessBar * WIDTH_PROCESS_BAR}
-                height={4}>
-                <Column
-                  top={-2}
-                  position='absolute'
-                  right={-4}
-                  backgroundColor={WHITE}
-                  borderRadius={4}
-                  height={4 * 2}
-                  width={4 * 2} />
-              </Column>
-              :
-              <>
-                {
-                  statusProcess == 'isPassed' ?
-                    <Column
-                      borderRadius={8 * 8}
-                      backgroundColor={generateColor}
-                      width={WIDTH_PROCESS_BAR}
-                      height={4}>
-                    </Column>
-                    :
-                    <Column
-                      borderRadius={8 * 8}
-                      backgroundColor={WHITE}
-                      width={0}
-                      height={4}>
-                    </Column>
-                }
-              </>
-          }
-        </Column>
 
+      <Column margin={8 * 2}>
         {
-          isHighestLevel ?
-            <Row
-              justifyContent='center'
-              marginTop={8}>
-              <Text
-                color={WHITE}
-                weight='bold'>
-                Từ {formatMonney(startPoint)}
-              </Text>
-            </Row>
+          currPartnerLevel?.code == 'PLATINUM' && currPartnerLevel?.code == data?.code ?
+            <>
+            </>
             :
-            <Row
-              justifyContent='space-between'
-              marginTop={8}>
-              <Text
-                color={WHITE}
-                weight='bold'>
-                {formatMonney(startPoint)}
-              </Text>
+            <Column
+              borderRadius={8 * 8}
+              backgroundColor={'rgba(255,255,255,.5)'}
+              height={4}
+              width={WIDTH_PROCESS_BAR}>
               {
                 statusProcess == 'isInProccessing' ?
-                  <Row gap={4}>
+                  <Column
+                    borderRadius={8 * 8}
+                    backgroundColor={generateColor}
+                    width={percentProccessBar * WIDTH_PROCESS_BAR}
+                    height={4}>
+                    <Column
+                      top={-2}
+                      position='absolute'
+                      right={-4}
+                      backgroundColor={WHITE}
+                      borderRadius={4}
+                      height={4 * 2}
+                      width={4 * 2} />
+                  </Column>
+                  :
+                  <>
+                    {
+                      statusProcess == 'isPassed' ?
+                        <Column
+                          borderRadius={8 * 8}
+                          backgroundColor={generateColor}
+                          width={WIDTH_PROCESS_BAR}
+                          height={4}>
+                        </Column>
+                        :
+                        <Column
+                          borderRadius={8 * 8}
+                          backgroundColor={WHITE}
+                          width={0}
+                          height={4}>
+                        </Column>
+                    }
+                  </>
+              }
+            </Column>
+        }
+
+        {
+          currPartnerLevel?.code == 'PLATINUM' && currPartnerLevel?.code == data?.code ?
+            <Column alignItems='center'
+              marginTop={8}>
+              <Text color={WHITE}
+                weight='bold'>
+                Bạn đã đạt thứ hạng cao nhất
+              </Text>
+              <Text color={WHITE}
+                weight='bold'>
+                Số điểm hiện tại: {formatMonney(liaPoint)}
+              </Text>
+            </Column>
+            :
+            <>
+              {
+                isHighestLevel ?
+                  <Row
+                    justifyContent='center'
+                    marginTop={8}>
                     <Text
                       color={WHITE}
                       weight='bold'>
-                      {formatMonney(liaPoint)}
-                    </Text>
-                    <Text weight='bold' color={WHITE}>/</Text>
-                    <Text
-                      color={WHITE}
-                      weight='bold'>
-                      {formatMonney(endPoint)}
+                      Từ {formatMonney(startPoint)}
                     </Text>
                   </Row>
                   :
-                  <Text
-                    color={WHITE}
-                    weight='bold'>
-                    {formatMonney(endPoint)}
-                  </Text>
+                  <Row
+                    justifyContent='space-between'
+                    marginTop={8}>
+                    <Text
+                      color={WHITE}
+                      weight='bold'>
+                      {formatMonney(startPoint)}
+                    </Text>
+                    {
+                      statusProcess == 'isInProccessing' ?
+                        <Row gap={4}>
+                          <Text
+                            color={WHITE}
+                            weight='bold'>
+                            {formatMonney(liaPoint)}
+                          </Text>
+                          <Text weight='bold' color={WHITE}>/</Text>
+                          <Text
+                            color={WHITE}
+                            weight='bold'>
+                            {formatMonney(endPoint)}
+                          </Text>
+                        </Row>
+                        :
+                        <Text
+                          color={WHITE}
+                          weight='bold'>
+                          {formatMonney(endPoint)}
+                        </Text>
+                    }
+                  </Row>
               }
-            </Row>
+            </>
+
+
         }
 
 

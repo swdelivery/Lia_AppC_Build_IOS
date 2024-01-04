@@ -17,7 +17,7 @@ import {
   IconRightArrow,
   RightArrowIcon,
 } from "../../../Components/Icon/Icon";
-import { BASE_COLOR, BLUE_FB, GREY, WHITE } from "../../../Constant/Color";
+import { BASE_COLOR, BLUE_FB, GREEN_SUCCESS, GREY, WHITE } from "../../../Constant/Color";
 import { stylesFont } from "../../../Constant/Font";
 import { sizeIcon } from "../../../Constant/Icon";
 import { _moderateScale } from "../../../Constant/Scale";
@@ -26,6 +26,8 @@ import {
   checkStepUnlockAffiliate,
   getCurrentCollaborator,
 } from "../../../Redux/Action/Affiilate";
+import Icon from "@Components/Icon";
+import Column from "@Components/Column";
 
 const Content = (props) => {
   const infoUserRedux = useSelector((state) => state.infoUserReducer?.infoUser);
@@ -66,7 +68,7 @@ const Content = (props) => {
             <Text
               style={{
                 flex: 1,
-                color: BASE_COLOR,
+                color: WHITE,
                 textDecorationLine: "underline",
                 ...stylesFont.fontNolan500,
                 fontSize: _moderateScale(14),
@@ -74,14 +76,22 @@ const Content = (props) => {
             >
               Bước 1: Đăng kí để trở thành cộng tác viên
             </Text>
-            <IconIsChecked style={sizeIcon.sm} />
+            <Column
+              backgroundColor={WHITE}
+              borderRadius={4}
+              height={8 * 2.5}
+              width={8 * 2.5}
+              justifyContent="center"
+              alignItems="center">
+              <Icon size={18} name="check" color={GREEN_SUCCESS} />
+            </Column>
           </>
         ) : (
           <>
             <Text
               style={{
                 flex: 1,
-                color: GREY,
+                color: WHITE,
                 textDecorationLine: "underline",
                 ...stylesFont.fontNolan500,
                 fontSize: _moderateScale(14),
@@ -89,7 +99,15 @@ const Content = (props) => {
             >
               Bước 1: Đăng kí để trở thành cộng tác viên
             </Text>
-            <IconNotChecked style={sizeIcon.sm} />
+            <Column
+              borderWidth={1}
+              borderColor={WHITE}
+              borderRadius={4}
+              height={8 * 2.5}
+              width={8 * 2.5}
+              justifyContent="center"
+              alignItems="center">
+            </Column>
           </>
         )}
       </TouchableOpacity>
@@ -109,7 +127,7 @@ const Content = (props) => {
             <Text
               style={{
                 flex: 1,
-                color: BASE_COLOR,
+                color: WHITE,
                 textDecorationLine: "underline",
                 ...stylesFont.fontNolan500,
                 fontSize: _moderateScale(14),
@@ -117,14 +135,22 @@ const Content = (props) => {
             >
               Bước 2: Đặt lịch sử dụng dịch vụ bất kì
             </Text>
-            <IconIsChecked style={sizeIcon.sm} />
+            <Column
+              backgroundColor={WHITE}
+              borderRadius={4}
+              height={8 * 2.5}
+              width={8 * 2.5}
+              justifyContent="center"
+              alignItems="center">
+              <Icon size={18} name="check" color={GREEN_SUCCESS} />
+            </Column>
           </>
         ) : (
           <>
             <Text
               style={{
                 flex: 1,
-                color: GREY,
+                color: WHITE,
                 textDecorationLine: "underline",
                 ...stylesFont.fontNolan500,
                 fontSize: _moderateScale(14),
@@ -132,7 +158,15 @@ const Content = (props) => {
             >
               Bước 2: Đặt lịch sử dụng dịch vụ bất kì
             </Text>
-            <IconNotChecked style={sizeIcon.sm} />
+            <Column
+              borderWidth={1}
+              borderColor={WHITE}
+              borderRadius={4}
+              height={8 * 2.5}
+              width={8 * 2.5}
+              justifyContent="center"
+              alignItems="center">
+            </Column>
           </>
         )}
       </TouchableOpacity>
@@ -152,7 +186,7 @@ const Content = (props) => {
             <Text
               style={{
                 flex: 1,
-                color: BASE_COLOR,
+                color: WHITE,
                 textDecorationLine: "underline",
                 ...stylesFont.fontNolan500,
                 fontSize: _moderateScale(14),
@@ -160,14 +194,22 @@ const Content = (props) => {
             >
               Bước 3: Hoàn thành nhật kí làm đẹp
             </Text>
-            <IconIsChecked style={sizeIcon.sm} />
+            <Column
+              backgroundColor={WHITE}
+              borderRadius={4}
+              height={8 * 2.5}
+              width={8 * 2.5}
+              justifyContent="center"
+              alignItems="center">
+              <Icon size={18} name="check" color={GREEN_SUCCESS} />
+            </Column>
           </>
         ) : (
           <>
             <Text
               style={{
                 flex: 1,
-                color: GREY,
+                color: WHITE,
                 textDecorationLine: "underline",
                 ...stylesFont.fontNolan500,
                 fontSize: _moderateScale(14),
@@ -175,7 +217,15 @@ const Content = (props) => {
             >
               Bước 3: Hoàn thành nhật kí làm đẹp
             </Text>
-            <IconNotChecked style={sizeIcon.sm} />
+            <Column
+              borderWidth={1}
+              borderColor={WHITE}
+              borderRadius={4}
+              height={8 * 2.5}
+              width={8 * 2.5}
+              justifyContent="center"
+              alignItems="center">
+            </Column>
           </>
         )}
       </TouchableOpacity>
@@ -192,7 +242,7 @@ const Content = (props) => {
             <Text
               style={{
                 flex: 1,
-                color: BASE_COLOR,
+                color: WHITE,
                 textDecorationLine: "underline",
                 ...stylesFont.fontNolan500,
                 fontSize: _moderateScale(14),
@@ -200,14 +250,22 @@ const Content = (props) => {
             >
               Bước 4: Chia sẻ nhật ký kèm mã giới thiệu
             </Text>
-            <IconIsChecked style={sizeIcon.sm} />
+            <Column
+              backgroundColor={WHITE}
+              borderRadius={4}
+              height={8 * 2.5}
+              width={8 * 2.5}
+              justifyContent="center"
+              alignItems="center">
+              <Icon size={18} name="check" color={GREEN_SUCCESS} />
+            </Column>
           </>
         ) : (
           <>
             <Text
               style={{
                 flex: 1,
-                color: GREY,
+                color: WHITE,
                 textDecorationLine: "underline",
                 ...stylesFont.fontNolan500,
                 fontSize: _moderateScale(14),
@@ -215,7 +273,15 @@ const Content = (props) => {
             >
               Bước 4: Chia sẻ nhật ký kèm mã giới thiệu
             </Text>
-            <IconNotChecked style={sizeIcon.sm} />
+            <Column
+              borderWidth={1}
+              borderColor={WHITE}
+              borderRadius={4}
+              height={8 * 2.5}
+              width={8 * 2.5}
+              justifyContent="center"
+              alignItems="center">
+            </Column>
           </>
         )}
       </View>
@@ -264,7 +330,7 @@ const TutMakeMoney = memo((props) => {
     const color = interpolateColor(
       valueBackgroundColor.value,
       [0, 1],
-      [WHITE, BLUE_FB]
+      ["#182128", BLUE_FB]
     );
     return {
       backgroundColor: color,
@@ -276,7 +342,6 @@ const TutMakeMoney = memo((props) => {
       <Animated.View
         style={[
           styles.options__btn,
-          shadow,
           isExpanded && { borderColor: BASE_COLOR, borderWidth: 1 },
           animBgColor,
         ]}
@@ -302,14 +367,14 @@ const TutMakeMoney = memo((props) => {
           <View style={{ width: _moderateScale(8) }} />
           <Text
             style={[
-              { flex: 1, color: BASE_COLOR, fontSize: _moderateScale(14) },
+              { flex: 1, color: WHITE, fontSize: _moderateScale(14) },
               stylesFont.fontNolan500,
             ]}
           >
             Hướng dẫn kiếm tiền
           </Text>
           <Animated.View style={animIcon}>
-            <RightArrowIcon color={BASE_COLOR} />
+            <RightArrowIcon color={WHITE} />
           </Animated.View>
         </TouchableOpacity>
 
@@ -328,10 +393,11 @@ const styles = StyleSheet.create({
     width: "100%",
     borderRadius: _moderateScale(8),
     paddingHorizontal: _moderateScale(8 * 2),
-    backgroundColor: WHITE,
+    backgroundColor: '#182128',
+    paddingVertical: 8
   },
   options: {
-    paddingHorizontal: _moderateScale(8 * 3),
+    // paddingHorizontal: _moderateScale(8 * 2),
   },
 });
 
