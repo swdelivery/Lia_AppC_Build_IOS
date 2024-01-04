@@ -70,7 +70,6 @@ export default function FlashSaleItem({ item, isUpcoming }: Props) {
       paddingLeft={4}
       paddingRight={4}
       marginBottom={8}
-      onPress={trigger(handleServicePress)}
     >
       <Column
         flex={1}
@@ -79,50 +78,52 @@ export default function FlashSaleItem({ item, isUpcoming }: Props) {
         padding={1}
         style={styleElement.shadow}
       >
-        <Image
-          avatar={
-            item.service.avatar ?? head(item.service.representationFileArr)
-          }
-          style={styles.image}
-        />
-        <Column flex={1} paddingHorizontal={4}>
-          <Text size={12} numberOfLines={2} top={4}>
-            {item.service.name}
-          </Text>
-        </Column>
-        <Row justifyContent="space-between" paddingHorizontal={4}>
-          <Text weight="bold" color={MAIN_RED} size={16}>
-            {`${
-              isUpcoming
-                ? replaceFirstCharacter(formatMonney(item.finalPrice), "?")
-                : formatMonney(item.finalPrice)
-            }`}
-          </Text>
-          <Text size={12} textDecorationLine="line-through">
-            {formatMonney(item.originalPrice)}
-          </Text>
-        </Row>
-        <Column marginTop={4} paddingTop={8} paddingHorizontal={4}>
-          <HorizontalProgress
-            percent={percentage}
-            height={12}
-            colors={[MAIN_RED_700, MAIN_RED_700]}
-            backgroundColor={MAIN_RED_100}
+        <Column onPress={trigger(handleServicePress)} flex={1}>
+          <Image
+            avatar={
+              item.service.avatar ?? head(item.service.representationFileArr)
+            }
+            style={styles.image}
           />
-          <Row style={StyleSheet.absoluteFill}>
-            <Column flex={Math.max(percentage / 100, 0.1)} />
-            <FlameIcon width={22} height={22} style={styles.fireIcon} />
+          <Column flex={1} paddingHorizontal={4}>
+            <Text size={12} numberOfLines={2} top={4}>
+              {item.service.name}
+            </Text>
+          </Column>
+          <Row justifyContent="space-between" paddingHorizontal={4}>
+            <Text weight="bold" color={MAIN_RED} size={16}>
+              {`${
+                isUpcoming
+                  ? replaceFirstCharacter(formatMonney(item.finalPrice), "?")
+                  : formatMonney(item.finalPrice)
+              }`}
+            </Text>
+            <Text size={12} textDecorationLine="line-through">
+              {formatMonney(item.originalPrice)}
+            </Text>
           </Row>
-          <Text
-            top={8}
-            removePadding
-            size={10}
-            weight="bold"
-            color={"white"}
-            style={styles.progress}
-          >
-            {saleProgress}
-          </Text>
+          <Column marginTop={4} paddingTop={8} paddingHorizontal={4}>
+            <HorizontalProgress
+              percent={percentage}
+              height={12}
+              colors={[MAIN_RED_700, MAIN_RED_700]}
+              backgroundColor={MAIN_RED_100}
+            />
+            <Row style={StyleSheet.absoluteFill}>
+              <Column flex={Math.max(percentage / 100, 0.1)} />
+              <FlameIcon width={22} height={22} style={styles.fireIcon} />
+            </Row>
+            <Text
+              top={8}
+              removePadding
+              size={10}
+              weight="bold"
+              color={"white"}
+              style={styles.progress}
+            >
+              {saleProgress}
+            </Text>
+          </Column>
         </Column>
         <Column
           borderWidth={1}
