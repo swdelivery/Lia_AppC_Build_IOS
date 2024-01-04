@@ -376,7 +376,7 @@ const InputChat = ({ }: Props) => {
             style={styles.sendIcon}
             duration={150}
           >
-            <SendIcon />
+            <SendIcon color={Color.BASE_COLOR} />
           </Fade>
         </IconButton>
       </Row>

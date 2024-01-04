@@ -18,7 +18,6 @@ type Props = {
 
 export default function RemindBookingMessage({ template }: Props) {
   const { navigation } = useNavigate();
-  console.log({ template });
 
   const handleBookingDetails = useCallback(() => {
     // @ts-ignore

@@ -18,7 +18,6 @@ type Props = {
 
 export default function ThankYouMessage({ template }: Props) {
   const { navigation } = useNavigate();
-  console.log({ template });
 
   const handleDetails = useCallback(() => {
     // @ts-ignore

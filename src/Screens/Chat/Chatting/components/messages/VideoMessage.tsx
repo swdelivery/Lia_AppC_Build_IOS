@@ -61,7 +61,9 @@ export default function VideoMessage({ item, isMyMessage }: Props) {
             textDecorationLine="underline"
             size={12}
           >
-            {item?.videos[0]?.originalName}
+            {item?.type === "video"
+              ? item?.videos[0]?.originalName
+              : item?.documents[0].originalName}
           </Text>
           <Text
             style={styles.time}
