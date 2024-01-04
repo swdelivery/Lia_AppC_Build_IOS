@@ -25,12 +25,22 @@ export default function useFlashSales(
     if (isValidFlasSale(currentFlashSale)) {
       result.push(currentFlashSale);
     }
-    const validFlashSales = nextFlashSale.filter((item) => {
-      const endTimestamp = moment(fromUtc(item.dateRange.to))
-        .add(item.timeRange.to.unixTime, "seconds")
-        .valueOf();
-      return Date.now() < endTimestamp;
-    });
+    const validFlashSales = nextFlashSale
+      .filter((item) => {
+        const endTimestamp = moment(fromUtc(item.dateRange.to))
+          .add(item.timeRange.to.unixTime, "seconds")
+          .valueOf();
+        return Date.now() < endTimestamp;
+      })
+      .sort((a, b) => {
+        const aStart = moment(fromUtc(a.dateRange.from))
+          .add(a.timeRange.from.unixTime, "seconds")
+          .valueOf();
+        const bStart = moment(fromUtc(b.dateRange.from))
+          .add(b.timeRange.from.unixTime, "seconds")
+          .valueOf();
+        return aStart - bStart;
+      });
     const firstNextFlashSale = validFlashSales[0];
 
     if (!!firstNextFlashSale) {
