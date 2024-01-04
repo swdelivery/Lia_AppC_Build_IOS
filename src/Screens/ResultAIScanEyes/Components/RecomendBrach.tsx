@@ -2,7 +2,7 @@ import Column from '@Components/Column'
 import Text from '@Components/Text'
 import { getBranchByResScanningListState } from '@Redux/resultcanningeyes/selectors'
 import BranchItem from '@Screens/SoYoungBranch/components/BranchItem'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { StyleSheet, View } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 import { useSelector } from 'react-redux'
@@ -29,7 +29,7 @@ const RecomendBrach = () => {
                 </Column>
                 <View style={{ alignItems: 'center' }}>
                     {
-                        dataBranchs?.map((item, index) => {
+                        dataBranchs?.filter(item => item.isActive).map((item, index) => {
                             return (
                                 <BranchItem item={item} key={item?._id} />
                             )

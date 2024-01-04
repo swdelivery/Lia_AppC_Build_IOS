@@ -47,6 +47,9 @@ import useConfirmation from "src/Hooks/useConfirmation";
 import useImagePicker from "./useImagePicker";
 import { isAndroid } from "src/utils/platform";
 import useVolume from "./Components/useVolume";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { BackIcon } from "@Components/Icon/Icon";
+import { BASE_COLOR, BLACK } from "@Constant/Color";
 
 const EYE_INDICATOR_SIZE = 10;
 
@@ -83,6 +86,8 @@ const FaceAI = () => {
   const [startResultLeftEye, setStartResultLeftEye] = useState(null);
 
   const [showBackDropOpacity, setShowBackDropOpacity] = useState(null);
+
+  const { top } = useSafeAreaInsets()
 
   // FIXME: This code is used for testing on emulator
   // __DEV__ &&
@@ -544,6 +549,23 @@ const FaceAI = () => {
                     backgroundColor: "white",
                   }}
                 ></View>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.goBack();
+                }}
+                style={{
+                  position: "absolute",
+                  left: 0,
+                  top: top,
+                  width: _moderateScale(8 * 10),
+                  height: _moderateScale(8 * 10),
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <BackIcon />
               </TouchableOpacity>
             </View>
           </View>

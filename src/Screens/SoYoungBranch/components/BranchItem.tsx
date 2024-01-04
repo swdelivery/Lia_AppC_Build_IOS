@@ -42,7 +42,7 @@ export default function BranchItem({ item }: Props) {
               {item?.name}
             </Text>
 
-            <TouchableOpacity style={styles.adviseBtn}>
+            <TouchableOpacity style={styles.adviseBtn} onPress={handlePress}>
               <Text size={12} color="white" weight="bold">
                 Tư vấn
               </Text>
