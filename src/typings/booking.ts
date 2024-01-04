@@ -19,9 +19,11 @@ export type AppointmentDate = {
 
 export type BookingStatus =
   | "WAIT"
+  | "WAS_CHECK_IN"
   | "WAIT_CONSULTATION"
   | "IS_CONSULTING"
   | "WAS_CONSULTED"
+  | "WAIT_PROGRESS"
   | "IN_PROGRESS"
   | "COMPLETE_PROGRESS"
   | "WAS_CHECK_OUT"
