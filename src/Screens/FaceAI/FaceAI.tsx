@@ -295,7 +295,11 @@ const FaceAI = () => {
 
       setScanningResult(result?.data?.data);
     } else {
-      Alert.alert("Hình chưa hợp lệ!");
+      if (result?.data?.code === 400) {
+        Alert.alert(result?.data?.data);
+      } else {
+        Alert.alert("Hình chưa hợp lệ!", "Xin hãy chú ý về vị trí khuôn mặt, độ nét và môi trường ánh sáng");
+      }
       setImageScan(null);
     }
   };
