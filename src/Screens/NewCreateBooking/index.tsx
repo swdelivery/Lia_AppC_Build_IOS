@@ -280,8 +280,17 @@ const NewCreateBooking = () => {
   }, [dataBranch?.code]);
 
   const _handleConfirmPickDate = useCallback((date) => {
-    dispatch(selectDate(moment(date)));
+    if (date) {
+      dispatch(selectDate(moment(date)));
+    } else {
+      dispatch(selectDate(moment(new Date())));
+    }
   }, []);
+
+  const _handleNew = useCallback(() => {
+    dispatch(selectDate(moment(new Date())));
+    datePicker.hide();
+  }, [])
 
   const _handleConfirmPickTime = useCallback((data) => {
     dispatch(
@@ -369,6 +378,7 @@ const NewCreateBooking = () => {
         minDate={moment()}
         visible={datePicker.visible}
         onClose={datePicker.hide}
+        onNew={_handleNew}
       />
       <ModalListBeautyInsurance
         visible={insurancePicker.visible}

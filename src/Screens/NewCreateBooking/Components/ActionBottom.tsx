@@ -41,7 +41,21 @@ const ActionBottom = ({ isEditBooking, editBookingId }: Props) => {
 
   const infoUserRedux = useSelector((state) => state.infoUserReducer);
 
+  const validateTime = () => {
+    const currentTime = new Date();
+    const inputTime = new Date();
+    inputTime.setHours(parseInt(dataTime.hour, 10));
+    inputTime.setMinutes(parseInt(dataTime.minute, 10));
+
+    if (inputTime > currentTime) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   const _handleConfirmCreateBooking = () => {
+
     if (!infoUserRedux?.infoUser?._id) {
       return Alert.alert("Bạn cần đăng nhập để đặt hẹn");
     }
@@ -53,6 +67,9 @@ const ActionBottom = ({ isEditBooking, editBookingId }: Props) => {
     }
     if (isEmpty(dataServices)) {
       return Alert.alert("Vui lòng chọn dịch vụ");
+    }
+    if (!validateTime()) {
+      return Alert.alert("Vui lòng chọn khung thời gian trong tương lai");
     }
     let dataFetch: any = {};
     dataFetch["partnerId"] = infoUserRedux?.infoUser?._id;
