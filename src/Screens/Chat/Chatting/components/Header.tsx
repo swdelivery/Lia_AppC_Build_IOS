@@ -26,7 +26,7 @@ type Props = {
 };
 
 const Header = ({ conversation }: Props) => {
-  const { navigation } = useNavigate();
+  const { navigation, navigate } = useNavigate();
   const { top } = useSafeAreaInsets();
 
   return (
@@ -47,9 +47,7 @@ const Header = ({ conversation }: Props) => {
 
         <TouchableOpacity
           disabled={conversation?.type == "videoCallRequest"}
-          onPress={() => {
-            navigation.navigate(ScreenKey.INFO_ROOM_CHAT);
-          }}
+          onPress={navigate(ScreenKey.INFO_ROOM_CHAT)}
           activeOpacity={0.8}
           style={styles.roomInfo}
         >
@@ -89,9 +87,8 @@ const Header = ({ conversation }: Props) => {
         </TouchableOpacity>
         <TouchableOpacity
           disabled={conversation?.type == "videoCallRequest"}
-          onPress={() => {
-            navigation.navigate(ScreenKey.INFO_ROOM_CHAT);
-          }}>
+          onPress={navigate(ScreenKey.INFO_ROOM_CHAT)}
+        >
           <OptionDotsVerticalIcon />
         </TouchableOpacity>
       </Row>

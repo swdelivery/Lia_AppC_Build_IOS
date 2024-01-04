@@ -1,7 +1,6 @@
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { BASE_COLOR, WHITE } from '../../Constant/Color'
-import { getStatusBarHeight } from 'react-native-status-bar-height'
+import { BASE_COLOR, WHITE } from "../../Constant/Color";
 import { _moderateScale } from '../../Constant/Scale'
 import { IconBXH, IconBackWhite, IconEyeBase, IconWallet } from '../../Components/Icon/Icon'
 import { stylesFont } from '../../Constant/Font'

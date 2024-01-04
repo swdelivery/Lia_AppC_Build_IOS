@@ -21,78 +21,96 @@ import EmptyResultData from '@Components/LoadingIndicator/EmptyResultData'
 
 
 const ItemOrderService = (props) => {
+  const [infoPartner, setInfoPartner] = useState({});
 
-    const [infoPartner, setInfoPartner] = useState({})
-
-    useEffect(() => {
-        if (props?.data?.partnerId) {
-            _getPartnerById(props?.data?.partnerId)
-        }
-    }, [props?.data?.partnerId])
-
-    const _getPartnerById = async (id) => {
-        let result = await getUserById(id)
-        if (result?.isAxiosError) return;
-        setInfoPartner(result?.data?.data)
+  useEffect(() => {
+    if (props?.data?.partnerId) {
+      _getPartnerById(props?.data?.partnerId);
     }
+  }, [props?.data?.partnerId]);
 
-    console.log({ wdwdwd: props?.currPartnerLevel });
+  const _getPartnerById = async (id) => {
+    let result = await getUserById(id);
+    if (result?.isAxiosError) return;
+    setInfoPartner(result?.data?.data);
+  };
 
-    return (
-        <TouchableOpacity
-            onPress={() => {
-            }}
-            style={{
-                padding: _moderateScale(8 * 2),
-                borderBottomWidth: .5,
-                borderColor: 'rgba(0,0,0,.2)',
-                alignItems: 'center'
-            }}>
-            <View style={{ flexDirection: 'row' }}>
-                <View style={{ flex: 4 }}>
-                    <Text style={[stylesFont.fontNolanBold, , { fontSize: _moderateScale(14) }]}>
-                        {
-                            props?.data?.serviceName
-                        }
-                    </Text>
-                </View>
-                <View style={{ flex: 2, alignItems: 'flex-end' }}>
-                    <Text style={[stylesFont.fontNolan500, { fontSize: _moderateScale(14) }]}>
-                        {formatMonney(props?.data?.finalPrice)} vnđ
-                    </Text>
-                </View>
-            </View>
-            <View style={{ flexDirection: 'row', marginTop: _moderateScale(8) }}>
-                <View style={{ flex: 4 }}>
-                    <Text style={[stylesFont.fontNolan, , { fontSize: _moderateScale(14) }]}>
-                        Phát sinh thưởng
-                    </Text>
-                </View>
-                <View style={{ flex: 2, alignItems: 'flex-end' }}>
-                    <Text style={[stylesFont.fontNolanBold, { fontSize: _moderateScale(14), color: Color.PRICE_ORANGE }]}>
-                        + {
-                            formatMonney(props?.data?.finalPrice * (props?.currPartnerLevel?.promotion?.commissionRate / 100))
-                        } vnđ
-                    </Text>
-                </View>
-            </View>
-            <View style={{ width: '100%' }}>
-                <View style={{ flexDirection: 'row', marginTop: _moderateScale(8) }}>
-                    <View style={{}}>
-                        <Text style={[stylesFont.fontNolan, , { fontSize: _moderateScale(14) }]}>
-                            Đơn hàng của:
-                        </Text>
-                    </View>
-                    <View style={{ alignItems: 'flex-start' }}>
-                        <Text style={[stylesFont.fontNolanBold, { fontSize: _moderateScale(14), color: Color.BLACK }]}>
-                            {
-                                infoPartner?.name
-                            }
-                        </Text>
-                    </View>
-                </View>
-            </View>
-            {/* <View style={{ width: '100%' }}>
+  return (
+    <TouchableOpacity
+      onPress={() => {}}
+      style={{
+        padding: _moderateScale(8 * 2),
+        borderBottomWidth: 0.5,
+        borderColor: "rgba(0,0,0,.2)",
+        alignItems: "center",
+      }}
+    >
+      <View style={{ flexDirection: "row" }}>
+        <View style={{ flex: 4 }}>
+          <Text
+            style={[
+              stylesFont.fontNolanBold,
+              ,
+              { fontSize: _moderateScale(14) },
+            ]}
+          >
+            {props?.data?.serviceName}
+          </Text>
+        </View>
+        <View style={{ flex: 2, alignItems: "flex-end" }}>
+          <Text
+            style={[stylesFont.fontNolan500, { fontSize: _moderateScale(14) }]}
+          >
+            {formatMonney(props?.data?.finalPrice)} vnđ
+          </Text>
+        </View>
+      </View>
+      <View style={{ flexDirection: "row", marginTop: _moderateScale(8) }}>
+        <View style={{ flex: 4 }}>
+          <Text
+            style={[stylesFont.fontNolan, , { fontSize: _moderateScale(14) }]}
+          >
+            Phát sinh thưởng
+          </Text>
+        </View>
+        <View style={{ flex: 2, alignItems: "flex-end" }}>
+          <Text
+            style={[
+              stylesFont.fontNolanBold,
+              { fontSize: _moderateScale(14), color: Color.PRICE_ORANGE },
+            ]}
+          >
+            +{" "}
+            {formatMonney(
+              props?.data?.finalPrice *
+                (props?.currPartnerLevel?.promotion?.commissionRate / 100)
+            )}{" "}
+            vnđ
+          </Text>
+        </View>
+      </View>
+      <View style={{ width: "100%" }}>
+        <View style={{ flexDirection: "row", marginTop: _moderateScale(8) }}>
+          <View style={{}}>
+            <Text
+              style={[stylesFont.fontNolan, , { fontSize: _moderateScale(14) }]}
+            >
+              Đơn hàng của:
+            </Text>
+          </View>
+          <View style={{ alignItems: "flex-start" }}>
+            <Text
+              style={[
+                stylesFont.fontNolanBold,
+                { fontSize: _moderateScale(14), color: Color.BLACK },
+              ]}
+            >
+              {infoPartner?.name}
+            </Text>
+          </View>
+        </View>
+      </View>
+      {/* <View style={{ width: '100%' }}>
                 <View style={{ flexDirection: 'row', marginTop: _moderateScale(8) }}>
                     <View style={{}}>
                         <Text style={[stylesFont.fontNolan, , { fontSize: _moderateScale(14) }]}>
@@ -106,47 +124,42 @@ const ItemOrderService = (props) => {
                     </View>
                 </View>
             </View> */}
-        </TouchableOpacity>
-    )
-}
+    </TouchableOpacity>
+  );
+};
 
 const Tab1 = (props) => {
+  const infoUserRedux = useSelector((state) => state.infoUserReducer?.infoUser);
+  const { data: listPartnerLevel } = useSelector(getListPartnerLevelState);
 
-    const infoUserRedux = useSelector(state => state.infoUserReducer?.infoUser)
-    const { data: listPartnerLevel } = useSelector(getListPartnerLevelState)
+  const [currPartnerLevel, setCurrPartnerLevel] = useState({});
 
-    const [currPartnerLevel, setCurrPartnerLevel] = useState({})
+  useEffect(() => {
+    let findCurrPartnerLevel = listPartnerLevel?.find(
+      (item) => item?.code == infoUserRedux?.levelCode
+    );
+    if (findCurrPartnerLevel?._id) {
+      setCurrPartnerLevel(findCurrPartnerLevel);
+    }
+  }, []);
 
-    useEffect(() => {
+  const _renderItem = useCallback(({ item }) => {
+    return <ItemOrderService currPartnerLevel={currPartnerLevel} data={item} />;
+  }, []);
 
-        let findCurrPartnerLevel = listPartnerLevel?.find(item => item?.code == infoUserRedux?.levelCode);
-        console.log({ findCurrPartnerLevel });
-        if (findCurrPartnerLevel?._id) {
-            setCurrPartnerLevel(findCurrPartnerLevel)
-        }
-    }, [])
-
-    const _renderItem = useCallback(({ item }) => {
-        return (
-            <ItemOrderService currPartnerLevel={currPartnerLevel} data={item} />
-        )
-    }, [])
-
-    return (
-        <FlatList
-            contentContainerStyle={{ flexGrow: 1 }}
-            ListEmptyComponent={<EmptyResultData title='Chưa có đơn hàng' />}
-            renderItem={_renderItem}
-            data={props?.data}
-            keyExtractor={(item, index) => index}
-            ListFooterComponent={() => {
-                return (
-                    <View style={{ height: 100 }} />
-                )
-            }}
-        />
-    )
-}
+  return (
+    <FlatList
+      contentContainerStyle={{ flexGrow: 1 }}
+      ListEmptyComponent={<EmptyResultData title="Chưa có đơn hàng" />}
+      renderItem={_renderItem}
+      data={props?.data}
+      keyExtractor={(item, index) => index}
+      ListFooterComponent={() => {
+        return <View style={{ height: 100 }} />;
+      }}
+    />
+  );
+};
 
 const Tab2 = (props) => {
 

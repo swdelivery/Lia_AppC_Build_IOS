@@ -1,5 +1,5 @@
 import { Platform, StyleSheet, View } from "react-native";
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { BASE_COLOR } from "../../../Constant/Color";
 import { _moderateScale, _width, _widthScale } from "../../../Constant/Scale";
 import { styleElement } from "../../../Constant/StyleElement";
@@ -12,10 +12,7 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import EachImage from "./EachImage";
-import ScreenKey from "../../../Navigation/ScreenKey";
-import { navigation } from "../../../../rootNavigation";
 import { FlatList } from "react-native-gesture-handler";
-import useConfigFile from "src/Hooks/useConfigFile";
 import { ConfigFileCode } from "@typings/configFile";
 import { getConfigFileByCode } from "@Redux/Action/SpinWheelAction";
 import { first } from "lodash";
@@ -46,28 +43,29 @@ const HorizontalBanner = ({
   const [interval, setInterval] = useState(null);
 
   useEffect(() => {
-    _getListImageBanner()
+    _getListImageBanner();
   }, []);
 
   const _getListImageBanner = useCallback(async () => {
-    let res1 = await getConfigFileByCode(ConfigFileCode.BannerVoucher1)
-    let res2 = await getConfigFileByCode(ConfigFileCode.BannerVoucher2)
-    let res3 = await getConfigFileByCode(ConfigFileCode.BannerVoucher3)
-    let res4 = await getConfigFileByCode(ConfigFileCode.BannerVoucher4)
-
+    const [res1, res2, res3, res4] = await Promise.all([
+      getConfigFileByCode(ConfigFileCode.BannerVoucher1),
+      getConfigFileByCode(ConfigFileCode.BannerVoucher2),
+      getConfigFileByCode(ConfigFileCode.BannerVoucher3),
+      getConfigFileByCode(ConfigFileCode.BannerVoucher4),
+    ]);
     let image1 = first(res1?.data?.data?.fileArr);
     let image2 = first(res2?.data?.data?.fileArr);
     let image3 = first(res3?.data?.data?.fileArr);
     let image4 = first(res4?.data?.data?.fileArr);
 
-    let newFormat = [image1, image2, image3, image4]?.map(item => {
+    let newFormat = [image1, image2, image3, image4]?.map((item) => {
       return {
         _id: item?._id,
         url: getImageAvataUrl(item),
-      }
-    })
-    setListImage(newFormat)
-  }, [])
+      };
+    });
+    setListImage(newFormat);
+  }, []);
 
   useEffect(() => {
     flagIndexHasChanged.value = 0;
@@ -108,7 +106,10 @@ const HorizontalBanner = ({
 
     let pColor;
     if (Platform.OS == "ios") {
-      primaryColor.value = result?.background;
+      primaryColor.value =
+        result?.background.toLowerCase() === "#ffffff"
+          ? result?.primary
+          : result?.background;
       secondColor.value = result?.secondary;
     } else {
       primaryColor.value = result?.dominant;
