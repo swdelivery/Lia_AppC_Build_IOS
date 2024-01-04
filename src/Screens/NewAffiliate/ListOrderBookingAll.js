@@ -16,6 +16,7 @@ import { formatMonney, renderStatusBookingByCode } from '../../Constant/Utils'
 import { useSelector } from 'react-redux'
 import moment from 'moment'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { getListPartnerLevelState } from '@Redux/affiliate/selectors'
 
 
 const ItemOrderService = (props) => {
@@ -33,6 +34,8 @@ const ItemOrderService = (props) => {
         if (result?.isAxiosError) return;
         setInfoPartner(result?.data?.data)
     }
+
+    console.log({ wdwdwd: props?.currPartnerLevel });
 
     return (
         <TouchableOpacity
@@ -109,13 +112,13 @@ const ItemOrderService = (props) => {
 const Tab1 = (props) => {
 
     const infoUserRedux = useSelector(state => state.infoUserReducer?.infoUser)
-    const listPartnerLevelRedux = useSelector(state => state.affiliateReducer?.listPartnerLevel)
+    const { data: listPartnerLevel } = useSelector(getListPartnerLevelState)
 
     const [currPartnerLevel, setCurrPartnerLevel] = useState({})
 
     useEffect(() => {
 
-        let findCurrPartnerLevel = listPartnerLevelRedux?.find(item => item?.code == infoUserRedux?.levelCode);
+        let findCurrPartnerLevel = listPartnerLevel?.find(item => item?.code == infoUserRedux?.levelCode);
         console.log({ findCurrPartnerLevel });
         if (findCurrPartnerLevel?._id) {
             setCurrPartnerLevel(findCurrPartnerLevel)
@@ -139,13 +142,13 @@ const Tab1 = (props) => {
 const Tab2 = (props) => {
 
     const infoUserRedux = useSelector(state => state.infoUserReducer?.infoUser)
-    const listPartnerLevelRedux = useSelector(state => state.affiliateReducer?.listPartnerLevel)
+    const { data: listPartnerLevel } = useSelector(getListPartnerLevelState)
 
     const [currPartnerLevel, setCurrPartnerLevel] = useState({})
 
     useEffect(() => {
 
-        let findCurrPartnerLevel = listPartnerLevelRedux?.find(item => item?.code == infoUserRedux?.levelCode);
+        let findCurrPartnerLevel = listPartnerLevel?.find(item => item?.code == infoUserRedux?.levelCode);
         console.log({ findCurrPartnerLevel });
         if (findCurrPartnerLevel?._id) {
             setCurrPartnerLevel(findCurrPartnerLevel)
@@ -274,7 +277,7 @@ const ListOrderBookingAll = () => {
     ]);
     const [index, setIndex] = useState(0);
 
-    const {top} = useSafeAreaInsets()
+    const { top } = useSafeAreaInsets()
 
 
     useEffect(() => {

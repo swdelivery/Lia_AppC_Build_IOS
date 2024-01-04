@@ -8,11 +8,13 @@ import { BORDER_COLOR, GREY, WHITE } from '@Constant/Color'
 import { _heightScale, _widthScale } from '@Constant/Scale'
 import { styleElement } from '@Constant/StyleElement'
 import { getHistorySpin } from '@Redux/Action/SpinWheelAction'
+import { getCurrActiveWheelSpinState } from '@Redux/wheelSpin/selectors'
 import { ConfigDataCode } from '@typings/configData'
 import { first } from 'lodash'
 import moment from 'moment'
 import React, { useCallback, useEffect, useState } from 'react'
 import { Image, ScrollView, StyleSheet } from 'react-native'
+import { useSelector } from 'react-redux'
 import useConfigData from 'src/Hooks/useConfigData'
 
 type Props = {
@@ -20,7 +22,7 @@ type Props = {
 }
 
 const ModalInfo = ({ visibleModalInfo }: Props) => {
-
+  const { data: currActiveWheel } = useSelector(getCurrActiveWheelSpinState)
   const wheelRule = useConfigData(ConfigDataCode.WheelRule);
 
   return (
@@ -57,7 +59,7 @@ const ModalInfo = ({ visibleModalInfo }: Props) => {
         width={_widthScale(340)}>
         <ScrollView>
           {
-            wheelRule?.value && <RenderHTML data={wheelRule?.value} />
+            currActiveWheel?.description && <RenderHTML data={currActiveWheel?.description} />
           }
         </ScrollView>
       </Column>

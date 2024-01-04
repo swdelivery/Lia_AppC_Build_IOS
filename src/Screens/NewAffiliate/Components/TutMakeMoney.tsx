@@ -230,7 +230,10 @@ const Content = (props) => {
         )}
       </TouchableOpacity>
 
-      <View
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate(ScreenKey.CREATE_NEW_FEED);
+        }}
         style={{
           flexDirection: "row",
           alignItems: "center",
@@ -284,7 +287,7 @@ const Content = (props) => {
             </Column>
           </>
         )}
-      </View>
+      </TouchableOpacity>
 
       <View
         style={{
