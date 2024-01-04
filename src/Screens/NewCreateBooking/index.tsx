@@ -280,7 +280,11 @@ const NewCreateBooking = () => {
   }, [dataBranch?.code]);
 
   const _handleConfirmPickDate = useCallback((date) => {
-    dispatch(selectDate(moment(date)));
+    if (date) {
+      dispatch(selectDate(moment(date)));
+    } else {
+      dispatch(selectDate(moment(new Date())));
+    }
   }, []);
 
   const _handleConfirmPickTime = useCallback((data) => {
