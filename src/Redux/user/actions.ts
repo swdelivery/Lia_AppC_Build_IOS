@@ -1,5 +1,6 @@
 import { generateActionsGroup } from "@Redux/helper";
 import {
+  CANCEL_PARTNER_BOOKING,
   GET_BOOKING_DEPOSITS,
   GET_BOOKING_DETAILS,
   GET_MY_BOOKING,
@@ -63,6 +64,10 @@ export const getOrderDetails = generateActionsGroup<string, Order>(
 
 export const getOrderPayments = generateActionsGroup<string, any>(
   GET_ORDER_PAYMENTS
+);
+
+export const cancelPartnerBooking = generateActionsGroup(
+  CANCEL_PARTNER_BOOKING
 );
 
 export const logOut = () => ({

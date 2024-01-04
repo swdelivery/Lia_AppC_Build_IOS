@@ -36,6 +36,10 @@ export const GET_ORDER_PAYMENTS = generateActionTypes(
   "@user/booking/get-order-payments"
 );
 
+export const CANCEL_PARTNER_BOOKING = generateActionTypes(
+  "@user/cancel-partner-booking"
+);
+
 export type GetTreatmentServicesParams = {
   bookingId: string;
 };

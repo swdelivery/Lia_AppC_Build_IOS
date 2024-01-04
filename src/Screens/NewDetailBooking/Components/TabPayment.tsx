@@ -1,28 +1,30 @@
 import Column from '@Components/Column'
 import Row from '@Components/Row'
 import Text from '@Components/Text'
-import { BG_GREY_OPACITY_5, BLACK, BORDER_COLOR, GREY, RED, WHITE } from '@Constant/Color'
-import { _moderateScale } from '@Constant/Scale'
-import { styleElement } from '@Constant/StyleElement'
-import { formatMonney } from '@Constant/Utils'
-import moment from 'moment'
-import React, { useEffect } from "react";
+import {
+  BASE_COLOR,
+  BG_GREY_OPACITY_5,
+  BLACK,
+  BORDER_COLOR,
+  GREY,
+  RED,
+  WHITE,
+} from "@Constant/Color";
+import { _moderateScale } from "@Constant/Scale";
+import { styleElement } from "@Constant/StyleElement";
+import { formatMonney } from "@Constant/Utils";
+import moment from "moment";
+import React, { useEffect, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import { Booking } from "@typings/booking";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getBookingDeposits,
-  getOrderDetails,
-  getOrderPayments,
-  getPaymentRequest,
-} from "@Redux/user/actions";
+import { getOrderDetails, getOrderPayments } from "@Redux/user/actions";
 import {
   getOrderDetailsState,
   getOrderPaymentState,
 } from "@Redux/user/selectors";
-import Services from "./Services";
 import ItemService from "./ItemService";
-import Voucher from "./Voucher";
+import { sum } from "lodash";
 
 const PAYMENT_FOR = {
   WALLET: "Ví",
@@ -33,6 +35,7 @@ const PAYMENT_FOR = {
 const PAYMENT_METHODS = {
   CASH: "Tiền mặt",
   CARDTRANSFER: "Chuyển khoản",
+  BANK_TRANSFER: "Chuyển khoán",
   WALLETTRANSFER: "Ví",
 };
 
@@ -62,7 +65,23 @@ const TabPayment = ({ booking }: Props) => {
     }
   }, [booking.orderId]);
 
-  console.log({ orderDetails });
+  const discountAmount = useMemo(() => {
+    return sum(
+      (orderDetails?.partnerCoupons || []).map((item) => {
+        if (item.coupon.discountType === "percent") {
+          const discount =
+            (orderDetails.totalAmount * item.coupon.discountAmount) / 100;
+          return Math.min(discount, item.coupon.maxAmountDiscount);
+        }
+        if (item.coupon.discountType === "fixed") {
+          return item.coupon.discountAmount;
+        }
+        return 0;
+      })
+    );
+  }, [orderDetails]);
+
+  console.log({ orderDetails, orderPayments });
 
   return (
     <View style={styles.container}>
@@ -112,11 +131,16 @@ const TabPayment = ({ booking }: Props) => {
         </Text>
       </View>
       {(orderDetails?.services || []).map((item, index) => {
-        return <ItemService key={item.service._id} item={item.service} />;
+        return <ItemService key={item.service._id} item={item} />;
       })}
 
       <Column paddingHorizontal={16} paddingTop={16}>
-        <Voucher booking={booking} />
+        <Row justifyContent="space-between">
+          <Text weight="bold">Ưu đãi:</Text>
+          <Text color={BASE_COLOR} weight="bold">
+            {`-${formatMonney(discountAmount, true)}`}
+          </Text>
+        </Row>
       </Column>
 
       {orderPayments?.length > 0 && (

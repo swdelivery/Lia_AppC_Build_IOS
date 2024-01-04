@@ -183,15 +183,7 @@ const Login = (props) => {
               },
             ]}
           >
-            <Text
-              style={[
-                stylesFont.fontNolanBold,
-                {
-                  fontSize: 14,
-                  color: Color.TEXT_COLOR_FORGET_PASS,
-                },
-              ]}
-            >
+            <Text color={Color.BASE_COLOR} size={14} weight="bold">
               Quên mật khẩu?
             </Text>
           </TouchableOpacity>
@@ -212,11 +204,7 @@ const Login = (props) => {
           >
             <Text color={Color.GREY}>
               {"Bạn chưa có tài khoản?  "}
-              <Text
-                weight="bold"
-                size={14}
-                color={Color.TEXT_COLOR_FORGET_PASS}
-              >
+              <Text weight="bold" size={14} color={Color.BASE_COLOR}>
                 Đăng ký ngay
               </Text>
             </Text>

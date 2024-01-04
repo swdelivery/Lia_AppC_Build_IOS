@@ -18,14 +18,16 @@ const AIChatting = () => {
   const { infoUser } = useSelector(getInfoUserReducer);
 
   useEffect(() => {
-    dispatch(getListAIMessages.request({
-      condition: {
-        "partnerId": { "equal": infoUser?._id }
-      },
-      page: 1,
-      limit: 10
-    }))
-  }, [])
+    dispatch(
+      getListAIMessages.request({
+        condition: {
+          partnerId: { equal: infoUser?._id },
+        },
+        page: 1,
+        limit: 10,
+      })
+    );
+  }, []);
 
   return (
     <KeyboardAvoidingView
@@ -33,7 +35,7 @@ const AIChatting = () => {
       behavior="padding"
       style={styles.content}
     >
-      <Screen safeBottom>
+      <Screen safeBottom backgroundColor="#EEF2F1">
         <Header />
         <ListMessages />
         <InputChat />

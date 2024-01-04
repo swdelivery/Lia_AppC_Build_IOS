@@ -92,7 +92,7 @@ export type Conversation = {
   partnerId: string;
   partnerName: string;
   partnerName_fuzzy: any[];
-  type: "treatment" | "videoCallRequest" | "consultation";
+  type: "treatment" | "videoCallRequest" | "consultation" | "assistant";
   uniqueKey: string;
   updated: string;
 };

@@ -4,14 +4,13 @@ import Text from "@Components/Text";
 import { _moderateScale } from "@Constant/Scale";
 import Row from "@Components/Row";
 import Column from "@Components/Column";
-import { WHITE } from "@Constant/Color";
+import { BASE_COLOR, WHITE } from "@Constant/Color";
 import { Conversation } from "@typings/chat";
 import ContentLoader, { Circle, Rect } from "react-content-loader/native";
 import Avatar from "@Components/Avatar";
-import { useSelector } from "react-redux";
-import { getInfoUserReducer } from "@Redux/Selectors";
 import moment from "moment";
 import useCallbackItem from "src/Hooks/useCallbackItem";
+import { IconAI } from "@Components/Icon/Icon";
 
 type Props = {
   item: Conversation;
@@ -20,17 +19,14 @@ type Props = {
 
 const ItemLastedMessage = ({ item, onPress }: Props) => {
   const trigger = useCallbackItem(item);
-  const { infoUser } = useSelector(getInfoUserReducer);
 
   const assignedUser = useMemo(() => {
     return item.assignedUsers[0];
   }, [item]);
 
   const isSeen = useMemo(() => {
-    return item.latestMessage
-      ? item.latestMessage.viewerUserIdArr.includes(infoUser._id)
-      : false;
-  }, [item, infoUser]);
+    return item.type === "assistant" || item.latestMessage?.isPartnerSeen;
+  }, [item]);
 
   return (
     <Pressable onPress={trigger(onPress)}>
@@ -41,6 +37,8 @@ const ItemLastedMessage = ({ item, onPress }: Props) => {
             source={require("src/NewImage/logoLiA.png")}
             style={styles.avatar}
           />
+        ) : item.type === "assistant" ? (
+          <IconAI width={8 * 5} height={8 * 5} color={BASE_COLOR} />
         ) : (
           <Avatar
             size={_moderateScale(8 * 5)}
@@ -49,27 +47,26 @@ const ItemLastedMessage = ({ item, onPress }: Props) => {
           />
         )}
         <Column gap={_moderateScale(4)} flex={1}>
-          <Text weight={item.latestMessage?.isPartnerSeen ? "regular" : "bold"}>
-            {item.type === "consultation" ? item.name : assignedUser?.name}
+          <Text weight={isSeen ? "regular" : "bold"}>
+            {item.type === "assistant" || item.type === "consultation"
+              ? item.name
+              : assignedUser?.name}
           </Text>
           <Text
             size={12}
-            weight={item.latestMessage?.isPartnerSeen ? "regular" : "bold"}
+            weight={isSeen ? "regular" : "bold"}
             numberOfLines={1}
           >
             {item.latestMessage?.content}
           </Text>
         </Column>
         <Column gap={_moderateScale(4)} alignItems="flex-end">
-          <Text
-            weight={item.latestMessage?.isPartnerSeen ? "regular" : "bold"}
-            size={12}
-          >
+          <Text weight={isSeen ? "regular" : "bold"} size={12}>
             {item.latestMessage?.created
               ? moment(item.latestMessage?.created).fromNow()
               : ""}
           </Text>
-          {!item.latestMessage?.isPartnerSeen ? (
+          {!isSeen ? (
             <View style={styles.countBox}>
               <Text weight="bold" size={12} color={WHITE}>
                 Mới

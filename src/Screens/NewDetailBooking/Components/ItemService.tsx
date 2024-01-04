@@ -6,33 +6,27 @@ import { BASE_COLOR, BORDER_INPUT_TEXT, PRICE_ORANGE } from "@Constant/Color";
 import { _moderateScale } from "@Constant/Scale";
 import { styleElement } from "@Constant/StyleElement";
 import { formatMonney } from "@Constant/Utils";
+import { BookingService } from "@typings/booking";
 import { Service } from "@typings/serviceGroup";
 import React, { useCallback } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import useServiceDetailsNavigation from "src/Hooks/navigation/useServiceDetailsNavigation";
 
 type Props = {
-  item: Service;
+  item: BookingService;
 };
 
 const ItemService = ({ item }: Props) => {
   const handlePress = useServiceDetailsNavigation();
 
   const handleServicePress = useCallback(() => {
-    handlePress(item);
+    handlePress(item.service);
   }, [item]);
 
   return (
     <View style={styles.itemService}>
       <Row alignItems={"stretch"} gap={8 * 2}>
-        <Image
-          style={styles.avatarService}
-          avatar={
-            item.representationFileArr
-              ? item.representationFileArr[0]
-              : undefined
-          }
-        />
+        <Image style={styles.avatarService} avatar={item.service.avatar} />
         <Column flex={1} justifyContent="space-between">
           <Row gap={8 * 4}>
             <Text
@@ -41,10 +35,10 @@ const ItemService = ({ item }: Props) => {
               color={BASE_COLOR}
               weight="bold"
             >
-              {item.name}
+              {item.service.name}
             </Text>
             <Text color={PRICE_ORANGE} weight="bold">
-              {`${formatMonney(item.price)} VNĐ`}
+              {`${formatMonney(item.finalPrice, true)}`}
             </Text>
           </Row>
           <Row alignItems="flex-end" gap={4}>

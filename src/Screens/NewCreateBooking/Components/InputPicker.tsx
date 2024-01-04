@@ -16,13 +16,9 @@ type Props = {
 };
 
 const InputPicker = ({ value, require, title, onPress }: Props) => {
-  const _handlePress = () => {
-    onPress();
-  };
-
   return (
     <TouchableOpacity
-      onPress={_handlePress}
+      onPress={onPress}
       activeOpacity={0.8}
       style={styles.container}
     >
@@ -38,8 +34,7 @@ const InputPicker = ({ value, require, title, onPress }: Props) => {
             </Text>
           )}
         </Column>
-
-        <IconLineArrowDown style={sizeIcon.md} />
+        {onPress && <IconLineArrowDown style={sizeIcon.md} />}
       </Row>
     </TouchableOpacity>
   );

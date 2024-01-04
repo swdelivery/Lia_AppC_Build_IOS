@@ -18,7 +18,7 @@ type Props = {
 
 const Banner = ({ booking }: Props) => {
   const service = useMemo(() => {
-    return head(booking?.servicesNeedCare);
+    return head(booking?.services)?.service;
   }, [booking]);
 
   const appointmentDate = useMemo(() => {
@@ -35,7 +35,7 @@ const Banner = ({ booking }: Props) => {
     <View style={styles.container}>
       <Image style={styleElement.flex} avatar={service?.avatar} />
       <Column
-        backgroundColor={"rgba(0,0,0,0.5)"}
+        backgroundColor={"rgba(0,0,0,0.7)"}
         style={StyleSheet.absoluteFillObject}
         justifyContent="center"
       >

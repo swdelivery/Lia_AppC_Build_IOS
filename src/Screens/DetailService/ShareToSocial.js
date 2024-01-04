@@ -31,14 +31,14 @@ import { getCurrentCollaborator } from '../../Redux/Action/Affiilate'
 import Header from '../../Components/HeaderLoseWeight';
 import { _getServiceShareTemplate } from '../../Redux/Action/Service'
 import Share from 'react-native-share';
-import RNFetchBlob from 'rn-fetch-blob';
+import ReactNativeBlobUtil from 'react-native-blob-util';
 import { alertCustomNotAction } from '../../Constant/Utils';
 import ModalFlashMsg from '../../Components/ModalFlashMsg/ModalFlashMsg';
 import ModalTutorialShare from './Components/ModalTutorialShare';
 import { getConfigData } from '../../Redux/Action/OrtherAction';
 
 
-const fs = RNFetchBlob.fs;
+const fs = ReactNativeBlobUtil.fs;
 
 const ShareToSocial = memo((props) => {
 
@@ -157,7 +157,7 @@ const ShareToSocial = memo((props) => {
     //         });
 
     //     // let imagePath = null;
-    //     // RNFetchBlob.config({
+    //     // ReactNativeBlobUtil.config({
     //     //     fileCache: true,
     //     // })
     //     //     .fetch('GET', imagesPath[0])
@@ -199,7 +199,7 @@ const ShareToSocial = memo((props) => {
 
         for (const item of listIdImageHide) {
 
-            let result = await RNFetchBlob.config({
+            let result = await ReactNativeBlobUtil.config({
                 fileCache: true,
             }).fetch('GET', `${URL_ORIGINAL}${item?.link}`)
 

@@ -1,7 +1,9 @@
+import { BookingService } from "./booking";
 import { Branch } from "./branch";
 import { FileAvatar, Timestamp } from "./common";
 import { Partner } from "./partner";
 import { Service } from "./serviceGroup";
+import { MyVoucher } from "./voucher";
 
 export type Currency = {
   exchangeRate: number;
@@ -108,5 +110,6 @@ export type Order = {
   finalAmountDeposit: number;
   paidAmount: number;
   id: string;
-  services: { service: Service }[];
+  services: BookingService[];
+  partnerCoupons: MyVoucher[];
 } & Timestamp;
