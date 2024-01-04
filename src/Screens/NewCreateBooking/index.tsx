@@ -293,8 +293,6 @@ const NewCreateBooking = () => {
   }, [])
 
   const _handleConfirmPickTime = useCallback((data) => {
-    console.log({ data });
-
     dispatch(
       selectTime({
         hour: `${data?.valueInteger}`,

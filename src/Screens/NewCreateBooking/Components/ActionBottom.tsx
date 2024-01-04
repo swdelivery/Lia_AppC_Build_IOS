@@ -42,16 +42,11 @@ const ActionBottom = ({ isEditBooking, editBookingId }: Props) => {
   const infoUserRedux = useSelector((state) => state.infoUserReducer);
 
   const validateTime = () => {
-    const currentTime = new Date();
-    const inputTime = new Date();
+    const inputTime = new Date(dataDate);
     inputTime.setHours(parseInt(dataTime.hour, 10));
     inputTime.setMinutes(parseInt(dataTime.minute, 10));
 
-    if (inputTime > currentTime) {
-      return true;
-    } else {
-      return false;
-    }
+    return inputTime.getTime() > Date.now();
   }
 
   const _handleConfirmCreateBooking = () => {

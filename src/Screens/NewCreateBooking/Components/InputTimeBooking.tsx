@@ -28,6 +28,7 @@ import {
 } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { useDispatch, useSelector } from "react-redux";
+import { getTwoDigits } from "src/utils/date";
 
 type Props = {
   setShowModalDatePicker: any;
@@ -169,8 +170,9 @@ const InputTimeBooking = memo(
               <Text>
                 Đã chọn:{" "}
                 <Text color={BASE_COLOR} weight="bold">
-                  {" "}
-                  {`${dataTime?.hour} : ${dataTime?.minute}`}
+                  {` ${getTwoDigits(dataTime?.hour)} : ${getTwoDigits(
+                    dataTime?.minute
+                  )}`}
                 </Text>
               </Text>
             ) : (

@@ -30,17 +30,16 @@ const CardDoctor = ({ data, onClose }: Props) => {
     const dispatch = useDispatch()
 
     const _handleChoiceDoctor = () => {
-        console.log({ data });
-        if (data?.identification == 'doctor') {
-            dispatch(selectDoctor(data))
-            dispatch(clearPractitioner())
-            onClose()
-        } else if (data?.identification == 'practitioner') {
-            dispatch(selectPractitioner(data))
-            dispatch(clearDoctor())
-            onClose()
-        }
-    }
+      if (data?.identification == "doctor") {
+        dispatch(selectDoctor(data));
+        dispatch(clearPractitioner());
+        onClose();
+      } else if (data?.identification == "practitioner") {
+        dispatch(selectPractitioner(data));
+        dispatch(clearDoctor());
+        onClose();
+      }
+    };
 
     const _handleGoDetail = useCallback(() => {
         if (data?.identification == 'doctor') {
