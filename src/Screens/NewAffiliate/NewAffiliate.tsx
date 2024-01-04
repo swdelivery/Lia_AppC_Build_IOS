@@ -32,6 +32,8 @@ import { checkStepUnlockAffiliate } from '@Redux/Action/Affiilate'
 import ModalShareCodeAffiliate from './Components/ModalShareCodeAffiliate'
 import ModalRequireBecomeCTV from './Components/ModalRequireBecomeCTV'
 import ModalShowInfoRanked from './Components/ModalShowInfoRanked'
+import ModalPolicy from './Components/ModalPolicy'
+import useVisible from 'src/Hooks/useVisible'
 
 const WIDTH_CARD = _width - 8 * 4;
 const WIDTH_PROCESS_BAR = (_width - 8 * 4) - 8 * 4;
@@ -51,6 +53,8 @@ const NewAffiliate = () => {
   const [showModalRequireBecomeCTV, setShowModalRequireBecomeCTV] =
     useState(false);
   const [showModalInfoRanked, setShowModalInfoRanked] = useState(false);
+
+  const visiblePolicy = useVisible()
 
   useEffect(() => {
     dispatch(getPartnerLevel.request())
@@ -95,6 +99,7 @@ const NewAffiliate = () => {
         alignItems='center'
         width={_width}>
         <CardLevel
+          showPolicy={visiblePolicy.show}
           setShowModalInfoRanked={setShowModalInfoRanked}
           data={item} />
       </Column>
@@ -134,9 +139,8 @@ const NewAffiliate = () => {
           <Spacer top={_heightScale(8 * 6)} />
           <FlatList
             onMomentumScrollEnd={(event) => {
-              const index =
-                event.nativeEvent.contentOffset.x /
-                event.nativeEvent.layoutMeasurement.width;
+              const index = Math.ceil(event.nativeEvent.contentOffset.x /
+                event.nativeEvent.layoutMeasurement.width)
               setCurrIndexCard(index);
             }}
             showsHorizontalScrollIndicator={false}
@@ -208,6 +212,7 @@ const NewAffiliate = () => {
           isShow={showModalInfoRanked}
           onHideModal={() => setShowModalInfoRanked(false)}
         />
+        <ModalPolicy visiblePolicy={visiblePolicy} />
       </ImageBackground>
 
     </Screen>

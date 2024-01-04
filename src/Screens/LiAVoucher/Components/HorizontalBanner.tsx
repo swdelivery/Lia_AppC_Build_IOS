@@ -46,28 +46,7 @@ const HorizontalBanner = ({
   const [interval, setInterval] = useState(null);
 
   useEffect(() => {
-    // setListImage([
-    //   {
-    //     _id: "4",
-    //     url: `https://img2.soyoung.com/upload/20210924/9/e4b63471060c8d9cfd934752fb3dafe8.jpg`,
-    //   },
-    //   {
-    //     _id: "1",
-    //     url: `https://img2.soyoung.com/upload/20210924/2/9a0441f5159d66125f5252bd886c3946.jpg`,
-    //   },
-    //   {
-    //     _id: "2",
-    //     url: `https://img2.soyoung.com/upload/20210924/6/642739b17effba4d31b163757e4d0114.jpg`,
-    //   },
-    //   {
-    //     _id: "3",
-    //     url: `https://img2.soyoung.com/upload/20210924/4/b61733f1b5fafde858db04c7bcb04869.jpg`,
-    //   },
-    // ]);
-
     _getListImageBanner()
-
-    // startInterval()
   }, []);
 
   const _getListImageBanner = useCallback(async () => {

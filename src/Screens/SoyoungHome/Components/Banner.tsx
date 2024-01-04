@@ -138,7 +138,8 @@ const Banner = () => {
             const index =
               event.nativeEvent.contentOffset.x /
               event.nativeEvent.layoutMeasurement.width;
-            setCurrIndexBanner(index);
+            const roundedNumber = Math.ceil(index);
+            setCurrIndexBanner(roundedNumber);
           }}
           pagingEnabled
           renderItem={_renderImage}

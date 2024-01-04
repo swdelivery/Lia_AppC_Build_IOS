@@ -2,7 +2,7 @@ import Row from '@Components/Row'
 import Text from '@Components/Text'
 import { styleElement } from '@Constant/StyleElement'
 import { openActionSheetIcon, selectItemActionSheetIcon } from '@Redux/modal/actions'
-import React, { ReactNode, memo, useCallback, useEffect, useMemo, useState } from 'react'
+import React, { ReactNode, forwardRef, memo, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react'
 import { StyleSheet, TouchableOpacity, View, ViewStyle } from 'react-native'
 import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 import { useDispatch, useSelector } from 'react-redux'
@@ -21,7 +21,7 @@ type Props = ViewStyle & {
   children?: ReactNode;
 }
 
-const ModalBottom = ({ visible, heightModal, onClose, children, ...props }: Props) => {
+const ModalBottom = ({ visible, heightModal, onClose, children, ...props }: Props, ref: any) => {
 
   const containerStyle = useMemo(() => {
     return { ...props };
@@ -29,6 +29,12 @@ const ModalBottom = ({ visible, heightModal, onClose, children, ...props }: Prop
 
   const opacityBackDrop = useSharedValue(0);
   const tranYModal = useSharedValue(0);
+
+  useImperativeHandle(ref, () => ({
+    requestCloseModal: () => {
+      _handleHideModal()
+    },
+  }));
 
   useEffect(() => {
     if (visible && heightModal) {
@@ -91,7 +97,7 @@ const ModalBottom = ({ visible, heightModal, onClose, children, ...props }: Prop
 }
 
 
-export default ModalBottom
+export default forwardRef(ModalBottom)
 
 const styles = StyleSheet.create({
   cancelBtn: {

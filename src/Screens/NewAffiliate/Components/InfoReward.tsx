@@ -76,8 +76,22 @@ const InfoReward = ({ currIndexCard }: Props) => {
         break;
     }
   }, [currIndexCard])
+  const generateIcon4 = useMemo(() => {
+    switch (currIndexCard) {
+      case 0:
+        return <Image style={styles.btn} source={require('../../../NewImage/Affiliate/bronze4.png')} />
+      case 1:
+        return <Image style={styles.btn} source={require('../../../NewImage/Affiliate/silver4.png')} />
+      case 2:
+        return <Image style={styles.btn} source={require('../../../NewImage/Affiliate/gold4.png')} />
+      case 3:
+        return <Image style={styles.btn} source={require('../../../NewImage/Affiliate/platinum4.png')} />
+      default:
+        break;
+    }
+  }, [currIndexCard])
 
-  const EachItem = useCallback(({ title, value, icon }) => {
+  const EachItem = useCallback(({ title, value, icon, hideValue = false }) => {
     return (
       <Column
         alignItems='center'
@@ -92,6 +106,7 @@ const InfoReward = ({ currIndexCard }: Props) => {
           icon
         }
         <Text
+          opacity={hideValue ? 0 : 1}
           weight='bold'
           size={14}
           color={WHITE}>
@@ -110,7 +125,7 @@ const InfoReward = ({ currIndexCard }: Props) => {
         Phần thưởng quý khách
       </Text>
 
-      <Row gap={8 * 3} marginTop={8 * 2}>
+      <Row justifyContent='center' gap={8 * 4} marginTop={8 * 2}>
         <EachItem
           title={`Giảm giá${`\n`}trực tiếp`}
           value={currLevelByIndex?.promotion?.discountRetailService}
@@ -125,6 +140,12 @@ const InfoReward = ({ currIndexCard }: Props) => {
           title={`Phần trăm${`\n`}hoa hồng`}
           value={currLevelByIndex?.promotion?.commissionRate}
           icon={generateIcon3}
+        />
+        <EachItem
+          hideValue
+          title={`Quà tặng${`\n`}sinh nhật`}
+          value={currLevelByIndex?.promotion?.commissionRate}
+          icon={generateIcon4}
         />
       </Row>
 

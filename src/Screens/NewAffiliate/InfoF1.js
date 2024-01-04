@@ -16,6 +16,7 @@ import { useSelector } from 'react-redux'
 import moment from 'moment'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { getListPartnerLevelState } from '@Redux/affiliate/selectors'
+import EmptyResultData from '@Components/LoadingIndicator/EmptyResultData'
 
 
 
@@ -36,51 +37,61 @@ const Tab1 = (props) => {
     }, [])
 
     return (
-        <ScrollView>
+        <>
             {
-                props?.data?.map((item, index) => {
-                    return (
-                        <TouchableOpacity
-                            onPress={() => {
-                            }}
-                            style={{
-                                padding: _moderateScale(8 * 2),
-                                borderBottomWidth: .5,
-                                borderColor: 'rgba(0,0,0,.2)',
-                                alignItems: 'center'
-                            }}>
-                            <View style={{ flexDirection: 'row' }}>
-                                <View style={{ flex: 4 }}>
-                                    <Text style={[stylesFont.fontNolanBold, , { fontSize: _moderateScale(14) }]}>
-                                        {index + 1}. {item?.serviceName}
-                                    </Text>
-                                </View>
-                                <View style={{ flex: 2, alignItems: 'flex-end' }}>
-                                    <Text style={[stylesFont.fontNolan500, { fontSize: _moderateScale(14) }]}>
-                                        {formatMonney(item?.finalPrice)} vnđ
-                                    </Text>
-                                </View>
-                            </View>
-                            <View style={{ flexDirection: 'row', marginTop: _moderateScale(8) }}>
-                                <View style={{ flex: 4 }}>
-                                    <Text style={[stylesFont.fontNolan, , { fontSize: _moderateScale(14) }]}>
-                                        Phát sinh thưởng
-                                    </Text>
-                                </View>
-                                <View style={{ flex: 2, alignItems: 'flex-end' }}>
-                                    <Text style={[stylesFont.fontNolanBold, { fontSize: _moderateScale(14), color: Color.PRICE_ORANGE }]}>
-                                        + {
-                                            formatMonney(item?.finalPrice * (currPartnerLevel?.promotion?.commissionRate / 100))
-                                        } vnđ
-                                    </Text>
-                                </View>
-                            </View>
-                        </TouchableOpacity>
-                    )
-                })
+                props?.data?.length > 0 ?
+                    <ScrollView>
+                        {
+                            props?.data?.map((item, index) => {
+                                return (
+                                    <TouchableOpacity
+                                        onPress={() => {
+                                        }}
+                                        style={{
+                                            padding: _moderateScale(8 * 2),
+                                            borderBottomWidth: .5,
+                                            borderColor: 'rgba(0,0,0,.2)',
+                                            alignItems: 'center'
+                                        }}>
+                                        <View style={{ flexDirection: 'row' }}>
+                                            <View style={{ flex: 4 }}>
+                                                <Text style={[stylesFont.fontNolanBold, , { fontSize: _moderateScale(14) }]}>
+                                                    {index + 1}. {item?.serviceName}
+                                                </Text>
+                                            </View>
+                                            <View style={{ flex: 2, alignItems: 'flex-end' }}>
+                                                <Text style={[stylesFont.fontNolan500, { fontSize: _moderateScale(14) }]}>
+                                                    {formatMonney(item?.finalPrice)} vnđ
+                                                </Text>
+                                            </View>
+                                        </View>
+                                        <View style={{ flexDirection: 'row', marginTop: _moderateScale(8) }}>
+                                            <View style={{ flex: 4 }}>
+                                                <Text style={[stylesFont.fontNolan, , { fontSize: _moderateScale(14) }]}>
+                                                    Phát sinh thưởng
+                                                </Text>
+                                            </View>
+                                            <View style={{ flex: 2, alignItems: 'flex-end' }}>
+                                                <Text style={[stylesFont.fontNolanBold, { fontSize: _moderateScale(14), color: Color.PRICE_ORANGE }]}>
+                                                    + {
+                                                        formatMonney(item?.finalPrice * (currPartnerLevel?.promotion?.commissionRate / 100))
+                                                    } vnđ
+                                                </Text>
+                                            </View>
+                                        </View>
+                                    </TouchableOpacity>
+                                )
+                            })
+                        }
+                    </ScrollView>
+                    :
+                    <>
+                        <EmptyResultData title='Chưa có đơn hàng' />
+                        <View style={{ height: 100 }} />
+                    </>
             }
+        </>
 
-        </ScrollView>
     )
 }
 
@@ -101,98 +112,109 @@ const Tab2 = (props) => {
     }, [])
 
     return (
-        <ScrollView>
+        <>
             {
-                props?.data?.map((item, index) => {
-                    return (
-                        <TouchableOpacity
-                            onPress={() => {
-                            }}
-                            style={{
-                                padding: _moderateScale(8 * 2),
-                                borderBottomWidth: .5,
-                                borderColor: 'rgba(0,0,0,.2)',
-                                alignItems: 'center'
-                            }}>
-                            <View style={{ flexDirection: 'row' }}>
-                                <View style={{ flex: 4 }}>
-                                    <Text style={[stylesFont.fontNolanBold, , { fontSize: _moderateScale(14) }]}>
-                                        {index + 1}. {item?.services?.map(item => item?.service?.name)}
-                                    </Text>
-                                </View>
-                                <View style={{ flex: 2, alignItems: 'flex-end' }}>
-                                    <Text style={[stylesFont.fontNolan500, { fontSize: _moderateScale(14) }]}>
-                                        {
-                                            formatMonney(item?.services?.reduce((total, item) => {
-                                                return total += item?.finalPrice
-                                            }, 0))
-                                        } vnđ
-                                    </Text>
-                                </View>
-                            </View>
-                            <View style={{ flexDirection: 'row', marginTop: _moderateScale(8) }}>
-                                <View style={{ flex: 4 }}>
-                                    <Text style={[stylesFont.fontNolan, , { fontSize: _moderateScale(14) }]}>
-                                        Hoa hồng dự kiến
-                                    </Text>
-                                </View>
-                                <View style={{ flex: 2, alignItems: 'flex-end' }}>
-                                    <Text style={[stylesFont.fontNolanBold, { fontSize: _moderateScale(14), color: Color.PRICE_ORANGE }]}>
-                                        + {
-                                            formatMonney((item?.services?.reduce((total, item) => {
-                                                return total += item?.finalPrice
-                                            }, 0)) * (currPartnerLevel?.promotion?.commissionRate / 100))
-                                        } vnđ
-                                    </Text>
-                                </View>
-                            </View>
-                            <View style={{ width: '100%' }}>
-                                <View style={{ flexDirection: 'row', marginTop: _moderateScale(8) }}>
-                                    <View style={{}}>
-                                        <Text style={[stylesFont.fontNolan, , { fontSize: _moderateScale(14) }]}>
-                                            Thời gian hẹn:
-                                        </Text>
-                                    </View>
-                                    <View style={{ alignItems: 'flex-start' }}>
-                                        <Text style={[stylesFont.fontNolan500, { fontSize: _moderateScale(14), color: Color.GREY }]}>
-                                            {moment(item?.appointmentDateFinal?.date).format("DD/MM/YYYY")}
-                                        </Text>
-                                    </View>
-                                </View>
-                            </View>
+                props?.data?.length > 0 ?
+                    <ScrollView>
+                        {
+                            props?.data?.map((item, index) => {
+                                return (
+                                    <TouchableOpacity
+                                        onPress={() => {
+                                        }}
+                                        style={{
+                                            padding: _moderateScale(8 * 2),
+                                            borderBottomWidth: .5,
+                                            borderColor: 'rgba(0,0,0,.2)',
+                                            alignItems: 'center'
+                                        }}>
+                                        <View style={{ flexDirection: 'row' }}>
+                                            <View style={{ flex: 4 }}>
+                                                <Text style={[stylesFont.fontNolanBold, , { fontSize: _moderateScale(14) }]}>
+                                                    {index + 1}. {item?.services?.map(item => item?.service?.name)}
+                                                </Text>
+                                            </View>
+                                            <View style={{ flex: 2, alignItems: 'flex-end' }}>
+                                                <Text style={[stylesFont.fontNolan500, { fontSize: _moderateScale(14) }]}>
+                                                    {
+                                                        formatMonney(item?.services?.reduce((total, item) => {
+                                                            return total += item?.finalPrice
+                                                        }, 0))
+                                                    } vnđ
+                                                </Text>
+                                            </View>
+                                        </View>
+                                        <View style={{ flexDirection: 'row', marginTop: _moderateScale(8) }}>
+                                            <View style={{ flex: 4 }}>
+                                                <Text style={[stylesFont.fontNolan, , { fontSize: _moderateScale(14) }]}>
+                                                    Hoa hồng dự kiến
+                                                </Text>
+                                            </View>
+                                            <View style={{ flex: 2, alignItems: 'flex-end' }}>
+                                                <Text style={[stylesFont.fontNolanBold, { fontSize: _moderateScale(14), color: Color.PRICE_ORANGE }]}>
+                                                    + {
+                                                        formatMonney((item?.services?.reduce((total, item) => {
+                                                            return total += item?.finalPrice
+                                                        }, 0)) * (currPartnerLevel?.promotion?.commissionRate / 100))
+                                                    } vnđ
+                                                </Text>
+                                            </View>
+                                        </View>
+                                        <View style={{ width: '100%' }}>
+                                            <View style={{ flexDirection: 'row', marginTop: _moderateScale(8) }}>
+                                                <View style={{}}>
+                                                    <Text style={[stylesFont.fontNolan, , { fontSize: _moderateScale(14) }]}>
+                                                        Thời gian hẹn:
+                                                    </Text>
+                                                </View>
+                                                <View style={{ alignItems: 'flex-start' }}>
+                                                    <Text style={[stylesFont.fontNolan500, { fontSize: _moderateScale(14), color: Color.GREY }]}>
+                                                        {moment(item?.appointmentDateFinal?.date).format("DD/MM/YYYY")}
+                                                    </Text>
+                                                </View>
+                                            </View>
+                                        </View>
 
-                            <View style={{ width: '100%' }}>
-                                <View style={{ flexDirection: 'row', marginTop: _moderateScale(8) }}>
-                                    <View style={{}}>
-                                        <Text style={[stylesFont.fontNolan, , { fontSize: _moderateScale(14) }]}>
-                                            Chi nhánh:
-                                        </Text>
-                                    </View>
-                                    <View style={{ alignItems: 'flex-start' }}>
-                                        <Text style={[stylesFont.fontNolan500, { fontSize: _moderateScale(14), color: Color.GREY }]}>
-                                            {item?.branch?.name}
-                                        </Text>
-                                    </View>
-                                </View>
-                            </View>
+                                        <View style={{ width: '100%' }}>
+                                            <View style={{ flexDirection: 'row', marginTop: _moderateScale(8) }}>
+                                                <View style={{}}>
+                                                    <Text style={[stylesFont.fontNolan, , { fontSize: _moderateScale(14) }]}>
+                                                        Chi nhánh:
+                                                    </Text>
+                                                </View>
+                                                <View style={{ alignItems: 'flex-start' }}>
+                                                    <Text style={[stylesFont.fontNolan500, { fontSize: _moderateScale(14), color: Color.GREY }]}>
+                                                        {item?.branch?.name}
+                                                    </Text>
+                                                </View>
+                                            </View>
+                                        </View>
 
-                            <View style={{ width: '100%' }}>
-                                <View style={{ flexDirection: 'row', marginTop: _moderateScale(8), alignItems: 'center' }}>
-                                    <Text style={{ ...stylesFont.fontNolan500 }}>
-                                        {`Trạng thái: `}
-                                    </Text>
-                                    {
-                                        renderStatusBookingByCode(item?.status)
-                                    }
-                                </View>
-                            </View>
+                                        <View style={{ width: '100%' }}>
+                                            <View style={{ flexDirection: 'row', marginTop: _moderateScale(8), alignItems: 'center' }}>
+                                                <Text style={{ ...stylesFont.fontNolan500 }}>
+                                                    {`Trạng thái: `}
+                                                </Text>
+                                                {
+                                                    renderStatusBookingByCode(item?.status)
+                                                }
+                                            </View>
+                                        </View>
 
-                        </TouchableOpacity>
-                    )
-                })
+                                    </TouchableOpacity>
+                                )
+                            })
+                        }
+                        <View style={{ height: 100 }} />
+                    </ScrollView>
+                    :
+                    <>
+                        <EmptyResultData title='Chưa có booking' />
+                        <View style={{ height: 100 }} />
+                    </>
             }
-            <View style={{ height: 100 }} />
-        </ScrollView>
+        </>
+
     )
 }
 

@@ -22,9 +22,10 @@ const WIDTH_PROCESS_BAR = (_width - 8 * 4) - 8 * 4;
 type Props = {
   data: PartnerLevel;
   setShowModalInfoRanked: (state) => void;
+  showPolicy: () => void;
 }
 
-const CardLevel = ({ data, setShowModalInfoRanked }: Props) => {
+const CardLevel = ({ data, setShowModalInfoRanked, showPolicy }: Props) => {
   const { data: listPartnerLevel } = useSelector(getListPartnerLevelState)
   const { data: currPartnerLevel } = useSelector(getCurrPartnerLevelState)
   const { infoUser: { liaPoint } } = useSelector(getInfoUserReducer);
@@ -86,7 +87,7 @@ const CardLevel = ({ data, setShowModalInfoRanked }: Props) => {
           weight='bold'>
           Chào mừng quý khách đến với LiA
         </Text>
-        <TouchableOpacity onPress={() => setShowModalInfoRanked(true)}>
+        <TouchableOpacity onPress={showPolicy}>
           <Row>
             <Text
               color={WHITE}
