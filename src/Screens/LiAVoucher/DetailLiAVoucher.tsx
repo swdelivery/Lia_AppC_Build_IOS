@@ -107,16 +107,17 @@ const DetailLiAVoucher = (props) => {
               </View>
               <Column paddingTop={8} marginLeft={8} flex={1}>
                 <Text numberOfLines={2} style={sizeText.small_500}>
-                  {props?.route?.params?.data?.name}
+                  {props?.route?.params?.data?.code?.toUpperCase()}
                 </Text>
                 <Text numberOfLines={2} style={sizeText.small_bold}>
                   {props?.route?.params?.data?.description}
                 </Text>
-                <Text numberOfLines={2} style={[sizeText.small]}>
-                  Hiệu lực đến ngày:{" "}
-                  {moment(props?.route?.params?.data?.expiredAt).format(
-                    "DD/MM/YYYY"
-                  )}
+                <Text fontStyle="italic" size={12} numberOfLines={2}>
+                  Hiệu lực đến ngày: <Text weight="bold" color={"#AA827C"} fontStyle="italic" size={12}>
+                    {moment(props?.route?.params?.data?.expiredAt).format(
+                      "DD/MM/YYYY"
+                    )}
+                  </Text>
                 </Text>
               </Column>
             </View>

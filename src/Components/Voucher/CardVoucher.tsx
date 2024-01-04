@@ -55,13 +55,14 @@ export default function CardVoucher({ data }: Props) {
       <View style={[styles.voucherBox__left, shadow]}>
         <Image avatar={data?.coupon?.couponImg} style={styles.avatarVoucher} />
         <Column flex={1} marginLeft={8}>
-          <Text numberOfLines={1} weight='medium' size={12}>{data?.coupon?.name}</Text>
+          <Text numberOfLines={1} weight='medium' size={12}>{data?.coupon?.code.toUpperCase()}</Text>
           <Text numberOfLines={2} weight='medium' size={10}>
             {data?.coupon?.description}
           </Text>
-          <Text numberOfLines={2} weight='regular' size={10}>
-            Hiệu lực đến:{" "}
-            {moment(data?.coupon?.expiredAt).format("DD/MM/YYYY")}
+          <Text fontStyle="italic" size={10} numberOfLines={2}>
+            Hiệu lực đến ngày: <Text weight="bold" color={"#AA827C"} fontStyle="italic" size={10}>
+              {moment(data?.coupon?.expiredAt).format("DD/MM/YYYY")}
+            </Text>
           </Text>
         </Column>
       </View>

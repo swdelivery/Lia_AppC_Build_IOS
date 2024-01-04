@@ -41,12 +41,14 @@ export default function VoucherItem({
       <View style={styles.voucherBox__left}>
         <Image style={styles.avatarVoucher} avatar={item?.couponImg} />
         <Column flex={1} marginLeft={8}>
-          <Text numberOfLines={2} style={sizeText.small_500}>{item?.name}</Text>
+          <Text numberOfLines={2} style={sizeText.small_500}>{item?.code.toUpperCase()}</Text>
           <Text numberOfLines={2} style={sizeText.small_bold}>
             {item?.description}
           </Text>
-          <Text numberOfLines={2} style={[sizeText.small]}>
-            Hiệu lực đến ngày: {moment(item?.expiredAt).format("DD/MM/YYYY")}
+          <Text fontStyle="italic" size={12} numberOfLines={2}>
+            Hiệu lực đến ngày: <Text weight="bold" color={"#AA827C"} fontStyle="italic" size={12}>
+              {moment(item?.expiredAt).format("DD/MM/YYYY")}
+            </Text>
           </Text>
         </Column>
       </View>
