@@ -1,5 +1,5 @@
 import { Platform, StyleSheet, View } from "react-native";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { BASE_COLOR } from "../../../Constant/Color";
 import { _moderateScale, _width, _widthScale } from "../../../Constant/Scale";
 import { styleElement } from "../../../Constant/StyleElement";
@@ -12,9 +12,11 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import EachImage from "./EachImage";
-import ScreenKey from "../../../Navigation/ScreenKey";
-import { navigation } from "../../../../rootNavigation";
 import { FlatList } from "react-native-gesture-handler";
+import { ConfigFileCode } from "@typings/configFile";
+import { getConfigFileByCode } from "@Redux/Action/SpinWheelAction";
+import { first } from "lodash";
+import { getImageAvataUrl } from "src/utils/avatar";
 
 type Props = {
   flagIndexHasChanged: SharedValue<number>;
@@ -41,26 +43,28 @@ const HorizontalBanner = ({
   const [interval, setInterval] = useState(null);
 
   useEffect(() => {
-    setListImage([
-      {
-        _id: "4",
-        url: `https://img2.soyoung.com/upload/20210924/9/e4b63471060c8d9cfd934752fb3dafe8.jpg`,
-      },
-      {
-        _id: "1",
-        url: `https://img2.soyoung.com/upload/20210924/2/9a0441f5159d66125f5252bd886c3946.jpg`,
-      },
-      {
-        _id: "2",
-        url: `https://img2.soyoung.com/upload/20210924/6/642739b17effba4d31b163757e4d0114.jpg`,
-      },
-      {
-        _id: "3",
-        url: `https://img2.soyoung.com/upload/20210924/4/b61733f1b5fafde858db04c7bcb04869.jpg`,
-      },
-    ]);
+    _getListImageBanner();
+  }, []);
 
-    // startInterval()
+  const _getListImageBanner = useCallback(async () => {
+    const [res1, res2, res3, res4] = await Promise.all([
+      getConfigFileByCode(ConfigFileCode.BannerVoucher1),
+      getConfigFileByCode(ConfigFileCode.BannerVoucher2),
+      getConfigFileByCode(ConfigFileCode.BannerVoucher3),
+      getConfigFileByCode(ConfigFileCode.BannerVoucher4),
+    ]);
+    let image1 = first(res1?.data?.data?.fileArr);
+    let image2 = first(res2?.data?.data?.fileArr);
+    let image3 = first(res3?.data?.data?.fileArr);
+    let image4 = first(res4?.data?.data?.fileArr);
+
+    let newFormat = [image1, image2, image3, image4]?.map((item) => {
+      return {
+        _id: item?._id,
+        url: getImageAvataUrl(item),
+      };
+    });
+    setListImage(newFormat);
   }, []);
 
   useEffect(() => {
@@ -102,7 +106,10 @@ const HorizontalBanner = ({
 
     let pColor;
     if (Platform.OS == "ios") {
-      primaryColor.value = result?.background;
+      primaryColor.value =
+        result?.background.toLowerCase() === "#ffffff"
+          ? result?.primary
+          : result?.background;
       secondColor.value = result?.secondary;
     } else {
       primaryColor.value = result?.dominant;

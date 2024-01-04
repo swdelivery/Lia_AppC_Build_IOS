@@ -52,7 +52,7 @@ const ItemTreatment = ({ data }: Props) => {
         weight='bold'>{doctorName}</Text>
 
       <Row gap={4}>
-        <Text>{moment(created).format('HH:MM')}</Text>
+        <Text>{moment(created).format('HH:mm')}</Text>
         <Text>|</Text>
         <Text>{moment(created).format('DD/MM/YYYY')}</Text>
       </Row>

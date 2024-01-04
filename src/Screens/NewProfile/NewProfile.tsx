@@ -77,7 +77,7 @@ const NewProfile = () => {
               data={[
                 {
                   flag: "lia-wallet",
-                  name: "Ví Lia",
+                  name: "Ví LiA",
                   icon: <IconProfileWallet />,
                 },
                 {

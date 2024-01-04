@@ -1,7 +1,6 @@
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { BASE_COLOR, WHITE } from '../../Constant/Color'
-import { getStatusBarHeight } from 'react-native-status-bar-height'
+import { BASE_COLOR, WHITE } from "../../Constant/Color";
 import { _moderateScale } from '../../Constant/Scale'
 import { IconBXH, IconBackWhite, IconEyeBase, IconWallet } from '../../Components/Icon/Icon'
 import { stylesFont } from '../../Constant/Font'
@@ -10,6 +9,7 @@ import { navigation } from '../../../rootNavigation'
 import ScreenKey from '../../Navigation/ScreenKey'
 import { getListInvitee } from '../../Redux/Action/Affiilate'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import EmptyResultData from '@Components/LoadingIndicator/EmptyResultData'
 
 
 const ItemF1 = (data) => {
@@ -37,7 +37,7 @@ const ListF1 = () => {
 
     const [listInvitee, setListInvitee] = useState([])
 
-    const {top} = useSafeAreaInsets()
+    const { top } = useSafeAreaInsets()
 
     useEffect(() => {
         _getListF1()
@@ -83,6 +83,8 @@ const ListF1 = () => {
                 </View>
             </View>
             <FlatList
+                contentContainerStyle={{ flexGrow: 1 }}
+                ListEmptyComponent={<EmptyResultData title='Danh sách người giới thiệu rỗng' />}
                 renderItem={_renderItem}
                 data={listInvitee}
                 keyExtractor={(item, index) => index}

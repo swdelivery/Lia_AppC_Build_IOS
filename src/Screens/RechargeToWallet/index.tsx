@@ -12,10 +12,12 @@ import { sizeIcon } from '@Constant/Icon'
 import { _moderateScale } from '@Constant/Scale'
 import { createPaymentRequest, uploadModule } from '@Redux/Action/BookingAction'
 import Clipboard from "@react-native-clipboard/clipboard";
+import { ConfigDataCode } from '@typings/configData'
 import { isEmpty } from 'lodash'
 import React, { useEffect, useMemo, useState } from 'react'
-import { Image, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native'
+import { Alert, Image, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native'
 import ImagePicker from 'react-native-image-crop-picker'
+import useConfigData from 'src/Hooks/useConfigData'
 import useConfirmation from 'src/Hooks/useConfirmation'
 import { useNavigate } from 'src/Hooks/useNavigation'
 
@@ -42,42 +44,51 @@ const RechargeToWallet = () => {
   }
 
   const _handleConfirm = async () => {
-    showConfirmation(
-      "Xác nhận",
-      `Xác nhận gửi yêu cầu nạp ${valueMoney} VNĐ vào ví?`,
-      async () => {
-        let listImages = listImageBanking.map((i, index) => {
-          return {
-            uri: i.path,
-            width: i.width,
-            height: i.height,
-            mime: i.mime,
-            type: i.mime,
-            name: `${i.modificationDate}_${index}`
-          };
-        })
 
-        let resultUploadImage = await uploadModule({
-          moduleName: 'paymentRequest',
-          files: listImages
-        })
-        if (resultUploadImage.isAxiosError) return
+    const numberRegex = /^[1-9]\d*$/;
+    let checkIsMoney = numberRegex.test(valueMoney?.split('.')?.join(''));
+    if (!checkIsMoney) {
+      return Alert.alert('Vui lòng nhập đúng định dạng tiền')
+    } else {
+      showConfirmation(
+        "Xác nhận",
+        `Xác nhận gửi yêu cầu nạp ${valueMoney} VNĐ vào ví?`,
+        async () => {
+          let listImages = listImageBanking.map((i, index) => {
+            return {
+              uri: i.path,
+              width: i.width,
+              height: i.height,
+              mime: i.mime,
+              type: i.mime,
+              name: `${i.modificationDate}_${index}`
+            };
+          })
 
-        let listIdImageHasUpload = resultUploadImage?.data?.data.map(item => item._id);
-        let dataFetchCreatePaymentRequest = {
-          paymentFor: "WALLET",
-          amount: Number(valueMoney?.split('.')?.join('')),
-          isRefund: false,
-          methodCode: "CARDTRANSFER",
-          currencyCode: "VND",
-          description: valueDescription,
-          images: listIdImageHasUpload
+          let resultUploadImage = await uploadModule({
+            moduleName: 'paymentRequest',
+            files: listImages
+          })
+          if (resultUploadImage.isAxiosError) return
+
+          let listIdImageHasUpload = resultUploadImage?.data?.data.map(item => item._id);
+          let dataFetchCreatePaymentRequest = {
+            paymentFor: "WALLET",
+            amount: Number(valueMoney?.split('.')?.join('')),
+            isRefund: false,
+            methodCode: "CARDTRANSFER",
+            currencyCode: "VND",
+            description: valueDescription,
+            images: listIdImageHasUpload
+          }
+          let resultCreatePaymentRequest = await createPaymentRequest(dataFetchCreatePaymentRequest);
+          if (resultCreatePaymentRequest?.isAxiosError) return;
+          navigation.goBack()
         }
-        let resultCreatePaymentRequest = await createPaymentRequest(dataFetchCreatePaymentRequest);
-        if (resultCreatePaymentRequest?.isAxiosError) return;
-        navigation.goBack()
-      }
-    );
+      );
+    }
+
+
   }
 
   const _handlePickImage = async () => {
@@ -95,12 +106,19 @@ const RechargeToWallet = () => {
   }
 
   const isDisabled = useMemo(() => {
-    if (!isEmpty(valueMoney) && !isEmpty(listImageBanking)) {
+    const numberRegex = /^[1-9]\d*$/;
+    let checkIsMoney = numberRegex.test(valueMoney?.split('.')?.join(''));
+
+    if (!isEmpty(valueMoney) && !isEmpty(listImageBanking) && checkIsMoney) {
       return false;
     } else {
       return true;
     }
   }, [valueMoney, listImageBanking]);
+
+  const bankName = useConfigData(ConfigDataCode.BankName);
+  const bankNumber = useConfigData(ConfigDataCode.BankNumber);
+  const bankOwner = useConfigData(ConfigDataCode.BankOwner);
 
   return (
     <Screen safeBottom>
@@ -121,7 +139,7 @@ const RechargeToWallet = () => {
               </Text>
               <Text
                 weight='bold'>
-                ACB
+                {bankName?.value}
               </Text>
             </Column>
             <Column
@@ -134,7 +152,7 @@ const RechargeToWallet = () => {
               <Row gap={8 * 2}>
                 <Text
                   weight='bold'>
-                  68686868
+                  {bankNumber?.value}
                 </Text>
 
                 <TouchableOpacity
@@ -164,7 +182,7 @@ const RechargeToWallet = () => {
               </Text>
               <Text
                 weight='bold'>
-                LIA MEDIA COMPANY
+                {bankOwner?.value}
               </Text>
             </Column>
           </Column>

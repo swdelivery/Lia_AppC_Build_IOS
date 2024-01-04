@@ -7,7 +7,7 @@ import { styleElement } from "@Constant/StyleElement";
 import { sizeText } from "@Constant/Text";
 import { MyVoucher } from "@typings/voucher";
 import moment from "moment";
-import React from "react";
+import React, { useMemo } from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
 import useCallbackItem from "src/Hooks/useCallbackItem";
 
@@ -20,31 +20,50 @@ type Props = {
 export default function MyVoucherItem({ item, onDetails, onUseCoupon }: Props) {
   const trigger = useCallbackItem(item);
 
+  const isUsed = useMemo(() => {
+    return item?.usedAt
+  }, [item])
+
   return (
     <TouchableOpacity onPress={trigger(onDetails)} style={styles.voucherBox}>
       <View style={styles.voucherBox__left}>
         <Image style={styles.avatarVoucher} avatar={item.coupon?.couponImg} />
         <Column flex={1} marginLeft={8}>
-          <Text style={sizeText.small_500}>{item.coupon?.name}</Text>
+          <Text numberOfLines={1} style={sizeText.small_500}>{item?.coupon?.code.toUpperCase()}</Text>
           <Text numberOfLines={2} style={sizeText.small_bold}>
-            {item.coupon?.description}
+            {item?.coupon?.description}
           </Text>
-          <Text numberOfLines={2} style={[sizeText.small]}>
-            Hiệu lực đến ngày:{" "}
-            {moment(item.coupon?.expiredAt).format("DD/MM/YYYY")}
+          <Text fontStyle="italic" size={12} numberOfLines={2}>
+            Hiệu lực đến ngày: <Text weight="bold" color={"#AA827C"} fontStyle="italic" size={12}>
+              {moment(item?.coupon?.expiredAt).format("DD/MM/YYYY")}
+            </Text>
           </Text>
         </Column>
       </View>
       <View style={styles.dashLine} />
       <View style={styles.voucherBox__right}>
-        <TouchableOpacity
-          onPress={trigger(onUseCoupon)}
-          style={styles.voucherBox__right__btn}
-        >
-          <Text color={WHITE} size={12} weight="bold">
-            Sử dụng
-          </Text>
-        </TouchableOpacity>
+        {
+          isUsed ?
+            <TouchableOpacity
+              disabled
+              onPress={trigger(onUseCoupon)}
+              style={[styles.voucherBox__right__btn, { opacity: .5 }]}
+            >
+              <Text color={WHITE} size={12} weight="bold">
+                Đã sử dụng
+              </Text>
+            </TouchableOpacity>
+            :
+            <TouchableOpacity
+              onPress={trigger(onUseCoupon)}
+              style={styles.voucherBox__right__btn}
+            >
+              <Text color={WHITE} size={12} weight="bold">
+                Sử dụng
+              </Text>
+            </TouchableOpacity>
+        }
+
       </View>
     </TouchableOpacity>
   );
@@ -56,6 +75,7 @@ const styles = StyleSheet.create({
     height: _moderateScale(8 * 3),
     ...styleElement.centerChild,
     backgroundColor: BASE_COLOR,
+    borderRadius: 4
   },
   avatarVoucher: {
     width: _moderateScale(8 * 8),

@@ -24,7 +24,7 @@ import SVGTrash from "src/SGV/trash.svg";
 import { BASE_COLOR } from "@Constant/Color";
 
 const RecentFind = memo((props) => {
-  const { navigation } = useNavigate();
+  const { navigation, navigate } = useNavigate();
   const [listRecent, setListRecent] = useState([]);
   const [listRecommend, setListRecommend] = useState([]);
 
@@ -107,9 +107,7 @@ const RecentFind = memo((props) => {
 
       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
         <TouchableOpacity
-          onPress={() => {
-            navigation.navigate("FACE_AI");
-          }}
+          onPress={navigate("FACE_AI")}
           style={styles.btnRecommend}
         >
           <View style={styles.btnRecommend__box}>
@@ -124,8 +122,9 @@ const RecentFind = memo((props) => {
           <Text style={styles.btnRecommend__text}>Tri Ân</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => navigation.navigate(ScreenKey.CREATE_BOOKING)}
-          style={styles.btnRecommend}>
+          onPress={navigate(ScreenKey.CREATE_BOOKING)}
+          style={styles.btnRecommend}
+        >
           <View style={styles.btnRecommend__box}>
             <CommentIcon color={BASE_COLOR} />
           </View>

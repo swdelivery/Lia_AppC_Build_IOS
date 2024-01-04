@@ -4,6 +4,7 @@ export enum ConfigDataCode {
   BankNumber = "BANK_NUMBER",
   BankOwner = "BANK_OWNER",
   WheelRule = "WHEEL_RULE",
+  LevelPolicy = "LEVEL_POLICY",
 }
 
 export type ConfigData = {

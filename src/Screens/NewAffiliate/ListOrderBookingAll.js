@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import React, { useCallback, useEffect, useState } from 'react'
+import { FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 import { IconBackWhite } from '../../Components/Icon/Icon'
 import { BASE_COLOR, WHITE } from '../../Constant/Color'
@@ -16,79 +16,101 @@ import { formatMonney, renderStatusBookingByCode } from '../../Constant/Utils'
 import { useSelector } from 'react-redux'
 import moment from 'moment'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { getListPartnerLevelState } from '@Redux/affiliate/selectors'
+import EmptyResultData from '@Components/LoadingIndicator/EmptyResultData'
 
 
 const ItemOrderService = (props) => {
+  const [infoPartner, setInfoPartner] = useState({});
 
-    const [infoPartner, setInfoPartner] = useState({})
-
-    useEffect(() => {
-        if (props?.data?.partnerId) {
-            _getPartnerById(props?.data?.partnerId)
-        }
-    }, [props?.data?.partnerId])
-
-    const _getPartnerById = async (id) => {
-        let result = await getUserById(id)
-        if (result?.isAxiosError) return;
-        setInfoPartner(result?.data?.data)
+  useEffect(() => {
+    if (props?.data?.partnerId) {
+      _getPartnerById(props?.data?.partnerId);
     }
+  }, [props?.data?.partnerId]);
 
-    return (
-        <TouchableOpacity
-            onPress={() => {
-            }}
-            style={{
-                padding: _moderateScale(8 * 2),
-                borderBottomWidth: .5,
-                borderColor: 'rgba(0,0,0,.2)',
-                alignItems: 'center'
-            }}>
-            <View style={{ flexDirection: 'row' }}>
-                <View style={{ flex: 4 }}>
-                    <Text style={[stylesFont.fontNolanBold, , { fontSize: _moderateScale(14) }]}>
-                        {
-                            props?.data?.serviceName
-                        }
-                    </Text>
-                </View>
-                <View style={{ flex: 2, alignItems: 'flex-end' }}>
-                    <Text style={[stylesFont.fontNolan500, { fontSize: _moderateScale(14) }]}>
-                        {formatMonney(props?.data?.finalPrice)} vnđ
-                    </Text>
-                </View>
-            </View>
-            <View style={{ flexDirection: 'row', marginTop: _moderateScale(8) }}>
-                <View style={{ flex: 4 }}>
-                    <Text style={[stylesFont.fontNolan, , { fontSize: _moderateScale(14) }]}>
-                        Phát sinh thưởng
-                    </Text>
-                </View>
-                <View style={{ flex: 2, alignItems: 'flex-end' }}>
-                    <Text style={[stylesFont.fontNolanBold, { fontSize: _moderateScale(14), color: Color.PRICE_ORANGE }]}>
-                        + {
-                            formatMonney(props?.data?.finalPrice * (props?.currPartnerLevel?.promotion?.commissionRate / 100))
-                        } vnđ
-                    </Text>
-                </View>
-            </View>
-            <View style={{ width: '100%' }}>
-                <View style={{ flexDirection: 'row', marginTop: _moderateScale(8) }}>
-                    <View style={{}}>
-                        <Text style={[stylesFont.fontNolan, , { fontSize: _moderateScale(14) }]}>
-                            Đơn hàng của:
-                        </Text>
-                    </View>
-                    <View style={{ alignItems: 'flex-start' }}>
-                        <Text style={[stylesFont.fontNolanBold, { fontSize: _moderateScale(14), color: Color.BLACK }]}>
-                            {
-                                infoPartner?.name
-                            }
-                        </Text>
-                    </View>
-                </View>
-            </View>
-            {/* <View style={{ width: '100%' }}>
+  const _getPartnerById = async (id) => {
+    let result = await getUserById(id);
+    if (result?.isAxiosError) return;
+    setInfoPartner(result?.data?.data);
+  };
+
+  return (
+    <TouchableOpacity
+      onPress={() => {}}
+      style={{
+        padding: _moderateScale(8 * 2),
+        borderBottomWidth: 0.5,
+        borderColor: "rgba(0,0,0,.2)",
+        alignItems: "center",
+      }}
+    >
+      <View style={{ flexDirection: "row" }}>
+        <View style={{ flex: 4 }}>
+          <Text
+            style={[
+              stylesFont.fontNolanBold,
+              ,
+              { fontSize: _moderateScale(14) },
+            ]}
+          >
+            {props?.data?.serviceName}
+          </Text>
+        </View>
+        <View style={{ flex: 2, alignItems: "flex-end" }}>
+          <Text
+            style={[stylesFont.fontNolan500, { fontSize: _moderateScale(14) }]}
+          >
+            {formatMonney(props?.data?.finalPrice)} vnđ
+          </Text>
+        </View>
+      </View>
+      <View style={{ flexDirection: "row", marginTop: _moderateScale(8) }}>
+        <View style={{ flex: 4 }}>
+          <Text
+            style={[stylesFont.fontNolan, , { fontSize: _moderateScale(14) }]}
+          >
+            Phát sinh thưởng
+          </Text>
+        </View>
+        <View style={{ flex: 2, alignItems: "flex-end" }}>
+          <Text
+            style={[
+              stylesFont.fontNolanBold,
+              { fontSize: _moderateScale(14), color: Color.PRICE_ORANGE },
+            ]}
+          >
+            +{" "}
+            {formatMonney(
+              props?.data?.finalPrice *
+                (props?.currPartnerLevel?.promotion?.commissionRate / 100)
+            )}{" "}
+            vnđ
+          </Text>
+        </View>
+      </View>
+      <View style={{ width: "100%" }}>
+        <View style={{ flexDirection: "row", marginTop: _moderateScale(8) }}>
+          <View style={{}}>
+            <Text
+              style={[stylesFont.fontNolan, , { fontSize: _moderateScale(14) }]}
+            >
+              Đơn hàng của:
+            </Text>
+          </View>
+          <View style={{ alignItems: "flex-start" }}>
+            <Text
+              style={[
+                stylesFont.fontNolanBold,
+                { fontSize: _moderateScale(14), color: Color.BLACK },
+              ]}
+            >
+              {infoPartner?.name}
+            </Text>
+          </View>
+        </View>
+      </View>
+      {/* <View style={{ width: '100%' }}>
                 <View style={{ flexDirection: 'row', marginTop: _moderateScale(8) }}>
                     <View style={{}}>
                         <Text style={[stylesFont.fontNolan, , { fontSize: _moderateScale(14) }]}>
@@ -102,50 +124,53 @@ const ItemOrderService = (props) => {
                     </View>
                 </View>
             </View> */}
-        </TouchableOpacity>
-    )
-}
+    </TouchableOpacity>
+  );
+};
 
 const Tab1 = (props) => {
+  const infoUserRedux = useSelector((state) => state.infoUserReducer?.infoUser);
+  const { data: listPartnerLevel } = useSelector(getListPartnerLevelState);
 
-    const infoUserRedux = useSelector(state => state.infoUserReducer?.infoUser)
-    const listPartnerLevelRedux = useSelector(state => state.affiliateReducer?.listPartnerLevel)
+  const [currPartnerLevel, setCurrPartnerLevel] = useState({});
 
-    const [currPartnerLevel, setCurrPartnerLevel] = useState({})
+  useEffect(() => {
+    let findCurrPartnerLevel = listPartnerLevel?.find(
+      (item) => item?.code == infoUserRedux?.levelCode
+    );
+    if (findCurrPartnerLevel?._id) {
+      setCurrPartnerLevel(findCurrPartnerLevel);
+    }
+  }, []);
 
-    useEffect(() => {
+  const _renderItem = useCallback(({ item }) => {
+    return <ItemOrderService currPartnerLevel={currPartnerLevel} data={item} />;
+  }, []);
 
-        let findCurrPartnerLevel = listPartnerLevelRedux?.find(item => item?.code == infoUserRedux?.levelCode);
-        console.log({ findCurrPartnerLevel });
-        if (findCurrPartnerLevel?._id) {
-            setCurrPartnerLevel(findCurrPartnerLevel)
-        }
-    }, [])
-
-    return (
-        <ScrollView>
-            {
-                props?.data?.map((item, index) => {
-                    return (
-                        <ItemOrderService currPartnerLevel={currPartnerLevel} data={item} key={index} />
-                    )
-                })
-            }
-            <View style={{ height: 100 }} />
-        </ScrollView>
-    )
-}
+  return (
+    <FlatList
+      contentContainerStyle={{ flexGrow: 1 }}
+      ListEmptyComponent={<EmptyResultData title="Chưa có đơn hàng" />}
+      renderItem={_renderItem}
+      data={props?.data}
+      keyExtractor={(item, index) => index}
+      ListFooterComponent={() => {
+        return <View style={{ height: 100 }} />;
+      }}
+    />
+  );
+};
 
 const Tab2 = (props) => {
 
     const infoUserRedux = useSelector(state => state.infoUserReducer?.infoUser)
-    const listPartnerLevelRedux = useSelector(state => state.affiliateReducer?.listPartnerLevel)
+    const { data: listPartnerLevel } = useSelector(getListPartnerLevelState)
 
     const [currPartnerLevel, setCurrPartnerLevel] = useState({})
 
     useEffect(() => {
 
-        let findCurrPartnerLevel = listPartnerLevelRedux?.find(item => item?.code == infoUserRedux?.levelCode);
+        let findCurrPartnerLevel = listPartnerLevel?.find(item => item?.code == infoUserRedux?.levelCode);
         console.log({ findCurrPartnerLevel });
         if (findCurrPartnerLevel?._id) {
             setCurrPartnerLevel(findCurrPartnerLevel)
@@ -153,113 +178,126 @@ const Tab2 = (props) => {
     }, [])
 
     return (
-        <ScrollView>
+        <>
             {
-                props?.data?.map((item, index) => {
-                    return (
-                        <TouchableOpacity
-                            onPress={() => {
-                            }}
-                            style={{
-                                padding: _moderateScale(8 * 2),
-                                borderBottomWidth: .5,
-                                borderColor: 'rgba(0,0,0,.2)',
-                                alignItems: 'center'
-                            }}>
-                            <View style={{ flexDirection: 'row' }}>
-                                <View style={{ flex: 4 }}>
-                                    <Text style={[stylesFont.fontNolanBold, , { fontSize: _moderateScale(14) }]}>
-                                        {item?.services?.map(item => item?.service?.name)}
-                                    </Text>
-                                </View>
-                                <View style={{ flex: 2, alignItems: 'flex-end' }}>
-                                    <Text style={[stylesFont.fontNolan500, { fontSize: _moderateScale(14) }]}>
-                                        {
-                                            formatMonney(item?.services?.reduce((total, item) => {
-                                                return total += item?.finalPrice
-                                            }, 0))
-                                        } vnđ
-                                    </Text>
-                                </View>
-                            </View>
-                            <View style={{ flexDirection: 'row', marginTop: _moderateScale(8) }}>
-                                <View style={{ flex: 4 }}>
-                                    <Text style={[stylesFont.fontNolan, , { fontSize: _moderateScale(14) }]}>
-                                        Hoa hồng dự kiến
-                                    </Text>
-                                </View>
-                                <View style={{ flex: 2, alignItems: 'flex-end' }}>
-                                    <Text style={[stylesFont.fontNolanBold, { fontSize: _moderateScale(14), color: Color.PRICE_ORANGE }]}>
-                                        + {
-                                            formatMonney((item?.services?.reduce((total, item) => {
-                                                return total += item?.finalPrice
-                                            }, 0)) * (currPartnerLevel?.promotion?.commissionRate / 100))
-                                        } vnđ
-                                    </Text>
-                                </View>
-                            </View>
-                            <View style={{ width: '100%' }}>
-                                <View style={{ flexDirection: 'row', marginTop: _moderateScale(8) }}>
-                                    <View style={{}}>
-                                        <Text style={[stylesFont.fontNolan, , { fontSize: _moderateScale(14) }]}>
-                                            Booking của:
-                                        </Text>
-                                    </View>
-                                    <View style={{ alignItems: 'flex-start' }}>
-                                        <Text style={[stylesFont.fontNolanBold, { fontSize: _moderateScale(14), color: Color.BLACK }]}>
-                                            {
-                                                item?.partner?.name
-                                            }
-                                        </Text>
-                                    </View>
-                                </View>
-                            </View>
-                            <View style={{ width: '100%' }}>
-                                <View style={{ flexDirection: 'row', marginTop: _moderateScale(8) }}>
-                                    <View style={{}}>
-                                        <Text style={[stylesFont.fontNolan, , { fontSize: _moderateScale(14) }]}>
-                                            Thời gian hẹn:
-                                        </Text>
-                                    </View>
-                                    <View style={{ alignItems: 'flex-start' }}>
-                                        <Text style={[stylesFont.fontNolan500, { fontSize: _moderateScale(14), color: Color.GREY }]}>
-                                            {moment(item?.appointmentDateFinal?.date).format("DD/MM/YYYY")}
-                                        </Text>
-                                    </View>
-                                </View>
-                            </View>
+                props?.data?.length > 0 ?
+                    <ScrollView>
+                        {
+                            props?.data?.map((item, index) => {
+                                return (
+                                    <TouchableOpacity
+                                        onPress={() => {
+                                        }}
+                                        style={{
+                                            padding: _moderateScale(8 * 2),
+                                            borderBottomWidth: .5,
+                                            borderColor: 'rgba(0,0,0,.2)',
+                                            alignItems: 'center'
+                                        }}>
+                                        <View style={{ flexDirection: 'row' }}>
+                                            <View style={{ flex: 4 }}>
+                                                <Text style={[stylesFont.fontNolanBold, , { fontSize: _moderateScale(14) }]}>
+                                                    {item?.services?.map(item => item?.service?.name)}
+                                                </Text>
+                                            </View>
+                                            <View style={{ flex: 2, alignItems: 'flex-end' }}>
+                                                <Text style={[stylesFont.fontNolan500, { fontSize: _moderateScale(14) }]}>
+                                                    {
+                                                        formatMonney(item?.services?.reduce((total, item) => {
+                                                            return total += item?.finalPrice
+                                                        }, 0))
+                                                    } vnđ
+                                                </Text>
+                                            </View>
+                                        </View>
+                                        <View style={{ flexDirection: 'row', marginTop: _moderateScale(8) }}>
+                                            <View style={{ flex: 4 }}>
+                                                <Text style={[stylesFont.fontNolan, , { fontSize: _moderateScale(14) }]}>
+                                                    Hoa hồng dự kiến
+                                                </Text>
+                                            </View>
+                                            <View style={{ flex: 2, alignItems: 'flex-end' }}>
+                                                <Text style={[stylesFont.fontNolanBold, { fontSize: _moderateScale(14), color: Color.PRICE_ORANGE }]}>
+                                                    + {
+                                                        formatMonney((item?.services?.reduce((total, item) => {
+                                                            return total += item?.finalPrice
+                                                        }, 0)) * (currPartnerLevel?.promotion?.commissionRate / 100))
+                                                    } vnđ
+                                                </Text>
+                                            </View>
+                                        </View>
+                                        <View style={{ width: '100%' }}>
+                                            <View style={{ flexDirection: 'row', marginTop: _moderateScale(8) }}>
+                                                <View style={{}}>
+                                                    <Text style={[stylesFont.fontNolan, , { fontSize: _moderateScale(14) }]}>
+                                                        Booking của:
+                                                    </Text>
+                                                </View>
+                                                <View style={{ alignItems: 'flex-start' }}>
+                                                    <Text style={[stylesFont.fontNolanBold, { fontSize: _moderateScale(14), color: Color.BLACK }]}>
+                                                        {
+                                                            item?.partner?.name
+                                                        }
+                                                    </Text>
+                                                </View>
+                                            </View>
+                                        </View>
+                                        <View style={{ width: '100%' }}>
+                                            <View style={{ flexDirection: 'row', marginTop: _moderateScale(8) }}>
+                                                <View style={{}}>
+                                                    <Text style={[stylesFont.fontNolan, , { fontSize: _moderateScale(14) }]}>
+                                                        Thời gian hẹn:
+                                                    </Text>
+                                                </View>
+                                                <View style={{ alignItems: 'flex-start' }}>
+                                                    <Text style={[stylesFont.fontNolan500, { fontSize: _moderateScale(14), color: Color.GREY }]}>
+                                                        {moment(item?.appointmentDateFinal?.date).format("DD/MM/YYYY")}
+                                                    </Text>
+                                                </View>
+                                            </View>
+                                        </View>
 
-                            <View style={{ width: '100%' }}>
-                                <View style={{ flexDirection: 'row', marginTop: _moderateScale(8) }}>
-                                    <View style={{}}>
-                                        <Text style={[stylesFont.fontNolan, , { fontSize: _moderateScale(14) }]}>
-                                            Chi nhánh:
-                                        </Text>
-                                    </View>
-                                    <View style={{ alignItems: 'flex-start' }}>
-                                        <Text style={[stylesFont.fontNolan500, { fontSize: _moderateScale(14), color: Color.GREY }]}>
-                                            {item?.branch?.name}
-                                        </Text>
-                                    </View>
-                                </View>
-                            </View>
-                            <View style={{ width: '100%' }}>
-                                <View style={{ flexDirection: 'row', marginTop: _moderateScale(8), alignItems: 'center' }}>
-                                    <Text style={{ ...stylesFont.fontNolan500 }}>
-                                        {`Trạng thái: `}
-                                    </Text>
-                                    {
-                                        renderStatusBookingByCode(item?.status)
-                                    }
-                                </View>
-                            </View>
+                                        <View style={{ width: '100%' }}>
+                                            <View style={{ flexDirection: 'row', marginTop: _moderateScale(8) }}>
+                                                <View style={{}}>
+                                                    <Text style={[stylesFont.fontNolan, , { fontSize: _moderateScale(14) }]}>
+                                                        Chi nhánh:
+                                                    </Text>
+                                                </View>
+                                                <View style={{ alignItems: 'flex-start' }}>
+                                                    <Text style={[stylesFont.fontNolan500, { fontSize: _moderateScale(14), color: Color.GREY }]}>
+                                                        {item?.branch?.name}
+                                                    </Text>
+                                                </View>
+                                            </View>
+                                        </View>
+                                        <View style={{ width: '100%' }}>
+                                            <View style={{ flexDirection: 'row', marginTop: _moderateScale(8), alignItems: 'center' }}>
+                                                <Text style={{ ...stylesFont.fontNolan500 }}>
+                                                    {`Trạng thái: `}
+                                                </Text>
+                                                {
+                                                    renderStatusBookingByCode(item?.status)
+                                                }
+                                            </View>
+                                        </View>
 
-                        </TouchableOpacity>
-                    )
-                })
+                                    </TouchableOpacity>
+                                )
+                            })
+                        }
+                        <View style={{ height: 100 }} />
+                    </ScrollView>
+                    :
+                    <>
+                        <EmptyResultData title='Chưa có booking' />
+                        <View style={{ height: 100 }} />
+                    </>
             }
-            <View style={{ height: 100 }} />
-        </ScrollView>
+
+        </>
+
+
     )
 }
 
@@ -274,7 +312,7 @@ const ListOrderBookingAll = () => {
     ]);
     const [index, setIndex] = useState(0);
 
-    const {top} = useSafeAreaInsets()
+    const { top } = useSafeAreaInsets()
 
 
     useEffect(() => {

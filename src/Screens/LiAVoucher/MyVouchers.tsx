@@ -14,8 +14,11 @@ import useItemExtractor from "src/Hooks/useItemExtractor";
 import { getMyCoupons, loadMoreMyCoupons } from "@Redux/user/actions";
 import { getMyCouponsState } from "@Redux/user/selectors";
 import useListFilter from "src/Hooks/useListFilter";
+import { useDispatch } from "react-redux";
+import { selectCoupon } from "@Redux/booking/actions";
 
 const MyVouchers = () => {
+  const dispatch = useDispatch()
   const { navigation } = useNavigate();
   const { isLoading, data, getData, loadMoreData, refreshData } = useListFilter(
     getMyCouponsState,
@@ -29,11 +32,13 @@ const MyVouchers = () => {
 
   const handleUseCoupon = useCallback((item: MyVoucher) => {
     navigation.navigate(ScreenKey.CREATE_BOOKING, { coupon: item });
+    dispatch(selectCoupon(item))
   }, []);
 
   const handleViewDetails = useCallback((item: MyVoucher) => {
     navigation.navigate(ScreenKey.DETAIL_LIA_VOUCHER, {
-      data: { ...item.coupon, isTaked: true },
+      data: { ...item.coupon, isTaked: true, usedAt: item?.usedAt },
+      infoVoucher: data
     });
   }, []);
 
