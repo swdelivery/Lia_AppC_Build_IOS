@@ -31,7 +31,7 @@ const InfoWalletNewAffiliate = () => {
         dispatch(getHistoryWallet.request({
             condition: {
                 "paymentFor": {
-                    "in": ["WALLET_COMMISSION", "WALLET"]
+                    "in": ["WALLET_COMMISSION", "WALLET", "WHEEL_TURN"]
                 }
             },
             limit: 100
@@ -85,6 +85,25 @@ const InfoWalletNewAffiliate = () => {
 
                         </Text>
                     )
+                case "WHEEL_TURN":
+                    return (
+                        <Text
+                            numberOfLines={1}
+                            color={BLUE_FB}
+                            weight='bold'>
+                            {
+                                status == 'increase' ?
+                                    <>
+                                        Thưởng từ vòng quay may mắn
+                                    </>
+                                    :
+                                    <>
+
+                                    </>
+                            }
+
+                        </Text>
+                    )
 
                 default:
                     break;
@@ -117,7 +136,7 @@ const InfoWalletNewAffiliate = () => {
                         numberOfLines={1}
                         color={GREY}
                         weight='regular'>
-                        {moment(item?.created).format("DD/MM/YYYY")} - {moment(item?.created).format("HH:MM")}
+                        {moment(item?.created).format("DD/MM/YYYY")} - {moment(item?.created).format("HH:mm")}
                     </Text>
                     <Text
                         numberOfLines={1}
