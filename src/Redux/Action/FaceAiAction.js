@@ -47,7 +47,7 @@ export const scanningEyes = async (photo) => {
     formData.append(`key`, 'liadigitech@2023');
     console.log({ formData });
 
-    return Axios.post(`http://192.168.101.3:5912/v2/eye/predict`, formData, {
+    return Axios.post(`https://liabeautyai-api.vndigitech.com/v2/eye/predict`, formData, {
         headers: {
             'Content-Type': 'multipart/form-data'
         }
