@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo } from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 import { _moderateScale, _widthScale } from "../../../../Constant/Scale";
 import Column from "@Components/Column";
 import { useNavigate } from "src/Hooks/useNavigation";
@@ -7,7 +7,6 @@ import ScreenKey from "@Navigation/ScreenKey";
 import FlashSaleTimer from "./components/FlashSaleTimer";
 import Row from "@Components/Row";
 import FlashSaleItem from "./components/FlashSaleItem";
-import { ScrollView } from "react-native-gesture-handler";
 import Image from "@Components/Image";
 import { head } from "lodash";
 import { useDispatch, useSelector } from "react-redux";
@@ -84,6 +83,7 @@ const FlashSaleBanner = ({ flashSale }: { flashSale: FlashSale }) => {
       <Row flex={1}>
         <ScrollView
           horizontal
+          bounces={false}
           contentContainerStyle={styles.services}
           showsHorizontalScrollIndicator={false}
         >
@@ -158,6 +158,7 @@ const styles = StyleSheet.create({
   },
   services: {
     gap: 8,
+    flexGrow: 1,
   },
   btnSeeAll: {
     justifyContent: "center",
