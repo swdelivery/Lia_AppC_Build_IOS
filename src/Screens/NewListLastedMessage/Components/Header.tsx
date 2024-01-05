@@ -67,7 +67,7 @@ const Header = () => {
         paddingHorizontal={_moderateScale(8 * 2)}
       >
         <Column>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={navigate(ScreenKey.MY_PERSONAL_PAGE)}>
             <Avatar
               size={32}
               style={styles.avatar}

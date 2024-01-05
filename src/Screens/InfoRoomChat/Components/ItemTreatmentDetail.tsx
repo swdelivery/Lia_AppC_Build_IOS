@@ -48,8 +48,12 @@ const ItemTreatmentDetail = memo((props) => {
         review,
         treatmentDoctorCode,
         serviceCode,
-        branchCode
+        branchCode,
+        completeAt
     } } = props
+
+    console.log({ props });
+
 
     const listDoctorRedux = useSelector(state => state?.membersReducer?.listDoctor)
 
@@ -206,9 +210,16 @@ const ItemTreatmentDetail = memo((props) => {
                             : <></>
                     }
 
-                    <RowInfo
-                        name={"Thời gian:"}
-                        value={`${moment(created).format('LL')} - ${moment(created).format('LT')}`} />
+                    {
+                        completeAt ?
+                            <RowInfo
+                                name={"Thời gian:"}
+                                value={`${moment(created).format('HH:mm')} - ${moment(completeAt).format('HH:mm')} | ${moment(created).format('DD/MM/YYYY')}`} />
+                            :
+                            <RowInfo
+                                name={"Thời gian:"}
+                                value={`${moment(created).format('HH:mm')} | ${moment(created).format('DD/MM/YYYY')}`} />
+                    }
                     <RowInfo
                         colorValue={_renderColorStatus(status)}
                         name={"Trạng thái:"}

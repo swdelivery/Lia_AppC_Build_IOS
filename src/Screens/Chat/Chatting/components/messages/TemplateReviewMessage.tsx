@@ -36,9 +36,12 @@ export default function TemplateReviewMessage({ item }: Props) {
 
   const handleTreatmentDetails = useCallback(() => {
     if (!item.template?.data?.treatmentDetailId) return;
-    dispatch(
-      openTreatmentDetails.request(item.template?.data?.treatmentDetailId)
-    );
+    navigation.navigate(ScreenKey.UPDATE_DAILY_DIARIES, {
+      dataPartnerTreatment: {
+        _id: item.template?.data?.treatmentDetailId,
+        serviceName: item.template?.data?.serviceName
+      }
+    })
   }, []);
 
   return (

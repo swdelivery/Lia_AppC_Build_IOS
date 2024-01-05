@@ -1,7 +1,7 @@
 import BottomSheet from "@Components/BottomSheet";
 import { uploadModule } from "@Redux/Action/BookingAction";
 import React, { useCallback, useRef } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Alert } from "react-native";
 import ImageCropPicker from "react-native-image-crop-picker";
 import { delay } from "src/utils/common";
 import DialogConfirmInput from "@Components/Dialog/ConfirmTextInput";
@@ -9,6 +9,7 @@ import useVisible from "src/Hooks/useVisible";
 import { LoadingModal } from "@Components/Loading/LoadingView";
 import withPortal from "@Components/withPortal";
 import { useNavigate } from "src/Hooks/useNavigation";
+import { first } from "lodash";
 
 type Props = {
   visible: boolean;
@@ -54,7 +55,7 @@ function MediaPicker({ visible, onClose, onMessage }: Props) {
           images: listIdImageHasUpload,
         });
       })
-      .catch((e) => {});
+      .catch((e) => { });
   }, [onMessage]);
 
   const pickImages = useCallback(async () => {
@@ -96,7 +97,7 @@ function MediaPicker({ visible, onClose, onMessage }: Props) {
           images: listIdImageHasUpload,
         });
       })
-      .catch((e) => {});
+      .catch((e) => { });
   }, []);
 
   const pickVideo = useCallback(async () => {
@@ -112,11 +113,16 @@ function MediaPicker({ visible, onClose, onMessage }: Props) {
       compressVideoPreset: "MediumQuality",
     })
       .then(async (images) => {
-        listVideoForUpload.current = images;
-        await delay(500);
-        confirmVideo.show();
+        console.log({ images });
+        if (images[0]?.duration > 30000) {
+          return Alert.alert('Vui lòng chọn video có độ dài dưới 30 giây')
+        } else {
+          listVideoForUpload.current = images;
+          await delay(500);
+          confirmVideo.show();
+        }
       })
-      .catch((e) => {});
+      .catch((e) => { });
   }, []);
 
   const handleConfirmVideo = useCallback(

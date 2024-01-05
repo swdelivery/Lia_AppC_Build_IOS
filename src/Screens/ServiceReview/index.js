@@ -1,4 +1,4 @@
-import React, { useRef, useState, memo, useEffect } from 'react';
+import React, { useRef, useState, memo, useEffect, useMemo } from 'react';
 import { Animated, Image, StyleSheet, Text, TextInput, TouchableOpacity, View, Linking, Alert, ScrollView, LayoutAnimation, Platform, KeyboardAvoidingView } from 'react-native';
 import { GREY, WHITE, BASE_COLOR, RED, BG_GREY_OPACITY_5, BLACK, BLACK_OPACITY_8, BLUE_FB, FIFTH_COLOR, GREEN_SUCCESS, BG_GREY_OPACITY_2 } from '../../Constant/Color';
 import { stylesFont } from '../../Constant/Font';
@@ -408,6 +408,14 @@ const index = memo((props) => {
         }
     }
 
+    const isDisableEdited = useMemo(() => {
+        if (props?.route?.params?.data?.template?.data?.interacted || props?.route?.params?.data?.hasReview) {
+            return true
+        } else {
+            return false
+        }
+    }, [props?.route?.params?.data])
+
     return (
         <View style={{ flex: 1, backgroundColor: WHITE }}>
             <KeyboardAvoidingView
@@ -434,7 +442,7 @@ const index = memo((props) => {
                     </View>
                 </View>
 
-                {
+                {/* {
                     props?.route?.params?.data?.template?.data?.interacted || props?.route?.params?.data?.hasReview ?
                         <View style={{
                             position: 'absolute',
@@ -446,7 +454,7 @@ const index = memo((props) => {
                         }} />
                         :
                         <></>
-                }
+                } */}
 
                 <ScrollView>
 
@@ -468,6 +476,7 @@ const index = memo((props) => {
                                 if (index + 1 > indexCountStar) {
                                     return (
                                         <TouchableOpacity
+                                            disabled={isDisableEdited}
                                             key={index}
                                             onPress={() => {
                                                 _handleSetReaction(index + 1)
@@ -483,6 +492,7 @@ const index = memo((props) => {
                                 }
                                 return (
                                     <TouchableOpacity
+                                        disabled={isDisableEdited}
                                         key={index}
                                         onPress={() => {
                                             _handleSetReaction(index + 1)
@@ -512,6 +522,7 @@ const index = memo((props) => {
                                             if (listItemNotGood?.find(itemFind => itemFind?.code == item?.code)) {
                                                 return (
                                                     <TouchableOpacity
+                                                        disabled={isDisableEdited}
                                                         key={item?._id}
                                                         onPress={() => {
                                                             setListItemNotGood(old => [...old].filter(itemFilter => itemFilter?.code !== item?.code))
@@ -537,6 +548,7 @@ const index = memo((props) => {
 
                                             return (
                                                 <TouchableOpacity
+                                                    disabled={isDisableEdited}
                                                     key={item?._id}
                                                     onPress={() => {
                                                         setListItemNotGood(old => [...old, item])
@@ -581,6 +593,7 @@ const index = memo((props) => {
                             borderColor: BASE_COLOR
                         }}>
                             <TextInput
+                                editable={!isDisableEdited}
                                 value={description}
                                 onChangeText={(e) => _handleOnchangeText(e)}
                                 placeholder={'Ý kiến của bạn sẽ giúp chúng tôi tiếp tục cải thiện  và cung cấp trải nghiệm dịch vụ tốt nhất có thể.'}
@@ -595,7 +608,7 @@ const index = memo((props) => {
                 </ScrollView>
                 <View style={{ flex: 1 }} />
                 {
-                    props?.route?.params?.data?.template?.data?.interacted || props?.route?.params?.data?.hasReview ?
+                    isDisableEdited ?
                         <>
                         </>
                         :

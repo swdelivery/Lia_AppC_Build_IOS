@@ -1,5 +1,5 @@
 import { isEmpty } from "lodash";
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import * as Color from "../../../../Constant/Color";
 import {
@@ -114,20 +114,27 @@ function DoctorInfo({ conversation }: { conversation: any }) {
     return conversation?.assignedUsers?.find((item) => item?.isMain);
   }, [conversation]);
 
+  const _handleNavigate = useCallback(() => {
+    // PENDING FOR WAITING BACKEND
+    console.log({ mainDoctor, conversation });
+  }, [mainDoctor])
+
   if (mainDoctor) {
     return (
-      <>
-        <Avatar avatar={mainDoctor?.profile?.fileAvatar} size={35} circle />
-        <Text
-          weight="bold"
-          size={16}
-          numberOfLines={1}
-          left={12}
-          color={Color.WHITE}
-        >
-          {mainDoctor?.name}
-        </Text>
-      </>
+      <TouchableOpacity onPress={_handleNavigate}>
+        <Row>
+          <Avatar avatar={mainDoctor?.profile?.fileAvatar} size={35} circle />
+          <Text
+            weight="bold"
+            size={16}
+            numberOfLines={1}
+            left={12}
+            color={Color.WHITE}
+          >
+            {mainDoctor?.name}
+          </Text>
+        </Row>
+      </TouchableOpacity>
     );
   }
   return (
