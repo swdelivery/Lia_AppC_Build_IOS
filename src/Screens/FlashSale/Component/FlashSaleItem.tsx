@@ -49,8 +49,11 @@ export default function FlashSaleItem({ item, isUpcoming, onBooking }: Props) {
   const canBook = !isOutOfStock && !isUpcoming;
 
   const saleProgress = useMemo(() => {
+    if (isOutOfStock) {
+      return "Đã hết ưu đãi";
+    }
     return `Đã bán ${item.usage}${item.limit ? `/${item.limit}` : ""}`;
-  }, [item]);
+  }, [item, isOutOfStock]);
 
   const onServiceDetails = useCallback(() => {
     handleServicePress(item.service);
