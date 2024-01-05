@@ -103,7 +103,7 @@ const ActionSheetIcon = memo(() => {
         style={[
           {
             width: _width,
-            height: _height,
+            height: '100%',
           },
           {
             backgroundColor: "rgba(0,0,0,.7)",
@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
   },
   container: {
     width: _width,
-    height: _height,
+    height: '100%',
     position: 'absolute',
     zIndex: 100,
     bottom: 0
