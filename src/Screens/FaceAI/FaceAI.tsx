@@ -50,6 +50,7 @@ import useVolume from "./Components/useVolume";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { BackIcon } from "@Components/Icon/Icon";
 import { BASE_COLOR, BLACK } from "@Constant/Color";
+import IconButton from "@Components/IconButton";
 
 const EYE_INDICATOR_SIZE = 10;
 
@@ -551,22 +552,9 @@ const FaceAI = () => {
                 ></View>
               </TouchableOpacity>
 
-              <TouchableOpacity
-                onPress={() => {
-                  navigation.goBack();
-                }}
-                style={{
-                  position: "absolute",
-                  left: 0,
-                  top: top,
-                  width: _moderateScale(8 * 10),
-                  height: _moderateScale(8 * 10),
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
+              <IconButton containerStyle={[styles.backBtn, { top: top }]} onPress={navigation.goBack}>
                 <BackIcon />
-              </TouchableOpacity>
+              </IconButton>
             </View>
           </View>
         </View>
@@ -595,4 +583,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderColor: "white",
   },
+  backBtn: {
+    position: "absolute",
+    left: 0,
+    width: _moderateScale(8 * 10),
+    height: _moderateScale(8 * 10),
+    justifyContent: "center",
+    alignItems: "center",
+  }
 });

@@ -33,8 +33,8 @@ const RecomendService = memo(() => {
                         {
                             dataServices?.map((item, index) => {
                                 return (
-                                    <Column width={_widthScale(_width / 2)}>
-                                        <ServiceItem key={item?._id} item={item} />
+                                    <Column key={item?._id} width={_widthScale(_width / 2)}>
+                                        <ServiceItem item={item} />
                                     </Column>
                                 )
                             })
