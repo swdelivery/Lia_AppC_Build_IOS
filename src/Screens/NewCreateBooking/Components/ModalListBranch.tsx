@@ -73,7 +73,7 @@ const ModalListBranch = ({ visible, onClose, showDoctorBranch }: Props) => {
   }, [dataServices, showDoctorBranch]);
 
   const branches = useMemo(() => {
-    if (showDoctorBranch) {
+    if (showDoctorBranch && dataDoctor) {
       return [dataDoctor.branch];
     }
     return data;
