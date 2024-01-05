@@ -1,6 +1,6 @@
 import { ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
 import React, { useEffect, useMemo, useState } from "react";
-import { WHITE } from "../../Constant/Color";
+import { BASE_COLOR, WHITE } from "../../Constant/Color";
 import LiAHeader from "../../Components/Header/LiAHeader";
 import { _moderateScale, _width, _widthScale } from "../../Constant/Scale";
 import { styleElement } from "../../Constant/StyleElement";
@@ -65,7 +65,6 @@ const DetailLiAVoucher = (props) => {
     );
   }, [props?.route?.params?.data]);
 
-
   useEffect(() => {
     if (showModalFlashMsg) {
       setTimeout(() => {
@@ -75,9 +74,8 @@ const DetailLiAVoucher = (props) => {
   }, [showModalFlashMsg]);
 
   const isUsedVoucher = useMemo(() => {
-    return props?.route?.params?.data?.usedAt
-  }, [props?.route?.params?.data?.usedAt])
-
+    return props?.route?.params?.data?.usedAt;
+  }, [props?.route?.params?.data?.usedAt]);
 
   return (
     <Screen safeTop safeBottom style={styles.container}>
@@ -113,7 +111,13 @@ const DetailLiAVoucher = (props) => {
                   {props?.route?.params?.data?.description}
                 </Text>
                 <Text fontStyle="italic" size={12} numberOfLines={2}>
-                  Hiệu lực đến ngày: <Text weight="bold" color={"#AA827C"} fontStyle="italic" size={12}>
+                  Hiệu lực đến ngày:{" "}
+                  <Text
+                    weight="bold"
+                    color={"#AA827C"}
+                    fontStyle="italic"
+                    size={12}
+                  >
                     {moment(props?.route?.params?.data?.expiredAt).format(
                       "DD/MM/YYYY"
                     )}
@@ -133,45 +137,44 @@ const DetailLiAVoucher = (props) => {
       </ScrollView>
 
       <View style={styles.bottomContainer}>
-        {
-          isUsedVoucher ?
-            <TouchableOpacity
-              disabled
-              onPress={() => {
-                navigation.navigate(ScreenKey.CREATE_BOOKING);
-              }}
-              style={[styles.bottomButton, { opacity: .5 }]}
-            >
-              <Text style={[sizeText.normal_bold, { color: WHITE }]}>
-                Mã giảm giá đã được sử dụng
-              </Text>
-            </TouchableOpacity>
-            :
-            <>
-              {props?.route?.params?.data?.isTaked ? (
-                <TouchableOpacity
-                  onPress={() => {
-                    dispatch(selectCoupon(props?.route?.params?.infoVoucher))
-                    navigation.navigate(ScreenKey.CREATE_BOOKING);
-                  }}
-                  style={styles.bottomButton}
-                >
-                  <Text style={[sizeText.normal_bold, { color: WHITE }]}>
-                    Sử dụng mã giảm giá
-                  </Text>
-                </TouchableOpacity>
-              ) : (
-                <TouchableOpacity
-                  onPress={_handleTakeVoucher}
-                  style={styles.bottomButton}
-                >
-                  <Text style={[sizeText.normal_bold, { color: WHITE }]}>
-                    Lấy mã giảm giá
-                  </Text>
-                </TouchableOpacity>
-              )}
-            </>
-        }
+        {isUsedVoucher ? (
+          <TouchableOpacity
+            disabled
+            onPress={() => {
+              navigation.navigate(ScreenKey.CREATE_BOOKING);
+            }}
+            style={[styles.bottomButton, { opacity: 0.5 }]}
+          >
+            <Text style={[sizeText.normal_bold, { color: WHITE }]}>
+              Mã giảm giá đã được sử dụng
+            </Text>
+          </TouchableOpacity>
+        ) : (
+          <>
+            {props?.route?.params?.data?.isTaked ? (
+              <TouchableOpacity
+                onPress={() => {
+                  dispatch(selectCoupon(props?.route?.params?.infoVoucher));
+                  navigation.navigate(ScreenKey.CREATE_BOOKING);
+                }}
+                style={styles.bottomButton}
+              >
+                <Text style={[sizeText.normal_bold, { color: WHITE }]}>
+                  Sử dụng mã giảm giá
+                </Text>
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                onPress={_handleTakeVoucher}
+                style={styles.bottomButton}
+              >
+                <Text style={[sizeText.normal_bold, { color: WHITE }]}>
+                  Lấy mã giảm giá
+                </Text>
+              </TouchableOpacity>
+            )}
+          </>
+        )}
       </View>
     </Screen>
   );
@@ -230,7 +233,7 @@ const styles = StyleSheet.create({
   },
   banner: {
     height: _moderateScale(8 * 12),
-    backgroundColor: "#AF7169",
+    backgroundColor: BASE_COLOR,
   },
   container: {
     flex: 1,
@@ -248,7 +251,7 @@ const styles = StyleSheet.create({
   bottomButton: {
     width: _moderateScale(320),
     height: 50,
-    backgroundColor: "#AF7169",
+    backgroundColor: BASE_COLOR,
     ...styleElement.centerChild,
     borderRadius: _moderateScale(8),
   },

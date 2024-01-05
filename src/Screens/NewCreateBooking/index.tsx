@@ -55,6 +55,7 @@ import { AfterTimeoutFragment } from "@Components/AfterTimeoutFragment";
 import ModalScrollPicker from "@Components/ModalBottom/ModalScrollPicker";
 import { formatMonney } from "@Constant/Utils";
 import { getMyCouponsState } from "@Redux/user/selectors";
+import { styleElement } from "@Constant/StyleElement";
 
 const listTimeForBooking: TimeForBooking[] = [
   {
@@ -290,7 +291,7 @@ const NewCreateBooking = () => {
   const _handleNew = useCallback(() => {
     dispatch(selectDate(moment(new Date())));
     datePicker.hide();
-  }, [])
+  }, []);
 
   const _handleConfirmPickTime = useCallback((data) => {
     dispatch(
@@ -314,7 +315,7 @@ const NewCreateBooking = () => {
       <AfterTimeoutFragment>
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
-          style={{ flex: 1 }}
+          style={styleElement.flex}
         >
           <Animated.ScrollView
             scrollEventThrottle={16}

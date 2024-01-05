@@ -1,5 +1,5 @@
 import { ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import Text from "@Components/Text";
 import {
   BORDER_COLOR,
@@ -27,7 +27,7 @@ import { removeService, selectCoupon } from "@Redux/booking/actions";
 import { SERVICE_BANNER_RATIO } from "@Constant/image";
 import FlashSale from "@Screens/SoYoungService/components/FlashSale";
 import { FlashIcon } from "src/SGV";
-import { formatTime } from "src/utils/date";
+import { formatTime, fromFlashSaleDate } from "src/utils/date";
 
 const ITEM_SERVICE_WIDTH = 8 * 22;
 
@@ -82,6 +82,13 @@ const ItemService = ({ data }) => {
     dispatch(removeService(data));
   }, []);
 
+  const isFlashSaleStarted = useMemo(() => {
+    if (data.isOnFlashSale && data.currentFlashSale) {
+      const currentFlashSale = fromFlashSaleDate(data.currentFlashSale);
+      return currentFlashSale.to > Date.now();
+    }
+  }, [data]);
+
   return (
     <Column width={ITEM_SERVICE_WIDTH} borderRadius={8}>
       <Column position={"absolute"} zIndex={1} top={-8} right={-8}>
@@ -90,7 +97,7 @@ const ItemService = ({ data }) => {
 
       <Column>
         <Image style={styles.image} avatar={data?.representationFileArr[0]} />
-        {data.isOnFlashSale && (
+        {isFlashSaleStarted && (
           <FlashSale item={data} width={ITEM_SERVICE_WIDTH} />
         )}
       </Column>

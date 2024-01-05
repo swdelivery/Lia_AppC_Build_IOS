@@ -34,7 +34,7 @@ import { Doctor } from "@typings/doctor";
 import { Practitioner } from "@typings/practitioner";
 
 export const getBranchListForBooking = generateActionsGroup<
-  void,
+  any,
   DataPagingPayload<Branch[]>
 >(GET_BRANCH_LIST_FOR_BOOKING);
 

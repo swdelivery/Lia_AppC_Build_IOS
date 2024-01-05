@@ -34,6 +34,7 @@ import CardBranch from "./CardBranch";
 import Column from "@Components/Column";
 import CardDoctor from "./CardDoctor";
 import {
+  getDataCreateBookingState,
   getDoctorListForBookingState,
   getPractitionerListForBookingState,
 } from "@Redux/booking/selectors";
@@ -42,6 +43,7 @@ import {
   getDoctorListByBranchCode,
   getPractitionerListByBranchCode,
 } from "@Redux/booking/actions";
+import { LoadingView } from "@Components/Loading/LoadingView";
 
 const HEIGHT_MODAL = _heightScale(650);
 
@@ -53,10 +55,12 @@ type Props = {
 
 const ModalListDoctor = ({ visible, onClose, branchCode }: Props) => {
   const dispatch = useDispatch();
-  const { data: dataDoctors } = useSelector(getDoctorListForBookingState);
-  const { data: dataPractitioners } = useSelector(
-    getPractitionerListForBookingState
+  const { data: dataDoctors, isLoading: isLoadingDoctors } = useSelector(
+    getDoctorListForBookingState
   );
+  const { data: dataPractitioners, isLoading: isLoadingPractioners } =
+    useSelector(getPractitionerListForBookingState);
+  const { dataServices } = useSelector(getDataCreateBookingState);
   const opacityBackDrop = useSharedValue(0);
   const tranYModal = useSharedValue(0);
 
@@ -64,16 +68,18 @@ const ModalListDoctor = ({ visible, onClose, branchCode }: Props) => {
     if (visible) {
       tranYModal.value = withTiming(-HEIGHT_MODAL, { duration: 200 });
       opacityBackDrop.value = withTiming(1, { duration: 300 });
-      dispatch(
-        getDoctorListByBranchCode.request({
-          branchCode,
-        })
-      );
-      dispatch(
-        getPractitionerListByBranchCode.request({
-          branchCode,
-        })
-      );
+      const condition = {
+        branchCode: { equal: branchCode },
+        doctorServices: {
+          object: {
+            code: {
+              in: dataServices.map((s) => s.code),
+            },
+          },
+        },
+      };
+      dispatch(getDoctorListByBranchCode.request(condition));
+      dispatch(getPractitionerListByBranchCode.request(condition));
     }
   }, [visible]);
 
@@ -81,25 +87,43 @@ const ModalListDoctor = ({ visible, onClose, branchCode }: Props) => {
     let temp = [
       {
         title: "Bác sĩ",
-        data: dataDoctors.map((item) => {
-          return {
-            ...item,
-            identification: "doctor",
-          };
-        }),
+        data: [
+          ...(isLoadingDoctors
+            ? [
+                {
+                  identification: "loading",
+                },
+              ]
+            : []),
+          ...dataDoctors.map((item) => {
+            return {
+              ...item,
+              identification: "doctor",
+            };
+          }),
+        ],
       },
       {
         title: "Chuyên viên",
-        data: dataPractitioners.map((item) => {
-          return {
-            ...item,
-            identification: "practitioner",
-          };
-        }),
+        data: [
+          ...(isLoadingPractioners
+            ? [
+                {
+                  identification: "loading",
+                },
+              ]
+            : []),
+          ...dataPractitioners.map((item) => {
+            return {
+              ...item,
+              identification: "practitioner",
+            };
+          }),
+        ],
       },
     ];
     return temp;
-  }, [dataDoctors, dataPractitioners]);
+  }, [dataDoctors, dataPractitioners, isLoadingDoctors, isLoadingPractioners]);
 
   const animTranY = useAnimatedStyle(() => {
     return {
@@ -204,9 +228,12 @@ const ModalListDoctor = ({ visible, onClose, branchCode }: Props) => {
               contentContainerStyle={styles.contentContainer}
               sections={sectionList}
               keyExtractor={(item, index) => item + index}
-              renderItem={({ item }) => (
-                <CardDoctor onClose={_handleHideModal} data={item} />
-              )}
+              renderItem={({ item }) => {
+                if (item.identification === "loading") {
+                  return <LoadingView />;
+                }
+                return <CardDoctor onClose={_handleHideModal} data={item} />;
+              }}
               renderSectionHeader={({ section: { title } }) => (
                 <Column
                   borderBottomWidth={0.5}

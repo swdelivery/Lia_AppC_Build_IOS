@@ -1,11 +1,5 @@
 import React, { memo, useEffect } from "react";
-import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
 import Animated, {
   runOnJS,
   useAnimatedStyle,
@@ -26,8 +20,17 @@ import {
 import { styleElement } from "@Constant/StyleElement";
 import CardBranch from "./CardBranch";
 import Column from "@Components/Column";
-import { getBranchListForBookingState, getDataCreateBookingState } from "@Redux/booking/selectors";
-import { changeBranchListForBookingByService, getBranchListForBooking } from "@Redux/booking/actions";
+import {
+  getBranchListForBookingState,
+  getDataCreateBookingState,
+} from "@Redux/booking/selectors";
+import {
+  changeBranchListForBookingByService,
+  getBranchListForBooking,
+} from "@Redux/booking/actions";
+import { isEmpty } from "lodash";
+import Text from "@Components/Text";
+import { LoadingView } from "@Components/Loading/LoadingView";
 
 const HEIGHT_MODAL = _heightScale(650);
 
@@ -38,8 +41,8 @@ type Props = {
 
 const ModalListBranch = ({ visible, onClose }: Props) => {
   const dispatch = useDispatch();
-  const { data } = useSelector(getBranchListForBookingState);
-  const { dataServices } = useSelector(getDataCreateBookingState)
+  const { isLoading, data } = useSelector(getBranchListForBookingState);
+  const { dataServices } = useSelector(getDataCreateBookingState);
 
   const opacityBackDrop = useSharedValue(0);
   const tranYModal = useSharedValue(0);
@@ -48,22 +51,21 @@ const ModalListBranch = ({ visible, onClose }: Props) => {
     if (visible) {
       tranYModal.value = withTiming(-HEIGHT_MODAL, { duration: 200 });
       opacityBackDrop.value = withTiming(1, { duration: 300 });
-      _checkGetBranchList()
+      _checkGetBranchList();
     }
   }, [visible]);
 
   const _checkGetBranchList = () => {
-    if (dataServices?.length > 0) {
-      if (dataServices[0]?.branchServices?.length > 0) {
-        let branches = dataServices[0]?.branchServices?.map(
-          (item) => item?.branch
-        );
-        dispatch(changeBranchListForBookingByService(branches))
-      }
-    } else {
-      dispatch(getBranchListForBooking.request());
-    }
-  }
+    dispatch(
+      getBranchListForBooking.request({
+        condition: {
+          services: !isEmpty(dataServices)
+            ? { object: { code: { in: dataServices.map((s) => s.code) } } }
+            : undefined,
+        },
+      })
+    );
+  };
 
   const animTranY = useAnimatedStyle(() => {
     return {
@@ -145,14 +147,7 @@ const ModalListBranch = ({ visible, onClose }: Props) => {
                   height: _moderateScale(8 * 6),
                 }}
               >
-                <Text
-                  style={[
-                    stylesFont.fontNolanBold,
-                    { fontSize: _moderateScale(14) },
-                  ]}
-                >
-                  Chọn phòng khám
-                </Text>
+                <Text weight="bold">Chọn phòng khám</Text>
 
                 <TouchableOpacity
                   hitSlop={styleElement.hitslopSm}
@@ -170,6 +165,7 @@ const ModalListBranch = ({ visible, onClose }: Props) => {
             </View>
 
             <ScrollView>
+              {isLoading && <LoadingView />}
               <Column style={{ marginTop: 8 * 2 }} gap={8 * 2}>
                 {data?.map((item, index) => {
                   return (

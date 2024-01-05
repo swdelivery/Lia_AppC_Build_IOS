@@ -17,7 +17,7 @@ import { Service } from "@typings/serviceGroup";
 import FlashSaleEnds from "@Screens/FlashSale/Component/FlashSaleEnds";
 import { FlashIcon } from "src/SGV";
 import { useServiceDetailsContext } from "../context";
-import { formatTime, fromUtc } from "src/utils/date";
+import { formatTime, fromFlashSaleDate, fromUtc } from "src/utils/date";
 import moment from "moment";
 
 type Props = {
@@ -25,9 +25,17 @@ type Props = {
 };
 
 const NameService = ({ service }: Props) => {
-  const isFlashSaleStarted = service.isOnFlashSale;
   const isFlashSaleIncoming = !service.isOnFlashSale && service.nextFlashSale;
   const { refreshService } = useServiceDetailsContext();
+
+  const isFlashSaleStarted = useMemo(() => {
+    if (service.isOnFlashSale && service.currentFlashSale) {
+      const currentFlashSale = fromFlashSaleDate(service.currentFlashSale);
+      console.log({ currentFlashSale });
+
+      return currentFlashSale.to > Date.now();
+    }
+  }, [service]);
 
   const flashSaleStartTime = useMemo(() => {
     return service.nextFlashSale

@@ -8,6 +8,7 @@ import { Booking } from "@typings/booking";
 import { Insurance } from "@typings/insurance";
 import { Conversation } from "@typings/chat";
 import { Campain, CompanionRequest } from "@typings/charity";
+import { Voucher } from "@typings/voucher";
 
 type valueof<T> = T[keyof T];
 type Screens = valueof<typeof ScreenKey>;
@@ -36,7 +37,11 @@ type ScreenParams = {
   [ScreenKey.CREATE_BOOKING]: {
     branch?: Branch;
     doctor?: Doctor;
+    service?: Service;
     practitioner?: Practitioner;
+    coupon?: Voucher;
+    type?: string;
+    dataBookingEdit?: Booking;
   };
   // Chat
   [ScreenKey.CHATTING]: {

@@ -1,6 +1,6 @@
-import { AppointmentDate, BookingDate } from "@typings/booking";
+import { BookingDate } from "@typings/booking";
 import { TemplateData } from "@typings/chat";
-import { FlashSaleTime } from "@typings/flashsale";
+import { FlashSale, FlashSaleTime } from "@typings/flashsale";
 import moment from "moment";
 
 /**
@@ -33,6 +33,19 @@ export function formatDuration(milliseconds: number) {
 
 export function formatTime(time: FlashSaleTime) {
   return `${getTwoDigits(time.hour)}:${getTwoDigits(time.minute)}`;
+}
+
+export function fromFlashSaleDate(flashSale: FlashSale) {
+  const from = moment(fromUtc(flashSale.dateRange.from))
+    .add(flashSale.timeRange.from.unixTime, "seconds")
+    .valueOf();
+  const to = moment(fromUtc(flashSale.dateRange.to))
+    .add(flashSale.timeRange.to.unixTime, "seconds")
+    .valueOf();
+  return {
+    from,
+    to,
+  };
 }
 
 export function fromBookingDate(date: BookingDate) {

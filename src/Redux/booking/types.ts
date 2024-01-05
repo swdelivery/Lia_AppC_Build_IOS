@@ -48,11 +48,13 @@ export const CREAT_PARTNER_BOOKING = generateActionTypes(
 export const RESET_DATA = "@booking/reset-data";
 
 export type GetDoctorListByBranchCodeParams = {
-  branchCode: string;
+  branchCode: Condition;
+  doctorServices: Condition;
 };
 
 export type GetPractitionerListByBranchCodeParams = {
-  branchCode: string;
+  branchCode: Condition;
+  doctorServices: Condition;
 };
 
 export type GetListServiceForBookingParams = {

@@ -9,4 +9,9 @@ export type Condition =
       like: string;
     }
   | { in: string[] }
-  | { notIn: string[] };
+  | { notIn: string[] }
+  | {
+      object: {
+        [key: string]: Condition;
+      };
+    };

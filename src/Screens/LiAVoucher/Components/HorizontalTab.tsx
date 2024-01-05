@@ -1,5 +1,5 @@
-import { StyleSheet, TouchableOpacity, View } from "react-native";
-import React from "react";
+import { Alert, StyleSheet, TouchableOpacity, View } from "react-native";
+import React, { useCallback } from "react";
 import { _moderateScale } from "../../../Constant/Scale";
 import { BASE_COLOR, WHITE } from "../../../Constant/Color";
 import { IconVoucher } from "../../../Components/Icon/Icon";
@@ -13,6 +13,7 @@ import ScreenKey from "../../../Navigation/ScreenKey";
 import Text from "@Components/Text";
 import { useNavigate } from "src/Hooks/useNavigation";
 import useRequireLoginCallback from "src/Hooks/useRequireLoginAction";
+import Column from "@Components/Column";
 
 type Props = {
   animatedPrimaryColor: SharedValue<string>;
@@ -40,6 +41,10 @@ const HorizontalTab = ({
       backgroundColor: animatedSecondColor.value,
     };
   });
+
+  const handleCheckinPress = useCallback(() => {
+    Alert.alert("Tính năng đang được phát triển");
+  }, []);
 
   return (
     <View style={styles.tab}>
@@ -71,18 +76,20 @@ const HorizontalTab = ({
         </TouchableOpacity>
       </Animated.View>
       <Animated.View style={[styles.tab__child, animBG]}>
-        <IconVoucher style={sizeIcon.lg} />
-        <Text size={12} weight="bold" color={WHITE}>
-          Điểm danh
-        </Text>
+        <Column alignItems="center" onPress={handleCheckinPress}>
+          <IconVoucher style={sizeIcon.lg} />
+          <Text size={12} weight="bold" color={WHITE}>
+            Điểm danh
+          </Text>
+        </Column>
       </Animated.View>
 
-      <Animated.View style={[styles.tab__child, animBG]}>
+      {/* <Animated.View style={[styles.tab__child, animBG]}>
         <IconVoucher style={sizeIcon.lg} />
         <Text size={12} weight="bold" color={WHITE}>
           Vũ điệu LiA
         </Text>
-      </Animated.View>
+      </Animated.View> */}
     </View>
   );
 };
@@ -98,6 +105,6 @@ const styles = StyleSheet.create({
   tab: {
     height: _moderateScale(8 * 7),
     flexDirection: "row",
-    top: 1
+    top: 1,
   },
 });

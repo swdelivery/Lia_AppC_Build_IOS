@@ -14,15 +14,12 @@ import { _width } from "@Constant/Scale";
 import { styleElement } from "@Constant/StyleElement";
 import { formatMonney, replaceFirstCharacter } from "@Constant/Utils";
 import { SERVICE_BANNER_RATIO } from "@Constant/image";
-import ScreenKey from "@Navigation/ScreenKey";
 import { FlashSaleService } from "@typings/flashsale";
 import { head } from "lodash";
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import { StyleSheet } from "react-native";
 import useServiceDetailsNavigation from "src/Hooks/navigation/useServiceDetailsNavigation";
 import useCallbackItem from "src/Hooks/useCallbackItem";
-import { useNavigate } from "src/Hooks/useNavigation";
-import useRequireLoginCallback from "src/Hooks/useRequireLoginAction";
 import { FlameIcon } from "src/SGV";
 
 const IMAGE_WIDTH = _width / 2 - 8 * 2 + 1;
@@ -30,11 +27,11 @@ const IMAGE_HEIGHT = IMAGE_WIDTH * SERVICE_BANNER_RATIO;
 type Props = {
   item: FlashSaleService;
   isUpcoming: boolean;
+  onBooking: (item: FlashSaleService) => void;
 };
 
-export default function FlashSaleItem({ item, isUpcoming }: Props) {
-  const { navigation } = useNavigate();
-  const trigger = useCallbackItem(item.service);
+export default function FlashSaleItem({ item, isUpcoming, onBooking }: Props) {
+  const trigger = useCallbackItem(item);
   const handleServicePress = useServiceDetailsNavigation();
 
   const percentage = useMemo(() => {
@@ -58,9 +55,9 @@ export default function FlashSaleItem({ item, isUpcoming }: Props) {
     return `Đã bán ${item.usage}${item.limit ? `/${item.limit}` : ""}`;
   }, [item, isOutOfStock]);
 
-  const handleBooking = useRequireLoginCallback(() => {
-    navigation.navigate(ScreenKey.CREATE_BOOKING, { service: item.service });
-  }, [item]);
+  const onServiceDetails = useCallback(() => {
+    handleServicePress(item.service);
+  }, [item, handleServicePress]);
 
   return (
     <Column
@@ -78,7 +75,7 @@ export default function FlashSaleItem({ item, isUpcoming }: Props) {
         padding={1}
         style={styleElement.shadow}
       >
-        <Column onPress={trigger(handleServicePress)} flex={1}>
+        <Column onPress={onServiceDetails} flex={1}>
           <Image
             avatar={
               item.service.avatar ?? head(item.service.representationFileArr)
@@ -134,7 +131,7 @@ export default function FlashSaleItem({ item, isUpcoming }: Props) {
           paddingBottom={4}
           paddingTop={2}
           marginVertical={8}
-          onPress={handleBooking}
+          onPress={trigger(onBooking)}
           disabled={!canBook}
         >
           <Text color={!canBook ? TITLE_GREY : MAIN_RED_600}>{"Đặt hẹn"}</Text>

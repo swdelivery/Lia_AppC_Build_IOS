@@ -49,9 +49,7 @@ function* getDoctorListByBranchCode({
   payload,
 }: BaseAction<GetDoctorListByBranchCodeParams>) {
   try {
-    const data: Doctor[] = yield call(PartnerService.getDoctorList, {
-      branchCode: { equal: payload.branchCode },
-    });
+    const data: Doctor[] = yield call(PartnerService.getDoctorList, payload);
     yield put(
       actions.getDoctorListByBranchCode.success({
         data,
@@ -70,9 +68,10 @@ function* getPractitionerListByBranchCode({
   payload,
 }: BaseAction<GetPractitionerListByBranchCodeParams>) {
   try {
-    const data: Practitioner[] = yield call(PartnerService.getPractitioners, {
-      branchCode: { equal: payload.branchCode },
-    });
+    const data: Practitioner[] = yield call(
+      PartnerService.getPractitioners,
+      payload
+    );
     yield put(
       actions.getPractitionerListByBranchCode.success({
         data,
