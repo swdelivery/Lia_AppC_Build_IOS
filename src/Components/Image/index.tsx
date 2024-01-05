@@ -47,7 +47,6 @@ export default function Image({
   return (
     <View style={style}>
       <FastImage
-        auto={auto}
         style={[style, autoStyle]}
         uri={uri}
         placeholderComponent={<DefaultPlaceholder colors={placeholderColors} />}

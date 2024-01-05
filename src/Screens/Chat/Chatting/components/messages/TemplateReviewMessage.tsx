@@ -1,6 +1,7 @@
 import Column from "@Components/Column";
 import Text from "@Components/Text";
 import {
+  BASE_COLOR,
   BLUE_FB,
   GREEN_SUCCESS,
   SENDER_COLOR_TEXT,
@@ -87,13 +88,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     marginTop: 4,
     borderRadius: _moderateScale(8),
-    backgroundColor: BLUE_FB,
+    backgroundColor: BASE_COLOR,
     alignSelf: "flex-start",
   },
   ratedStyle: {
     backgroundColor: GREEN_SUCCESS,
   },
   treatment: {
-    backgroundColor: "purple",
+    backgroundColor: BASE_COLOR,
   },
 });
