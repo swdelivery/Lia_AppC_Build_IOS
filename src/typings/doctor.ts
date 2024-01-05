@@ -37,6 +37,7 @@ export type Doctor = {
   representationFileArr: FileAvatar[];
   treatmentDoctorFileArr: FileUpload[];
   branch: Branch;
+  branchArr: Branch[];
   id: string;
   doctorServices: BranchService[];
   questionVideoDoctorArr: any[];

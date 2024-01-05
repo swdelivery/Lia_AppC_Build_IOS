@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from "react";
+import React, { memo, useCallback, useEffect, useMemo } from "react";
 import { ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
 import Animated, {
   runOnJS,
@@ -42,20 +42,26 @@ type Props = {
 const ModalListBranch = ({ visible, onClose }: Props) => {
   const dispatch = useDispatch();
   const { isLoading, data } = useSelector(getBranchListForBookingState);
-  const { dataServices } = useSelector(getDataCreateBookingState);
+  const { dataServices, dataDoctor } = useSelector(getDataCreateBookingState);
 
   const opacityBackDrop = useSharedValue(0);
   const tranYModal = useSharedValue(0);
+
+  console.log({ dataDoctor });
 
   useEffect(() => {
     if (visible) {
       tranYModal.value = withTiming(-HEIGHT_MODAL, { duration: 200 });
       opacityBackDrop.value = withTiming(1, { duration: 300 });
-      _checkGetBranchList();
+      getData();
     }
   }, [visible]);
 
-  const _checkGetBranchList = () => {
+  const getData = useCallback(() => {
+    if (dataDoctor && !isEmpty(dataDoctor.branchArr)) {
+      return;
+    }
+
     dispatch(
       getBranchListForBooking.request({
         condition: {
@@ -65,7 +71,14 @@ const ModalListBranch = ({ visible, onClose }: Props) => {
         },
       })
     );
-  };
+  }, [dataServices, dataDoctor]);
+
+  const branches = useMemo(() => {
+    if (dataDoctor && !isEmpty(dataDoctor.branchArr)) {
+      return dataDoctor.branchArr;
+    }
+    return data;
+  }, [data, dataDoctor]);
 
   const animTranY = useAnimatedStyle(() => {
     return {
@@ -95,15 +108,7 @@ const ModalListBranch = ({ visible, onClose }: Props) => {
   return (
     <>
       {visible ? (
-        <View
-          style={{
-            width: _width,
-            height: _height,
-            position: "absolute",
-            zIndex: 100,
-            bottom: 0,
-          }}
-        >
+        <View style={styles.container}>
           <Animated.View
             style={[
               {
@@ -167,7 +172,7 @@ const ModalListBranch = ({ visible, onClose }: Props) => {
             <ScrollView>
               {isLoading && <LoadingView />}
               <Column style={{ marginTop: 8 * 2 }} gap={8 * 2}>
-                {data?.map((item, index) => {
+                {branches?.map((item, index) => {
                   return (
                     <CardBranch
                       onClose={_handleHideModal}
@@ -191,6 +196,13 @@ const ModalListBranch = ({ visible, onClose }: Props) => {
 export default ModalListBranch;
 
 const styles = StyleSheet.create({
+  container: {
+    width: _width,
+    height: _height,
+    position: "absolute",
+    zIndex: 100,
+    bottom: 0,
+  },
   itemMission: {
     padding: _moderateScale(8 * 2),
     borderBottomWidth: 0.5,
