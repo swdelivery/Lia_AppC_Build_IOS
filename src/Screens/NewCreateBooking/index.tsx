@@ -368,6 +368,7 @@ const NewCreateBooking = () => {
       <ModalListBranch
         visible={listBranchPicker.visible}
         onClose={listBranchPicker.hide}
+        showDoctorBranch={doctor}
       />
       <ModalListDoctor
         visible={listDoctorPicker.visible}

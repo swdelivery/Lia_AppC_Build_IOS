@@ -37,17 +37,16 @@ const HEIGHT_MODAL = _heightScale(650);
 type Props = {
   visible: boolean;
   onClose: () => void;
+  showDoctorBranch: boolean;
 };
 
-const ModalListBranch = ({ visible, onClose }: Props) => {
+const ModalListBranch = ({ visible, onClose, showDoctorBranch }: Props) => {
   const dispatch = useDispatch();
   const { isLoading, data } = useSelector(getBranchListForBookingState);
   const { dataServices, dataDoctor } = useSelector(getDataCreateBookingState);
 
   const opacityBackDrop = useSharedValue(0);
   const tranYModal = useSharedValue(0);
-
-  console.log({ dataDoctor });
 
   useEffect(() => {
     if (visible) {
@@ -58,7 +57,7 @@ const ModalListBranch = ({ visible, onClose }: Props) => {
   }, [visible]);
 
   const getData = useCallback(() => {
-    if (dataDoctor) {
+    if (showDoctorBranch) {
       return;
     }
 
@@ -71,14 +70,14 @@ const ModalListBranch = ({ visible, onClose }: Props) => {
         },
       })
     );
-  }, [dataServices, dataDoctor]);
+  }, [dataServices, showDoctorBranch]);
 
   const branches = useMemo(() => {
-    if (dataDoctor) {
+    if (showDoctorBranch) {
       return [dataDoctor.branch];
     }
     return data;
-  }, [data, dataDoctor]);
+  }, [data, dataDoctor, showDoctorBranch]);
 
   const animTranY = useAnimatedStyle(() => {
     return {
