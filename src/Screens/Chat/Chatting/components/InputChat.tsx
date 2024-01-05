@@ -6,6 +6,7 @@ import {
   View,
   LayoutAnimation,
   Alert,
+  TouchableOpacity,
 } from "react-native";
 import DocumentPicker from "react-native-document-picker";
 import { useSelector } from "react-redux";
@@ -220,6 +221,8 @@ const InputChat = ({ }: Props) => {
         conversationId: conversation?._id,
         message,
       };
+      console.log({ data });
+
 
       SocketInstance.socketConn?.emit(CSS_SEND_MESSAGE, data);
     },
@@ -338,9 +341,9 @@ const InputChat = ({ }: Props) => {
         borderTopWidth={1}
         borderColor={Color.BORDER_COLOR}
       >
-        <IconButton onPress={handleChatGptPress}>
+        <TouchableOpacity onPress={handleChatGptPress}>
           <ChatGptIcon color={Color.BASE_COLOR} />
-        </IconButton>
+        </TouchableOpacity>
         <Column
           borderWidth={1}
           borderRadius={5}

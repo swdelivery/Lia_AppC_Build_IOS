@@ -28,6 +28,24 @@ const ItemLastedMessage = ({ item, onPress }: Props) => {
     return item.type === "assistant" || item.latestMessage?.isPartnerSeen;
   }, [item]);
 
+  const _renderContent = useMemo(() => {
+    switch (item.latestMessage?.type) {
+      case "text":
+        return item.latestMessage?.content
+      case "video":
+        return `[ Video ]`
+      case "image":
+        return `[ Hình ảnh ]`
+      case "document":
+        return `[ Tài liệu ]`
+      case "template":
+        return item.latestMessage?.content
+
+      default:
+        break;
+    }
+  }, [item])
+
   return (
     <Pressable onPress={trigger(onPress)}>
       <Row gap={_moderateScale(8 * 2)} paddingVertical={8}>
@@ -57,7 +75,10 @@ const ItemLastedMessage = ({ item, onPress }: Props) => {
             weight={isSeen ? "regular" : "bold"}
             numberOfLines={1}
           >
-            {item.latestMessage?.content}
+            {
+              _renderContent
+            }
+            {/* {item.latestMessage?.content} */}
           </Text>
         </Column>
         <Column gap={_moderateScale(4)} alignItems="flex-end">

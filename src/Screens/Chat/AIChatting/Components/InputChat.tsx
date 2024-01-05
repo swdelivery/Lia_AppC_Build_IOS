@@ -56,9 +56,7 @@ const InputChat = ({ }: Props) => {
         borderTopWidth={1}
         borderColor={Color.BORDER_COLOR}
       >
-        <IconButton onPress={() => {}}>
-          <ChatGptIcon color={Color.BASE_COLOR} />
-        </IconButton>
+        <ChatGptIcon style={{ opacity: 0 }} color={Color.BASE_COLOR} />
         <Column
           borderWidth={1}
           borderRadius={5}

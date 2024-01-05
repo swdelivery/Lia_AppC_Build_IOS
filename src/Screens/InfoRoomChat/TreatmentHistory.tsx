@@ -11,6 +11,7 @@ import { IconEmpty } from '@Components/Icon/Icon';
 import Column from '@Components/Column';
 import Text from '@Components/Text';
 import Screen from '@Components/Screen';
+import { useFocused } from 'src/Hooks/useNavigation';
 
 const TreatmentHistory = memo((props) => {
 
@@ -19,9 +20,9 @@ const TreatmentHistory = memo((props) => {
     const [listTreamentDetail, setListTreatmentDetail] = useState([])
     const [refreshing, setRefreshing] = React.useState(false);
 
-    useEffect(() => {
+    useFocused(() => {
         _getListTreatmentDetail()
-    }, [])
+    })
 
     const _getListTreatmentDetail = async () => {
         let resultGetTreatmentDetailForPartner = await getTreatmentDetailForPartner({
