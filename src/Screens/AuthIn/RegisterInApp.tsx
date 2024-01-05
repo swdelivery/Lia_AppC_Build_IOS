@@ -13,6 +13,7 @@ import { stylesFont } from "../../Constant/Font";
 import {
   _heightScale,
   _moderateScale,
+  _width,
   _widthScale,
 } from "../../Constant/Scale";
 import { navigation } from "../../../rootNavigation";
@@ -99,6 +100,7 @@ const RegisterInApp = (props) => {
         fullPhone: phoneNumber,
         password: password,
         routeName: props?.route?.params?.routeName,
+        nationCode: nationCode,
         codeAffiliate: codeAffiliate.trim(),
       });
     },
@@ -183,8 +185,14 @@ const RegisterInApp = (props) => {
     setCodeAffiliate(textValue.toUpperCase());
   };
 
+  const handleLoginBtn = () => {
+    navigation.navigate(ScreenKey.LOGIN_IN_APP, {
+      routeName: props?.route?.params?.routeName,
+    })
+  }
+
   return (
-    <Screen safeTop style={styles.container}>
+    <Screen safeTop safeBottom style={styles.container}>
       <StatusBar />
       <Header title="Đăng ký tài khoản" onBack={navigation.goBack} />
       <KeyboardAwareScrollView
@@ -197,7 +205,7 @@ const RegisterInApp = (props) => {
           <Image
             resizeMode={"contain"}
             style={{ width: "70%", height: "70%" }}
-            source={require("../../NewImage/logoLiA.png")}
+            source={require("../../NewImage/NewLogo.png")}
           />
         </View>
 
@@ -205,7 +213,6 @@ const RegisterInApp = (props) => {
           gap={_moderateScale(8 * 2)}
           style={{
             paddingHorizontal: _moderateScale(8 * 2),
-            marginTop: _moderateScale(8 * 2),
           }}
         >
           <View>
@@ -284,7 +291,7 @@ const RegisterInApp = (props) => {
               <TextInput
                 value={name}
                 onChangeText={setName}
-                placeholder={"Tên của bạn"}
+                placeholder={"Họ và tên của bạn"}
                 placeholderTextColor={"grey"}
                 style={styles.input_text}
                 onBlur={validateName}
@@ -301,7 +308,7 @@ const RegisterInApp = (props) => {
             content={phoneNumber}
             countryCallingCode={countryCallingCode}
             errorMessage={errorPhoneNumber}
-            label="Nhập số điện thoại"
+            label="Số điện thoại"
             onBlur={validatePhoneNumber}
             onChangeText={setphoneNumber}
             onSelectionCallingCode={setCountryCallingCode}
@@ -323,7 +330,7 @@ const RegisterInApp = (props) => {
             onChangeText={setPassword2}
           />
 
-          <Spacer top={_moderateScale(8 * 4)} />
+          <Spacer top={_moderateScale(8 * 2)} />
           <TouchableOpacity
             onPress={() => {
               if (validation()) {
@@ -349,6 +356,37 @@ const RegisterInApp = (props) => {
               Đăng ký
             </Text>
           </TouchableOpacity>
+          <Column gap={_moderateScale(5)}>
+            <Column
+              flex={1}
+              justifyContent="flex-end"
+              alignSelf="center"
+              paddingTop={_moderateScale(64)}
+            >
+              <TouchableOpacity
+                onPress={handleLoginBtn}
+              >
+                <Text color={Color.GREY}>
+                  {"Bạn đã có tài khoản, "}
+                  <Text weight="bold" size={14} color={Color.BASE_COLOR}>
+                    Đăng nhập ngay
+                  </Text>
+                </Text>
+              </TouchableOpacity>
+            </Column>
+            <Row
+              justifyContent="flex-end"
+              paddingBottom={_moderateScale(8)}
+              alignSelf="center"
+            >
+              <Text
+                color={Color.GREY}
+                fontStyle="italic"
+              >
+                Copyright © Lia Beauty 2023
+              </Text>
+            </Row>
+          </Column>
         </Column>
       </KeyboardAwareScrollView>
     </Screen>
@@ -402,10 +440,9 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   container_logo: {
-    height: _moderateScale(8 * 20),
+    height: _moderateScale(8 * 15),
+    width: _moderateScale(_width),
     borderWidth: 0,
-    margin: _moderateScale(8 * 2),
-    borderRadius: _moderateScale(8 * 2),
     marginTop: _moderateScale(8 * 2),
   },
 });

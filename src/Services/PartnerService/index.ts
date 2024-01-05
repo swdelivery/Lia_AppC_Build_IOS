@@ -328,8 +328,8 @@ const getPartnerConversations = (
   return axios
     .get(
       "/partner-conversation" +
-        "?" +
-        encodeParams({ ...params, limit: pageSize, page })
+      "?" +
+      encodeParams({ ...params, limit: pageSize, page })
     )
     .then(({ data }) => data.data);
 };
@@ -586,6 +586,26 @@ const getPartnerLevel = (payload: any) => {
   return axios.get(`/partner-level?${query}`).then(({ data }) => data);
 };
 
+const requestOTPResetPass = (payload: any) => {
+  return axios.post("/partner-account/request-reset-password", payload).then(({ data }) => data);
+};
+
+const resendOTP = (payload: any) => {
+  return axios.post("/otp/resend", payload).then(({ data }) => data);
+};
+
+const verifyOtpAccountPartner = (payload: any) => {
+  return axios.post("/partner-account/verify-account", payload).then(({ data }) => data);
+};
+
+const verifyOtpResetPass = (payload: any) => {
+  return axios.post("/partner-account/verify-reset-password", payload).then(({ data }) => data);
+};
+
+const changePass = (payload: any) => {
+  return axios.post("/partner-account/reset-password", payload).then(({ data }) => data);
+};
+
 export default {
   partnerLogout,
 
@@ -702,4 +722,11 @@ export default {
 
   // Affiliate
   getPartnerLevel,
+
+  //OTP
+  requestOTPResetPass,
+  resendOTP,
+  verifyOtpAccountPartner,
+  verifyOtpResetPass,
+  changePass
 };
