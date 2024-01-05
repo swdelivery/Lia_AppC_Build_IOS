@@ -58,7 +58,7 @@ const ModalListBranch = ({ visible, onClose }: Props) => {
   }, [visible]);
 
   const getData = useCallback(() => {
-    if (dataDoctor && !isEmpty(dataDoctor.branchArr)) {
+    if (dataDoctor) {
       return;
     }
 
@@ -74,8 +74,8 @@ const ModalListBranch = ({ visible, onClose }: Props) => {
   }, [dataServices, dataDoctor]);
 
   const branches = useMemo(() => {
-    if (dataDoctor && !isEmpty(dataDoctor.branchArr)) {
-      return dataDoctor.branchArr;
+    if (dataDoctor) {
+      return [dataDoctor.branch];
     }
     return data;
   }, [data, dataDoctor]);
