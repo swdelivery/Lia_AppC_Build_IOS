@@ -38,7 +38,7 @@ export default function FlashSaleItem({ item, isUpcoming, onBooking }: Props) {
     return isUpcoming || item.usage === 0
       ? 0
       : item.limit
-      ? item.usage / item.limit
+      ? (item.usage / item.limit) * 100
       : 30;
   }, [isUpcoming, item]);
 
@@ -49,11 +49,8 @@ export default function FlashSaleItem({ item, isUpcoming, onBooking }: Props) {
   const canBook = !isOutOfStock && !isUpcoming;
 
   const saleProgress = useMemo(() => {
-    if (isOutOfStock) {
-      return "Đã hết ưu đãi";
-    }
     return `Đã bán ${item.usage}${item.limit ? `/${item.limit}` : ""}`;
-  }, [item, isOutOfStock]);
+  }, [item]);
 
   const onServiceDetails = useCallback(() => {
     handleServicePress(item.service);

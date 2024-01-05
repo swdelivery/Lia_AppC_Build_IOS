@@ -47,7 +47,7 @@ export default function FlashSaleItem({ item, isUpcoming }: Props) {
             isUpcoming || item.usage === 0
               ? 0
               : item.limit
-              ? item.usage / item.limit
+              ? (item.usage / item.limit) * 100
               : 30
           }
           height={12}

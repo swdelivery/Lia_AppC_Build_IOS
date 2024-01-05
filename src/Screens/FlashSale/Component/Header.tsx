@@ -6,11 +6,13 @@ import Row from "@Components/Row";
 import { StatusBar } from "@Components/StatusBar";
 import { MAIN_RED_500 } from "@Constant/Color";
 import ModalThele from "@Screens/WheelSpin/ModalThele";
+import { ConfigDataCode } from "@typings/configData";
 import { ConfigFileCode } from "@typings/configFile";
 import { isEmpty } from "lodash";
 import React from "react";
 import { StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import useConfigData from "src/Hooks/useConfigData";
 import useConfigFile from "src/Hooks/useConfigFile";
 import { useNavigate } from "src/Hooks/useNavigation";
 import useVisible from "src/Hooks/useVisible";
@@ -21,8 +23,11 @@ export default function Header({}: Props) {
   const { navigation } = useNavigate();
   const { top } = useSafeAreaInsets();
   const infoModal = useVisible();
-  const flashSaleRule = useConfigFile(ConfigFileCode.FlashSaleRule);
+  const flashSaleRule = useConfigData(ConfigDataCode.FlashSaleRule);
   const flashSaleTitle = useConfigFile(ConfigFileCode.FlashSaleTitle);
+
+  console.log({ flashSaleTitle, flashSaleRule });
+  
 
   return (
     <Row
