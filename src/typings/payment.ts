@@ -112,4 +112,16 @@ export type Order = {
   id: string;
   services: BookingService[];
   partnerCoupons: MyVoucher[];
+  partnerLevelPromotion: {
+    point: number;
+    description: string;
+    discountRetailService: number;
+    discountComboService: number;
+    discountFriend: number;
+    commissionRate: number;
+    indirectCommissionRate: number;
+    code: string;
+    name: string;
+    id: string;
+  };
 } & Timestamp;

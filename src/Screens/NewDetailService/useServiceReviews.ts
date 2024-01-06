@@ -17,7 +17,7 @@ export default function useServiceReviews(service: Service) {
         equal: service.code,
       },
     });
-  }, [service.code]);
+  }, [service?.code]);
   
   return { data, meta, isLoading };
 }

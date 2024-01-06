@@ -81,7 +81,24 @@ const TabPayment = ({ booking }: Props) => {
     );
   }, [orderDetails]);
 
-  console.log({ orderDetails, orderPayments });
+  const discountLevel = useMemo(() => {
+    if (!orderDetails?.partnerLevelPromotion) return 0;
+    return (
+      (orderDetails.totalAmount *
+        orderDetails.partnerLevelPromotion.discountRetailService) /
+      100
+    );
+  }, [orderDetails]);
+
+  const totalAmount = useMemo(() => {
+    if (!orderDetails) {
+      return 0;
+    }
+    if (orderDetails.status === "CONFIRMED") {
+      return orderDetails.totalAmount;
+    }
+    return orderDetails.totalAmount - discountAmount - discountLevel;
+  }, [orderDetails]);
 
   return (
     <View style={styles.container}>
@@ -89,7 +106,7 @@ const TabPayment = ({ booking }: Props) => {
         <Row gap={8 * 2} paddingHorizontal={8 * 2}>
           <Card
             title={"Tổng"}
-            price={formatMonney(orderDetails?.totalAmount) + " VNĐ"}
+            price={formatMonney(totalAmount) + " VNĐ"}
             bgColor={"#56A0FF"}
           />
           <Card
@@ -134,11 +151,17 @@ const TabPayment = ({ booking }: Props) => {
         return <ItemService key={item.service._id} item={item} />;
       })}
 
-      <Column paddingHorizontal={16} paddingTop={16}>
+      <Column paddingHorizontal={16} paddingTop={16} gap={8}>
         <Row justifyContent="space-between">
           <Text weight="bold">Ưu đãi:</Text>
           <Text color={BASE_COLOR} weight="bold">
             {`-${formatMonney(discountAmount, true)}`}
+          </Text>
+        </Row>
+        <Row justifyContent="space-between">
+          <Text weight="bold">Giảm giá ước tính theo hạng:</Text>
+          <Text color={BASE_COLOR} weight="bold">
+            {`-${formatMonney(discountLevel, true)}`}
           </Text>
         </Row>
       </Column>

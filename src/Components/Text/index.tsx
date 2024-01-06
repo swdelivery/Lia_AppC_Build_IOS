@@ -14,7 +14,7 @@ import {
   FONT_NOLAN_NEXT_ANDROID_BOLD,
   FONT_NOLAN_NEXT_ANDROID_MEDIUM,
 } from "@Constant/Font";
-import { BLACK, TEXT_BASE } from "@Constant/Color";
+import { BLACK } from "@Constant/Color";
 
 const isAndroid = Platform.OS === "android";
 

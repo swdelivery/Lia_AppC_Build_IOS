@@ -18,11 +18,12 @@ import { WHITE } from "@Constant/Color";
 import { ScrollView } from "react-native-gesture-handler";
 import Row from "@Components/Row";
 import Column from "@Components/Column";
+import { isEmpty } from "lodash";
 
 const WIDTH_ITEM = (_width - _widthScale(16) * 2) / 5;
 
 const OptionService = () => {
-  let { data } = useSelector(getServiceGroupState);
+  const { data, isLoading } = useSelector(getServiceGroupState);
   const dispatch = useDispatch();
   const { navigate } = useNavigate();
 
@@ -48,8 +49,10 @@ const OptionService = () => {
   }, []);
 
   const displayItems = useMemo(() => {
+    if (isEmpty(data)) {
+      return [];
+    }
     const totalItems = data.length;
-
     // Determine the number of rows and columns based on the total number of items
     let numRows, numCols;
     if (totalItems <= 10) {
@@ -78,9 +81,7 @@ const OptionService = () => {
       }
     }
     return grid;
-  }, [data]);
-
-  console.log({ displayItems });
+  }, [isLoading, data]);
 
   return (
     <View style={styles.container}>
