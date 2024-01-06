@@ -88,7 +88,7 @@ const FillPhoneToGetNewPass = (props) => {
         <View
           style={[
             {
-              height: _moderateScale(8 * 15),
+              height: _moderateScale(8 * 20),
               width: _moderateScale(_width),
               borderWidth: 0,
             },
@@ -98,7 +98,7 @@ const FillPhoneToGetNewPass = (props) => {
           <Image
             resizeMode={"contain"}
             style={{ width: "70%", height: "70%" }}
-            source={require("../../NewImage/NewLogo.png")}
+            source={require("../../NewImage/logoLiA.png")}
           />
         </View>
         <Spacer top={_moderateScale(8 * 10)} />
