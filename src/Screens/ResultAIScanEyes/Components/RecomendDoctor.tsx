@@ -1,46 +1,48 @@
 import Column from '@Components/Column'
 import Text from '@Components/Text'
+import { getDoctorsByResEye } from '@Redux/resultcanningeyes/actions'
 import { getDoctorByResScanningListState } from '@Redux/resultcanningeyes/selectors'
 import DoctorItem from '@Screens/SoYoungDoctor/components/DoctorItem'
-import React from 'react'
-import { StyleSheet, View } from 'react-native'
-import LinearGradient from 'react-native-linear-gradient'
-import { useSelector } from 'react-redux'
-import { GREY_FOR_TITLE } from '../../../Constant/Color'
-import { _moderateScale } from '../../../Constant/Scale'
+import React, { useEffect } from 'react'
+import { StyleSheet } from 'react-native'
+import { useDispatch, useSelector } from 'react-redux'
+import { NEW_BASE_COLOR } from '../../../Constant/Color'
+import { _moderateScale, _width } from '../../../Constant/Scale'
 
 const RecomendDoctor = () => {
-
+    const dispatch = useDispatch()
     const { dataDoctors } = useSelector(getDoctorByResScanningListState)
 
+    useEffect(() => {
+        dispatch(getDoctorsByResEye.request({}));
+    }, [])
+
     return (
-        <View style={styles.main}>
-            <View style={styles.child}>
-                <LinearGradient
-                    style={[StyleSheet.absoluteFill, styles.linear]}
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 0, y: 1 }}
-                    colors={["#C4E5FC", "white"]}
-                />
-                <Column margin={8 * 2}>
-                    <Text size={16} weight='bold' color={GREY_FOR_TITLE}>
-                        Đội ngũ bác sĩ sẵn sàng tư vấn miễn phí
-                    </Text>
-                </Column>
-                <View style={{ alignItems: 'center' }}>
-                    {
-                        dataDoctors?.map((item, index) => {
-                            return (
-                                <DoctorItem item={item} />
-                            )
-                        })
-                    }
-                </View>
-
-
-
-            </View>
-        </View>
+        <Column>
+            <Column
+                margin={8 * 2}>
+                <Text
+                    color={NEW_BASE_COLOR}
+                    weight='bold'>
+                    BÁC SĨ / CHUYÊN VIÊN
+                </Text>
+            </Column>
+            <Column alignItems='center'>
+                {
+                    dataDoctors?.map((item, index) => {
+                        return (
+                            <DoctorItem
+                                key={item?._id}
+                                styleContainer={{
+                                    width: _width - 8 * 4
+                                }}
+                                item={item}
+                            />
+                        )
+                    })
+                }
+            </Column>
+        </Column>
     )
 }
 

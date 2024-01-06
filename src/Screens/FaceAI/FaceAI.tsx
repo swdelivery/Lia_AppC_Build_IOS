@@ -506,7 +506,7 @@ const FaceAI = () => {
               <View
                 style={{
                   position: "absolute",
-                  top: _heightScale(8 * 15),
+                  top: _heightScale(8 * 16),
                 }}
               >
                 <Text
@@ -514,9 +514,10 @@ const FaceAI = () => {
                     fontSize: _moderateScale(14),
                     color: "white",
                     fontWeight: "bold",
+                    textAlign: 'center'
                   }}
                 >
-                  {`[Hãy đưa trọn gương mặt vào khung hình]`}
+                  {`Giữ gương mặt ở giữa vòng tròn ${`\n`} Nhìn thẳng vào camera và nhấn chụp`}
                 </Text>
               </View>
 

@@ -171,6 +171,45 @@ const InfoReward = ({ currIndexCard }: Props) => {
     }
   }, [currIndexCard]);
 
+  const generateTitle = useMemo(() => {
+    switch (currIndexCard) {
+      case 0:
+        return (
+          <Image
+            resizeMode="contain"
+            style={styles.title}
+            source={require("../../../NewImage/Affiliate/bronzeTitle.png")}
+          />
+        );
+      case 1:
+        return (
+          <Image
+            resizeMode="contain"
+            style={styles.title}
+            source={require("../../../NewImage/Affiliate/silverTitle.png")}
+          />
+        );
+      case 2:
+        return (
+          <Image
+            resizeMode="contain"
+            style={styles.title}
+            source={require("../../../NewImage/Affiliate/goldTitle.png")}
+          />
+        );
+      case 3:
+        return (
+          <Image
+            resizeMode="contain"
+            style={styles.title}
+            source={require("../../../NewImage/Affiliate/platinumTitle.png")}
+          />
+        );
+      default:
+        break;
+    }
+  }, [currIndexCard])
+
   const EachItem = useCallback(({ title, value, icon, hideValue = false }) => {
     return (
       <Column alignItems="center" gap={4}>
@@ -187,9 +226,10 @@ const InfoReward = ({ currIndexCard }: Props) => {
 
   return (
     <Column margin={8 * 2}>
-      <Text size={16} weight="bold" color={generateColor}>
+      {/* <Text size={16} weight="bold" color={generateColor}>
         Phần thưởng quý khách
-      </Text>
+      </Text> */}
+      {generateTitle}
 
       <Row justifyContent="center" gap={8 * 4} marginTop={8 * 2}>
         <EachItem
@@ -221,6 +261,10 @@ const InfoReward = ({ currIndexCard }: Props) => {
 export default InfoReward;
 
 const styles = StyleSheet.create({
+  title: {
+    width: 8 * 24,
+    height: 8 * 24 * 88 / 856,
+  },
   btn: {
     width: 8 * 7,
     height: 8 * 7,

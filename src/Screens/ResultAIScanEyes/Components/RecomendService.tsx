@@ -3,47 +3,73 @@ import Row from '@Components/Row'
 import Text from '@Components/Text'
 import { getServiceByResScanningListState } from '@Redux/resultcanningeyes/selectors'
 import ServiceItem from '@Screens/SoYoungService/components/ServiceItem'
-import React, { memo } from 'react'
-import { ScrollView, StyleSheet, View } from 'react-native'
+import React, { memo, useCallback, useEffect } from 'react'
+import { FlatList, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
-import { useSelector } from 'react-redux'
-import { GREY_FOR_TITLE } from '../../../Constant/Color'
+import { useDispatch, useSelector } from 'react-redux'
+import { GREY_FOR_TITLE, NEW_BASE_COLOR } from '../../../Constant/Color'
 import { _moderateScale, _width, _widthScale } from '../../../Constant/Scale'
+import Image from '@Components/Image'
+import { Service } from '@typings/serviceGroup'
+import { RenderItemProps } from '@typings/common'
+import { useNavigate } from 'src/Hooks/useNavigation'
+import ScreenKey from '@Navigation/ScreenKey'
+import { getServicesByResEye } from '@Redux/resultcanningeyes/actions'
 
 const RecomendService = memo(() => {
-
+    const dispatch = useDispatch()
+    const { navigation } = useNavigate()
     const { dataServices } = useSelector(getServiceByResScanningListState)
 
-    return (
-        <View style={styles.main}>
-            <View style={styles.child}>
-                <LinearGradient
-                    style={[StyleSheet.absoluteFill, styles.linear]}
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 0, y: 1 }}
-                    colors={["#C4E5FC", "white"]}
-                />
-                <Column margin={8 * 2}>
-                    <Text size={16} weight='bold' color={GREY_FOR_TITLE}>
-                        Giải pháp làm đẹp mắt
-                    </Text>
-                </Column>
-                <ScrollView horizontal>
-                    <Row flexWrap='wrap'>
-                        {
-                            dataServices?.map((item, index) => {
-                                return (
-                                    <Column key={item?._id} width={_widthScale(_width / 2)}>
-                                        <ServiceItem item={item} />
-                                    </Column>
-                                )
-                            })
-                        }
-                    </Row>
-                </ScrollView>
+    useEffect(() => {
+        dispatch(
+            getServicesByResEye.request({
+                codeGroup: { equal: "MAT" },
+            })
+        );
+    }, [])
 
-            </View>
-        </View>
+    const _renderItem = useCallback(({ item }: RenderItemProps<Service>) => {
+
+        const _handleGoDetailService = (() => {
+            navigation.navigate(ScreenKey.DETAIL_SERVICE, {
+                service: item,
+            });
+        })
+        return (
+            <TouchableOpacity onPress={_handleGoDetailService} >
+                <Image
+                    style={styles.avatarService}
+                    avatar={item.avatar} />
+            </TouchableOpacity>
+        )
+    }, [])
+
+    const _awesomeChildListKeyExtractor = useCallback(
+        (item) => `awesome-child-key-${item._id}`,
+        []
+    );
+
+    return (
+        <Column>
+            <Column
+                margin={8 * 2}>
+                <Text
+                    color={NEW_BASE_COLOR}
+                    weight='bold'>
+                    ĐỀ XUẤT DỊCH VỤ
+                </Text>
+            </Column>
+            <Column>
+                <FlatList
+                    showsHorizontalScrollIndicator={false}
+                    contentContainerStyle={styles.contentContainerStyle}
+                    horizontal
+                    keyExtractor={_awesomeChildListKeyExtractor}
+                    renderItem={_renderItem}
+                    data={dataServices} />
+            </Column>
+        </Column>
     )
 })
 
@@ -51,15 +77,12 @@ export default RecomendService
 
 
 const styles = StyleSheet.create({
-    child: {
-        width: '100%',
-        borderTopStartRadius: _moderateScale(8),
-        borderTopEndRadius: _moderateScale(8)
+    contentContainerStyle: {
+        gap: 8, paddingHorizontal: 8 * 2
     },
-    main: { marginTop: _moderateScale(4) },
-    linear: {
-        zIndex: -1,
-        borderTopStartRadius: _moderateScale(8),
-        borderTopEndRadius: _moderateScale(8)
+    avatarService: {
+        width: 8 * 22,
+        height: 8 * 22 * 9 / 16,
+        borderRadius: 8
     }
 })

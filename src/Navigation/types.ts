@@ -53,6 +53,10 @@ type ScreenParams = {
   [ScreenKey.CHARITY_DONATION]: {
     volunteerCompanion: CompanionRequest;
   };
+  [ScreenKey.SCREEN_HTML]: {
+    title: string;
+    value: string;
+  };
 };
 
 export type RootStackParamsList = {

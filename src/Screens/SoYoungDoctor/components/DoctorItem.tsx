@@ -11,7 +11,7 @@ import { styleElement } from "@Constant/StyleElement";
 import ScreenKey from "@Navigation/ScreenKey";
 import { Doctor } from "@typings/doctor";
 import React, { useCallback } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, ViewStyle } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useNavigate } from "src/Hooks/useNavigation";
 import ContentLoader, { Circle, Rect } from "react-content-loader/native";
@@ -20,12 +20,14 @@ import { LocationIcon } from "src/SGV";
 import useRequireLoginCallback from "src/Hooks/useRequireLoginAction";
 import { useDispatch } from "react-redux";
 import { startChat } from "@Redux/chat/actions";
+import { StyleProp } from "react-native";
 
 type Props = {
   item: Doctor;
+  styleContainer?: StyleProp<ViewStyle>;
 };
 
-export default function DoctorItem({ item }: Props) {
+export default function DoctorItem({ item, styleContainer }: Props) {
   const { navigation } = useNavigate();
   const dispatch = useDispatch();
 
@@ -46,7 +48,7 @@ export default function DoctorItem({ item }: Props) {
     <TouchableOpacity
       activeOpacity={0.7}
       onPress={handleItemPress}
-      style={[styles.card, styleElement.shadow]}
+      style={[styles.card, styleElement.shadow, styleContainer]}
     >
       <Row alignItems="flex-start" gap={8} marginBottom={8}>
         <Avatar size={48} avatar={item.avatar} circle />
@@ -85,7 +87,7 @@ export default function DoctorItem({ item }: Props) {
         </Column>
       </Row>
       {item.doctorServices.length > 0 && (
-        <HorizontalServices items={item.doctorServices} />
+        <HorizontalServices items={item.doctorServices?.slice(0, 5)} />
       )}
     </TouchableOpacity>
   );

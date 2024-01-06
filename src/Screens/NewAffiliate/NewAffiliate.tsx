@@ -154,7 +154,7 @@ const NewAffiliate = () => {
             onMomentumScrollEnd={(event) => {
               const index = Math.ceil(
                 event.nativeEvent.contentOffset.x /
-                  event.nativeEvent.layoutMeasurement.width
+                event.nativeEvent.layoutMeasurement.width
               );
               setCurrIndexCard(index);
             }}
