@@ -1,209 +1,22 @@
-import { ScrollView, StyleSheet, View } from "react-native";
-import React, { useEffect, useState } from "react";
+import LiAHeader from "@Components/Header/LiAHeader";
+import Screen from "@Components/Screen";
+import Spacer from "@Components/Spacer";
+import React from "react";
+import { ScrollView, StyleSheet } from "react-native";
+import { NEW_BASE_COLOR, WHITE } from "../../Constant/Color";
 import {
-  _heightScale,
   _moderateScale,
   _width,
-  _widthScale,
+  _widthScale
 } from "../../Constant/Scale";
-import LinearGradient from "react-native-linear-gradient";
-import LeftEye from "./Components/LeftEye";
-import RightEye from "./Components/RightEye";
-import { BLACK, NEW_BASE_COLOR, WHITE } from "../../Constant/Color";
-import RecomendService from "./Components/RecomendService";
-import RecomendDoctor from "./Components/RecomendDoctor";
-import RecomendBrach from "./Components/RecomendBrach";
-import { isEmpty } from "lodash";
-import ImageEditor from "@react-native-community/image-editor";
-import { Platform } from "react-native";
-import { useDispatch } from "react-redux";
-import {
-  getBranchsByResEye,
-  getDoctorsByResEye,
-  getEyeLabel,
-  getServicesByResEye,
-} from "@Redux/resultcanningeyes/actions";
-import Screen from "@Components/Screen";
-import Column from "@Components/Column";
-import LiAHeader from "@Components/Header/LiAHeader";
+import ListDiary from "./Components/ListDiary";
 import OverViewEyes from "./Components/OverViewEyes";
-import Spacer from "@Components/Spacer";
+import RecomendBrach from "./Components/RecomendBrach";
+import RecomendDoctor from "./Components/RecomendDoctor";
+import RecomendService from "./Components/RecomendService";
 
 const ResultAIScanEyes = (props) => {
-  const dispatch = useDispatch();
-
   const { scanningResult, imageScan } = props?.route?.params;
-  const [croppedLeftEyeImage, setCroppedLeftEyeImage] = useState({
-    uri: null,
-    width: null,
-    height: null,
-    ratio: null,
-    boxEyelid: null,
-    boxFatBag: null,
-  });
-  const [croppedRightEyeImage, setCroppedRightEyeImage] = useState({
-    uri: null,
-    width: null,
-    height: null,
-    ratio: null,
-    boxEyelid: null,
-    boxFatBag: null,
-  });
-
-  useEffect(() => {
-    getDataEyeLabel()
-  }, [])
-
-  useEffect(() => {
-    if (!isEmpty(scanningResult) && !isEmpty(imageScan)) {
-      dispatch(
-        getServicesByResEye.request({
-          codeGroup: { equal: "MAT" },
-        })
-      );
-      dispatch(getDoctorsByResEye.request({}));
-      dispatch(getBranchsByResEye.request({}));
-      cropLeftEyeImage();
-      cropRightEyeImage();
-    }
-  }, [scanningResult, imageScan]);
-
-  const getDataEyeLabel = () => {
-    dispatch(getEyeLabel.request())
-  }
-
-  const cropLeftEyeImage = async () => {
-    const {
-      left: {
-        coordinate_fat_bag_box,
-        coordinate_eyelid_boxs,
-        eye_area_top_left_crop,
-        eye_area_bottom_right_crop,
-      },
-    } = scanningResult;
-    try {
-      const imagePath =
-        Platform?.OS == "ios" ? imageScan : `file://${imageScan}`; // Thay đổi thành đường dẫn thực tế của bạn
-      const cropData = {
-        offset: { x: eye_area_top_left_crop[1], y: eye_area_top_left_crop[0] }, // Thay Xmin, Ymin bằng toạ độ thực tế của bạn
-        size: {
-          width: eye_area_bottom_right_crop[1] - eye_area_top_left_crop[1],
-          height: eye_area_bottom_right_crop[0] - eye_area_top_left_crop[0],
-        }, // Thay Xmax, Ymax bằng toạ độ thực tế của bạn
-      };
-      const newImagePath = await ImageEditor.cropImage(imagePath, cropData);
-      setCroppedLeftEyeImage({
-        uri: newImagePath,
-        width: eye_area_bottom_right_crop[1] - eye_area_top_left_crop[1],
-        height: eye_area_bottom_right_crop[0] - eye_area_top_left_crop[0],
-        ratio:
-          (eye_area_bottom_right_crop[1] - eye_area_top_left_crop[1]) /
-          (eye_area_bottom_right_crop[0] - eye_area_top_left_crop[0]),
-        boxEyelid:
-          coordinate_eyelid_boxs?.length > 0
-            ? {
-              point1: {
-                x: coordinate_eyelid_boxs[0][0],
-                y: coordinate_eyelid_boxs[0][1],
-              },
-              point2: {
-                x: coordinate_eyelid_boxs[0][2],
-                y: coordinate_eyelid_boxs[0][1],
-              },
-              point3: {
-                x: coordinate_eyelid_boxs[0][2],
-                y: coordinate_eyelid_boxs[0][3],
-              },
-            }
-            : null,
-        boxFatBag:
-          coordinate_fat_bag_box?.length > 0
-            ? {
-              point1: {
-                x: coordinate_fat_bag_box[0],
-                y: coordinate_fat_bag_box[1],
-              },
-              point2: {
-                x: coordinate_fat_bag_box[2],
-                y: coordinate_fat_bag_box[1],
-              },
-              point3: {
-                x: coordinate_fat_bag_box[2],
-                y: coordinate_fat_bag_box[3],
-              },
-            }
-            : null,
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  const cropRightEyeImage = async () => {
-    const {
-      right: {
-        coordinate_fat_bag_box,
-        coordinate_eyelid_boxs,
-        eye_area_top_left_crop,
-        eye_area_bottom_right_crop,
-      },
-    } = scanningResult;
-    try {
-      const imagePath =
-        Platform?.OS == "ios" ? imageScan : `file://${imageScan}`; // Thay đổi thành đường dẫn thực tế của bạn
-      const cropData = {
-        offset: { x: eye_area_top_left_crop[1], y: eye_area_top_left_crop[0] }, // Thay Xmin, Ymin bằng toạ độ thực tế của bạn
-        size: {
-          width: eye_area_bottom_right_crop[1] - eye_area_top_left_crop[1],
-          height: eye_area_bottom_right_crop[0] - eye_area_top_left_crop[0],
-        }, // Thay Xmax, Ymax bằng toạ độ thực tế của bạn
-      };
-      const newImagePath = await ImageEditor.cropImage(imagePath, cropData);
-      setCroppedRightEyeImage({
-        uri: newImagePath,
-        width: eye_area_bottom_right_crop[1] - eye_area_top_left_crop[1],
-        height: eye_area_bottom_right_crop[0] - eye_area_top_left_crop[0],
-        ratio:
-          (eye_area_bottom_right_crop[1] - eye_area_top_left_crop[1]) /
-          (eye_area_bottom_right_crop[0] - eye_area_top_left_crop[0]),
-        boxEyelid:
-          coordinate_eyelid_boxs?.length > 0
-            ? {
-              point1: {
-                x: coordinate_eyelid_boxs[0][0],
-                y: coordinate_eyelid_boxs[0][1],
-              },
-              point2: {
-                x: coordinate_eyelid_boxs[0][2],
-                y: coordinate_eyelid_boxs[0][1],
-              },
-              point3: {
-                x: coordinate_eyelid_boxs[0][2],
-                y: coordinate_eyelid_boxs[0][3],
-              },
-            }
-            : null,
-        boxFatBag:
-          coordinate_fat_bag_box?.length > 0
-            ? {
-              point1: {
-                x: coordinate_fat_bag_box[0],
-                y: coordinate_fat_bag_box[1],
-              },
-              point2: {
-                x: coordinate_fat_bag_box[2],
-                y: coordinate_fat_bag_box[1],
-              },
-              point3: {
-                x: coordinate_fat_bag_box[2],
-                y: coordinate_fat_bag_box[3],
-              },
-            }
-            : null,
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   return (
     <Screen style={styles.container}>
@@ -218,10 +31,12 @@ const ResultAIScanEyes = (props) => {
         <Spacer top={8 * 2} />
         <OverViewEyes
           scanningResult={scanningResult}
-          croppedLeftEyeImage={croppedLeftEyeImage}
-          croppedRightEyeImage={croppedRightEyeImage}
-        />
-
+          imageScan={imageScan} />
+        <ListDiary />
+        <RecomendService />
+        <RecomendDoctor />
+        <RecomendBrach />
+        <Spacer top={8 * 20} />
       </ScrollView>
     </Screen>
   );

@@ -50,11 +50,12 @@ const BackDropOpacity = memo((props) => {
                         }}>
                             <Text style={{
                                 color: 'white',
-                                fontSize: _moderateScale(50),
+                                fontSize: _moderateScale(40),
                                 fontWeight: 'bold',
-                                opacity: 1
+                                opacity: 1,
+                                textAlign: 'center'
                             }}>
-                                EYE ANALYSIS
+                                {`GƯƠNG THẦN ${`\n`}ĐANG PHÂN TÍCH`}
                             </Text>
                         </View>
 

@@ -1,17 +1,22 @@
 import Column from '@Components/Column'
 import Text from '@Components/Text'
+import { getBranchsByResEye } from '@Redux/resultcanningeyes/actions'
 import { getBranchByResScanningListState } from '@Redux/resultcanningeyes/selectors'
 import BranchItem from '@Screens/SoYoungBranch/components/BranchItem'
 import React, { useEffect } from 'react'
 import { StyleSheet, View } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { GREY_FOR_TITLE } from '../../../Constant/Color'
 import { _moderateScale } from '../../../Constant/Scale'
 
 const RecomendBrach = () => {
-
+    const dispatch = useDispatch()
     const { dataBranchs } = useSelector(getBranchByResScanningListState)
+
+    useEffect(() => {
+        dispatch(getBranchsByResEye.request({}));
+    }, [])
 
     return (
         <View style={styles.main}>
@@ -23,8 +28,8 @@ const RecomendBrach = () => {
                     colors={["#C4E5FC", "white"]}
                 />
                 <Column margin={8 * 2}>
-                    <Text size={16} weight='bold' color={GREY_FOR_TITLE}>
-                        Các phòng khám uy tín hàng đầu
+                    <Text weight='bold' color={GREY_FOR_TITLE}>
+                        PHÒNG KHÁM
                     </Text>
                 </Column>
                 <View style={{ alignItems: 'center' }}>
