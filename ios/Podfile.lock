@@ -106,7 +106,7 @@ PODS:
   - libwebp/webp (1.3.2):
     - libwebp/sharpyuv
   - lottie-ios (4.3.4)
-  - lottie-react-native (6.5.0):
+  - lottie-react-native (6.5.1):
     - glog
     - lottie-ios (~> 4.3.3)
     - RCT-Folly (= 2022.05.16.00)
@@ -1639,7 +1639,7 @@ SPEC CHECKSUMS:
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   libwebp: 1786c9f4ff8a279e4dac1e8f385004d5fc253009
   lottie-ios: 3d98679b41fa6fd6aff2352b3953dbd3df8a397e
-  lottie-react-native: eae761f11db129178b8dcccf381531b2dcdaea3a
+  lottie-react-native: c1c6a1fd86e1942d69c2bc2e14212be72b55f3be
   MMKV: f21593c0af4b3f2a0ceb8f820f28bb639ea22bb7
   MMKVCore: 31b4cb83f8266467eef20a35b6d78e409a11060d
   Mute: 20135a96076f140cc82bfc8b810e2d6150d8ec7e

@@ -56,7 +56,7 @@ const EYE_INDICATOR_SIZE = 10;
 
 const FaceAI = () => {
   const { hasPermission, requestPermission } = useCameraPermission();
-  const device = useCameraDevice("front");
+  // const device = useCameraDevice("front");
   // const format = useCameraFormat(device, Templates.Instagram)
 
   const refCamera = useRef<Camera>(null);
@@ -91,13 +91,13 @@ const FaceAI = () => {
   const { top } = useSafeAreaInsets()
 
   // FIXME: This code is used for testing on emulator
-  // __DEV__ &&
-  //   useImagePicker((image) => {
-  //     console.log({ image });
-  //     processImage({
-  //       path: image,
-  //     });
-  //   });
+  __DEV__ &&
+    useImagePicker((image) => {
+      console.log({ image });
+      processImage({
+        path: image,
+      });
+    });
 
   const volumne = isAndroid ? useVolume() : -1;
 
@@ -290,7 +290,7 @@ const FaceAI = () => {
       //   valueLeftX,
       //   valueLeftY,
       // });
-      // return navigation.replace(ScreenKey.RESULT_AI_SCAN_EYES, { scanningResult: result?.data?.data, imageScan: photo?.path });
+      return navigation.replace(ScreenKey.RESULT_AI_SCAN_EYES, { scanningResult: result?.data?.data, imageScan: photo?.path });
       setShowBackDropOpacity("doing");
 
       setPosRightEyeX(valueRightX);
@@ -490,7 +490,7 @@ const FaceAI = () => {
                 alignItems: "center",
               }}
             >
-              <Camera
+              {/* <Camera
                 enableHighQualityPhotos={true}
                 orientation={"portrait"}
                 ref={refCamera}
@@ -502,7 +502,7 @@ const FaceAI = () => {
                 enableDepthData={true}
                 enablePortraitEffectsMatteDelivery={true}
               // format={format}
-              />
+              /> */}
               <View
                 style={{
                   position: "absolute",

@@ -9,7 +9,7 @@ import {
 import LinearGradient from "react-native-linear-gradient";
 import LeftEye from "./Components/LeftEye";
 import RightEye from "./Components/RightEye";
-import { BLACK, NEW_BASE_COLOR, WHITE } from "../../Constant/Color";
+import { BLACK, WHITE } from "../../Constant/Color";
 import RecomendService from "./Components/RecomendService";
 import RecomendDoctor from "./Components/RecomendDoctor";
 import RecomendBrach from "./Components/RecomendBrach";
@@ -26,8 +26,6 @@ import {
 import Screen from "@Components/Screen";
 import Column from "@Components/Column";
 import LiAHeader from "@Components/Header/LiAHeader";
-import OverViewEyes from "./Components/OverViewEyes";
-import Spacer from "@Components/Spacer";
 
 const ResultAIScanEyes = (props) => {
   const dispatch = useDispatch();
@@ -209,19 +207,39 @@ const ResultAIScanEyes = (props) => {
     <Screen style={styles.container}>
       <LiAHeader
         safeTop
-        titleColor={NEW_BASE_COLOR}
+        titleColor={BLACK}
         barStyle={"dark-content"}
         bg={WHITE}
-        title={"KẾT QUẢ CHI TIẾT"}
+        title={"Kết quả phân tích"}
       />
       <ScrollView>
-        <Spacer top={8 * 2} />
-        <OverViewEyes
-          scanningResult={scanningResult}
-          croppedLeftEyeImage={croppedLeftEyeImage}
-          croppedRightEyeImage={croppedRightEyeImage}
-        />
+        <Column gap={8 * 2} style={styles.overView}>
+          <LinearGradient
+            style={[StyleSheet.absoluteFill, { zIndex: -1 }]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 0, y: 1 }}
+            colors={["#B9DDF5", "#74BAEB", "#74BAEB"]}
+          />
+          <View style={styles.overView__box}>
+            <LeftEye
+              scanningResult={scanningResult}
+              croppedLeftEyeImage={croppedLeftEyeImage}
+            />
+          </View>
+          <View style={[styles.overView__box]}>
+            <RightEye
+              scanningResult={scanningResult}
+              croppedRightEyeImage={croppedRightEyeImage}
+            />
+          </View>
+        </Column>
+        <Column gap={8}>
+          <RecomendService />
+          <RecomendDoctor />
+          <RecomendBrach />
+        </Column>
 
+        <View style={{ height: 500 }} />
       </ScrollView>
     </Screen>
   );
@@ -256,6 +274,6 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: WHITE,
+    backgroundColor: "#F4F9FD",
   },
 });

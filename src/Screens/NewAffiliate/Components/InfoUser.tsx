@@ -1,4 +1,4 @@
-import { StyleSheet, View } from 'react-native'
+import { Image, StyleSheet, View } from 'react-native'
 import React, { useMemo } from 'react'
 import Column from '@Components/Column'
 import Avatar from '@Components/Avatar'
@@ -29,6 +29,46 @@ const InfoUser = () => {
     }
   }, [currPartnerLevel])
 
+  const generateLevel = useMemo(() => {
+
+    switch (currPartnerLevel?.code) {
+      case "BRONZE":
+        return (
+          <Image
+            resizeMode="contain"
+            style={styles.levelCode}
+            source={require("../../../NewImage/Affiliate/bronzeLevel.png")}
+          />
+        );
+      case "SILVER":
+        return (
+          <Image
+            resizeMode="contain"
+            style={styles.levelCode}
+            source={require("../../../NewImage/Affiliate/silverLevel.png")}
+          />
+        );
+      case "GOLD":
+        return (
+          <Image
+            resizeMode="contain"
+            style={styles.levelCode}
+            source={require("../../../NewImage/Affiliate/goldLevel.png")}
+          />
+        );
+      case "PLATINUM":
+        return (
+          <Image
+            resizeMode="contain"
+            style={styles.levelCode}
+            source={require("../../../NewImage/Affiliate/platinumLevel.png")}
+          />
+        );
+      default:
+        return null
+    }
+  }, [currPartnerLevel])
+
   return (
     <Column
       gap={8}
@@ -53,12 +93,13 @@ const InfoUser = () => {
           weight='bold'>
           {infoUser?.name}
         </Text>
-        <Text
+        {generateLevel}
+        {/* <Text
           size={_heightScale(12)}
           color={generateColor}
           weight='bold'>
           {currPartnerLevel?.name}
-        </Text>
+        </Text> */}
       </Column>
     </Column>
   )
@@ -66,4 +107,9 @@ const InfoUser = () => {
 
 export default InfoUser
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  levelCode: {
+    width: _heightScale(8 * 10),
+    height: 8 * 3
+  }
+})
