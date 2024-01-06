@@ -11,6 +11,8 @@ import Avatar from "@Components/Avatar";
 import moment from "moment";
 import useCallbackItem from "src/Hooks/useCallbackItem";
 import { IconAI } from "@Components/Icon/Icon";
+import { useSelector } from "react-redux";
+import { getInfoUserReducer } from "@Redux/Selectors";
 
 type Props = {
   item: Conversation;
@@ -19,6 +21,7 @@ type Props = {
 
 const ItemLastedMessage = ({ item, onPress }: Props) => {
   const trigger = useCallbackItem(item);
+  const { infoUser } = useSelector(getInfoUserReducer);
 
   const assignedUser = useMemo(() => {
     return item.assignedUsers[0];
@@ -29,22 +32,29 @@ const ItemLastedMessage = ({ item, onPress }: Props) => {
   }, [item]);
 
   const lastMessageContent = useMemo(() => {
+    const prefix = infoUser?._id === item.latestMessage.senderId ? "Bạn: " : ``;
+    let content = "";
     switch (item.latestMessage?.type) {
       case "text":
-        return item.latestMessage?.content;
+        content = item.latestMessage?.content;
+        break;
       case "video":
-        return `[ Video ]`;
+        content = `[ Video ]`;
+        break;
       case "image":
-        return `[ Hình ảnh ]`;
+        content = `[ Hình ảnh ]`;
+        break;
       case "document":
-        return `[ Tài liệu ]`;
+        content = `[ Tài liệu ]`;
+        break;
       case "template":
-        return item.latestMessage?.content;
-
+        content = item.latestMessage?.content;
+        break;
       default:
         break;
     }
-  }, [item]);
+    return `${prefix}${content}`;
+  }, [item, infoUser]);
 
   const lastMessageTime = useMemo(() => {
     if (!item.latestMessage?.created) {
