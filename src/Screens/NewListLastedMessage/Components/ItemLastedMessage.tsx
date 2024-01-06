@@ -28,23 +28,36 @@ const ItemLastedMessage = ({ item, onPress }: Props) => {
     return item.type === "assistant" || item.latestMessage?.isPartnerSeen;
   }, [item]);
 
-  const _renderContent = useMemo(() => {
+  const lastMessageContent = useMemo(() => {
     switch (item.latestMessage?.type) {
       case "text":
-        return item.latestMessage?.content
+        return item.latestMessage?.content;
       case "video":
-        return `[ Video ]`
+        return `[ Video ]`;
       case "image":
-        return `[ Hình ảnh ]`
+        return `[ Hình ảnh ]`;
       case "document":
-        return `[ Tài liệu ]`
+        return `[ Tài liệu ]`;
       case "template":
-        return item.latestMessage?.content
+        return item.latestMessage?.content;
 
       default:
         break;
     }
-  }, [item])
+  }, [item]);
+
+  const lastMessageTime = useMemo(() => {
+    if (!item.latestMessage?.created) {
+      return "";
+    }
+    const created = moment(item.latestMessage?.created);
+    if (
+      created.clone().startOf("days").diff(moment().startOf("days"), "day") < -1
+    ) {
+      return created.format("DD/MM/YYYY");
+    }
+    return moment(item.latestMessage?.created).fromNow();
+  }, [item.latestMessage?.created]);
 
   return (
     <Pressable onPress={trigger(onPress)}>
@@ -75,17 +88,12 @@ const ItemLastedMessage = ({ item, onPress }: Props) => {
             weight={isSeen ? "regular" : "bold"}
             numberOfLines={1}
           >
-            {
-              _renderContent
-            }
-            {/* {item.latestMessage?.content} */}
+            {lastMessageContent}
           </Text>
         </Column>
         <Column gap={_moderateScale(4)} alignItems="flex-end">
           <Text weight={isSeen ? "regular" : "bold"} size={12}>
-            {item.latestMessage?.created
-              ? moment(item.latestMessage?.created).fromNow()
-              : ""}
+            {lastMessageTime}
           </Text>
           {!isSeen ? (
             <View style={styles.countBox}>

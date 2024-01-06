@@ -34,6 +34,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Screen from "@Components/Screen";
 import Column from "@Components/Column";
 import Text from "@Components/Text";
+import { StatusBar } from "@Components/StatusBar";
 
 const index = memo((props: any) => {
   const { top, bottom } = useSafeAreaInsets();
@@ -435,6 +436,7 @@ const index = memo((props: any) => {
 
   return (
     <Screen safeTop>
+      <StatusBar barStyle="dark-content" />
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styleElement.flex}

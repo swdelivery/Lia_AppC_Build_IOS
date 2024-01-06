@@ -112,7 +112,7 @@ const Header = ({ conversation }: Props) => {
 function DoctorInfo({ conversation }: { conversation: any }) {
   const mainDoctor = useMemo(() => {
     return conversation?.assignedUsers?.find((item) => item?.isMain);
-  }, [conversation]);
+  }, [conversation]);  
 
   const _handleNavigate = useCallback(() => {
     // PENDING FOR WAITING BACKEND
