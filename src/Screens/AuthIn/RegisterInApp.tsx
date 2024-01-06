@@ -205,7 +205,7 @@ const RegisterInApp = (props) => {
           <Image
             resizeMode={"contain"}
             style={{ width: "70%", height: "70%" }}
-            source={require("../../NewImage/NewLogo.png")}
+            source={require("../../NewImage/logoLiA.png")}
           />
         </View>
 
