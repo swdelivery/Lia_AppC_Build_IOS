@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useDispatch } from "react-redux";
 import * as Color from "../../Constant/Color";
@@ -20,6 +20,10 @@ import Screen from "@Components/Screen";
 import Header from "./components/Header";
 import PhoneInput from "@Components/PhoneInput";
 import { isValidPhoneNumber } from "react-phone-number-input";
+import Column from "@Components/Column";
+import Spacer from "@Components/Spacer";
+import Row from "@Components/Row";
+import Text from "@Components/Text";
 
 const FillPhoneToGetNewPass = (props) => {
   const [phoneNumber, setphoneNumber] = useState("");
@@ -50,13 +54,33 @@ const FillPhoneToGetNewPass = (props) => {
     }
   };
 
+  const _handleOnPressContinue = async () => {
+    if (validatePhoneNumber()) {
+      let newFormatPhone = phoneNumber;
+
+      if (newFormatPhone.charAt(0) == "0") {
+        newFormatPhone = `+${countryCallingCode}${newFormatPhone.substring(
+          1
+        )}`;
+      } else {
+        newFormatPhone = `+${countryCallingCode}${newFormatPhone}`;
+      }
+      return navigation.navigate(ScreenKey.GET_OTP_NEW_PASS, {
+        phoneNumber: newFormatPhone,
+        fullPhone: phoneNumber,
+        routeName: props?.route?.params?.routeName,
+        nationCode: "+" + countryCallingCode,
+      });
+    }
+  }
+
   return (
-    <Screen style={styles.container} safeTop>
+    <Screen style={styles.container} safeTop safeBottom>
       <Header title="Quên mật khẩu" onBack={navigation.goBack} />
       <KeyboardAwareScrollView
         contentContainerStyle={{
           flexGrow: 1,
-          paddingHorizontal: _moderateScale(8 * 4),
+          flex: 1,
         }}
         enableOnAndroid={true}
       >
@@ -64,10 +88,9 @@ const FillPhoneToGetNewPass = (props) => {
         <View
           style={[
             {
-              height: _moderateScale(8 * 20),
+              height: _moderateScale(8 * 15),
+              width: _moderateScale(_width),
               borderWidth: 0,
-              margin: _moderateScale(8 * 2),
-              borderRadius: _moderateScale(8 * 2),
             },
             styleElement.centerChild,
           ]}
@@ -75,60 +98,57 @@ const FillPhoneToGetNewPass = (props) => {
           <Image
             resizeMode={"contain"}
             style={{ width: "70%", height: "70%" }}
-            source={require("../../NewImage/logoLiA.png")}
+            source={require("../../NewImage/NewLogo.png")}
           />
         </View>
-        <PhoneInput
-          content={phoneNumber}
-          countryCallingCode={countryCallingCode}
-          errorMessage={errorPhoneNumber}
-          label="Số điện thoại đã đăng ký"
-          onBlur={validatePhoneNumber}
-          onChangeText={setphoneNumber}
-          onSelectionCallingCode={setCountryCallingCode}
-        />
-        <View style={{ height: _moderateScale(8 * 4) }} />
-        <TouchableOpacity
-          onPress={() => {
-            if (validatePhoneNumber()) {
-              let newFormatPhone = phoneNumber;
-
-              if (newFormatPhone.charAt(0) == "0") {
-                newFormatPhone = `+${countryCallingCode}${newFormatPhone.substring(
-                  1
-                )}`;
-              } else {
-                newFormatPhone = `+${countryCallingCode}${newFormatPhone}`;
-              }
-              return navigation.navigate(ScreenKey.GET_OTP_NEW_PASS, {
-                phoneNumber: newFormatPhone,
-                fullPhone: phoneNumber,
-                routeName: props?.route?.params?.routeName,
-                nationCode: "+" + countryCallingCode,
-              });
-            }
-          }}
-          style={[
-            {
-              height: _moderateScale(8 * 6),
-              borderRadius: _moderateScale(8),
-              justifyContent: "center",
-              alignItems: "center",
-              backgroundColor: Color.BG_LOGIN_BUTTON,
-            },
-          ]}
-        >
-          <Text
+        <Spacer top={_moderateScale(8 * 10)} />
+        <Column paddingHorizontal={_moderateScale(8 * 2)}>
+          <PhoneInput
+            content={phoneNumber}
+            countryCallingCode={countryCallingCode}
+            errorMessage={errorPhoneNumber}
+            label="Số điện thoại đã đăng ký"
+            onBlur={validatePhoneNumber}
+            onChangeText={setphoneNumber}
+            onSelectionCallingCode={setCountryCallingCode}
+          />
+          <View style={{ height: _moderateScale(8 * 4) }} />
+          <TouchableOpacity
+            onPress={_handleOnPressContinue}
             style={[
-              stylesFont.fontNolanBold,
-              { fontSize: _moderateScale(16), color: Color.WHITE },
+              {
+                height: _moderateScale(8 * 6),
+                borderRadius: _moderateScale(8),
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: Color.BG_LOGIN_BUTTON,
+              },
             ]}
           >
-            Tiếp tục
-          </Text>
-        </TouchableOpacity>
+            <Text
+              style={[
+                stylesFont.fontNolanBold,
+                { fontSize: _moderateScale(16), color: Color.WHITE },
+              ]}
+            >
+              Tiếp tục
+            </Text>
+          </TouchableOpacity>
+        </Column>
         <View style={{ height: _moderateScale(8 * 0.5) }} />
       </KeyboardAwareScrollView>
+      <Row
+        justifyContent="flex-end"
+        paddingBottom={_moderateScale(8)}
+        alignSelf="center"
+      >
+        <Text
+          color={Color.GREY}
+          fontStyle="italic"
+        >
+          Copyright © Lia Beauty 2023
+        </Text>
+      </Row>
     </Screen>
   );
 };

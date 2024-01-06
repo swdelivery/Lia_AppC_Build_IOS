@@ -1,7 +1,7 @@
 import React, { forwardRef, useImperativeHandle, useState } from "react";
 import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
 import { stylesFont } from "../../../Constant/Font";
-import { BLUE_FB, GREEN_2, GREY } from "../../../Constant/Color";
+import { BASE_COLOR, BLACK, BLUE_FB, GREEN_2, GREY } from "../../../Constant/Color";
 import { _moderateScale } from "../../../Constant/Scale";
 import { useInterval } from "@r0b0t3d/react-native-hooks";
 
@@ -10,7 +10,7 @@ type Props = {
 };
 
 function ResendOtp({ onResend }: Props, ref: any) {
-  const [counter, setCounter] = useState(20);
+  const [counter, setCounter] = useState(150);
 
   useImperativeHandle(ref, () => ({
     setCounter: (value: number) => {
@@ -47,14 +47,14 @@ const styles = StyleSheet.create({
     ...stylesFont.fontNolan,
     alignSelf: "center",
     textDecorationLine: "underline",
-    color: GREEN_2,
+    color: BLACK,
     fontSize: _moderateScale(15),
   },
   resendAfter: {
     ...stylesFont.fontNolan,
     alignSelf: "center",
-    color: GREEN_2,
+    color: BLACK,
     fontSize: _moderateScale(15),
   },
-  counter: { ...stylesFont.fontNolanBold, color: BLUE_FB },
+  counter: { ...stylesFont.fontNolanBold, color: BASE_COLOR },
 });

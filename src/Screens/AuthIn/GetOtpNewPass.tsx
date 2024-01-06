@@ -1,5 +1,5 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import React, { useCallback, useRef, useState } from "react";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import Screen from "@Components/Screen";
 import { _moderateScale, _widthScale } from "@Constant/Scale";
 import Header from "./components/Header";
@@ -8,7 +8,7 @@ import { stylesFont } from "@Constant/Font";
 import OTPInputView from "@twotalltotems/react-native-otp-input";
 import ResendOtp from "./components/ResendOtp";
 import * as Color from "../../Constant/Color";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigationParams } from "src/Hooks/useNavigation";
 import ScreenKey from "@Navigation/ScreenKey";
 import auth, { FirebaseAuthTypes } from "@react-native-firebase/auth";
@@ -25,6 +25,10 @@ import PasswordInput from "@Components/PasswordInput";
 import Spacer from "@Components/Spacer";
 import { delay } from "src/utils/common";
 import Toast from "react-native-toast-message";
+import { changePass, requestOTPResetPass, resendOTP, resetStateChangePass, resetVerifyOtpResetPass, verifyOtpResetPass } from "@Redux/otp/actions";
+import { getStateChangePass, getStateVerifyOtpResetPass } from "@Redux/otp/selectors";
+import Row from "@Components/Row";
+import Text from "@Components/Text";
 
 type ScreenK = typeof ScreenKey.GET_OTP_NEW_PASS;
 
@@ -41,41 +45,25 @@ const GetOtpNewPass = (props: any) => {
   const [errorPassword, setErrorPassword] = useState("");
   const [errorPassword2, setErrorPassword2] = useState("");
 
-  const [idTokenFireBase, setIdTokenFireBase] = useState(null);
-
   const [isWrongOTP, setIsWrongOTP] = useState(false);
 
-  const handleUserLogin = useCallback(
-    async (
-      user: FirebaseAuthTypes.User,
-      token: FirebaseAuthTypes.IdTokenResult
-    ) => {
-      if (token.token) {
-        setIdTokenFireBase(token.token);
-      }
-    },
-    []
-  );
-  const { confirmCode, verifyPhoneNumber } = usePhoneAuth(
-    phoneNumber,
-    handleUserLogin
-  );
+  const [isVerified, setIsVerified] = useState(false);
 
-  const confirmVerificationCode = useCallback(
-    async (code: string) => {
-      try {
-        await confirmCode(code);
-        setActiveCode("");
-      } catch (error) {
-        setIsWrongOTP(true);
-        Toast.show({
-          text1: "Mã OTP không chính xác",
-          type: "error",
-        });
-      }
-    },
-    [confirmCode]
-  );
+  const { isLoading, isSuccess, message } = useSelector(getStateVerifyOtpResetPass)
+
+  const { isLoading: loadingChangePass, isSuccess: isSuccessChangePass, message: messageChangePass } = useSelector(getStateChangePass)
+
+  useEffect(() => {
+    dispatch(resetVerifyOtpResetPass.request())
+    dispatch(resetStateChangePass.request())
+    dispatch(requestOTPResetPass.request({
+      phone: {
+        nationCode: nationCode,
+        phoneNumber: fullPhone,
+      },
+      type: "RESET_PASSWORD"
+    }))
+  }, [])
 
   const validatePassword = () => {
     if (!password.trim()) {
@@ -125,72 +113,76 @@ const GetOtpNewPass = (props: any) => {
       return;
     }
 
-    let resultFirebaseResetPassword = await firebaseResetPassword({
-      idToken: idTokenFireBase,
-      phone: {
-        phoneNumber: fullPhone,
-        nationCode: nationCode,
-      },
+    dispatch(changePass.request({
+      code: activeCode,
       password: password,
-    });
-    if (resultFirebaseResetPassword?.isAxiosError) {
-      auth().signOut();
-      return navigation.navigate(routeName, {});
-    }
-    auth().signOut();
-    dispatch(
-      loginInApp(
-        {
-          phone: {
-            phoneNumber: fullPhone,
-            nationCode: nationCode,
-          },
-          password: password,
-          appName: "CS_APP",
-        },
-        props?.route?.params?.routeName
-      )
-    );
+      phone: {
+        nationCode: nationCode,
+        phoneNumber: fullPhone,
+      },
+      type: "RESET_PASSWORD"
+    }))
   };
 
-  const _reSendOTP = useCallback(async () => {
-    setActiveCode("");
+  const confirmVerificationCode = (code: string) => {
+    if (code.length === 6) {
+      dispatch(verifyOtpResetPass.request({
+        code: code,
+        phone: {
+          nationCode: nationCode,
+          phoneNumber: fullPhone,
+        },
+        type: "RESET_PASSWORD"
+      }))
+    }
+  }
+
+  const _reSendOTP = async () => {
+    setActiveCode("")
+    setIsWrongOTP(false)
     if (resendRef.current) {
-      resendRef.current.setCounter(90);
+      resendRef.current.setCounter(150);
     }
     await delay(3000);
-
-    if (resentCount.current < 1) {
-      verifyPhoneNumber();
-      resentCount.current++;
-      return;
-    }
-
-    auth().signOut();
-
-    let result = await forceVerifyAccount({
+    dispatch(resendOTP.request({
       phone: {
+        nationCode: nationCode.includes("+") ? nationCode : ("+" + nationCode),
         phoneNumber: fullPhone,
-        nationCode: nationCode,
       },
-    });
-    if (result?.isAxiosError) return;
+      type: "RESET_PASSWORD"
+    }))
+  }
 
-    // dispatch(
-    //   loginInApp(
-    //     {
-    //       phone: {
-    //         phoneNumber: fullPhone,
-    //         nationCode: nationCode,
-    //       },
-    //       password: password,
-    //       appName: "CS_APP",
-    //     },
-    //     props?.route?.params?.routeName
-    //   )
-    // );
-  }, [verifyPhoneNumber]);
-  return idTokenFireBase ? (
+
+  useEffect(() => {
+    if (!isLoading && isSuccess === false) {
+      setIsWrongOTP(true)
+    }
+    if (!isLoading && isSuccess === true) {
+      setIsWrongOTP(false)
+      setIsVerified(true)
+    }
+  }, [isSuccess, isLoading, message])
+
+  useEffect(() => {
+    if (!isLoading && isSuccess === true) {
+      dispatch(
+        loginInApp(
+          {
+            phone: {
+              phoneNumber: fullPhone,
+              nationCode: nationCode,
+            },
+            password: password,
+            appName: "CS_APP",
+          },
+          props?.route?.params?.routeName
+        )
+      );
+    }
+  }, [isSuccessChangePass, loadingChangePass, messageChangePass])
+
+  return isVerified ? (
     <Screen safeTop style={styles.container}>
       <Header title="Tạo mật khẩu mới" onBack={navigation.goBack} />
       <KeyboardAwareScrollView
@@ -243,6 +235,18 @@ const GetOtpNewPass = (props: any) => {
           </TouchableOpacity>
         </Column>
       </KeyboardAwareScrollView>
+      <Row
+        justifyContent="flex-end"
+        paddingBottom={_moderateScale(8)}
+        alignSelf="center"
+      >
+        <Text
+          color={Color.GREY}
+          fontStyle="italic"
+        >
+          Copyright © Lia Beauty 2023
+        </Text>
+      </Row>
     </Screen>
   ) : (
     <Screen safeTop style={styles.container}>
@@ -290,7 +294,26 @@ const GetOtpNewPass = (props: any) => {
           autoFocusOnLoad={true}
         />
         <ResendOtp ref={resendRef} onResend={_reSendOTP} />
+        <TouchableOpacity onPress={() => confirmVerificationCode(activeCode)}>
+          <Row backgroundColor={Color.BASE_COLOR} padding={_moderateScale(10)} marginVertical={_moderateScale(40)} marginHorizontal={_moderateScale(50)} borderRadius={_moderateScale(5)}>
+            <Text style={{ textAlign: "center" }} flex={1} color={Color.WHITE} size={_moderateScale(14)} weight="bold">
+              Xác thực
+            </Text>
+          </Row>
+        </TouchableOpacity>
       </KeyboardAwareScrollView>
+      <Row
+        justifyContent="flex-end"
+        paddingBottom={_moderateScale(8)}
+        alignSelf="center"
+      >
+        <Text
+          color={Color.GREY}
+          fontStyle="italic"
+        >
+          Copyright © Lia Beauty 2023
+        </Text>
+      </Row>
     </Screen>
   );
 };

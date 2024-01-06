@@ -1,7 +1,7 @@
-import React, { useState, useCallback, useRef } from "react";
-import { StyleSheet } from "react-native";
+import React, { useState, useCallback, useRef, useEffect } from "react";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import * as Color from "../../Constant/Color";
 import { stylesFont } from "../../Constant/Font";
 import {
@@ -25,6 +25,11 @@ import Screen from "@Components/Screen";
 import Text from "@Components/Text";
 import Header from "./components/Header";
 import Toast from "react-native-toast-message";
+import Row from "@Components/Row";
+import Column from "@Components/Column";
+import Button from "@Components/Button/Button";
+import { resendOTP, resetVerifyAccount, verifyOtpAccountpartner } from "@Redux/otp/actions";
+import { getStateVerifyOtpAccountPartner } from "@Redux/otp/selectors";
 
 type ScreenK = typeof ScreenKey.ACTIVATION_IN_APP;
 
@@ -37,103 +42,73 @@ const ActivationInApp = (props: any) => {
     useNavigationParams<ScreenK>();
   const [isWrongOTP, setIsWrongOTP] = useState(false);
 
-  const handleUserLogin = useCallback(
-    async (
-      user: FirebaseAuthTypes.User,
-      token: FirebaseAuthTypes.IdTokenResult
-    ) => {
-      if (token.token) {
-        let resultVerifyAccount = await verifyAccount({
-          idToken: token.token,
-          phone: {
-            phoneNumber: props?.route?.params?.fullPhone,
-            nationCode: nationCode,
-          },
-        });
-        if (resultVerifyAccount?.isAxiosError) {
-          return navigation.navigate(ScreenKey.LOGIN_IN_APP, {});
+  const { isLoading, isSuccess, message } = useSelector(getStateVerifyOtpAccountPartner)
+
+  const confirmVerificationCode = (code: string) => {
+    if (code.length === 6) {
+      dispatch(verifyOtpAccountpartner.request({
+        code: code,
+        phone: {
+          nationCode: nationCode.includes("+") ? nationCode : ("+" + nationCode),
+          phoneNumber: fullPhone
         }
+      }))
+    }
+  }
 
-        auth().signOut();
-        dispatch(
-          loginInApp(
-            {
-              phone: {
-                phoneNumber: fullPhone,
-                nationCode: nationCode,
-              },
-              password: password,
-              appName: "CS_APP",
-            },
-            routeName
-          )
-        );
-      }
-    },
-    [props?.route?.params]
-  );
+  useEffect(() => {
+    dispatch(resetVerifyAccount.request())
+    if (props?.route?.params?.isLogin === true) {
+      _handleResendOTP()
+    }
+  }, [])
 
-  const { confirmCode, verifyPhoneNumber } = usePhoneAuth(
-    phoneNumber,
-    handleUserLogin
-  );
+  const handleLoginBtn = () => {
+    navigation.navigate(ScreenKey.LOGIN_IN_APP, {
+      routeName: props?.route?.params?.routeName,
+    })
+  }
 
-  const confirmVerificationCode = useCallback(
-    async (code: string) => {
-      try {
-        await confirmCode(code);
-        setActiveCode("");
-      } catch (error) {
-        setIsWrongOTP(true);
-        Toast.show({
-          text1: "Mã OTP không chính xác",
-          type: "error",
-        });
-      }
-    },
-    [confirmCode]
-  );
-
-  const _reSendOTP = useCallback(async () => {
-    setActiveCode("");
+  const _handleResendOTP = async () => {
+    setActiveCode("")
+    setIsWrongOTP(false)
     if (resendRef.current) {
-      resendRef.current.setCounter(90);
+      resendRef.current.setCounter(150);
     }
     await delay(3000);
-
-    if (resentCount.current < 1) {
-      verifyPhoneNumber();
-      resentCount.current++;
-      return;
-    }
-
-    auth().signOut();
-
-    let result = await forceVerifyAccount({
+    dispatch(resendOTP.request({
       phone: {
-        phoneNumber: props?.route?.params?.fullPhone,
-        nationCode: nationCode,
+        nationCode: nationCode.includes("+") ? nationCode : ("+" + nationCode),
+        phoneNumber: fullPhone,
       },
-    });
-    if (result?.isAxiosError) return;
+      type: "VERIFY_ACCOUNT"
+    }))
 
-    dispatch(
-      loginInApp(
-        {
-          phone: {
-            phoneNumber: props?.route?.params?.fullPhone,
-            nationCode: nationCode,
+  }
+
+  useEffect(() => {
+    if (!isLoading && isSuccess === false) {
+      setIsWrongOTP(true)
+    }
+    if (!isLoading && isSuccess === true) {
+      dispatch(
+        loginInApp(
+          {
+            phone: {
+              phoneNumber: fullPhone,
+              nationCode: nationCode.includes("+") ? nationCode : ("+" + nationCode),
+            },
+            password: password,
+            appName: "CS_APP",
           },
-          password: props?.route?.params?.password,
-          appName: "CS_APP",
-        },
-        props?.route?.params?.routeName
-      )
-    );
-  }, [verifyPhoneNumber]);
+          props?.route?.params?.routeName
+        )
+      );
+    }
+  }, [isSuccess, isLoading, message])
 
   return (
-    <Screen safeTop style={styles.container}>
+    <Screen safeBottom safeTop style={styles.container}>
       <Header title="Xác thực OTP" onBack={navigation.goBack} />
       <KeyboardAwareScrollView
         bounces={false}
@@ -161,7 +136,7 @@ const ActivationInApp = (props: any) => {
             marginTop: _moderateScale(8 * 1),
           }}
         >
-          {props?.route?.params?.fullPhone}
+          {nationCode}{fullPhone}
         </Text>
         <OTPInputView
           style={{ width: "80%", height: 100, alignSelf: "center" }}
@@ -176,8 +151,46 @@ const ActivationInApp = (props: any) => {
           onCodeChanged={setActiveCode}
           autoFocusOnLoad={true}
         />
-        <ResendOtp ref={resendRef} onResend={_reSendOTP} />
+        <ResendOtp ref={resendRef} onResend={_handleResendOTP} />
+
+        <TouchableOpacity onPress={() => confirmVerificationCode(activeCode)}>
+          <Row backgroundColor={Color.BASE_COLOR} padding={_moderateScale(10)} marginVertical={_moderateScale(40)} marginHorizontal={_moderateScale(50)} borderRadius={_moderateScale(5)}>
+            <Text style={{ textAlign: "center" }} flex={1} color={Color.WHITE} size={_moderateScale(14)} weight="bold">
+              Xác thực
+            </Text>
+          </Row>
+        </TouchableOpacity>
       </KeyboardAwareScrollView>
+      <Column
+        flex={1}
+        justifyContent="flex-end"
+        alignSelf="center"
+        paddingTop={_moderateScale(64)}
+        marginBottom={_moderateScale(10)}
+      >
+        <TouchableOpacity
+          onPress={handleLoginBtn}
+        >
+          <Text color={Color.GREY}>
+            {"Bạn đã có tài khoản, "}
+            <Text weight="bold" size={14} color={Color.BASE_COLOR}>
+              Đăng nhập ngay
+            </Text>
+          </Text>
+        </TouchableOpacity>
+      </Column>
+      <Row
+        justifyContent="flex-end"
+        paddingBottom={_moderateScale(8)}
+        alignSelf="center"
+      >
+        <Text
+          color={Color.GREY}
+          fontStyle="italic"
+        >
+          Copyright © Lia Beauty 2023
+        </Text>
+      </Row>
     </Screen>
   );
 };

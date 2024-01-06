@@ -437,7 +437,8 @@ export const loginInApp = (props, routeNameForGoback) => {
             if (routeNameForGoback) {
               navigation.navigate(routeNameForGoback);
             } else {
-              navigation.goBack();
+              // navigation.goBack();
+              navigation.navigate("MainTab");
             }
           })
           .catch((err) => {
@@ -473,8 +474,10 @@ export const loginInApp = (props, routeNameForGoback) => {
           return navigation.navigate(ScreenKey.ACTIVATION_IN_APP, {
             phoneNumber: newFormatPhone,
             fullPhone: props?.phone?.phoneNumber,
+            nationCode: props?.phone?.nationCode,
             password: props?.password,
             routeName: routeNameForGoback,
+            isLogin: true
           });
         }
         if (err?.message == "Network Error") {

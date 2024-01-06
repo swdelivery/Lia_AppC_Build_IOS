@@ -4,11 +4,11 @@ import Text from '@Components/Text'
 import { getServiceByResScanningListState } from '@Redux/resultcanningeyes/selectors'
 import ServiceItem from '@Screens/SoYoungService/components/ServiceItem'
 import React, { memo } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { ScrollView, StyleSheet, View } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 import { useSelector } from 'react-redux'
 import { GREY_FOR_TITLE } from '../../../Constant/Color'
-import { _moderateScale } from '../../../Constant/Scale'
+import { _moderateScale, _width, _widthScale } from '../../../Constant/Scale'
 
 const RecomendService = memo(() => {
 
@@ -28,15 +28,19 @@ const RecomendService = memo(() => {
                         Giải pháp làm đẹp mắt
                     </Text>
                 </Column>
-                <Row flexWrap='wrap'>
-                    {
-                        dataServices?.map((item, index) => {
-                            return (
-                                <ServiceItem key={item?._id} item={item} />
-                            )
-                        })
-                    }
-                </Row>
+                <ScrollView horizontal>
+                    <Row flexWrap='wrap'>
+                        {
+                            dataServices?.map((item, index) => {
+                                return (
+                                    <Column key={item?._id} width={_widthScale(_width / 2)}>
+                                        <ServiceItem item={item} />
+                                    </Column>
+                                )
+                            })
+                        }
+                    </Row>
+                </ScrollView>
 
             </View>
         </View>

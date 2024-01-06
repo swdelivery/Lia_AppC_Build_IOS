@@ -120,7 +120,7 @@ const Login = (props) => {
           <Image
             resizeMode={"contain"}
             style={{ width: "70%", height: "70%" }}
-            source={require("../../NewImage/logoLiA.png")}
+            source={require("../../NewImage/NewLogo.png")}
           />
         </Column>
 
@@ -203,7 +203,7 @@ const Login = (props) => {
             }}
           >
             <Text color={Color.GREY}>
-              {"Bạn chưa có tài khoản?  "}
+              {"Bạn chưa có tài khoản, "}
               <Text weight="bold" size={14} color={Color.BASE_COLOR}>
                 Đăng ký ngay
               </Text>
@@ -216,12 +216,10 @@ const Login = (props) => {
           alignSelf="center"
         >
           <Text
-            style={[
-              stylesFont.fontDinTextPro,
-              { color: Color.BLACK, fontSize: 12 },
-            ]}
+            color={Color.GREY}
+            fontStyle="italic"
           >
-            Copyright © Lia Beauty 2023.
+            Copyright © Lia Beauty 2023
           </Text>
         </Row>
       </KeyboardAwareScrollView>

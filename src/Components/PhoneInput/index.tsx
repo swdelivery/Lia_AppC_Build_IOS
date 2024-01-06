@@ -53,15 +53,7 @@ export default function PhoneInput({
   };
   return (
     <Column marginTop={marginTop}>
-      {content ? (
-        <View style={styles.labelContainer}>
-          <Text size={14} color={Color.GREY}>
-            {label}
-          </Text>
-        </View>
-      ) : (
-        <></>
-      )}
+
       <Row
         paddingVertical={8 * 2}
         borderRadius={8}
@@ -69,8 +61,8 @@ export default function PhoneInput({
           errorMessage
             ? Color.ERROR_COLOR
             : content
-            ? Color.BORDER_INPUT_TEXT_FOCUSED
-            : Color.BORDER_INPUT_TEXT
+              ? Color.BORDER_INPUT_TEXT_FOCUSED
+              : Color.BORDER_INPUT_TEXT
         }
         borderWidth={1}
         paddingHorizontal={10}
@@ -99,11 +91,20 @@ export default function PhoneInput({
           onBlur={onBlur}
         />
       </Row>
-      {errorMessage && errorMessage.length > 0 ? (
-        <Text style={styles.error_text}>{errorMessage}</Text>
-      ) : (
-        <></>
-      )}
+      {
+        content && (
+          <View style={styles.labelContainer}>
+            <Text size={14} color={Color.GREY}>
+              {label}
+            </Text>
+          </View>
+        )
+      }
+      {
+        (errorMessage && errorMessage.length > 0) && (
+          <Text style={styles.error_text}>{errorMessage}</Text>
+        )
+      }
     </Column>
   );
 }
