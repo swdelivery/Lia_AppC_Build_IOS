@@ -36,7 +36,7 @@ import Column from "@Components/Column";
 import Text from "@Components/Text";
 import { StatusBar } from "@Components/StatusBar";
 
-const index = memo((props: any) => {
+const ServiceReview = memo((props: any) => {
   const { top, bottom } = useSafeAreaInsets();
 
   const [reaction, setReaction] = useState("VERY_GOOD");
@@ -769,4 +769,4 @@ const shadow = {
   elevation: 3,
 };
 
-export default index;
+export default ServiceReview;
