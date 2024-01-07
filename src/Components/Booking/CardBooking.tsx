@@ -97,7 +97,7 @@ const CardBooking = ({ item, isProcessing }: Props) => {
         </Row>
         <Row gap={8}>
           <IconLocation width={8 * 2} height={8 * 2} />
-          <Text>{item?.branch?.address}</Text>
+          <Text style={styleElement.flex}>{item?.branch?.address}</Text>
         </Row>
       </Column>
       {isProcessing && <LoadingView style={styles.overlay} />}
