@@ -659,16 +659,14 @@ const index = memo((props: any) => {
               <TextInput
                 editable={!isDisableEdited}
                 value={description}
-                onChangeText={(e) => _handleOnchangeText(e)}
+                onChangeText={_handleOnchangeText}
                 placeholder={
                   "Ý kiến của bạn sẽ giúp chúng tôi tiếp tục cải thiện  và cung cấp trải nghiệm dịch vụ tốt nhất có thể."
                 }
+                placeholderTextColor={GREY}
                 multiline
                 scrollEnabled={false}
-                style={{
-                  flex: 1,
-                  fontSize: _moderateScale(14),
-                }}
+                style={styles.textInput}
               />
             </View>
           </View>
@@ -682,12 +680,7 @@ const index = memo((props: any) => {
               onPress={_handleConfirmFeedBack}
               style={styles.btnConfirm}
             >
-              <Text
-                style={[
-                  stylesFont.fontNolanBold,
-                  { fontSize: _moderateScale(16), color: WHITE },
-                ]}
-              >
+              <Text size={16} color={"white"} weight="bold">
                 Gửi đánh giá
               </Text>
             </TouchableOpacity>
@@ -755,6 +748,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: BASE_COLOR,
     marginBottom: 60,
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+  },
+  textInput: {
+    fontSize: _moderateScale(14),
+    textAlignVertical: "top",
   },
 });
 
