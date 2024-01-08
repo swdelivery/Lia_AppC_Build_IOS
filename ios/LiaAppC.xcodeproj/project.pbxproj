@@ -25,6 +25,7 @@
 		4E3C4F7632D24592ACC879C7 /* Kastelov - NolanNext-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7C1E025B7C70403F8469B49B /* Kastelov - NolanNext-Light.ttf */; };
 		5A5ED75DE03349B19DA337EE /* Kastelov - NolanNext-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 907C05D357B941289FF29FB6 /* Kastelov - NolanNext-ThinItalic.ttf */; };
 		5D7FF0DB10DC445A8C9190F4 /* Kastelov - NolanNext-BookItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 123D309D438D4D839FBE3943 /* Kastelov - NolanNext-BookItalic.ttf */; };
+		625456CA2B4B790000C1A18D /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625456C92B4B790000C1A18D /* File.swift */; };
 		629960322AED1394003FB8BE /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 629960312AED1394003FB8BE /* BootSplash.storyboard */; };
 		78B4869E944743F188CE3A4A /* Kastelov - NolanNext-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6E1EB421B6F944D5BD8F6760 /* Kastelov - NolanNext-Medium.ttf */; };
 		84E396BE775F41DA970451DA /* Kastelov-Nolan-Next-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0B6441AC00264EEEBC6F6B44 /* Kastelov-Nolan-Next-Bold.ttf */; };
@@ -72,6 +73,8 @@
 		5C5B65B097D14483A2AAB02D /* Kastelov-Nolan-Next-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Kastelov-Nolan-Next-Italic.ttf"; path = "../assets/fonts/Kastelov-Nolan-Next-Italic.ttf"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-LiaAppC.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LiaAppC.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		621C52E02AF07F00005574B7 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		625456C82B4B790000C1A18D /* LiaAppC-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LiaAppC-Bridging-Header.h"; sourceTree = "<group>"; };
+		625456C92B4B790000C1A18D /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		629960312AED1394003FB8BE /* BootSplash.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = BootSplash.storyboard; path = LiaAppC/BootSplash.storyboard; sourceTree = "<group>"; };
 		6AC37F8B28E549EC982778B5 /* Mohave-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Mohave-Bold.ttf"; path = "../assets/fonts/Mohave-Bold.ttf"; sourceTree = "<group>"; };
 		6E1EB421B6F944D5BD8F6760 /* Kastelov - NolanNext-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Kastelov - NolanNext-Medium.ttf"; path = "../assets/fonts/Kastelov - NolanNext-Medium.ttf"; sourceTree = "<group>"; };
@@ -137,6 +140,8 @@
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				625456C92B4B790000C1A18D /* File.swift */,
+				625456C82B4B790000C1A18D /* LiaAppC-Bridging-Header.h */,
 			);
 			name = LiaAppC;
 			sourceTree = "<group>";
@@ -266,7 +271,7 @@
 				LastUpgradeCheck = 1210;
 				TargetAttributes = {
 					13B07F861A680F5B00A75B9A = {
-						LastSwiftMigration = 1120;
+						LastSwiftMigration = 1500;
 					};
 				};
 			};
@@ -443,6 +448,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
+				625456CA2B4B790000C1A18D /* File.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -479,6 +485,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "LiaAppC-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -516,6 +523,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc com.digitech.lia";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "LiaAppC-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
