@@ -2,7 +2,7 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Text from '@Components/Text'
 import Column from '@Components/Column'
-import { BORDER_COLOR, WHITE } from '@Constant/Color'
+import { BASE_COLOR, BORDER_COLOR, WHITE } from "@Constant/Color";
 import Row from '@Components/Row'
 import { IconArrowDown, IconCheckList, IconRightArrowBase } from '@Components/Icon/Icon'
 import { getHealthRecord } from '@Redux/Action/ProfileAction'
@@ -67,7 +67,7 @@ const CheckList = ({ anamnesis = [], setAnamnesis }) => {
             Tiền sử bệnh
           </Text>
           <View style={{ transform: [{ rotate: "90deg" }] }}>
-            <IconRightArrowBase />
+            <IconRightArrowBase color={BASE_COLOR} />
           </View>
         </Row>
       </Column>
