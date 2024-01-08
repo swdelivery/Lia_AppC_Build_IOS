@@ -33,6 +33,7 @@ import useConfirmation from "src/Hooks/useConfirmation";
 import useVisible from "src/Hooks/useVisible";
 import EditAvatar from "./Components/EditAvatar";
 import LiAHeader from "@Components/Header/LiAHeader";
+import { BASE_COLOR } from "@Constant/Color";
 
 const RelativesInfo = (props) => {
   const { params } = props?.route;
@@ -287,14 +288,26 @@ const RelativesInfo = (props) => {
               require
               value={valueName}
               onChangeText={setValueName}
-              icon={<IconProfilePerson width={8 * 2} height={8 * 2} />}
+              icon={
+                <IconProfilePerson
+                  color={BASE_COLOR}
+                  width={8 * 2}
+                  height={8 * 2}
+                />
+              }
             />
 
             <Input
               title="Tên thân mật"
               value={valueNickname}
               onChangeText={setValueNickname}
-              icon={<IconProfilePerson width={8 * 2} height={8 * 2} />}
+              icon={
+                <IconProfilePerson
+                  color={BASE_COLOR}
+                  width={8 * 2}
+                  height={8 * 2}
+                />
+              }
             />
 
             <Input

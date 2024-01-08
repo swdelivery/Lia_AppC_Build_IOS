@@ -5,7 +5,7 @@ import { IconPlusBase, IconTrashRed } from "@Components/Icon/Icon";
 import Row from "@Components/Row";
 import Screen from "@Components/Screen";
 import Text from "@Components/Text";
-import { WHITE } from "@Constant/Color";
+import { BASE_COLOR, WHITE } from "@Constant/Color";
 import { styleElement } from "@Constant/StyleElement";
 import ScreenKey from "@Navigation/ScreenKey";
 import {
@@ -99,7 +99,7 @@ const ListRelativesProfile = () => {
         style={[styles.containerBtn, shadow]}
       >
         <Row gap={8 * 2} padding={8 * 2}>
-          <IconPlusBase />
+          <IconPlusBase color={BASE_COLOR} />
           <Text>Thêm hồ sơ người thân</Text>
         </Row>
       </TouchableOpacity>
@@ -114,8 +114,7 @@ const ListRelativesProfile = () => {
         keyExtractor={({ item, index }) => item?._id}
         data={dataListRelatives}
         renderItem={_renderItem}
-        ListFooterComponent={_renderBtnAdd}
-        ListFooterComponentStyle={{ height: 200 }}
+        ListHeaderComponent={_renderBtnAdd}
       />
     </Screen>
   );
