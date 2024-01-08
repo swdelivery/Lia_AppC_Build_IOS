@@ -10,6 +10,7 @@ import Certificate from "@Components/Certificate/Certificate";
 import { styleElement } from "@Constant/StyleElement";
 import Icon from "@Components/Icon";
 import useBranchDetailsNavigation from "src/Hooks/navigation/useBranchDetailsNavigation";
+import { BASE_COLOR } from "@Constant/Color";
 
 type Props = {
   branch: Branch;
@@ -89,7 +90,7 @@ const styles = StyleSheet.create({
   button: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#4BA888",
+    backgroundColor: BASE_COLOR,
     paddingHorizontal: 8,
     paddingVertical: 2,
     borderRadius: 8 * 2,

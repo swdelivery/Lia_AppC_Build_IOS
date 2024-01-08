@@ -11,6 +11,7 @@ import Column from "@Components/Column";
 import { useNavigate } from "src/Hooks/useNavigation";
 import { useDispatch } from "react-redux";
 import { startChat } from "@Redux/chat/actions";
+import { BASE_COLOR } from "@Constant/Color";
 
 type Props = {
   doctor: Doctor;
@@ -89,12 +90,12 @@ const styles = StyleSheet.create({
     borderRadius: _moderateScale(8 * 2),
     alignItems: "center",
     justifyContent: "center",
-    borderColor: "#1E463E",
-    backgroundColor: "#1E463E",
+    borderColor: BASE_COLOR,
+    backgroundColor: BASE_COLOR,
   },
   bookingBtn__text: {
     fontSize: _moderateScale(14),
-    color: "#1E463E",
+    color: BASE_COLOR,
     fontWeight: "bold",
   },
   bookingBtn: {
@@ -104,7 +105,7 @@ const styles = StyleSheet.create({
     borderRadius: _moderateScale(8 * 2),
     alignItems: "center",
     justifyContent: "center",
-    borderColor: "#1E463E",
+    borderColor: BASE_COLOR,
   },
   care: {
     width: _moderateScale(8 * 3),
@@ -114,6 +115,6 @@ const styles = StyleSheet.create({
     width: _width,
     backgroundColor: "white",
     borderTopWidth: 0.5,
-    borderColor: "rgba(0,0,0,.2)",
+    borderColor: BASE_COLOR,
   },
 });

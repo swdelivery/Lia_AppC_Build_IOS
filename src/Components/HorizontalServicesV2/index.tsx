@@ -1,7 +1,7 @@
 import { StyleProp, StyleSheet, View } from "react-native";
 import React from "react";
-import { _moderateScale, _widthScale } from "../../Constant/Scale";
-import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
+import { _moderateScale, _width, _widthScale } from "src/Constant/Scale";
+import { TouchableOpacity } from "react-native-gesture-handler";
 import CountStar2 from "@Components/NewCountStar/CountStar";
 import Text from "@Components/Text";
 import { RED } from "@Constant/Color";
@@ -13,6 +13,8 @@ import { Service } from "@typings/serviceGroup";
 import useServiceDetailsNavigation from "src/Hooks/navigation/useServiceDetailsNavigation";
 import { SERVICE_BANNER_RATIO } from "@Constant/image";
 import Column from "@Components/Column";
+import { FlashList } from "@shopify/flash-list";
+import { RenderItemProps } from "@typings/common";
 
 type Props = {
   title?: string;
@@ -28,7 +30,7 @@ const HorizontalServicesV2 = ({
 }: Props) => {
   const handlePress = useServiceDetailsNavigation();
 
-  function renderItem(item: Service, index: number) {
+  function renderItem({ item }: RenderItemProps<Service>) {
     return <ServiceItem item={item} key={item._id} onPress={handlePress} />;
   }
 
@@ -43,14 +45,17 @@ const HorizontalServicesV2 = ({
         </Text>
       )}
       <View>
-        <ScrollView
+        <FlashList
           horizontal
-          showsVerticalScrollIndicator={false}
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.contentContainer}
-        >
-          {items.map(renderItem)}
-        </ScrollView>
+          data={items}
+          renderItem={renderItem}
+          estimatedItemSize={60}
+          estimatedListSize={{
+            width: _width,
+            height: 100,
+          }}
+          drawDistance={100}
+        />
       </View>
     </Column>
   );
@@ -97,9 +102,9 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
   },
   container: {
-    borderRadius: _moderateScale(8),
+    borderRadius: 8,
     backgroundColor: "white",
-    marginTop: _moderateScale(0),
+    marginTop: 0,
     gap: 8,
   },
   itemContainer: {

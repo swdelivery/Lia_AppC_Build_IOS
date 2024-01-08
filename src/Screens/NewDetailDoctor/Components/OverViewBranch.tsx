@@ -10,8 +10,9 @@ import { Certificates } from "@Components/Certificate/Certificate";
 import { styleElement } from "@Constant/StyleElement";
 import Icon from "@Components/Icon";
 import useBranchDetailsNavigation from "src/Hooks/navigation/useBranchDetailsNavigation";
-import { LocationIcon, PersonsIcon } from "src/SGV";
+import { LocationIcon } from "src/SGV";
 import Column from "@Components/Column";
+import { BASE_COLOR } from "@Constant/Color";
 
 type Props = {
   branch: Branch;
@@ -35,7 +36,7 @@ const OverViewBranch = ({ branch }: Props) => {
               <CountStar2
                 rating={branch?.averageRating}
                 count={branch?.reviewCount}
-                countPartner={branch.countPartner}
+                countPartner={branch?.countPartner}
                 size={12}
               />
             </Column>
@@ -49,7 +50,7 @@ const OverViewBranch = ({ branch }: Props) => {
           <Row gap={4}>
             <LocationIcon />
             <Text flex={1} size={12}>
-              {branch.address}
+              {branch?.address}
             </Text>
           </Row>
           {branch?.branchFileArr && (
@@ -103,7 +104,7 @@ const styles = StyleSheet.create({
   button: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#4BA888",
+    backgroundColor: BASE_COLOR,
     paddingHorizontal: 8,
     borderRadius: 8,
     paddingTop: 2,

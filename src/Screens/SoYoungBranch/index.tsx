@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Pressable, StyleSheet } from "react-native";
 import { _height, _width } from "../../Constant/Scale";
 import { RenderItemProps } from "../../typings/common";
@@ -14,7 +14,7 @@ import PlaceholderSkeletons from "@Components/PlaceholderSkeletons";
 import ListEmpty from "@Components/ListEmpty";
 import Column from "@Components/Column";
 import Text from "@Components/Text";
-import { BASE_COLOR, BASE_COLOR_LIGHT } from "@Constant/Color";
+import { BASE_COLOR } from "@Constant/Color";
 import { useNavigate } from "src/Hooks/useNavigation";
 import ScreenKey from "@Navigation/ScreenKey";
 import { AfterTimeoutFragment } from "@Components/AfterTimeoutFragment";
