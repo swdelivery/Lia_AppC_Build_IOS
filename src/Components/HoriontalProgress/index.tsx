@@ -22,8 +22,6 @@ export default function HorizontalProgress({
     return {
       flex: percent,
       height,
-      borderRadius: height,
-      overflow: "hidden",
     };
   }, [percent, height]);
 
@@ -32,6 +30,7 @@ export default function HorizontalProgress({
       height={height}
       borderRadius={height}
       backgroundColor={backgroundColor}
+      overflow={"hidden"}
       {...props}
     >
       <LinearGradient horizontal colors={colors} style={progressStyle} />

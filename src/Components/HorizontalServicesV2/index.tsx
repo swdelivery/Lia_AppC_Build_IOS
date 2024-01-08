@@ -1,7 +1,7 @@
 import { StyleProp, StyleSheet, View } from "react-native";
 import React from "react";
 import { _moderateScale, _width, _widthScale } from "src/Constant/Scale";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
 import CountStar2 from "@Components/NewCountStar/CountStar";
 import Text from "@Components/Text";
 import { RED } from "@Constant/Color";
@@ -45,16 +45,14 @@ const HorizontalServicesV2 = ({
         </Text>
       )}
       <View>
-        <FlashList
+        <FlatList
           horizontal
           data={items}
           renderItem={renderItem}
-          estimatedItemSize={60}
-          estimatedListSize={{
-            width: _width,
-            height: 100,
-          }}
-          drawDistance={100}
+          windowSize={10}
+          initialNumToRender={5}
+          maxToRenderPerBatch={3}
+          removeClippedSubviews
         />
       </View>
     </Column>

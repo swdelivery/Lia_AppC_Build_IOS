@@ -25,11 +25,7 @@ type Props = {
   isFirstInRow: boolean;
 };
 
-export default function ServiceItem({
-  item,
-  numColumns = 2,
-  isFirstInRow,
-}: Props) {
+function ServiceItem({ item, numColumns = 2, isFirstInRow }: Props) {
   const { navigation } = useNavigate();
 
   const _handleGoDetailService = useCallback(() => {
@@ -156,3 +152,5 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
 });
+
+export default React.memo(ServiceItem);
