@@ -58,7 +58,7 @@ export default function BranchItem({ item }: Props) {
           <Row gap={4} marginTop={2}>
             <Icon name="map-marker" color={RED} size={14} />
             <Text size={12} color="grey" right={8} style={styleElement.flex}>
-              {item?.address}
+              {item?.addressDetails?.fullAddress}
             </Text>
           </Row>
 

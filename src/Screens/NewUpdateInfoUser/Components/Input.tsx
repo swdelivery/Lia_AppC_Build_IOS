@@ -1,5 +1,5 @@
 import { Alert, StyleSheet, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { ReactNode, useEffect, useRef, useState } from 'react'
 import Row from '@Components/Row'
 import { IconProfileBooking } from '@Components/Icon/Icon'
 import { BASE_COLOR, BLUE_FB, BORDER_COLOR, GREEN_SUCCESS, GREY, RED, WHITE } from '@Constant/Color'
@@ -25,6 +25,7 @@ type Props = {
   error?: string
   setError?: (item) => void
   maxLength?: number
+  children?: ReactNode;
 };
 
 
@@ -38,6 +39,7 @@ const Input = ({ title,
   notEditable,
   keyboardType = 'default',
   error,
+  children,
   setError,
   maxLength = null
 }: Props) => {
@@ -161,7 +163,9 @@ const Input = ({ title,
             <Text color={RED} fontStyle='italic'>* {error}</Text>
           </Column>
         </Collapsible>
-
+        {
+          children
+        }
       </View>
     )
   }

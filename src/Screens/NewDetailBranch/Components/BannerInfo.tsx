@@ -57,27 +57,27 @@ const BannerInfo = ({ branch }: Props) => {
         <Row gap={8}>
           <Icon name="map-marker" color={RED} size={14} />
           <Text size={12} weight="bold" color="white">
-            {branch?.address}
+            {branch?.addressDetails?.fullAddress}
           </Text>
         </Row>
       </Pressable>
 
       {!isEmpty(branch?.configureArticleArr)
         ? branch.configureArticleArr.map((item) => (
-            <Pressable key={item} onPress={handleOpenLink(item)}>
-              <Row gap={8}>
-                <Icon name="link-variant" size={14} color="white" />
-                <Text
-                  weight="bold"
-                  textDecorationLine="underline"
-                  size={12}
-                  color={"white"}
-                >
-                  {item}
-                </Text>
-              </Row>
-            </Pressable>
-          ))
+          <Pressable key={item} onPress={handleOpenLink(item)}>
+            <Row gap={8}>
+              <Icon name="link-variant" size={14} color="white" />
+              <Text
+                weight="bold"
+                textDecorationLine="underline"
+                size={12}
+                color={"white"}
+              >
+                {item}
+              </Text>
+            </Row>
+          </Pressable>
+        ))
         : null}
       <Spacer top={_moderateScale(8)} />
       <Row gap={8}>

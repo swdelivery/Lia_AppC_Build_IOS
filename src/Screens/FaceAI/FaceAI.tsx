@@ -399,8 +399,8 @@ const FaceAI = () => {
         startTextLeftEye={startTextLeftEye}
       />
 
-      <RightEyeResult startRightResult={startResultRightEye} />
-      <LeftEyeResult startRightResult={startResultLeftEye} />
+      <RightEyeResult scanningResult={scanningResult} startRightResult={startResultRightEye} />
+      <LeftEyeResult scanningResult={scanningResult} startRightResult={startResultLeftEye} />
 
       {imageScan ? (
         <View

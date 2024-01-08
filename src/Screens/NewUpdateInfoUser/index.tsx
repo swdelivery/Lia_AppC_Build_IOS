@@ -1,9 +1,9 @@
 import ActionButton from '@Components/ActionButton/ActionButton'
 import Column from '@Components/Column'
-import { IconFacebook, IconInstagram, IconProfileBirthday, IconProfileCard, IconProfileFlag, IconProfileGender, IconProfileLocation, IconProfileMail, IconProfilePassport, IconProfilePerson, IconProfilePhone, IconZalo } from '@Components/Icon/Icon'
+import { IconFacebook, IconInstagram, IconProfileBirthday, IconProfileCard, IconProfileFlag, IconProfileGender, IconProfileLocation, IconProfileMail, IconProfilePassport, IconProfilePerson, IconProfilePhone, IconTick, IconZalo } from '@Components/Icon/Icon'
 import ModalPickSingleNotSearch from '@Components/ModalPickSingleNotSearch/ModalPickSingleNotSearch'
 import Screen from '@Components/Screen'
-import { updateProfilePartner } from '@Redux/Action/ProfileAction'
+import { getPartnerByCollaboratorCode, updateProfilePartner } from '@Redux/Action/ProfileAction'
 import { isEmpty } from 'lodash'
 import moment from 'moment'
 import React, { useEffect, useMemo, useState } from "react";
@@ -26,6 +26,10 @@ import ActionSheetBottom from "@Components/ModalBottom/ActionSheetBottom";
 import ImagePicker from "react-native-image-crop-picker";
 import { uploadModule } from "@Redux/Action/BookingAction";
 import LiAHeader from "@Components/Header/LiAHeader";
+import Row from '@Components/Row'
+import { sizeIcon } from '@Constant/Icon'
+import Icon from '@Components/Icon'
+import { NEW_BASE_COLOR } from '@Constant/Color'
 
 const NewUpdateInfoUser = () => {
   const dispatch = useDispatch();
@@ -37,6 +41,8 @@ const NewUpdateInfoUser = () => {
   const genderPicker = useVisible();
   const cameraPicker = useVisible();
 
+  const [valueInviteCode, setValueInviteCode] = useState("");
+  const [currPartnerCollab, setCurrPartnerCollab] = useState({});
   const [valueName, setValueName] = useState("");
   const [errorName, setErrorName] = useState(null);
   const [valuePhone, setValuePhone] = useState("");
@@ -61,7 +67,6 @@ const NewUpdateInfoUser = () => {
 
   useEffect(() => {
     if (infoUser?._id) {
-      console.log({ infoUser });
       setValueName(infoUser?.name);
       setValuePhone(infoUser?.phone[0]?.fullPhoneNumber);
       setValueEmail(infoUser?.email[0]);
@@ -92,19 +97,28 @@ const NewUpdateInfoUser = () => {
     }
   }, [infoUser]);
 
-  const _handleConfirm = () => {
-    console.log({
-      valueName,
-      valuePhone,
-      valueEmail,
-      valueAddress,
-      valueBirthday,
-      valueGender,
-      valueCMND,
-      valueJob,
-      valueNationality,
-      valueEthnicity,
+  useEffect(() => {
+    if (infoUser?.inviterCode) {
+      _getPartnerInviter(infoUser?.inviterCode)
+      setValueInviteCode(infoUser?.inviterCode)
+    }
+  }, [infoUser?.inviterCode])
+
+  useEffect(() => {
+    if (!isEmpty(valueInviteCode.trim())) {
+      _getPartnerInviter(valueInviteCode.trim())
+    }
+  }, [valueInviteCode])
+
+  const _getPartnerInviter = async (codeAffiliate) => {
+    let result = await getPartnerByCollaboratorCode({
+      collaboratorCode: codeAffiliate?.trim(),
     });
+    if (result?.isAxiosError) return setCurrPartnerCollab({});
+    setCurrPartnerCollab(result?.data?.data);
+  };
+
+  const _handleConfirm = () => {
 
     if (isEmpty(valueName)) {
       return Alert.alert("Vui lòng nhập các trường bắt buộc");
@@ -112,6 +126,9 @@ const NewUpdateInfoUser = () => {
 
     let dataFetch = {};
 
+    if (!isEmpty(valueInviteCode.trim())) {
+      dataFetch["inviterCode"] = valueInviteCode.trim();
+    }
     if (!isEmpty(valueName)) {
       dataFetch["name"] = valueName;
     }
@@ -309,6 +326,29 @@ const NewUpdateInfoUser = () => {
 
           <Column gap={8 * 4} paddingHorizontal={8 * 2}>
             <Input
+              notEditable={infoUser?.inviterCode}
+              maxLength={20}
+              title="Mã giới thiệu"
+              value={valueInviteCode}
+              onChangeText={setValueInviteCode}
+              icon={<Icon name='link-variant' color={NEW_BASE_COLOR} size={8 * 2} />}
+            >
+              {
+                currPartnerCollab?._id ?
+                  <Row
+                    gap={8}
+                    marginTop={0}
+                    margin={8 * 2}>
+                    <Text>
+                      Người giới thiệu: {currPartnerCollab?.name}
+                    </Text>
+                    <IconTick style={sizeIcon.sm} />
+                  </Row>
+                  : <></>
+              }
+
+            </Input>
+            <Input
               maxLength={20}
               error={errorName}
               setError={setErrorName}
@@ -316,7 +356,7 @@ const NewUpdateInfoUser = () => {
               require
               value={valueName}
               onChangeText={setValueName}
-              icon={<IconProfilePerson width={8 * 2} height={8 * 2} />}
+              icon={<Icon name='account' color={NEW_BASE_COLOR} size={8 * 2} />}
             />
 
             <Input
@@ -324,7 +364,7 @@ const NewUpdateInfoUser = () => {
               title="Số điện thoại"
               require
               value={valuePhone}
-              icon={<IconProfilePhone width={8 * 2} height={8 * 2} />}
+              icon={<Icon name='phone' color={NEW_BASE_COLOR} size={8 * 2} />}
             />
 
             <Input
@@ -334,14 +374,14 @@ const NewUpdateInfoUser = () => {
               keyboardType={"email-address"}
               value={valueEmail}
               onChangeText={setValueEmail}
-              icon={<IconProfileMail width={8 * 2} height={8 * 2} />}
+              icon={<Icon name='email' color={NEW_BASE_COLOR} size={8 * 2} />}
             />
 
             <Input
               title="Địa chỉ"
               value={valueAddress}
               onChangeText={setValueAddress}
-              icon={<IconProfileLocation width={8 * 2} height={8 * 2} />}
+              icon={<Icon name='map-marker' color={NEW_BASE_COLOR} size={8 * 2} />}
             />
 
             <MultiInput
@@ -351,7 +391,7 @@ const NewUpdateInfoUser = () => {
               number
               setError={setErrorBirthday}
               title="Ngày tháng năm sinh (vd: 01/01/2000)"
-              icon={<IconProfileBirthday width={8 * 2} height={8 * 2} />}
+              icon={<Icon name='calendar' color={NEW_BASE_COLOR} size={8 * 2} />}
             />
 
             <Input
@@ -361,7 +401,7 @@ const NewUpdateInfoUser = () => {
                 valueGender ? (valueGender == "male" ? "Nam" : "Nữ") : null
               }
               onPress={genderPicker.show}
-              icon={<IconProfileGender width={8 * 2} height={8 * 2} />}
+              icon={<Icon name='gender-male-female' color={NEW_BASE_COLOR} size={8 * 2} />}
             />
 
             <Input
@@ -369,28 +409,28 @@ const NewUpdateInfoUser = () => {
               value={valueCMND}
               keyboardType={"number-pad"}
               onChangeText={setValueCMND}
-              icon={<IconProfileCard width={8 * 2} height={8 * 2} />}
+              icon={<Icon name='card-account-details-outline' color={NEW_BASE_COLOR} size={8 * 2} />}
             />
 
             <Input
               title="Nghề nghiệp"
               value={valueJob}
               onChangeText={setValueJob}
-              icon={<IconProfilePerson width={8 * 2} height={8 * 2} />}
+              icon={<Icon name='account' color={NEW_BASE_COLOR} size={8 * 2} />}
             />
 
             <Input
               title="Quốc tịch"
               value={valueNationality}
               onChangeText={setValueNationality}
-              icon={<IconProfilePassport width={8 * 2} height={8 * 2} />}
+              icon={<Icon name='badge-account-outline' color={NEW_BASE_COLOR} size={8 * 2} />}
             />
 
             <Input
               title="Dân tộc"
               value={valueEthnicity}
               onChangeText={setValueEthnicity}
-              icon={<IconProfileFlag width={8 * 2} height={8 * 2} />}
+              icon={<Icon name='account' color={NEW_BASE_COLOR} size={8 * 2} />}
             />
 
             <Text weight="bold">Mạng xã hội</Text>
