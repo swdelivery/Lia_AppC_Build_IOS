@@ -23,6 +23,7 @@ import SoYoungPractitioner from "@Screens/SoYoungPractitioner";
 import { AfterTimeoutFragment } from "@Components/AfterTimeoutFragment";
 import { FocusAwareStatusBar } from "@Components/StatusBar";
 import { BASE_COLOR } from "@Constant/Color";
+import SoyoungProduct from "@Screens/SoyoungProduct";
 
 const STACKS = [
   {
@@ -45,11 +46,15 @@ const STACKS = [
     screen: SoYoungMaterial,
     tabLabel: "Vật liệu",
   },
+  {
+    screen: SoyoungProduct,
+    tabLabel: "Sản phẩm",
+  },
 ];
 
 const SoyoungHome = () => {
   const { top } = useSafeAreaInsets();
-  const [tabIndex, setTabIndex] = useState(0);
+  // const [tabIndex, setTabIndex] = useState(0);
   // const isFocused = useIsFocused();
 
   // const handleTabViewChnaged = useCallback((index, tabLabel) => {
@@ -78,12 +83,12 @@ const SoyoungHome = () => {
           }}
           stacks={STACKS}
           // onTabviewChanged={handleTabViewChnaged}
-          mappingProps={
-            {
-              // tabIndex,
-              // isFocused,
-            }
-          }
+          // mappingProps={
+          //   {
+          //     // tabIndex,
+          //     // isFocused,
+          //   }
+          // }
           tabWrapStyle={styleElement.flex}
           tabInnerStyle={styles.tabInnerStyle}
           tabActiveOpacity={1}

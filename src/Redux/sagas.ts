@@ -26,6 +26,7 @@ export function* rootSaga() {
     fork(require("./qrCheckin/sagas").default),
     fork(require("./wheelSpin/sagas").default),
     fork(require("./affiliate/sagas").default),
+    fork(require("./product/sagas").default),
     fork(require("./otp/sagas").default),
   ]);
 }

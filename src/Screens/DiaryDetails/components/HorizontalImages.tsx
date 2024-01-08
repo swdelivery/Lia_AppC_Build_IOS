@@ -9,7 +9,7 @@ import useVisible from "src/Hooks/useVisible";
 import { getImageAvataUrl } from "src/utils/avatar";
 
 type Props = {
-  title: string;
+  title?: string;
   images: FileAvatar[];
 };
 
@@ -41,7 +41,7 @@ export default function HorizontalImages({ title, images = [] }: Props) {
 
   return (
     <Column marginTop={15} gap={15}>
-      <Text left={25}>{title}</Text>
+      {!!title && <Text left={25}>{title}</Text>}
       <ScrollView
         contentContainerStyle={styles.contentContainer}
         horizontal

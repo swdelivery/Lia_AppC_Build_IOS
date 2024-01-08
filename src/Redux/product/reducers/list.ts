@@ -1,12 +1,12 @@
 import { createReducer } from "@Redux/helper";
 import { Handler, PagingInfo } from "@Redux/types";
-import { GET_SERVICES, LOAD_MORE_SERVICES } from "../types";
-import { Service } from "@typings/serviceGroup";
+import { GET_PRODUCTS, LOAD_MORE_PRODUCTS } from "../types";
+import { Product } from "@typings/product";
 
 export type State = {
   isLoading: boolean;
   isLoadingMore: boolean;
-  data: Service[];
+  data: Product[];
   total: number;
   paging?: PagingInfo;
 };
@@ -14,8 +14,8 @@ export type State = {
 const INITIAL_STATE: State = {
   isLoading: false,
   isLoadingMore: false,
-  total: 0,
   data: [],
+  total: 0,
 };
 
 const request: Handler<State> = (state) => ({
@@ -34,9 +34,14 @@ const success: Handler<State> = (state, { payload }) => ({
   ...payload,
 });
 
-const loadMoreRequest: Handler<State> = (state, { payload }) => ({
+const loadMoreRequest: Handler<State> = (state) => ({
   ...state,
-  isLoadingMore: true,
+  isLoadingMore: !!state.paging?.canLoadMore,
+});
+
+const loadMoreFailure: Handler<State> = (state) => ({
+  ...state,
+  isLoadingMore: false,
 });
 
 const loadMoreSuccess: Handler<State> = (state, { payload }) => ({
@@ -46,17 +51,12 @@ const loadMoreSuccess: Handler<State> = (state, { payload }) => ({
   paging: payload.paging,
 });
 
-const loadMoreFailure: Handler<State> = (state) => ({
-  ...state,
-  isLoadingMore: false,
-});
-
 export default createReducer(INITIAL_STATE, {
-  [GET_SERVICES.REQUEST]: request,
-  [GET_SERVICES.SUCCESS]: success,
-  [GET_SERVICES.FAILURE]: failure,
+  [GET_PRODUCTS.REQUEST]: request,
+  [GET_PRODUCTS.FAILURE]: failure,
+  [GET_PRODUCTS.SUCCESS]: success,
 
-  [LOAD_MORE_SERVICES.REQUEST]: loadMoreRequest,
-  [LOAD_MORE_SERVICES.SUCCESS]: loadMoreSuccess,
-  [LOAD_MORE_SERVICES.FAILURE]: loadMoreFailure,
+  [LOAD_MORE_PRODUCTS.REQUEST]: loadMoreRequest,
+  [LOAD_MORE_PRODUCTS.FAILURE]: loadMoreFailure,
+  [LOAD_MORE_PRODUCTS.SUCCESS]: loadMoreSuccess,
 });

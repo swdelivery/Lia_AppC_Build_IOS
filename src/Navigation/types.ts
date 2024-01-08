@@ -9,6 +9,7 @@ import { Insurance } from "@typings/insurance";
 import { Conversation } from "@typings/chat";
 import { Campain, CompanionRequest } from "@typings/charity";
 import { Voucher } from "@typings/voucher";
+import { Product } from "@typings/product";
 
 type valueof<T> = T[keyof T];
 type Screens = valueof<typeof ScreenKey>;
@@ -56,6 +57,9 @@ type ScreenParams = {
   [ScreenKey.SCREEN_HTML]: {
     title: string;
     value: string;
+  };
+  [ScreenKey.DETAIL_SERVICE_PRODUCT]: {
+    item: Product;
   };
 };
 

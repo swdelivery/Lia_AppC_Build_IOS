@@ -204,6 +204,8 @@ import NewQRCode from "@Screens/NewQRCode";
 import PickUtilities from "@Screens/NewQRCode/PickUtilities";
 import NewWheelSpin from "@Screens/NewWheelSpin";
 import ListDiary from "@Screens/ListDiaryOfPartner";
+import DetailServiceProduct from "@Screens/DetailServiceProduct";
+import ProductList from "@Screens/ProductList";
 
 const rootStack = createStackNavigator();
 
@@ -746,6 +748,14 @@ const RootNavigator = () => {
             options={optionsModal}
             name={ScreenKey.MODAL_SERVICE_REVIEW}
             component={ModalServiceReview}
+          />
+          <rootStack.Screen
+            name={ScreenKey.DETAIL_SERVICE_PRODUCT}
+            component={DetailServiceProduct}
+          />
+          <rootStack.Screen
+            name={ScreenKey.PRODUCT_LIST}
+            component={ProductList}
           />
           <rootStack.Screen
             options={optionsModal}

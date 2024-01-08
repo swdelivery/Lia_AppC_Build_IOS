@@ -50,6 +50,7 @@ import charity from "../charity/reducers"
 import qrCheckin from "../qrCheckin/reducers"
 import wheelSpin from "../wheelSpin/reducers"
 import affiliate from "../affiliate/reducers"
+import product from "../product/reducers";
 import otp from "../otp/reducers"
 
 const rootReducer = combineReducers({
@@ -103,7 +104,8 @@ const rootReducer = combineReducers({
   qrCheckin,
   wheelSpin,
   affiliate,
-  otp
+  product,
+  otp,
 });
 
 // const rootReducer = (state, action) => {

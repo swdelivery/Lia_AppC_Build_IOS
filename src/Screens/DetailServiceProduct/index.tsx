@@ -5,8 +5,7 @@ import {
   useAnimatedScrollHandler,
   useSharedValue,
 } from "react-native-reanimated";
-import { useFocused } from "src/Hooks/useNavigation";
-import HorizontalListImage from "./Components/HorizontalListImage";
+import { useFocused, useNavigationParams } from "src/Hooks/useNavigation";
 import MainInfo from "./Components/MainInfo";
 import ScrollableTabView from "@itenl/react-native-scrollable-tabview";
 import { _width } from "@Constant/Scale";
@@ -18,36 +17,21 @@ import { getDetailMaterial } from "@Redux/Action/Material";
 import { isAndroid } from "src/utils/platform";
 import LiAHeader from "@Components/Header/LiAHeader";
 import { StatusBar } from "@Components/StatusBar";
+import ScreenKey from "@Navigation/ScreenKey";
+import HorizontalImages from "@Screens/DiaryDetails/components/HorizontalImages";
+import HorizontalListImage from "./Components/HorizontalListImage";
 import { BASE_COLOR } from "@Constant/Color";
 
-const DetailMaterial = (props) => {
-  const scrollY = useSharedValue(0);
+type ScreenKey = typeof ScreenKey.DETAIL_SERVICE_PRODUCT;
 
-  const [infoMaterial, setInfoMaterial] = useState(null);
-  const scrollableTabViewRef = useRef();
-  const [rootTime, setRootTime] = useState(Date.now());
-
-  useFocused(() => {
-    _getData(props?.route?.params?._id);
-  });
-
-  const _getData = async (_id) => {
-    let result = await getDetailMaterial(_id);
-    if (result?.isAxiosError) return;
-    setInfoMaterial(result?.data?.data);
-  };
-
-  const scrollHandler = useAnimatedScrollHandler({
-    onScroll: (event, ctx) => {
-      scrollY.value = event.contentOffset.y;
-    },
-  });
+const DetailServiceProduct = (props) => {
+  const { item } = useNavigationParams<ScreenKey>();
 
   const Banner = () => {
     return (
       <>
-        <HorizontalListImage infoMaterial={infoMaterial} />
-        <MainInfo infoMaterial={infoMaterial} />
+        <HorizontalListImage images={item.representationFileArr} />
+        <MainInfo product={item} />
       </>
     );
   };
@@ -55,19 +39,19 @@ const DetailMaterial = (props) => {
   const STACKS = [
     {
       screen: () => {
-        return <Parameter infoMaterial={infoMaterial} />;
+        return <Parameter product={item} />;
       },
       tabLabel: "Thông số",
     },
     {
       screen: () => {
-        return <Introduce infoMaterial={infoMaterial} />;
+        return <Introduce product={item} />;
       },
       tabLabel: "Giới thiệu",
     },
     {
       screen: () => {
-        return <Instruct infoMaterial={infoMaterial} />;
+        return <Instruct product={item} />;
       },
       tabLabel: "Hướng dẫn",
     },
@@ -76,8 +60,7 @@ const DetailMaterial = (props) => {
   return (
     <Screen safeBottom={isAndroid}>
       <StatusBar barStyle={"light-content"} />
-      <LiAHeader safeTop title={"Thông tin vật liệu"} />
-
+      <LiAHeader safeTop title={"Thông tin sản phẩm"} />
       <ScrollableTabView
         title={<View />}
         titleArgs={{
@@ -87,11 +70,7 @@ const DetailMaterial = (props) => {
             extrapolate: "clamp",
           },
         }}
-        mappingProps={{
-          rootTime: rootTime,
-        }}
         stacks={STACKS}
-        ref={(it) => (scrollableTabViewRef.current = it)}
         header={<Banner />}
         tabsStyle={styles.tabsStyle}
         tabStyle={styles.tabStyle}
@@ -110,7 +89,7 @@ const DetailMaterial = (props) => {
   );
 };
 
-export default DetailMaterial;
+export default DetailServiceProduct;
 
 const styles = StyleSheet.create({
   container: {

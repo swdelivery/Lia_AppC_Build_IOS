@@ -1,12 +1,11 @@
-import React, { useEffect } from "react";
-import { Pressable, StyleSheet, View } from "react-native";
+import React from "react";
+import { Pressable, StyleSheet } from "react-native";
 import { _moderateScale, _width } from "../../Constant/Scale";
 import ServiceItem, {
   PLACEHOLDER_HEIGHT,
   Placeholder,
 } from "./components/ServiceItem";
-import { useDispatch, useSelector } from "react-redux";
-import { getServices } from "@Redux/service/actions";
+import { getServices, loadMoreServices } from "@Redux/service/actions";
 import { getServiceListState } from "@Redux/service/selectors";
 import { FlatList } from "react-native";
 import { RenderItemProps } from "@typings/common";
@@ -15,21 +14,23 @@ import useItemExtractor from "src/Hooks/useItemExtractor";
 import PlaceholderSkeletons from "@Components/PlaceholderSkeletons";
 import Column from "@Components/Column";
 import Text from "@Components/Text";
-import { BASE_COLOR, BASE_COLOR_LIGHT } from "@Constant/Color";
+import { BASE_COLOR } from "@Constant/Color";
 import ScreenKey from "@Navigation/ScreenKey";
 import { useFocused, useNavigate } from "src/Hooks/useNavigation";
 import { AfterTimeoutFragment } from "@Components/AfterTimeoutFragment";
 import { isTablet } from "src/utils/platform";
 import Spacer from "@Components/Spacer";
+import useListFilter from "src/Hooks/useListFilter";
+import { LoadingView } from "@Components/Loading/LoadingView";
 
-const SoYoungService = ({ tabIndex, isFocused }: any) => {
-  const dispatch = useDispatch();
+const SoYoungService = () => {
   const { navigate } = useNavigate();
-  const { isLoading, data } = useSelector(getServiceListState);
+  const { isLoading, data, paging, refreshData, loadMoreData, isLoadingMore } =
+    useListFilter(getServiceListState, getServices, loadMoreServices);
 
   useFocused(() => {
     requestAnimationFrame(() => {
-      dispatch(getServices.request());
+      refreshData();
     });
   });
 
@@ -80,7 +81,19 @@ const SoYoungService = ({ tabIndex, isFocused }: any) => {
             </PlaceholderSkeletons>
           ) : null
         }
-        removeClippedSubviews
+        ListFooterComponent={
+          isLoadingMore ? (
+            <LoadingView height={60} />
+          ) : paging?.canLoadMore ? (
+            <Column
+              alignItems="center"
+              paddingVertical={16}
+              onPress={loadMoreData}
+            >
+              <Text color={BASE_COLOR}>Xem thêm</Text>
+            </Column>
+          ) : null
+        }
       />
     </AfterTimeoutFragment>
   );
