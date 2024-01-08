@@ -21,11 +21,7 @@ import { StatusBar } from "@Components/StatusBar";
 import { BASE_COLOR } from "@Constant/Color";
 
 const DetailMaterial = (props) => {
-  const scrollY = useSharedValue(0);
-
   const [infoMaterial, setInfoMaterial] = useState(null);
-  const scrollableTabViewRef = useRef();
-  const [rootTime, setRootTime] = useState(Date.now());
 
   useFocused(() => {
     _getData(props?.route?.params?._id);
@@ -36,12 +32,6 @@ const DetailMaterial = (props) => {
     if (result?.isAxiosError) return;
     setInfoMaterial(result?.data?.data);
   };
-
-  const scrollHandler = useAnimatedScrollHandler({
-    onScroll: (event, ctx) => {
-      scrollY.value = event.contentOffset.y;
-    },
-  });
 
   const Banner = () => {
     return (
@@ -87,11 +77,7 @@ const DetailMaterial = (props) => {
             extrapolate: "clamp",
           },
         }}
-        mappingProps={{
-          rootTime: rootTime,
-        }}
         stacks={STACKS}
-        ref={(it) => (scrollableTabViewRef.current = it)}
         header={<Banner />}
         tabsStyle={styles.tabsStyle}
         tabStyle={styles.tabStyle}

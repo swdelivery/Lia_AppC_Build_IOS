@@ -32,7 +32,8 @@ const ItemLastedMessage = ({ item, onPress }: Props) => {
   }, [item]);
 
   const lastMessageContent = useMemo(() => {
-    const prefix = infoUser?._id === item.latestMessage.senderId ? "Bạn: " : ``;
+    const prefix =
+      infoUser?._id === item?.latestMessage?.senderId ? "Bạn: " : ``;
     let content = "";
     switch (item.latestMessage?.type) {
       case "text":
