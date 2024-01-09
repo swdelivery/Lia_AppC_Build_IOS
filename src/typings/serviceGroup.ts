@@ -29,17 +29,19 @@ export type ServiceOption = {
   groupName: string;
   groupCode: string;
   type: string;
-  data: {
-    description: string;
-    content: string;
-    _id: string;
-    code: string;
-    name: string;
-    groupCode: string;
-    extraAmount: number;
-    id: string;
-  }[];
+  data: ItemOptions[];
 };
+
+export type ItemOptions = {
+  description: string;
+  content: string;
+  _id: string;
+  code: string;
+  name: string;
+  groupCode: string;
+  extraAmount: number;
+  id: string;
+}
 export type MaterialInfo = {
   _id: string;
   name: string;
@@ -111,4 +113,6 @@ export type Service = {
   nextFlashSale?: FlashSale;
 
   serviceGroupArr: ServiceGroup[];
+  // Ui only
+  optionsSelected: ServiceOption[];
 } & Timestamp;

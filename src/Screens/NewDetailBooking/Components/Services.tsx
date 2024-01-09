@@ -7,7 +7,8 @@ import Column from "@Components/Column";
 import Row from "@Components/Row";
 import { BASE_COLOR, BLACK, BLUE_FB, RED } from "@Constant/Color";
 import { formatMonney } from "@Constant/Utils";
-import { sum } from "lodash";
+import { cloneDeep, isEmpty, sum } from "lodash";
+import { getServicePrice } from "@Constant/service";
 
 type Props = {
   booking: Booking;
@@ -39,6 +40,21 @@ export default function Services({ booking }: Props) {
     );
   }, [booking]);
 
+  const totalAmount = useMemo(() => {
+    return Object.values(booking.services).reduce((acc, item) => {
+      let service = item.service;
+      let options = cloneDeep(service.options);
+
+      for (let i = 0; i < options.length; i++) {
+        options[i].data = item.options.filter(item => item.groupCode === options[i].groupCode);
+      }
+
+      let optionsFinal = options.filter(item => !isEmpty(item.data))
+      service.optionsSelected = cloneDeep(optionsFinal);
+      return acc + getServicePrice(item.service);
+    }, 0);
+  }, [booking]);
+
   return (
     <View style={styles.container}>
       <Text weight="bold" color={BLACK} top={8} left={16}>
@@ -65,7 +81,7 @@ export default function Services({ booking }: Props) {
           <Text weight="bold">Tạm tính:</Text>
           <Text color={"#0053BD"} weight="bold">
             {`${formatMonney(
-              booking.totalAmount - discountAmount - discountLevel,
+              totalAmount - discountAmount - discountLevel,
               true
             )}`}
           </Text>

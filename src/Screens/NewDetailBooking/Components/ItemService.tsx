@@ -2,7 +2,7 @@ import Column from '@Components/Column'
 import Image from "@Components/Image";
 import Row from "@Components/Row";
 import Text from "@Components/Text";
-import { BASE_COLOR, BORDER_INPUT_TEXT, PRICE_ORANGE } from "@Constant/Color";
+import { BASE_COLOR, BLACK, BORDER_INPUT_TEXT, GREY, PRICE_ORANGE } from "@Constant/Color";
 import { _moderateScale } from "@Constant/Scale";
 import { styleElement } from "@Constant/StyleElement";
 import { formatMonney } from "@Constant/Utils";
@@ -42,7 +42,15 @@ const ItemService = ({ item }: Props) => {
             </Text>
           </Row>
           <Row alignItems="flex-end" gap={4}>
-            <Column flex={1}>{/* Topping dịch vụ */}</Column>
+            <Column flex={1}>
+              {
+                item.options.map(option => <Row gap={_moderateScale(5)}>
+                  <Column width={_moderateScale(2)} height={_moderateScale(2)} backgroundColor={GREY} borderRadius={_moderateScale(10)}>
+                  </Column>
+                  <Text color={GREY} fontStyle="italic" numberOfLines={1}>{option.name}</Text>
+                </Row>)
+              }
+            </Column>
             <Pressable onPress={handleServicePress}>
               <Text
                 fontStyle="italic"
@@ -54,8 +62,8 @@ const ItemService = ({ item }: Props) => {
             </Pressable>
           </Row>
         </Column>
-      </Row>
-    </View>
+      </Row >
+    </View >
   );
 };
 
