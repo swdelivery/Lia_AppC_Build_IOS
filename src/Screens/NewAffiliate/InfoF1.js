@@ -47,7 +47,7 @@ const Tab1 = (props) => {
           {props?.data?.map((item, index) => {
             return (
               <TouchableOpacity
-                onPress={() => {}}
+                onPress={() => { }}
                 style={{
                   padding: _moderateScale(8 * 2),
                   borderBottomWidth: 0.5,
@@ -105,7 +105,7 @@ const Tab1 = (props) => {
                       +{" "}
                       {formatMonney(
                         item?.finalPrice *
-                          (currPartnerLevel?.promotion?.commissionRate / 100)
+                        (currPartnerLevel?.promotion?.commissionRate / 100)
                       )}{" "}
                       vnđ
                     </Text>
@@ -148,7 +148,7 @@ const Tab2 = (props) => {
           {props?.data?.map((item, index) => {
             return (
               <TouchableOpacity
-                onPress={() => {}}
+                onPress={() => { }}
                 style={{
                   padding: _moderateScale(8 * 2),
                   borderBottomWidth: 0.5,
@@ -176,12 +176,7 @@ const Tab2 = (props) => {
                         { fontSize: _moderateScale(14) },
                       ]}
                     >
-                      {formatMonney(
-                        item?.services?.reduce((total, item) => {
-                          return (total += item?.finalPrice);
-                        }, 0)
-                      )}{" "}
-                      vnđ
+                      {formatMonney(item?.totalAmount, true)}
                     </Text>
                   </View>
                 </View>
@@ -209,14 +204,9 @@ const Tab2 = (props) => {
                         },
                       ]}
                     >
-                      +{" "}
                       {formatMonney(
-                        item?.services?.reduce((total, item) => {
-                          return (total += item?.finalPrice);
-                        }, 0) *
-                          (currPartnerLevel?.promotion?.commissionRate / 100)
-                      )}{" "}
-                      vnđ
+                        item?.totalAmount * item?.referralPartnerLevelPromotion?.commissionRate / 100, true
+                      )}
                     </Text>
                   </View>
                 </View>
