@@ -10,4 +10,5 @@ export type Partner = {
 export type PartnerPhone = {
   nationCode: string;
   phoneNumber: string;
+  fullPhoneNumber: string;
 };

@@ -13,35 +13,28 @@ import { useNavigate } from 'src/Hooks/useNavigation'
 import ScreenKey from '@Navigation/ScreenKey'
 import { sizeIcon } from '@Constant/Icon'
 import { styleElement } from '@Constant/StyleElement'
+import { getInfoUserReducer } from "@Redux/Selectors";
+import { hidePartOfString } from "src/utils/common";
 
 const Banner = () => {
-
-  const infoUser = useSelector(state => state?.infoUserReducer?.infoUser)
-  const { navigate } = useNavigate()
-  const { top } = useSafeAreaInsets()
+  const { navigate } = useNavigate();
+  const { infoUser } = useSelector(getInfoUserReducer);
+  const { top } = useSafeAreaInsets();
 
   const _renderLevelCode = (levelCode) => {
     switch (levelCode) {
       case "BRONZE":
-        return (
-          <BtnLevelCode name={'Hạng đồng'} bgColor={BRONZE} />
-        )
+        return <BtnLevelCode name={"Hạng đồng"} bgColor={BRONZE} />;
       case "SILVER":
-        return (
-          <BtnLevelCode name={'Hạng bạc'} bgColor={SILVER} />
-        )
+        return <BtnLevelCode name={"Hạng bạc"} bgColor={SILVER} />;
       case "GOLD":
-        return (
-          <BtnLevelCode name={'Hạng vàng'} bgColor={GOLD} />
-        )
+        return <BtnLevelCode name={"Hạng vàng"} bgColor={GOLD} />;
       case "PLATINUM":
-        return (
-          <BtnLevelCode name={'Hạng kim cương'} bgColor={PLATINUM} />
-        )
+        return <BtnLevelCode name={"Hạng kim cương"} bgColor={PLATINUM} />;
       default:
         break;
     }
-  }
+  };
 
   return (
     <View style={styles.container}>
@@ -49,29 +42,33 @@ const Banner = () => {
         <TouchableOpacity
           hitSlop={styleElement.hitslopSm}
           onPress={navigate(ScreenKey.SETTING_APP)}
-          style={styles.btnSetting}>
+          style={styles.btnSetting}
+        >
           <IconSetting style={sizeIcon.llg} />
         </TouchableOpacity>
         <TouchableOpacity onPress={navigate(ScreenKey.EDIT_PROFILE)}>
-          <Row
-            paddingHorizontal={8 * 2}
-            gap={8 * 2}>
-            <Avatar style={styles.avatar} avatar={infoUser?.fileAvatar} size={8 * 8} circle />
-            <Column gap={4}>
-              <Text weight='bold' size={14} color={WHITE}>
+          <Row paddingHorizontal={8 * 2} gap={8 * 2}>
+            <Avatar
+              style={styles.avatar}
+              avatar={infoUser?.fileAvatar}
+              size={8 * 8}
+              circle
+            />
+            <Column gap={4} flex={1}>
+              <Text weight="bold" size={14} color={WHITE}>
                 {infoUser?.name}
               </Text>
-              <Text weight='regular' size={14} color={WHITE}>
-                {infoUser?.phone[0]?.fullPhoneNumber}
+              <Text weight="regular" size={14} color={WHITE}>
+                {hidePartOfString(infoUser?.phone[0]?.fullPhoneNumber, 6, 10)}
               </Text>
               {_renderLevelCode(infoUser?.levelCode)}
             </Column>
-          </Row >
+          </Row>
         </TouchableOpacity>
       </Column>
     </View>
-  )
-}
+  );
+};
 
 export default Banner
 

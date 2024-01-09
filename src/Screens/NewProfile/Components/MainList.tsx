@@ -4,14 +4,20 @@ import { TouchableOpacity } from 'react-native'
 import Text from '@Components/Text'
 import { IconDiary, IconHandHeart, IconHeart, IconHome } from '@Components/Icon/Icon'
 import Row from '@Components/Row'
-import { GREY_FOR_TITLE, WHITE } from '@Constant/Color'
-import { useNavigate } from 'src/Hooks/useNavigation'
-import ScreenKey from '@Navigation/ScreenKey'
-
+import { BLACK, GREY_FOR_TITLE, WHITE } from "@Constant/Color";
+import { useNavigate } from "src/Hooks/useNavigation";
+import ScreenKey from "@Navigation/ScreenKey";
+import Column from "@Components/Column";
+import { styleElement } from "@Constant/StyleElement";
 
 const MainList = () => {
   return (
-    <View style={styles.container}>
+    <Row
+      backgroundColor={"white"}
+      marginHorizontal={16}
+      borderRadius={8}
+      style={styleElement.shadow}
+    >
       <Row gap={8 * 2} justifyContent="space-between">
         <BtnIcon flag={"diary"} text={"Nhật ký"} icon={<IconDiary />} />
         <BtnIcon
@@ -26,76 +32,54 @@ const MainList = () => {
         />
         <BtnIcon flag={"affiliate"} text={"Tri ân"} icon={<IconHandHeart />} />
       </Row>
-    </View>
+    </Row>
   );
-}
+};
 
-export default MainList
+export default MainList;
 
-const BtnIcon = ({ icon = null, text = '', flag = null }) => {
-
-  const { navigate } = useNavigate()
+const BtnIcon = ({ icon = null, text = "", flag = null }) => {
+  const { navigate } = useNavigate();
 
   const _handlePress = () => {
     switch (flag) {
-      case 'affiliate':
-        return navigate(ScreenKey.NEW_AFFILIATE)()
-      case 'diary':
-        return navigate(ScreenKey.LIST_PARTNER_DIARY)()
-      case 'health-record':
-        return navigate(ScreenKey.HEALTH_RECORD)()
-      case 'relatives-profile':
-        return navigate(ScreenKey.LIST_RELATIVES_PROFILE)()
+      case "affiliate":
+        return navigate(ScreenKey.NEW_AFFILIATE)();
+      case "diary":
+        return navigate(ScreenKey.LIST_PARTNER_DIARY)();
+      case "health-record":
+        return navigate(ScreenKey.HEALTH_RECORD)();
+      case "relatives-profile":
+        return navigate(ScreenKey.LIST_RELATIVES_PROFILE)();
 
       default:
         break;
     }
-  }
+  };
 
   return (
-    <TouchableOpacity
-      onPress={_handlePress}
-      style={[styles.btn, shadow]}>
-      <View style={styles.btn__icon}>
+    <TouchableOpacity onPress={_handlePress} style={styles.btn}>
+      <Column height={30} alignItems="center" justifyContent="center">
         {icon}
-      </View>
-      <Text color={GREY_FOR_TITLE} size={13} style={styles.btn__text} weight='bold'>
+      </Column>
+      <Text color={BLACK} size={14} weight="bold">
         {text}
       </Text>
     </TouchableOpacity>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
-  btn__icon: {
-    position: 'absolute',
-    top: 8 * 2.5
-  },
-  btn__text: {
-    position: 'absolute',
-    bottom: 8 * 1.5
-  },
   btn: {
-    alignItems: 'center',
+    alignItems: "center",
     flex: 1,
-    height: 8 * 11,
     backgroundColor: WHITE,
-    justifyContent: 'center',
-    borderRadius: 8
+    justifyContent: "center",
+    borderRadius: 8,
+    gap: 4,
+    paddingVertical: 8,
   },
   container: {
-    paddingHorizontal: 8 * 2
-  }
-})
-
-const shadow = {
-  shadowColor: "#000",
-  shadowOffset: {
-    width: 0,
-    height: 3,
+    paddingHorizontal: 8 * 2,
   },
-  shadowOpacity: 0.1,
-  shadowRadius: 5,
-
-  elevation: 3
-}
+});
