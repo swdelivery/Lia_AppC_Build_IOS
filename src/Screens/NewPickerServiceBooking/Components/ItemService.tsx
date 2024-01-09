@@ -17,9 +17,11 @@ import {
 import { _moderateScale, _width, _widthScale } from "@Constant/Scale";
 import { styleElement } from "@Constant/StyleElement";
 import { formatMonney } from "@Constant/Utils";
+import ModalPickToppingNew from "@Screens/Booking/bookingForBranch/ModalPickToppingNew";
 import FlashSale from "@Screens/SoYoungService/components/FlashSale";
 import { Service } from "@typings/serviceGroup";
-import React, { useCallback, useMemo } from "react";
+import { cloneDeep, isEmpty } from "lodash";
+import React, { useCallback, useMemo, useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import Toast, { ErrorToast } from "react-native-toast-message";
 import useServiceDetailsNavigation from "src/Hooks/navigation/useServiceDetailsNavigation";
@@ -47,11 +49,16 @@ const ItemService = ({
     handleGoDetailService(data);
   }, [data]);
 
+  const [showModalPickTopping, setShowModalPickTopping] = useState({
+    data: {} as Service,
+    isShow: false
+  })
+
   const isOutOfStock = useMemo(() => {
     return (
       data.preferentialInCurrentFlashSale?.limit &&
       data.preferentialInCurrentFlashSale.limit ===
-        data.preferentialInCurrentFlashSale.usage
+      data.preferentialInCurrentFlashSale.usage
     );
   }, [data]);
 
@@ -73,7 +80,15 @@ const ItemService = ({
       });
       return;
     }
-    onToggleSelection(data);
+
+    if (data.options != null && data.options.length > 0) {
+      setShowModalPickTopping({
+        isShow: true,
+        data: data
+      });
+    } else {
+      onToggleSelection(data);
+    }
   }, [data, isSelected, canSelect, onToggleSelection, isOutOfStock]);
 
   return (
@@ -141,7 +156,7 @@ const ItemService = ({
               style={[
                 styles.item__body__btnAdd,
                 (isSelected || !canSelect || isOutOfStock) &&
-                  styles.item__body__btnAdd_selected,
+                styles.item__body__btnAdd_selected,
               ]}
             >
               <Text color={WHITE} weight="bold">
@@ -151,6 +166,28 @@ const ItemService = ({
           </Column>
         </View>
       </TouchableOpacity>
+      <ModalPickToppingNew
+        confirm={(currChoice, listTopping) => {
+
+          let options = cloneDeep(currChoice.options);
+
+          for (let i = 0; i < options.length; i++) {
+            options[i].data = listTopping.filter(item => item.groupCode === options[i].groupCode);
+          }
+
+          let optionsFinal = options.filter(item => !isEmpty(item.data))
+          currChoice.optionsSelected = cloneDeep(optionsFinal);
+          onToggleSelection(currChoice);
+        }}
+        data={showModalPickTopping?.data}
+        show={showModalPickTopping?.isShow}
+        hide={() => {
+          setShowModalPickTopping({
+            data: {} as Service,
+            isShow: false
+          })
+        }}
+      />
     </View>
   );
 };

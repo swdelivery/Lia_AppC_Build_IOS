@@ -56,6 +56,7 @@ import ModalScrollPicker from "@Components/ModalBottom/ModalScrollPicker";
 import { formatMonney } from "@Constant/Utils";
 import { getMyCouponsState } from "@Redux/user/selectors";
 import { styleElement } from "@Constant/StyleElement";
+import { cloneDeep, isEmpty } from "lodash";
 
 const listTimeForBooking: TimeForBooking[] = [
   {
@@ -131,7 +132,7 @@ const NewCreateBooking = () => {
     service,
     coupon,
     type,
-    dataBookingEdit,
+    dataBookingEdit
   } = useNavigationParams<ScreenK>();
   const scrollY = useSharedValue(0);
   const { dataBranch, dataDoctor, dataPractitioner, dataServices } =
@@ -170,6 +171,7 @@ const NewCreateBooking = () => {
         partnerCouponIdArr,
         insuranceCodeArr,
         description,
+        services
       } = dataBookingEdit;
 
       dispatch(selectBranch(branch));
@@ -190,8 +192,21 @@ const NewCreateBooking = () => {
           })
         );
       }
-      if (servicesNeedCare?.length > 0) {
-        dispatch(selectServices(servicesNeedCare));
+      if (services?.length > 0) {
+        let listService = []
+        services.map(bookingService => {
+          let service = bookingService.service
+          let options = cloneDeep(service.options);
+
+          for (let i = 0; i < options.length; i++) {
+            options[i].data = bookingService.options.filter(item => item.groupCode === options[i].groupCode);
+          }
+
+          let optionsFinal = options.filter(item => !isEmpty(item.data))
+          service.optionsSelected = cloneDeep(optionsFinal);
+          listService.push(service)
+        })
+        dispatch(selectServices(listService));
       }
       if (partnerCouponIdArr?.length > 0) {
         let findCoupon = listMyCoupon?.find(
