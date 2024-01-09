@@ -587,6 +587,7 @@ export const IconVoucher = (props) => {
       height={
         props?.style?.height ? props?.style?.height : _moderateScale(8 * 4)
       }
+      color={props?.color ? props?.color : "white"}
     />
   );
 };
