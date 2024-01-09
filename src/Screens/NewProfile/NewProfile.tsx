@@ -112,7 +112,7 @@ const NewProfile = () => {
                 {
                   flag: "policy",
                   name: "Chính sách và quy định chung",
-                  icon: <IconProfilePolicy />,
+                  icon: <IconProfilePolicy width={20} height={20} />,
                 },
                 {
                   flag: "protect",

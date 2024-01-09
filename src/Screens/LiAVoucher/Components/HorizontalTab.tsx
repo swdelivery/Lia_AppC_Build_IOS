@@ -14,6 +14,7 @@ import Text from "@Components/Text";
 import { useNavigate } from "src/Hooks/useNavigation";
 import useRequireLoginCallback from "src/Hooks/useRequireLoginAction";
 import Column from "@Components/Column";
+import { CheckinIcon, LuckyWheelIcon } from "src/SGV";
 
 type Props = {
   animatedPrimaryColor: SharedValue<string>;
@@ -69,7 +70,7 @@ const HorizontalTab = ({
           onPress={handleLuckyWheelPress}
           style={{ alignItems: "center" }}
         >
-          <IconVoucher style={sizeIcon.lg} />
+          <LuckyWheelIcon width={24} height={24} color={"white"} />
           <Text size={12} weight="bold" color={WHITE}>
             Vòng quay LiA
           </Text>
@@ -77,7 +78,7 @@ const HorizontalTab = ({
       </Animated.View>
       <Animated.View style={[styles.tab__child, animBG]}>
         <Column alignItems="center" onPress={handleCheckinPress}>
-          <IconVoucher style={sizeIcon.lg} />
+          <CheckinIcon width={24} height={24} color={"white"} />
           <Text size={12} weight="bold" color={WHITE}>
             Điểm danh
           </Text>

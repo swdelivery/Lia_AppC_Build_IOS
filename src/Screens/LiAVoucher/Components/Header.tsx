@@ -1,4 +1,10 @@
-import { StatusBar, StyleSheet, TouchableOpacity, View } from "react-native";
+import {
+  Image,
+  StatusBar,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import React from "react";
 import { BASE_COLOR, WHITE } from "../../../Constant/Color";
 import { _moderateScale } from "../../../Constant/Scale";
@@ -55,10 +61,10 @@ const Header = ({ title, animatedPrimaryColor }: Props) => {
           </Text>
         </Column>
         <TouchableOpacity onPress={handleMyVoucher} style={styles.myVoucher}>
-          <IconVoucherGold style={sizeIcon.md} />
-          <Text weight="bold" color={WHITE}>
-            Kho Voucher
-          </Text>
+          <Image
+            style={sizeIcon.xlllg}
+            source={require("src/Image/myVoucher.png")}
+          />
         </TouchableOpacity>
       </View>
     </Animated.View>
@@ -77,10 +83,8 @@ const styles = StyleSheet.create({
   header: {
     backgroundColor: BASE_COLOR,
   },
-
   myVoucher: {
     flex: 1,
-
-    alignItems: "center",
+    alignItems: "flex-end",
   },
 });

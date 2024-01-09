@@ -115,7 +115,7 @@ const BtnIcon = ({
         </Column>
         <View style={styles.btn_text}>
           <Text
-            color={GREY_FOR_TITLE}
+            color={BLACK}
             style={{ textAlign: "center" }}
             size={_moderateScale(13)}
           >
