@@ -8,7 +8,7 @@ import { Alert } from 'react-native';
 
 export const takeAward = (data) => {
 
-    return Axios.post(`${URL_FOR_PARTNER}/partner-wheel-turn/mission/get-award`,data)
+    return Axios.post(`${URL_FOR_PARTNER}/partner-wheel-turn/mission/get-award`, data)
         .then(res => {
             console.log(useLogStyle + '----FETCHING SUCCESS: ', setLogStyle('green'), { takeAward: res });
             return res
@@ -35,7 +35,7 @@ export const getListMissions = () => {
 }
 export const byTurnWheel = (data) => {
 
-    return Axios.post(`${URL_FOR_PARTNER}/partner-wheel-turn/by-turn`,data)
+    return Axios.post(`${URL_FOR_PARTNER}/partner-wheel-turn/by-turn`, data)
         .then(res => {
             console.log(useLogStyle + '----FETCHING SUCCESS: ', setLogStyle('green'), { byTurnWheel: res });
             return res
@@ -49,7 +49,7 @@ export const byTurnWheel = (data) => {
 
 export const getHistorySpin = (data) => {
 
-    return Axios.post(`${URL_FOR_PARTNER}/lia-bonus-event`,data)
+    return Axios.post(`${URL_FOR_PARTNER}/lia-bonus-event`, data)
         .then(res => {
             console.log(useLogStyle + '----FETCHING SUCCESS: ', setLogStyle('green'), { getHistorySpin: res });
             return res
@@ -104,7 +104,7 @@ export const getLuckyCircle = () => {
 
 export const getDataLiaBonusEvent = (params) => {
 
-    return Axios.get(`${URL_FOR_PARTNER}/lia-bonus-event`,{params})
+    return Axios.get(`${URL_FOR_PARTNER}/lia-bonus-event`, { params })
         .then(res => {
             console.log(useLogStyle + '----FETCHING SUCCESS: ', setLogStyle('green'), { getDataLiaBonusEvent: res });
             return res
@@ -223,7 +223,7 @@ const _checkError = (err) => {
         }
 
         return Alert.alert(
-            "Lỗi",
+            "Thông báo",
             `${err?.response?.data?.message}`,
             [
                 { text: "OK", onPress: () => console.log("OK Pressed") }

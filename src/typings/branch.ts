@@ -40,4 +40,18 @@ export type Branch = {
   branchServices: BranchService[];
   configureArticleArr: string[];
   branchProblemFileArr: FileUpload[];
+  addressDetails: AddressDetails
 } & Timestamp;
+
+export type AddressDetails = {
+  nationId: string;
+  nation: string;
+  cityId: string;
+  city: string;
+  districtId: string;
+  district: string;
+  wardId: string;
+  ward: string;
+  street: string;
+  fullAddress: string;
+}

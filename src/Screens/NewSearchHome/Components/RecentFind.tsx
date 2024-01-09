@@ -50,6 +50,10 @@ const RecentFind = memo((props) => {
     navigation.navigate(ScreenKey.NEW_AFFILIATE);
   }, []);
 
+  const _handleBooking = useRequireLoginCallback(() => {
+    navigation.navigate(ScreenKey.CREATE_BOOKING);
+  }, []);
+
   return (
     <View style={styles.container}>
       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
@@ -122,7 +126,7 @@ const RecentFind = memo((props) => {
           <Text style={styles.btnRecommend__text}>Tri Ân</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={navigate(ScreenKey.CREATE_BOOKING)}
+          onPress={_handleBooking}
           style={styles.btnRecommend}
         >
           <View style={styles.btnRecommend__box}>

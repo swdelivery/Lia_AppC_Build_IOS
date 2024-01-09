@@ -1,56 +1,56 @@
-import { Image, Platform, StyleSheet, Text, View } from 'react-native'
 import React, { memo, useEffect, useState } from 'react'
-import { _heightScale, _moderateScale, _widthScale } from '../../../Constant/Scale'
-import Animated, { Extrapolation, interpolate, useAnimatedStyle, useDerivedValue, useSharedValue, withTiming } from 'react-native-reanimated'
+import { Image, Platform, StyleSheet, Text, View } from 'react-native'
+import Animated, { interpolate, useAnimatedStyle, useDerivedValue, useSharedValue, withTiming } from 'react-native-reanimated'
 import { ReText } from 'react-native-redash'
+import { _heightScale, _moderateScale, _widthScale } from '../../../Constant/Scale'
 
 const HEIGHT_BOX_CHOICE = _widthScale(8 * 8)
 
 const LeftEyeResult = memo((props) => {
 
-    const [listEyeResult, setListEyeResult] = useState([])
-    const [number, setNumber] = useState(50)
+    const [listEyeResult, setListEyeResult] = useState([
+        { _id: '1', uri: 'https://i.ibb.co/5Y7xJDK/mi-su-p.png', code: 'MI_SUP' },
+        { _id: '2', uri: 'https://i.ibb.co/k0bHB8B/1-mi-lo-t.png', code: 'MI_LOT' },
+        { _id: '3', uri: 'https://i.ibb.co/s6gfpQc/2-mi.png', code: 'HAI_MI' },
+        { _id: '4', uri: 'https://i.ibb.co/bLT6j1b/1-mi.png', code: 'MOT_MI' },
+        { _id: '5', uri: 'https://i.ibb.co/Ldg3R9j/nhie-u-mi.png', code: 'NHIEU_MI' },
+        { _id: '6', uri: 'https://i.ibb.co/ct3CNfk/2-mi-lo-t.png', code: '2MI_LOT' },
+        { _id: '7', uri: 'https://i.ibb.co/ZKVLr8M/2-mi-ru-o-i.png', code: '2MI_RUOI' },
+        { _id: '8', uri: 'https://i.ibb.co/H7TS0rY/mi-xe-ch.png', code: 'MI_SECH' },
+    ])
+    const [indexCurrValue, setIndexCurrValue] = useState(null)
     const numberValue = useSharedValue(1);
     const opacityChoice = useSharedValue(0.3);
 
     const tranYBox = useSharedValue(0);
     const scaleEyeChoiced = useSharedValue(1);
 
-
+    useEffect(() => {
+        if (props?.scanningResult) {
+            let findIndexCurr = listEyeResult?.findIndex(item => item?.code == props?.scanningResult?.left?.eylid_type);
+            if (findIndexCurr !== -1) {
+                setIndexCurrValue(findIndexCurr)
+            }
+        }
+    }, [props?.scanningResult])
 
 
     useEffect(() => {
-        setListEyeResult([
-            { _id: '1', uri: 'https://i.ibb.co/VqM2rcL/A-nh-ma-n-hi-nh-2023-10-02-lu-c-11-47-19.png' },
-            { _id: '2', uri: 'https://i.ibb.co/VqM2rcL/A-nh-ma-n-hi-nh-2023-10-02-lu-c-11-47-19.png' },
-            { _id: '3', uri: 'https://i.ibb.co/VqM2rcL/A-nh-ma-n-hi-nh-2023-10-02-lu-c-11-47-19.png' },
-            { _id: '4', uri: 'https://i.ibb.co/VqM2rcL/A-nh-ma-n-hi-nh-2023-10-02-lu-c-11-47-19.png' },
-            { _id: '5', uri: 'https://i.ibb.co/VqM2rcL/A-nh-ma-n-hi-nh-2023-10-02-lu-c-11-47-19.png' },
-            { _id: '6', uri: 'https://i.ibb.co/VqM2rcL/A-nh-ma-n-hi-nh-2023-10-02-lu-c-11-47-19.png' },
-            { _id: '7', uri: 'https://i.ibb.co/VqM2rcL/A-nh-ma-n-hi-nh-2023-10-02-lu-c-11-47-19.png' },
-            { _id: '8', uri: 'https://i.ibb.co/VqM2rcL/A-nh-ma-n-hi-nh-2023-10-02-lu-c-11-47-19.png' },
-            // { _id: '9', uri: 'https://i.ibb.co/VqM2rcL/A-nh-ma-n-hi-nh-2023-10-02-lu-c-11-47-19.png' },
-            // { _id: '10', uri: 'https://i.ibb.co/VqM2rcL/A-nh-ma-n-hi-nh-2023-10-02-lu-c-11-47-19.png' },
-        ])
-    }, [])
-
-    useEffect(() => {
-        if (props?.startRightResult) {
+        if (props?.startRightResult && indexCurrValue) {
             tranYBox.value = withTiming(HEIGHT_BOX_CHOICE * (listEyeResult.length - 1), { duration: 1000 }, (isFinished) => {
                 if (isFinished) {
-                    tranYBox.value = withTiming(HEIGHT_BOX_CHOICE * (listEyeResult?.length - 4), { duration: 500 }, (isFinished) => {
+                    tranYBox.value = withTiming(HEIGHT_BOX_CHOICE * (indexCurrValue), { duration: 500 }, (isFinished) => {
                         if (isFinished) {
+                            let randomNumber = Math.floor(Math.random() * (95 - 80 + 1)) + 80;
                             scaleEyeChoiced.value = withTiming(1.15, { duration: 500 })
-
-
-                            numberValue.value = withTiming(83, { duration: 1000 })
+                            numberValue.value = withTiming(randomNumber, { duration: 1000 })
                             opacityChoice.value = withTiming(1, { duration: 1000 })
                         }
                     })
                 }
             })
         }
-    }, [props?.startRightResult])
+    }, [props?.startRightResult, indexCurrValue])
 
     const animBoxChoice = useAnimatedStyle(() => {
         return {
@@ -71,16 +71,6 @@ const LeftEyeResult = memo((props) => {
         }
     })
 
-    // const animNumber = useAnimatedStyle(() => {
-
-    //     // const interpolateWidth = interpolate(numberValue.value, [50, 70], [50, 70], { extrapolateRight: Extrapolation.CLAMP, extrapolateLeft: Extrapolation.CLAMP });
-
-    //     // // setNumber(interpolateWidth)
-
-    //     // return{
-    //     // }
-    // })
-
     const progressText = useDerivedValue(() => {
         return `${Math.floor(numberValue.value)}`
     })
@@ -92,7 +82,6 @@ const LeftEyeResult = memo((props) => {
             opacity: interpolateOpacity
         }
     })
-
 
     return (
         <>
@@ -113,23 +102,11 @@ const LeftEyeResult = memo((props) => {
                                     }}
                                     source={require('../../../Image/left_arrowLeftBoxChoice.png')}
                                 />
-                                {/* <Image
-                                    style={{
-                                        width: _widthScale(8 * 8),
-                                        height: _widthScale(8 * 8),
-                                        resizeMode: 'center',
-                                        position:'absolute'
-                                        // borderWidth:1
-                                    }}
-                                    source={require('../../../Image/rightBoxChoice.png')} /> */}
-
                                 <Animated.View style={[{
                                     width: _widthScale(8 * 12),
                                     height: _widthScale(8 * 8),
-                                    // borderWidth: 1,
                                     position: 'absolute',
                                     right: -_widthScale(8 * 13),
-                                    // backgroundColor: 'rgba(0,0,0,.5)',
                                     alignItems: 'center',
                                     justifyContent: 'center'
                                 }, animBoxChoiceTextNumber]}>
@@ -156,14 +133,13 @@ const LeftEyeResult = memo((props) => {
                                     <View style={{
                                         flexDirection: 'row',
                                         alignItems: 'center',
-                                        // borderWidth:1,
                                         position: 'absolute',
                                         bottom: Platform.OS == 'ios' ? _heightScale(8) : 0
                                     }}>
                                         <ReText style={{
-                                           fontSize: _moderateScale(20),
-                                           fontWeight: 'bold',
-                                           color: 'white',
+                                            fontSize: _moderateScale(20),
+                                            fontWeight: 'bold',
+                                            color: 'white',
                                         }} text={progressText} />
                                         <Text style={{
                                             fontSize: _moderateScale(18),
@@ -171,9 +147,6 @@ const LeftEyeResult = memo((props) => {
                                             color: 'white'
                                         }}>%</Text>
                                     </View>
-                                    {/* <Text>
-                                        {`${progressText.value}`}
-                                    </Text> */}
                                 </Animated.View>
 
 
@@ -197,7 +170,7 @@ const LeftEyeResult = memo((props) => {
                                                     borderColor: 'white',
                                                     opacity: 0.3
                                                 },
-                                                index == 4 && animScaleEyeChoice
+                                                index == indexCurrValue && animScaleEyeChoice
                                                 ]}
                                                 source={{
                                                     uri: `${item?.uri}`
@@ -224,7 +197,6 @@ const styles = StyleSheet.create({
     animatedChoiceBox: {
         width: _widthScale(8 * 8),
         height: _widthScale(8 * 8),
-        // backgroundColor: 'rgba(140, 120, 150,.5)',
         position: 'absolute',
         zIndex: 1,
         borderWidth: _moderateScale(2),
