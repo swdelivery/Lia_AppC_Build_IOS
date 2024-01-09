@@ -204,7 +204,7 @@ const Tab2 = (props) => {
                         },
                       ]}
                     >
-                      {formatMonney(
+                      + {formatMonney(
                         item?.totalAmount * item?.referralPartnerLevelPromotion?.commissionRate / 100, true
                       )}
                     </Text>
