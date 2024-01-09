@@ -5,7 +5,7 @@ import Row from "@Components/Row";
 import Text from "@Components/Text";
 import { MAIN_RED, MAIN_RED_100 } from "@Constant/Color";
 import { _widthScale } from "@Constant/Scale";
-import { formatMonney } from "@Constant/Utils";
+import { formatMonney, replaceFirstCharacter } from "@Constant/Utils";
 import { SERVICE_BANNER_RATIO } from "@Constant/image";
 import { FlashSaleService } from "@typings/flashsale";
 import React from "react";
@@ -35,7 +35,11 @@ export default function FlashSaleItem({ item, isUpcoming }: Props) {
       </Text>
       <Row justifyContent="space-between" alignItems="flex-end">
         <Text size={10} weight="bold" color={MAIN_RED}>
-          {formatMonney(item.finalPrice)}
+          {`${
+            isUpcoming
+              ? replaceFirstCharacter(formatMonney(item.finalPrice), "?")
+              : formatMonney(item.finalPrice)
+          }`}
         </Text>
         <Text size={8} textDecorationLine="line-through" bottom={1}>
           {formatMonney(item.originalPrice)}
