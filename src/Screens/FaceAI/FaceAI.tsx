@@ -25,9 +25,7 @@ import Animated, {
 import RightEffectDotEye from "./Components/RightEffectDotEye";
 import {
   Camera,
-  Templates,
   useCameraDevice,
-  useCameraFormat,
   useCameraPermission,
 } from "react-native-vision-camera";
 import RightEffectTextEye from "./Components/RightEffectTextEye";
@@ -42,14 +40,11 @@ import BackDropOpacity from "./Components/BackDropOpacity";
 import RightCircle from "./Components/RightCircle";
 import LeftCircle from "./Components/LeftCircle";
 import { convertImageCoordsToDeviceCoords } from "src/utils/common";
-import { CameraRoll } from "@react-native-camera-roll/camera-roll";
 import useConfirmation from "src/Hooks/useConfirmation";
-import useImagePicker from "./useImagePicker";
 import { isAndroid } from "src/utils/platform";
 import useVolume from "./Components/useVolume";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { BackIcon } from "@Components/Icon/Icon";
-import { BASE_COLOR, BLACK } from "@Constant/Color";
 import IconButton from "@Components/IconButton";
 
 const EYE_INDICATOR_SIZE = 10;

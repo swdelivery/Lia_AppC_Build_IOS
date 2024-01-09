@@ -3,15 +3,8 @@ import {
   IconProfileBooking,
   IconProfileCare,
   IconProfileCoin,
-  IconProfileEducation,
-  IconProfileFindJob,
-  IconProfileHandHeartIn,
   IconProfileHistory,
-  IconProfileInsurance,
-  IconProfileLoveCare,
   IconProfileMedical,
-  IconProfilePartnerShip,
-  IconProfilePayLater,
   IconProfilePayment,
   IconProfilePolicy,
   IconProfileProtect,
@@ -22,11 +15,12 @@ import {
 } from "@Components/Icon/Icon";
 import Screen from "@Components/Screen";
 import React from "react";
-import { ScrollView, StatusBar, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import Banner from "./Components/Banner";
 import MainList from "./Components/MainList";
 import Menu from "./Components/Menu";
 import { FocusAwareStatusBar } from "@Components/StatusBar";
+import { ProfileMirrorIcon } from "src/SGV";
 
 const NewProfile = () => {
   return (
@@ -48,7 +42,7 @@ const NewProfile = () => {
                 },
                 {
                   flag: "treatment-history",
-                  name: "Lịch sử điều trị",
+                  name: "Lịch sử\nđiều trị",
                   icon: <IconProfileHistory />,
                 },
                 {
@@ -84,6 +78,11 @@ const NewProfile = () => {
                   flag: "lia-voucher",
                   name: "Kho Voucher",
                   icon: <IconProfileVoucher />,
+                },
+                {
+                  flag: "magic-mirror",
+                  name: "Gương thần",
+                  icon: <ProfileMirrorIcon />,
                 },
                 // { name: "LPay Later", icon: <IconProfilePayLater /> },
                 // { name: "Bảo hiểm", icon: <IconProfileInsurance /> },
@@ -135,7 +134,7 @@ export default NewProfile;
 
 const styles = StyleSheet.create({
   body: {
-    backgroundColor: "#E8F4F1",
+    backgroundColor: "#F6FCFF",
     paddingBottom: 100,
   },
 });

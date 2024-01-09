@@ -43,3 +43,17 @@ export const parseUrl = (url: string) => {
   }
   return params;
 };
+
+export const hidePartOfString = (
+  inputString: string,
+  startIndex = 0,
+  endIndex = 0
+) => {
+  const start = Math.max(0, startIndex);
+  const end = Math.max(startIndex, Math.min(endIndex, inputString.length));
+  var hiddenPart = "*".repeat(end - start);
+  var resultString =
+    inputString.substring(0, start) + hiddenPart + inputString.substring(end);
+
+  return resultString;
+};

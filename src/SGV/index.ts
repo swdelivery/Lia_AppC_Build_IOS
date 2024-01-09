@@ -13,4 +13,5 @@ export { default as LocationIcon } from "./location.svg";
 export { default as FlameIcon } from "./flame.svg";
 export { default as FlashIcon } from "./flash.svg";
 export { default as ChervonRightIcon } from "./chervon_right.svg";
+export { default as ProfileMirrorIcon } from "./profile_miror.svg";
 export { default as Diamond1Icon } from "./diamond_1.svg";
