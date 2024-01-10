@@ -11,7 +11,7 @@ type Props = {
 const Instruct = ({ product }: Props) => {
   return (
     <View style={styles.container}>
-      <RenderHTML data={product?.procedureDescription} />
+      <RenderHTML data={product?.procedureDescription ?? "Chưa có thông tin"} />
     </View>
   );
 };

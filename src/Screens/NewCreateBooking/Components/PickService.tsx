@@ -29,6 +29,7 @@ import { SERVICE_BANNER_RATIO } from "@Constant/image";
 import FlashSale from "@Screens/SoYoungService/components/FlashSale";
 import { FlashIcon } from "src/SGV";
 import { formatTime, fromFlashSaleDate } from "src/utils/date";
+import { Service } from "@typings/serviceGroup";
 
 const ITEM_SERVICE_WIDTH = 8 * 22;
 
@@ -60,7 +61,7 @@ const PickService = () => {
         showsHorizontalScrollIndicator={false}
       >
         {dataServices?.map((item, index) => {
-          return <ItemService key={item?.id} data={item} />
+          return <ItemService key={item?.id} data={item} />;
         })}
         <TouchableOpacity
           onPress={_handleGoPickerService}
@@ -76,12 +77,12 @@ const PickService = () => {
 
 export default PickService;
 
-const ItemService = ({ data }) => {
+const ItemService = ({ data }: { data: Service }) => {
   const dispatch = useDispatch();
 
   const _handleRemoveService = useHapticCallback(() => {
     dispatch(removeService(data));
-  }, []);
+  }, [data]);
 
   const isFlashSaleStarted = useMemo(() => {
     if (data.isOnFlashSale && data.currentFlashSale) {
@@ -93,27 +94,37 @@ const ItemService = ({ data }) => {
   const buildItemTopping = (value: string) => {
     return (
       <Row gap={_moderateScale(5)}>
-        <Column width={_moderateScale(5)} height={_moderateScale(5)} backgroundColor={BLACK} borderRadius={_moderateScale(20)}>
-        </Column>
-        <Text size={_moderateScale(12)} fontStyle="italic" numberOfLines={1}>{value}</Text>
+        <Column
+          width={_moderateScale(5)}
+          height={_moderateScale(5)}
+          backgroundColor={BLACK}
+          borderRadius={_moderateScale(20)}
+        />
+        <Text size={_moderateScale(12)} fontStyle="italic" numberOfLines={1}>
+          {value}
+        </Text>
       </Row>
-    )
-  }
+    );
+  };
 
   const toppingPrice = useMemo(() => {
     let total = 0;
-    if (data != null && data?.optionsSelected != null && data?.optionsSelected?.length > 0) {
+    if (
+      data != null &&
+      data?.optionsSelected != null &&
+      data?.optionsSelected?.length > 0
+    ) {
       for (let i = 0; i < data?.optionsSelected?.length; i++) {
         const element = data?.optionsSelected[i];
         for (let j = 0; j < element?.data.length; j++) {
           const elementChild = element?.data[j];
-          total += elementChild?.extraAmount != null ? elementChild?.extraAmount : 0;
+          total +=
+            elementChild?.extraAmount != null ? elementChild?.extraAmount : 0;
         }
       }
     }
     return total;
-  }, [data])
-
+  }, [data]);
 
   return (
     <Column width={ITEM_SERVICE_WIDTH} borderRadius={8}>
@@ -122,7 +133,10 @@ const ItemService = ({ data }) => {
       </Column>
 
       <Column>
-        <Image style={styles.image} avatar={data?.representationFileArr[0]} />
+        <Image
+          style={styles.image}
+          avatar={data.avatar ?? data.representationFileArr[0]}
+        />
         {isFlashSaleStarted && (
           <FlashSale item={data} width={ITEM_SERVICE_WIDTH} />
         )}
@@ -154,18 +168,19 @@ const ItemService = ({ data }) => {
           )}
         </Row>
         <Column gap={_moderateScale(5)}>
-          {
-            (data?.optionsSelected != null && data?.optionsSelected.length > 0) && (
-              data?.optionsSelected.map(item => item?.data?.map(itemChild => buildItemTopping(itemChild?.name)))
-            )
-          }
+          {data?.optionsSelected != null &&
+            data?.optionsSelected.length > 0 &&
+            data?.optionsSelected.map((item) =>
+              item?.data?.map((itemChild) => buildItemTopping(itemChild?.name))
+            )}
         </Column>
         <Row marginTop={2} justifyContent="space-between">
           {data.isOnFlashSale && data?.preferentialInCurrentFlashSale ? (
             <Row flex={1} alignItems="flex-end" gap={4}>
               <Text size={14} weight="bold" color={RED}>
                 {`${formatMonney(
-                  data?.preferentialInCurrentFlashSale?.finalPrice + toppingPrice
+                  data?.preferentialInCurrentFlashSale?.finalPrice +
+                    toppingPrice
                 )}`}
               </Text>
               <Text size={8} textDecorationLine="line-through" bottom={1}>

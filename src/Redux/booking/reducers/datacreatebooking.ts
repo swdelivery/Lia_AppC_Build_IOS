@@ -160,7 +160,7 @@ const clearDataCreateBooking: Handler<State> = (state, { payload }) => ({
 const removeService: Handler<State> = (state, { payload }) => ({
   ...state,
   dataServices: [
-    ...state.dataServices.filter((item) => item?.code !== payload?.code),
+    ...state.dataServices.filter((item) => item?._id !== payload?._id),
   ],
 });
 

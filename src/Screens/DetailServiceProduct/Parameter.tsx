@@ -7,7 +7,7 @@ import { Product } from "@typings/product";
 const Parameter = ({ product }: { product: Product }) => {
   return (
     <View style={styles.container}>
-      <RenderHTML data={product.parameterDescription} />
+      <RenderHTML data={product.parameterDescription ?? "Chưa có thông tin"} />
     </View>
   );
 };

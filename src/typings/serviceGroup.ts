@@ -2,6 +2,7 @@ import type { Branch } from "./branch";
 import type { FileAvatar, Timestamp } from "./common";
 import type { Doctor } from "./doctor";
 import { FlashSale } from "./flashsale";
+import { Product } from "./product";
 
 export type ServiceGroup = {
   parentCode: string;
@@ -111,6 +112,7 @@ export type Service = {
     __v: number;
   };
   nextFlashSale?: FlashSale;
+  productArr: Product[];
 
   serviceGroupArr: ServiceGroup[];
   // Ui only
