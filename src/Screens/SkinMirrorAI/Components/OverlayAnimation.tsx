@@ -10,14 +10,18 @@ import Text from '@Components/Text'
 import Column from '@Components/Column'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
+type Props = {
+  onEndAnim: (state) => void;
+}
 
-const OverlayAnimation = () => {
+const OverlayAnimation = ({ onEndAnim }: Props) => {
   const opacityBackDrop = useSharedValue(0);
   const { top } = useSafeAreaInsets()
   const scaleDot = useSharedValue(0);
 
   const [startAnimDots, setStartAnimDots] = useState('waiting');
   const [startResultBox, setStartResultBox] = useState('waiting')
+  const [showTitle, setShowTitle] = useState(true)
 
   const [listDots, setListDots] = useState([
     { size: 8, delay: 200, top: 450, left: 100 },
@@ -48,6 +52,10 @@ const OverlayAnimation = () => {
     setStartAnimDots('done')
     setStartResultBox('doing')
   }
+  const _handleEndAnimResult = () => {
+    setShowTitle(false)
+    onEndAnim(true)
+  }
 
   const animOpacityBackDrop = useAnimatedStyle(() => {
     return {
@@ -60,14 +68,19 @@ const OverlayAnimation = () => {
     <View style={styleElement.flex}>
       <Animated.View style={[styles.backDrop, animOpacityBackDrop]}>
 
-        <Column
-          alignSelf='center'
-          top={top + 8 * 2}
-          position='absolute'>
-          <Text style={{ textAlign: 'center' }} size={28} color={WHITE} weight='bold' >
-            GƯƠNG THẦN ĐANG{'\n'}PHÂN TÍCH DA
-          </Text>
-        </Column>
+        {
+          showTitle ?
+            <Column
+              alignSelf='center'
+              top={top + 8 * 2}
+              position='absolute'>
+              <Text style={{ textAlign: 'center' }} size={28} color={WHITE} weight='bold' >
+                GƯƠNG THẦN ĐANG{'\n'}PHÂN TÍCH DA
+              </Text>
+            </Column>
+            : <></>
+        }
+
 
         {
           startAnimDots == 'doing' ?
@@ -97,6 +110,8 @@ const OverlayAnimation = () => {
                 listResults?.map((item, index) => {
                   return (
                     <ResultBoxAnim
+                      onEndAnim={_handleEndAnimResult}
+                      isLasted={listResults.length - 1 == index}
                       condition={item?.condition}
                       heightBodyBox={item?.heightBodyBox}
                       delay={item?.delay}

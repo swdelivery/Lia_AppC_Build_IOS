@@ -1031,6 +1031,8 @@ PODS:
     - react-native-video/Video (= 5.2.1)
   - react-native-video/Video (5.2.1):
     - React-Core
+  - react-native-view-shot (3.8.0):
+    - React-Core
   - react-native-volume-manager (1.10.0):
     - Mute
     - React-Core
@@ -1347,6 +1349,7 @@ DEPENDENCIES:
   - "react-native-slider (from `../node_modules/@react-native-community/slider`)"
   - react-native-version-check (from `../node_modules/react-native-version-check`)
   - react-native-video (from `../node_modules/react-native-video`)
+  - react-native-view-shot (from `../node_modules/react-native-view-shot`)
   - react-native-volume-manager (from `../node_modules/react-native-volume-manager`)
   - react-native-webview (from `../node_modules/react-native-webview`)
   - React-nativeconfig (from `../node_modules/react-native/ReactCommon`)
@@ -1515,6 +1518,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-version-check"
   react-native-video:
     :path: "../node_modules/react-native-video"
+  react-native-view-shot:
+    :path: "../node_modules/react-native-view-shot"
   react-native-volume-manager:
     :path: "../node_modules/react-native-volume-manager"
   react-native-webview:
@@ -1680,6 +1685,7 @@ SPEC CHECKSUMS:
   react-native-slider: 7d387c7e8dd0b4c12bf49c975c8666435f082a33
   react-native-version-check: 6cd36aad4e30b8e3216747e3b4ddeb09e0647af8
   react-native-video: c26780b224543c62d5e1b2a7244a5cd1b50e8253
+  react-native-view-shot: 6b7ed61d77d88580fed10954d45fad0eb2d47688
   react-native-volume-manager: 3c7d8047841b6831730dea7bf25250522388b4f4
   react-native-webview: f95eb7d4d6a7ca45d04d861d99f628241b2aff83
   React-nativeconfig: 37aecd26d64b79327c3f10e43b2e9a6c425e0a60

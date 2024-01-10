@@ -1,6 +1,6 @@
 import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native'
 import React, { useEffect, useMemo } from 'react'
-import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
+import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 import Column from '@Components/Column';
 import { BLUE_FB, GREEN_2, RED, WHITE } from '@Constant/Color';
 import Text from '@Components/Text';
@@ -14,9 +14,11 @@ type Props = ViewStyle & {
   description: string;
   heightBodyBox: number;
   condition: string;
+  isLasted: boolean;
+  onEndAnim: () => void;
 };
 
-const ResultBoxAnim = ({ condition, heightBodyBox, title, description, delay, style, ...props }: Props) => {
+const ResultBoxAnim = ({ onEndAnim, isLasted, condition, heightBodyBox, title, description, delay, style, ...props }: Props) => {
   const containerStyle = useMemo(() => {
     return { ...props };
   }, [props]);
@@ -36,7 +38,13 @@ const ResultBoxAnim = ({ condition, heightBodyBox, title, description, delay, st
           widthMainBox.value = withTiming(8 * 15, { duration: 200 }, (fns) => {
             if (fns) {
               heighMainBox.value = withTiming(50, { duration: 1000 }, (fns) => {
-                opacityResultText.value = withTiming(1, { duration: 200 })
+                opacityResultText.value = withTiming(1, { duration: 200 }, (fns) => {
+                  if (fns) {
+                    if (isLasted) {
+                      runOnJS(onEndAnim)()
+                    }
+                  }
+                })
               })
             }
           })
