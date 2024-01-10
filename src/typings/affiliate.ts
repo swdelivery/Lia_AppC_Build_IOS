@@ -31,5 +31,9 @@ export type Promotion = {
   discountFriend: number;
   commissionRate: number;
   indirectCommissionRate: number;
-  id: string
+  id: string;
+  discountRetailServicePolicy: string;
+  discountFriendPolicy: string;
+  commissionRatePolicy: string;
+  birthDayPolicy: string;
 }

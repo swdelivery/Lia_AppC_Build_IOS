@@ -10,9 +10,11 @@ import { PartnerLevel } from "@typings/affiliate";
 
 type Props = {
   currIndexCard: number;
+  // NOTICE
+  visiblePromotionPolicy: any;
 };
 
-const InfoReward = ({ currIndexCard }: Props) => {
+const InfoReward = ({ currIndexCard, visiblePromotionPolicy }: Props) => {
   const { data: listPartnerLevel } = useSelector(getListPartnerLevelState);
 
   const currLevelByIndex: PartnerLevel = useMemo(() => {
@@ -210,9 +212,18 @@ const InfoReward = ({ currIndexCard }: Props) => {
     }
   }, [currIndexCard])
 
-  const EachItem = useCallback(({ title, value, icon, hideValue = false }) => {
+  const EachItem = useCallback(({ title, value, icon, hideValue = false, policy }) => {
+
+    const _handlePress = useCallback(() => {
+      console.log({ policy });
+      visiblePromotionPolicy.show({
+        title: title.replace(/\n/g, ' '),
+        data: policy
+      })
+    }, [policy])
+
     return (
-      <Column alignItems="center" gap={4}>
+      <Column onPress={_handlePress} alignItems="center" gap={4}>
         <Text style={{ textAlign: "center" }} size={12} color={WHITE}>
           {title}
         </Text>
@@ -233,21 +244,25 @@ const InfoReward = ({ currIndexCard }: Props) => {
 
       <Row justifyContent="center" gap={8 * 4} marginTop={8 * 2}>
         <EachItem
+          policy={currLevelByIndex?.promotion?.discountRetailServicePolicy}
           title={`Giảm giá${`\n`}trực tiếp`}
           value={currLevelByIndex?.promotion?.discountRetailService}
           icon={generateIcon1}
         />
         <EachItem
+          policy={currLevelByIndex?.promotion?.discountFriendPolicy}
           title={`Giảm giá${`\n`}cho người thân`}
           value={currLevelByIndex?.promotion?.discountFriend}
           icon={generateIcon2}
         />
         <EachItem
+          policy={currLevelByIndex?.promotion?.commissionRatePolicy}
           title={`Phần trăm${`\n`}hoa hồng`}
           value={currLevelByIndex?.promotion?.commissionRate}
           icon={generateIcon3}
         />
         <EachItem
+          policy={currLevelByIndex?.promotion?.birthDayPolicy}
           hideValue
           title={`Quà tặng${`\n`}sinh nhật`}
           value={currLevelByIndex?.promotion?.commissionRate}
