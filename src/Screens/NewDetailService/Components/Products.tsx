@@ -8,37 +8,41 @@ import {
 import Text from "@Components/Text";
 import Column from "@Components/Column";
 import Row from "@Components/Row";
-import { navigation } from "rootNavigation";
 import ScreenKey from "@Navigation/ScreenKey";
 import { Service } from "@typings/serviceGroup";
 import { BASE_COLOR, GREY } from "@Constant/Color";
 import SVGEyeBase from "src/SGV/eyeBase.svg";
+import { useNavigate } from "src/Hooks/useNavigation";
 
 type Props = {
   service: Service;
 };
 
-const Material = ({ service }: Props) => {
+const Products = ({ service }: Props) => {
+  const { navigation } = useNavigate();
+
   const _handleGoDetailMaterial = useCallback(
     (data) => () => {
-      navigation.navigate(ScreenKey.DETAIL_MATERIAL, { _id: data?._id });
+      navigation.navigate(ScreenKey.DETAIL_SERVICE_PRODUCT, { item: data });
     },
     []
   );
 
+  console.log({ service });
+
   return (
     <View style={styles.container}>
       <Text weight="bold" bottom={8}>
-        Vật liệu
+        Sản phẩm
       </Text>
       <Column gap={8}>
         <View style={styles.box__header}>
           <Text color={BASE_COLOR} weight="bold">
-            Thông tin vật liệu
+            Thông tin sản phẩm
           </Text>
 
           <Text color={BASE_COLOR} weight="bold">
-            {service?.materialArr?.length} Loại
+            {service?.productArr?.length} Loại
           </Text>
         </View>
 
@@ -48,14 +52,14 @@ const Material = ({ service }: Props) => {
           left={0}
           right={8}
         >
-          {service?.materialArr?.map((item, index) => {
+          {service?.productArr?.map((item, index) => {
             return (
               <TouchableOpacity
                 key={item._id}
                 onPress={_handleGoDetailMaterial(item)}
               >
                 <Row gap={16} justifyContent="space-between">
-                  <Text weight="bold" numberOfLines={1} color={GREY} flex={1}>
+                  <Text weight="bold" numberOfLines={2} color={GREY} flex={1}>
                     {item?.name}
                   </Text>
 
@@ -70,7 +74,7 @@ const Material = ({ service }: Props) => {
   );
 };
 
-export default Material;
+export default Products;
 
 const styles = StyleSheet.create({
   box__textRight: {

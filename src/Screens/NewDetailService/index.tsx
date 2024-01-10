@@ -30,6 +30,7 @@ import RecommendServices from "./Components/RecommendServices";
 import RelatedServices from "./Components/RelatedServices";
 import { isEmpty } from "lodash";
 import ListVideo from "./Components/ListVideo";
+import Products from "./Components/Products";
 
 const DetailService = () => {
   const { navigate } = useNavigate();
@@ -89,10 +90,9 @@ const DetailService = () => {
             {/* <FlashSale /> */}
           </View>
           <InfoBranch service={service} />
-          {
-            service?.guideVideo?.length > 0 && <ListVideo service={service} />
-          }
+          {service?.guideVideo?.length > 0 && <ListVideo service={service} />}
           <Material service={service} />
+          <Products service={service} />
           <BeautyInsurance
             onViewMore={navigate(ScreenKey.LIST_BEAUTY_INSURANCE)}
           />
