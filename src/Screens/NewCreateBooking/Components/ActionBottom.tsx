@@ -15,7 +15,6 @@ import LinearGradient from "react-native-linear-gradient";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "src/Hooks/useNavigation";
 import useConfirmation from "src/Hooks/useConfirmation";
-import { ServiceOption } from "@typings/serviceGroup";
 import { getInfoUserReducer } from "@Redux/Selectors";
 
 type Props = {
@@ -40,19 +39,16 @@ const ActionBottom = ({ isEditBooking, editBookingId }: Props) => {
     dataDescription,
   } = useSelector(getDataCreateBookingState);
 
-
-  // const infoUserRedux = useSelector((state) => state.infoUserReducer);
-  const { infoUser } = useSelector(getInfoUserReducer)
+  const { infoUser } = useSelector(getInfoUserReducer);
   const validateTime = () => {
     const inputTime = new Date(dataDate);
     inputTime.setHours(parseInt(dataTime.hour, 10));
     inputTime.setMinutes(parseInt(dataTime.minute, 10));
 
     return inputTime.getTime() > Date.now();
-  }
+  };
 
   const _handleConfirmCreateBooking = () => {
-
     if (!infoUser?._id) {
       return Alert.alert("Bạn cần đăng nhập để đặt hẹn");
     }
@@ -88,12 +84,12 @@ const ActionBottom = ({ isEditBooking, editBookingId }: Props) => {
       (item) => item.code
     );
     dataFetch["services"] = dataServices?.map((item) => {
-      let options = []
+      let options = [];
       for (let i = 0; i < item?.optionsSelected?.length; i++) {
         const element = item?.optionsSelected[i];
-        element.data.map(data => {
-          options.push(data)
-        })
+        element.data.map((data) => {
+          options.push(data);
+        });
       }
       return {
         serviceCode: item?.code, //bắt buộc
@@ -114,7 +110,7 @@ const ActionBottom = ({ isEditBooking, editBookingId }: Props) => {
     if (!isEmpty(dataCoupon)) {
       dataFetch["partnerCouponIdArr"] = [dataCoupon?._id];
     } else {
-      dataFetch["partnerCouponIdArr"] = []
+      dataFetch["partnerCouponIdArr"] = [];
     }
     if (!isEmpty(dataDoctor)) {
       dataFetch["assignedDoctorCode"] = dataDoctor.code;
@@ -123,31 +119,23 @@ const ActionBottom = ({ isEditBooking, editBookingId }: Props) => {
       dataFetch["assignedPractitionerCode"] = dataPractitioner.code;
     }
     if (!isEmpty(dataInsurance)) {
-      dataFetch["insuranceCodeArr"] = dataInsurance?.map(
-        (item) => item.code
-      );
+      dataFetch["insuranceCodeArr"] = dataInsurance?.map((item) => item.code);
     } else {
-      dataFetch["insuranceCodeArr"] = []
+      dataFetch["insuranceCodeArr"] = [];
     }
     if (isEditBooking) {
-      showConfirmation(
-        "Xác nhận",
-        "Xác nhận cập nhật lịch hẹn?",
-        () => {
-          dispatch(updatePartnerBooking.request({
+      showConfirmation("Xác nhận", "Xác nhận cập nhật lịch hẹn?", () => {
+        dispatch(
+          updatePartnerBooking.request({
             idBooking: editBookingId,
-            data: dataFetch
-          }));
-        }
-      );
+            data: dataFetch,
+          })
+        );
+      });
     } else {
-      showConfirmation(
-        "Xác nhận",
-        "Xác nhận tạo lịch hẹn?",
-        () => {
-          dispatch(createPartnerBooking.request(dataFetch));
-        }
-      );
+      showConfirmation("Xác nhận", "Xác nhận tạo lịch hẹn?", () => {
+        dispatch(createPartnerBooking.request(dataFetch));
+      });
     }
   };
 

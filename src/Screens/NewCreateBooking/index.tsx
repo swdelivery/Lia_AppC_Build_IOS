@@ -167,11 +167,10 @@ const NewCreateBooking = () => {
         branch,
         assignedDoctorCode,
         appointmentDateFinal,
-        servicesNeedCare,
         partnerCouponIdArr,
         insuranceCodeArr,
         description,
-        services
+        services,
       } = dataBookingEdit;
 
       dispatch(selectBranch(branch));

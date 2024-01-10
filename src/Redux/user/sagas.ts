@@ -19,7 +19,7 @@ import configs from "src/configs";
 import { Booking } from "@typings/booking";
 import { BaseAction } from "@Redux/types";
 import { ServiceTreatment } from "@typings/treatment";
-import { CLEAR_STORE_REDUX, LOG_OUT } from "@Redux/Constants/ActionType";
+import { LOG_OUT } from "@Redux/Constants/ActionType";
 import { navigation } from "rootNavigation";
 import ScreenKey from "@Navigation/ScreenKey";
 import AsyncStorage from "@react-native-community/async-storage";
@@ -147,10 +147,6 @@ function* logOut() {
     yield AsyncStorage.removeItem("codeAffiliateVsIdService");
     keychain.clearTokens();
 
-    yield delay(1000);
-    yield put({
-      type: CLEAR_STORE_REDUX,
-    });
     SocketInstance.instance = null;
     SocketInstance.socketConn.disconnect();
     SocketInstance.socketConn = null;

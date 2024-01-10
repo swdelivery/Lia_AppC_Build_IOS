@@ -104,11 +104,6 @@ const SettingApp = memo((props) => {
     await AsyncStorage.removeItem("codeAffiliateVsIdService");
     keychain.clearTokens();
 
-    setTimeout(() => {
-      Store.dispatch({
-        type: ActionType.CLEAR_STORE_REDUX,
-      });
-    }, 0);
     SocketInstance.instance = null;
     SocketInstance.socketConn.disconnect();
     SocketInstance.socketConn = null;

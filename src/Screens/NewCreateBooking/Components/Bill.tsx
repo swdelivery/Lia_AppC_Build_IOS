@@ -11,7 +11,6 @@ import { formatMonney } from "@Constant/Utils";
 import Collapsible from "react-native-collapsible";
 import { getServicePrice } from "@Constant/service";
 import { sumBy } from "lodash";
-import { ServiceOption } from "@typings/serviceGroup";
 
 const Bill = () => {
   const { dataCoupon, dataServices, dataInsurance } = useSelector(
