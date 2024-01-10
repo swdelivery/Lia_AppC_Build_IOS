@@ -42,6 +42,7 @@ import ModalRequireBecomeCTV from "./Components/ModalRequireBecomeCTV";
 import ModalShowInfoRanked from "./Components/ModalShowInfoRanked";
 import ModalPolicy from "./Components/ModalPolicy";
 import useVisible from "src/Hooks/useVisible";
+import ModalPromotionPolicy from "./Components/ModalPromotionPolicy";
 
 const WIDTH_CARD = _width - 8 * 4;
 const WIDTH_PROCESS_BAR = _width - 8 * 4 - 8 * 4;
@@ -64,6 +65,7 @@ const NewAffiliate = () => {
   const [showModalInfoRanked, setShowModalInfoRanked] = useState(false);
 
   const visiblePolicy = useVisible();
+  const visiblePromotionPolicy = useVisible();
 
   useEffect(() => {
     dispatch(getPartnerLevel.request());
@@ -165,7 +167,7 @@ const NewAffiliate = () => {
             renderItem={_renderItem}
             data={listPartnerLevel}
           />
-          <InfoReward currIndexCard={currIndexCard} />
+          <InfoReward visiblePromotionPolicy={visiblePromotionPolicy} currIndexCard={currIndexCard} />
           <Spacer top={8 * 2} />
 
           <Column
@@ -224,6 +226,8 @@ const NewAffiliate = () => {
           onHideModal={() => setShowModalInfoRanked(false)}
         />
         <ModalPolicy visiblePolicy={visiblePolicy} />
+        <ModalPromotionPolicy visiblePromotionPolicy={visiblePromotionPolicy} />
+
       </ImageBackground>
     </Screen>
   );

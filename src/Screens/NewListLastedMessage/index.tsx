@@ -72,7 +72,7 @@ const NewListLastedMessage = () => {
       return (
         <HeaderList
           icon={item === "lia" ? <Icon name="pin" size={20} /> : <IconChat />}
-          title="Cuộc trò chuyện"
+          title={item === "lia" ? "Trợ lý" : "Cuộc trò chuyện"}
         />
       );
     }
