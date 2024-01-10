@@ -358,7 +358,7 @@ const Tab1 = (props) => {
                       {item?.type == "single" ? (
                         <>
                           {props?.listChoice?.find(
-                            (itemFind) => itemFind?.code == itemChild?.code && itemFind?.groupCode == itemChild?.groupCode
+                            (itemFind) => itemFind?._id == itemChild?._id && itemFind?.groupCode == itemChild?.groupCode
                           ) ? (
                             <TouchableOpacity
                               hitSlop={styleElement.hitslopSm}
@@ -399,7 +399,7 @@ const Tab1 = (props) => {
                       {item?.type == "multiple" ? (
                         <>
                           {props?.listChoice?.find(
-                            (itemFind) => itemFind?.code == itemChild?.code && itemFind?.groupCode == itemChild?.groupCode
+                            (itemFind) => itemFind?._id == itemChild?._id && itemFind?.groupCode == itemChild?.groupCode
                           ) ? (
                             <TouchableOpacity
                               hitSlop={styleElement.hitslopSm}
@@ -671,7 +671,7 @@ const ModalPickToppingNew = ({ confirm, data, show, hide }: Props) => {
     let tempListChoice = cloneDeep(listChoice);
 
     let indexItem = tempListChoice?.findIndex(
-      (item) => item?.code == data?.code && item?.groupCode == data?.groupCode
+      (item) => item?._id == data?._id && item?.groupCode == data?.groupCode
     );
     if (indexItem !== -1) {
       tempListChoice.splice(indexItem, 1);
@@ -689,7 +689,7 @@ const ModalPickToppingNew = ({ confirm, data, show, hide }: Props) => {
     let tempListChoice = cloneDeep(listChoice);
 
     let indexItem = tempListChoice?.findIndex(
-      (item) => item?.code == data?.code && item?.groupCode == data?.groupCode
+      (item) => item?._id == data?._id && item?.groupCode == data?.groupCode
     );
     if (indexItem !== -1) {
       tempListChoice.splice(indexItem, 1);
@@ -710,7 +710,7 @@ const ModalPickToppingNew = ({ confirm, data, show, hide }: Props) => {
   };
 
   const _confirmToppingFromTab2 = (data) => {
-    if (listChoice?.find((itemFind) => itemFind?.code == data?.code && itemFind?.groupCode == data?.groupCode)) return;
+    if (listChoice?.find((itemFind) => itemFind?._id == data?._id && itemFind?.groupCode == data?.groupCode)) return;
 
     console.log({ data });
     if (data?.typeOption == "single") {
