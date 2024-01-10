@@ -74,7 +74,7 @@ const Tab1 = (props) => {
                         { fontSize: _moderateScale(14) },
                       ]}
                     >
-                      {formatMonney(item?.finalPrice)} vnđ
+                      {formatMonney(item?.totalAmount, true)}
                     </Text>
                   </View>
                 </View>
@@ -102,12 +102,11 @@ const Tab1 = (props) => {
                         },
                       ]}
                     >
-                      +{" "}
-                      {formatMonney(
-                        item?.finalPrice *
-                        (currPartnerLevel?.promotion?.commissionRate / 100)
-                      )}{" "}
-                      vnđ
+                      + {
+                        formatMonney(
+                          item?.totalAmount * item?.referralPartnerLevelPromotion?.commissionRate / 100, true
+                        )
+                      }
                     </Text>
                   </View>
                 </View>
