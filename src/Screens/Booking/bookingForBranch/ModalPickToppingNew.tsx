@@ -24,6 +24,8 @@ import { Service } from '@typings/serviceGroup';
 import Row from '@Components/Row';
 import Text from '@Components/Text';
 import Column from '@Components/Column';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import Icon from '@Components/Icon';
 
 
 const ItemDescription = ((props) => {
@@ -109,6 +111,7 @@ const ItemDescription = ((props) => {
 })
 
 const Tab1 = ((props) => {
+    const { bottom } = useSafeAreaInsets()
     return (
         <>
             <ScrollView style={{}}>
@@ -266,7 +269,7 @@ const Tab1 = ((props) => {
                                                                             onPress={() => {
                                                                                 props?._handleChoiceSingle(itemChild, item?.groupCode)
                                                                             }}>
-                                                                            <Image style={sizeIcon.lg} source={require('../../../NewIcon/circleChecked.png')} />
+                                                                            <Icon name="radiobox-marked" color={BASE_COLOR} style={sizeIcon.llg} />
                                                                         </TouchableOpacity>
                                                                         :
                                                                         <TouchableOpacity
@@ -274,7 +277,7 @@ const Tab1 = ((props) => {
                                                                             onPress={() => {
                                                                                 props?._handleChoiceSingle(itemChild, item?.groupCode)
                                                                             }}>
-                                                                            <Image style={sizeIcon.lg} source={require('../../../NewIcon/circleUnChecked.png')} />
+                                                                            <Icon name="radiobox-blank" color={BASE_COLOR} style={sizeIcon.llg} />
                                                                         </TouchableOpacity>
                                                                 }
 
@@ -292,7 +295,7 @@ const Tab1 = ((props) => {
                                                                             onPress={() => {
                                                                                 props?._handleChoiceMulti(itemChild, item?.groupCode)
                                                                             }}>
-                                                                            <Image style={sizeIcon.lg} source={require('../../../NewIcon/squareChecked.png')} />
+                                                                            <Icon name="checkbox-marked-outline" color={BASE_COLOR} style={sizeIcon.llg} />
                                                                         </TouchableOpacity>
                                                                         :
                                                                         <TouchableOpacity
@@ -300,7 +303,7 @@ const Tab1 = ((props) => {
                                                                             onPress={() => {
                                                                                 props?._handleChoiceMulti(itemChild, item?.groupCode)
                                                                             }}>
-                                                                            <Image style={sizeIcon.lg} source={require('../../../NewIcon/squareUnChecked.png')} />
+                                                                            <Icon name="checkbox-blank-outline" color={BASE_COLOR} style={sizeIcon.llg} />
                                                                         </TouchableOpacity>
                                                                 }
                                                             </>
@@ -336,14 +339,12 @@ const Tab1 = ((props) => {
                     onPress={() => {
                         props?._handleConfirm()
                     }}
-                    style={[{
-                        height: _moderateScale(8 * 5),
-                        borderRadius: _moderateScale(8),
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        backgroundColor: GREEN_SUCCESS,
-                        flex: 1
-                    }]}>
+                    style={[
+                        styles.styleBtnConfirm,
+                        {
+                            marginBottom: Platform.OS === 'ios' ? bottom : null
+                        }
+                    ]}>
                     {
                         props?.data?.isOnFlashSale && props?.data?.preferentialInCurrentFlashSale ? (
                             <Text style={[stylesFont.fontNolanBold, { fontSize: _moderateScale(16), color: WHITE }]}>
@@ -636,6 +637,14 @@ const styles = StyleSheet.create({
         backgroundColor: WHITE,
         borderRadius: _moderateScale(8 * 2),
         // paddingBottom: _moderateScale(8 * 3)
+    },
+    styleBtnConfirm: {
+        height: _moderateScale(8 * 5),
+        borderRadius: _moderateScale(8),
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: BASE_COLOR,
+        flex: 1
     }
 })
 
