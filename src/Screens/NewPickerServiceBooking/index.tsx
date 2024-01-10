@@ -26,6 +26,7 @@ import { head } from "lodash";
 import { getServicePrice } from "@Constant/service";
 import { RenderItemProps } from "@typings/common";
 import { Service } from "@typings/serviceGroup";
+import { FlashList } from "@shopify/flash-list";
 
 const NewPickerServiceBooking = () => {
   const dispatch = useDispatch();
@@ -49,7 +50,7 @@ const NewPickerServiceBooking = () => {
     }
   );
 
-  useEffect(() => { }, [dataServices]);
+  useEffect(() => {}, [dataServices]);
 
   useEffect(() => {
     dispatch(
@@ -110,7 +111,7 @@ const NewPickerServiceBooking = () => {
         item.currentFlashSale._id === currentFlashSale._id &&
         (!item.preferentialInCurrentFlashSale.limit ||
           item.preferentialInCurrentFlashSale.limit >
-          item.preferentialInCurrentFlashSale.usage)
+            item.preferentialInCurrentFlashSale.usage)
       ) {
         return true;
       }
@@ -139,20 +140,17 @@ const NewPickerServiceBooking = () => {
 
   return (
     <Screen safeBottom>
-      <ModalConfirmService
-        data={isShowModalAddServiceToBooking?.data}
-        isShow={isShowModalAddServiceToBooking?.flag}
-        hideModal={_hideModalConfirmService}
-      />
       <LiAHeader safeTop title="Chọn dịch vụ" />
       {routes?.length > 0 && (
         <Tabs tabs={routes} index={index} onTabChange={setIndex} />
       )}
-      <FlatList
+      <FlashList
         contentContainerStyle={styles.contentContainer}
         numColumns={2}
         data={listServices}
         renderItem={_renderItem}
+        estimatedItemSize={100}
+        extraData={selectedItems}
       />
       {hasItemSelected && (
         <View style={styles.bottomAction}>
@@ -166,6 +164,11 @@ const NewPickerServiceBooking = () => {
           />
         </View>
       )}
+      <ModalConfirmService
+        data={isShowModalAddServiceToBooking?.data}
+        isShow={isShowModalAddServiceToBooking?.flag}
+        hideModal={_hideModalConfirmService}
+      />
     </Screen>
   );
 };
