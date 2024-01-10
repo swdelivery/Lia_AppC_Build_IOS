@@ -26,9 +26,6 @@ export default function Header({}: Props) {
   const flashSaleRule = useConfigData(ConfigDataCode.FlashSaleRule);
   const flashSaleTitle = useConfigFile(ConfigFileCode.FlashSaleTitle);
 
-  console.log({ flashSaleTitle, flashSaleRule });
-  
-
   return (
     <Row
       backgroundColor={MAIN_RED_500}

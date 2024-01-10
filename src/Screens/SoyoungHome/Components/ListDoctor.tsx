@@ -14,7 +14,7 @@ const ListDoctor = () => {
   useEffect(() => {
     dispatch(
       getListDoctorForPartner({
-        limit: 1000,
+        limit: 10,
         sort: {
           orderNumber: -1,
         },
