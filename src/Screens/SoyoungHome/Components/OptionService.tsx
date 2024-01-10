@@ -12,11 +12,10 @@ import { getServiceGroup } from "@Redux/home/actions";
 import { getServiceGroupState } from "@Redux/home/selectors";
 import Image from "@Components/Image";
 import Text from "@Components/Text";
-import { useFocused, useNavigate } from "src/Hooks/useNavigation";
+import { useNavigate } from "src/Hooks/useNavigation";
 import LinearGradient from "react-native-linear-gradient";
 import { WHITE } from "@Constant/Color";
 import { ScrollView } from "react-native-gesture-handler";
-import Row from "@Components/Row";
 import Column from "@Components/Column";
 import { isEmpty } from "lodash";
 
@@ -27,9 +26,9 @@ const OptionService = () => {
   const dispatch = useDispatch();
   const { navigate } = useNavigate();
 
-  useFocused(() => {
+  useEffect(() => {
     _getData();
-  });
+  }, []);
 
   const _getData = useCallback(() => {
     const condition = {
@@ -44,6 +43,7 @@ const OptionService = () => {
       limit: 100,
       page: 1,
     };
+
     dispatch(getServiceGroup.request(condition));
   }, []);
 

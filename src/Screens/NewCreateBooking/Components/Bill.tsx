@@ -15,7 +15,6 @@ import { getInfoUserReducer } from "@Redux/Selectors";
 import { getPartnerLevel, setCurrPartnerLevel } from "@Redux/affiliate/actions";
 import { getCurrPartnerLevelState, getListPartnerLevelState } from "@Redux/affiliate/selectors";
 import { sumBy } from "lodash";
-import { ServiceOption } from "@typings/serviceGroup";
 
 const Bill = () => {
   const dispatch = useDispatch()

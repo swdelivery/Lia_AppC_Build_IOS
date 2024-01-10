@@ -18,12 +18,10 @@ import {
 } from "../../Constant/Scale";
 import { navigation } from "../../../rootNavigation";
 import ScreenKey from "../../Navigation/ScreenKey";
-import { sizeIcon } from "../../Constant/Icon";
 import { partnerAccountRegister } from "../../Redux/Action/AuthAction";
 import { styleElement } from "../../Constant/StyleElement";
 import { getPartnerByCollaboratorCode } from "../../Redux/Action/ProfileAction";
-import Collapsible from "react-native-collapsible";
-import { IconCancelGrey, IconTick } from "../../Components/Icon/Icon";
+import { IconCancelGrey } from "../../Components/Icon/Icon";
 import Spacer from "../../Components/Spacer";
 import Screen from "@Components/Screen";
 import Text from "@Components/Text";

@@ -1,13 +1,26 @@
-import React, { useMemo } from "react";
+import React, { useEffect } from "react";
 import { StyleSheet } from "react-native";
 import { _moderateScale, _width, _widthScale } from "../../../Constant/Scale";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import HorizontalDoctors from "@Components/HorizontalDoctors";
+import { getListDoctorForPartner } from "@Redux/Action/MembersAction";
 
 const ListDoctor = () => {
+  const dispatch = useDispatch();
   const listDoctorRedux = useSelector(
     (state) => state?.bookingReducer?.listDoctor
   );
+
+  useEffect(() => {
+    dispatch(
+      getListDoctorForPartner({
+        limit: 1000,
+        sort: {
+          orderNumber: -1,
+        },
+      })
+    );
+  }, []);
 
   return (
     <HorizontalDoctors

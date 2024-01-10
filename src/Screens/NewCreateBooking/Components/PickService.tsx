@@ -29,7 +29,6 @@ import { SERVICE_BANNER_RATIO } from "@Constant/image";
 import FlashSale from "@Screens/SoYoungService/components/FlashSale";
 import { FlashIcon } from "src/SGV";
 import { formatTime, fromFlashSaleDate } from "src/utils/date";
-import { Service, ServiceOption } from "@typings/serviceGroup";
 
 const ITEM_SERVICE_WIDTH = 8 * 22;
 

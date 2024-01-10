@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { _moderateScale, _width } from "../../../Constant/Scale";
 import IconCalendar from "../../../SGV/calendar.svg";
@@ -7,14 +7,12 @@ import IconPhoneWhite from "../../../SGV/phoneWhite.svg";
 import useRequireLoginCallback from "src/Hooks/useRequireLoginAction";
 import Row from "@Components/Row";
 import Text from "@Components/Text";
-import { Service, ServiceOption } from "@typings/serviceGroup";
+import { Service } from "@typings/serviceGroup";
 import { useNavigate } from "src/Hooks/useNavigation";
 import ScreenKey from "@Navigation/ScreenKey";
 import { BASE_COLOR } from "@Constant/Color";
 import Toast from "react-native-toast-message";
-import ModalPickTopping from "@Screens/Booking/bookingForBranch/ModalPickTopping";
 import ModalPickToppingNew from "@Screens/Booking/bookingForBranch/ModalPickToppingNew";
-import { navigation } from "rootNavigation";
 import { cloneDeep, isEmpty } from "lodash";
 
 type Props = {
@@ -26,14 +24,14 @@ const BottomAction = ({ service }: Props) => {
 
   const [showModalPickTopping, setShowModalPickTopping] = useState({
     data: {} as Service,
-    isShow: false
-  })
+    isShow: false,
+  });
 
   const handleBooking = useRequireLoginCallback(() => {
     const isOutOfStock =
       service.preferentialInCurrentFlashSale?.limit &&
       service.preferentialInCurrentFlashSale.limit ===
-      service.preferentialInCurrentFlashSale.usage;
+        service.preferentialInCurrentFlashSale.usage;
     if (isOutOfStock) {
       Toast.show({
         type: "error",
@@ -41,19 +39,25 @@ const BottomAction = ({ service }: Props) => {
       });
       return;
     }
-    if (service?.options != null && service?.options?.length > 0 && service?.options?.some(option => option.data != null && option.data.length > 0)) {
+    if (
+      service?.options != null &&
+      service?.options?.length > 0 &&
+      service?.options?.some(
+        (option) => option.data != null && option.data.length > 0
+      )
+    ) {
       setShowModalPickTopping({
         data: service,
-        isShow: true
-      })
+        isShow: true,
+      });
     } else {
       navigate(ScreenKey.CREATE_BOOKING, { service })();
     }
   }, [service]);
 
-  const handlePhonePress = useCallback(() => { }, [service]);
+  const handlePhonePress = useCallback(() => {}, [service]);
 
-  const handleChatPress = useRequireLoginCallback(() => { }, []);
+  const handleChatPress = useRequireLoginCallback(() => {}, []);
 
   return (
     <View style={styles.container}>
@@ -87,14 +91,15 @@ const BottomAction = ({ service }: Props) => {
       </View>
       <ModalPickToppingNew
         confirm={(currChoice, listTopping) => {
-
           let options = cloneDeep(service.options);
 
           for (let i = 0; i < options.length; i++) {
-            options[i].data = listTopping.filter(item => item.groupCode === options[i].groupCode);
+            options[i].data = listTopping.filter(
+              (item) => item.groupCode === options[i].groupCode
+            );
           }
 
-          let optionsFinal = options.filter(item => !isEmpty(item.data))
+          let optionsFinal = options.filter((item) => !isEmpty(item.data));
           service.optionsSelected = cloneDeep(optionsFinal);
           navigate(ScreenKey.CREATE_BOOKING, { service: service })();
         }}
@@ -103,8 +108,8 @@ const BottomAction = ({ service }: Props) => {
         hide={() => {
           setShowModalPickTopping({
             data: {} as Service,
-            isShow: false
-          })
+            isShow: false,
+          });
         }}
       />
     </View>
