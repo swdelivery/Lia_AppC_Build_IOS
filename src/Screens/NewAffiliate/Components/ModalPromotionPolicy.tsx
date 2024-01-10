@@ -33,7 +33,7 @@ const ModalPromotionPolicy = ({ visiblePromotionPolicy }: Props) => {
       borderTopLeftRadius={8 * 2}
       borderTopRightRadius={8 * 2}
       onClose={visiblePromotionPolicy.hide}
-      heightModal={_heightScale(400)}
+      heightModal={_heightScale(500)}
       visible={visiblePromotionPolicy.visible} >
 
       <Column
