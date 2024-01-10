@@ -60,9 +60,6 @@ export default class SocketInstance {
           SOCKET: `----SOCKET CONNECT SUCCESS---`,
           navigation: navigation,
         });
-        // if (navigation.checkRoute().name == ScreenKey.CHATTING) {
-        //     navigation.reset()
-        // }
         // alert('new connect')
         // SocketInstance.socketConn.emit('*', handshake);
         SocketInstance.online = true;

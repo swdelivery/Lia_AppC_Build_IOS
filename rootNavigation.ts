@@ -1,48 +1,90 @@
 import * as React from "react";
-import { CommonActions, StackActions } from "@react-navigation/native";
+import {
+  CommonActions,
+  StackActions,
+  createNavigationContainerRef,
+} from "@react-navigation/native";
+import { RootStackParamsList } from "@Navigation/types";
 
-export const navigationRef = React.createRef();
+type RouteName = keyof RootStackParamsList;
+
+export const navigationRef =
+  createNavigationContainerRef<RootStackParamsList>();
 // export const navigation = navigationRef.current
-export function navigate(name: string, params?: any) {
-  navigationRef.current?.navigate(name, params);
+export function navigate(routeName: RouteName, params?: any) {
+  if (navigationRef.isReady()) {
+    // @ts-ignore
+    navigationRef.navigate(routeName, params);
+  } else {
+    console.error("Trying to navigatte but hasnt mounted");
+  }
 }
 export function dispatch(action) {
-  navigationRef.current?.dispatch(action);
-}
-export function jumpTo(name, params) {
-  navigationRef.current?.jumpTo(name, params);
-}
-export function replace(name, params) {
-  navigationRef.current?.dispatch(StackActions.replace(name, params));
-}
-export function push(name, params) {
-  navigationRef.current?.dispatch(StackActions.push(name, params));
-}
-export function goBack() {
-  navigationRef.current?.goBack();
-}
-export function checkRoute() {
-  return navigationRef.current.getCurrentRoute();
+  if (navigationRef.isReady()) {
+    navigationRef.dispatch(action);
+  }
 }
 
-export function reset() {
-  return navigationRef.current.reset({
-    index: 0,
-  });
+function replace(name: string, params?: any) {
+  if (navigationRef.isReady()) {
+    navigationRef.dispatch(StackActions.replace(name, params));
+  }
+}
+
+export function push(name, params) {
+  if (navigationRef.isReady()) {
+    navigationRef.dispatch(StackActions.push(name, params));
+  }
+}
+
+function goBack() {
+  if (navigationRef.isReady()) {
+    navigationRef.goBack();
+  }
 }
 
 function setParams(params: any) {
   navigationRef.current?.dispatch(CommonActions.setParams(params));
 }
 
+export function getCurrentRouteName(state: any): RouteName | null {
+  if (!state || !state.routes) return null;
+
+  const route = state.routes[state.index];
+
+  if (route.state) {
+    // Dive into nested navigators
+    return getCurrentRouteName(route.state);
+  }
+  return route.name;
+}
+
+// add other navigation functions that you need and export them
+function currentRouteName(): RouteName | null {
+  // @ts-ignore
+  const navigationState = navigationRef.current?.getRootState();
+  return getCurrentRouteName(navigationState);
+}
+
+export function getCurrentRoute(state: any): any {
+  if (!state || !state.routes) return null;
+
+  const route = state.routes[state.index];
+
+  if (route.state) {
+    // Dive into nested navigators
+    return getCurrentRoute(route.state);
+  }
+
+  return route;
+}
+
 export const navigation = {
   navigate,
   dispatch,
-  jumpTo,
   replace,
   push,
   goBack,
-  checkRoute,
-  reset,
   setParams,
+  currentRouteName,
 };
