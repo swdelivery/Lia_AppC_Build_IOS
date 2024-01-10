@@ -1,6 +1,6 @@
 import { StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native'
 import React, { useEffect, useMemo } from 'react'
-import Animated, { useAnimatedStyle, useSharedValue, withRepeat, withSequence, withTiming } from 'react-native-reanimated'
+import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withRepeat, withSequence, withTiming } from 'react-native-reanimated'
 import { WHITE } from '@Constant/Color';
 
 
@@ -8,9 +8,11 @@ type Props = ViewStyle & {
   style?: StyleProp<ViewStyle>;
   delay: number;
   size: number;
+  isLasted: boolean;
+  onEndAnim: () => void;
 };
 
-const DotAnim = ({ size, delay, style, ...props }: Props) => {
+const DotAnim = ({ size, delay, style, isLasted, onEndAnim, ...props }: Props) => {
   const containerStyle = useMemo(() => {
     return { ...props };
   }, [props]);
@@ -27,7 +29,13 @@ const DotAnim = ({ size, delay, style, ...props }: Props) => {
 
   useEffect(() => {
     setTimeout(() => {
-      scaleDot.value = withRepeat(withSequence(withTiming(1), withTiming(0)), 15);
+      scaleDot.value = withRepeat(withSequence(withTiming(1), withTiming(0)), 5, false, (fns) => {
+        if (fns) {
+          if (isLasted) {
+            runOnJS(onEndAnim)()
+          }
+        }
+      });
     }, delay);
   }, [])
 
@@ -42,7 +50,7 @@ const DotAnim = ({ size, delay, style, ...props }: Props) => {
   })
 
   return (
-    <Animated.View style={[styles.dot, style, containerStyle, sizeDot, animScaleDot]} />
+    <Animated.View style={[styles.dot, style, containerStyle, sizeDot, animScaleDot, isLasted]} />
   )
 }
 

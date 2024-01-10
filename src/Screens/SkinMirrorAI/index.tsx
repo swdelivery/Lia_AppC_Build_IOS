@@ -11,8 +11,7 @@ const SkinMirrorAI = () => {
 
       <ImageBackground
         style={styleElement.flex}
-        source={{ uri: `https://i.ibb.co/P6Y54RQ/A-nh-ma-n-hi-nh-2024-01-10-lu-c-13-01-11.png` }}>
-
+        source={require('../../Image/demoSkinAI/demo.png')}>
         <OverlayAnimation />
 
       </ImageBackground>

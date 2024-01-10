@@ -86,7 +86,7 @@ const NewProfile = () => {
                 },
                 {
                   flag: "skin-mirror",
-                  name: "Sa-Doi",
+                  name: "SaYoi",
                   icon: <ProfileMirrorIcon />,
                 },
                 // { name: "LPay Later", icon: <IconProfilePayLater /> },
