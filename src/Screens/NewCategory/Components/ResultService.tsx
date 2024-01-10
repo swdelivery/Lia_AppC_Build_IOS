@@ -46,7 +46,7 @@ const ResultService = () => {
           };
         }
         if (dataServiceCoupon) {
-          dataFetch['condition']["preferential"] = { "notEqual": [] }
+          dataFetch["condition"]["isOnFlashSale"] = { equal: true };
         }
         if (dataServiceAverageRating) {
           dataFetch['sort']["averageRating"] = -1
@@ -102,7 +102,7 @@ const ResultService = () => {
           in: [dataServiceParentCodeGroup?.code]
         };
         if (dataServiceCoupon) {
-          dataFetch['condition']["preferential"] = { "notEqual": [] }
+          dataFetch["condition"]["isOnFlashSale"] = { equal: true };
         }
         if (dataServiceAverageRating) {
           dataFetch['sort']["averageRating"] = -1

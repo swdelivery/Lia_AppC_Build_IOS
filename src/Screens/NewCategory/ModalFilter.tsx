@@ -143,7 +143,7 @@ const ModalFilter = ({ visible, onClose }: Props) => {
         };
       }
       if (dataServiceCoupon) {
-        dataFetch["condition"]["preferential"] = { notEqual: [] };
+        dataFetch["condition"]["isOnFlashSale"] = { equal: true };
       }
       if (dataServiceAverageRating) {
         dataFetch["sort"]["averageRating"] = -1;
