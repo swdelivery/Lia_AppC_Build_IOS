@@ -45,20 +45,35 @@ index 88c085f..2b7205e 100644
      val processedBitmap =
        Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, false)
      FileOutputStream(file).use { stream ->
-diff --git a/node_modules/react-native-vision-camera/src/Camera.tsx b/node_modules/react-native-vision-camera/src/Camera.tsx
-index 7f4019c..6cce84f 100644
---- a/node_modules/react-native-vision-camera/src/Camera.tsx
-+++ b/node_modules/react-native-vision-camera/src/Camera.tsx
-@@ -455,6 +455,12 @@ export class Camera extends React.PureComponent<CameraProps, CameraState> {
-       this.lastFrameProcessor = frameProcessor
-     }
-   }
-+  
-+  componentWillUnmount(): void {
-+    if (this.props.frameProcessor !== null) {
-+      this.unsetFrameProcessor()
-+    }
-+  }
-   //#endregion
+diff --git a/node_modules/react-native-vision-camera/android/src/main/java/com/mrousavy/camera/core/PreviewView.kt b/node_modules/react-native-vision-camera/android/src/main/java/com/mrousavy/camera/core/PreviewView.kt
+index 8cdb4c5..45aaa7e 100644
+--- a/node_modules/react-native-vision-camera/android/src/main/java/com/mrousavy/camera/core/PreviewView.kt
++++ b/node_modules/react-native-vision-camera/android/src/main/java/com/mrousavy/camera/core/PreviewView.kt
+@@ -78,11 +78,23 @@ class PreviewView(context: Context, callback: SurfaceHolder.Callback) : SurfaceV
+   override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+     super.onMeasure(widthMeasureSpec, heightMeasureSpec)
  
-   /** @internal */
+-    val viewSize = Size(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.getSize(heightMeasureSpec))
+-    val fittedSize = getSize(size, viewSize, resizeMode)
++    val viewWidth = MeasureSpec.getSize(widthMeasureSpec)
++    val viewHeight = MeasureSpec.getSize(heightMeasureSpec)
++    Log.i(TAG, "PreviewView onMeasure($viewWidth, $viewHeight)")
+ 
+-    Log.i(TAG, "PreviewView is $viewSize, rendering $size content. Resizing to: $fittedSize ($resizeMode)")
+-    setMeasuredDimension(fittedSize.width, fittedSize.height)
++    val newWidth: Int
++    val newHeight: Int
++
++    val actualRatio = if (viewWidth > viewHeight) aspectRatio else 1f / aspectRatio
++    if (viewWidth < viewHeight * actualRatio) {
++      newHeight = viewHeight
++      newWidth = (viewHeight * actualRatio).roundToInt()
++    } else {
++      newWidth = viewWidth
++      newHeight = (viewWidth / actualRatio).roundToInt()
++    }
++    Log.d(TAG, "Measured dimensions set: $newWidth x $newHeight")
++    setMeasuredDimension(newWidth, newHeight)
+   }
+ 
+   companion object {
