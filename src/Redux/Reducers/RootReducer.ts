@@ -1,5 +1,4 @@
 import { combineReducers } from "redux";
-import * as ActionType from "../Constants/ActionType";
 import authReducer from "./AuthReducer";
 import userReducer from "./index";
 import infoUserReducer from "./InfoUserReducer";
@@ -45,13 +44,13 @@ import material from "../material/reducers";
 import newfeeds from "../newfeeds/reducers";
 import wallet from "../wallet/reducers";
 import takecare from "../takecare/reducers";
-import category from "../category/reducers"
-import charity from "../charity/reducers"
-import qrCheckin from "../qrCheckin/reducers"
-import wheelSpin from "../wheelSpin/reducers"
-import affiliate from "../affiliate/reducers"
+import category from "../category/reducers";
+import charity from "../charity/reducers";
+import qrCheckin from "../qrCheckin/reducers";
+import wheelSpin from "../wheelSpin/reducers";
+import affiliate from "../affiliate/reducers";
 import product from "../product/reducers";
-import otp from "../otp/reducers"
+import otp from "../otp/reducers";
 
 const rootReducer = combineReducers({
   newsReducer,
@@ -117,10 +116,6 @@ const rootReducer = combineReducers({
 // }
 
 // export default rootReducer;
-export default (state, action) =>
-  rootReducer(
-    action.type === ActionType.CLEAR_STORE_REDUX ? undefined : state,
-    action
-  );
+export default rootReducer;
 
 export type AppState = ReturnType<typeof rootReducer>;

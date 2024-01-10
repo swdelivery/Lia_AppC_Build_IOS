@@ -18,12 +18,10 @@ import {
 } from "../../Constant/Scale";
 import { navigation } from "../../../rootNavigation";
 import ScreenKey from "../../Navigation/ScreenKey";
-import { sizeIcon } from "../../Constant/Icon";
 import { partnerAccountRegister } from "../../Redux/Action/AuthAction";
 import { styleElement } from "../../Constant/StyleElement";
 import { getPartnerByCollaboratorCode } from "../../Redux/Action/ProfileAction";
-import Collapsible from "react-native-collapsible";
-import { IconTick } from "../../Components/Icon/Icon";
+import { IconCancelGrey } from "../../Components/Icon/Icon";
 import Spacer from "../../Components/Spacer";
 import Screen from "@Components/Screen";
 import Text from "@Components/Text";
@@ -63,7 +61,7 @@ const RegisterInApp = (props) => {
 
   const _getPartnerInviter = async (codeAffiliate) => {
     let result = await getPartnerByCollaboratorCode({
-      collaboratorCode: codeAffiliate?.trim(),
+      collaboratorCode: codeAffiliate?.trim().toUpperCase(),
     });
     if (result?.isAxiosError) return setCurrPartnerCollab({});
     setCurrPartnerCollab(result?.data?.data);
@@ -101,7 +99,7 @@ const RegisterInApp = (props) => {
         password: password,
         routeName: props?.route?.params?.routeName,
         nationCode: nationCode,
-        codeAffiliate: codeAffiliate.trim(),
+        codeAffiliate: codeAffiliate.trim().toUpperCase(),
       });
     },
     [name, phoneNumber, password, password2, codeAffiliate]
@@ -181,14 +179,15 @@ const RegisterInApp = (props) => {
     return isContinue;
   };
 
-  const formatCodeAffiliate = (textValue) => {
-    setCodeAffiliate(textValue.toUpperCase());
-  };
-
   const handleLoginBtn = () => {
     navigation.navigate(ScreenKey.LOGIN_IN_APP, {
       routeName: props?.route?.params?.routeName,
     })
+  }
+
+  const handleRemoveCodeAffiliate = () => {
+    setCodeAffiliate("");
+    setCurrPartnerCollab(null);
   }
 
   return (
@@ -216,15 +215,7 @@ const RegisterInApp = (props) => {
           }}
         >
           <View>
-            {codeAffiliate ? (
-              <View style={styles.labelContainer}>
-                <Text size={14} color={Color.GREY}>
-                  Mã giới thiệu
-                </Text>
-              </View>
-            ) : (
-              <></>
-            )}
+
             <Row
               paddingVertical={_moderateScale(8 * 2)}
               borderRadius={_moderateScale(8)}
@@ -238,43 +229,58 @@ const RegisterInApp = (props) => {
             >
               <TextInput
                 value={codeAffiliate}
-                onChangeText={formatCodeAffiliate}
-                // style={styles.input}
+                onChangeText={setCodeAffiliate}
+                style={styles.input}
+                autoCapitalize="characters"
                 placeholder={"Mã giới thiệu"}
                 placeholderTextColor={"grey"}
                 style={styles.input_text}
               />
-
-              <Collapsible collapsed={currPartnerCollab?._id ? false : true}>
-                <View
-                  style={{
-                    padding: _moderateScale(8 * 2),
-                    paddingBottom: 0,
-                    ...styleElement.rowAliCenter,
-                  }}
-                >
-                  <Text style={{ marginRight: _moderateScale(8) }}>
-                    Tìm thấy người giới thiệu:{" "}
-                    <Text style={{ fontWeight: "bold" }}>
-                      {currPartnerCollab?.name}
+              {
+                currPartnerCollab?._id && (
+                  // <Collapsible collapsed={currPartnerCollab?._id ? false : true}>
+                  //   <View
+                  //     style={{
+                  //       padding: _moderateScale(8 * 2),
+                  //       paddingBottom: 0,
+                  //       ...styleElement.rowAliCenter,
+                  //     }}
+                  //   >
+                  //     <Text style={{ marginRight: _moderateScale(8) }}>
+                  //       Tìm thấy người giới thiệu:{" "}
+                  //       <Text style={{ fontWeight: "bold" }}>
+                  //         {currPartnerCollab?.name}
+                  //       </Text>
+                  //     </Text>
+                  //     <IconTick style={sizeIcon.sm} />
+                  //   </View>
+                  // </Collapsible>
+                  <Row gap={_moderateScale(10)}>
+                    <Text>
+                      Tìm thấy người giới thiệu:{" "}
+                      <Text weight="bold">
+                        {currPartnerCollab?.name}
+                      </Text>
                     </Text>
-                  </Text>
-                  <IconTick style={sizeIcon.sm} />
-                </View>
-              </Collapsible>
+                    <TouchableOpacity onPress={handleRemoveCodeAffiliate}>
+                      <IconCancelGrey style={{ width: _moderateScale(15), height: _moderateScale(15) }} />
+                    </TouchableOpacity>
+                  </Row>
+                )
+              }
             </Row>
+            {
+              codeAffiliate && (
+                <View style={styles.labelContainer}>
+                  <Text size={14} color={Color.GREY}>
+                    Mã giới thiệu
+                  </Text>
+                </View>
+              )
+            }
           </View>
 
           <View>
-            {name ? (
-              <View style={styles.labelContainer}>
-                <Text size={14} color={Color.GREY}>
-                  Tên của bạn
-                </Text>
-              </View>
-            ) : (
-              <></>
-            )}
             <Row
               paddingVertical={_moderateScale(8 * 2)}
               borderRadius={_moderateScale(8)}
@@ -297,11 +303,21 @@ const RegisterInApp = (props) => {
                 onBlur={validateName}
               />
             </Row>
-            {errorName && errorName.length > 0 ? (
-              <Text style={styles.error_text}>{errorName}</Text>
-            ) : (
-              <></>
-            )}
+            {
+              (errorName && errorName.length > 0) && (
+                <Text style={styles.error_text}>{errorName}</Text>
+              )
+            }
+
+            {
+              name && (
+                <View style={styles.labelContainer}>
+                  <Text size={14} color={Color.GREY}>
+                    Tên của bạn
+                  </Text>
+                </View>
+              )
+            }
           </View>
 
           <PhoneInput

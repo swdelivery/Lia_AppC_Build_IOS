@@ -16,7 +16,6 @@ import { useNavigate } from "src/Hooks/useNavigation";
 import LinearGradient from "react-native-linear-gradient";
 import { WHITE } from "@Constant/Color";
 import { ScrollView } from "react-native-gesture-handler";
-import Row from "@Components/Row";
 import Column from "@Components/Column";
 import { isEmpty } from "lodash";
 
