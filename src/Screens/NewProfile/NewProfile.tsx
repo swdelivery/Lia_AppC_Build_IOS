@@ -84,6 +84,11 @@ const NewProfile = () => {
                   name: "Gương thần",
                   icon: <ProfileMirrorIcon />,
                 },
+                {
+                  flag: "skin-mirror",
+                  name: "Sa-Doi",
+                  icon: <ProfileMirrorIcon />,
+                },
                 // { name: "LPay Later", icon: <IconProfilePayLater /> },
                 // { name: "Bảo hiểm", icon: <IconProfileInsurance /> },
               ]}

@@ -206,6 +206,7 @@ import NewWheelSpin from "@Screens/NewWheelSpin";
 import ListDiary from "@Screens/ListDiaryOfPartner";
 import DetailServiceProduct from "@Screens/DetailServiceProduct";
 import ProductList from "@Screens/ProductList";
+import SkinMirrorAI from "@Screens/SkinMirrorAI";
 
 const rootStack = createStackNavigator();
 
@@ -1128,6 +1129,13 @@ const RootNavigator = () => {
             options={{ ...TransitionPresets.SlideFromRightIOS }}
             name={ScreenKey.CHARITY_LIST_COMPANION}
             component={ListCompanion}
+          />
+
+          {/* SKIN MIRROR AI */}
+          <rootStack.Screen
+            options={{ ...TransitionPresets.SlideFromRightIOS }}
+            name={ScreenKey.SKIN_MIRROR_AI}
+            component={SkinMirrorAI}
           />
 
           <rootStack.Screen
