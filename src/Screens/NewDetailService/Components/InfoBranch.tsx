@@ -93,30 +93,36 @@ const InfoBranch = ({ service }: Props) => {
       <Separator color="#dcdedc" top={8} bottom={16} />
 
       <ScrollView showsHorizontalScrollIndicator={false} horizontal>
-        {service?.doctorServices?.map((item, index) => {
-          return (
-            <TouchableOpacity
-              onPress={_handleGoDetailDoctor(item.treatmentDoctor)}
-              key={index}
-              style={styles.doctorCard}
-            >
-              <Image
-                style={styles.avatarDoctor}
-                avatar={item?.treatmentDoctor?.avatar}
-              />
-              <Column maxWidth={_widthScale(200)} marginRight={8} flex={1}>
-                <Text weight="bold">{item?.treatmentDoctor?.name}</Text>
-                <Text size={12} color={"grey"} numberOfLines={2}>
-                  {item?.treatmentDoctor?.description}
-                </Text>
-              </Column>
+        {(service?.doctorServices || [])
+          .filter(
+            (doctor) =>
+              doctor.treatmentDoctor.isActive &&
+              doctor.treatmentDoctor.isDisplayed
+          )
+          .map((item, index) => {
+            return (
+              <TouchableOpacity
+                onPress={_handleGoDetailDoctor(item.treatmentDoctor)}
+                key={index}
+                style={styles.doctorCard}
+              >
+                <Image
+                  style={styles.avatarDoctor}
+                  avatar={item?.treatmentDoctor?.avatar}
+                />
+                <Column maxWidth={_widthScale(200)} marginRight={8} flex={1}>
+                  <Text weight="bold">{item?.treatmentDoctor?.name}</Text>
+                  <Text size={12} color={"grey"} numberOfLines={2}>
+                    {item?.treatmentDoctor?.description}
+                  </Text>
+                </Column>
 
-              <TouchableOpacity onPress={() => {}}>
-                <Icon name="message-text-outline" size={22} color={GREY} />
+                <TouchableOpacity onPress={() => {}}>
+                  <Icon name="message-text-outline" size={22} color={GREY} />
+                </TouchableOpacity>
               </TouchableOpacity>
-            </TouchableOpacity>
-          );
-        })}
+            );
+          })}
       </ScrollView>
     </View>
   );
