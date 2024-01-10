@@ -1,18 +1,5 @@
-diff --git a/node_modules/react-native-vision-camera/android/src/main/java/com/mrousavy/camera/CameraDevicesManager.kt b/node_modules/react-native-vision-camera/android/src/main/java/com/mrousavy/camera/CameraDevicesManager.kt
-index 4434ece..978d988 100644
---- a/node_modules/react-native-vision-camera/android/src/main/java/com/mrousavy/camera/CameraDevicesManager.kt
-+++ b/node_modules/react-native-vision-camera/android/src/main/java/com/mrousavy/camera/CameraDevicesManager.kt
-@@ -71,8 +71,6 @@ class CameraDevicesManager(private val reactContext: ReactApplicationContext) :
-     eventEmitter.emit("CameraDevicesChanged", getDevicesJson())
-   }
- 
--  override fun hasConstants(): Boolean = true
--
-   override fun getConstants(): MutableMap<String, Any?> {
-     val devices = getDevicesJson()
-     val preferredDevice = if (devices.size() > 0) devices.getMap(0) else null
 diff --git a/node_modules/react-native-vision-camera/android/src/main/java/com/mrousavy/camera/CameraView+TakePhoto.kt b/node_modules/react-native-vision-camera/android/src/main/java/com/mrousavy/camera/CameraView+TakePhoto.kt
-index 88c085f..5ec9817 100644
+index 88c085f..2b7205e 100644
 --- a/node_modules/react-native-vision-camera/android/src/main/java/com/mrousavy/camera/CameraView+TakePhoto.kt
 +++ b/node_modules/react-native-vision-camera/android/src/main/java/com/mrousavy/camera/CameraView+TakePhoto.kt
 @@ -7,6 +7,7 @@ import android.graphics.BitmapFactory
@@ -23,12 +10,11 @@ index 88c085f..5ec9817 100644
  import android.util.Log
  import com.facebook.react.bridge.Arguments
  import com.facebook.react.bridge.ReadableMap
-@@ -71,7 +72,35 @@ private fun writePhotoToFile(photo: CameraSession.CapturedPhoto, file: File) {
+@@ -71,7 +72,33 @@ private fun writePhotoToFile(photo: CameraSession.CapturedPhoto, file: File) {
      val imageBytes = ByteArray(byteBuffer.remaining()).apply { byteBuffer.get(this) }
      val bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
      val matrix = Matrix()
 -    matrix.preScale(-1f, 1f)
-+    
 +    // Fix rotation of the mirrored image
 +    val exif = ExifInterface(imageBytes.inputStream())
 +    val orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED)
@@ -56,7 +42,23 @@ index 88c085f..5ec9817 100644
 +        matrix.postScale(-1f, 1f)
 +      }
 +    }
-+
      val processedBitmap =
        Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, false)
      FileOutputStream(file).use { stream ->
+diff --git a/node_modules/react-native-vision-camera/src/Camera.tsx b/node_modules/react-native-vision-camera/src/Camera.tsx
+index 7f4019c..6cce84f 100644
+--- a/node_modules/react-native-vision-camera/src/Camera.tsx
++++ b/node_modules/react-native-vision-camera/src/Camera.tsx
+@@ -455,6 +455,12 @@ export class Camera extends React.PureComponent<CameraProps, CameraState> {
+       this.lastFrameProcessor = frameProcessor
+     }
+   }
++  
++  componentWillUnmount(): void {
++    if (this.props.frameProcessor !== null) {
++      this.unsetFrameProcessor()
++    }
++  }
+   //#endregion
+ 
+   /** @internal */
