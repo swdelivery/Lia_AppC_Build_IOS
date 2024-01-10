@@ -1,7 +1,3 @@
-import {
-  createStackNavigator,
-  TransitionPresets,
-} from "@react-navigation/stack";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 import { Platform } from "react-native";
@@ -47,7 +43,6 @@ import ListOrderService from "../Screens/ListOrderService";
 import VideoRequest from "../Screens/VideoRequest";
 import DetailBrand from "../Screens/NewDetailBranch/index";
 // import DetailBrand from '../Screens/DetailBrand/index'
-import FakeModal from "../Screens/DemoFakeModal/index";
 // import DetailDoctor from '../Screens/DetailDoctor/index'
 import DetailDoctor from "../Screens/NewDetailDoctor";
 import DetailPractitioner from "../Screens/NewDetailPractitioner/index";
@@ -198,6 +193,13 @@ import ListDiary from "@Screens/ListDiaryOfPartner";
 import DetailServiceProduct from "@Screens/DetailServiceProduct";
 import ProductList from "@Screens/ProductList";
 import { isAndroid } from "src/utils/platform";
+import ListBranch from "@Screens/ListBranch";
+import ListDoctor from "@Screens/ListDoctor";
+import ListAllNews from "@Screens/Home/ListAllNews";
+import ListAllEncyclopedia from "@Screens/Home/ListAllEncyclopedia";
+import TreatmentRecord from "@Screens/TreatmentRecord/index";
+import ListDiaryOfPartnerChild from '@Screens/ListDiaryOfPartnerChild'
+import PickTreatmentDiary from '@Screens/ListDiaryOfPartner/Components/PickTreatmentToDiary'
 
 const Stack = createNativeStackNavigator();
 
@@ -211,14 +213,6 @@ const navigationOptions = {
   cardOverlayEnabled: true,
 };
 
-const optionsModal = {
-  gestureEnabled: Platform.OS == "ios" ? false : false,
-  ...TransitionPresets.ModalSlideFromBottomIOS,
-  cardStyle: {
-    backgroundColor: "transparent",
-  },
-};
-
 const RootNavigator = () => {
   return (
     <Stack.Navigator
@@ -226,6 +220,27 @@ const RootNavigator = () => {
       screenOptions={navigationOptions}
     >
       <Stack.Screen component={MainTab} name="MainTab" />
+      <Stack.Screen name={ScreenKey.LIST_BRANCH} component={ListBranch} />
+      <Stack.Screen name={ScreenKey.LIST_DOCTOR} component={ListDoctor} />
+      <Stack.Screen name={ScreenKey.LIST_DOCTOR_IOS} component={ListDoctor} />
+      {/* <Stack.Screen options={{ ...TransitionPresets.SlideFromRightIOS }} name={ScreenKey.LIST_SERVICE} component={ListService} /> */}
+      <Stack.Screen name={ScreenKey.LIST_ALL_NEWS} component={ListAllNews} />
+      <Stack.Screen
+        name={ScreenKey.LIST_ALL_ENCYCLOPEDIA}
+        component={ListAllEncyclopedia}
+      />
+      <Stack.Screen
+        name={ScreenKey.TREATMENT_RECORD}
+        component={TreatmentRecord}
+      />
+      <Stack.Screen
+        name={ScreenKey.PICK_TREATMENT_TO_BOOKING}
+        component={PickTreatmentDiary}
+      />
+      <Stack.Screen
+        name={ScreenKey.LIST_PARTNER_DIARY_CHILD}
+        component={ListDiaryOfPartnerChild}
+      />
 
       <Stack.Screen
         component={CharityFundDetails}
@@ -249,16 +264,6 @@ const RootNavigator = () => {
       <Stack.Screen name={ScreenKey.AI_CHATTING} component={AIChatting} />
       <Stack.Screen name={ScreenKey.LIST_MEMBER_APP} component={ListMembers} />
       <Stack.Screen name={ScreenKey.EDIT_CHATTING_ROOM} component={EditChat} />
-      <Stack.Screen
-        options={optionsModal}
-        name={ScreenKey.MODAL_CREATE_GROUP_CHAT}
-        component={ModalCreateGroupChat}
-      />
-      <Stack.Screen
-        options={optionsModal}
-        name={ScreenKey.ADD_MEMBERS_TO_GROUP_CHAT}
-        component={ModalAddMemberToGroupChat}
-      />
       <Stack.Screen name={ScreenKey.INFO_ROOM_CHAT} component={InfoRoomChat} />
 
       {/* AFFILIATE */}
@@ -316,13 +321,6 @@ const RootNavigator = () => {
           /> */}
       <Stack.Screen name={ScreenKey.DETAIL_POST} component={DetailPost} />
       <Stack.Screen
-        // options={Platform.OS == 'ios' ? { ...TransitionPresets.ModalPresentationIOS } : optionsModal}
-        // options={{ ...TransitionPresets.ModalPresentationIOS }}
-        options={optionsModal}
-        name={ScreenKey.LIST_COMMENTS}
-        component={ListComments}
-      />
-      <Stack.Screen
         name={ScreenKey.SEARCH_NEW_FEED}
         component={NewFeedSearch}
       />
@@ -354,39 +352,13 @@ const RootNavigator = () => {
         component={BookingForDoctor}
       />
       <Stack.Screen name={ScreenKey.EDIT_BOOKING} component={EditBooking} />
-
-      {/* Info Booking */}
-
-      <Stack.Screen
-        options={optionsModal}
-        name={ScreenKey.INFO_BOOKING}
-        component={InfoBooking}
-      />
       <Stack.Screen name={ScreenKey.DETAIL_BOOKING} component={DetailBooking} />
-      <Stack.Screen
-        options={optionsModal}
-        name={ScreenKey.INFO_MATERIAL}
-        component={InfoMaterial}
-      />
-
       {/* Diary */}
       <Stack.Screen
         name={ScreenKey.DIARY_OF_TREATMENT}
         component={DiaryOfTreatment}
       />
       <Stack.Screen name={ScreenKey.EDIT_DIARY} component={EditDiary} />
-
-      <Stack.Screen
-        options={{ ...optionsModal }}
-        name={ScreenKey.MODAL_LIST_DIARY}
-        component={ModalListDiary}
-      />
-
-      <Stack.Screen
-        options={optionsModal}
-        name={ScreenKey.PICK_SERVICE_TO_BOOKING}
-        component={PickServiceToBooking}
-      />
       {/* <Stack.Screen
                 options={optionsModal}
                 name={ScreenKey.PICK_SERVICE_TO_BOOKING}
@@ -402,11 +374,6 @@ const RootNavigator = () => {
       <Stack.Screen
         name={ScreenKey.MATERIAL_SERVICE}
         component={ServiceMaterial}
-      />
-      <Stack.Screen
-        options={{ ...optionsModal }}
-        name={ScreenKey.LIST_SERVICE_COMPARE}
-        component={ListServiceCompare}
       />
       <Stack.Screen
         name={ScreenKey.COMPARE_SERVICE}
@@ -504,50 +471,15 @@ const RootNavigator = () => {
       />
 
       <Stack.Screen
-        options={optionsModal}
-        name={ScreenKey.CREATE_NEW_FEED}
-        component={CreateNewFeed}
-      />
-      <Stack.Screen
-        options={{ ...TransitionPresets.ModalPresentationIOS }}
-        name={ScreenKey.EDIT_NEW_FEED}
-        component={EditNewFeed}
-      />
-      <Stack.Screen
-        options={optionsModal}
-        name={ScreenKey.MODAL_COMMENT_POST}
-        component={ModalCommentPost}
-      />
-      <Stack.Screen
         name={ScreenKey.MODAL_COMMENT_POST_FROM_NOTIFI}
         component={CommentPostFromNotifi}
-      />
-      <Stack.Screen
-        options={optionsModal}
-        name={ScreenKey.MODAL_SERVICE_REVIEW}
-        component={ModalServiceReview}
       />
       <Stack.Screen
         name={ScreenKey.DETAIL_SERVICE_PRODUCT}
         component={DetailServiceProduct}
       />
       <Stack.Screen name={ScreenKey.PRODUCT_LIST} component={ProductList} />
-      <Stack.Screen
-        options={optionsModal}
-        name={ScreenKey.MODAL_BOOKING_REVIEW}
-        component={ModalBookingReview}
-      />
 
-      <Stack.Screen
-        options={optionsModal}
-        name={ScreenKey.VIDEO_CALL}
-        component={VideoCall}
-      />
-      <Stack.Screen
-        options={optionsModal}
-        name={ScreenKey.VOICE_CALL}
-        component={VoiceCall}
-      />
       <Stack.Screen name={ScreenKey.SETTING_APP} component={NewSettingApp} />
 
       <Stack.Screen
@@ -560,33 +492,6 @@ const RootNavigator = () => {
       />
 
       <Stack.Screen name={ScreenKey.WHEEL_SPIN} component={NewWheelSpin} />
-
-      <Stack.Screen
-        options={optionsModal}
-        name={ScreenKey.QR_CODE}
-        component={NewQRCode}
-      />
-      <Stack.Screen
-        options={optionsModal}
-        name={ScreenKey.PICK_UTILITIES}
-        component={PickUtilities}
-      />
-
-      <Stack.Screen
-        options={optionsModal}
-        name={ScreenKey.FEED_BACK_BRANCH}
-        component={FeedBackBranch}
-      />
-      <Stack.Screen
-        options={optionsModal}
-        name={ScreenKey.FEED_BACK_DOCTOR}
-        component={FeedBackDoctor}
-      />
-      <Stack.Screen
-        options={optionsModal}
-        name={ScreenKey.FEED_BACK_SERVICE}
-        component={FeedBackService}
-      />
 
       <Stack.Screen name={ScreenKey.CREATE_BOOKING} component={CreateBooking} />
       {/* <Stack.Screen
@@ -744,11 +649,6 @@ const RootNavigator = () => {
         component={ListOutstanding}
       />
       <Stack.Screen
-        options={optionsModal}
-        name={ScreenKey.CHARITY_ACCOUNT_MODAL_FILTER}
-        component={ModalFilter}
-      />
-      <Stack.Screen
         name={ScreenKey.CHARITY_RESULT_FILTER_CASH_FLOW}
         component={ResultFilter}
       />
@@ -763,31 +663,6 @@ const RootNavigator = () => {
         component={ListCompanion}
       />
 
-      <Stack.Screen
-        options={{
-          headerShown: false,
-          cardStyle: { backgroundColor: "transparent" },
-          cardOverlayEnabled: true,
-          cardStyleInterpolator: ({ current: { progress } }) => ({
-            cardStyle: {
-              opacity: progress.interpolate({
-                inputRange: [0, 0.5, 0.9, 1],
-                outputRange: [0, 0.25, 0.7, 1],
-              }),
-            },
-            overlayStyle: {
-              opacity: progress.interpolate({
-                inputRange: [0, 1],
-                outputRange: [0, 0.5],
-                extrapolate: "clamp",
-              }),
-            },
-          }),
-        }}
-        name={"fakeModal"}
-        component={FakeModal}
-      />
-
       <Stack.Screen name={ScreenKey.LIST_PARTNER_DIARY} component={ListDiary} />
 
       <Stack.Group
@@ -799,6 +674,73 @@ const RootNavigator = () => {
         <Stack.Screen
           name={ScreenKey.VERTICAL_VIDEO_PLAYER}
           component={VerticalVideoPlayer}
+        />
+        <Stack.Screen
+          name={ScreenKey.MODAL_CREATE_GROUP_CHAT}
+          component={ModalCreateGroupChat}
+        />
+        <Stack.Screen
+          name={ScreenKey.ADD_MEMBERS_TO_GROUP_CHAT}
+          component={ModalAddMemberToGroupChat}
+        />
+        <Stack.Screen name={ScreenKey.LIST_COMMENTS} component={ListComments} />
+
+        <Stack.Screen name={ScreenKey.INFO_BOOKING} component={InfoBooking} />
+        <Stack.Screen name={ScreenKey.INFO_MATERIAL} component={InfoMaterial} />
+        <Stack.Screen
+          name={ScreenKey.LIST_SERVICE_COMPARE}
+          component={ListServiceCompare}
+        />
+        <Stack.Screen
+          name={ScreenKey.MODAL_LIST_DIARY}
+          component={ModalListDiary}
+        />
+
+        <Stack.Screen
+          name={ScreenKey.PICK_SERVICE_TO_BOOKING}
+          component={PickServiceToBooking}
+        />
+        <Stack.Screen
+          name={ScreenKey.CREATE_NEW_FEED}
+          component={CreateNewFeed}
+        />
+        <Stack.Screen name={ScreenKey.EDIT_NEW_FEED} component={EditNewFeed} />
+        <Stack.Screen
+          name={ScreenKey.MODAL_COMMENT_POST}
+          component={ModalCommentPost}
+        />
+        <Stack.Screen
+          name={ScreenKey.MODAL_SERVICE_REVIEW}
+          component={ModalServiceReview}
+        />
+        <Stack.Screen
+          name={ScreenKey.MODAL_BOOKING_REVIEW}
+          component={ModalBookingReview}
+        />
+
+        <Stack.Screen name={ScreenKey.VIDEO_CALL} component={VideoCall} />
+        <Stack.Screen name={ScreenKey.VOICE_CALL} component={VoiceCall} />
+        <Stack.Screen name={ScreenKey.QR_CODE} component={NewQRCode} />
+        <Stack.Screen
+          name={ScreenKey.PICK_UTILITIES}
+          component={PickUtilities}
+        />
+
+        <Stack.Screen
+          name={ScreenKey.FEED_BACK_BRANCH}
+          component={FeedBackBranch}
+        />
+        <Stack.Screen
+          name={ScreenKey.FEED_BACK_DOCTOR}
+          component={FeedBackDoctor}
+        />
+        <Stack.Screen
+          name={ScreenKey.FEED_BACK_SERVICE}
+          component={FeedBackService}
+        />
+        <Stack.Screen
+          name={ScreenKey.CHARITY_ACCOUNT_MODAL_FILTER}
+          component={ModalFilter}
         />
       </Stack.Group>
     </Stack.Navigator>

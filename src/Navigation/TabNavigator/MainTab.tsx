@@ -2,36 +2,25 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import { createStackNavigator } from "@react-navigation/stack";
 // import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from "react";
-import { Dimensions, Image, Platform, View } from "react-native";
 import { useSelector } from "react-redux";
 import TabbarMessageIcon from "../../Components/TabbarNew/ChatTabIcon";
-import TabbarTaskIcon from "../../Components/Tabbar/TaskTabIcon";
 import TabbarHomeIcon from "../../Components/TabbarNew/HomeTabIcon";
 import TabbarTimelineIcon from "../../Components/TabbarNew/NewsTabIcon";
-import TabbarLiveStreamIcon from "../../Components/Tabbar/LiveStreamTabIcon";
 import TabbarProfileIcon from "../../Components/TabbarNew/ProfileTabIcon";
-
 import { BASE_COLOR, BG_GREY_OPACITY_3, GREY } from "../../Constant/Color";
-import { sizeIcon } from "../../Constant/Icon";
 import { _heightScale, _moderateScale, _width } from "../../Constant/Scale";
 import ScreenKey from "../ScreenKey";
-
-import HomeTab from "./HomeTab/HomeTab";
-import ChatTab from "./ChatTab/ChatTab";
-import ProfileTab from "./ProfileTab/ProfileTab";
-import TimelineTab from "./TimelineTab/TimelineTab";
-import LiveStreamTab from "../../Screens/LiveStream/index";
-import { navigation } from "../../../rootNavigation";
-import QRTab from "../../Screens/QRCode/index";
 import store from "../../Redux/store";
 import * as ActionType from "../../Redux/Constants/ActionType";
 import { getInfoUserReducer } from "../../Redux/Selectors";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { FONT_WEIGHTS } from "@Components/Text";
+import NewListLastedMessage from "@Screens/NewListLastedMessage";
+import Home from "@Screens/SoyoungHome";
+import NewProfile from "@Screens/NewProfile/NewProfile";
+import Social from "@Screens/Social";
 
 const Tab = createMaterialTopTabNavigator();
-const Stack = createStackNavigator();
-const rootStack = createStackNavigator();
 
 const MainTab = (props) => {
   const { infoUser } = useSelector(getInfoUserReducer);
@@ -76,9 +65,8 @@ const MainTab = (props) => {
           tabBarIcon: ({ focused }) => <TabbarHomeIcon focused={focused} />,
         }}
         name={ScreenKey.HOME}
-        component={HomeTab}
+        component={Home}
       />
-
       <Tab.Screen
         // listeners={{
         //     tabPress: (e) => {
@@ -107,8 +95,8 @@ const MainTab = (props) => {
           ),
         }}
         name={ScreenKey.TAB_TIMELINE}
-        component={TimelineTab}
-      // component={infoUser?._id ? TimelineTab : () => <></>}
+        component={Social}
+        // component={infoUser?._id ? TimelineTab : () => <></>}
       />
 
       {/* <Tab.Screen
@@ -167,7 +155,7 @@ const MainTab = (props) => {
           ),
         }}
         name={ScreenKey.TAB_CHAT}
-        component={infoUser?._id ? ChatTab : () => <></>}
+        component={infoUser?._id ? NewListLastedMessage : () => <></>}
       />
 
       <Tab.Screen
@@ -194,7 +182,7 @@ const MainTab = (props) => {
           ),
         }}
         name={ScreenKey.TAB_PROFILE}
-        component={infoUser?._id ? ProfileTab : () => <></>}
+        component={infoUser?._id ? NewProfile : () => <></>}
       />
     </Tab.Navigator>
   );

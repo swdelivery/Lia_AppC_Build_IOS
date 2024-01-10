@@ -8043,7 +8043,7 @@ reactotron-core-contract@0.1.1:
   resolved "https://registry.yarnpkg.com/reactotron-core-contract/-/reactotron-core-contract-0.1.1.tgz#3fc0e72e17a71c830c752985b5d2a5dd3df79166"
   integrity sha512-NmmojG6Pz97NJe8ov0oZgIxxaaEkXsVAiFOeFTI4QH03qMqAs6d28nUd5bTrKLipxWy5rPr4PXITE7AHdT0kaw==
 
-reactotron-react-native@^5.0.3:
+reactotron-react-native@^5.0.4:
   version "5.0.4"
   resolved "https://registry.yarnpkg.com/reactotron-react-native/-/reactotron-react-native-5.0.4.tgz#4bff2e74f2a99bf4963db130a6b392036bd90130"
   integrity sha512-Ho5PXLtF4GirFzhjdzbVgRk9Idf3woK5c9Cx1lVdYMVb96kzUMlzn2qCD7H6t/yjIFik9LM/3ncWWNHacVySNg==
@@ -8054,7 +8054,7 @@ reactotron-react-native@^5.0.3:
   optionalDependencies:
     react-native-flipper "^0.164.0"
 
-reactotron-redux@^3.1.3:
+reactotron-redux@^3.1.5:
   version "3.1.5"
   resolved "https://registry.yarnpkg.com/reactotron-redux/-/reactotron-redux-3.1.5.tgz#0c3f40582cfcb15dce304b1168dff7b67be93e9c"
   integrity sha512-1gNdHgTNLuvuZxcgJdFxauMJWVGDXK9/dSkxAOJiHkJ0xn+5ytjApO1+naV0R3PquPoOAHlttGjkLmJvOoKacw==
