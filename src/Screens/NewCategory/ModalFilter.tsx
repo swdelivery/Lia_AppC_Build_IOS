@@ -35,8 +35,8 @@ const ModalFilter = ({ visible, onClose }: Props) => {
   const { top } = useSafeAreaInsets();
   const tranX = useSharedValue(0);
   const opacityBackDrop = useSharedValue(0);
-
   const visibleModalBottomLocation = useVisible();
+  const { bottom } = useSafeAreaInsets();
 
   // DATA FOR USER TO SELECT
   const {
@@ -299,7 +299,12 @@ const ModalFilter = ({ visible, onClose }: Props) => {
           )}
         </ScrollView>
 
-        <Row marginVertical={8 * 2} paddingHorizontal={8 * 2} gap={8 * 2}>
+        <Row
+          marginVertical={8 * 2}
+          paddingHorizontal={8 * 2}
+          gap={8 * 2}
+          paddingBottom={bottom}
+        >
           <Column width={120}>
             <Button.Custom
               titleSize={14}
@@ -330,28 +335,30 @@ const ModalFilter = ({ visible, onClose }: Props) => {
       />
     </View>
   );
-}
+};
 
-export default ModalFilter
+export default ModalFilter;
 
 const styles = StyleSheet.create({
   btnCancel: {
-    position: 'absolute',
+    position: "absolute",
     zIndex: 1,
-    right: 8 * 2
+    right: 8 * 2,
   },
   containerRightTab: {
     width: WIDTH_MODAL,
-    height: '100%',
-    position: 'absolute',
+    height: "100%",
+    position: "absolute",
     zIndex: 1,
     backgroundColor: WHITE,
   },
   container: {
-    width: '100%',
-    height: '100%',
-    position: 'absolute',
+    width: "100%",
+    position: "absolute",
     zIndex: 1,
     right: 0,
-  }
-})
+    bottom: 0,
+    top: 0,
+    left: 0,
+  },
+});
