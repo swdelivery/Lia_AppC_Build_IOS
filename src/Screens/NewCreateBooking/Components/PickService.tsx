@@ -101,7 +101,7 @@ const ItemService = ({ data }) => {
     )
   }
 
-  const calculate = useCallback(() => {
+  const toppingPrice = useMemo(() => {
     let total = 0;
     if (data != null && data?.optionsSelected != null && data?.optionsSelected?.length > 0) {
       for (let i = 0; i < data?.optionsSelected?.length; i++) {
@@ -166,16 +166,16 @@ const ItemService = ({ data }) => {
             <Row flex={1} alignItems="flex-end" gap={4}>
               <Text size={14} weight="bold" color={RED}>
                 {`${formatMonney(
-                  data?.preferentialInCurrentFlashSale?.finalPrice + (calculate() as Number)
+                  data?.preferentialInCurrentFlashSale?.finalPrice + toppingPrice
                 )}`}
               </Text>
               <Text size={8} textDecorationLine="line-through" bottom={1}>
-                {formatMonney(data.price + calculate())}
+                {formatMonney(data.price + toppingPrice)}
               </Text>
             </Row>
           ) : (
             <Text size={14} weight="bold" color={RED} style={styleElement.flex}>
-              {`${formatMonney(data?.price + calculate())}`}
+              {`${formatMonney(data?.price + toppingPrice)}`}
             </Text>
           )}
 

@@ -37,14 +37,14 @@ const AppWrapper = (props) => {
 
   useEffect(() => {
     if (reduxAuth.isLoggedIn == true) {
-      // dispatch(
-      //   getListDoctorForPartner({
-      //     limit: 1000,
-      //     sort: {
-      //       orderNumber: -1,
-      //     },
-      //   })
-      // );
+      dispatch(
+        getListDoctorForPartner({
+          limit: 1000,
+          sort: {
+            orderNumber: -1,
+          },
+        })
+      );
 
       const unsubscribe = messaging().onMessage(async (remoteMessage) => {
         // Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
