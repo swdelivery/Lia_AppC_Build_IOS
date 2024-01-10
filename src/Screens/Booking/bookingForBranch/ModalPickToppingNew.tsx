@@ -158,7 +158,7 @@ const Tab1 = (props) => {
             </Text>
             <View style={{ flexDirection: "row" }}>
               {props?.data?.isOnFlashSale &&
-              props?.data?.preferentialInCurrentFlashSale ? (
+                props?.data?.preferentialInCurrentFlashSale ? (
                 <Row gap={_moderateScale(10)}>
                   <Text
                     style={[
@@ -358,7 +358,7 @@ const Tab1 = (props) => {
                       {item?.type == "single" ? (
                         <>
                           {props?.listChoice?.find(
-                            (itemFind) => itemFind?.code == itemChild?.code
+                            (itemFind) => itemFind?.code == itemChild?.code && itemFind?.groupCode == itemChild?.groupCode
                           ) ? (
                             <TouchableOpacity
                               hitSlop={styleElement.hitslopSm}
@@ -399,7 +399,7 @@ const Tab1 = (props) => {
                       {item?.type == "multiple" ? (
                         <>
                           {props?.listChoice?.find(
-                            (itemFind) => itemFind?.code == itemChild?.code
+                            (itemFind) => itemFind?.code == itemChild?.code && itemFind?.groupCode == itemChild?.groupCode
                           ) ? (
                             <TouchableOpacity
                               hitSlop={styleElement.hitslopSm}
@@ -475,7 +475,7 @@ const Tab1 = (props) => {
           ]}
         >
           {props?.data?.isOnFlashSale &&
-          props?.data?.preferentialInCurrentFlashSale ? (
+            props?.data?.preferentialInCurrentFlashSale ? (
             <Text
               style={[
                 stylesFont.fontNolanBold,
@@ -485,10 +485,10 @@ const Tab1 = (props) => {
               Xác nhận (
               {formatMonney(
                 props?.data?.preferentialInCurrentFlashSale?.finalPrice +
-                  props?.listChoice?.reduce((total, item) => {
-                    return (total +=
-                      item?.extraAmount != null ? item.extraAmount : 0);
-                  }, 0)
+                props?.listChoice?.reduce((total, item) => {
+                  return (total +=
+                    item?.extraAmount != null ? item.extraAmount : 0);
+                }, 0)
               )}
               )
             </Text>
@@ -502,10 +502,10 @@ const Tab1 = (props) => {
               Xác nhận (
               {formatMonney(
                 props?.data?.price +
-                  props?.listChoice?.reduce((total, item) => {
-                    return (total +=
-                      item?.extraAmount != null ? item.extraAmount : 0);
-                  }, 0)
+                props?.listChoice?.reduce((total, item) => {
+                  return (total +=
+                    item?.extraAmount != null ? item.extraAmount : 0);
+                }, 0)
               )}
               )
             </Text>
@@ -710,7 +710,7 @@ const ModalPickToppingNew = ({ confirm, data, show, hide }: Props) => {
   };
 
   const _confirmToppingFromTab2 = (data) => {
-    if (listChoice?.find((itemFind) => itemFind?.code == data?.code)) return;
+    if (listChoice?.find((itemFind) => itemFind?.code == data?.code && itemFind?.groupCode == data?.groupCode)) return;
 
     console.log({ data });
     if (data?.typeOption == "single") {
@@ -763,7 +763,7 @@ const ModalPickToppingNew = ({ confirm, data, show, hide }: Props) => {
       // animationIn={'slideInUp'}
       // animationOut={'fadeOut'}
       backdropTransitionOutTiming={0}
-      onModalShow={() => {}}
+      onModalShow={() => { }}
       onModalHide={() => {
         setListChoice([]);
       }}
