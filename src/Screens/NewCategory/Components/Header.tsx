@@ -2,19 +2,23 @@ import Column from '@Components/Column'
 import { IconBackBlue, IconFindGrey, IconLike } from '@Components/Icon/Icon'
 import Row from '@Components/Row'
 import Text from '@Components/Text'
-import { BORDER_COLOR, WHITE } from '@Constant/Color'
-import { sizeIcon } from '@Constant/Icon'
-import { _widthScale } from '@Constant/Scale'
-import { styleElement } from '@Constant/StyleElement'
-import { selectServiceSearching } from '@Redux/category/actions'
-import { isEmpty } from 'lodash'
-import React, { useEffect, useRef, useState } from 'react'
-import { StyleSheet, TextInput, TouchableOpacity, View } from 'react-native'
-import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { useDispatch } from 'react-redux'
-import useHapticCallback from 'src/Hooks/useHapticCallback'
-import { useNavigate } from 'src/Hooks/useNavigation'
+import { BLACK, BORDER_COLOR, TEXT_BASE, WHITE } from "@Constant/Color";
+import { sizeIcon } from "@Constant/Icon";
+import { _widthScale } from "@Constant/Scale";
+import { styleElement } from "@Constant/StyleElement";
+import { selectServiceSearching } from "@Redux/category/actions";
+import { isEmpty } from "lodash";
+import React, { useEffect, useRef, useState } from "react";
+import { StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from "react-native-reanimated";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useDispatch } from "react-redux";
+import useHapticCallback from "src/Hooks/useHapticCallback";
+import { useNavigate } from "src/Hooks/useNavigation";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -90,20 +94,19 @@ const Header = () => {
               <TextInput
                 onChangeText={setValueSearch}
                 value={valueSearch}
-                style={[styleElement.flex]}
+                style={[styleElement.flex, styles.input]}
                 ref={textInputRef}
                 onBlur={_handleToggle}
                 placeholder="Nhập thông tin"
               />
 
-              <Column marginRight={8}>
-                <TouchableOpacity
-                  onPress={() => {
-                    textInputRef?.current?.blur();
-                  }}
-                >
-                  <Text>Tìm</Text>
-                </TouchableOpacity>
+              <Column
+                marginRight={8}
+                onPress={() => {
+                  textInputRef?.current?.blur();
+                }}
+              >
+                <Text>Tìm</Text>
               </Column>
             </Animated.View>
           )}
@@ -147,5 +150,8 @@ const styles = StyleSheet.create({
     height: 40,
     justifyContent: "center",
     alignItems: "center",
+  },
+  input: {
+    color: BLACK,
   },
 });
