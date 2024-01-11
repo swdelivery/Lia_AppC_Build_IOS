@@ -119,7 +119,7 @@ const RegisterInApp = (props) => {
     }
   };
   const validateName = () => {
-    if (!name) {
+    if (!name.trim() || name.trim() === "") {
       setErrorName("Vui lòng nhập họ và tên");
       return false;
     } else {
