@@ -13,7 +13,6 @@ import React from "react";
 import { Alert, StyleSheet, TouchableOpacity, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "src/Hooks/useNavigation";
 import useConfirmation from "src/Hooks/useConfirmation";
 import { getInfoUserReducer } from "@Redux/Selectors";
 
@@ -24,7 +23,6 @@ type Props = {
 
 const ActionBottom = ({ isEditBooking, editBookingId }: Props) => {
   const dispatch = useDispatch();
-  const { navigation } = useNavigate();
   const { showConfirmation } = useConfirmation();
 
   const {
@@ -97,7 +95,7 @@ const ActionBottom = ({ isEditBooking, editBookingId }: Props) => {
       };
     });
     const isFlashSale =
-      dataServices.findIndex((service) => !!service.currentFlashSale) >= 0;
+      dataServices.findIndex((service) => service.isOnFlashSale) >= 0;
 
     dataFetch.type = isFlashSale ? "FLASH_SALE" : "DEFAULT";
     dataFetch["partnerPhone"] = {
