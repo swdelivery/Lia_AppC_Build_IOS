@@ -20,7 +20,7 @@ import Banner from "./Components/Banner";
 import MainList from "./Components/MainList";
 import Menu from "./Components/Menu";
 import { FocusAwareStatusBar } from "@Components/StatusBar";
-import { ProfileMirrorIcon } from "src/SGV";
+import { ProfileMirrorIcon, RecordIcon } from "src/SGV";
 
 const NewProfile = () => {
   return (
@@ -41,6 +41,11 @@ const NewProfile = () => {
                   icon: <IconProfileBooking />,
                 },
                 {
+                  flag: "record",
+                  name: "Kết quả\nthăm khám",
+                  icon: <RecordIcon />,
+                },
+                {
                   flag: "treatment-history",
                   name: "Lịch sử\nđiều trị",
                   icon: <IconProfileHistory />,
@@ -51,18 +56,18 @@ const NewProfile = () => {
                   icon: <IconProfileMedical />,
                 },
                 {
-                  flag: "payment",
-                  name: "Thanh toán",
-                  icon: <IconProfilePayment />,
-                },
-                {
                   flag: "takecare",
                   name: "Chăm sóc",
                   icon: <IconProfileCare />,
                 },
+                {
+                  flag: "payment",
+                  name: "Thanh toán",
+                  icon: <IconProfilePayment />,
+                },
+                // { name: "Đánh giá", icon: <IconProfileStar /> },
                 // { name: "Hoàn tiền", icon: <IconProfileCoin /> },
                 // { name: "Bảo hành", icon: <IconProfileShield /> },
-                // { name: "Đánh giá", icon: <IconProfileStar /> },
               ]}
             />
             <Menu
