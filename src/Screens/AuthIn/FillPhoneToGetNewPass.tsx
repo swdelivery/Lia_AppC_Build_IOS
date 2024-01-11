@@ -42,10 +42,11 @@ const FillPhoneToGetNewPass = (props) => {
   };
 
   const validatePhoneNumber = () => {
+    const numberRegex = /^[0-9]+$/;
     if (!phoneNumber) {
       setErrorPhoneNumber("Vui lòng nhập số điện thoại");
       return false;
-    } else if (!isValidPhoneNumber("+" + countryCallingCode + phoneNumber)) {
+    } else if (!isValidPhoneNumber("+" + countryCallingCode + phoneNumber) || !numberRegex.test(phoneNumber)) {
       setErrorPhoneNumber("Số điện thoại không hợp lệ");
       return false;
     } else {
@@ -59,20 +60,22 @@ const FillPhoneToGetNewPass = (props) => {
       let newFormatPhone = phoneNumber;
 
       if (newFormatPhone.charAt(0) == "0") {
-        newFormatPhone = `+${countryCallingCode}${newFormatPhone.substring(
+        newFormatPhone = `${newFormatPhone.substring(
           1
         )}`;
       } else {
-        newFormatPhone = `+${countryCallingCode}${newFormatPhone}`;
+        newFormatPhone = `${newFormatPhone}`;
       }
       return navigation.navigate(ScreenKey.GET_OTP_NEW_PASS, {
         phoneNumber: newFormatPhone,
-        fullPhone: phoneNumber,
+        fullPhone: newFormatPhone,
         routeName: props?.route?.params?.routeName,
         nationCode: "+" + countryCallingCode,
       });
     }
   }
+
+
 
   return (
     <Screen style={styles.container} safeTop safeBottom>
