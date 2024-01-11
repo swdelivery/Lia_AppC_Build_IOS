@@ -22,6 +22,8 @@ import LiAHeader from "@Components/Header/LiAHeader";
 import { logOut } from "@Redux/user/actions";
 import { getInfoUserReducer } from "@Redux/Selectors";
 import usePermission from "src/Hooks/usePermission";
+import Store from "../Redux/store";
+import * as ActionType from "../Redux/Constants/ActionType";
 
 const NewSettingApp = () => {
   const dipsatch = useDispatch();
@@ -92,6 +94,12 @@ const NewSettingApp = () => {
 
   const _handleLogOut = useCallback(() => {
     dipsatch(logOut());
+    Store.dispatch({
+      type: ActionType.LOG_OUT,
+    });
+    Store.dispatch({
+      type: ActionType.CLEAR_INFO_USER,
+    });
   }, []);
 
   return (
