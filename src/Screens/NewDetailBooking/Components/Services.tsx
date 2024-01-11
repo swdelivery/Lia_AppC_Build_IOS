@@ -5,10 +5,11 @@ import { View, StyleSheet } from "react-native";
 import ItemService from "./ItemService";
 import Column from "@Components/Column";
 import Row from "@Components/Row";
-import { BASE_COLOR, BLACK, BLUE_FB, RED } from "@Constant/Color";
+import { BASE_COLOR, BLACK } from "@Constant/Color";
 import { formatMonney } from "@Constant/Utils";
 import { cloneDeep, isEmpty, sum } from "lodash";
 import { getServicePrice } from "@Constant/service";
+import ItemInsurance from "@Screens/NewCreateBooking/Components/ItemInsurance";
 
 type Props = {
   booking: Booking;
@@ -46,10 +47,12 @@ export default function Services({ booking }: Props) {
       let options = cloneDeep(service.options);
 
       for (let i = 0; i < options.length; i++) {
-        options[i].data = item.options.filter(item => item.groupCode === options[i].groupCode);
+        options[i].data = item.options.filter(
+          (item) => item.groupCode === options[i].groupCode
+        );
       }
 
-      let optionsFinal = options.filter(item => !isEmpty(item.data))
+      let optionsFinal = options.filter((item) => !isEmpty(item.data));
       service.optionsSelected = cloneDeep(optionsFinal);
       return acc + getServicePrice(item.service);
     }, 0);
@@ -64,6 +67,16 @@ export default function Services({ booking }: Props) {
         booking.services?.map((item, index) => {
           return <ItemService key={item._id} item={item} />;
         })}
+      {booking.insuranceArr?.length > 0 && (
+        <>
+          <Text weight="bold" color={BLACK} top={16} left={16}>
+            Danh sách bảo hiểm
+          </Text>
+          {booking.insuranceArr.map((item) => {
+            return <ItemInsurance item={item} key={item._id} />;
+          })}
+        </>
+      )}
       <Column gap={8 * 2} paddingHorizontal={16} marginTop={16}>
         <Row justifyContent="space-between">
           <Text weight="bold">Ưu đãi:</Text>

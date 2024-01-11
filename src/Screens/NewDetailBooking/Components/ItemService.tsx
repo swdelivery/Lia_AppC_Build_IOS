@@ -4,7 +4,6 @@ import Row from "@Components/Row";
 import Text from "@Components/Text";
 import {
   BASE_COLOR,
-  BLACK,
   BORDER_INPUT_TEXT,
   GREY,
   PRICE_ORANGE,
@@ -13,7 +12,6 @@ import { _moderateScale } from "@Constant/Scale";
 import { styleElement } from "@Constant/StyleElement";
 import { formatMonney } from "@Constant/Utils";
 import { BookingService } from "@typings/booking";
-import { Service } from "@typings/serviceGroup";
 import React, { useCallback } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import useServiceDetailsNavigation from "src/Hooks/navigation/useServiceDetailsNavigation";
