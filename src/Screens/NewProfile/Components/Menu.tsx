@@ -91,6 +91,8 @@ const BtnIcon = ({
         return navigate(ScreenKey.SCREEN_HTML, { title: name, code: "CSBM" })();
       case "magic-mirror":
         return navigate("FACE_AI")();
+      case "skin-mirror":
+        return navigate(ScreenKey.SKIN_MIRROR_AI)();
       default:
         break;
     }

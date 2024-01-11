@@ -192,14 +192,15 @@ import NewWheelSpin from "@Screens/NewWheelSpin";
 import ListDiary from "@Screens/ListDiaryOfPartner";
 import DetailServiceProduct from "@Screens/DetailServiceProduct";
 import ProductList from "@Screens/ProductList";
+import SkinMirrorAI from "@Screens/SkinMirrorAI";
 import { isAndroid } from "src/utils/platform";
 import ListBranch from "@Screens/ListBranch";
 import ListDoctor from "@Screens/ListDoctor";
 import ListAllNews from "@Screens/Home/ListAllNews";
 import ListAllEncyclopedia from "@Screens/Home/ListAllEncyclopedia";
 import TreatmentRecord from "@Screens/TreatmentRecord/index";
-import ListDiaryOfPartnerChild from '@Screens/ListDiaryOfPartnerChild'
-import PickTreatmentDiary from '@Screens/ListDiaryOfPartner/Components/PickTreatmentToDiary'
+import ListDiaryOfPartnerChild from "@Screens/ListDiaryOfPartnerChild";
+import PickTreatmentDiary from "@Screens/ListDiaryOfPartner/Components/PickTreatmentToDiary";
 
 const Stack = createNativeStackNavigator();
 
@@ -664,7 +665,7 @@ const RootNavigator = () => {
       />
 
       <Stack.Screen name={ScreenKey.LIST_PARTNER_DIARY} component={ListDiary} />
-
+      <Stack.Screen name={ScreenKey.SKIN_MIRROR_AI} component={SkinMirrorAI} />
       <Stack.Group
         screenOptions={{
           presentation: isAndroid ? "fullScreenModal" : undefined,

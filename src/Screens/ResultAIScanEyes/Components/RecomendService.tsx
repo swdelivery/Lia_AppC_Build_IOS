@@ -15,6 +15,7 @@ import { RenderItemProps } from '@typings/common'
 import { useNavigate } from 'src/Hooks/useNavigation'
 import ScreenKey from '@Navigation/ScreenKey'
 import { getServicesByResEye } from '@Redux/resultcanningeyes/actions'
+import { AfterTimeoutFragment } from '@Components/AfterTimeoutFragment'
 
 const RecomendService = memo(() => {
     const dispatch = useDispatch()
@@ -22,11 +23,13 @@ const RecomendService = memo(() => {
     const { dataServices } = useSelector(getServiceByResScanningListState)
 
     useEffect(() => {
-        dispatch(
-            getServicesByResEye.request({
-                codeGroup: { equal: "MAT" },
-            })
-        );
+        requestAnimationFrame(() => {
+            dispatch(
+                getServicesByResEye.request({
+                    codeGroup: { equal: "MAT" },
+                })
+            );
+        })
     }, [])
 
     const _renderItem = useCallback(({ item }: RenderItemProps<Service>) => {
@@ -51,25 +54,27 @@ const RecomendService = memo(() => {
     );
 
     return (
-        <Column>
-            <Column
-                margin={8 * 2}>
-                <Text
-                    color={NEW_BASE_COLOR}
-                    weight='bold'>
-                    ĐỀ XUẤT DỊCH VỤ
-                </Text>
-            </Column>
+        <AfterTimeoutFragment timeout={500}>
             <Column>
-                <FlatList
-                    showsHorizontalScrollIndicator={false}
-                    contentContainerStyle={styles.contentContainerStyle}
-                    horizontal
-                    keyExtractor={_awesomeChildListKeyExtractor}
-                    renderItem={_renderItem}
-                    data={dataServices} />
+                <Column
+                    margin={8 * 2}>
+                    <Text
+                        color={NEW_BASE_COLOR}
+                        weight='bold'>
+                        ĐỀ XUẤT DỊCH VỤ
+                    </Text>
+                </Column>
+                <Column>
+                    <FlatList
+                        showsHorizontalScrollIndicator={false}
+                        contentContainerStyle={styles.contentContainerStyle}
+                        horizontal
+                        keyExtractor={_awesomeChildListKeyExtractor}
+                        renderItem={_renderItem}
+                        data={dataServices} />
+                </Column>
             </Column>
-        </Column>
+        </AfterTimeoutFragment>
     )
 })
 

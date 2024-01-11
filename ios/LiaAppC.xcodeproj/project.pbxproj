@@ -519,7 +519,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.digitech.lia;
 				PRODUCT_NAME = LiaAppC;
-				PROVISIONING_PROFILE = "3c26d054-b642-441a-9a70-e0fd1a31108a";
+				PROVISIONING_PROFILE = "fe482d38-f4fb-4271-8d2e-b0652437e8b4";
 				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc com.digitech.lia";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
