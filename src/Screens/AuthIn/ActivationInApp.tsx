@@ -149,7 +149,7 @@ const ActivationInApp = (props: any) => {
           }
           onCodeFilled={confirmVerificationCode}
           onCodeChanged={setActiveCode}
-          autoFocusOnLoad={true}
+          autoFocusOnLoad={false}
         />
         <ResendOtp ref={resendRef} onResend={_handleResendOTP} />
 
