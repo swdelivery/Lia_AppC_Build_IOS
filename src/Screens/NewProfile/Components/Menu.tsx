@@ -7,7 +7,7 @@ import { _moderateScale, _width } from "@Constant/Scale";
 import { styleElement } from "@Constant/StyleElement";
 import ScreenKey from "@Navigation/ScreenKey";
 import React from "react";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { Alert, StyleSheet, TouchableOpacity, View } from "react-native";
 import { useNavigate } from "src/Hooks/useNavigation";
 
 const WIDTH_BOX = _width - 8 * 4;
@@ -89,10 +89,20 @@ const BtnIcon = ({
         return navigate(ScreenKey.SCREEN_HTML, { title: name, code: "CSBH" })();
       case "protect":
         return navigate(ScreenKey.SCREEN_HTML, { title: name, code: "CSBM" })();
+      case "contact":
+        return navigate(ScreenKey.SCREEN_HTML, {
+          title: name,
+          code: "CONTACT_FOR_COLLABORATION",
+        })();
       case "magic-mirror":
         return navigate("FACE_AI")();
       case "skin-mirror":
         return navigate(ScreenKey.SKIN_MIRROR_AI)();
+      case "examination-results":
+      case "rating":
+      case "refund":
+        Alert.alert("Tính năng đang phát triển");
+        return;
       default:
         break;
     }

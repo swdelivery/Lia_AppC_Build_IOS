@@ -95,4 +95,5 @@ export type Conversation = {
   type: "treatment" | "videoCallRequest" | "consultation" | "assistant";
   uniqueKey: string;
   updated: string;
+  unreadCount: number;
 };

@@ -24,6 +24,7 @@ import ItemLastedMessage, {
 } from "./Components/ItemLastedMessage";
 import Icon from "@Components/Icon";
 import { FlashList } from "@shopify/flash-list";
+import { PinIcon } from "src/SGV";
 
 const NewListLastedMessage = () => {
   const { navigation } = useNavigate();
@@ -71,8 +72,8 @@ const NewListLastedMessage = () => {
     if (typeof item === "string") {
       return (
         <HeaderList
-          icon={item === "lia" ? <Icon name="pin" size={20} /> : <IconChat />}
-          title={item === "lia" ? "Trợ lý" : "Cuộc trò chuyện"}
+          icon={item === "lia" ? <PinIcon /> : <IconChat />}
+          title={item === "lia" ? "Nổi bật" : "Cuộc trò chuyện"}
         />
       );
     }

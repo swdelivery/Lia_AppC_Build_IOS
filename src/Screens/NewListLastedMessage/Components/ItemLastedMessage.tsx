@@ -78,36 +78,32 @@ const ItemLastedMessage = ({ item, onPress }: Props) => {
             style={styles.avatar}
           />
         ) : item.type === "assistant" ? (
-          <IconAI width={8 * 5} height={8 * 5} color={BASE_COLOR} />
+          <IconAI width={70} height={70} color={BASE_COLOR} />
         ) : (
           <Avatar
-            size={_moderateScale(8 * 5)}
+            size={70}
             style={styles.avatar}
             avatar={assignedUser?.profile?.fileAvatar}
           />
         )}
         <Column gap={_moderateScale(4)} flex={1}>
-          <Text weight={isSeen ? "regular" : "bold"}>
+          <Text weight={isSeen ? "regular" : "bold"} size={18}>
             {item.type === "assistant" || item.type === "consultation"
               ? item.name
               : assignedUser?.name}
           </Text>
-          <Text
-            size={12}
-            weight={isSeen ? "regular" : "bold"}
-            numberOfLines={1}
-          >
+          <Text weight={isSeen ? "regular" : "bold"} numberOfLines={1}>
             {lastMessageContent}
           </Text>
         </Column>
         <Column gap={_moderateScale(4)} alignItems="flex-end">
-          <Text weight={isSeen ? "regular" : "bold"} size={12}>
+          <Text weight={isSeen ? "regular" : "bold"} fontStyle="italic">
             {lastMessageTime}
           </Text>
           {!isSeen ? (
             <View style={styles.countBox}>
               <Text weight="bold" size={12} color={WHITE}>
-                Mới
+                {item.unreadCount}
               </Text>
             </View>
           ) : (
@@ -149,8 +145,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   avatar: {
-    width: 8 * 5,
-    height: 8 * 5,
-    borderRadius: (8 * 5) / 2,
+    width: 70,
+    aspectRatio: 1,
+    borderRadius: 70 / 2,
   },
 });

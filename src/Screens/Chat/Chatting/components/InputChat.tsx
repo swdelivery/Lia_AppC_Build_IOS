@@ -7,6 +7,7 @@ import {
   LayoutAnimation,
   Alert,
   TouchableOpacity,
+  Image,
 } from "react-native";
 import DocumentPicker from "react-native-document-picker";
 import { useSelector } from "react-redux";
@@ -60,7 +61,7 @@ type Props = {
   //
 };
 
-const InputChat = ({ }: Props) => {
+const InputChat = ({}: Props) => {
   const { infoUser } = useSelector(getInfoUserReducer);
   const { data: conversation } = useSelector(getConversationState);
   const moreActions = useVisible();
@@ -223,7 +224,6 @@ const InputChat = ({ }: Props) => {
       };
       console.log({ data });
 
-
       SocketInstance.socketConn?.emit(CSS_SEND_MESSAGE, data);
     },
     [conversation]
@@ -342,7 +342,11 @@ const InputChat = ({ }: Props) => {
         borderColor={Color.BORDER_COLOR}
       >
         <TouchableOpacity onPress={handleChatGptPress}>
-          <ChatGptIcon color={Color.BASE_COLOR} />
+          <Image
+            resizeMode="cover"
+            source={require("src/NewImage/logoLiA.png")}
+            style={styles.icon}
+          />
         </TouchableOpacity>
         <Column
           borderWidth={1}
@@ -446,6 +450,13 @@ const styles = StyleSheet.create({
   sendIcon: {
     ...StyleSheet.absoluteFillObject,
     // backgroundColor: "white",
+  },
+  icon: {
+    width: 32,
+    height: 32,
+    borderRadius: 32 / 2,
+    borderColor: Color.BG_GREY_OPACITY,
+    backgroundColor: "white",
   },
 });
 

@@ -12,9 +12,9 @@ type Props = {
 
 export default function HeaderList({ icon, title }: Props) {
   return (
-    <Row gap={_moderateScale(8)} marginVertical={16}>
+    <Row gap={10} marginVertical={16}>
       {icon}
-      <Text weight="bold" color={BLACK}>
+      <Text weight="bold" color={BLACK} size={16}>
         {title}
       </Text>
     </Row>

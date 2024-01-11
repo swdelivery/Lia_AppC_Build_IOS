@@ -5,6 +5,7 @@ import {
   IconProfileCoin,
   IconProfileHistory,
   IconProfileMedical,
+  IconProfilePartnerShip,
   IconProfilePayment,
   IconProfilePolicy,
   IconProfileProtect,
@@ -41,7 +42,7 @@ const NewProfile = () => {
                   icon: <IconProfileBooking />,
                 },
                 {
-                  flag: "record",
+                  flag: "examination-results",
                   name: "Kết quả\nthăm khám",
                   icon: <RecordIcon />,
                 },
@@ -65,8 +66,12 @@ const NewProfile = () => {
                   name: "Thanh toán",
                   icon: <IconProfilePayment />,
                 },
-                // { name: "Đánh giá", icon: <IconProfileStar /> },
-                // { name: "Hoàn tiền", icon: <IconProfileCoin /> },
+                { flag: "rating", name: "Đánh giá", icon: <IconProfileStar /> },
+                {
+                  flag: "refund",
+                  name: "Hoàn tiền",
+                  icon: <IconProfileCoin />,
+                },
                 // { name: "Bảo hành", icon: <IconProfileShield /> },
               ]}
             />
@@ -129,7 +134,11 @@ const NewProfile = () => {
                   name: "Chính sách bảo mật",
                   icon: <IconProfileProtect />,
                 },
-                // { name: "Liên hệ hợp tác", icon: <IconProfilePartnerShip /> },
+                {
+                  flag: "contact",
+                  name: "Liên hệ hợp tác",
+                  icon: <IconProfilePartnerShip width={20} height={20} />,
+                },
               ]}
             />
             {/* <View style={{ height: 100 }} /> */}

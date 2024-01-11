@@ -56,7 +56,6 @@ const InputChat = ({ }: Props) => {
         borderTopWidth={1}
         borderColor={Color.BORDER_COLOR}
       >
-        <ChatGptIcon style={{ opacity: 0 }} color={Color.BASE_COLOR} />
         <Column
           borderWidth={1}
           borderRadius={5}
@@ -75,13 +74,7 @@ const InputChat = ({ }: Props) => {
           />
         </Column>
         <IconButton onPress={handlePressSend} size={30}>
-          <Fade
-            visible={!!currTextMessage}
-            style={styles.sendIcon}
-            duration={150}
-          >
-            <SendIcon color={Color.BASE_COLOR} />
-          </Fade>
+          <SendIcon color={Color.BASE_COLOR} />
         </IconButton>
       </Row>
     </View>
