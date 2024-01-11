@@ -50,7 +50,7 @@ const NewPickerServiceBooking = () => {
     }
   );
 
-  useEffect(() => {}, [dataServices]);
+  useEffect(() => { }, [dataServices]);
 
   useEffect(() => {
     dispatch(
@@ -111,7 +111,7 @@ const NewPickerServiceBooking = () => {
         item.currentFlashSale._id === currentFlashSale._id &&
         (!item.preferentialInCurrentFlashSale.limit ||
           item.preferentialInCurrentFlashSale.limit >
-            item.preferentialInCurrentFlashSale.usage)
+          item.preferentialInCurrentFlashSale.usage)
       ) {
         return true;
       }

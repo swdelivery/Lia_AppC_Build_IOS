@@ -88,6 +88,7 @@ const PRICE_ORANGE = "#EB4303";
 const MAIN_BG = "#F5F5F5";
 const BG_CLEAR = "#ecf1f7ad";
 const BORDER_COLOR = "#E2E2E0";
+const BORDER_TOPPING_GROUP = "#F2F7F8" 
 
 const BORDER_INPUT_TEXT = "#D9D9D9";
 const BG_LOGIN_BUTTON = "#1B5478";
@@ -178,4 +179,5 @@ export {
   MAIN_RED_500,
   MAIN_RED_600,
   MAIN_RED_700,
+  BORDER_TOPPING_GROUP
 };

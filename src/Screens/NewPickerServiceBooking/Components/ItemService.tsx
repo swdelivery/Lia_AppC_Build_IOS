@@ -81,7 +81,7 @@ const ItemService = ({
       return;
     }
 
-    if (data.options != null && data.options.length > 0) {
+    if (data.options != null && data.options.length > 0 && !isSelected) {
       setShowModalPickTopping({
         isShow: true,
         data: data
