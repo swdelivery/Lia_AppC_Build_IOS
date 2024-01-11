@@ -1,4 +1,3 @@
-import AsyncStorage from "@react-native-community/async-storage";
 import { isEmpty } from "lodash-es";
 import io from "socket.io-client/dist/socket.io";
 import { navigation } from "./rootNavigation";
@@ -355,11 +354,14 @@ export default class SocketInstance {
   //     }
   // }
 
-  send(message, data) {
+  static send(message, data) {
+    console.log("---send---", { message, data });
     if (SocketInstance.socketConn !== null) {
       SocketInstance.socketConn.emit(message, data);
     } else {
-      SocketInstance.getSocket();
+      SocketInstance.getSocket().then(() => {
+        SocketInstance.socketConn.emit(message, data);
+      });
     }
   }
 
