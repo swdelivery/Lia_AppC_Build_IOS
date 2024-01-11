@@ -54,13 +54,6 @@ const GetOtpNewPass = (props: any) => {
   const { isLoading: loadingChangePass, isSuccess: isSuccessChangePass, message: messageChangePass } = useSelector(getStateChangePass)
 
   useEffect(() => {
-    dispatch(requestOTPResetPass.request({
-      phone: {
-        nationCode: nationCode,
-        phoneNumber: fullPhone,
-      },
-      type: "RESET_PASSWORD"
-    }))
     return () => {
       dispatch(resetVerifyOtpResetPass.request())
       dispatch(resetStateChangePass.request())

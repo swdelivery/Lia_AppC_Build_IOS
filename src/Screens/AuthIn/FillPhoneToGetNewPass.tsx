@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import * as Color from "../../Constant/Color";
 import { stylesFont } from "../../Constant/Font";
 import {
@@ -24,22 +24,50 @@ import Column from "@Components/Column";
 import Spacer from "@Components/Spacer";
 import Row from "@Components/Row";
 import Text from "@Components/Text";
+import { requestOTPResetPass, resetStateRequestResetPass } from "@Redux/otp/actions";
+import { getStateRequestResetPass } from "@Redux/otp/selectors";
 
 const FillPhoneToGetNewPass = (props) => {
   const [phoneNumber, setphoneNumber] = useState("");
   const [countryCallingCode, setCountryCallingCode] = useState("84");
   const [errorPhoneNumber, setErrorPhoneNumber] = useState("");
 
+  const { isLoading, isSuccess, message } = useSelector(getStateRequestResetPass)
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     _getUsernamePassword();
+    return () => {
+      dispatch(resetStateRequestResetPass())
+    }
   }, []);
 
   const _getUsernamePassword = async () => {
     let userName = await AsyncStorage.getItem("userName");
     setphoneNumber(userName);
   };
+
+  useMemo(() => {
+    if (!isLoading && isSuccess) {
+      let newFormatPhone = phoneNumber;
+
+      if (newFormatPhone.charAt(0) == "0") {
+        newFormatPhone = `${newFormatPhone.substring(
+          1
+        )}`;
+      } else {
+        newFormatPhone = `${newFormatPhone}`;
+      }
+
+      navigation.navigate(ScreenKey.GET_OTP_NEW_PASS, {
+        phoneNumber: newFormatPhone,
+        fullPhone: newFormatPhone,
+        routeName: props?.route?.params?.routeName,
+        nationCode: "+" + countryCallingCode,
+      });
+    }
+  }, [isLoading, isSuccess, message])
 
   const validatePhoneNumber = () => {
     const numberRegex = /^[0-9]+$/;
@@ -66,12 +94,15 @@ const FillPhoneToGetNewPass = (props) => {
       } else {
         newFormatPhone = `${newFormatPhone}`;
       }
-      return navigation.navigate(ScreenKey.GET_OTP_NEW_PASS, {
-        phoneNumber: newFormatPhone,
-        fullPhone: newFormatPhone,
-        routeName: props?.route?.params?.routeName,
-        nationCode: "+" + countryCallingCode,
-      });
+
+      return dispatch(requestOTPResetPass.request({
+        phone: {
+          nationCode: "+" + countryCallingCode,
+          phoneNumber: newFormatPhone,
+        },
+        type: "RESET_PASSWORD"
+      }))
+
     }
   }
 
