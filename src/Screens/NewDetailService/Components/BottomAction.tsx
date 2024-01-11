@@ -31,7 +31,7 @@ const BottomAction = ({ service }: Props) => {
     const isOutOfStock =
       service.preferentialInCurrentFlashSale?.limit &&
       service.preferentialInCurrentFlashSale.limit ===
-        service.preferentialInCurrentFlashSale.usage;
+      service.preferentialInCurrentFlashSale.usage;
     if (isOutOfStock) {
       Toast.show({
         type: "error",
@@ -55,9 +55,9 @@ const BottomAction = ({ service }: Props) => {
     }
   }, [service]);
 
-  const handlePhonePress = useCallback(() => {}, [service]);
+  const handlePhonePress = useCallback(() => { }, [service]);
 
-  const handleChatPress = useRequireLoginCallback(() => {}, []);
+  const handleChatPress = useRequireLoginCallback(() => { }, []);
 
   return (
     <View style={styles.container}>
