@@ -394,8 +394,14 @@ const FaceAI = () => {
         startTextLeftEye={startTextLeftEye}
       />
 
-      <RightEyeResult scanningResult={scanningResult} startRightResult={startResultRightEye} />
-      <LeftEyeResult scanningResult={scanningResult} startRightResult={startResultLeftEye} />
+      <RightEyeResult
+        scanningResult={scanningResult}
+        startRightResult={startResultRightEye}
+      />
+      <LeftEyeResult
+        scanningResult={scanningResult}
+        startRightResult={startResultLeftEye}
+      />
 
       {imageScan ? (
         <View
@@ -493,10 +499,11 @@ const FaceAI = () => {
                 device={device}
                 isActive={true}
                 photo={true}
+                resizeMode="contain"
                 // photoHdr={true}
                 enableDepthData={true}
                 enablePortraitEffectsMatteDelivery={true}
-              // format={format}
+                // format={format}
               />
               <View
                 style={{
@@ -509,7 +516,7 @@ const FaceAI = () => {
                     fontSize: _moderateScale(14),
                     color: "white",
                     fontWeight: "bold",
-                    textAlign: 'center'
+                    textAlign: "center",
                   }}
                 >
                   {`Giữ gương mặt ở giữa vòng tròn ${`\n`} Nhìn thẳng vào camera và nhấn chụp`}
@@ -548,7 +555,10 @@ const FaceAI = () => {
                 ></View>
               </TouchableOpacity>
 
-              <IconButton containerStyle={[styles.backBtn, { top: top }]} onPress={navigation.goBack}>
+              <IconButton
+                containerStyle={[styles.backBtn, { top: top }]}
+                onPress={navigation.goBack}
+              >
                 <BackIcon />
               </IconButton>
             </View>

@@ -46,7 +46,7 @@ index 88c085f..2b7205e 100644
        Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, false)
      FileOutputStream(file).use { stream ->
 diff --git a/node_modules/react-native-vision-camera/android/src/main/java/com/mrousavy/camera/core/PreviewView.kt b/node_modules/react-native-vision-camera/android/src/main/java/com/mrousavy/camera/core/PreviewView.kt
-index 8cdb4c5..50a71d6 100644
+index 8cdb4c5..2fb630c 100644
 --- a/node_modules/react-native-vision-camera/android/src/main/java/com/mrousavy/camera/core/PreviewView.kt
 +++ b/node_modules/react-native-vision-camera/android/src/main/java/com/mrousavy/camera/core/PreviewView.kt
 @@ -54,7 +54,7 @@ class PreviewView(context: Context, callback: SurfaceHolder.Callback) : SurfaceV
