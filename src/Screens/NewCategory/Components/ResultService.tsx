@@ -10,9 +10,10 @@ import { FlatList, StyleSheet } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import ItemService from './ItemService';
 import Spacer from '@Components/Spacer';
+import { FlashList } from "@shopify/flash-list";
 
 const ResultService = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const {
     dataServiceParentCodeGroup,
     dataServiceCoupon,
@@ -25,62 +26,67 @@ const ResultService = () => {
     dataServiceBranchGroup,
     dataServiceRangePrice,
     dataServiceUtilities,
-    dataServiceSearching
-  } = useSelector(getDataFilterServiceState)
-  const { data: dataResultListService, isLoading } = useSelector(getResultListServiceState)
+    dataServiceSearching,
+  } = useSelector(getDataFilterServiceState);
+  const { data: dataResultListService, isLoading } = useSelector(
+    getResultListServiceState
+  );
 
   useEffect(() => {
     if (!isEmpty(dataServiceParentCodeGroup)) {
       requestAnimationFrame(() => {
         let dataFetch = {
           condition: {},
-          sort: {}
+          sort: {},
         };
         if (!isEmpty(dataServiceChildCodeGroup)) {
-          dataFetch['condition']["codeGroup"] = {
-            in: dataServiceChildCodeGroup.map(item => item?.code)
+          dataFetch["condition"]["codeGroup"] = {
+            in: dataServiceChildCodeGroup.map((item) => item?.code),
           };
         } else {
-          dataFetch['condition']["codeGroup"] = {
-            in: [dataServiceParentCodeGroup?.code]
+          dataFetch["condition"]["codeGroup"] = {
+            in: [dataServiceParentCodeGroup?.code],
           };
         }
         if (dataServiceCoupon) {
           dataFetch["condition"]["isOnFlashSale"] = { equal: true };
         }
         if (dataServiceAverageRating) {
-          dataFetch['sort']["averageRating"] = -1
+          dataFetch["sort"]["averageRating"] = -1;
         }
         if (dataServiceMostPopular) {
-          dataFetch['sort']["reviewCount"] = -1
-          dataFetch['sort']["countPartner"] = -1
+          dataFetch["sort"]["reviewCount"] = -1;
+          dataFetch["sort"]["countPartner"] = -1;
         }
         if (dataServiceSortPrice) {
-          dataFetch['sort']["price"] = dataServiceSortPrice
+          dataFetch["sort"]["price"] = dataServiceSortPrice;
         }
         if (!isEmpty(dataServiceLocation)) {
-          dataFetch['condition']["cityCode"] = { "equal": dataServiceLocation?.codeCity[0] }
+          dataFetch["condition"]["cityCode"] = {
+            equal: dataServiceLocation?.codeCity[0],
+          };
         }
         if (!isEmpty(dataServiceBranchGroup)) {
-          dataFetch['condition']["type"] = {
-            "in": dataServiceBranchGroup
-          }
+          dataFetch["condition"]["type"] = {
+            in: dataServiceBranchGroup,
+          };
         }
         if (dataServiceRangePrice) {
-          dataFetch['condition']["price"] = {
-            "from": 0, "to": dataServiceRangePrice
-          }
+          dataFetch["condition"]["price"] = {
+            from: 0,
+            to: dataServiceRangePrice,
+          };
         }
         if (!isEmpty(dataServiceUtilities)) {
-          dataFetch['condition']["utilities"] = {
-            "in": dataServiceUtilities
-          }
+          dataFetch["condition"]["utilities"] = {
+            in: dataServiceUtilities,
+          };
         }
         if (dataServiceSearching?.trim()?.length > 0) {
-          dataFetch['search'] = dataServiceSearching
+          dataFetch["search"] = dataServiceSearching;
         }
 
-        dispatch(getListServiceFilter.request(dataFetch))
+        dispatch(getListServiceFilter.request(dataFetch));
       });
     }
   }, [
@@ -88,52 +94,52 @@ const ResultService = () => {
     dataServiceAverageRating,
     dataServiceMostPopular,
     dataServiceSortPrice,
-    dataServiceSearching
-  ])
+    dataServiceSearching,
+  ]);
 
   useEffect(() => {
     if (dataServiceParentCodeGroup) {
       requestAnimationFrame(() => {
         let dataFetch = {
           condition: {},
-          sort: {}
+          sort: {},
         };
-        dataFetch['condition']["codeGroup"] = {
-          in: [dataServiceParentCodeGroup?.code]
+        dataFetch["condition"]["codeGroup"] = {
+          in: [dataServiceParentCodeGroup?.code],
         };
         if (dataServiceCoupon) {
           dataFetch["condition"]["isOnFlashSale"] = { equal: true };
         }
         if (dataServiceAverageRating) {
-          dataFetch['sort']["averageRating"] = -1
+          dataFetch["sort"]["averageRating"] = -1;
         }
         if (dataServiceMostPopular) {
-          dataFetch['sort']["reviewCount"] = -1
-          dataFetch['sort']["countPartner"] = -1
+          dataFetch["sort"]["reviewCount"] = -1;
+          dataFetch["sort"]["countPartner"] = -1;
         }
         if (dataServiceSortPrice) {
-          dataFetch['sort']["price"] = dataServiceSortPrice
+          dataFetch["sort"]["price"] = dataServiceSortPrice;
         }
         if (dataServiceSearching?.trim()?.length > 0) {
-          dataFetch['search'] = dataServiceSearching
+          dataFetch["search"] = dataServiceSearching;
         }
 
-        dispatch(getListServiceFilter.request(dataFetch))
-        dispatch(getDataForModalFilterService.request(dataServiceParentCodeGroup))
-        dispatch(selectServiceChildCodeGroup([]))
-        dispatch(selectServiceLocation(null))
-        dispatch(selectServiceBranchGroup([]))
-        dispatch(selectServiceRangePrice(null))
-        dispatch(selectServiceUtilities([]))
+        dispatch(getListServiceFilter.request(dataFetch));
+        dispatch(
+          getDataForModalFilterService.request(dataServiceParentCodeGroup)
+        );
+        dispatch(selectServiceChildCodeGroup([]));
+        dispatch(selectServiceLocation(null));
+        dispatch(selectServiceBranchGroup([]));
+        dispatch(selectServiceRangePrice(null));
+        dispatch(selectServiceUtilities([]));
       });
     }
-  }, [dataServiceParentCodeGroup])
+  }, [dataServiceParentCodeGroup]);
 
   const _renderItemService = ({ item, index }) => {
-    return (
-      <ItemService data={item} />
-    )
-  }
+    return <ItemService data={item} />;
+  };
 
   const _awesomeChildListKeyExtractor = useCallback(
     (item) => `awesome-child-key-${item._id}`,
@@ -142,23 +148,27 @@ const ResultService = () => {
 
   return (
     <AfterTimeoutFragment timeout={200}>
-      <Column
-        flex={1}
-        marginLeft={8}>
-        <FlatList
-          ListEmptyComponent={isLoading ? <LoadingIndicator /> : <EmptyResultData title='Không tìm thấy dữ liệu' />}
-          contentContainerStyle={{ justifyContent: 'space-between', paddingVertical: 8 }}
+      <Column flex={1} marginLeft={8}>
+        <FlashList
+          ListEmptyComponent={
+            isLoading ? (
+              <LoadingIndicator />
+            ) : (
+              <EmptyResultData title="Không tìm thấy dữ liệu" />
+            )
+          }
+          contentContainerStyle={{ paddingVertical: 8 }}
           renderItem={_renderItemService}
           keyExtractor={_awesomeChildListKeyExtractor}
           numColumns={2}
           ListFooterComponent={<Spacer top={100} />}
-          data={dataResultListService} />
-        {/* } */}
-
+          data={dataResultListService}
+          estimatedItemSize={80}
+        />
       </Column>
     </AfterTimeoutFragment>
-  )
-}
+  );
+};
 
 export default ResultService
 

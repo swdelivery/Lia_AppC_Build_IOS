@@ -84,7 +84,7 @@ const ItemService = ({ data }: Props) => {
             <FlashSale
               item={data}
               height={18}
-              width={_width / 2 - 20}
+              width={WIDTH_IMAGE_SERVICE}
               textSize={10}
             />
           )}
