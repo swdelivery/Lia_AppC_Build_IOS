@@ -82,7 +82,7 @@ const ModalPickToppingNew = ({ confirm, data, show, hide }: Props) => {
     }
   }, [data?.description]);
 
-  const _handleChoiceSingle = (data, groupCode) => {
+  const handleChoiceSingle = (data, groupCode) => {
     console.log({ data, listChoice, groupCode });
     let tempListChoice = cloneDeep(listChoice);
 
@@ -100,7 +100,7 @@ const ModalPickToppingNew = ({ confirm, data, show, hide }: Props) => {
     setListChoice(tempListChoice);
   };
 
-  const _handleChoiceMulti = (data, groupCode) => {
+  const handleChoiceMulti = (data, groupCode) => {
     console.log({ data, listChoice });
     let tempListChoice = cloneDeep(listChoice);
 
@@ -115,7 +115,7 @@ const ModalPickToppingNew = ({ confirm, data, show, hide }: Props) => {
     setListChoice(tempListChoice);
   };
 
-  const _handleConfirm = () => {
+  const handleConfirm = () => {
     confirm(data, listChoice);
     hide();
   };
@@ -129,10 +129,10 @@ const ModalPickToppingNew = ({ confirm, data, show, hide }: Props) => {
 
     console.log({ data });
     if (data?.typeOption == "single") {
-      _handleChoiceSingle(data, data?.groupCode);
+      handleChoiceSingle(data, data?.groupCode);
     }
     if (data?.typeOption == "multiple") {
-      _handleChoiceMulti(data, data?.groupCode);
+      handleChoiceMulti(data, data?.groupCode);
     }
   };
 
@@ -146,9 +146,9 @@ const ModalPickToppingNew = ({ confirm, data, show, hide }: Props) => {
             isCollapDescription={isCollapDescription}
             setCurrDescriptionTopping={_setCurrDescriptionTopping}
             setIndex={setIndex}
-            _handleConfirm={_handleConfirm}
-            _handleChoiceSingle={_handleChoiceSingle}
-            _handleChoiceMulti={_handleChoiceMulti}
+            handleConfirm={handleConfirm}
+            handleChoiceSingle={handleChoiceSingle}
+            handleChoiceMulti={handleChoiceMulti}
             listChoice={listChoice}
             data={data}
             onCancel={hide}

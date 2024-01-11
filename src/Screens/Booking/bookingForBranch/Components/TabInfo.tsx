@@ -26,14 +26,14 @@ type Props = {
   isCollapDescription?: boolean,
   setCurrDescriptionTopping?: (any) => void,
   setIndex?: (number) => void,
-  _handleConfirm?: () => void,
-  _handleChoiceSingle?: (data: any, groupCode: any) => void,
-  _handleChoiceMulti?: (data: any, groupCode: any) => void,
+  handleConfirm?: () => void,
+  handleChoiceSingle?: (data: any, groupCode: any) => void,
+  handleChoiceMulti?: (data: any, groupCode: any) => void,
   listChoice?: any[],
   onCancel?: () => void,
 }
 
-export const TabInfo = ({ data, _handleChoiceMulti, _handleChoiceSingle, _handleConfirm, isCollapDescription, listChoice, setCurrDescriptionTopping, setIndex, setIsCollapDescription, onCancel }: Props) => {
+export const TabInfo = ({ data, handleChoiceMulti, handleChoiceSingle, handleConfirm, isCollapDescription, listChoice, setCurrDescriptionTopping, setIndex, setIsCollapDescription, onCancel }: Props) => {
   const { top } = useSafeAreaInsets()
   return (
     <Column flex={1}>
@@ -169,7 +169,7 @@ export const TabInfo = ({ data, _handleChoiceMulti, _handleChoiceSingle, _handle
                                 <TouchableOpacity
                                   hitSlop={styleElement.hitslopSm}
                                   onPress={() => {
-                                    _handleChoiceSingle(
+                                    handleChoiceSingle(
                                       itemChild,
                                       item?.groupCode
                                     );
@@ -185,7 +185,7 @@ export const TabInfo = ({ data, _handleChoiceMulti, _handleChoiceSingle, _handle
                                 <TouchableOpacity
                                   hitSlop={styleElement.hitslopSm}
                                   onPress={() => {
-                                    _handleChoiceSingle(
+                                    handleChoiceSingle(
                                       itemChild,
                                       item?.groupCode
                                     );
@@ -208,7 +208,7 @@ export const TabInfo = ({ data, _handleChoiceMulti, _handleChoiceSingle, _handle
                                 <TouchableOpacity
                                   hitSlop={styleElement.hitslopSm}
                                   onPress={() => {
-                                    _handleChoiceMulti(
+                                    handleChoiceMulti(
                                       itemChild,
                                       item?.groupCode
                                     );
@@ -224,7 +224,7 @@ export const TabInfo = ({ data, _handleChoiceMulti, _handleChoiceSingle, _handle
                                 <TouchableOpacity
                                   hitSlop={styleElement.hitslopSm}
                                   onPress={() => {
-                                    _handleChoiceMulti(
+                                    handleChoiceMulti(
                                       itemChild,
                                       item?.groupCode
                                     );
@@ -288,7 +288,7 @@ export const TabInfo = ({ data, _handleChoiceMulti, _handleChoiceSingle, _handle
       >
         <TouchableOpacity
           onPress={() => {
-            _handleConfirm();
+            handleConfirm();
           }}
           style={[
             styles.styleBtnConfirm,
