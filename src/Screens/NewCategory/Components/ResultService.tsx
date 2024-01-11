@@ -63,7 +63,7 @@ const ResultService = () => {
         }
         if (!isEmpty(dataServiceLocation)) {
           dataFetch["condition"]["cityCode"] = {
-            equal: dataServiceLocation?.codeCity[0],
+            equal: dataServiceLocation?.codeCity,
           };
         }
         if (!isEmpty(dataServiceBranchGroup)) {

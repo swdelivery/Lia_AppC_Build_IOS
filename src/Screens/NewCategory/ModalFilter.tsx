@@ -157,7 +157,7 @@ const ModalFilter = ({ visible, onClose }: Props) => {
       }
       if (!isEmpty(provinceChoiced)) {
         dataFetch["condition"]["cityCode"] = {
-          equal: provinceChoiced?.codeCity[0],
+          equal: provinceChoiced?.codeCity,
         };
       }
       if (!isEmpty(selectedListTagType)) {
