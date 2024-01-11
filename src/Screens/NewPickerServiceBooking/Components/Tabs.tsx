@@ -1,31 +1,23 @@
 import Text from "@Components/Text";
 import { BASE_COLOR } from "@Constant/Color";
 import { _moderateScale } from "@Constant/Scale";
-import { getServiceGroupState } from "@Redux/home/selectors";
-import React, { useCallback, useMemo } from "react";
+import { ServiceGroup } from "@typings/serviceGroup";
+import React, { useCallback } from "react";
 import { View, StyleSheet, ScrollView, Pressable } from "react-native";
-import { useSelector } from "react-redux";
 
 type Props = {
-  tabs: { title: string; key: string }[];
+  tabs: ServiceGroup[];
   index: number;
   onTabChange: (index: number) => void;
 };
 
 export default function Tabs({ tabs, index, onTabChange }: Props) {
-  const { data: listServiceGroup } = useSelector(getServiceGroupState);
-
   const handleTabPress = useCallback(
     (idx: number) => () => {
       onTabChange(idx);
     },
     [onTabChange]
   );
-
-  const _generateNameServiceGR = useCallback((value) => {
-    if (value == 'Tất cả') return 'Tất cả'
-    return listServiceGroup?.find(item => item?.code == value)?.name
-  }, [listServiceGroup])
 
   return (
     <View>
@@ -34,13 +26,11 @@ export default function Tabs({ tabs, index, onTabChange }: Props) {
           const isSelected = idx === index;
           return (
             <Pressable
-              key={item.key}
+              key={item._id}
               style={[styles.tab, isSelected && styles.tabActive]}
               onPress={handleTabPress(idx)}
             >
-              <Text color={isSelected ? "white" : BASE_COLOR}>
-                {_generateNameServiceGR(item.title)}
-              </Text>
+              <Text color={isSelected ? "white" : BASE_COLOR}>{item.name}</Text>
             </Pressable>
           );
         })}

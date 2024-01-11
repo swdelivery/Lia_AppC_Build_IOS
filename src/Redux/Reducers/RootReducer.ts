@@ -53,6 +53,8 @@ import product from "../product/reducers";
 import otp from "../otp/reducers";
 
 const rootReducer = combineReducers({
+  infoUserReducer: resetable(infoUserReducer),
+  user: resetable(user),
   newsReducer,
   productGroupReducer,
   productReducer,
@@ -63,7 +65,6 @@ const rootReducer = combineReducers({
   authReducer,
   membersReducer,
   networkReducer,
-  infoUserReducer,
   messageReducer,
   notificationReducer,
   postReducer,
@@ -90,7 +91,6 @@ const rootReducer = combineReducers({
   insurance,
   chat,
   flashSale,
-  user: resetable(user),
   modal,
   resultcanningeyes,
   relatives,

@@ -1,4 +1,4 @@
-import { FlatList, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import Screen from "@Components/Screen";
 import { BASE_COLOR, BORDER_COLOR, NEW_BASE_COLOR } from "@Constant/Color";
@@ -22,10 +22,10 @@ import ItemService from "./Components/ItemService";
 import Button from "@Components/Button/Button";
 import LiAHeader from "@Components/Header/LiAHeader";
 import useFlashSales from "@Screens/SoyoungHome/Components/useFlashSale";
-import { head } from "lodash";
+import { head, uniqBy } from "lodash";
 import { getServicePrice } from "@Constant/service";
 import { RenderItemProps } from "@typings/common";
-import { Service } from "@typings/serviceGroup";
+import { Service, ServiceGroup } from "@typings/serviceGroup";
 import { FlashList } from "@shopify/flash-list";
 
 const NewPickerServiceBooking = () => {
@@ -50,7 +50,7 @@ const NewPickerServiceBooking = () => {
     }
   );
 
-  useEffect(() => { }, [dataServices]);
+  useEffect(() => {}, [dataServices]);
 
   useEffect(() => {
     dispatch(
@@ -66,17 +66,17 @@ const NewPickerServiceBooking = () => {
     );
   }, []);
 
-  const routes = useMemo(() => {
+  // @ts-ignore
+  const routes: ServiceGroup[] = useMemo(() => {
     let listServiceTemp = dataListService;
-
-    let newArray = [
-      ...new Set(listServiceTemp.flatMap((service) => service.codeGroup)),
-    ].map((codeGroup) => ({
-      key: codeGroup,
-      title: codeGroup,
-    }));
-    return [{ key: "all", title: "Tất cả" }, ...newArray];
+    const newArray = uniqBy(
+      listServiceTemp.flatMap((service) => service.serviceGroupArr),
+      "_id"
+    );
+    return [{ _id: "all", name: "Tất cả", code: "all" }, ...newArray];
   }, [dataListService]);
+
+  console.log({ routes });
 
   const _hideModalConfirmService = useCallback(() => {
     dispatch(openModalAddServiceToBooking(false));
@@ -91,7 +91,7 @@ const NewPickerServiceBooking = () => {
     if (index === 0) {
       return dataListService;
     }
-    const codeGroup = routes[index].key;
+    const codeGroup = routes[index].code;
     return dataListService.filter((item) => item.codeGroup.includes(codeGroup));
   }, [dataListService, index, routes]);
 
@@ -111,7 +111,7 @@ const NewPickerServiceBooking = () => {
         item.currentFlashSale._id === currentFlashSale._id &&
         (!item.preferentialInCurrentFlashSale.limit ||
           item.preferentialInCurrentFlashSale.limit >
-          item.preferentialInCurrentFlashSale.usage)
+            item.preferentialInCurrentFlashSale.usage)
       ) {
         return true;
       }

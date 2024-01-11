@@ -57,9 +57,8 @@ const AuthReducer = (state = initialState, action) => {
             }
         case ActionType.LOG_OUT:
             return {
-                ...state,
-                isLoggedIn: false
-            }
+              ...initialState,
+            };
         case ActionType.CHECK_AUTH_PROCESSING:
             return {
                 ...state,
