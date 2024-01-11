@@ -11,6 +11,8 @@ buildscript {
 
         firebaseMessagingVersion = "21.1.0" 
         googlePlayServicesVersion = "+" // default: "+"
+
+        VisionCamera_enableCodeScanner=true
     }
     repositories {
         google()

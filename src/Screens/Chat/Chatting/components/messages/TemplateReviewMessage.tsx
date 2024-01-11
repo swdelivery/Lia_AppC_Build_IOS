@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
   },
   ratedStyle: {
-    backgroundColor: GREEN_SUCCESS,
+    backgroundColor: BASE_COLOR,
   },
   treatment: {
     backgroundColor: BASE_COLOR,

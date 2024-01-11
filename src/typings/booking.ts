@@ -1,5 +1,6 @@
 import { Branch } from "./branch";
 import { Timestamp } from "./common";
+import { Insurance } from "./insurance";
 import { PartnerPhone } from "./partner";
 import { Service } from "./serviceGroup";
 import { MyVoucher, Voucher } from "./voucher";
@@ -107,6 +108,7 @@ export type Booking = {
   checkOutAt: string;
   cancelAt: string;
   partnerCoupons: MyVoucher[];
+  insuranceArr: Insurance[];
 
   partnerLevelPromotion: {
     point: number;

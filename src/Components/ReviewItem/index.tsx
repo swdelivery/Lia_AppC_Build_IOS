@@ -9,7 +9,6 @@ import { Review } from "@typings/review";
 import moment from "moment";
 import React, { useMemo } from "react";
 import { View, StyleSheet, Image } from "react-native";
-import { getImageAvataUrl } from "src/utils/avatar";
 
 type Props = {
   item: Review;

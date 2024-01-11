@@ -11,7 +11,7 @@ type Props = {
 const Introduce = ({ product }: Props) => {
   return (
     <View style={styles.container}>
-      <RenderHTML data={product?.advantageDescription} />
+      <RenderHTML data={product?.advantageDescription ?? "Chưa có thông tin"} />
     </View>
   );
 };

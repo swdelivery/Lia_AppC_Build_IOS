@@ -19,6 +19,7 @@ import {
   GREEN_SUCCESS,
   BORDER_COLOR,
   BLACK,
+  BASE_COLOR,
 } from "../../../Constant/Color";
 import { _moderateScale } from "../../../Constant/Scale";
 
@@ -318,7 +319,7 @@ const ItemTreatmentDetail = memo((props) => {
                   },
                 });
               }}
-              style={[styles.btnSeeInfo, { backgroundColor: GREEN_SUCCESS }]}
+              style={styles.btnSeeInfo}
             >
               <Text weight="bold" color={WHITE}>
                 Xem đánh giá
@@ -361,7 +362,7 @@ const styles = StyleSheet.create({
     paddingVertical: _moderateScale(6),
     paddingHorizontal: _moderateScale(8 * 2),
     borderRadius: _moderateScale(8),
-    backgroundColor: BLUE_FB,
+    backgroundColor: BASE_COLOR,
   },
   imageTreatment: {
     width: _moderateScale(8 * 16),

@@ -1,11 +1,14 @@
 import BootSplash from "react-native-bootsplash";
 import { NavigationContainer } from "@react-navigation/native";
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { navigationRef, navigation } from "../../rootNavigation";
+import React, { useCallback, useEffect, useRef } from "react";
+import { useSelector } from "react-redux";
+import {
+  navigationRef,
+  navigation,
+  getCurrentRoute,
+} from "../../rootNavigation";
 import { _heightScale } from "../Constant/Scale";
 import ScreenKey from "./ScreenKey";
-import { getListDoctorForPartner } from "../Redux/Action/MembersAction";
 import ModalRequireLogin from "../Components/Notification/ModalRequireLogin";
 import messaging from "@react-native-firebase/messaging";
 import ActionSheetIcon from "@Components/ModalBottom/ActionSheetIcon";
@@ -28,7 +31,7 @@ const LINKING = {
 };
 
 const AppWrapper = (props) => {
-  const dispatch = useDispatch();
+  const routeNameRef = useRef<string | null>("");
   const reduxAuth = useSelector((state) => state.authReducer);
 
   useEffect(() => {
@@ -74,12 +77,30 @@ const AppWrapper = (props) => {
     }
   }, [reduxAuth.isLoggedIn]);
 
+  const handleNavigationStateChange = useCallback((state: any) => {
+    const previousRouteName = routeNameRef.current;
+    const currentRoute = getCurrentRoute(state);
+    if (previousRouteName !== currentRoute?.name) {
+      // The line below uses the @react-native-firebase/analytics tracker
+      // Change this line to use another Mobile analytics SDK
+      // TODO: analytics.setCurrentScreen(currentRouteName);
+    }
+
+    // Save the current route name for later comparision
+    routeNameRef.current = currentRoute?.name;
+    console.log({
+      currentRouteName: currentRoute?.name,
+      params: currentRoute.params,
+    });
+  }, []);
+
   return (
     <>
       <NavigationContainer
         ref={navigationRef}
         linking={LINKING}
         fallback={<Text>Đang tải...</Text>}
+        onStateChange={handleNavigationStateChange}
       >
         <RootNavigator />
       </NavigationContainer>

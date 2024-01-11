@@ -13,6 +13,7 @@ import Rules from "./Rules";
 import ScreenKey from "@Navigation/ScreenKey";
 import { useNavigationParams } from "src/Hooks/useNavigation";
 import LiAHeader from "@Components/Header/LiAHeader";
+import { BASE_COLOR } from "@Constant/Color";
 
 type ScreenK = typeof ScreenKey.DETAIL_BEAUTY_INSURANCE;
 
@@ -103,7 +104,7 @@ const styles = StyleSheet.create({
     fontFamily: FONT_WEIGHTS["bold"],
   },
   tabUnderlineStyle: {
-    backgroundColor: "#4BA888",
+    backgroundColor: BASE_COLOR,
     top: 8 * 4,
     height: 3,
   },
@@ -115,7 +116,7 @@ const styles = StyleSheet.create({
   },
   tabInnerStyle: { width: "100%" },
   textActiveStyle: {
-    color: "#4BA888",
+    color: BASE_COLOR,
     fontWeight: "bold",
   },
 });

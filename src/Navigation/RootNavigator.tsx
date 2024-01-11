@@ -1,7 +1,4 @@
-import {
-  createStackNavigator,
-  TransitionPresets,
-} from "@react-navigation/stack";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
 import { Platform } from "react-native";
 // import RNBootSplash from "react-native-bootsplash";
@@ -46,7 +43,6 @@ import ListOrderService from "../Screens/ListOrderService";
 import VideoRequest from "../Screens/VideoRequest";
 import DetailBrand from "../Screens/NewDetailBranch/index";
 // import DetailBrand from '../Screens/DetailBrand/index'
-import FakeModal from "../Screens/DemoFakeModal/index";
 // import DetailDoctor from '../Screens/DetailDoctor/index'
 import DetailDoctor from "../Screens/NewDetailDoctor";
 import DetailPractitioner from "../Screens/NewDetailPractitioner/index";
@@ -57,17 +53,13 @@ import ListProduct from "../Screens/ListProduct";
 import DetailProduct from "../Screens/DetailProduct/index";
 import DiaryOfTreatment from "../Screens/DiaryOfTreatment";
 import PurchaseDepositRequest from "../Screens/PurchaseDepositRequest/index";
-
 import DetailNewFeed from "../Screens/DetailNewFeed";
 import CreateNewFeed from "../Screens/CreateNewFeed";
 import EditNewFeed from "../Screens/CreateNewFeed/UpdatePost";
 import NewFeedSearch from "../Screens/NewFeedSearch";
-
 import ModalListDiary from "../Screens/ModalListDiary";
-
 import ModalServiceReview from "../Screens/ServiceReview/index";
 import ModalBookingReview from "../Screens/BookingReview/index";
-
 import InfoRoomChat from "../Screens/InfoRoomChat/index";
 import AddFood from "../Screens/LoseWeight/AddFood";
 import AddingFood from "../Screens/AddingFood/index";
@@ -91,21 +83,17 @@ import DetailNews from "../Screens/DetailNews/index";
 import ListNews from "../Screens/ListNews/index";
 import QAService from "../Screens/QAService/index";
 import ServiceMaterial from "../Screens/ServiceMaterial/index";
-
 import CreateDiaryDaily from "../Screens/ListDiaryOfPartnerChild/Components/CreatedDiaryForm";
 import UpdateDiaryDaily from "../Screens/ListDiaryOfPartnerChild/Components/UpdateDiaryForm";
-
 import InfoBooking from "../Screens/InfoBooking/index";
 import DetailBooking from "../Screens/NewDetailBooking/index";
 import InfoMaterial from "../Screens/InfoMaterial/index";
-
 import AskForLgin from "../Screens/Auth/AskForLogin";
 import LoginInApp from "../Screens/AuthIn/LoginInApp";
 import RegisterInApp from "../Screens/AuthIn/RegisterInApp";
 import ActivationInApp from "../Screens/AuthIn/ActivationInApp";
 import FillPhoneToGetNewPass from "../Screens/AuthIn/FillPhoneToGetNewPass";
 import GetOtpNewPass from "../Screens/AuthIn/GetOtpNewPass";
-
 import VideoCall from "../Screens/VideoCall/VideoCall";
 import HistoryLiaTicket from "../Screens/Affiliate/HistoryLiATicket";
 import SettingApp from "../Screens/SettingApp/SettingApp";
@@ -113,9 +101,7 @@ import MyPersonalPage from "../Screens/MyPersonalPage/MyPersonalPage";
 import EditDiary from "../Screens/DiaryDetails";
 import ListDiaryByType from "../Screens/ListDiaryByType/ListDiaryByType";
 import WheelSpin from "../Screens/WheelSpin/WheelSpin";
-
 import QRScreen from "../Screens/QRCode/index";
-
 import Mission from "../Screens/Mission";
 import FeedBackBranch from "../Screens/DetailBrand/FeedBackBranch";
 import FeedBackDoctor from "../Screens/DetailDoctor/FeedBackDoctor";
@@ -207,8 +193,16 @@ import ListDiary from "@Screens/ListDiaryOfPartner";
 import DetailServiceProduct from "@Screens/DetailServiceProduct";
 import ProductList from "@Screens/ProductList";
 import SkinMirrorAI from "@Screens/SkinMirrorAI";
+import { isAndroid } from "src/utils/platform";
+import ListBranch from "@Screens/ListBranch";
+import ListDoctor from "@Screens/ListDoctor";
+import ListAllNews from "@Screens/Home/ListAllNews";
+import ListAllEncyclopedia from "@Screens/Home/ListAllEncyclopedia";
+import TreatmentRecord from "@Screens/TreatmentRecord/index";
+import ListDiaryOfPartnerChild from "@Screens/ListDiaryOfPartnerChild";
+import PickTreatmentDiary from "@Screens/ListDiaryOfPartner/Components/PickTreatmentToDiary";
 
-const rootStack = createStackNavigator();
+const Stack = createNativeStackNavigator();
 
 const navigationOptions = {
   headerShown: false,
@@ -220,967 +214,537 @@ const navigationOptions = {
   cardOverlayEnabled: true,
 };
 
-const optionsModal = {
-  gestureEnabled: Platform.OS == "ios" ? false : false,
-  ...TransitionPresets.ModalSlideFromBottomIOS,
-  cardStyle: {
-    backgroundColor: "transparent",
-  },
-};
-
 const RootNavigator = () => {
   return (
-    <rootStack.Navigator
+    <Stack.Navigator
       // initialRouteName={ScreenKey.CHARITY_FUND_DETAILS}
       screenOptions={navigationOptions}
     >
-      {true ? (
-        <>
-          <rootStack.Screen component={MainTab} name="MainTab" />
+      <Stack.Screen component={MainTab} name="MainTab" />
+      <Stack.Screen name={ScreenKey.LIST_BRANCH} component={ListBranch} />
+      <Stack.Screen name={ScreenKey.LIST_DOCTOR} component={ListDoctor} />
+      <Stack.Screen name={ScreenKey.LIST_DOCTOR_IOS} component={ListDoctor} />
+      {/* <Stack.Screen options={{ ...TransitionPresets.SlideFromRightIOS }} name={ScreenKey.LIST_SERVICE} component={ListService} /> */}
+      <Stack.Screen name={ScreenKey.LIST_ALL_NEWS} component={ListAllNews} />
+      <Stack.Screen
+        name={ScreenKey.LIST_ALL_ENCYCLOPEDIA}
+        component={ListAllEncyclopedia}
+      />
+      <Stack.Screen
+        name={ScreenKey.TREATMENT_RECORD}
+        component={TreatmentRecord}
+      />
+      <Stack.Screen
+        name={ScreenKey.PICK_TREATMENT_TO_BOOKING}
+        component={PickTreatmentDiary}
+      />
+      <Stack.Screen
+        name={ScreenKey.LIST_PARTNER_DIARY_CHILD}
+        component={ListDiaryOfPartnerChild}
+      />
 
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            component={CharityFundDetails}
-            name={ScreenKey.CHARITY_FUND_DETAILS}
-          />
+      <Stack.Screen
+        component={CharityFundDetails}
+        name={ScreenKey.CHARITY_FUND_DETAILS}
+      />
 
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.DETAIL_PRODUCT}
-            component={DetailProduct}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.MISSION_SCREEN}
-            component={Mission}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.FLASHSALE_SCREEN}
-            component={FlashSale}
-          />
+      <Stack.Screen name={ScreenKey.DETAIL_PRODUCT} component={DetailProduct} />
+      <Stack.Screen name={ScreenKey.MISSION_SCREEN} component={Mission} />
+      <Stack.Screen name={ScreenKey.FLASHSALE_SCREEN} component={FlashSale} />
 
-          {/* <rootStack.Screen options={{ ...TransitionPresets.ModalPresentationIOS }} name={ScreenKey.QR_CODE} component={QRCode} /> */}
+      {/* <Stack.Screen options={{ ...TransitionPresets.ModalPresentationIOS }} name={ScreenKey.QR_CODE} component={QRCode} /> */}
 
-          <rootStack.Screen
-            options={{ ...TransitionPresets.ModalPresentationIOS }}
-            name={ScreenKey.SCAN_QR_CODE}
-            component={ScanQRCode}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.HEALTH_RECORD}
-            component={NewHealthRecord}
-          />
-          {/* <rootStack.Screen options={{ ...TransitionPresets.SlideFromRightIOS }} name={ScreenKey.TREATMENT_RECORD} component={TreatmentRecord} /> */}
+      <Stack.Screen name={ScreenKey.SCAN_QR_CODE} component={ScanQRCode} />
+      <Stack.Screen
+        name={ScreenKey.HEALTH_RECORD}
+        component={NewHealthRecord}
+      />
+      {/* <Stack.Screen  name={ScreenKey.TREATMENT_RECORD} component={TreatmentRecord} /> */}
 
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.CHATTING}
-            component={Chatting}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.AI_CHATTING}
-            component={AIChatting}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.LIST_MEMBER_APP}
-            component={ListMembers}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.EDIT_CHATTING_ROOM}
-            component={EditChat}
-          />
-          <rootStack.Screen
-            options={optionsModal}
-            name={ScreenKey.MODAL_CREATE_GROUP_CHAT}
-            component={ModalCreateGroupChat}
-          />
-          <rootStack.Screen
-            options={optionsModal}
-            name={ScreenKey.ADD_MEMBERS_TO_GROUP_CHAT}
-            component={ModalAddMemberToGroupChat}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.INFO_ROOM_CHAT}
-            component={InfoRoomChat}
-          />
+      <Stack.Screen name={ScreenKey.CHATTING} component={Chatting} />
+      <Stack.Screen name={ScreenKey.AI_CHATTING} component={AIChatting} />
+      <Stack.Screen name={ScreenKey.LIST_MEMBER_APP} component={ListMembers} />
+      <Stack.Screen name={ScreenKey.EDIT_CHATTING_ROOM} component={EditChat} />
+      <Stack.Screen name={ScreenKey.INFO_ROOM_CHAT} component={InfoRoomChat} />
 
-          {/* AFFILIATE */}
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.AFFILIATE}
-            component={Affiliate}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.AFFILIATE_NOT_COLLAB}
-            component={NotCollab}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.VERIFICATION_CTV}
-            component={VerificationCTV}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.NEW_VERIFICATION_CTV}
-            component={NewVerificationCTV}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.CURR_COLLAB_REQUEST}
-            component={CurrCollaboratorRequest}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.LIST_BANK_FOR_WITHDRAW}
-            component={ListBankForWithdraw}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.WITH_DRAW}
-            component={WithDraw}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.UPDATE_PARTNER_INFO_BANK}
-            component={UpdatePartnerInfoBank}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.HISTORY_LIA_TICKET}
-            component={HistoryLiaTicket}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.COMMISSION}
-            component={Commission}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.TEAMMATE}
-            component={Teammate}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.AFFILIATE_SERVICE}
-            component={AffiliateService}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.AFFILIATE_WALLET}
-            component={AffiliateWallet}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.QA_AFFILIATE}
-            component={QAAffiliate}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.RANKED}
-            component={Ranked}
-          />
+      {/* AFFILIATE */}
+      <Stack.Screen name={ScreenKey.AFFILIATE} component={Affiliate} />
+      <Stack.Screen
+        name={ScreenKey.AFFILIATE_NOT_COLLAB}
+        component={NotCollab}
+      />
+      <Stack.Screen
+        name={ScreenKey.VERIFICATION_CTV}
+        component={VerificationCTV}
+      />
+      <Stack.Screen
+        name={ScreenKey.NEW_VERIFICATION_CTV}
+        component={NewVerificationCTV}
+      />
+      <Stack.Screen
+        name={ScreenKey.CURR_COLLAB_REQUEST}
+        component={CurrCollaboratorRequest}
+      />
+      <Stack.Screen
+        name={ScreenKey.LIST_BANK_FOR_WITHDRAW}
+        component={ListBankForWithdraw}
+      />
+      <Stack.Screen name={ScreenKey.WITH_DRAW} component={WithDraw} />
+      <Stack.Screen
+        name={ScreenKey.UPDATE_PARTNER_INFO_BANK}
+        component={UpdatePartnerInfoBank}
+      />
+      <Stack.Screen
+        name={ScreenKey.HISTORY_LIA_TICKET}
+        component={HistoryLiaTicket}
+      />
+      <Stack.Screen name={ScreenKey.COMMISSION} component={Commission} />
+      <Stack.Screen name={ScreenKey.TEAMMATE} component={Teammate} />
+      <Stack.Screen
+        name={ScreenKey.AFFILIATE_SERVICE}
+        component={AffiliateService}
+      />
+      <Stack.Screen
+        name={ScreenKey.AFFILIATE_WALLET}
+        component={AffiliateWallet}
+      />
+      <Stack.Screen name={ScreenKey.QA_AFFILIATE} component={QAAffiliate} />
+      <Stack.Screen name={ScreenKey.RANKED} component={Ranked} />
 
-          {/* Booking */}
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.BOOKING_MAIN}
-            component={BookingMain}
-          />
-          {/* <rootStack.Screen options={{ ...TransitionPresets.SlideFromRightIOS }} name={ScreenKey.LIST_BRANCH} component={ListBranch} /> */}
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.DETAIL_BRAND}
-            component={DetailBrand}
-          />
-          {/* <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
+      {/* Booking */}
+      <Stack.Screen name={ScreenKey.BOOKING_MAIN} component={BookingMain} />
+      {/* <Stack.Screen  name={ScreenKey.LIST_BRANCH} component={ListBranch} /> */}
+      <Stack.Screen name={ScreenKey.DETAIL_BRAND} component={DetailBrand} />
+      {/* <Stack.Screen
+            
             name={ScreenKey.DETAIL_NEW_FEED}
             component={DetailNewFeed}
           /> */}
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.DETAIL_POST}
-            component={DetailPost}
-          />
-          <rootStack.Screen
-            // options={Platform.OS == 'ios' ? { ...TransitionPresets.ModalPresentationIOS } : optionsModal}
-            // options={{ ...TransitionPresets.ModalPresentationIOS }}
-            options={optionsModal}
-            name={ScreenKey.LIST_COMMENTS}
-            component={ListComments}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.SEARCH_NEW_FEED}
-            component={NewFeedSearch}
-          />
+      <Stack.Screen name={ScreenKey.DETAIL_POST} component={DetailPost} />
+      <Stack.Screen
+        name={ScreenKey.SEARCH_NEW_FEED}
+        component={NewFeedSearch}
+      />
 
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.MY_PERSONAL_PAGE}
-            component={MyPersonalPage}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.OTHER_PERSONAL_PAGE}
-            component={OtherPersonalPage}
-          />
+      <Stack.Screen
+        name={ScreenKey.MY_PERSONAL_PAGE}
+        component={MyPersonalPage}
+      />
+      <Stack.Screen
+        name={ScreenKey.OTHER_PERSONAL_PAGE}
+        component={OtherPersonalPage}
+      />
 
-          {/* <rootStack.Screen options={{ ...TransitionPresets.SlideFromRightIOS }} name={ScreenKey.LIST_DOCTOR} component={ListDoctor} /> */}
-          {/* <rootStack.Screen options={{ ...TransitionPresets.SlideFromRightIOS }} name={ScreenKey.DETAIL_DOCTOR} component={DetailDoctor} /> */}
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.DETAIL_DOCTOR}
-            component={DetailDoctor}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.DETAIL_PRACTITIONER}
-            component={DetailPractitioner}
-          />
+      {/* <Stack.Screen  name={ScreenKey.LIST_DOCTOR} component={ListDoctor} /> */}
+      {/* <Stack.Screen  name={ScreenKey.DETAIL_DOCTOR} component={DetailDoctor} /> */}
+      <Stack.Screen name={ScreenKey.DETAIL_DOCTOR} component={DetailDoctor} />
+      <Stack.Screen
+        name={ScreenKey.DETAIL_PRACTITIONER}
+        component={DetailPractitioner}
+      />
 
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.VIDEO_REQUEST}
-            component={VideoRequest}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.BOOKING_FOR_BRANCH}
-            component={BookingForBranch}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.BOOKING_FOR_DOCTOR}
-            component={BookingForDoctor}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.EDIT_BOOKING}
-            component={EditBooking}
-          />
-
-          {/* Info Booking */}
-
-          <rootStack.Screen
-            options={optionsModal}
-            name={ScreenKey.INFO_BOOKING}
-            component={InfoBooking}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.DETAIL_BOOKING}
-            component={DetailBooking}
-          />
-          <rootStack.Screen
-            options={optionsModal}
-            name={ScreenKey.INFO_MATERIAL}
-            component={InfoMaterial}
-          />
-
-          {/* Diary */}
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.DIARY_OF_TREATMENT}
-            component={DiaryOfTreatment}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.EDIT_DIARY}
-            component={EditDiary}
-          />
-
-          <rootStack.Screen
-            options={{ ...optionsModal }}
-            name={ScreenKey.MODAL_LIST_DIARY}
-            component={ModalListDiary}
-          />
-
-          <rootStack.Screen
-            options={optionsModal}
-            name={ScreenKey.PICK_SERVICE_TO_BOOKING}
-            component={PickServiceToBooking}
-          />
-          {/* <rootStack.Screen
+      <Stack.Screen name={ScreenKey.VIDEO_REQUEST} component={VideoRequest} />
+      <Stack.Screen
+        name={ScreenKey.BOOKING_FOR_BRANCH}
+        component={BookingForBranch}
+      />
+      <Stack.Screen
+        name={ScreenKey.BOOKING_FOR_DOCTOR}
+        component={BookingForDoctor}
+      />
+      <Stack.Screen name={ScreenKey.EDIT_BOOKING} component={EditBooking} />
+      <Stack.Screen name={ScreenKey.DETAIL_BOOKING} component={DetailBooking} />
+      {/* Diary */}
+      <Stack.Screen
+        name={ScreenKey.DIARY_OF_TREATMENT}
+        component={DiaryOfTreatment}
+      />
+      <Stack.Screen name={ScreenKey.EDIT_DIARY} component={EditDiary} />
+      {/* <Stack.Screen
                 options={optionsModal}
                 name={ScreenKey.PICK_SERVICE_TO_BOOKING}
                 component={PickServiceToBooking}
               /> */}
-          {/* -------- */}
-          {/* Service */}
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.LIST_SERVICE}
-            component={ListService}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.NEW_CATEGORY}
-            component={NewCategory}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.LIST_PRODUCT}
-            component={ListProduct}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.DETAIL_SERVICE}
-            component={DetailService}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.STORAGE_VIDEO}
-            component={StorageVideo}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.MATERIAL_SERVICE}
-            component={ServiceMaterial}
-          />
-          <rootStack.Screen
-            options={{ ...optionsModal }}
-            name={ScreenKey.LIST_SERVICE_COMPARE}
-            component={ListServiceCompare}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.COMPARE_SERVICE}
-            component={CompareService}
-          />
+      {/* -------- */}
+      {/* Service */}
+      <Stack.Screen name={ScreenKey.LIST_SERVICE} component={ListService} />
+      <Stack.Screen name={ScreenKey.NEW_CATEGORY} component={NewCategory} />
+      <Stack.Screen name={ScreenKey.LIST_PRODUCT} component={ListProduct} />
+      <Stack.Screen name={ScreenKey.DETAIL_SERVICE} component={DetailService} />
+      <Stack.Screen name={ScreenKey.STORAGE_VIDEO} component={StorageVideo} />
+      <Stack.Screen
+        name={ScreenKey.MATERIAL_SERVICE}
+        component={ServiceMaterial}
+      />
+      <Stack.Screen
+        name={ScreenKey.COMPARE_SERVICE}
+        component={CompareService}
+      />
 
-          {/* -------- */}
-          {/* Profile */}
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.EDIT_PROFILE}
-            component={NewUpdateInfoUser}
-          />
-          {/* <rootStack.Screen options={{ ...TransitionPresets.SlideFromRightIOS }} name={ScreenKey.PICK_TREATMENT_TO_BOOKING} component={PickTreatmentDiary} /> */}
+      {/* -------- */}
+      {/* Profile */}
+      <Stack.Screen
+        name={ScreenKey.EDIT_PROFILE}
+        component={NewUpdateInfoUser}
+      />
+      {/* <Stack.Screen  name={ScreenKey.PICK_TREATMENT_TO_BOOKING} component={PickTreatmentDiary} /> */}
 
-          {/* <rootStack.Screen options={{ ...TransitionPresets.SlideFromRightIOS }} name={ScreenKey.LIST_PARTNER_DIARY} component={ListDiary} /> */}
-          {/* <rootStack.Screen options={{ ...TransitionPresets.SlideFromRightIOS }} name={ScreenKey.LIST_PARTNER_DIARY_CHILD} component={ListDiaryOfPartnerChild} /> */}
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.CREATE_PARTNER_DIARY_DAILY}
-            component={CreateDiaryDaily}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.UPDATE_PARTNER_DIARY_DAILY}
-            component={UpdateDiaryDaily}
-          />
+      {/* <Stack.Screen  name={ScreenKey.LIST_PARTNER_DIARY} component={ListDiary} /> */}
+      {/* <Stack.Screen  name={ScreenKey.LIST_PARTNER_DIARY_CHILD} component={ListDiaryOfPartnerChild} /> */}
+      <Stack.Screen
+        name={ScreenKey.CREATE_PARTNER_DIARY_DAILY}
+        component={CreateDiaryDaily}
+      />
+      <Stack.Screen
+        name={ScreenKey.UPDATE_PARTNER_DIARY_DAILY}
+        component={UpdateDiaryDaily}
+      />
 
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.LIST_BOOKING}
-            component={ListBooking}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.LIST_DEPOSIT}
-            component={ListDeposit}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.LIST_PAYMENT}
-            component={ListPayment}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.LIST_MEDICINE}
-            component={ListMedicine}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.LIST_DEPOSIT_REQUEST}
-            component={ListDepositRequest}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.LIST_ORDER_SERVICE}
-            component={ListOrderService}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.LIST_TREATMENT_DETAIL}
-            component={ListTreatmentDetail}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.PURCHASE_DEPOSIT_REQUEST}
-            component={PurchaseDepositRequest}
-          />
+      <Stack.Screen name={ScreenKey.LIST_BOOKING} component={ListBooking} />
+      <Stack.Screen name={ScreenKey.LIST_DEPOSIT} component={ListDeposit} />
+      <Stack.Screen name={ScreenKey.LIST_PAYMENT} component={ListPayment} />
+      <Stack.Screen name={ScreenKey.LIST_MEDICINE} component={ListMedicine} />
+      <Stack.Screen
+        name={ScreenKey.LIST_DEPOSIT_REQUEST}
+        component={ListDepositRequest}
+      />
+      <Stack.Screen
+        name={ScreenKey.LIST_ORDER_SERVICE}
+        component={ListOrderService}
+      />
+      <Stack.Screen
+        name={ScreenKey.LIST_TREATMENT_DETAIL}
+        component={ListTreatmentDetail}
+      />
+      <Stack.Screen
+        name={ScreenKey.PURCHASE_DEPOSIT_REQUEST}
+        component={PurchaseDepositRequest}
+      />
 
-          {/* Lose Weight */}
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.LOSE_WEIGHT}
-            component={LoseWeight}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.SETTING_LOSE_WEIGHT}
-            component={SettingLoseWeight}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.ADD_FOOD}
-            component={AddFood}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.LIST_FOOD_IN_MENU}
-            component={ListFoodInMenu}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.ADDING_FOOD}
-            component={AddingFood}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.ADDING_ACTIVITY}
-            component={AddingActivity}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.DETAIL_FOOD}
-            component={DetailFood}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.LIST_ACTIVITY_TO_ADD}
-            component={ListActivityToAdd}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.DETAIL_ACTIVITY}
-            component={DetailActivity}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.CHART_RP_CARLO}
-            component={ChartRPCarlo}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.CHART_RP_WEIGHT}
-            component={ChartRPWeight}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.QA_LOSE_WEIGHT}
-            component={QALoseWeight}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.QA_SERVICE}
-            component={QAService}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.MY_GOAL}
-            component={MyGoal}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.WATER_GOAL}
-            component={WaterGoal}
-          />
+      {/* Lose Weight */}
+      <Stack.Screen name={ScreenKey.LOSE_WEIGHT} component={LoseWeight} />
+      <Stack.Screen
+        name={ScreenKey.SETTING_LOSE_WEIGHT}
+        component={SettingLoseWeight}
+      />
+      <Stack.Screen name={ScreenKey.ADD_FOOD} component={AddFood} />
+      <Stack.Screen
+        name={ScreenKey.LIST_FOOD_IN_MENU}
+        component={ListFoodInMenu}
+      />
+      <Stack.Screen name={ScreenKey.ADDING_FOOD} component={AddingFood} />
+      <Stack.Screen
+        name={ScreenKey.ADDING_ACTIVITY}
+        component={AddingActivity}
+      />
+      <Stack.Screen name={ScreenKey.DETAIL_FOOD} component={DetailFood} />
+      <Stack.Screen
+        name={ScreenKey.LIST_ACTIVITY_TO_ADD}
+        component={ListActivityToAdd}
+      />
+      <Stack.Screen
+        name={ScreenKey.DETAIL_ACTIVITY}
+        component={DetailActivity}
+      />
+      <Stack.Screen name={ScreenKey.CHART_RP_CARLO} component={ChartRPCarlo} />
+      <Stack.Screen
+        name={ScreenKey.CHART_RP_WEIGHT}
+        component={ChartRPWeight}
+      />
+      <Stack.Screen name={ScreenKey.QA_LOSE_WEIGHT} component={QALoseWeight} />
+      <Stack.Screen name={ScreenKey.QA_SERVICE} component={QAService} />
+      <Stack.Screen name={ScreenKey.MY_GOAL} component={MyGoal} />
+      <Stack.Screen name={ScreenKey.WATER_GOAL} component={WaterGoal} />
 
-          {/* SOCIAL ASSISTANCE */}
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.LIST_SP_SOCIAL}
-            component={ListSpSocical}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.DETAIL_SP_SOCIAL}
-            component={DetailSpSocial}
-          />
+      {/* SOCIAL ASSISTANCE */}
+      <Stack.Screen name={ScreenKey.LIST_SP_SOCIAL} component={ListSpSocical} />
+      <Stack.Screen
+        name={ScreenKey.DETAIL_SP_SOCIAL}
+        component={DetailSpSocial}
+      />
 
-          {/* -------- */}
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.LIST_NEWS}
-            component={ListNews}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.DETAIL_NEWS}
-            component={DetailNews}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.DETAIL_ENCYCLOPEDIA}
-            component={DetailEncyclopedia}
-          />
+      {/* -------- */}
+      <Stack.Screen name={ScreenKey.LIST_NEWS} component={ListNews} />
+      <Stack.Screen name={ScreenKey.DETAIL_NEWS} component={DetailNews} />
+      <Stack.Screen
+        name={ScreenKey.DETAIL_ENCYCLOPEDIA}
+        component={DetailEncyclopedia}
+      />
 
-          <rootStack.Screen
-            options={optionsModal}
-            name={ScreenKey.CREATE_NEW_FEED}
-            component={CreateNewFeed}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.ModalPresentationIOS }}
-            name={ScreenKey.EDIT_NEW_FEED}
-            component={EditNewFeed}
-          />
-          <rootStack.Screen
-            options={optionsModal}
-            name={ScreenKey.MODAL_COMMENT_POST}
-            component={ModalCommentPost}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.MODAL_COMMENT_POST_FROM_NOTIFI}
-            component={CommentPostFromNotifi}
-          />
-          <rootStack.Screen
-            options={optionsModal}
-            name={ScreenKey.MODAL_SERVICE_REVIEW}
-            component={ModalServiceReview}
-          />
-          <rootStack.Screen
-            name={ScreenKey.DETAIL_SERVICE_PRODUCT}
-            component={DetailServiceProduct}
-          />
-          <rootStack.Screen
-            name={ScreenKey.PRODUCT_LIST}
-            component={ProductList}
-          />
-          <rootStack.Screen
-            options={optionsModal}
-            name={ScreenKey.MODAL_BOOKING_REVIEW}
-            component={ModalBookingReview}
-          />
+      <Stack.Screen
+        name={ScreenKey.MODAL_COMMENT_POST_FROM_NOTIFI}
+        component={CommentPostFromNotifi}
+      />
+      <Stack.Screen
+        name={ScreenKey.DETAIL_SERVICE_PRODUCT}
+        component={DetailServiceProduct}
+      />
+      <Stack.Screen name={ScreenKey.PRODUCT_LIST} component={ProductList} />
 
-          <rootStack.Screen
-            options={optionsModal}
-            name={ScreenKey.VIDEO_CALL}
-            component={VideoCall}
-          />
-          <rootStack.Screen
-            options={optionsModal}
-            name={ScreenKey.VOICE_CALL}
-            component={VoiceCall}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.SETTING_APP}
-            component={NewSettingApp}
-          />
+      <Stack.Screen name={ScreenKey.SETTING_APP} component={NewSettingApp} />
 
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.LIST_DIARY_BY_TYPE}
-            component={ListDiaryByType}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.LIST_SERVICE_BY_KEY}
-            component={ListServiceByKey}
-          />
+      <Stack.Screen
+        name={ScreenKey.LIST_DIARY_BY_TYPE}
+        component={ListDiaryByType}
+      />
+      <Stack.Screen
+        name={ScreenKey.LIST_SERVICE_BY_KEY}
+        component={ListServiceByKey}
+      />
 
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.WHEEL_SPIN}
-            component={NewWheelSpin}
-          />
+      <Stack.Screen name={ScreenKey.WHEEL_SPIN} component={NewWheelSpin} />
 
-          <rootStack.Screen
-            options={optionsModal}
-            name={ScreenKey.QR_CODE}
-            component={NewQRCode}
-          />
-          <rootStack.Screen
-            options={optionsModal}
-            name={ScreenKey.PICK_UTILITIES}
-            component={PickUtilities}
-          />
-
-          <rootStack.Screen
-            options={optionsModal}
-            name={ScreenKey.FEED_BACK_BRANCH}
-            component={FeedBackBranch}
-          />
-          <rootStack.Screen
-            options={optionsModal}
-            name={ScreenKey.FEED_BACK_DOCTOR}
-            component={FeedBackDoctor}
-          />
-          <rootStack.Screen
-            options={optionsModal}
-            name={ScreenKey.FEED_BACK_SERVICE}
-            component={FeedBackService}
-          />
-
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.CREATE_BOOKING}
-            component={CreateBooking}
-          />
-          {/* <rootStack.Screen
-                options={{ ...TransitionPresets.SlideFromRightIOS }}
+      <Stack.Screen name={ScreenKey.CREATE_BOOKING} component={CreateBooking} />
+      {/* <Stack.Screen
+                
                 name={ScreenKey.CREATE_BOOKING}
                 component={CreateBooking}
               /> */}
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.CREATE_BOOKING_FLASH_SALE}
-            component={CreateBookingFlashSale}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.DETAIL_SERVICE_FLASH_SALE}
-            component={DetailServiceFlashSale}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.LIST_VOUCHER}
-            component={ListVoucher}
-          />
+      <Stack.Screen
+        name={ScreenKey.CREATE_BOOKING_FLASH_SALE}
+        component={CreateBookingFlashSale}
+      />
+      <Stack.Screen
+        name={ScreenKey.DETAIL_SERVICE_FLASH_SALE}
+        component={DetailServiceFlashSale}
+      />
+      <Stack.Screen name={ScreenKey.LIST_VOUCHER} component={ListVoucher} />
 
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.LIST_ALL_HISTORY_TREATMENT}
-            component={ListAllHistoryTreatment}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.SHARE_TO_SOCIAL}
-            component={ShareToSocial}
-          />
+      <Stack.Screen
+        name={ScreenKey.LIST_ALL_HISTORY_TREATMENT}
+        component={ListAllHistoryTreatment}
+      />
+      <Stack.Screen
+        name={ScreenKey.SHARE_TO_SOCIAL}
+        component={ShareToSocial}
+      />
 
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.LIST_MY_ADDRESS}
-            component={ListMyAddress}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.CREATE_NEW_ADDRESS}
-            component={CreateNewAddress}
-          />
+      <Stack.Screen
+        name={ScreenKey.LIST_MY_ADDRESS}
+        component={ListMyAddress}
+      />
+      <Stack.Screen
+        name={ScreenKey.CREATE_NEW_ADDRESS}
+        component={CreateNewAddress}
+      />
 
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.LIA_UNI}
-            component={LiAUni}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.LESSION}
-            component={Lession}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.START_EXAM}
-            component={StartExam}
-          />
+      <Stack.Screen name={ScreenKey.LIA_UNI} component={LiAUni} />
+      <Stack.Screen name={ScreenKey.LESSION} component={Lession} />
+      <Stack.Screen name={ScreenKey.START_EXAM} component={StartExam} />
 
-          {/* AUTH IN APP */}
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.LOGIN_IN_APP}
-            component={LoginInApp}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.REGISTER_IN_APP}
-            component={RegisterInApp}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.ACTIVATION_IN_APP}
-            component={ActivationInApp}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.FILL_PHONE_TO_GET_NEW_PASS}
-            component={FillPhoneToGetNewPass}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.GET_OTP_NEW_PASS}
-            component={GetOtpNewPass}
-          />
+      {/* AUTH IN APP */}
+      <Stack.Screen name={ScreenKey.LOGIN_IN_APP} component={LoginInApp} />
+      <Stack.Screen
+        name={ScreenKey.REGISTER_IN_APP}
+        component={RegisterInApp}
+      />
+      <Stack.Screen
+        name={ScreenKey.ACTIVATION_IN_APP}
+        component={ActivationInApp}
+      />
+      <Stack.Screen
+        name={ScreenKey.FILL_PHONE_TO_GET_NEW_PASS}
+        component={FillPhoneToGetNewPass}
+      />
+      <Stack.Screen
+        name={ScreenKey.GET_OTP_NEW_PASS}
+        component={GetOtpNewPass}
+      />
 
-          {/* AI */}
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={"FACE_AI"}
-            component={FaceAI}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.RESULT_AI_SCAN_EYES}
-            component={ResultAIScanEyes}
-          />
+      {/* AI */}
+      <Stack.Screen name={"FACE_AI"} component={FaceAI} />
+      <Stack.Screen
+        name={ScreenKey.RESULT_AI_SCAN_EYES}
+        component={ResultAIScanEyes}
+      />
 
-          {/* NEW AFFILIATE */}
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.NEW_AFFILIATE}
-            component={NewAffiliate}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.LIST_F1}
-            component={ListF1}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.INFO_F1}
-            component={InfoF1}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.ORDER_BOOKING_ALL_AFFILIATE}
-            component={ListOrderBookingAll}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.QA_NEW_AFFILIATE}
-            component={QANewAffiliate}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.INFO_WALLET_NEW_AFFILIATE}
-            component={InfoWalletNewAffiliate}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.LIST_RANKED}
-            component={ListRanked}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.RECHARGE_TO_WALLET}
-            component={RechargeToWallet}
-          />
+      {/* NEW AFFILIATE */}
+      <Stack.Screen name={ScreenKey.NEW_AFFILIATE} component={NewAffiliate} />
+      <Stack.Screen name={ScreenKey.LIST_F1} component={ListF1} />
+      <Stack.Screen name={ScreenKey.INFO_F1} component={InfoF1} />
+      <Stack.Screen
+        name={ScreenKey.ORDER_BOOKING_ALL_AFFILIATE}
+        component={ListOrderBookingAll}
+      />
+      <Stack.Screen
+        name={ScreenKey.QA_NEW_AFFILIATE}
+        component={QANewAffiliate}
+      />
+      <Stack.Screen
+        name={ScreenKey.INFO_WALLET_NEW_AFFILIATE}
+        component={InfoWalletNewAffiliate}
+      />
+      <Stack.Screen name={ScreenKey.LIST_RANKED} component={ListRanked} />
+      <Stack.Screen
+        name={ScreenKey.RECHARGE_TO_WALLET}
+        component={RechargeToWallet}
+      />
 
-          {/* LiA Voucher */}
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.LIA_VOUCHER}
-            component={LiAVoucher}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.DETAIL_LIA_VOUCHER}
-            component={DetailLiAVoucher}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.MY_VOUCHERS}
-            component={MyVouchers}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.DETAIL_NEWS_VOUCHER}
-            component={DetailNewsVoucher}
-          />
+      {/* LiA Voucher */}
+      <Stack.Screen name={ScreenKey.LIA_VOUCHER} component={LiAVoucher} />
+      <Stack.Screen
+        name={ScreenKey.DETAIL_LIA_VOUCHER}
+        component={DetailLiAVoucher}
+      />
+      <Stack.Screen name={ScreenKey.MY_VOUCHERS} component={MyVouchers} />
+      <Stack.Screen
+        name={ScreenKey.DETAIL_NEWS_VOUCHER}
+        component={DetailNewsVoucher}
+      />
 
-          {/* VIDEO PLAYER */}
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.VERTICAL_VIDEO_PLAYER}
-            component={VerticalVideoPlayer}
-          />
+      {/* MATERIAL */}
+      <Stack.Screen
+        name={ScreenKey.DETAIL_MATERIAL}
+        component={DetailMaterial}
+      />
 
-          {/* MATERIAL */}
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.DETAIL_MATERIAL}
-            component={DetailMaterial}
-          />
+      {/* BEAUTY INSURANCE */}
+      <Stack.Screen
+        name={ScreenKey.LIST_BEAUTY_INSURANCE}
+        component={ListBeautyInsurance}
+      />
+      <Stack.Screen
+        name={ScreenKey.DETAIL_BEAUTY_INSURANCE}
+        component={DetailBeautyInsurance}
+      />
 
-          {/* BEAUTY INSURANCE */}
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.LIST_BEAUTY_INSURANCE}
-            component={ListBeautyInsurance}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.DETAIL_BEAUTY_INSURANCE}
-            component={DetailBeautyInsurance}
-          />
+      {/* SCREEN FOR RENDER HTML */}
+      <Stack.Screen name={ScreenKey.SCREEN_HTML} component={ScreenHTML} />
 
-          {/* SCREEN FOR RENDER HTML */}
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.SCREEN_HTML}
-            component={ScreenHTML}
-          />
+      {/* RELATIVES PROFILE */}
+      <Stack.Screen
+        name={ScreenKey.LIST_RELATIVES_PROFILE}
+        component={ListRelativesProfile}
+      />
+      <Stack.Screen name={ScreenKey.RELATIVES_INFO} component={RelativesInfo} />
+      <Stack.Screen name={ScreenKey.DOCTOR_LIST} component={DoctorList} />
+      <Stack.Screen
+        name={ScreenKey.PRACTITIONER_LIST}
+        component={PractitionerList}
+      />
+      <Stack.Screen name={ScreenKey.BRANCH_LIST} component={BranchList} />
+      <Stack.Screen name={ScreenKey.SERVICE_LIST} component={ServiceList} />
+      <Stack.Screen name={ScreenKey.MATERIAL_LIST} component={MaterialList} />
 
-          {/* RELATIVES PROFILE */}
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.LIST_RELATIVES_PROFILE}
-            component={ListRelativesProfile}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.RELATIVES_INFO}
-            component={RelativesInfo}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.DOCTOR_LIST}
-            component={DoctorList}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.PRACTITIONER_LIST}
-            component={PractitionerList}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.BRANCH_LIST}
-            component={BranchList}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.SERVICE_LIST}
-            component={ServiceList}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.MATERIAL_LIST}
-            component={MaterialList}
-          />
+      <Stack.Screen name={ScreenKey.SEARCHING_HOME} component={SearchingHome} />
 
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.SEARCHING_HOME}
-            component={SearchingHome}
-          />
+      {/* TAKE CARE AFTER TREATMENT */}
+      <Stack.Screen name={ScreenKey.TAKECARE} component={TakeCare} />
+      <Stack.Screen
+        name={ScreenKey.UPDATE_DAILY_DIARIES}
+        component={UpdateDailyDiaries}
+      />
 
-          {/* TAKE CARE AFTER TREATMENT */}
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.TAKECARE}
-            component={TakeCare}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.UPDATE_DAILY_DIARIES}
-            component={UpdateDailyDiaries}
-          />
+      {/* CHARITY */}
+      <Stack.Screen name={ScreenKey.CHARITY} component={Charity} />
+      <Stack.Screen
+        name={ScreenKey.SEARCHING_CHARITY}
+        component={SearchingCharity}
+      />
+      <Stack.Screen
+        name={ScreenKey.CHARITY_ACCOUNT_STATEMENT}
+        component={CharityAccountStatement}
+      />
+      <Stack.Screen
+        name={ScreenKey.CHARITY_LIST_OUTSTANDING}
+        component={ListOutstanding}
+      />
+      <Stack.Screen
+        name={ScreenKey.CHARITY_RESULT_FILTER_CASH_FLOW}
+        component={ResultFilter}
+      />
+      <Stack.Screen name={ScreenKey.CHARITY_COMPANION} component={Companion} />
+      <Stack.Screen name={ScreenKey.CHARITY_DONATION} component={Donation} />
+      <Stack.Screen
+        name={ScreenKey.CHARITY_INFO_CO_FOUNDER}
+        component={InfoCoFounder}
+      />
+      <Stack.Screen
+        name={ScreenKey.CHARITY_LIST_COMPANION}
+        component={ListCompanion}
+      />
 
-          {/* CHARITY */}
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.CHARITY}
-            component={Charity}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.SEARCHING_CHARITY}
-            component={SearchingCharity}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.CHARITY_ACCOUNT_STATEMENT}
-            component={CharityAccountStatement}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.CHARITY_LIST_OUTSTANDING}
-            component={ListOutstanding}
-          />
-          <rootStack.Screen
-            options={optionsModal}
-            name={ScreenKey.CHARITY_ACCOUNT_MODAL_FILTER}
-            component={ModalFilter}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.CHARITY_RESULT_FILTER_CASH_FLOW}
-            component={ResultFilter}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.CHARITY_COMPANION}
-            component={Companion}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.CHARITY_DONATION}
-            component={Donation}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.CHARITY_INFO_CO_FOUNDER}
-            component={InfoCoFounder}
-          />
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.CHARITY_LIST_COMPANION}
-            component={ListCompanion}
-          />
+      <Stack.Screen name={ScreenKey.LIST_PARTNER_DIARY} component={ListDiary} />
+      <Stack.Screen name={ScreenKey.SKIN_MIRROR_AI} component={SkinMirrorAI} />
+      <Stack.Group
+        screenOptions={{
+          presentation: isAndroid ? "fullScreenModal" : undefined,
+          animation: "slide_from_bottom",
+        }}
+      >
+        <Stack.Screen
+          name={ScreenKey.VERTICAL_VIDEO_PLAYER}
+          component={VerticalVideoPlayer}
+        />
+        <Stack.Screen
+          name={ScreenKey.MODAL_CREATE_GROUP_CHAT}
+          component={ModalCreateGroupChat}
+        />
+        <Stack.Screen
+          name={ScreenKey.ADD_MEMBERS_TO_GROUP_CHAT}
+          component={ModalAddMemberToGroupChat}
+        />
+        <Stack.Screen name={ScreenKey.LIST_COMMENTS} component={ListComments} />
 
-          {/* SKIN MIRROR AI */}
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.SKIN_MIRROR_AI}
-            component={SkinMirrorAI}
-          />
+        <Stack.Screen name={ScreenKey.INFO_BOOKING} component={InfoBooking} />
+        <Stack.Screen name={ScreenKey.INFO_MATERIAL} component={InfoMaterial} />
+        <Stack.Screen
+          name={ScreenKey.LIST_SERVICE_COMPARE}
+          component={ListServiceCompare}
+        />
+        <Stack.Screen
+          name={ScreenKey.MODAL_LIST_DIARY}
+          component={ModalListDiary}
+        />
 
-          <rootStack.Screen
-            options={{
-              headerShown: false,
-              cardStyle: { backgroundColor: "transparent" },
-              cardOverlayEnabled: true,
-              cardStyleInterpolator: ({ current: { progress } }) => ({
-                cardStyle: {
-                  opacity: progress.interpolate({
-                    inputRange: [0, 0.5, 0.9, 1],
-                    outputRange: [0, 0.25, 0.7, 1],
-                  }),
-                },
-                overlayStyle: {
-                  opacity: progress.interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [0, 0.5],
-                    extrapolate: "clamp",
-                  }),
-                },
-              }),
-            }}
-            name={"fakeModal"}
-            component={FakeModal}
-          />
+        <Stack.Screen
+          name={ScreenKey.PICK_SERVICE_TO_BOOKING}
+          component={PickServiceToBooking}
+        />
+        <Stack.Screen
+          name={ScreenKey.CREATE_NEW_FEED}
+          component={CreateNewFeed}
+        />
+        <Stack.Screen name={ScreenKey.EDIT_NEW_FEED} component={EditNewFeed} />
+        <Stack.Screen
+          name={ScreenKey.MODAL_COMMENT_POST}
+          component={ModalCommentPost}
+        />
+        <Stack.Screen
+          name={ScreenKey.MODAL_SERVICE_REVIEW}
+          component={ModalServiceReview}
+        />
+        <Stack.Screen
+          name={ScreenKey.MODAL_BOOKING_REVIEW}
+          component={ModalBookingReview}
+        />
 
-          <rootStack.Screen
-            options={{ ...TransitionPresets.SlideFromRightIOS }}
-            name={ScreenKey.LIST_PARTNER_DIARY}
-            component={ListDiary}
-          />
-        </>
-      ) : (
-        <>
-          <rootStack.Screen name="AskForLogin" component={AskForLgin} />
-          <rootStack.Screen name="Login" component={Login} />
-          <rootStack.Screen name={ScreenKey.REGISTER} component={Register} />
-          <rootStack.Screen
-            name={ScreenKey.ACTIVATION}
-            component={Activation}
-          />
-        </>
-      )}
-    </rootStack.Navigator>
+        <Stack.Screen name={ScreenKey.VIDEO_CALL} component={VideoCall} />
+        <Stack.Screen name={ScreenKey.VOICE_CALL} component={VoiceCall} />
+        <Stack.Screen name={ScreenKey.QR_CODE} component={NewQRCode} />
+        <Stack.Screen
+          name={ScreenKey.PICK_UTILITIES}
+          component={PickUtilities}
+        />
+
+        <Stack.Screen
+          name={ScreenKey.FEED_BACK_BRANCH}
+          component={FeedBackBranch}
+        />
+        <Stack.Screen
+          name={ScreenKey.FEED_BACK_DOCTOR}
+          component={FeedBackDoctor}
+        />
+        <Stack.Screen
+          name={ScreenKey.FEED_BACK_SERVICE}
+          component={FeedBackService}
+        />
+        <Stack.Screen
+          name={ScreenKey.CHARITY_ACCOUNT_MODAL_FILTER}
+          component={ModalFilter}
+        />
+      </Stack.Group>
+    </Stack.Navigator>
   );
 };
 

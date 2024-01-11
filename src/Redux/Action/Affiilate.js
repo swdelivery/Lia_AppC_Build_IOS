@@ -20,7 +20,7 @@ export const getListAllBookingInvitee = (data) => {
 }
 
 export const getListAllOrderServiceInvitee = (data) => {
-    return Axios.post(`${URL_FOR_PARTNER}/gratitue/invitee-services`, data)
+    return Axios.post(`${URL_FOR_PARTNER}/gratitue/invitee-order`, data)
         .then(res => {
             console.log(useLogStyle + '----FETCHING SUCCESS: ', setLogStyle('green'), { getListAllOrderServiceInvitee: res });
             return res
@@ -46,7 +46,7 @@ export const getListBookingInvitee = (data) => {
 }
 
 export const getListOrderServiceInvitee = (data) => {
-    return Axios.post(`${URL_FOR_PARTNER}/gratitue/invitee/list-service`, data)
+    return Axios.post(`${URL_FOR_PARTNER}/gratitue/invitee/list-order`, data)
         .then(res => {
             console.log(useLogStyle + '----FETCHING SUCCESS: ', setLogStyle('green'), { getListOrderServiceInvitee: res });
             return res

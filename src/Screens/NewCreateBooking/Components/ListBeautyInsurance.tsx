@@ -11,69 +11,34 @@ import React from 'react'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'src/Hooks/useNavigation'
-
+import ItemInsurance from "./ItemInsurance";
 
 type Props = {
-    onPress: (item) => void;
-}
+  onPress: (item) => void;
+};
 
 const ListBeautyInsurance = ({ onPress }: Props) => {
+  const { navigate } = useNavigate();
 
-    const { navigate } = useNavigate()
+  const { dataInsurance } = useSelector(getDataCreateBookingState);
 
-    const { dataInsurance } = useSelector(getDataCreateBookingState)
+  return (
+    <View>
+      <Row marginHorizontal={8 * 2} justifyContent="space-between">
+        <Text size={14} weight="bold">
+          Bảo hiểm làm đẹp{" "}
+        </Text>
 
-    const ItemInsurance = ({ data }) => {
-        return (
-            <TouchableOpacity
-                onPress={navigate(ScreenKey.DETAIL_BEAUTY_INSURANCE, {
-                    insurance: data,
-                })}>
-                <Column
-                    gap={4}
-                    borderRadius={8}
-                    borderWidth={1}
-                    borderColor={BORDER_COLOR}
-                    padding={8 * 2}
-                    marginTop={8 * 2}
-                    marginHorizontal={8 * 2} >
-                    <Row justifyContent='space-between'>
-                        <Text style={{ flex: 1 }} weight='bold'>
-                            {data?.name}
-                        </Text>
-                        <Text weight='bold' color={PRICE_ORANGE}>
-                            {formatMonney(data?.price)} VNĐ
-                        </Text>
-                    </Row>
-                    <Text numberOfLines={3}>
-                        {data?.description}
-                    </Text>
-                </Column>
-            </TouchableOpacity>
-        )
-    }
-
-    return (
-        <View>
-            <Row marginHorizontal={8 * 2} justifyContent='space-between'>
-                <Text size={14} weight='bold'>Bảo hiểm làm đẹp </Text>
-
-                <TouchableOpacity
-                    hitSlop={styleElement.hitslopSm}
-                    onPress={onPress}>
-                    <IconPlusBase width={8 * 2} height={8 * 2} />
-                </TouchableOpacity>
-            </Row>
-            {
-                dataInsurance?.map((item, index) => {
-                    return (
-                        <ItemInsurance data={item} key={index} />
-                    )
-                })
-            }
-        </View >
-    )
-}
+        <TouchableOpacity hitSlop={styleElement.hitslopSm} onPress={onPress}>
+          <IconPlusBase width={8 * 2} height={8 * 2} />
+        </TouchableOpacity>
+      </Row>
+      {dataInsurance?.map((item, index) => {
+        return <ItemInsurance item={item} key={index} />;
+      })}
+    </View>
+  );
+};
 
 export default ListBeautyInsurance
 

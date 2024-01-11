@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Image, Platform, StyleSheet, Text, TouchableOpacity, View, ScrollView, Alert } from 'react-native';
+import {
+  Image,
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import Modal from 'react-native-modal';
 import { useSelector } from 'react-redux';
 import * as Color from '../../../Constant/Color';
@@ -8,16 +15,7 @@ import { _heightScale, _widthScale, _moderateScale, _width, _height } from '../.
 import * as ActionType from '../../../Redux/Constants/ActionType';
 import Store from "../../../Redux/store";
 import { styleElement } from '../../../Constant/StyleElement';
-import { sizeIcon } from '../../../Constant/Icon';
-import ScreenKey from '../../../Navigation/ScreenKey'
-import { navigation } from '../../../../rootNavigation';
-import { URL_ORIGINAL } from '../../../Constant/Url';
-import RenderHtml from 'react-native-render-html';
-import { formatMonney } from '../../../Constant/Utils';
-import { isEmpty } from 'lodash-es';
-import { getConfigData } from '../../../Redux/Action/OrtherAction';
-import FastImage from 'react-native-fast-image';
-import { getConfigFileByCode } from '../../../Redux/Action/SpinWheelAction';
+import { sizeIcon } from "../../../Constant/Icon";
 import YoutubePlayer from "react-native-youtube-iframe";
 import SkeletonPlaceholder from "react-native-skeleton-placeholder";
 

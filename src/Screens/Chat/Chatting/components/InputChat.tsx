@@ -88,7 +88,7 @@ const InputChat = ({ }: Props) => {
           isTyping: true,
         },
       };
-      SocketInstance.socketConn?.emit(CSS_PARTNER_TYPING, data);
+      SocketInstance.send(CSS_PARTNER_TYPING, data);
       console.log("Start Typing");
     } else {
       let data = {
@@ -97,7 +97,7 @@ const InputChat = ({ }: Props) => {
           isTyping: false,
         },
       };
-      SocketInstance.socketConn?.emit(CSS_PARTNER_TYPING, data);
+      SocketInstance.send(CSS_PARTNER_TYPING, data);
       console.log("Stop Typing");
     }
   }, [isTyping]);
@@ -209,7 +209,7 @@ const InputChat = ({ }: Props) => {
 
     setIsTyping(false);
     setCurrTextMessage("");
-    SocketInstance.socketConn?.emit(CSS_SEND_MESSAGE, data);
+    SocketInstance.send(CSS_SEND_MESSAGE, data);
     setTimeout(() => {
       setLoadingSendMessage(false);
     }, 300);

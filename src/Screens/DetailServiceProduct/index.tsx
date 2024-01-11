@@ -1,11 +1,7 @@
 import Screen from "@Components/Screen";
-import React, { useRef, useState } from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
-import {
-  useAnimatedScrollHandler,
-  useSharedValue,
-} from "react-native-reanimated";
-import { useFocused, useNavigationParams } from "src/Hooks/useNavigation";
+import { useNavigationParams } from "src/Hooks/useNavigation";
 import MainInfo from "./Components/MainInfo";
 import ScrollableTabView from "@itenl/react-native-scrollable-tabview";
 import { _width } from "@Constant/Scale";
@@ -13,25 +9,34 @@ import { FONT_WEIGHTS } from "@Components/Text";
 import Parameter from "./Parameter";
 import Introduce from "./Introduce";
 import Instruct from "./Instruct";
-import { getDetailMaterial } from "@Redux/Action/Material";
 import { isAndroid } from "src/utils/platform";
 import LiAHeader from "@Components/Header/LiAHeader";
 import { StatusBar } from "@Components/StatusBar";
 import ScreenKey from "@Navigation/ScreenKey";
-import HorizontalImages from "@Screens/DiaryDetails/components/HorizontalImages";
 import HorizontalListImage from "./Components/HorizontalListImage";
 import { BASE_COLOR } from "@Constant/Color";
+import useApi from "src/Hooks/services/useApi";
+import ProductService from "src/Services/ProductService";
+import { LoadingView } from "@Components/Loading/LoadingView";
 
 type ScreenKey = typeof ScreenKey.DETAIL_SERVICE_PRODUCT;
 
 const DetailServiceProduct = (props) => {
   const { item } = useNavigationParams<ScreenKey>();
+  const { isLoading, data, performRequest } = useApi(
+    ProductService.getProductDetails,
+    item
+  );
+
+  useEffect(() => {
+    performRequest(item._id);
+  }, [item._id]);
 
   const Banner = () => {
     return (
       <>
-        <HorizontalListImage images={item.representationFileArr} />
-        <MainInfo product={item} />
+        <HorizontalListImage images={data.representationFileArr} />
+        <MainInfo product={data} />
       </>
     );
   };
@@ -39,19 +44,19 @@ const DetailServiceProduct = (props) => {
   const STACKS = [
     {
       screen: () => {
-        return <Parameter product={item} />;
+        return isLoading ? <LoadingView /> : <Parameter product={data} />;
       },
       tabLabel: "Thông số",
     },
     {
       screen: () => {
-        return <Introduce product={item} />;
+        return <Introduce product={data} />;
       },
       tabLabel: "Giới thiệu",
     },
     {
       screen: () => {
-        return <Instruct product={item} />;
+        return <Instruct product={data} />;
       },
       tabLabel: "Hướng dẫn",
     },

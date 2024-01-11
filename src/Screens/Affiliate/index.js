@@ -1,22 +1,39 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { Animated, Image, StyleSheet, Text, TextInput, TouchableOpacity, View, ImageBackground, ScrollView, Clipboard, Alert } from 'react-native';
-import { GREY, WHITE, BASE_COLOR, SECOND_COLOR, BTN_PRICE, RED, BLUE_FB, THIRD_COLOR, BLACK, BG_GREY_OPACITY_5, BG_GREY_OPACITY_2 } from '../../Constant/Color';
+import {
+  Animated,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  ScrollView,
+  Alert,
+} from "react-native";
+import {
+  GREY,
+  WHITE,
+  BASE_COLOR,
+  SECOND_COLOR,
+  BTN_PRICE,
+  THIRD_COLOR,
+  BLACK,
+  BG_GREY_OPACITY_5,
+  BG_GREY_OPACITY_2,
+} from "../../Constant/Color";
 import { stylesFont } from '../../Constant/Font';
-import { sizeIcon, sizeLogo } from '../../Constant/Icon';
+import { sizeIcon } from "../../Constant/Icon";
 import { _moderateScale, _width } from '../../Constant/Scale';
 import { styleElement } from '../../Constant/StyleElement';
-import { navigation } from '../../../rootNavigation';
-import moment from 'moment'
+import { navigation } from "../../../rootNavigation";
 
-import Menu from './Menu'
 import { useSelector, useDispatch } from 'react-redux';
-import { getWallet, getCurrentCommission, getCollabStatistic, getMineCommission } from '../../Redux/Action/InfoAction'
+import { getWallet, getMineCommission } from "../../Redux/Action/InfoAction";
 import { formatMonney } from '../../Constant/Utils';
 import ModalCashInWallet from './Components/ModalCashInWallet';
 import ModalInfoWallet from './Components/ModalInfoWallet';
 import ScreenKey from '../../Navigation/ScreenKey'
 import StatusBarCustom from '../../Components/StatusBar/StatusBarCustom';
-import { TabBar, TabView } from 'react-native-tab-view';
+import { TabBar } from "react-native-tab-view";
 import Wallet from './Wallet/index'
 import Service from './Service/index'
 import QAndA from './Q&A/index'
@@ -24,8 +41,7 @@ import ModalFlashMsg from '../../Components/ModalFlashMsg/ModalFlashMsg';
 import LinearGradient from 'react-native-linear-gradient';
 import { URL_ORIGINAL } from '../../Constant/Url';
 import ModalInfoUserAffiliate from './Components/ModalInfoUserAffiliate';
-import { getBottomSpace } from 'react-native-iphone-x-helper';
-import YoutubePlayer from "react-native-youtube-iframe";
+import { getBottomSpace } from "react-native-iphone-x-helper";
 import ModalIframeYoutube from '../../Components/ModalIframeYoutube/ModalIframeYoutube';
 import { getConfigData } from '../../Redux/Action/OrtherAction';
 

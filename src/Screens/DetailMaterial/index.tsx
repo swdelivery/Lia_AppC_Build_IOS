@@ -1,10 +1,6 @@
 import Screen from "@Components/Screen";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
-import {
-  useAnimatedScrollHandler,
-  useSharedValue,
-} from "react-native-reanimated";
 import { useFocused } from "src/Hooks/useNavigation";
 import HorizontalListImage from "./Components/HorizontalListImage";
 import MainInfo from "./Components/MainInfo";

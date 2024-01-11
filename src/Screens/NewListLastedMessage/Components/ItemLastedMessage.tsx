@@ -36,9 +36,6 @@ const ItemLastedMessage = ({ item, onPress }: Props) => {
       infoUser?._id === item?.latestMessage?.senderId ? "Bạn: " : ``;
     let content = "";
     switch (item.latestMessage?.type) {
-      case "text":
-        content = item.latestMessage?.content;
-        break;
       case "video":
         content = `[ Video ]`;
         break;
@@ -52,6 +49,7 @@ const ItemLastedMessage = ({ item, onPress }: Props) => {
         content = item.latestMessage?.content;
         break;
       default:
+        content = item.latestMessage?.content;
         break;
     }
     return `${prefix}${content}`;

@@ -8,6 +8,7 @@ import Slider from '@react-native-community/slider'
 import React, { useEffect, useState } from 'react'
 import { Platform, StyleSheet } from 'react-native'
 
+const MAX_FILTER_PRICE = 100000000;
 
 type Props = {
   selectedPrice: number;
@@ -15,26 +16,24 @@ type Props = {
 };
 
 const SliderPrice = ({ selectedPrice, setSelectedPrice }: Props) => {
-  const [currValuePrice, setCurrValuePrice] = useState(0)
+  const [currValuePrice, setCurrValuePrice] = useState(0);
 
   const _handleValueChange = (e) => {
-    setCurrValuePrice(e)
-  }
+    setCurrValuePrice(e);
+  };
 
   useEffect(() => {
-    setCurrValuePrice(selectedPrice)
-  }, [selectedPrice])
+    setCurrValuePrice(selectedPrice);
+  }, [selectedPrice]);
 
   return (
     <Column gap={8} margin={8 * 2}>
-      <Text weight='bold'>Giá</Text>
-      <Text
-        weight='bold'
-        color={NEW_BASE_COLOR}>
+      <Text weight="bold">Giá</Text>
+      <Text weight="bold" color={NEW_BASE_COLOR}>
         {formatMonney(currValuePrice)} VNĐ
       </Text>
 
-      <Column alignSelf='flex-start'>
+      <Column alignSelf="flex-start">
         <Slider
           value={selectedPrice}
           onSlidingComplete={setSelectedPrice}
@@ -42,19 +41,21 @@ const SliderPrice = ({ selectedPrice, setSelectedPrice }: Props) => {
           style={styles.slider}
           minimumValue={0}
           step={100000}
-          thumbTintColor={Platform.OS == 'ios' ? null : NEW_BASE_COLOR}
-          maximumValue={50000000}
+          thumbTintColor={Platform.OS == "ios" ? null : NEW_BASE_COLOR}
+          maximumValue={MAX_FILTER_PRICE}
           minimumTrackTintColor={NEW_BASE_COLOR}
-          maximumTrackTintColor={'#C7CBD8'}
+          maximumTrackTintColor={"#C7CBD8"}
         />
-        <Row justifyContent='space-between'>
+        <Row justifyContent="space-between">
           <Text color={NEW_BASE_COLOR}>0 VNĐ</Text>
-          <Text color={NEW_BASE_COLOR}>50.000.000 VNĐ</Text>
+          <Text color={NEW_BASE_COLOR}>
+            {formatMonney(MAX_FILTER_PRICE, true)}
+          </Text>
         </Row>
       </Column>
     </Column>
-  )
-}
+  );
+};
 
 export default SliderPrice
 
