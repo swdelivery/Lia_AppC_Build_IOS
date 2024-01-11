@@ -46,6 +46,9 @@ import useVolume from "./Components/useVolume";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { BackIcon } from "@Components/Icon/Icon";
 import IconButton from "@Components/IconButton";
+import { useTimeout } from "@r0b0t3d/react-native-hooks";
+import { useFocused } from "src/Hooks/useNavigation";
+import { useIsFocused } from "@react-navigation/native";
 
 const EYE_INDICATOR_SIZE = 10;
 
@@ -80,10 +83,11 @@ const FaceAI = () => {
   const [startCirlLeftEye, setStartCirlLeftEye] = useState(null);
   const [startTextLeftEye, setStartTextLeftEye] = useState(null);
   const [startResultLeftEye, setStartResultLeftEye] = useState(null);
-
   const [showBackDropOpacity, setShowBackDropOpacity] = useState(null);
+  const [isReady, setIsReady] = React.useState(false);
 
-  const { top } = useSafeAreaInsets()
+  const { top } = useSafeAreaInsets();
+  const isFocused = useIsFocused();
 
   // FIXME: This code is used for testing on emulator
   // __DEV__ &&
@@ -96,7 +100,12 @@ const FaceAI = () => {
 
   const volumne = isAndroid ? useVolume() : -1;
 
-  console.log({ volumne });
+  useTimeout(
+    () => {
+      setIsReady(true);
+    },
+    hasPermission ? 1500 : -1
+  );
 
   //ASK PERMISSION CAMERA
   useEffect(() => {
@@ -299,7 +308,10 @@ const FaceAI = () => {
       if (result?.data?.code === 400) {
         Alert.alert(result?.data?.data);
       } else {
-        Alert.alert("Hình chưa hợp lệ!", "Xin hãy chú ý về vị trí khuôn mặt, độ nét và môi trường ánh sáng");
+        Alert.alert(
+          "Hình chưa hợp lệ!",
+          "Xin hãy chú ý về vị trí khuôn mặt, độ nét và môi trường ánh sáng"
+        );
       }
       setImageScan(null);
     }
@@ -308,7 +320,7 @@ const FaceAI = () => {
   const _handleTakePhoto = async () => {
     const photo = await refCamera.current.takePhoto({
       enableShutterSound: volumne !== 0,
-      qualityPrioritization: 'quality'
+      qualityPrioritization: "quality",
     });
     // await CameraRoll.save(`file://${photo.path}`, {
     //   type: 'photo',
@@ -491,20 +503,22 @@ const FaceAI = () => {
                 alignItems: "center",
               }}
             >
-              <Camera
-                enableHighQualityPhotos={true}
-                orientation={"portrait"}
-                ref={refCamera}
-                style={StyleSheet.absoluteFill}
-                device={device}
-                isActive={true}
-                photo={true}
-                resizeMode="contain"
-                // photoHdr={true}
-                enableDepthData={true}
-                enablePortraitEffectsMatteDelivery={true}
-                // format={format}
-              />
+              {device && (
+                <Camera
+                  enableHighQualityPhotos={true}
+                  orientation={"portrait"}
+                  ref={refCamera}
+                  style={StyleSheet.absoluteFill}
+                  device={device}
+                  isActive={isReady && isFocused}
+                  photo={true}
+                  resizeMode="contain"
+                  // photoHdr={true}
+                  enableDepthData={true}
+                  enablePortraitEffectsMatteDelivery={true}
+                  // format={format}
+                />
+              )}
               <View
                 style={{
                   position: "absolute",
