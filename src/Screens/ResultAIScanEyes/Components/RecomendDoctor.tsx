@@ -8,41 +8,46 @@ import { StyleSheet } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'
 import { NEW_BASE_COLOR } from '../../../Constant/Color'
 import { _moderateScale, _width } from '../../../Constant/Scale'
+import { AfterTimeoutFragment } from '@Components/AfterTimeoutFragment'
 
 const RecomendDoctor = () => {
     const dispatch = useDispatch()
     const { dataDoctors } = useSelector(getDoctorByResScanningListState)
 
     useEffect(() => {
-        dispatch(getDoctorsByResEye.request({}));
+        requestAnimationFrame(() => {
+            dispatch(getDoctorsByResEye.request({}));
+        })
     }, [])
 
     return (
-        <Column>
-            <Column
-                margin={8 * 2}>
-                <Text
-                    color={NEW_BASE_COLOR}
-                    weight='bold'>
-                    BÁC SĨ / CHUYÊN VIÊN
-                </Text>
+        <AfterTimeoutFragment timeout={500}>
+            <Column>
+                <Column
+                    margin={8 * 2}>
+                    <Text
+                        color={NEW_BASE_COLOR}
+                        weight='bold'>
+                        BÁC SĨ / CHUYÊN VIÊN
+                    </Text>
+                </Column>
+                <Column alignItems='center'>
+                    {
+                        dataDoctors?.slice(0, 3)?.map((item, index) => {
+                            return (
+                                <DoctorItem
+                                    key={item?._id}
+                                    styleContainer={{
+                                        width: _width - 8 * 4
+                                    }}
+                                    item={item}
+                                />
+                            )
+                        })
+                    }
+                </Column>
             </Column>
-            <Column alignItems='center'>
-                {
-                    dataDoctors?.map((item, index) => {
-                        return (
-                            <DoctorItem
-                                key={item?._id}
-                                styleContainer={{
-                                    width: _width - 8 * 4
-                                }}
-                                item={item}
-                            />
-                        )
-                    })
-                }
-            </Column>
-        </Column>
+        </AfterTimeoutFragment>
     )
 }
 

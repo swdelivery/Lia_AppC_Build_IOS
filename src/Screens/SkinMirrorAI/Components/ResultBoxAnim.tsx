@@ -27,14 +27,15 @@ const ResultBoxAnim = ({ onEndAnim, isLasted, condition, heightBodyBox, title, d
   const heightBody = useSharedValue(0);
   const heighMainBox = useSharedValue(0);
   const widthMainBox = useSharedValue(0);
+  const opacityMainBox = useSharedValue(0);
   const opacityResultText = useSharedValue(0);
 
   useEffect(() => {
-
     setTimeout(() => {
       sizeRootDot.value = withTiming(8, { duration: 1000 }, (fns) => {
         if (fns) {
           heightBody.value = withTiming(heightBodyBox, { duration: 1000 })
+          opacityMainBox.value = withTiming(1, { duration: 500 });
           widthMainBox.value = withTiming(8 * 15, { duration: 200 }, (fns) => {
             if (fns) {
               heighMainBox.value = withTiming(50, { duration: 1000 }, (fns) => {
@@ -67,7 +68,8 @@ const ResultBoxAnim = ({ onEndAnim, isLasted, condition, heightBodyBox, title, d
   const mainBoxAnim = useAnimatedStyle(() => {
     return {
       width: widthMainBox.value,
-      height: heighMainBox.value
+      height: heighMainBox.value,
+      opacity: opacityMainBox.value
     }
   })
   const opacityResultTextAnim = useAnimatedStyle(() => {
@@ -115,15 +117,12 @@ export default ResultBoxAnim
 
 const styles = StyleSheet.create({
   mainBox: {
-    width: 8 * 15,
     borderRadius: 8,
     borderWidth: 1,
     borderColor: WHITE,
     position: 'absolute',
-
     justifyContent: 'center',
     paddingLeft: 8,
-    // alignItems: 'center'
     backgroundColor: 'rgba(0,0,0,.5)'
   },
   body: {

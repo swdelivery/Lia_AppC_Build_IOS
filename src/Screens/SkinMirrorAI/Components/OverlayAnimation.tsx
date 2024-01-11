@@ -1,14 +1,13 @@
-import { Alert, StyleSheet, View } from 'react-native'
-import React, { useCallback, useEffect, useState } from 'react'
+import Column from '@Components/Column'
+import Text from '@Components/Text'
+import { WHITE } from '@Constant/Color'
 import { styleElement } from '@Constant/StyleElement'
-import { _moderateScale } from '@Constant/Scale'
-import { RED, WHITE } from '@Constant/Color'
-import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withRepeat, withSequence, withSpring, withTiming } from 'react-native-reanimated'
+import React, { useEffect, useState } from 'react'
+import { StyleSheet, View } from 'react-native'
+import Animated, { runOnJS, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import DotAnim from './DotAnim'
 import ResultBoxAnim from './ResultBoxAnim'
-import Text from '@Components/Text'
-import Column from '@Components/Column'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 type Props = {
   onEndAnim: (state) => void;
@@ -17,7 +16,6 @@ type Props = {
 const OverlayAnimation = ({ onEndAnim }: Props) => {
   const opacityBackDrop = useSharedValue(0);
   const { top } = useSafeAreaInsets()
-  const scaleDot = useSharedValue(0);
 
   const [startAnimDots, setStartAnimDots] = useState('waiting');
   const [startResultBox, setStartResultBox] = useState('waiting')
@@ -33,8 +31,8 @@ const OverlayAnimation = ({ onEndAnim }: Props) => {
     { size: 8 * 1.25, delay: 600, top: 520, left: 120 },
   ])
   const [listResults, setListResults] = useState([
-    { delay: 200, left: 100, bottom: 550, title: 'Mụn đầu đen', description: 'Nhẹ', heightBodyBox: 100, condition: 'normal' },
-    { delay: 2000, left: 300, bottom: 500, title: 'Da dầu nhờn', description: 'Chú ý', heightBodyBox: 70, condition: 'medium' },
+    { delay: 200, left: 100, bottom: 530, title: 'Mụn đầu đen', description: 'Nhẹ', heightBodyBox: 100, condition: 'normal' },
+    { delay: 2000, left: 300, bottom: 450, title: 'Da dầu nhờn', description: 'Chú ý', heightBodyBox: 70, condition: 'medium' },
     { delay: 4000, left: 150, bottom: 420, title: 'Chân lông to', description: 'Nhẹ', heightBodyBox: 30, condition: 'normal' },
   ])
 
@@ -80,7 +78,6 @@ const OverlayAnimation = ({ onEndAnim }: Props) => {
             </Column>
             : <></>
         }
-
 
         {
           startAnimDots == 'doing' ?

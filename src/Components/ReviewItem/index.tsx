@@ -26,9 +26,9 @@ export default function ReviewItem({ item, type }: Props) {
   return (
     <View style={styles.container}>
       <Row gap={8}>
-        <Avatar avatar={item.partner.fileAvatar} size={40} circle />
+        <Avatar avatar={item?.partner?.fileAvatar} size={40} circle />
         <View style={styleElement.flex}>
-          <Text style={styles.name}>{item.partner.name}</Text>
+          <Text style={styles.name}>{item?.partner?.name}</Text>
           <Text size={12}>
             {moment(item?.created).format("DD/MM/YYYY")} -{" "}
             {moment(item?.created).format("LT")}
