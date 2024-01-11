@@ -27,10 +27,10 @@ export default function DiaryItem({ item, onPress }: Props) {
       style={styles.box__diary}
     >
       <Row gap={8}>
-        <Avatar avatar={item.partner.fileAvatar} size={40} circle />
+        <Avatar avatar={item.partner?.fileAvatar} size={40} circle />
         <View style={styleElement.flex}>
           <Text numberOfLines={1} weight="bold">
-            {item.partner.name}
+            {item.partner?.name}
           </Text>
           <Text numberOfLines={1} size={12}>
             Cập nhật <Text size={12}>{moment(item.updated).fromNow()}</Text>
