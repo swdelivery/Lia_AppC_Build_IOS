@@ -1,5 +1,5 @@
 import React, { memo, useState } from 'react';
-import { Text, View, StyleSheet, Image ,ScrollView, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
 import {
     BG_GREY_OPACITY_5,
     BLUE_2,
@@ -340,7 +340,7 @@ const ItemTreatmentDetail = memo((props) => {
                 <View style={{ marginTop: _moderateScale(12) }}>
                     <Text style={[stylesFont.fontNolan, { fontSize: _moderateScale(14), color: GREY }]}>
                         Hình ảnh sau điều trị
-                </Text>
+                    </Text>
 
                     <View style={{ flexDirection: 'row', width: "100%", marginTop: _moderateScale(8), paddingLeft: _moderateScale(8) }}>
                         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
@@ -430,7 +430,7 @@ const ItemTreatmentDetail = memo((props) => {
                                         style={[styles.btnSeeInfo, { backgroundColor: BLUE_FB }]}>
                                         <Text style={[stylesFont.fontNolanBold, styles.btnSeeInfo__text]}>
                                             Đánh giá
-                                    </Text>
+                                        </Text>
                                     </TouchableOpacity>
                                 </View>
                             </>

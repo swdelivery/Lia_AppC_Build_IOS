@@ -22,7 +22,13 @@ const ListVoucher = () => {
     );
 
     useFocused(() => {
-        getData();
+        getData({
+            condition: {
+                status: {
+                    equal: "UNUSED"
+                }
+            }
+        });
     });
 
     const listVoucherAvailable = useMemo(() => {

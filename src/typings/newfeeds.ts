@@ -1,4 +1,5 @@
 import { Timestamp } from "./common";
+import { Partner } from "./partner";
 
 
 
@@ -51,7 +52,7 @@ export type PartnerDiary = {
   updated: string;
   __v: number;
   dailyDiaryArr: any;
-  partner: any;
+  partner: Partner;
   id: string;
 
 

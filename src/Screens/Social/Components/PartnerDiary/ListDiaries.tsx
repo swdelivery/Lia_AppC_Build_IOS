@@ -1,5 +1,5 @@
 import Text from '@Components/Text';
-import { BASE_COLOR, BG_GREY_OPACITY_5 } from '@Constant/Color';
+import { BASE_COLOR, BG_GREY_OPACITY_5, NEW_BASE_COLOR } from '@Constant/Color';
 import { stylesFont } from '@Constant/Font';
 import { _moderateScale } from '@Constant/Scale';
 import { URL_ORIGINAL } from '@Constant/Url';
@@ -19,6 +19,13 @@ type Props = {
 const ListDiaries = ({ data }: Props) => {
   const { dailyDiaryArr } = data
 
+  const _canculateDiffDays = useCallback((dailyDiary) => {
+    const daysDifference = moment(dailyDiary?.date).diff(data?.treatmentDate, 'days');
+    if (daysDifference == 0) {
+      return `Ngày đầu tiên  `
+    }
+    return `Sau ${daysDifference} ngày  `;
+  }, [data])
 
   const ListImage = useCallback((images) => {
     const imageViewer = useVisible<number>();
@@ -70,7 +77,10 @@ const ListDiaries = ({ data }: Props) => {
               </View>
               <View style={styles.main}>
                 <Text weight='bold'>
-                  {moment(item?.date).format('DD/MM/YYYY')}
+                  {_canculateDiffDays(item)}
+                  <Text color={NEW_BASE_COLOR}>
+                    ({moment(item?.date).format('DD/MM/YYYY')})
+                  </Text>
                 </Text>
                 {
                   item?.description?.length > 0 ?
@@ -82,23 +92,6 @@ const ListDiaries = ({ data }: Props) => {
                 {
                   item?.images?.length > 0 ?
                     <ListImage data={item?.images} />
-                    // <View style={styles.containerImages}>
-                    //   {
-                    //     item?.images?.map((itemMap, index) => {
-                    //       return (
-                    //         <TouchableOpacity
-                    //           onPress={() => {
-                    //           }}
-                    //           key={itemMap?._id} style={styles.imageBox}>
-                    //           <Image
-                    //             style={styles.image}
-                    //             source={{ uri: `${URL_ORIGINAL}${itemMap?.link}` }}
-                    //           />
-                    //         </TouchableOpacity>
-                    //       )
-                    //     })
-                    //   }
-                    // </View>
                     : <></>
                 }
                 <View style={styles.blankView} />

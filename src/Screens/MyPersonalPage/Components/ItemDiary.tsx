@@ -31,6 +31,7 @@ const ItemDiary = (props) => {
 
   return (
     <TouchableOpacity
+      activeOpacity={.8}
       onPress={() => {
         navigation.navigate(ScreenKey.EDIT_DIARY, {
           diaryId: props?.data?._id,
@@ -53,8 +54,8 @@ const ItemDiary = (props) => {
       />
 
       <Row>
-        <View style={styles.cardDiary__verticalLine} />
-        <Text style={styles.cardDiary__name}>{props?.data?.serviceName}</Text>
+        {/* <View style={styles.cardDiary__verticalLine} /> */}
+        <Text numberOfLines={1} style={styles.cardDiary__name}>{props?.data?.serviceName}</Text>
         <ChervonRightIcon />
       </Row>
 
@@ -184,7 +185,6 @@ const styles = StyleSheet.create({
   cardDiary__name: {
     ...stylesFont.fontNolanBold,
     flex: 1,
-    fontSize: _moderateScale(14),
     color: BLACK_OPACITY_7,
   },
   cardDiary: {

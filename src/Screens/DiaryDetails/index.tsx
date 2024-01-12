@@ -26,6 +26,7 @@ import HorizontalImages from "./components/HorizontalImages";
 import { Diary } from "@typings/diary";
 import DiaryTimeline from "./components/DiaryTimeline";
 import { useNavigate, useNavigationParams } from "src/Hooks/useNavigation";
+import Spacer from "@Components/Spacer";
 
 const DiaryDetails = (props) => {
   const { navigation } = useNavigate();
@@ -110,6 +111,7 @@ const DiaryDetails = (props) => {
           dailyDiaryArr={currPartnerDiary?.dailyDiaryArr || []}
           onDiaryUpdate={_getPartnerDiaryById}
         />
+        <Spacer top={100} />
       </ScrollView>
 
       <ActionButton

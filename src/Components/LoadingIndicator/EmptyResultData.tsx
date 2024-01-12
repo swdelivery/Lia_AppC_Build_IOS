@@ -1,5 +1,5 @@
 import { StyleSheet, View } from 'react-native'
-import React from 'react'
+import React, { ReactNode } from 'react'
 import Column from '@Components/Column'
 import Text from '@Components/Text'
 import { GREY } from '@Constant/Color'
@@ -7,19 +7,26 @@ import { GREY } from '@Constant/Color'
 
 type Props = {
   title?: string;
+  children?: ReactNode;
 };
 
-const EmptyResultData = ({ title = 'Chưa có dữ liệu' }: Props) => {
+const EmptyResultData = ({ title = 'Chưa có dữ liệu', children }: Props) => {
   return (
     <Column
       alignItems='center'
       justifyContent='center'
       flex={1}>
-      <Text
-        color={GREY}
-        fontStyle='italic'>
-        {title}
-      </Text>
+      {
+        children ?
+          children
+          :
+          <Text
+            color={GREY}
+            fontStyle='italic'>
+            {title}
+          </Text>
+      }
+
     </Column>
   )
 }

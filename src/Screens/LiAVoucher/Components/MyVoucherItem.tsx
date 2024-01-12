@@ -6,6 +6,7 @@ import { _moderateScale, _widthScale } from "@Constant/Scale";
 import { styleElement } from "@Constant/StyleElement";
 import { sizeText } from "@Constant/Text";
 import { MyVoucher } from "@typings/voucher";
+import { includes } from "lodash";
 import moment from "moment";
 import React, { useMemo } from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
@@ -21,7 +22,7 @@ export default function MyVoucherItem({ item, onDetails, onUseCoupon }: Props) {
   const trigger = useCallbackItem(item);
 
   const isUsed = useMemo(() => {
-    return item?.usedAt
+    return includes(['HOLD', 'USED'], item?.status)
   }, [item])
 
   return (

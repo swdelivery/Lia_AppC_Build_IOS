@@ -8,6 +8,7 @@ import { sizeIcon } from '../../../Constant/Icon';
 import { _moderateScale } from '../../../Constant/Scale';
 import ScreenKey from '../../../Navigation/ScreenKey';
 import ModalInfoTreatmentDetail from '../../Conversation/ListNoti/Components/ModalInfoTreatmentDetail'
+import { styleElement } from '@Constant/StyleElement';
 
 
 export default function ItemHistory(props) {
@@ -90,7 +91,7 @@ export default function ItemHistory(props) {
                     <View style={[styles.lineService]}>
                         <Image style={[sizeIcon.xs, { marginRight: _moderateScale(4) }]} source={require('../../../Icon/i_spa.png')} />
 
-                        <Text style={[styles.nameService]}>{props?.data?.serviceName}</Text>
+                        <Text style={[styles.nameService, styleElement.flex]}>{props?.data?.serviceName}</Text>
                     </View>
                     <View style={[styles.lineService]}>
                         <Image style={[sizeIcon.xs, { marginRight: _moderateScale(4) }]} source={require('../../../Icon/doctor.png')} />

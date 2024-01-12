@@ -21,7 +21,7 @@ import { Order, PaymentRequest } from "@typings/payment";
 import { LOG_OUT } from "@Redux/Constants/ActionType";
 
 export const getMyCoupons = generateActionsGroup<
-  void,
+  any,
   DataPagingPayload<MyVoucher[]>
 >(GET_MY_COUPONS);
 

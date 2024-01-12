@@ -1,17 +1,18 @@
-import { StyleSheet, Text, View } from "react-native";
-import React from "react";
-import Screen from "@Components/Screen";
-import ListBookings from "./ListBookings";
-import { useDispatch, useSelector } from "react-redux";
-import { getStateActionSheetBottom } from "@Redux/modal/selectors";
-import ActionSheetBottom from "@Components/ModalBottom/ActionSheetBottom";
-import { closeActionSheetBottom, openActionSheetBottom } from "@Redux/modal/actions";
-import LinearGradient from "react-native-linear-gradient";
-import { BASE_COLOR } from "@Constant/Color";
+import Column from "@Components/Column";
 import LiAHeader from "@Components/Header/LiAHeader";
-import { useNavigate } from "src/Hooks/useNavigation";
+import ActionSheetBottom from "@Components/ModalBottom/ActionSheetBottom";
+import Screen from "@Components/Screen";
+import { NEW_BASE_COLOR } from "@Constant/Color";
+import { styleElement } from "@Constant/StyleElement";
 import ScreenKey from "@Navigation/ScreenKey";
+import { closeActionSheetBottom } from "@Redux/modal/actions";
+import { getStateActionSheetBottom } from "@Redux/modal/selectors";
 import { cancelPartnerBooking } from "@Redux/user/actions";
+import React from "react";
+import { StyleSheet } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "src/Hooks/useNavigation";
+import ListBookings from "./ListBookings";
 
 const NewListBookings = () => {
   const dispatch = useDispatch();
@@ -37,15 +38,11 @@ const NewListBookings = () => {
   };
 
   return (
-    <Screen>
-      <LinearGradient
-        colors={[BASE_COLOR, "#fff"]}
-        style={StyleSheet.absoluteFillObject}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 0, y: 1 }}
-      />
-      <LiAHeader safeTop bg={"transparent"} title={"Danh sách đặt hẹn"} />
-      <ListBookings />
+    <Screen style={styleElement.flex}>
+      <LiAHeader safeTop bg={NEW_BASE_COLOR} title={"Lịch hẹn"} />
+      <Column flex={1}>
+        <ListBookings />
+      </Column>
       <ActionSheetBottom
         onConfirm={_handleConfirm}
         indexRed={1}

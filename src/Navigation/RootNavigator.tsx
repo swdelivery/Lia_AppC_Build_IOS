@@ -201,6 +201,7 @@ import ListAllEncyclopedia from "@Screens/Home/ListAllEncyclopedia";
 import TreatmentRecord from "@Screens/TreatmentRecord/index";
 import ListDiaryOfPartnerChild from "@Screens/ListDiaryOfPartnerChild";
 import PickTreatmentDiary from "@Screens/ListDiaryOfPartner/Components/PickTreatmentToDiary";
+import PartnerReviewService from "@Screens/PartnerReviewService";
 
 const Stack = createNativeStackNavigator();
 
@@ -666,6 +667,10 @@ const RootNavigator = () => {
 
       <Stack.Screen name={ScreenKey.LIST_PARTNER_DIARY} component={ListDiary} />
       <Stack.Screen name={ScreenKey.SKIN_MIRROR_AI} component={SkinMirrorAI} />
+
+      {/* PARTNER REVIEW SERVICE */}
+      <Stack.Screen name={ScreenKey.PARTNER_REVIEW_SERVICE} component={PartnerReviewService} />
+
       <Stack.Group
         screenOptions={{
           presentation: isAndroid ? "fullScreenModal" : undefined,
@@ -743,6 +748,8 @@ const RootNavigator = () => {
           name={ScreenKey.CHARITY_ACCOUNT_MODAL_FILTER}
           component={ModalFilter}
         />
+
+
       </Stack.Group>
     </Stack.Navigator>
   );
