@@ -22,6 +22,7 @@ import { isTablet } from "src/utils/platform";
 import Spacer from "@Components/Spacer";
 import useListFilter from "src/Hooks/useListFilter";
 import { LoadingView } from "@Components/Loading/LoadingView";
+import useNavigationParamUpdate from "src/Hooks/useNavigationParamUpdate";
 
 const SoYoungService = () => {
   const { navigate } = useNavigate();
@@ -32,6 +33,10 @@ const SoYoungService = () => {
     requestAnimationFrame(() => {
       refreshData();
     });
+  });
+
+  useNavigationParamUpdate("flashsaleUpdate", () => {
+    refreshData();
   });
 
   function renderItem({ item, index }: RenderItemProps<Service>) {

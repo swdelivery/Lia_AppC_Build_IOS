@@ -26,7 +26,7 @@ import { IconRightArrowBase } from "@Components/Icon/Icon";
 
 const FlashSaleBanner = ({ flashSale }: { flashSale: FlashSale }) => {
   const dispatch = useDispatch();
-  const { navigate } = useNavigate();
+  const { navigate, navigation } = useNavigate();
   const { image } = useSelector(getFlashSaleState);
   const { data: services } = useSelector(getCurrentFlashSaleServicesState);
 
@@ -36,6 +36,8 @@ const FlashSaleBanner = ({ flashSale }: { flashSale: FlashSale }) => {
 
   const refreshFlashSale = useCallback(() => {
     dispatch(checkFlashSale.request());
+    // @ts-ignore
+    navigation.setParams({ flashsaleUpdate: true });
   }, []);
 
   useEffect(() => {

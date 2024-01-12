@@ -28,7 +28,7 @@ export default function FlashSaleTimes({
     if (onFlashSaleSelect) {
       onFlashSaleSelect(fs[0]);
     }
-  });
+  });  
 
   const handleSelectFlashSale = useCallback(
     (item: FlashSale) => () => {
