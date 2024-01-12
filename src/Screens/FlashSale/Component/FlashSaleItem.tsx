@@ -63,7 +63,7 @@ export default function FlashSaleItem({ item, isUpcoming, onBooking }: Props) {
     <Column
       flex={1 / 2}
       width={_width / 2}
-      height={230}
+      height={250}
       paddingLeft={4}
       paddingRight={4}
       marginBottom={8}
