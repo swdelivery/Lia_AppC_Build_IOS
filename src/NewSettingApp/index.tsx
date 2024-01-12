@@ -94,12 +94,6 @@ const NewSettingApp = () => {
 
   const _handleLogOut = useCallback(() => {
     dipsatch(logOut());
-    Store.dispatch({
-      type: ActionType.LOG_OUT,
-    });
-    Store.dispatch({
-      type: ActionType.CLEAR_INFO_USER,
-    });
   }, []);
 
   return (
