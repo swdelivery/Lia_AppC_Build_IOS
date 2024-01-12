@@ -40,6 +40,10 @@ const RechargeToWallet = () => {
   }
 
   const _handleOnchangeText = (value) => {
+    let money = parseInt(value.split('.').join("").toString())
+    if ((value !== "" && !money) || money > 999999999999999) {
+      return
+    }
     setValueMoney(value.split('.').join("").toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."))
   }
 
