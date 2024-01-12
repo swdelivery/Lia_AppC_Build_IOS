@@ -8,6 +8,7 @@ import DoctorItem, {
   Placeholder,
   PLACEHOLDER_HEIGHT,
 } from "@Screens/SoYoungDoctor/components/DoctorItem";
+import { FlashList } from "@shopify/flash-list";
 import { RenderItemProps } from "@typings/common";
 import React, { useEffect } from "react";
 import { View, StyleSheet, FlatList } from "react-native";
@@ -33,7 +34,7 @@ export default function DoctorList({}: Props) {
   return (
     <Screen>
       <LiAHeader safeTop title="Danh sách bác sĩ" />
-      <FlatList
+      <FlashList
         contentContainerStyle={styles.container}
         data={data}
         renderItem={renderItem}
@@ -46,6 +47,7 @@ export default function DoctorList({}: Props) {
             <ListEmpty isLoading={isLoading} title="Không tìm thấy bác sĩ" />
           )
         }
+        estimatedItemSize={100}
       />
     </Screen>
   );

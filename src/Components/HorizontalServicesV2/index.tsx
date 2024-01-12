@@ -45,14 +45,11 @@ const HorizontalServicesV2 = ({
         </Text>
       )}
       <View>
-        <FlatList
+        <FlashList
           horizontal
           data={items}
           renderItem={renderItem}
-          windowSize={10}
-          initialNumToRender={5}
-          maxToRenderPerBatch={3}
-          removeClippedSubviews
+          estimatedItemSize={80}
         />
       </View>
     </Column>

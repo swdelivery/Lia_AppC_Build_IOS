@@ -87,7 +87,13 @@ export default function DoctorItem({ item, styleContainer }: Props) {
         </Column>
       </Row>
       {item.doctorServices.length > 0 && (
-        <HorizontalServices items={item.doctorServices?.slice(0, 5)} />
+        <HorizontalServices
+          items={item.doctorServices
+            .filter(
+              (i) => i.service && i.service.isActive && i.service.isDisplayed
+            )
+            .slice(0, 5)}
+        />
       )}
     </TouchableOpacity>
   );

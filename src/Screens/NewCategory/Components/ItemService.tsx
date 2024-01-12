@@ -68,17 +68,6 @@ const ItemService = ({ data }: Props) => {
           </Column>
           <Row gap={2}>
             <CountStar2 rating={averageRating} count={reviewCount} size={7} />
-            {data.currentFlashSale && (
-              <Row flex={1}>
-                <Column backgroundColor={MAIN_RED_600} marginRight={2}>
-                  <FlashIcon width={8} height={8} />
-                </Column>
-                <Text size={5} color={MAIN_RED_600} flex={1}>
-                  Flash Sale bắt đầu lúc{" "}
-                  {formatTime(data.currentFlashSale.timeRange.from)}
-                </Text>
-              </Row>
-            )}
             {!data.isOnFlashSale && !!data.nextFlashSale && (
               <Row>
                 <Column backgroundColor={MAIN_RED_600} marginRight={2}>
