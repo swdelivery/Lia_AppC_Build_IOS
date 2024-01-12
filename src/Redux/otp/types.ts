@@ -18,6 +18,8 @@ export const RESET_STATE_CHANGE_PASS = generateActionTypes("@otp/reset-state-cha
 
 export const RESET_STATE_REQUETST_RESET_PASS = "@otp/reset-state-request-reset-pass"
 
+export const RESET_STATE_RESEND_OTP = "@otp/reset-state-resend-otp"
+
 export type RequestOTPParams = {
   phone?: {
     nationCode?: string,

@@ -11,19 +11,29 @@ type Props = {
 
 function ResendOtp({ onResend }: Props, ref: any) {
   const [counter, setCounter] = useState(150);
+  const [startTime, setStartTime] = useState<number>(Date.now());
 
   useImperativeHandle(ref, () => ({
     setCounter: (value: number) => {
       setCounter(value);
+      setStartTime(Date.now())
     },
   }));
 
   useInterval(
     () => {
-      setCounter((prev) => prev - 1);
+      // setCounter((prev) => prev - 1);
+      setCounter(calculateRemainingTime())
     },
     counter > 0 ? 1000 : -1
   );
+
+  function calculateRemainingTime() {
+    const currentTime = Math.floor(Date.now() / 1000);
+    const elapsedSeconds = currentTime - Math.floor(startTime / 1000);
+    const remainingSeconds = Math.max(0, 150 - elapsedSeconds);
+    return remainingSeconds;
+  }
 
   return (
     <>

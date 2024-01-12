@@ -26,7 +26,7 @@ import Spacer from "@Components/Spacer";
 import { delay } from "src/utils/common";
 import Toast from "react-native-toast-message";
 import { changePass, requestOTPResetPass, resendOTP, resetStateChangePass, resetVerifyOtpResetPass, verifyOtpResetPass } from "@Redux/otp/actions";
-import { getStateChangePass, getStateVerifyOtpResetPass } from "@Redux/otp/selectors";
+import { getStateChangePass, getStateResendOTP, getStateVerifyOtpResetPass } from "@Redux/otp/selectors";
 import Row from "@Components/Row";
 import Text from "@Components/Text";
 
@@ -52,6 +52,8 @@ const GetOtpNewPass = (props: any) => {
   const { isLoading, isSuccess, message } = useSelector(getStateVerifyOtpResetPass)
 
   const { isLoading: loadingChangePass, isSuccess: isSuccessChangePass, message: messageChangePass } = useSelector(getStateChangePass)
+
+  const { isLoading: loadingResend, message: messageResend, isSuccess: isSuccessResend } = useSelector(getStateResendOTP)
 
   useEffect(() => {
     return () => {
@@ -133,12 +135,6 @@ const GetOtpNewPass = (props: any) => {
   }
 
   const _reSendOTP = async () => {
-    setActiveCode("")
-    setIsWrongOTP(false)
-    if (resendRef.current) {
-      resendRef.current.setCounter(150);
-    }
-    await delay(3000);
     dispatch(resendOTP.request({
       phone: {
         nationCode: nationCode.includes("+") ? nationCode : ("+" + nationCode),
@@ -146,7 +142,18 @@ const GetOtpNewPass = (props: any) => {
       },
       type: "RESET_PASSWORD"
     }))
+
   }
+
+  useEffect(() => {
+    if (!isLoading && isSuccess === true) {
+      setActiveCode("")
+      setIsWrongOTP(false)
+      if (resendRef.current) {
+        resendRef.current.setCounter(150);
+      }
+    }
+  }, [isSuccessResend, loadingResend, messageResend])
 
 
   useEffect(() => {
