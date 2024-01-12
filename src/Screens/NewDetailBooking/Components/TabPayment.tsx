@@ -151,7 +151,7 @@ const TabPayment = ({ booking }: Props) => {
       {(orderDetails?.services || []).map((item, index) => {
         return <ItemService key={item.service._id} item={item} />;
       })}
-      {orderDetails.insurances?.length > 0 && (
+      {orderDetails?.insurances?.length > 0 && (
         <>
           <Text weight="bold" color={BLACK} top={16} left={16}>
             Danh sách bảo hiểm
