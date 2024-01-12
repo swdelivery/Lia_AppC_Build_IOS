@@ -34,6 +34,7 @@ export default function Column({
       disabled={!onPress || disabled}
       onPress={onPress}
       style={[styles.container, containerStyle, style]}
+      onLayout={onLayout}
     >
       {children}
     </Pressable>

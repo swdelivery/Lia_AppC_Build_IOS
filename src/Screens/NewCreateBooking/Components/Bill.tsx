@@ -51,10 +51,10 @@ const Bill = () => {
   const originPrice = servicesPrice + insurancePrice;
 
   const discountLevel = useMemo(() => {
-    return originPrice * currPartnerLevel?.promotion?.discountRetailService / 100
+    return (
+      (originPrice * currPartnerLevel?.promotion?.discountRetailService) / 100
+    );
   }, [currPartnerLevel, originPrice]);
-  console.log({ infoUser });
-
 
   const discountAmount = useMemo(() => {
     if (dataCoupon?._id && originPrice) {

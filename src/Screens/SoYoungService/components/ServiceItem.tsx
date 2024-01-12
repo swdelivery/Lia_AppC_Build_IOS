@@ -43,9 +43,7 @@ function ServiceItem({ item, numColumns = 2, isFirstInRow }: Props) {
     >
       <Column overflow="hidden">
         <Image style={styles.image} avatar={item.avatar} />
-        {item.isOnFlashSale && (
-          <FlashSale item={item} width={_width / numColumns} />
-        )}
+        {item.isOnFlashSale && <FlashSale item={item} />}
       </Column>
       <Column style={styles.info}>
         <Column height={35}>

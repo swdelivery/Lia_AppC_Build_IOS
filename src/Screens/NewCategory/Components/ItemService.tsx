@@ -25,8 +25,7 @@ type Props = {
 };
 
 const ItemService = ({ data }: Props) => {
-  const { avatar, name, averageRating, reviewCount, price, countPartner } =
-    data;
+  const { avatar, name, averageRating, reviewCount } = data;
 
   const { navigation } = useNavigate();
 
@@ -37,37 +36,6 @@ const ItemService = ({ data }: Props) => {
   }, [data]);
 
   return (
-    // <TouchableOpacity
-    //   activeOpacity={0.8}
-    //   style={styles.card}>
-    //   <View style={styles.content}>
-    //     <Image style={styles.image} avatar={avatar} />
-    //     <Column style={styles.info}>
-    //       <Column height={35}>
-    //         <Text numberOfLines={2} size={12} weight="bold">
-    //           {name}
-    //         </Text>
-    //       </Column>
-    //       <CountStar2
-    //         rating={averageRating}
-    //         count={reviewCount}
-    //         size={10}
-    //       />
-    //       <Row>
-    //         <Text size={12} weight="bold" color={RED} style={styleElement.flex}>
-    //           {`${formatMonney(price, true)}`}
-    //         </Text>
-    //         <Icon name="account-multiple" size={14} color={GREY} />
-    //         <Text
-    //           size={10}
-    //           bottom={2}
-    //           left={2}
-    //         >{`(${countPartner})`}</Text>
-    //       </Row>
-    //     </Column>
-    //   </View>
-    // </TouchableOpacity>
-
     <TouchableOpacity onPress={_handleGoDetailService}>
       <Column margin={4} width={WIDTH_IMAGE_SERVICE}>
         <Column overflow="hidden">
@@ -81,12 +49,7 @@ const ItemService = ({ data }: Props) => {
             avatar={avatar}
           />
           {data.isOnFlashSale && (
-            <FlashSale
-              item={data}
-              height={18}
-              width={WIDTH_IMAGE_SERVICE}
-              textSize={10}
-            />
+            <FlashSale item={data} height={18} textSize={10} />
           )}
         </Column>
         <Column
@@ -105,6 +68,17 @@ const ItemService = ({ data }: Props) => {
           </Column>
           <Row gap={2}>
             <CountStar2 rating={averageRating} count={reviewCount} size={7} />
+            {data.currentFlashSale && (
+              <Row flex={1}>
+                <Column backgroundColor={MAIN_RED_600} marginRight={2}>
+                  <FlashIcon width={8} height={8} />
+                </Column>
+                <Text size={5} color={MAIN_RED_600} flex={1}>
+                  Flash Sale bắt đầu lúc{" "}
+                  {formatTime(data.currentFlashSale.timeRange.from)}
+                </Text>
+              </Row>
+            )}
             {!data.isOnFlashSale && !!data.nextFlashSale && (
               <Row>
                 <Column backgroundColor={MAIN_RED_600} marginRight={2}>
@@ -126,7 +100,7 @@ const ItemService = ({ data }: Props) => {
                   )}`}
                 </Text>
                 <Text size={6} textDecorationLine="line-through" bottom={1}>
-                  {formatMonney(data.price)}
+                  {formatMonney(data?.price)}
                 </Text>
               </Row>
             ) : (

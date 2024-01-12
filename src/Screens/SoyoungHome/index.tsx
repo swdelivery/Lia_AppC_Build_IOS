@@ -10,7 +10,6 @@ import {
   _widthScale,
 } from "../../Constant/Scale";
 import ScrollableTabView from "@itenl/react-native-scrollable-tabview";
-import { useState } from "react";
 import SoYoungService from "../SoYoungService/index";
 import SoYoungBranch from "../SoYoungBranch/index";
 import SoYoungDoctor from "../SoYoungDoctor/index";
