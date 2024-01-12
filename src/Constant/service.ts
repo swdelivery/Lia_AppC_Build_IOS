@@ -27,12 +27,34 @@ export const isCurrentFlashSale = (flashSale?: FlashSale) => {
   return Date.now() >= startTimestamp && Date.now() <= endTimestamp;
 };
 
+const calculateToppingPrice = (data: Service) => {
+  let total = 0;
+  if (
+    data != null &&
+    data?.optionsSelected != null &&
+    data?.optionsSelected?.length > 0
+  ) {
+    for (let i = 0; i < data?.optionsSelected?.length; i++) {
+      const element = data?.optionsSelected[i];
+      for (let j = 0; j < element?.data.length; j++) {
+        const elementChild = element?.data[j];
+        total +=
+          elementChild?.extraAmount != null ? elementChild?.extraAmount : 0;
+      }
+    }
+  }
+  return total;
+};
+
 export const getServicePrice = (service: Service) => {
   if (
     isCurrentFlashSale(service.currentFlashSale) &&
     service.preferentialInCurrentFlashSale
   ) {
-    return service.preferentialInCurrentFlashSale.finalPrice;
+    return (
+      service.preferentialInCurrentFlashSale.finalPrice +
+      calculateToppingPrice(service)
+    );
   }
-  return service.price;
+  return service.price + calculateToppingPrice(service);
 };

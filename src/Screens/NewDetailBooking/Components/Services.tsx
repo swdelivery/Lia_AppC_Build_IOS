@@ -7,8 +7,7 @@ import Column from "@Components/Column";
 import Row from "@Components/Row";
 import { BASE_COLOR, BLACK } from "@Constant/Color";
 import { formatMonney } from "@Constant/Utils";
-import { cloneDeep, isEmpty, sum } from "lodash";
-import { getServicePrice } from "@Constant/service";
+import { sum } from "lodash";
 import ItemInsurance from "@Screens/NewCreateBooking/Components/ItemInsurance";
 
 type Props = {
