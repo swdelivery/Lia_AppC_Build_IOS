@@ -27,30 +27,12 @@ export const isCurrentFlashSale = (flashSale?: FlashSale) => {
   return Date.now() >= startTimestamp && Date.now() <= endTimestamp;
 };
 
-const calculateServiceOptionsPrice = (listOption?: ServiceOption[]) => {
-  let total = 0;
-  if (listOption != null && listOption?.length > 0) {
-    for (let i = 0; i < listOption?.length; i++) {
-      const element = listOption[i];
-      for (let j = 0; j < element?.data.length; j++) {
-        const elementChild = element?.data[j];
-        total +=
-          elementChild?.extraAmount != null ? elementChild?.extraAmount : 0;
-      }
-    }
-  }
-  return total;
-};
-
 export const getServicePrice = (service: Service) => {
-  let totalOptions = calculateServiceOptionsPrice(
-    service.optionsSelected != null ? service.optionsSelected : []
-  );
   if (
     isCurrentFlashSale(service.currentFlashSale) &&
     service.preferentialInCurrentFlashSale
   ) {
-    return service.preferentialInCurrentFlashSale.finalPrice + totalOptions;
+    return service.preferentialInCurrentFlashSale.finalPrice;
   }
-  return service.price + totalOptions;
+  return service.price;
 };

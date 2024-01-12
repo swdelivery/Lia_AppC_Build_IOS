@@ -109,6 +109,14 @@ export type Booking = {
   cancelAt: string;
   partnerCoupons: MyVoucher[];
   insuranceArr: Insurance[];
+  insurances: {
+    finalPrice: 4000000;
+    timeNumber: number;
+    _id: string;
+    insuranceCode: string;
+    type: "year";
+    insurance: Insurance;
+  }[];
 
   partnerLevelPromotion: {
     point: number;
