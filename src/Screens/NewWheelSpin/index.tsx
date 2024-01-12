@@ -75,11 +75,6 @@ const NewWheelSpin = () => {
     dispatch(getPartnerWheelTurn.request())
   }
 
-  const _handleGetReward = useCallback(() => {
-    visibleModalReward.hide()
-    // visibleListHistory.show()
-  }, [])
-
   // ANIMATION
   const animCircle = useAnimatedStyle(() => {
     const interpolateRotate = interpolate(rotateCircle.value, [0, 1], ['0', '360'], {});
@@ -212,7 +207,6 @@ const NewWheelSpin = () => {
         <ModalInfo
           visibleModalInfo={visibleModalInfo} />
         <ModalReward
-          onPress={_handleGetReward}
           visible={visibleModalReward} />
       </ImageBackground>
     </Screen>

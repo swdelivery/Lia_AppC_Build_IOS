@@ -2,7 +2,7 @@
 import ModalBottom from '@Components/ModalBottom/ModalBottom'
 import Text from '@Components/Text'
 import { _height, _moderateScale } from '@Constant/Scale'
-import React, { useCallback, useEffect } from 'react'
+import React, { useCallback, useEffect, useRef } from 'react'
 import { Image, TouchableOpacity } from 'react-native'
 import { StyleSheet, View } from 'react-native'
 import Animated, { useAnimatedStyle, useSharedValue, withRepeat, withSequence, withSpring, withTiming } from 'react-native-reanimated'
@@ -10,11 +10,11 @@ import { getImageAvataUrl } from 'src/utils/avatar'
 
 type Props = {
   visible: any;
-  onPress: () => void;
 }
 
-const ModalReward = ({ visible, onPress }: Props) => {
+const ModalReward = ({ visible }: Props) => {
   const scaleBtn = useSharedValue(1);
+  const requestCloseModalRef = useRef<any>(null)
 
   useEffect(() => {
     scaleBtn.value = withRepeat(
@@ -23,7 +23,12 @@ const ModalReward = ({ visible, onPress }: Props) => {
         withTiming(1, { duration: 500 })
       )
       , -1);
+  }, [])
 
+  const _handleCloseModal = useCallback(() => {
+    if (requestCloseModalRef.current) {
+      requestCloseModalRef.current.requestCloseModal()
+    }
   }, [])
 
   const scaleAnim = useAnimatedStyle(() => {
@@ -38,6 +43,7 @@ const ModalReward = ({ visible, onPress }: Props) => {
 
   return (
     <ModalBottom
+      ref={requestCloseModalRef}
       backgroundColor={'transparent'}
       onClose={visible.hide}
       heightModal={_height}
@@ -46,15 +52,12 @@ const ModalReward = ({ visible, onPress }: Props) => {
       visible={visible.visible} >
 
       <View>
-        {/* <Text>
-          {visible.selectedItem.current?.awards?.name}
-        </Text> */}
         <Image
           resizeMode='contain'
           style={styles.imageReward}
           source={{ uri: getImageAvataUrl(visible.selectedItem.current?.awards?.imageReward) }} />
 
-        <TouchableOpacity onPress={onPress}>
+        <TouchableOpacity onPress={_handleCloseModal}>
           <Animated.Image
             resizeMode='contain'
             style={[styles.btnGetReward, scaleAnim]}
