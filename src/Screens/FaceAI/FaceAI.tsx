@@ -516,7 +516,7 @@ const FaceAI = () => {
                   // photoHdr={true}
                   enableDepthData={true}
                   enablePortraitEffectsMatteDelivery={true}
-                  // format={format}
+                // format={format}
                 />
               )}
               <View

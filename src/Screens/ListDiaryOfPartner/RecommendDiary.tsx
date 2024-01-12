@@ -13,7 +13,7 @@ const RecommendDiary = () => {
   useEffect(() => {
     requestAnimationFrame(() => {
       getData({
-        page: 6,
+        page: 1,
         limit: 5
       });
     })
