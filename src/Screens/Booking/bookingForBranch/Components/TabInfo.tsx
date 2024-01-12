@@ -37,9 +37,7 @@ export const TabInfo = ({ data, handleChoiceMulti, handleChoiceSingle, handleCon
   const { top } = useSafeAreaInsets()
   return (
     <Column flex={1}>
-      <KeyboardAwareScrollView
-        bounces={false}
-        enableOnAndroid={true}>
+      <ScrollView>
         <Column flex={1}>
           <Column gap={_moderateScale(10)}>
             <Row position="relative">
@@ -269,8 +267,9 @@ export const TabInfo = ({ data, handleChoiceMulti, handleChoiceSingle, handleCon
               )
             })
           }
+          <Row height={_moderateScale(100)}></Row>
         </Column>
-      </KeyboardAwareScrollView>
+      </ScrollView>
       <View
         style={[
           {

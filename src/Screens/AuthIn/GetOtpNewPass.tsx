@@ -54,15 +54,10 @@ const GetOtpNewPass = (props: any) => {
   const { isLoading: loadingChangePass, isSuccess: isSuccessChangePass, message: messageChangePass } = useSelector(getStateChangePass)
 
   useEffect(() => {
-    dispatch(resetVerifyOtpResetPass.request())
-    dispatch(resetStateChangePass.request())
-    dispatch(requestOTPResetPass.request({
-      phone: {
-        nationCode: nationCode,
-        phoneNumber: fullPhone,
-      },
-      type: "RESET_PASSWORD"
-    }))
+    return () => {
+      dispatch(resetVerifyOtpResetPass.request())
+      dispatch(resetStateChangePass.request())
+    }
   }, [])
 
   const validatePassword = () => {
@@ -291,7 +286,7 @@ const GetOtpNewPass = (props: any) => {
           }
           onCodeFilled={confirmVerificationCode}
           onCodeChanged={setActiveCode}
-          autoFocusOnLoad={true}
+          autoFocusOnLoad={false}
         />
         <ResendOtp ref={resendRef} onResend={_reSendOTP} />
         <TouchableOpacity onPress={() => confirmVerificationCode(activeCode)}>

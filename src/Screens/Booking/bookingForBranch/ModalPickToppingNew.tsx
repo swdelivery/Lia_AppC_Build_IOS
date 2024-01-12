@@ -60,19 +60,7 @@ const ModalPickToppingNew = ({ confirm, data, show, hide }: Props) => {
   const [isCollapDescription, setIsCollapDescription] = useState(false);
 
   const [currDescriptionTopping, setCurrDescriptionTopping] = useState({});
-
-  useEffect(() => {
-    let listChoiceTemp = [];
-    data?.options?.map((item) => {
-      if (item?.type == "single") {
-        if (item?.data?.length > 0) {
-          listChoiceTemp.push({ ...item?.data[0], groupCode: item?.groupCode });
-        }
-      }
-    });
-
-    setListChoice(listChoiceTemp);
-  }, [data]);
+  const { top, bottom } = useSafeAreaInsets()
 
   useEffect(() => {
     if (data?.description?.length > 85) {
@@ -189,27 +177,23 @@ const ModalPickToppingNew = ({ confirm, data, show, hide }: Props) => {
         hide();
       }}
     >
-      <KeyboardAvoidingView
-        behavior={Platform.OS == "ios" ? "position" : null}
-        enabled
-      >
-        <View style={styles.container}>
-          <Column flex={1}>
-            {
-              data && (
-                <TabView
-                  renderTabBar={() => <View></View>}
-                  swipeEnabled={false}
-                  navigationState={{ index, routes }}
-                  renderScene={renderScene}
-                  onIndexChange={setIndex}
-                  lazy
-                />
-              )
-            }
-          </Column>
-        </View>
-      </KeyboardAvoidingView>
+
+      <View style={[styles.container, { paddingBottom: Platform.OS === 'ios' ? bottom : null, paddingTop: Platform.OS === 'ios' ? top : null }]}>
+        <Column flex={1}>
+          {
+            data && (
+              <TabView
+                renderTabBar={() => <View></View>}
+                swipeEnabled={false}
+                navigationState={{ index, routes }}
+                renderScene={renderScene}
+                onIndexChange={setIndex}
+                lazy
+              />
+            )
+          }
+        </Column>
+      </View>
     </Modal>
   );
 };
@@ -246,8 +230,8 @@ const styles = StyleSheet.create({
   },
   container: {
     width: _width,
-    height: _height,
     backgroundColor: WHITE,
+    height: _height,
   },
   styleBtnConfirm: {
     height: _moderateScale(8 * 5),
