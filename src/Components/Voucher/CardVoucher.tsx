@@ -20,47 +20,56 @@ type Props = {
 };
 
 export default function CardVoucher({ data }: Props) {
-
-  const dispatch = useDispatch()
-  const { navigate } = useNavigate()
-
-  const { dataCoupon, dataServices } = useSelector(getDataCreateBookingState)
+  const dispatch = useDispatch();
+  const { navigate } = useNavigate();
+  const { dataCoupon, dataServices } = useSelector(getDataCreateBookingState);
 
   const _handleSelectCoupon = useCallback(() => {
-    let totalPriceSerive = dataServices?.reduce((sum, { price }) => sum + price, 0);
+    let totalPriceSerive = dataServices?.reduce(
+      (sum, { price }) => sum + price,
+      0
+    );
 
     if (totalPriceSerive == 0) {
-      return Alert.alert(`Hãy chọn dịch vụ trước`)
+      return Alert.alert(`Hãy chọn dịch vụ trước`);
     }
 
     if (totalPriceSerive < data?.coupon?.minRequiredOrderAmount) {
-      return Alert.alert(`Bạn cần đạt giá trị đơn hàng tối thiểu ${formatMonney(data?.coupon?.minRequiredOrderAmount)} để sử dụng Voucher này`)
+      return Alert.alert(
+        `Bạn cần đạt giá trị đơn hàng tối thiểu ${formatMonney(
+          data?.coupon?.minRequiredOrderAmount
+        )} để sử dụng Voucher này`
+      );
     }
-    dispatch(selectCoupon(data))
-  }, [data, dataServices])
+    dispatch(selectCoupon(data));
+  }, [data, dataServices]);
 
   const _handleClearCoupon = useCallback(() => {
-    dispatch(clearCoupon(data))
-  }, [data])
-
-
+    dispatch(clearCoupon(data));
+  }, [data]);
 
   return (
     <TouchableOpacity
       onPress={navigate(ScreenKey.DETAIL_LIA_VOUCHER, {
         data: { ...data?.coupon, isTaked: true },
-        infoVoucher: data
+        infoVoucher: data,
+        isCreatingBooking: true,
       })}
-      activeOpacity={.5} style={styles.voucherBox} >
+      activeOpacity={0.5}
+      style={styles.voucherBox}
+    >
       <View style={[styles.voucherBox__left, shadow]}>
         <Image avatar={data?.coupon?.couponImg} style={styles.avatarVoucher} />
         <Column flex={1} marginLeft={8}>
-          <Text numberOfLines={1} weight='medium' size={12}>{data?.coupon?.code.toUpperCase()}</Text>
-          <Text numberOfLines={2} weight='medium' size={10}>
+          <Text numberOfLines={1} weight="medium" size={12}>
+            {data?.coupon?.code.toUpperCase()}
+          </Text>
+          <Text numberOfLines={2} weight="medium" size={10}>
             {data?.coupon?.description}
           </Text>
           <Text fontStyle="italic" size={10} numberOfLines={2}>
-            Hiệu lực đến ngày: <Text weight="bold" color={"#AA827C"} fontStyle="italic" size={10}>
+            Hiệu lực đến ngày:{" "}
+            <Text weight="bold" color={BASE_COLOR} fontStyle="italic" size={10}>
               {moment(data?.coupon?.expiredAt).format("DD/MM/YYYY")}
             </Text>
           </Text>
@@ -68,31 +77,29 @@ export default function CardVoucher({ data }: Props) {
       </View>
       <View style={styles.dashLine} />
       <View style={[styles.voucherBox__right, shadow]}>
-        {
-          dataCoupon?.coupon?.code == data?.coupon?.code ?
-            <TouchableOpacity
-              hitSlop={styleElement.hitslopSm}
-              onPress={_handleClearCoupon}
-              style={[styles.voucherBox__right__btn, { backgroundColor: GREY }]}
-            >
-              <Text color={WHITE} size={12} weight="bold">
-                Huỷ
-              </Text>
-            </TouchableOpacity>
-            :
-            <TouchableOpacity
-              hitSlop={styleElement.hitslopSm}
-              onPress={_handleSelectCoupon}
-              style={styles.voucherBox__right__btn}
-            >
-              <Text color={WHITE} size={12} weight="bold">
-                Sử dụng
-              </Text>
-            </TouchableOpacity>
-        }
-
+        {dataCoupon?.coupon?.code == data?.coupon?.code ? (
+          <TouchableOpacity
+            hitSlop={styleElement.hitslopSm}
+            onPress={_handleClearCoupon}
+            style={[styles.voucherBox__right__btn, { backgroundColor: GREY }]}
+          >
+            <Text color={WHITE} size={12} weight="bold">
+              Huỷ
+            </Text>
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity
+            hitSlop={styleElement.hitslopSm}
+            onPress={_handleSelectCoupon}
+            style={styles.voucherBox__right__btn}
+          >
+            <Text color={WHITE} size={12} weight="bold">
+              Sử dụng
+            </Text>
+          </TouchableOpacity>
+        )}
       </View>
-    </TouchableOpacity >
+    </TouchableOpacity>
   );
 }
 
@@ -139,7 +146,7 @@ const styles = StyleSheet.create({
     // height: _moderateScale(8 * 10),
     alignSelf: "center",
     flexDirection: "row",
-    margin: 4
+    margin: 4,
   },
   container: {
     flex: 1,
@@ -150,7 +157,6 @@ const styles = StyleSheet.create({
   },
 });
 
-
 const shadow = {
   shadowColor: "#000",
   shadowOffset: {
@@ -160,5 +166,5 @@ const shadow = {
   shadowOpacity: 0.2,
   shadowRadius: 1,
 
-  elevation: 2
-}
+  elevation: 2,
+};

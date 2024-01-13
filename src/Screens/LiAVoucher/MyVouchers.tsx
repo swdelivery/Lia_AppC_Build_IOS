@@ -8,18 +8,27 @@ import { _moderateScale, _widthScale } from "../../Constant/Scale";
 import { styleElement } from "../../Constant/StyleElement";
 import { MyVoucher } from "@typings/voucher";
 import MyVoucherItem from "./Components/MyVoucherItem";
-import { useFocused, useNavigate } from "src/Hooks/useNavigation";
+import {
+  useFocused,
+  useNavigate,
+  useNavigationParams,
+} from "src/Hooks/useNavigation";
 import { RenderItemProps } from "@typings/common";
 import useItemExtractor from "src/Hooks/useItemExtractor";
 import { getMyCoupons, loadMoreMyCoupons } from "@Redux/user/actions";
 import { getMyCouponsState } from "@Redux/user/selectors";
 import useListFilter from "src/Hooks/useListFilter";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectCoupon } from "@Redux/booking/actions";
+import { getDataCreateBookingState } from "@Redux/booking/selectors";
+
+type ScreenKey = typeof ScreenKey.MY_VOUCHERS;
 
 const MyVouchers = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const { navigation } = useNavigate();
+  const { isCreatingBooking } = useNavigationParams<ScreenKey>();
+  const { dataCoupon } = useSelector(getDataCreateBookingState);
   const { isLoading, data, getData, loadMoreData, refreshData } = useListFilter(
     getMyCouponsState,
     getMyCoupons,
@@ -32,22 +41,32 @@ const MyVouchers = () => {
 
   const handleUseCoupon = useCallback((item: MyVoucher) => {
     navigation.navigate(ScreenKey.CREATE_BOOKING, { coupon: item });
-    dispatch(selectCoupon(item))
+    if (isCreatingBooking) {
+      dispatch(selectCoupon(item));
+    }
+  }, []);
+
+  const handleCancelCoupon = useCallback(() => {
+    dispatch(selectCoupon(undefined));
   }, []);
 
   const handleViewDetails = useCallback((item: MyVoucher) => {
     navigation.navigate(ScreenKey.DETAIL_LIA_VOUCHER, {
-      data: { ...item.coupon, isTaked: true, usedAt: item?.usedAt },
-      infoVoucher: data
+      infoVoucher: item,
+      data: { ...item.coupon },
+      isCreatingBooking: true,
     });
   }, []);
 
   function renderItem({ item }: RenderItemProps<MyVoucher>) {
+    const isUsing = isCreatingBooking && item._id === dataCoupon?._id;
     return (
       <MyVoucherItem
+        isUsing={isUsing}
         item={item}
         onDetails={handleViewDetails}
         onUseCoupon={handleUseCoupon}
+        onCancelCoupon={handleCancelCoupon}
       />
     );
   }

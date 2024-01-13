@@ -8,7 +8,7 @@ import { Booking } from "@typings/booking";
 import { Insurance } from "@typings/insurance";
 import { Conversation } from "@typings/chat";
 import { Campain, CompanionRequest } from "@typings/charity";
-import { Voucher } from "@typings/voucher";
+import { MyVoucher, Voucher } from "@typings/voucher";
 import { Product } from "@typings/product";
 
 type valueof<T> = T[keyof T];
@@ -60,6 +60,14 @@ type ScreenParams = {
   };
   [ScreenKey.DETAIL_SERVICE_PRODUCT]: {
     item: Product;
+  };
+  [ScreenKey.MY_VOUCHERS]: {
+    isCreatingBooking?: boolean;
+  };
+  [ScreenKey.DETAIL_LIA_VOUCHER]: {
+    isCreatingBooking?: boolean;
+    data: Voucher;
+    infoVoucher: MyVoucher;
   };
 };
 

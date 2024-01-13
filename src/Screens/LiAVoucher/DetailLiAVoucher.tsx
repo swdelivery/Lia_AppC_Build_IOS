@@ -1,12 +1,11 @@
 import { ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
 import React, { useEffect, useMemo, useState } from "react";
-import { BASE_COLOR, WHITE } from "../../Constant/Color";
+import { BASE_COLOR, GREY, WHITE } from "../../Constant/Color";
 import LiAHeader from "../../Components/Header/LiAHeader";
 import { _moderateScale, _width, _widthScale } from "../../Constant/Scale";
 import { styleElement } from "../../Constant/StyleElement";
 import { sizeText } from "../../Constant/Text";
 import RenderHTML from "../../Components/RenderHTML/RenderHTML";
-import { getConfigData } from "../../Redux/Action/OrtherAction";
 import ModalFlashMsg from "../../Components/ModalFlashMsg/ModalFlashMsg";
 import ScreenKey from "../../Navigation/ScreenKey";
 import { getDetailVoucher } from "../../Redux/Action/VoucherAction";
@@ -20,15 +19,29 @@ import useRequireLoginCallback from "src/Hooks/useRequireLoginAction";
 import { takeVoucher } from "@Redux/voucher/actions";
 import useNavigationParamUpdate from "src/Hooks/useNavigationParamUpdate";
 import { getInfoUserReducer } from "@Redux/Selectors";
-import { useNavigate } from "src/Hooks/useNavigation";
+import { useNavigate, useNavigationParams } from "src/Hooks/useNavigation";
 import { selectCoupon } from "@Redux/booking/actions";
+import { getDataCreateBookingState } from "@Redux/booking/selectors";
+import useApi from "src/Hooks/services/useApi";
+import PartnerService from "src/Services/PartnerService";
+
+type ScreenKey = typeof ScreenKey.DETAIL_LIA_VOUCHER;
 
 const DetailLiAVoucher = (props) => {
   const { navigation } = useNavigate();
   const dispatch = useDispatch();
-  const { infoUser } = useSelector(getInfoUserReducer);
-  const [dataHTML, setDataHTML] = useState("");
   const [showModalFlashMsg, setShowModalFlashMsg] = useState(false);
+  const {
+    isCreatingBooking,
+    infoVoucher,
+    data: coupon,
+  } = useNavigationParams<ScreenKey>();
+  const { infoUser } = useSelector(getInfoUserReducer);
+  const { dataCoupon } = useSelector(getDataCreateBookingState);
+  const { data, performRequest } = useApi(
+    PartnerService.getCouponDetails,
+    coupon
+  );
 
   useNavigationParamUpdate("isTakeVoucherSuccess", (value) => {
     if (value) {
@@ -46,14 +59,11 @@ const DetailLiAVoucher = (props) => {
   });
 
   useEffect(() => {
-    if (props?.route?.params?.idVoucher) {
-      _getDetailVoucher(props?.route?.params?.idVoucher);
-    }
-  }, [props?.route?.params?.idVoucher]);
+    performRequest(data._id);
+  }, [data._id]);
 
-  const _getDetailVoucher = async (_id) => {
-    let result = await getDetailVoucher(_id);
-  };
+  const isUsingCoupon =
+    isCreatingBooking && dataCoupon?._id === infoVoucher?._id;
 
   const _handleTakeVoucher = useRequireLoginCallback(() => {
     const item = props?.route?.params?.data;
@@ -72,10 +82,6 @@ const DetailLiAVoucher = (props) => {
       }, 1000);
     }
   }, [showModalFlashMsg]);
-
-  const isUsedVoucher = useMemo(() => {
-    return props?.route?.params?.data?.usedAt;
-  }, [props?.route?.params?.data?.usedAt]);
 
   return (
     <Screen safeTop safeBottom style={styles.container}>
@@ -128,50 +134,53 @@ const DetailLiAVoucher = (props) => {
           </View>
         </View>
         <Column flex={1} paddingHorizontal={16} marginTop={40}>
-          {props?.route?.params?.data?.content ? (
-            <RenderHTML data={props?.route?.params?.data?.content} />
-          ) : (
-            <></>
-          )}
+          {data?.content ? <RenderHTML data={data?.content} /> : <></>}
         </Column>
       </ScrollView>
 
       <View style={styles.bottomContainer}>
-        {isUsedVoucher ? (
-          <TouchableOpacity
-            disabled
+        {isCreatingBooking ? (
+          <Column
             onPress={() => {
+              if (isUsingCoupon) {
+                dispatch(selectCoupon(undefined));
+              } else {
+                dispatch(selectCoupon(infoVoucher));
+              }
               navigation.navigate(ScreenKey.CREATE_BOOKING);
             }}
-            style={[styles.bottomButton, { opacity: 0.5 }]}
+            style={styles.bottomButton}
+            backgroundColor={isUsingCoupon ? GREY : BASE_COLOR}
           >
-            <Text style={[sizeText.normal_bold, { color: WHITE }]}>
-              Mã giảm giá đã được sử dụng
+            <Text color={WHITE} weight="bold">
+              {isUsingCoupon ? "Hủy" : "Sử dụng mã giảm giá"}
             </Text>
-          </TouchableOpacity>
+          </Column>
         ) : (
           <>
-            {props?.route?.params?.data?.isTaked ? (
-              <TouchableOpacity
+            {coupon.isTaked ? (
+              <Column
+                disabled
                 onPress={() => {
-                  dispatch(selectCoupon(props?.route?.params?.infoVoucher));
                   navigation.navigate(ScreenKey.CREATE_BOOKING);
                 }}
                 style={styles.bottomButton}
+                backgroundColor={GREY}
               >
                 <Text style={[sizeText.normal_bold, { color: WHITE }]}>
-                  Sử dụng mã giảm giá
+                  Đã lấy
                 </Text>
-              </TouchableOpacity>
+              </Column>
             ) : (
-              <TouchableOpacity
+              <Column
                 onPress={_handleTakeVoucher}
                 style={styles.bottomButton}
+                backgroundColor={BASE_COLOR}
               >
                 <Text style={[sizeText.normal_bold, { color: WHITE }]}>
                   Lấy mã giảm giá
                 </Text>
-              </TouchableOpacity>
+              </Column>
             )}
           </>
         )}
@@ -251,7 +260,6 @@ const styles = StyleSheet.create({
   bottomButton: {
     width: _moderateScale(320),
     height: 50,
-    backgroundColor: BASE_COLOR,
     ...styleElement.centerChild,
     borderRadius: _moderateScale(8),
   },
