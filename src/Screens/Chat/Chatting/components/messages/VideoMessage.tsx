@@ -18,7 +18,8 @@ type Props = {
 };
 
 export default function VideoMessage({ item, isMyMessage }: Props) {
-  const { isExist, isLoading, openFile } = useCacheFile(item?.videos[0]);
+  const file = item?.type === "video" ? item?.videos[0] : item?.documents[0];
+  const { isExist, isLoading, openFile } = useCacheFile(file);
   const backgroundColor = isMyMessage ? Color.SENDER_BG : Color.RECEIVER_BG;
 
   function renderDownloadIcon() {
@@ -61,9 +62,7 @@ export default function VideoMessage({ item, isMyMessage }: Props) {
             textDecorationLine="underline"
             size={12}
           >
-            {item?.type === "video"
-              ? item?.videos[0]?.originalName
-              : item?.documents[0].originalName}
+            {file.originalName}
           </Text>
           <Text
             style={styles.time}

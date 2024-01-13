@@ -46,7 +46,7 @@ index 88c085f..2b7205e 100644
        Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, false)
      FileOutputStream(file).use { stream ->
 diff --git a/node_modules/react-native-vision-camera/android/src/main/java/com/mrousavy/camera/core/PreviewView.kt b/node_modules/react-native-vision-camera/android/src/main/java/com/mrousavy/camera/core/PreviewView.kt
-index cfda57a..a40ad19 100644
+index cfda57a..bac806c 100644
 --- a/node_modules/react-native-vision-camera/android/src/main/java/com/mrousavy/camera/core/PreviewView.kt
 +++ b/node_modules/react-native-vision-camera/android/src/main/java/com/mrousavy/camera/core/PreviewView.kt
 @@ -48,6 +48,8 @@ class PreviewView(context: Context, callback: SurfaceHolder.Callback) : SurfaceV
@@ -58,37 +58,40 @@ index cfda57a..a40ad19 100644
      val widthOverHeight = when (resizeMode) {
        ResizeMode.COVER -> contentAspectRatio > containerAspectRatio
        ResizeMode.CONTAIN -> contentAspectRatio < containerAspectRatio
-@@ -55,23 +57,26 @@ class PreviewView(context: Context, callback: SurfaceHolder.Callback) : SurfaceV
+diff --git a/node_modules/react-native-vision-camera/android/src/main/java/com/mrousavy/camera/extensions/CameraCharacteristics+getPreviewSize.kt b/node_modules/react-native-vision-camera/android/src/main/java/com/mrousavy/camera/extensions/CameraCharacteristics+getPreviewSize.kt
+index e758c45..74a6452 100644
+--- a/node_modules/react-native-vision-camera/android/src/main/java/com/mrousavy/camera/extensions/CameraCharacteristics+getPreviewSize.kt
++++ b/node_modules/react-native-vision-camera/android/src/main/java/com/mrousavy/camera/extensions/CameraCharacteristics+getPreviewSize.kt
+@@ -5,6 +5,23 @@ import android.hardware.camera2.CameraCharacteristics
+ import android.util.Size
+ import android.view.SurfaceHolder
  
-     return if (widthOverHeight) {
-       // Scale by width to cover height
--      val scaledWidth = containerSize.height * contentAspectRatio
--      Size(scaledWidth.roundToInt(), containerSize.height)
-+      val scaledWidth = (containerSize.height * contentAspectRatio).toInt()
-+      Size(scaledWidth, containerSize.height)
-     } else {
-       // Scale by height to cover width
--      val scaledHeight = containerSize.width / contentAspectRatio
--      Size(containerSize.width, scaledHeight.roundToInt())
-+      val scaledHeight = (containerSize.width / contentAspectRatio).toInt()
-+      Size(containerSize.width, scaledHeight)
-     }
-   }
- 
-   @SuppressLint("DrawAllocation")
-   override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-     super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-+    val viewWidth = MeasureSpec.getSize(widthMeasureSpec)
-+    val viewHeight = MeasureSpec.getSize(heightMeasureSpec)
++fun calculateNewSize(maxSize: Size, originalSize: Size): Size {
++  val maxRatio = maxSize.width.toDouble() / maxSize.height
++  val originalRatio = originalSize.width.toDouble() / originalSize.height
 +
-+    Log.i(TAG, "PreviewView onMeasure($viewWidth, $viewHeight)")
++  return if (originalRatio > maxRatio) {
++    // Scale by width to fit the maximum width
++    val scaledWidth = maxSize.width
++    val scaledHeight = (maxSize.width / originalRatio).toInt()
++    Size(scaledWidth, scaledHeight)
++  } else {
++    // Scale by height to fit the maximum height
++    val scaledWidth = (maxSize.height * originalRatio).toInt()
++    val scaledHeight = maxSize.height
++    Size(scaledWidth, scaledHeight)
++  }
++}
++
+ fun getMaximumPreviewSize(): Size {
+   // See https://developer.android.com/reference/android/hardware/camera2/params/StreamConfigurationMap
+   // According to the Android Developer documentation, PREVIEW streams can have a resolution
+@@ -16,7 +33,7 @@ fun getMaximumPreviewSize(): Size {
+   )
+   val isHighResScreen = displaySize.bigger >= display1080p.bigger || displaySize.smaller >= display1080p.smaller
  
--    val viewSize = Size(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.getSize(heightMeasureSpec))
--    val fittedSize = getSize(size, viewSize, resizeMode)
-+    val fittedSize = getSize(size, Size(viewWidth, viewHeight), resizeMode)
+-  return if (isHighResScreen) display1080p else displaySize
++  return if (isHighResScreen) calculateNewSize(display1080p, displaySize) else displaySize
+ }
  
--    Log.i(TAG, "PreviewView is $viewSize, rendering $size content. Resizing to: $fittedSize ($resizeMode)")
-+    Log.d(TAG, "Fitted dimensions set: $fittedSize")
-     setMeasuredDimension(fittedSize.width, fittedSize.height)
-   }
- 
+ fun CameraCharacteristics.getPreviewTargetSize(targetSize: Size?): Size {
