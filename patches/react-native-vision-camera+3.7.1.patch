@@ -45,3 +45,45 @@ index 88c085f..2b7205e 100644
      val processedBitmap =
        Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, false)
      FileOutputStream(file).use { stream ->
+diff --git a/node_modules/react-native-vision-camera/android/src/main/java/com/mrousavy/camera/core/PreviewView.kt b/node_modules/react-native-vision-camera/android/src/main/java/com/mrousavy/camera/core/PreviewView.kt
+index cfda57a..c62f370 100644
+--- a/node_modules/react-native-vision-camera/android/src/main/java/com/mrousavy/camera/core/PreviewView.kt
++++ b/node_modules/react-native-vision-camera/android/src/main/java/com/mrousavy/camera/core/PreviewView.kt
+@@ -34,6 +34,8 @@ class PreviewView(context: Context, callback: SurfaceHolder.Callback) : SurfaceV
+       }
+     }
+ 
++  private val aspectRatio: Float get() = size.width.toFloat() / size.height.toFloat()
++
+   init {
+     Log.i(TAG, "Creating PreviewView...")
+     layoutParams = FrameLayout.LayoutParams(
+@@ -67,12 +69,24 @@ class PreviewView(context: Context, callback: SurfaceHolder.Callback) : SurfaceV
+   @SuppressLint("DrawAllocation")
+   override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+     super.onMeasure(widthMeasureSpec, heightMeasureSpec)
++    val viewWidth = MeasureSpec.getSize(widthMeasureSpec)
++    val viewHeight = MeasureSpec.getSize(heightMeasureSpec)
++    Log.i(TAG, "PreviewView onMeasure($viewWidth, $viewHeight)")
++
++    val newWidth: Int
++    val newHeight: Int
+ 
+-    val viewSize = Size(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.getSize(heightMeasureSpec))
+-    val fittedSize = getSize(size, viewSize, resizeMode)
++    val actualRatio = if (viewWidth > viewHeight) aspectRatio else 1f / aspectRatio
++    if (viewWidth < viewHeight * actualRatio) {
++      newHeight = viewHeight
++      newWidth = (viewHeight * actualRatio).roundToInt()
++    } else {
++      newWidth = viewWidth
++      newHeight = (viewWidth / actualRatio).roundToInt()
++    }
+ 
+-    Log.i(TAG, "PreviewView is $viewSize, rendering $size content. Resizing to: $fittedSize ($resizeMode)")
+-    setMeasuredDimension(fittedSize.width, fittedSize.height)
++    Log.d(TAG, "Measured dimensions set: $newWidth x $newHeight")
++    setMeasuredDimension(newWidth, newHeight)
+   }
+ 
+   companion object {
