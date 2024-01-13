@@ -26,6 +26,7 @@ import { Service } from "@typings/serviceGroup";
 import { Material } from "@typings/material";
 import { ConfigData } from "@typings/configData";
 import { isArray } from "lodash";
+import { Voucher } from "@typings/voucher";
 
 const axios = createAxios(URL_FOR_PARTNER);
 
@@ -206,6 +207,9 @@ const getMyCoupons = (
     .then(({ data }) => data);
 };
 
+const getCouponDetails = (couponId: string): Promise<Voucher> =>
+  axios.get("/coupon/" + couponId).then(({ data }) => data.data);
+
 const getVouchers = (
   payload: any,
   page = 1,
@@ -328,8 +332,8 @@ const getPartnerConversations = (
   return axios
     .get(
       "/partner-conversation" +
-      "?" +
-      encodeParams({ ...params, limit: pageSize, page })
+        "?" +
+        encodeParams({ ...params, limit: pageSize, page })
     )
     .then(({ data }) => data.data);
 };
@@ -587,7 +591,9 @@ const getPartnerLevel = (payload: any) => {
 };
 
 const requestOTPResetPass = (payload: any) => {
-  return axios.post("/partner-account/request-reset-password", payload).then(({ data }) => data);
+  return axios
+    .post("/partner-account/request-reset-password", payload)
+    .then(({ data }) => data);
 };
 
 const resendOTP = (payload: any) => {
@@ -595,15 +601,21 @@ const resendOTP = (payload: any) => {
 };
 
 const verifyOtpAccountPartner = (payload: any) => {
-  return axios.post("/partner-account/verify-account", payload).then(({ data }) => data);
+  return axios
+    .post("/partner-account/verify-account", payload)
+    .then(({ data }) => data);
 };
 
 const verifyOtpResetPass = (payload: any) => {
-  return axios.post("/partner-account/verify-reset-password", payload).then(({ data }) => data);
+  return axios
+    .post("/partner-account/verify-reset-password", payload)
+    .then(({ data }) => data);
 };
 
 const changePass = (payload: any) => {
-  return axios.post("/partner-account/reset-password", payload).then(({ data }) => data);
+  return axios
+    .post("/partner-account/reset-password", payload)
+    .then(({ data }) => data);
 };
 
 export default {
@@ -633,6 +645,7 @@ export default {
 
   // Coupon
   getMyCoupons,
+  getCouponDetails,
   getVouchers,
   getPublicVouchers,
   takeVoucher,
@@ -728,5 +741,5 @@ export default {
   resendOTP,
   verifyOtpAccountPartner,
   verifyOtpResetPass,
-  changePass
+  changePass,
 };

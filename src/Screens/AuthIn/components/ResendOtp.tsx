@@ -33,7 +33,7 @@ function ResendOtp({ onResend }: Props, ref: any) {
         </TouchableOpacity>
       ) : (
         <Text style={styles.resendAfter}>
-          Gửi lại OTP sau: <Text style={styles.counter}>{counter}</Text>
+          Gửi lại OTP sau: <Text style={styles.counter}>{counter}s</Text>
         </Text>
       )}
     </>

@@ -94,9 +94,11 @@ const ItemService = ({
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={_handleGoDetailService} style={styles.item}>
-        <Column overflow="hidden">
+        <Column
+        //overflow="hidden"
+        >
           <Image style={styles.avatar} avatar={data?.avatar} />
-          {data.isOnFlashSale && <FlashSale item={data} width={_width / 2} />}
+          {data.isOnFlashSale && <FlashSale item={data} />}
         </Column>
 
         <View style={styles.item__body}>
@@ -156,7 +158,7 @@ const ItemService = ({
               style={[
                 styles.item__body__btnAdd,
                 (isSelected || !canSelect || isOutOfStock) &&
-                styles.item__body__btnAdd_selected,
+                  styles.item__body__btnAdd_selected,
               ]}
             >
               <Text color={WHITE} weight="bold">
@@ -168,14 +170,15 @@ const ItemService = ({
       </TouchableOpacity>
       <ModalPickToppingNew
         confirm={(currChoice, listTopping) => {
-
           let options = cloneDeep(currChoice.options);
 
           for (let i = 0; i < options.length; i++) {
-            options[i].data = listTopping.filter(item => item.groupCode === options[i].groupCode);
+            options[i].data = listTopping.filter(
+              (item) => item.groupCode === options[i].groupCode
+            );
           }
 
-          let optionsFinal = options.filter(item => !isEmpty(item.data))
+          let optionsFinal = options.filter((item) => !isEmpty(item.data));
           currChoice.optionsSelected = cloneDeep(optionsFinal);
           onToggleSelection(currChoice);
         }}
@@ -184,8 +187,8 @@ const ItemService = ({
         hide={() => {
           setShowModalPickTopping({
             data: {} as Service,
-            isShow: false
-          })
+            isShow: false,
+          });
         }}
       />
     </View>

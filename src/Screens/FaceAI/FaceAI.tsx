@@ -47,7 +47,6 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { BackIcon } from "@Components/Icon/Icon";
 import IconButton from "@Components/IconButton";
 import { useTimeout } from "@r0b0t3d/react-native-hooks";
-import { useFocused } from "src/Hooks/useNavigation";
 import { useIsFocused } from "@react-navigation/native";
 
 const EYE_INDICATOR_SIZE = 10;
@@ -512,7 +511,7 @@ const FaceAI = () => {
                   device={device}
                   isActive={isReady && isFocused}
                   photo={true}
-                  resizeMode="contain"
+                  resizeMode="cover"
                   // photoHdr={true}
                   enableDepthData={true}
                   enablePortraitEffectsMatteDelivery={true}

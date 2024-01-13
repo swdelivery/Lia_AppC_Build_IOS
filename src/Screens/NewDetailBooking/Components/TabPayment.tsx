@@ -25,6 +25,7 @@ import {
 } from "@Redux/user/selectors";
 import ItemService from "./ItemService";
 import { sum } from "lodash";
+import ItemInsurance from "@Screens/NewCreateBooking/Components/ItemInsurance";
 
 const PAYMENT_FOR = {
   WALLET: "Ví",
@@ -150,6 +151,16 @@ const TabPayment = ({ booking }: Props) => {
       {(orderDetails?.services || []).map((item, index) => {
         return <ItemService key={item.service._id} item={item} />;
       })}
+      {orderDetails?.insurances?.length > 0 && (
+        <>
+          <Text weight="bold" color={BLACK} top={16} left={16}>
+            Danh sách bảo hiểm
+          </Text>
+          {orderDetails.insurances.map((item) => {
+            return <ItemInsurance item={item.insurance} key={item._id} />;
+          })}
+        </>
+      )}
 
       <Column paddingHorizontal={16} paddingTop={16} gap={8}>
         <Row justifyContent="space-between">

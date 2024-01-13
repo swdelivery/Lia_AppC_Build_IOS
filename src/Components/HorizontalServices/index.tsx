@@ -19,7 +19,9 @@ const HorizontalServices = ({
   paddingHorizontal = 0,
 }: Props) => {
   const data = useMemo(() => {
-    return items.map((item) => item.service).filter((item) => item);
+    return items
+      .filter((item) => item.service && item.service.isActive)
+      .map((item) => item.service);
   }, [items]);
 
   return (

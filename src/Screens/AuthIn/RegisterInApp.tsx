@@ -106,10 +106,11 @@ const RegisterInApp = (props) => {
   );
 
   const validatePhoneNumber = () => {
+    const numberRegex = /^[0-9]+$/;
     if (!phoneNumber) {
       setErrorPhoneNumber("Vui lòng nhập số điện thoại");
       return false;
-    } else if (!isValidPhoneNumber("+" + countryCallingCode + phoneNumber)) {
+    } else if (!isValidPhoneNumber("+" + countryCallingCode + phoneNumber) || !numberRegex.test(phoneNumber)) {
       setErrorPhoneNumber("Số điện thoại không hợp lệ");
       return false;
     } else {
@@ -118,7 +119,7 @@ const RegisterInApp = (props) => {
     }
   };
   const validateName = () => {
-    if (!name) {
+    if (!name.trim() || name.trim() === "") {
       setErrorName("Vui lòng nhập họ và tên");
       return false;
     } else {

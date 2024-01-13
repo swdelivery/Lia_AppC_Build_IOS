@@ -45,16 +45,3 @@ index 88c085f..2b7205e 100644
      val processedBitmap =
        Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, false)
      FileOutputStream(file).use { stream ->
-diff --git a/node_modules/react-native-vision-camera/android/src/main/java/com/mrousavy/camera/core/PreviewView.kt b/node_modules/react-native-vision-camera/android/src/main/java/com/mrousavy/camera/core/PreviewView.kt
-index 8cdb4c5..2fb630c 100644
---- a/node_modules/react-native-vision-camera/android/src/main/java/com/mrousavy/camera/core/PreviewView.kt
-+++ b/node_modules/react-native-vision-camera/android/src/main/java/com/mrousavy/camera/core/PreviewView.kt
-@@ -54,7 +54,7 @@ class PreviewView(context: Context, callback: SurfaceHolder.Callback) : SurfaceV
- 
-   private fun getSize(contentSize: Size, containerSize: Size, resizeMode: ResizeMode): Size {
-     val contentAspectRatio = contentSize.height.toDouble() / contentSize.width
--    val containerAspectRatio = containerSize.width.toDouble() / containerSize.height
-+    val containerAspectRatio = containerSize.height.toDouble() / containerSize.width
- 
-     Log.i(TAG, "Content Size: $contentSize ($contentAspectRatio) | Container Size: $containerSize ($containerAspectRatio)")
- 

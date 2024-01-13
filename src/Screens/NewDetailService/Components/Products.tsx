@@ -28,8 +28,6 @@ const Products = ({ service }: Props) => {
     []
   );
 
-  console.log({ service });
-
   return (
     <View style={styles.container}>
       <Text weight="bold" bottom={8}>

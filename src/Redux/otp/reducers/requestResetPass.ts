@@ -1,7 +1,7 @@
 import { measure } from 'react-native-reanimated';
 import { createReducer } from "@Redux/helper";
 import { Handler } from "@Redux/types";
-import { REQUEST_OTP_RESET_PASS, RESEND_OTP, RESET_STATE_VERIFY_OTP_ACCOUNT, VERIFY_OTP_ACCOUNT_PARTER } from "../types";
+import { REQUEST_OTP_RESET_PASS, RESEND_OTP, RESET_STATE_REQUETST_RESET_PASS, RESET_STATE_VERIFY_OTP_ACCOUNT, VERIFY_OTP_ACCOUNT_PARTER } from "../types";
 import Toast from 'react-native-toast-message';
 
 export type State = {
@@ -46,8 +46,16 @@ const success: Handler<State> = (state, { payload }) => {
   }
 }
 
+const reset: Handler<State> = (state) => ({
+  ...state,
+  isLoading: false,
+  isSuccess: null,
+  message: null
+});
+
 export default createReducer(INITIAL_STATE, {
   [REQUEST_OTP_RESET_PASS.REQUEST]: request,
   [REQUEST_OTP_RESET_PASS.SUCCESS]: success,
   [REQUEST_OTP_RESET_PASS.FAILURE]: failure,
+  [RESET_STATE_REQUETST_RESET_PASS]: reset
 });

@@ -137,9 +137,7 @@ const ItemService = ({ data }: { data: Service }) => {
           style={styles.image}
           avatar={data.avatar ?? data.representationFileArr[0]}
         />
-        {isFlashSaleStarted && (
-          <FlashSale item={data} width={ITEM_SERVICE_WIDTH} />
-        )}
+        {isFlashSaleStarted && <FlashSale item={data} />}
       </Column>
 
       <Column

@@ -1,6 +1,7 @@
 import { BookingService } from "./booking";
 import { Branch } from "./branch";
 import { FileAvatar, Timestamp } from "./common";
+import { Insurance } from "./insurance";
 import { Partner } from "./partner";
 import { Service } from "./serviceGroup";
 import { MyVoucher } from "./voucher";
@@ -111,6 +112,14 @@ export type Order = {
   paidAmount: number;
   id: string;
   services: BookingService[];
+  insurances: {
+    finalPrice: 4000000;
+    timeNumber: number;
+    _id: string;
+    insuranceCode: string;
+    type: "year";
+    insurance: Insurance;
+  }[];
   partnerCoupons: MyVoucher[];
   partnerLevelPromotion: {
     point: number;

@@ -1,7 +1,7 @@
 import Column from "@Components/Column";
 import Image from "@Components/Image";
 import Text from "@Components/Text";
-import { BASE_COLOR, WHITE } from "@Constant/Color";
+import { BASE_COLOR, GREY, WHITE } from "@Constant/Color";
 import { _moderateScale, _widthScale } from "@Constant/Scale";
 import { styleElement } from "@Constant/StyleElement";
 import { sizeText } from "@Constant/Text";
@@ -13,29 +13,40 @@ import { View, StyleSheet, TouchableOpacity } from "react-native";
 import useCallbackItem from "src/Hooks/useCallbackItem";
 
 type Props = {
+  isUsing?: boolean;
   item: MyVoucher;
   onDetails: (item: MyVoucher) => void;
   onUseCoupon: (item: MyVoucher) => void;
+  onCancelCoupon?: (item: MyVoucher) => void;
 };
 
-export default function MyVoucherItem({ item, onDetails, onUseCoupon }: Props) {
+export default function MyVoucherItem({
+  isUsing,
+  item,
+  onDetails,
+  onUseCoupon,
+  onCancelCoupon,
+}: Props) {
   const trigger = useCallbackItem(item);
 
   const isUsed = useMemo(() => {
-    return includes(['HOLD', 'USED'], item?.status)
-  }, [item])
+    return includes(["HOLD", "USED"], item?.status);
+  }, [item]);
 
   return (
     <TouchableOpacity onPress={trigger(onDetails)} style={styles.voucherBox}>
       <View style={styles.voucherBox__left}>
         <Image style={styles.avatarVoucher} avatar={item.coupon?.couponImg} />
         <Column flex={1} marginLeft={8}>
-          <Text numberOfLines={1} style={sizeText.small_500}>{item?.coupon?.code.toUpperCase()}</Text>
+          <Text numberOfLines={1} style={sizeText.small_500}>
+            {item?.coupon?.code.toUpperCase()}
+          </Text>
           <Text numberOfLines={2} style={sizeText.small_bold}>
             {item?.coupon?.description}
           </Text>
           <Text fontStyle="italic" size={12} numberOfLines={2}>
-            Hiệu lực đến ngày: <Text weight="bold" color={"#AA827C"} fontStyle="italic" size={12}>
+            Hiệu lực đến ngày:{" "}
+            <Text weight="bold" color={"#AA827C"} fontStyle="italic" size={12}>
               {moment(item?.coupon?.expiredAt).format("DD/MM/YYYY")}
             </Text>
           </Text>
@@ -43,28 +54,35 @@ export default function MyVoucherItem({ item, onDetails, onUseCoupon }: Props) {
       </View>
       <View style={styles.dashLine} />
       <View style={styles.voucherBox__right}>
-        {
-          isUsed ?
-            <TouchableOpacity
-              disabled
-              onPress={trigger(onUseCoupon)}
-              style={[styles.voucherBox__right__btn, { opacity: .5 }]}
-            >
-              <Text color={WHITE} size={12} weight="bold">
-                Đã sử dụng
-              </Text>
-            </TouchableOpacity>
-            :
-            <TouchableOpacity
-              onPress={trigger(onUseCoupon)}
-              style={styles.voucherBox__right__btn}
-            >
-              <Text color={WHITE} size={12} weight="bold">
-                Sử dụng
-              </Text>
-            </TouchableOpacity>
-        }
-
+        {isUsed ? (
+          <TouchableOpacity
+            disabled
+            onPress={trigger(onUseCoupon)}
+            style={[styles.voucherBox__right__btn, { opacity: 0.5 }]}
+          >
+            <Text color={WHITE} size={12} weight="bold">
+              Đã sử dụng
+            </Text>
+          </TouchableOpacity>
+        ) : isUsing ? (
+          <TouchableOpacity
+            onPress={trigger(onCancelCoupon)}
+            style={[styles.voucherBox__right__btn, { backgroundColor: GREY }]}
+          >
+            <Text color={WHITE} size={12} weight="bold">
+              Hủy
+            </Text>
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity
+            onPress={trigger(onUseCoupon)}
+            style={styles.voucherBox__right__btn}
+          >
+            <Text color={WHITE} size={12} weight="bold">
+              Sử dụng
+            </Text>
+          </TouchableOpacity>
+        )}
       </View>
     </TouchableOpacity>
   );
@@ -76,7 +94,7 @@ const styles = StyleSheet.create({
     height: _moderateScale(8 * 3),
     ...styleElement.centerChild,
     backgroundColor: BASE_COLOR,
-    borderRadius: 4
+    borderRadius: 4,
   },
   avatarVoucher: {
     width: _moderateScale(8 * 8),

@@ -56,57 +56,50 @@ const DetailService = () => {
   });
 
   const bannerImages = useMemo(() => {
+    if (!service) {
+      return [];
+    }
     return isEmpty(service?.representationServiceFileArr)
       ? [service.avatar]
       : service.representationServiceFileArr;
   }, [service]);
 
   return (
-    <Screen safeBottom safeTop style={styles.container}>
-      <StatusBar
-        barStyle="dark-content"
-        translucent
-        backgroundColor={"transparent"}
-      />
-      <Header />
-      <AfterTimeoutFragment placeholder={<Placeholder />} timeout={1000}>
-        <ScrollView style={styles.content}>
-          <HorizonListImage images={bannerImages} getColors={getColors} />
-          <View style={styles.body}>
-            <Animated.View style={[styles.bodyBg2, animatedStyle]} />
-            <LinearGradient
-              style={styles.bodyBg}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 0, y: 1 }}
-              colors={["transparent", "white", "#F7F8FA"]}
-            >
-              <NameService service={service} />
-              <OverViewFeedBack
-                service={service}
-                reviews={reviews}
-                total={reviewsMeta?.totalDocuments}
-              />
-            </LinearGradient>
-            {/* <FlashSale /> */}
-          </View>
-          <InfoBranch service={service} />
-          {service?.guideVideo?.length > 0 && <ListVideo service={service} />}
-          <Material service={service} />
-          <Products service={service} />
-          <BeautyInsurance
-            onViewMore={navigate(ScreenKey.LIST_BEAUTY_INSURANCE)}
-          />
-          {/* <Tutorial /> */}
-          <MainInfoService service={service} />
-          <RelatedServices service={service} />
-          <Feedback reviews={reviews} />
+    <>
+      <ScrollView style={styles.content}>
+        <HorizonListImage images={bannerImages} getColors={getColors} />
+        <View style={styles.body}>
+          <Animated.View style={[styles.bodyBg2, animatedStyle]} />
+          <LinearGradient
+            style={styles.bodyBg}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 0, y: 1 }}
+            colors={["transparent", "white", "#F7F8FA"]}
+          >
+            <NameService service={service} />
+            <OverViewFeedBack
+              service={service}
+              reviews={reviews}
+              total={reviewsMeta?.totalDocuments}
+            />
+          </LinearGradient>
+        </View>
+        <InfoBranch service={service} />
+        {service?.guideVideo?.length > 0 && <ListVideo service={service} />}
+        <Material service={service} />
+        <Products service={service} />
+        <BeautyInsurance
+          onViewMore={navigate(ScreenKey.LIST_BEAUTY_INSURANCE)}
+        />
+        <MainInfoService service={service} />
+        <RelatedServices service={service} />
+        <Feedback reviews={reviews} />
 
-          <Spacer top={16} />
-          <RecommendServices service={service} />
-        </ScrollView>
-        <BottomAction service={service} />
-      </AfterTimeoutFragment>
-    </Screen>
+        <Spacer top={16} />
+        <RecommendServices service={service} />
+      </ScrollView>
+      <BottomAction service={service} />
+    </>
   );
 };
 
@@ -155,10 +148,6 @@ const styles = StyleSheet.create({
   },
   body: {
     width: _width,
-  },
-  container: {
-    flex: 1,
-    backgroundColor: "white",
   },
   content: {
     backgroundColor: "#F7F8FA",

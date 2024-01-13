@@ -27,11 +27,15 @@ export const isCurrentFlashSale = (flashSale?: FlashSale) => {
   return Date.now() >= startTimestamp && Date.now() <= endTimestamp;
 };
 
-const calculateServiceOptionsPrice = (listOption?: ServiceOption[]) => {
+const calculateToppingPrice = (data: Service) => {
   let total = 0;
-  if (listOption != null && listOption?.length > 0) {
-    for (let i = 0; i < listOption?.length; i++) {
-      const element = listOption[i];
+  if (
+    data != null &&
+    data?.optionsSelected != null &&
+    data?.optionsSelected?.length > 0
+  ) {
+    for (let i = 0; i < data?.optionsSelected?.length; i++) {
+      const element = data?.optionsSelected[i];
       for (let j = 0; j < element?.data.length; j++) {
         const elementChild = element?.data[j];
         total +=
@@ -43,14 +47,14 @@ const calculateServiceOptionsPrice = (listOption?: ServiceOption[]) => {
 };
 
 export const getServicePrice = (service: Service) => {
-  let totalOptions = calculateServiceOptionsPrice(
-    service.optionsSelected != null ? service.optionsSelected : []
-  );
   if (
     isCurrentFlashSale(service.currentFlashSale) &&
     service.preferentialInCurrentFlashSale
   ) {
-    return service.preferentialInCurrentFlashSale.finalPrice + totalOptions;
+    return (
+      service.preferentialInCurrentFlashSale.finalPrice +
+      calculateToppingPrice(service)
+    );
   }
-  return service.price + totalOptions;
+  return service.price + calculateToppingPrice(service);
 };

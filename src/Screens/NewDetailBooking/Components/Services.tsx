@@ -7,8 +7,7 @@ import Column from "@Components/Column";
 import Row from "@Components/Row";
 import { BASE_COLOR, BLACK } from "@Constant/Color";
 import { formatMonney } from "@Constant/Utils";
-import { cloneDeep, isEmpty, sum } from "lodash";
-import { getServicePrice } from "@Constant/service";
+import { sum } from "lodash";
 import ItemInsurance from "@Screens/NewCreateBooking/Components/ItemInsurance";
 
 type Props = {
@@ -41,23 +40,6 @@ export default function Services({ booking }: Props) {
     );
   }, [booking]);
 
-  const totalAmount = useMemo(() => {
-    return Object.values(booking.services).reduce((acc, item) => {
-      let service = item.service;
-      let options = cloneDeep(service.options);
-
-      for (let i = 0; i < options.length; i++) {
-        options[i].data = item.options.filter(
-          (item) => item.groupCode === options[i].groupCode
-        );
-      }
-
-      let optionsFinal = options.filter((item) => !isEmpty(item.data));
-      service.optionsSelected = cloneDeep(optionsFinal);
-      return acc + getServicePrice(item.service);
-    }, 0);
-  }, [booking]);
-
   return (
     <View style={styles.container}>
       <Text weight="bold" color={BLACK} top={8} left={16}>
@@ -67,13 +49,13 @@ export default function Services({ booking }: Props) {
         booking.services?.map((item, index) => {
           return <ItemService key={item._id} item={item} />;
         })}
-      {booking.insuranceArr?.length > 0 && (
+      {booking.insurances?.length > 0 && (
         <>
           <Text weight="bold" color={BLACK} top={16} left={16}>
             Danh sách bảo hiểm
           </Text>
-          {booking.insuranceArr.map((item) => {
-            return <ItemInsurance item={item} key={item._id} />;
+          {booking.insurances.map((item) => {
+            return <ItemInsurance item={item.insurance} key={item._id} />;
           })}
         </>
       )}
@@ -94,7 +76,7 @@ export default function Services({ booking }: Props) {
           <Text weight="bold">Tạm tính:</Text>
           <Text color={"#0053BD"} weight="bold">
             {`${formatMonney(
-              totalAmount - discountAmount - discountLevel,
+              booking.totalAmount - discountAmount - discountLevel,
               true
             )}`}
           </Text>

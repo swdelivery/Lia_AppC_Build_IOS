@@ -36,12 +36,13 @@ export type TextProps = RNTextProps & {
   right?: number;
   removePadding?: boolean;
   fontStyle?: "normal" | "italic";
+  textAlign?: TextStyle["textAlign"];
   flex?: number;
   textDecorationLine?:
-  | "none"
-  | "underline"
-  | "line-through"
-  | "underline line-through";
+    | "none"
+    | "underline"
+    | "line-through"
+    | "underline line-through";
 };
 
 const Text = ({
@@ -56,6 +57,7 @@ const Text = ({
   removePadding = false,
   textDecorationLine = "none",
   fontStyle,
+  textAlign,
   flex,
   ...props
 }: TextProps) => {
@@ -67,8 +69,8 @@ const Text = ({
       fontWeight: isAndroid
         ? undefined
         : weight === "regular"
-          ? "normal"
-          : "bold",
+        ? "normal"
+        : "bold",
       fontSize,
       color: color || BLACK,
       marginTop: top || undefined,
@@ -77,12 +79,13 @@ const Text = ({
       marginBottom: bottom || undefined,
       textDecorationLine,
       fontStyle,
+      textAlign,
       flex,
       ...(removePadding
         ? {
-          height: fontSize,
-          lineHeight: fontSize * 1.2,
-        }
+            height: fontSize,
+            lineHeight: fontSize * 1.2,
+          }
         : {}),
     };
   }, [

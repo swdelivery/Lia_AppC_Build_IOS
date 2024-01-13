@@ -31,7 +31,6 @@ const NameService = ({ service }: Props) => {
   const isFlashSaleStarted = useMemo(() => {
     if (service.isOnFlashSale && service.currentFlashSale) {
       const currentFlashSale = fromFlashSaleDate(service.currentFlashSale);
-      console.log({ currentFlashSale });
 
       return currentFlashSale.to > Date.now();
     }

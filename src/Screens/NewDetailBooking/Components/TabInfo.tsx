@@ -12,7 +12,7 @@ import {
 import { _moderateScale } from "@Constant/Scale";
 import { styleElement } from "@Constant/StyleElement";
 import moment from "moment";
-import React, { useMemo } from "react";
+import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Booking } from "@typings/booking";
 import useBookingStatuses from "../useBookingStatuses";
@@ -24,10 +24,6 @@ type Props = {
 
 const TabInfo = ({ booking }: Props) => {
   const statuses = useBookingStatuses(booking);
-
-  const activeStatusIndex = useMemo(() => {
-    return statuses.findIndex((item) => item.status === booking.status);
-  }, [booking, statuses]);
 
   return (
     <View style={styles.container}>

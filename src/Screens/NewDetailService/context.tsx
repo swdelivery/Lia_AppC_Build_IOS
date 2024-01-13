@@ -5,6 +5,12 @@ import { createContext, useContext, useMemo } from "react";
 import useApi from "src/Hooks/services/useApi";
 import { useFocused, useNavigationParams } from "src/Hooks/useNavigation";
 import PartnerService from "src/Services/PartnerService";
+import Screen from "@Components/Screen";
+import { StatusBar } from "@Components/StatusBar";
+import Header from "./Components/Header";
+import { AfterTimeoutFragment } from "@Components/AfterTimeoutFragment";
+import Placeholder from "./Components/Placeholder";
+import { StyleSheet } from "react-native";
 
 export type ServiceDetailsContextType = {
   service: Service;
@@ -58,8 +64,25 @@ export function withServiceDetailsContext<T>(
 
     return (
       <ServiceDetailsContext.Provider value={context}>
-        <Component {...props} />
+        <Screen safeBottom safeTop style={styles.container}>
+          <StatusBar
+            barStyle="dark-content"
+            translucent
+            backgroundColor={"transparent"}
+          />
+          <Header />
+          <AfterTimeoutFragment placeholder={<Placeholder />} timeout={1000}>
+            {data && <Component {...props} />}
+          </AfterTimeoutFragment>
+        </Screen>
       </ServiceDetailsContext.Provider>
     );
   };
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "white",
+  },
+});
