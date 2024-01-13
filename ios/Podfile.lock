@@ -1292,7 +1292,7 @@ PODS:
     - SDWebImage/Core (~> 5.10)
   - SocketRocket (0.6.1)
   - TOCropViewController (2.6.1)
-  - VisionCamera (3.7.0):
+  - VisionCamera (3.7.1):
     - React
     - React-callinvoker
     - React-Core
@@ -1739,7 +1739,7 @@ SPEC CHECKSUMS:
   SDWebImageWebPCoder: 908b83b6adda48effe7667cd2b7f78c897e5111d
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   TOCropViewController: edfd4f25713d56905ad1e0b9f5be3fbe0f59c863
-  VisionCamera: 459701e86be125db2583392d2d06acb15b04ec03
+  VisionCamera: ef56ac9d3e0fef4b94c7cf75735aaccc2326e35a
   Yoga: e64aa65de36c0832d04e8c7bd614396c77a80047
 
 PODFILE CHECKSUM: a3bd99ef1f6f60f4a3897d6d8e143fa0cfc34784
