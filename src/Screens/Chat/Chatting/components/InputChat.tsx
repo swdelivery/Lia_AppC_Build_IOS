@@ -61,7 +61,7 @@ type Props = {
   //
 };
 
-const InputChat = ({}: Props) => {
+const InputChat = ({ }: Props) => {
   const { infoUser } = useSelector(getInfoUserReducer);
   const { data: conversation } = useSelector(getConversationState);
   const moreActions = useVisible();
@@ -438,6 +438,7 @@ const styles = StyleSheet.create({
     margin: 0,
     fontFamily: FONT_WEIGHTS["regular"],
     maxHeight: 150,
+    color: Color.BLACK,
   },
   content: {
     minHeight: 1000,
