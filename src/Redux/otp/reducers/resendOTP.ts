@@ -22,10 +22,7 @@ const request: Handler<State> = (state) => ({
 });
 
 const failure: Handler<State> = (state, { payload }) => {
-  Toast.show({
-    text1: payload,
-    type: "error",
-  });
+
   return ({
     ...state,
     isLoading: false,
@@ -35,10 +32,7 @@ const failure: Handler<State> = (state, { payload }) => {
 };
 
 const success: Handler<State> = (state, { payload }) => {
-  Toast.show({
-    text1: payload.message,
-    type: "success",
-  });
+
   return ({
     ...state,
     isLoading: false,
