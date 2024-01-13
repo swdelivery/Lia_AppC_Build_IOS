@@ -56,9 +56,8 @@ const ModalPolicy = ({ visiblePolicy }: Props) => {
           </TouchableOpacity>
         </Column>
       </Column>
-      <Column
-        marginHorizontal={8 * 2}>
-        <ScrollView>
+      <Column>
+        <ScrollView contentContainerStyle={{ paddingHorizontal: 8 * 2 }}>
           {
             dataLevelPolicy?.value ?
               <RenderHTML data={dataLevelPolicy.value} />

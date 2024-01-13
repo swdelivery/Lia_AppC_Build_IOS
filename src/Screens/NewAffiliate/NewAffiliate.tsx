@@ -32,7 +32,7 @@ import CheckOrderBtn from "./Components/CheckOrderBtn";
 import QA from "./Components/QA";
 import Row from "@Components/Row";
 import Icon from "@Components/Icon";
-import { IconBXH, IconWallet } from "@Components/Icon/Icon";
+import { IconAffiliateRanked, IconAffiliateWallet, IconBXH, IconWallet } from "@Components/Icon/Icon";
 import { useNavigate } from "src/Hooks/useNavigation";
 import ScreenKey from "@Navigation/ScreenKey";
 import useHapticCallback from "src/Hooks/useHapticCallback";
@@ -133,14 +133,14 @@ const NewAffiliate = () => {
       >
         <LiAHeader
           right={
-            <Row gap={8 * 2}>
+            <Row alignItems="flex-end" gap={8 * 2}>
               <TouchableOpacity onPress={navigate(ScreenKey.LIST_RANKED)}>
-                <IconBXH />
+                <IconAffiliateRanked width={8 * 3.5} height={8 * 4.5} />
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={navigate(ScreenKey.INFO_WALLET_NEW_AFFILIATE)}
               >
-                <IconWallet />
+                <IconAffiliateWallet width={8 * 3} height={8 * 3} />
               </TouchableOpacity>
             </Row>
           }
