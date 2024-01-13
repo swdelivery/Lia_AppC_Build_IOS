@@ -13,7 +13,6 @@ import { Service } from "@typings/serviceGroup";
 import useServiceDetailsNavigation from "src/Hooks/navigation/useServiceDetailsNavigation";
 import { SERVICE_BANNER_RATIO } from "@Constant/image";
 import Column from "@Components/Column";
-import { FlashList } from "@shopify/flash-list";
 import { RenderItemProps } from "@typings/common";
 
 type Props = {
@@ -45,11 +44,14 @@ const HorizontalServicesV2 = ({
         </Text>
       )}
       <View>
-        <FlashList
+        <FlatList
           horizontal
           data={items}
           renderItem={renderItem}
-          estimatedItemSize={80}
+          windowSize={10}
+          initialNumToRender={5}
+          maxToRenderPerBatch={3}
+          removeClippedSubviews
         />
       </View>
     </Column>

@@ -6,6 +6,7 @@ import { ViewStyle } from "react-native";
 import HorizontalServicesV2 from "@Components/HorizontalServicesV2";
 import Fade from "@Components/Fade";
 
+
 type Props = {
   title?: string;
   items: BranchService[];
