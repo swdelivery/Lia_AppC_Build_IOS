@@ -505,17 +505,16 @@ const FaceAI = () => {
               {device && (
                 <Camera
                   enableHighQualityPhotos={true}
-                  orientation={"portrait"}
+                  orientation={"landscape-left"}
                   ref={refCamera}
                   style={StyleSheet.absoluteFill}
                   device={device}
                   isActive={isReady && isFocused}
                   photo={true}
-                  resizeMode="cover"
                   // photoHdr={true}
                   enableDepthData={true}
                   enablePortraitEffectsMatteDelivery={true}
-                // format={format}
+                  // format={format}
                 />
               )}
               <View

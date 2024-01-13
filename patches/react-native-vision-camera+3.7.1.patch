@@ -46,44 +46,49 @@ index 88c085f..2b7205e 100644
        Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, false)
      FileOutputStream(file).use { stream ->
 diff --git a/node_modules/react-native-vision-camera/android/src/main/java/com/mrousavy/camera/core/PreviewView.kt b/node_modules/react-native-vision-camera/android/src/main/java/com/mrousavy/camera/core/PreviewView.kt
-index cfda57a..c62f370 100644
+index cfda57a..a40ad19 100644
 --- a/node_modules/react-native-vision-camera/android/src/main/java/com/mrousavy/camera/core/PreviewView.kt
 +++ b/node_modules/react-native-vision-camera/android/src/main/java/com/mrousavy/camera/core/PreviewView.kt
-@@ -34,6 +34,8 @@ class PreviewView(context: Context, callback: SurfaceHolder.Callback) : SurfaceV
-       }
-     }
+@@ -48,6 +48,8 @@ class PreviewView(context: Context, callback: SurfaceHolder.Callback) : SurfaceV
+     val contentAspectRatio = contentSize.width.toDouble() / contentSize.height
+     val containerAspectRatio = containerSize.width.toDouble() / containerSize.height
  
-+  private val aspectRatio: Float get() = size.width.toFloat() / size.height.toFloat()
++    Log.d(TAG, "coverSize :: $contentSize ($contentAspectRatio), ${containerSize.width}x${containerSize.height} ($containerAspectRatio)")
 +
-   init {
-     Log.i(TAG, "Creating PreviewView...")
-     layoutParams = FrameLayout.LayoutParams(
-@@ -67,12 +69,24 @@ class PreviewView(context: Context, callback: SurfaceHolder.Callback) : SurfaceV
+     val widthOverHeight = when (resizeMode) {
+       ResizeMode.COVER -> contentAspectRatio > containerAspectRatio
+       ResizeMode.CONTAIN -> contentAspectRatio < containerAspectRatio
+@@ -55,23 +57,26 @@ class PreviewView(context: Context, callback: SurfaceHolder.Callback) : SurfaceV
+ 
+     return if (widthOverHeight) {
+       // Scale by width to cover height
+-      val scaledWidth = containerSize.height * contentAspectRatio
+-      Size(scaledWidth.roundToInt(), containerSize.height)
++      val scaledWidth = (containerSize.height * contentAspectRatio).toInt()
++      Size(scaledWidth, containerSize.height)
+     } else {
+       // Scale by height to cover width
+-      val scaledHeight = containerSize.width / contentAspectRatio
+-      Size(containerSize.width, scaledHeight.roundToInt())
++      val scaledHeight = (containerSize.width / contentAspectRatio).toInt()
++      Size(containerSize.width, scaledHeight)
+     }
+   }
+ 
    @SuppressLint("DrawAllocation")
    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
      super.onMeasure(widthMeasureSpec, heightMeasureSpec)
 +    val viewWidth = MeasureSpec.getSize(widthMeasureSpec)
 +    val viewHeight = MeasureSpec.getSize(heightMeasureSpec)
-+    Log.i(TAG, "PreviewView onMeasure($viewWidth, $viewHeight)")
 +
-+    val newWidth: Int
-+    val newHeight: Int
++    Log.i(TAG, "PreviewView onMeasure($viewWidth, $viewHeight)")
  
 -    val viewSize = Size(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.getSize(heightMeasureSpec))
 -    val fittedSize = getSize(size, viewSize, resizeMode)
-+    val actualRatio = if (viewWidth > viewHeight) aspectRatio else 1f / aspectRatio
-+    if (viewWidth < viewHeight * actualRatio) {
-+      newHeight = viewHeight
-+      newWidth = (viewHeight * actualRatio).roundToInt()
-+    } else {
-+      newWidth = viewWidth
-+      newHeight = (viewWidth / actualRatio).roundToInt()
-+    }
++    val fittedSize = getSize(size, Size(viewWidth, viewHeight), resizeMode)
  
 -    Log.i(TAG, "PreviewView is $viewSize, rendering $size content. Resizing to: $fittedSize ($resizeMode)")
--    setMeasuredDimension(fittedSize.width, fittedSize.height)
-+    Log.d(TAG, "Measured dimensions set: $newWidth x $newHeight")
-+    setMeasuredDimension(newWidth, newHeight)
++    Log.d(TAG, "Fitted dimensions set: $fittedSize")
+     setMeasuredDimension(fittedSize.width, fittedSize.height)
    }
  
-   companion object {
