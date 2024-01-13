@@ -1,8 +1,8 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { memo } from 'react'
 import { _moderateScale } from '../../../Constant/Scale'
-import { IconCheckOrder, IconCustomer, IconPolicy, IconRightArrow, IconTeamConnect } from '../../../Components/Icon/Icon'
-import { BASE_COLOR, WHITE } from '../../../Constant/Color'
+import { IconAffiliateQA } from '../../../Components/Icon/Icon'
+import { WHITE } from '../../../Constant/Color'
 import { stylesFont } from '../../../Constant/Font'
 import { navigation } from '../../../../rootNavigation'
 import ScreenKey from '../../../Navigation/ScreenKey'
@@ -15,7 +15,7 @@ const QA = memo(() => {
           navigation.navigate(ScreenKey.QA_NEW_AFFILIATE)
         }}
         style={[styles.options__btn]}>
-        <IconCustomer style={{ width: _moderateScale(8 * 3), height: _moderateScale(8 * 3) }} />
+        <IconAffiliateQA width={8 * 2.5} height={8 * 2.5} />
 
         <View style={{ width: _moderateScale(8) }} />
         <Text style={[{ flex: 1, color: WHITE, fontSize: _moderateScale(14) }, stylesFont.fontNolan500]}>
@@ -41,7 +41,6 @@ const styles = StyleSheet.create({
   },
   options: {
     paddingVertical: 8
-    // paddingHorizontal: _moderateScale(8 * 2)
   }
 })
 

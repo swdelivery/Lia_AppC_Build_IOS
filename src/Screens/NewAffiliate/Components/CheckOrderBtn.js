@@ -1,8 +1,8 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { memo } from 'react'
 import { _moderateScale } from '../../../Constant/Scale'
-import { IconCheckOrder, IconPolicy, IconRightArrow, IconTeamConnect } from '../../../Components/Icon/Icon'
-import { BASE_COLOR, WHITE } from '../../../Constant/Color'
+import { IconAffiliateReportOrder } from '../../../Components/Icon/Icon'
+import { WHITE } from '../../../Constant/Color'
 import { stylesFont } from '../../../Constant/Font'
 import { navigation } from '../../../../rootNavigation'
 import ScreenKey from '../../../Navigation/ScreenKey'
@@ -15,8 +15,7 @@ const CheckOrderBtn = memo(() => {
           navigation.navigate(ScreenKey.ORDER_BOOKING_ALL_AFFILIATE)
         }}
         style={[styles.options__btn]}>
-        <IconCheckOrder style={{ width: _moderateScale(8 * 3), height: _moderateScale(8 * 3) }} />
-
+        <IconAffiliateReportOrder width={8 * 2.5} height={8 * 2.5} />
         <View style={{ width: _moderateScale(8) }} />
         <Text style={[{ flex: 1, color: WHITE, fontSize: _moderateScale(14) }, stylesFont.fontNolan500]}>
           Theo dõi đơn hàng & Booking
@@ -41,7 +40,6 @@ const styles = StyleSheet.create({
   },
   options: {
     paddingVertical: 8
-    // paddingHorizontal: _moderateScale(8 * 2)
   }
 })
 

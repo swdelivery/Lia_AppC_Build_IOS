@@ -11,15 +11,11 @@ import Animated, {
 import { useSelector } from "react-redux";
 import { navigation } from "../../../../rootNavigation";
 import {
-  IconIsChecked,
-  IconNotChecked,
-  IconPartnerShip,
-  IconRightArrow,
+  IconAffiliateTutorial,
   RightArrowIcon,
 } from "../../../Components/Icon/Icon";
 import { BASE_COLOR, BLUE_FB, GREEN_SUCCESS, GREY, WHITE } from "../../../Constant/Color";
 import { stylesFont } from "../../../Constant/Font";
-import { sizeIcon } from "../../../Constant/Icon";
 import { _moderateScale } from "../../../Constant/Scale";
 import ScreenKey from "../../../Navigation/ScreenKey";
 import {
@@ -360,12 +356,7 @@ const TutMakeMoney = memo((props) => {
             height: _moderateScale(8 * 5),
           }}
         >
-          <IconPartnerShip
-            style={{
-              width: _moderateScale(8 * 3),
-              height: _moderateScale(8 * 3),
-            }}
-          />
+          <IconAffiliateTutorial width={8 * 2.5} height={8 * 2.5} />
 
           <View style={{ width: _moderateScale(8) }} />
           <Text
@@ -400,7 +391,6 @@ const styles = StyleSheet.create({
     paddingVertical: 8
   },
   options: {
-    // paddingHorizontal: _moderateScale(8 * 2),
   },
 });
 
