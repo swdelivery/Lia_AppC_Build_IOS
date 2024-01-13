@@ -4,7 +4,7 @@ import Text from "@Components/Text";
 import { _moderateScale } from "@Constant/Scale";
 import Row from "@Components/Row";
 import Column from "@Components/Column";
-import { BASE_COLOR, WHITE } from "@Constant/Color";
+import { BASE_COLOR, BLACK, BLACK_OPACITY_7, BLACK_OPACITY_8, WHITE } from "@Constant/Color";
 import { Conversation } from "@typings/chat";
 import ContentLoader, { Circle, Rect } from "react-content-loader/native";
 import Avatar from "@Components/Avatar";
@@ -78,16 +78,16 @@ const ItemLastedMessage = ({ item, onPress }: Props) => {
             style={styles.avatar}
           />
         ) : item.type === "assistant" ? (
-          <IconAI width={70} height={70} color={BASE_COLOR} />
+          <IconAI width={45} height={45} color={BASE_COLOR} />
         ) : (
           <Avatar
-            size={70}
+            size={45}
             style={styles.avatar}
             avatar={assignedUser?.profile?.fileAvatar}
           />
         )}
         <Column gap={_moderateScale(4)} flex={1}>
-          <Text weight={isSeen ? "regular" : "bold"} size={18}>
+          <Text weight={isSeen ? "bold" : "bold"} color={isSeen ? BLACK_OPACITY_7 : BLACK} size={14}>
             {item.type === "assistant" || item.type === "consultation"
               ? item.name
               : assignedUser?.name}
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   avatar: {
-    width: 70,
+    width: 45,
     aspectRatio: 1,
     borderRadius: 70 / 2,
   },

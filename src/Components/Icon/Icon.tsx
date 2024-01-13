@@ -147,6 +147,7 @@ export { default as IconSortPriceUp } from "../../SGV/service/sortPriceUp.svg";
 export { default as IconSortPriceDown } from "../../SGV/service/sortPriceDown.svg";
 export { default as IconDArrowDownBase } from "../../SGV/dArrowDownBase.svg";
 export { default as IconQuestion } from "../../SGV/wheelSpin/question.svg";
+export { default as IconEmptyData } from "../../SGV/iconEmptyData.svg";
 
 
 export const IconSetting = (props) => {

@@ -98,8 +98,9 @@ const BtnIcon = ({
         return navigate("FACE_AI")();
       case "skin-mirror":
         return navigate(ScreenKey.SKIN_MIRROR_AI)();
-      case "examination-results":
       case "rating":
+        return navigate(ScreenKey.PARTNER_REVIEW_SERVICE)();
+      case "examination-results":
       case "refund":
         Alert.alert("Tính năng đang phát triển");
         return;

@@ -6,6 +6,7 @@ import { _moderateScale, _widthScale } from "@Constant/Scale";
 import { styleElement } from "@Constant/StyleElement";
 import { sizeText } from "@Constant/Text";
 import { MyVoucher } from "@typings/voucher";
+import { includes } from "lodash";
 import moment from "moment";
 import React, { useMemo } from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
@@ -29,7 +30,7 @@ export default function MyVoucherItem({
   const trigger = useCallbackItem(item);
 
   const isUsed = useMemo(() => {
-    return item?.usedAt;
+    return includes(["HOLD", "USED"], item?.status);
   }, [item]);
 
   return (
@@ -93,7 +94,7 @@ const styles = StyleSheet.create({
     height: _moderateScale(8 * 3),
     ...styleElement.centerChild,
     backgroundColor: BASE_COLOR,
-    borderRadius: 4
+    borderRadius: 4,
   },
   avatarVoucher: {
     width: _moderateScale(8 * 8),

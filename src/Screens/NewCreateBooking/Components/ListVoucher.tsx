@@ -28,16 +28,20 @@ const ListVoucher = () => {
     return data?.filter((item) => !item?.usedAt);
   }, [data]);
 
+  useFocused(() => {
+    getData({
+      condition: {
+        status: {
+          equal: "UNUSED",
+        },
+      },
+    });
+  });
   return (
     <View style={{}}>
-      <Row
-        style={{
-          marginHorizontal: _moderateScale(8 * 2),
-          justifyContent: "space-between",
-        }}
-      >
+      <Row marginHorizontal={16} justifyContent="space-between">
         <Text size={14} weight="bold">
-          Voucher{" "}
+          Voucher
         </Text>
 
         <TouchableOpacity

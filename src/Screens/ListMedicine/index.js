@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react';
+import React, { memo, useCallback, useEffect } from 'react';
 import { ScrollView, StyleSheet, View, Text } from 'react-native';
 import { useDispatch, useSelector } from "react-redux";
 import Header from '../../Components/Header/Header';
@@ -10,30 +10,66 @@ import ItemMedicine from './Components/ItemMedicine';
 import { getMedicalPrescription } from '../../Redux/Action/InfoAction';
 import { styleElement } from '../../Constant/StyleElement';
 import { stylesFont } from '../../Constant/Font';
+import Screen from '@Components/Screen';
+import LiAHeader from '@Components/Header/LiAHeader';
+import { FocusAwareStatusBar, StatusBar } from '@Components/StatusBar';
+import { FlatList } from 'react-native';
+import Column from '@Components/Column';
+import EmptyResultData from '@Components/LoadingIndicator/EmptyResultData';
+import { IconEmptyData } from '@Components/Icon/Icon';
+import Button from '@Components/Button/Button';
+import { useNavigate } from 'src/Hooks/useNavigation';
+import ScreenKey from '@Navigation/ScreenKey';
 
 
 const index = memo((props) => {
     const dispatch = useDispatch()
-
+    const { navigate } = useNavigate()
     const medicalPrescriptionRedux = useSelector(state => state?.infoReducer?.medicalPrescription)
-
-
-
     useEffect(() => {
-        // dispatch(getMedicalPrescription())
+        dispatch(getMedicalPrescription())
     }, [])
 
-    console.log('medicalPrescriptionRedux', medicalPrescriptionRedux)
+    const _renderItem = ({ item, index }) => {
+        return <ItemMedicine data={item} />
+    };
+
+    const _handleCreateBooking = useCallback(() => {
+        navigate(ScreenKey.CREATE_BOOKING)()
+    }, [])
 
     return (
-        <View style={styles.container}>
-            <StatusBarCustom barStyle={'dark-content'} bgColor={BASE_COLOR} />
-            <Header title={`Đơn thuốc`} keyGoBack={props?.route?.params?.keyGoBack}
-                styleTit={{ color: WHITE }}
-                backStyle={`white`}
-                styleCus={{ backgroundColor: BASE_COLOR }} />
+        <Screen style={styleElement.flex}>
+            <StatusBar barStyle="light-content" />
+            <LiAHeader safeTop title='Đơn thuốc' />
 
-            {
+            <FlatList
+                contentContainerStyle={{ alignItems: 'center', paddingVertical: 8 * 2 }}
+                ListEmptyComponent={
+                    <Column marginTop={8 * 20} flex={1}>
+                        <EmptyResultData>
+                            <Column gap={8} alignItems='center'>
+                                <IconEmptyData width={8 * 8} height={8 * 8} />
+                                <Text>
+                                    Làm đẹp cùng LiA
+                                </Text>
+                                <Button.Gradient
+                                    onPress={_handleCreateBooking}
+                                    height={8 * 4}
+                                    borderRadius={8 * 4}
+                                    width={8 * 20}
+                                    horizontal
+                                    colors={['#2A78BD', '#21587E']}
+                                    title='Đặt hẹn ngay' />
+                            </Column>
+                        </EmptyResultData>
+                    </Column>
+                }
+                data={medicalPrescriptionRedux}
+                renderItem={_renderItem}
+                keyExtractor={(item, index) => item._id}
+            />
+            {/* {
                 medicalPrescriptionRedux?.length > 0 ?
                     <ScrollView contentContainerStyle={{ paddingHorizontal: _moderateScale(8 * 2), paddingTop: _moderateScale(8) }}>
                         {
@@ -49,11 +85,11 @@ const index = memo((props) => {
                     <View style={[{ flex: 1 }, styleElement.centerChild]}>
                         <Text style={{ ...stylesFont.fontNolan500, fontSize: _moderateScale(14), color: GREY, fontStyle: 'italic' }}>
                             Dữ liệu trống
-                                    </Text>
+                        </Text>
                     </View>
-            }
+            } */}
 
-        </View>
+        </Screen>
     );
 });
 

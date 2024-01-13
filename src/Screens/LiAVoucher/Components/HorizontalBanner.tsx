@@ -58,13 +58,17 @@ const HorizontalBanner = ({
     let image3 = first(res3?.data?.data?.fileArr);
     let image4 = first(res4?.data?.data?.fileArr);
 
-    let newFormat = [image1, image2, image3, image4]?.map((item) => {
-      return {
-        _id: item?._id,
-        url: getImageAvataUrl(item),
-      };
+    let arrTemp = [];
+
+    [image1, image2, image3, image4]?.map((item) => {
+      if (item?._id) {
+        arrTemp.push({
+          _id: item?._id,
+          url: getImageAvataUrl(item),
+        })
+      }
     });
-    setListImage(newFormat);
+    setListImage(arrTemp);
   }, []);
 
   useEffect(() => {

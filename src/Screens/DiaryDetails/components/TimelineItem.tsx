@@ -91,7 +91,7 @@ export default function TimelineItem({ item, isFirst, onItemUpdate }: Props) {
             .concat(listIdImageHasUpload),
         });
       })
-      .catch((e) => {});
+      .catch((e) => { });
   }, [item, onItemUpdate]);
 
   const _handleDeleteImageDailyDiary = useCallback(
@@ -159,8 +159,8 @@ export default function TimelineItem({ item, isFirst, onItemUpdate }: Props) {
             {item?.description
               ? item?.description
               : !item.isSyncingTreatment
-              ? "Chạm để thêm nội dung"
-              : ""}
+                ? "Chạm để thêm nội dung"
+                : ""}
           </Text>
         </Column>
         <Row gap={8} flexWrap="wrap" alignItems="flex-end">

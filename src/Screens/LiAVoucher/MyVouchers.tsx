@@ -36,7 +36,13 @@ const MyVouchers = () => {
   );
 
   useFocused(() => {
-    getData();
+    getData({
+      condition: {
+        status: {
+          equal: "UNUSED"
+        }
+      }
+    });
   });
 
   const handleUseCoupon = useCallback((item: MyVoucher) => {

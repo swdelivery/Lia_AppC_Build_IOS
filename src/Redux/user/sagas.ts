@@ -26,11 +26,11 @@ import AsyncStorage from "@react-native-community/async-storage";
 import keychain from "src/utils/keychain";
 import SocketInstance from "SocketInstance";
 
-function* getMyCoupons() {
+function* getMyCoupons({ payload }) {
   try {
     const response: ApiResponse<MyVoucher[]> = yield call(
       PartnerService.getMyCoupons,
-      {}
+      payload
     );
     yield put(
       actions.getMyCoupons.success({

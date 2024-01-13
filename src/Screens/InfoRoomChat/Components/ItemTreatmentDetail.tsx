@@ -221,11 +221,10 @@ const ItemTreatmentDetail = memo((props) => {
             ?.name ? (
             <RowInfo
               name={"Bác sĩ chính:"}
-              value={`${
-                listDoctorRedux?.find(
-                  (itemFind) => itemFind?.userId == doctorId
-                )?.name
-              }`}
+              value={`${listDoctorRedux?.find(
+                (itemFind) => itemFind?.userId == doctorId
+              )?.name
+                }`}
             />
           ) : (
             <></>

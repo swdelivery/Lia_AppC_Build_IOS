@@ -36,4 +36,5 @@ export type MyVoucher = {
   couponCode: string;
   partnerId: string;
   coupon: Voucher;
+  status: string;
 } & Timestamp;
