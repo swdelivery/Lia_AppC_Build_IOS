@@ -2,7 +2,9 @@ import { Image, StyleSheet, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { _moderateScale, _width, _widthScale } from "../../../Constant/Scale";
 import CountStar2 from "../../../Components/NewCountStar/CountStar";
-import Certificate from "../../../Components/Certificate/Certificate";
+import Certificate, {
+  Certificates,
+} from "../../../Components/Certificate/Certificate";
 import { URL_ORIGINAL } from "@Constant/Url";
 import ImageView from "react-native-image-viewing";
 import Avatar from "@Components/Avatar";
@@ -65,11 +67,7 @@ const Banner = ({ doctor }: Props) => {
           {doctor?.experience}
         </Text>
 
-        <Row gap={4} flexWrap="wrap" marginTop={8}>
-          {doctor?.treatmentDoctorFileArr?.map((item, index) => {
-            return <Certificate item={item} key={item._id} />;
-          })}
-        </Row>
+        <Certificates data={doctor?.treatmentDoctorFileArr} />
 
         <View style={styles.infoHorizon}>
           <View style={styles.infoHorizon__box}>
