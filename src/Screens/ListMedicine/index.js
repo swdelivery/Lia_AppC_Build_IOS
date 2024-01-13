@@ -12,7 +12,7 @@ import { styleElement } from '../../Constant/StyleElement';
 import { stylesFont } from '../../Constant/Font';
 import Screen from '@Components/Screen';
 import LiAHeader from '@Components/Header/LiAHeader';
-import { FocusAwareStatusBar } from '@Components/StatusBar';
+import { FocusAwareStatusBar, StatusBar } from '@Components/StatusBar';
 import { FlatList } from 'react-native';
 import Column from '@Components/Column';
 import EmptyResultData from '@Components/LoadingIndicator/EmptyResultData';
@@ -40,7 +40,7 @@ const index = memo((props) => {
 
     return (
         <Screen style={styleElement.flex}>
-            <FocusAwareStatusBar barStyle='light-content' />
+            <StatusBar barStyle="light-content" />
             <LiAHeader safeTop title='Đơn thuốc' />
 
             <FlatList

@@ -10,7 +10,7 @@ import { TabBar, TabView } from 'react-native-tab-view';
 
 import LiAHeader from '@Components/Header/LiAHeader';
 import Screen from '@Components/Screen';
-import { FocusAwareStatusBar } from '@Components/StatusBar';
+import { FocusAwareStatusBar, StatusBar } from '@Components/StatusBar';
 import ListDeposit from '../../Screens/ListDeposit/index';
 import ListDepositRequest from '../../Screens/ListDepositRequest';
 import ListPayment from '../../Screens/ListPayment/index';
@@ -70,7 +70,7 @@ const index = memo((props) => {
 
     return (
         <Screen style={styles.container}>
-            <FocusAwareStatusBar barStyle='light-content' />
+            <StatusBar barStyle="light-content" />
             <LiAHeader safeTop title='Thanh toán / Cọc' />
             <TabView
                 renderTabBar={renderTabBar}

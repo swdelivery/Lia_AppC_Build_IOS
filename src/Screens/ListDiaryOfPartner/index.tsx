@@ -18,7 +18,7 @@ import { IconEmptyData } from "@Components/Icon/Icon";
 import EmptyResultData from "@Components/LoadingIndicator/EmptyResultData";
 import Row from "@Components/Row";
 import Screen from "@Components/Screen";
-import { FocusAwareStatusBar } from "@Components/StatusBar";
+import { FocusAwareStatusBar, StatusBar } from "@Components/StatusBar";
 import Text from "@Components/Text";
 import moment from "moment";
 import { useNavigate } from "src/Hooks/useNavigation";
@@ -86,7 +86,7 @@ const ListDiaryOfPartner = memo((props) => {
 
   return (
     <Screen style={styles.container}>
-      <FocusAwareStatusBar barStyle="light-content" />
+      <StatusBar barStyle="light-content" />
       <LiAHeader safeTop title="Nhật ký của bạn" />
       <FlatList
         ListEmptyComponent={
