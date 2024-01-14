@@ -71,3 +71,4 @@ ios/tmp.xcconfig
 .env
 fastlane/builds
 fastlane/report.xml
+fastlane/configs.json
