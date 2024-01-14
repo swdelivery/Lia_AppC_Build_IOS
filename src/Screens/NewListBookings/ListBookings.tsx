@@ -18,7 +18,7 @@ import { useFocused, useNavigate } from "src/Hooks/useNavigation";
 
 const ListBookings = () => {
   const { navigate } = useNavigate()
-  const { isLoading, data, refreshData } = useListFilter(
+  const { isLoading, data, refreshData, loadMoreData } = useListFilter(
     getMyBookingState,
     getMyBooking,
     loadMoreMyBooking
@@ -46,19 +46,18 @@ const ListBookings = () => {
         ) : (
           <Column marginTop={8 * 20} flex={1}>
             <EmptyResultData>
-              <Column gap={8} alignItems='center'>
+              <Column gap={8} alignItems="center">
                 <IconEmptyData width={8 * 8} height={8 * 8} />
-                <Text>
-                  Làm đẹp cùng LiA
-                </Text>
+                <Text>Làm đẹp cùng LiA</Text>
                 <Button.Gradient
                   onPress={_handleCreateBooking}
                   height={8 * 4}
                   borderRadius={8 * 4}
                   width={8 * 20}
                   horizontal
-                  colors={['#2A78BD', '#21587E']}
-                  title='Đặt hẹn ngay' />
+                  colors={["#2A78BD", "#21587E"]}
+                  title="Đặt hẹn ngay"
+                />
               </Column>
             </EmptyResultData>
           </Column>
@@ -70,6 +69,8 @@ const ListBookings = () => {
       keyExtractor={(item, index) => item._id}
       refreshing={isLoading}
       onRefresh={refreshData}
+      onEndReached={loadMoreData}
+      onEndReachedThreshold={0.3}
       estimatedItemSize={100}
       extraData={processingBooking}
     />

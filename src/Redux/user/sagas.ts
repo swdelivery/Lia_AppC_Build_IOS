@@ -10,6 +10,7 @@ import {
   GET_PAYMENT_REQUEST,
   GET_TREATMENT_SERVICES,
   GetTreatmentServicesParams,
+  LOAD_MORE_MY_BOOKING,
 } from "./types";
 import * as actions from "./actions";
 import PartnerService from "src/Services/PartnerService";
@@ -25,6 +26,8 @@ import ScreenKey from "@Navigation/ScreenKey";
 import AsyncStorage from "@react-native-community/async-storage";
 import keychain from "src/utils/keychain";
 import SocketInstance from "SocketInstance";
+import { selectState } from "@Redux/helper";
+import { getMyBookingState } from "./selectors";
 
 function* getMyCoupons({ payload }) {
   try {
@@ -63,6 +66,31 @@ function* getMyBooking() {
     );
   } catch (error: any) {
     yield put(actions.getMyBooking.failure(error.message));
+  }
+}
+
+function* loadMoreMyBooking() {
+  try {
+    const { paging } = yield* selectState(getMyBookingState);
+    if (!paging || !paging.canLoadMore) {
+      throw new Error("No more data");
+    }
+    const response: ApiResponse<Booking[]> = yield call(
+      PartnerService.getBookingList,
+      {},
+      paging.page + 1
+    );
+    yield put(
+      actions.loadMoreMyBooking.success({
+        data: response.data,
+        paging: {
+          canLoadMore: response.data.length === configs.apiPageSize,
+          page: paging.page + 1,
+        },
+      })
+    );
+  } catch (error: any) {
+    yield put(actions.loadMoreMyBooking.failure(error.message));
   }
 }
 
@@ -170,6 +198,7 @@ export default function* sagas() {
   yield all([
     takeLatest(GET_MY_COUPONS.REQUEST, getMyCoupons),
     takeLatest(GET_MY_BOOKING.REQUEST, getMyBooking),
+    takeLatest(LOAD_MORE_MY_BOOKING.REQUEST, loadMoreMyBooking),
     takeLatest(GET_BOOKING_DETAILS.REQUEST, getBookingDetails),
     takeLatest(GET_TREATMENT_SERVICES.REQUEST, getTreatmentServices),
     takeLatest(GET_PAYMENT_REQUEST.REQUEST, getPaymentRequest),

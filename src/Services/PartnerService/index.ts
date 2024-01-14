@@ -274,8 +274,21 @@ const getInsuranceList = (): Promise<ApiResponse<Insurance[]>> =>
 const getInsuranceDetails = (id: string) =>
   axios.get("/insurance/" + id).then(({ data }) => data.data);
 
-const getBookingList = (payload: any): Promise<ApiResponse<Booking[]>> =>
-  axios.get("/booking", payload).then(({ data }) => data);
+const getBookingList = (
+  payload: any,
+  page = 1
+): Promise<ApiResponse<Booking[]>> => {
+  const params = {
+    ...payload,
+    page,
+    limit: configs.apiPageSize,
+  };
+  return axios
+    .get("/booking", {
+      params,
+    })
+    .then(({ data }) => data);
+};
 
 const getBookingDetails = (id: string): Promise<Booking> =>
   axios.get("/booking/" + id).then(({ data }) => data.data);

@@ -149,9 +149,6 @@ const NewCreateBooking = () => {
   const timePicker = useVisible();
   const insurancePicker = useVisible();
 
-  const [isEditBooking, setIsEditBooking] = useState(false);
-  const [editBookingId, setEditBookingId] = useState(null);
-
   useEffect(() => {
     dispatch(getInsuranceList.request());
     return () => {
@@ -161,8 +158,6 @@ const NewCreateBooking = () => {
 
   useEffect(() => {
     if (type == "edit") {
-      setIsEditBooking(true);
-      setEditBookingId(dataBookingEdit?._id);
       const {
         branch,
         assignedDoctorCode,
@@ -192,19 +187,21 @@ const NewCreateBooking = () => {
         );
       }
       if (services?.length > 0) {
-        let listService = []
-        services.map(bookingService => {
-          let service = bookingService.service
+        let listService = [];
+        services.map((bookingService) => {
+          let service = bookingService.service;
           let options = cloneDeep(service.options);
 
           for (let i = 0; i < options.length; i++) {
-            options[i].data = bookingService.options.filter(item => item.groupCode === options[i].groupCode);
+            options[i].data = bookingService.options.filter(
+              (item) => item.groupCode === options[i].groupCode
+            );
           }
 
-          let optionsFinal = options.filter(item => !isEmpty(item.data))
+          let optionsFinal = options.filter((item) => !isEmpty(item.data));
           service.optionsSelected = cloneDeep(optionsFinal);
-          listService.push(service)
-        })
+          listService.push(service);
+        });
         dispatch(selectServices(listService));
       }
       if (partnerCouponIdArr?.length > 0) {
@@ -373,10 +370,7 @@ const NewCreateBooking = () => {
             </Column>
           </Animated.ScrollView>
         </KeyboardAvoidingView>
-        <ActionBottom
-          editBookingId={editBookingId}
-          isEditBooking={isEditBooking}
-        />
+        <ActionBottom booking={dataBookingEdit} />
       </AfterTimeoutFragment>
       <Header scrollY={scrollY} title={"Đặt hẹn"} />
       <ModalListBranch

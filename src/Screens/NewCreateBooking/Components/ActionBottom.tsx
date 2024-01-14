@@ -15,13 +15,13 @@ import LinearGradient from "react-native-linear-gradient";
 import { useDispatch, useSelector } from "react-redux";
 import useConfirmation from "src/Hooks/useConfirmation";
 import { getInfoUserReducer } from "@Redux/Selectors";
+import { Booking } from "@typings/booking";
 
 type Props = {
-  isEditBooking?: boolean;
-  editBookingId?: string;
+  booking?: Booking;
 };
 
-const ActionBottom = ({ isEditBooking, editBookingId }: Props) => {
+const ActionBottom = ({ booking }: Props) => {
   const dispatch = useDispatch();
   const { showConfirmation } = useConfirmation();
 
@@ -108,7 +108,7 @@ const ActionBottom = ({ isEditBooking, editBookingId }: Props) => {
     if (!isEmpty(dataCoupon)) {
       dataFetch["partnerCouponIdArr"] = [dataCoupon?._id];
     } else {
-      dataFetch["partnerCouponIdArr"] = [];
+      dataFetch["partnerCouponIdArr"] = booking?.partnerCouponIdArr || [];
     }
     if (!isEmpty(dataDoctor)) {
       dataFetch["assignedDoctorCode"] = dataDoctor.code;
@@ -121,11 +121,11 @@ const ActionBottom = ({ isEditBooking, editBookingId }: Props) => {
     } else {
       dataFetch["insuranceCodeArr"] = [];
     }
-    if (isEditBooking) {
+    if (booking) {
       showConfirmation("Xác nhận", "Xác nhận cập nhật lịch hẹn?", () => {
         dispatch(
           updatePartnerBooking.request({
-            idBooking: editBookingId,
+            idBooking: booking._id,
             data: dataFetch,
           })
         );
@@ -150,7 +150,7 @@ const ActionBottom = ({ isEditBooking, editBookingId }: Props) => {
           colors={[BASE_COLOR, NEW_BASE_COLOR]}
         />
         <Text color={WHITE} weight="bold" size={14}>
-          {isEditBooking ? `Cập nhật lịch hẹn` : `Xác nhận lịch hẹn`}
+          {booking ? `Cập nhật lịch hẹn` : `Xác nhận lịch hẹn`}
         </Text>
       </TouchableOpacity>
     </View>
