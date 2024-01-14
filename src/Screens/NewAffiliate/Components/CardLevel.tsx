@@ -1,7 +1,7 @@
 import { StyleSheet, View } from "react-native";
 import React, { useMemo } from "react";
 import { ImageBackground } from "react-native";
-import { _width } from "@Constant/Scale";
+import { _moderateScale, _width } from "@Constant/Scale";
 import Text from "@Components/Text";
 import { BLACK, WHITE } from "@Constant/Color";
 import Row from "@Components/Row";
@@ -33,7 +33,7 @@ const CardLevel = ({ data, setShowModalInfoRanked, showPolicy }: Props) => {
   const {
     infoUser: { liaPoint },
   } = useSelector(getInfoUserReducer);
-  const { levelImg, startPoint, endPoint, code } = data;
+  const { levelImg, startPoint, endPoint, code, name } = data;
 
   const statusProcess = useMemo(() => {
     let findIndexCurrPartnerLevel = listPartnerLevel.findIndex(
@@ -49,6 +49,23 @@ const CardLevel = ({ data, setShowModalInfoRanked, showPolicy }: Props) => {
     } else if (findIndexCurrPartnerLevel < findIndexThisCard) {
       return "isWaiting";
     }
+  }, [listPartnerLevel, currPartnerLevel, data]);
+
+  const nextLevel = useMemo(() => {
+    // let findIndexCurrPartnerLevel = listPartnerLevel.findIndex(
+    //   (item) => item?.code == currPartnerLevel?.code
+    // );
+    let findIndexThisCard = listPartnerLevel.findIndex(
+      (item) => item?.code == data?.code
+    );
+    return listPartnerLevel[findIndexThisCard + 1]
+    // if (findIndexCurrPartnerLevel == findIndexThisCard) {
+    //   return "isInProccessing";
+    // } else if (findIndexCurrPartnerLevel > findIndexThisCard) {
+    //   return "isPassed";
+    // } else if (findIndexCurrPartnerLevel < findIndexThisCard) {
+    //   return "isWaiting";
+    // }
   }, [listPartnerLevel, currPartnerLevel, data]);
 
   const percentProccessBar = useMemo(() => {
@@ -90,12 +107,12 @@ const CardLevel = ({ data, setShowModalInfoRanked, showPolicy }: Props) => {
       source={{ uri: getImageAvataUrl(levelImg) }}
     >
       <Row justifyContent="space-between" margin={8 * 2} marginRight={8}>
-        <Text color={WHITE} weight="bold">
+        <Text size={_moderateScale(12)} color={WHITE} weight="bold">
           Chào mừng quý khách đến với LiA
         </Text>
         <TouchableOpacity onPress={showPolicy}>
           <Row>
-            <Text color={WHITE} weight="bold">
+            <Text size={_moderateScale(12)} color={WHITE} weight="bold">
               Chính sách
             </Text>
             <Column
@@ -113,11 +130,29 @@ const CardLevel = ({ data, setShowModalInfoRanked, showPolicy }: Props) => {
         </TouchableOpacity>
       </Row>
       <Column flex={1} />
-      <Text color={WHITE}>{/* {statusProcess} */}</Text>
 
-      <Column margin={8 * 2}>
+      {
+        isHighestLevel ?
+          <>
+          </>
+          :
+          <Row
+            justifyContent="space-between"
+            marginVertical={8}
+            marginHorizontal={8 * 2}>
+            <Text color={WHITE}>
+              {name}
+            </Text>
+            <Text color={WHITE}>
+              {nextLevel?.name}
+            </Text>
+          </Row>
+      }
+
+
+      <Column marginTop={0} margin={8 * 2}>
         {currPartnerLevel?.code == "PLATINUM" &&
-        currPartnerLevel?.code == data?.code ? (
+          currPartnerLevel?.code == data?.code ? (
           <></>
         ) : (
           <Column
@@ -166,7 +201,7 @@ const CardLevel = ({ data, setShowModalInfoRanked, showPolicy }: Props) => {
         )}
 
         {currPartnerLevel?.code == "PLATINUM" &&
-        currPartnerLevel?.code == data?.code ? (
+          currPartnerLevel?.code == data?.code ? (
           <Column alignItems="center" marginTop={8}>
             <Text color={WHITE} weight="bold">
               Bạn đã đạt thứ hạng cao nhất

@@ -148,6 +148,12 @@ export { default as IconSortPriceDown } from "../../SGV/service/sortPriceDown.sv
 export { default as IconDArrowDownBase } from "../../SGV/dArrowDownBase.svg";
 export { default as IconQuestion } from "../../SGV/wheelSpin/question.svg";
 export { default as IconEmptyData } from "../../SGV/iconEmptyData.svg";
+export { default as IconAffiliateRanked } from "../../SGV/affiliate/ranked.svg";
+export { default as IconAffiliateWallet } from "../../SGV/affiliate/wallet.svg";
+export { default as IconAffiliateTutorial } from "../../SGV/affiliate/tutorial.svg";
+export { default as IconAffiliateListF1 } from "../../SGV/affiliate/listF1.svg";
+export { default as IconAffiliateReportOrder } from "../../SGV/affiliate/reportOrder.svg";
+export { default as IconAffiliateQA } from "../../SGV/affiliate/QA.svg";
 
 
 export const IconSetting = (props) => {

@@ -11,7 +11,7 @@ import {
   getCurrPartnerLevelState,
   getListPartnerLevelState,
 } from "@Redux/affiliate/selectors";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   FlatList,
   ImageBackground,
@@ -32,7 +32,7 @@ import CheckOrderBtn from "./Components/CheckOrderBtn";
 import QA from "./Components/QA";
 import Row from "@Components/Row";
 import Icon from "@Components/Icon";
-import { IconBXH, IconWallet } from "@Components/Icon/Icon";
+import { IconAffiliateRanked, IconAffiliateWallet, IconBXH, IconWallet } from "@Components/Icon/Icon";
 import { useNavigate } from "src/Hooks/useNavigation";
 import ScreenKey from "@Navigation/ScreenKey";
 import useHapticCallback from "src/Hooks/useHapticCallback";
@@ -48,6 +48,7 @@ const WIDTH_CARD = _width - 8 * 4;
 const WIDTH_PROCESS_BAR = _width - 8 * 4 - 8 * 4;
 
 const NewAffiliate = () => {
+  const flatListRef = useRef(null)
   const dispatch = useDispatch();
   const { navigate } = useNavigate();
   const { data: listPartnerLevel } = useSelector(getListPartnerLevelState);
@@ -71,6 +72,22 @@ const NewAffiliate = () => {
     dispatch(getPartnerLevel.request());
     _checkStep(infoUser?._id);
   }, []);
+
+  useEffect(() => {
+    if (listPartnerLevel && currPartnerLevel) {
+      let findIndexCurrPartnerLevel = listPartnerLevel.findIndex(
+        (item) => item?.code == currPartnerLevel?.code
+      );
+      if (findIndexCurrPartnerLevel !== -1) {
+        setTimeout(() => {
+          flatListRef?.current?.scrollToIndex({
+            index: findIndexCurrPartnerLevel,
+            animated: true,
+          });
+        }, 500);
+      }
+    }
+  }, [listPartnerLevel, currPartnerLevel])
 
   useEffect(() => {
     let findCurrPartnerLevel = listPartnerLevel.find(
@@ -133,26 +150,27 @@ const NewAffiliate = () => {
       >
         <LiAHeader
           right={
-            <Row gap={8 * 2}>
+            <Row alignItems="flex-end" gap={8 * 2}>
               <TouchableOpacity onPress={navigate(ScreenKey.LIST_RANKED)}>
-                <IconBXH />
+                <IconAffiliateRanked width={8 * 3.5} height={8 * 4.5} />
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={navigate(ScreenKey.INFO_WALLET_NEW_AFFILIATE)}
               >
-                <IconWallet />
+                <IconAffiliateWallet width={8 * 3} height={8 * 3} />
               </TouchableOpacity>
             </Row>
           }
           safeTop
           bg={"transparent"}
-          title="TRI   ÂN"
+          title="TRI  ÂN"
         />
 
         <ScrollView>
           <InfoUser />
           <Spacer top={_heightScale(8 * 6)} />
           <FlatList
+            ref={flatListRef}
             onMomentumScrollEnd={(event) => {
               const index = Math.ceil(
                 event.nativeEvent.contentOffset.x /

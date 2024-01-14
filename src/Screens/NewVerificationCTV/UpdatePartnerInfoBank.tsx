@@ -110,8 +110,11 @@ const UpdatePartnerInfoBank = (props) => {
               Tên chủ thẻ  <Text color={RED}>*</Text>
             </Text>
             <TextInput
+              onBlur={() => {
+                setValueBankOwner(valueBankOwner.toUpperCase())
+              }}
               placeholder='Nhập tên chủ thẻ'
-              onChangeText={(e) => setValueBankOwner(e.toUpperCase())}
+              onChangeText={(e) => setValueBankOwner(e)}
               value={valueBankOwner}
               style={styles.textInput} />
           </Column>
