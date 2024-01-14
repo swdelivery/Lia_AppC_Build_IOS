@@ -205,21 +205,11 @@ import PartnerReviewService from "@Screens/PartnerReviewService";
 
 const Stack = createNativeStackNavigator();
 
-const navigationOptions = {
-  headerShown: false,
-  // ...TransitionPreset,
-  // gestureResponseDistance: {
-  //     vertical: 800
-  // }
-  gestureEnabled: Platform.OS == "ios" ? true : false,
-  cardOverlayEnabled: true,
-};
-
 const RootNavigator = () => {
   return (
     <Stack.Navigator
       // initialRouteName={ScreenKey.CHARITY_FUND_DETAILS}
-      screenOptions={navigationOptions}
+      screenOptions={{ headerShown: false, animation: "slide_from_right" }}
     >
       <Stack.Screen component={MainTab} name="MainTab" />
       <Stack.Screen name={ScreenKey.LIST_BRANCH} component={ListBranch} />
@@ -669,7 +659,10 @@ const RootNavigator = () => {
       <Stack.Screen name={ScreenKey.SKIN_MIRROR_AI} component={SkinMirrorAI} />
 
       {/* PARTNER REVIEW SERVICE */}
-      <Stack.Screen name={ScreenKey.PARTNER_REVIEW_SERVICE} component={PartnerReviewService} />
+      <Stack.Screen
+        name={ScreenKey.PARTNER_REVIEW_SERVICE}
+        component={PartnerReviewService}
+      />
 
       <Stack.Group
         screenOptions={{
@@ -748,8 +741,6 @@ const RootNavigator = () => {
           name={ScreenKey.CHARITY_ACCOUNT_MODAL_FILTER}
           component={ModalFilter}
         />
-
-
       </Stack.Group>
     </Stack.Navigator>
   );

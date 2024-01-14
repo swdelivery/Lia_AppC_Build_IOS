@@ -48,6 +48,7 @@ import { BackIcon } from "@Components/Icon/Icon";
 import IconButton from "@Components/IconButton";
 import { useTimeout } from "@r0b0t3d/react-native-hooks";
 import { useIsFocused } from "@react-navigation/native";
+import { CameraRoll } from "@react-native-camera-roll/camera-roll";
 
 const EYE_INDICATOR_SIZE = 10;
 
@@ -321,9 +322,11 @@ const FaceAI = () => {
       enableShutterSound: volumne !== 0,
       qualityPrioritization: "quality",
     });
-    // await CameraRoll.save(`file://${photo.path}`, {
-    //   type: 'photo',
-    // })
+    if (__DEV__) {
+      await CameraRoll.save(`file://${photo.path}`, {
+        type: "photo",
+      });
+    }
     processImage(photo);
   };
 
@@ -505,7 +508,7 @@ const FaceAI = () => {
               {device && (
                 <Camera
                   enableHighQualityPhotos={true}
-                  orientation={"landscape-left"}
+                  orientation={"portrait"}
                   ref={refCamera}
                   style={StyleSheet.absoluteFill}
                   device={device}
