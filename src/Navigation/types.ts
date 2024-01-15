@@ -48,6 +48,9 @@ type ScreenParams = {
   [ScreenKey.CHATTING]: {
     conversation: Conversation;
   };
+  [ScreenKey.AI_CHATTING]: {
+    conversation: Conversation;
+  };
   [ScreenKey.CHARITY_FUND_DETAILS]: {
     campain: Campain;
   };

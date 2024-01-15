@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import EachMessage from "./messages/EachMessage";
 import { FlashList } from "@shopify/flash-list";
 
-const ListMessages = () => {
+const ListMessages = ({ conversation }: { conversation: Conversation }) => {
   const dispatch = useDispatch();
   const {
     data: messages,
@@ -46,6 +46,7 @@ const ListMessages = () => {
         item={item}
         previousMessage={messages[index - 1]}
         nextMessage={messages[index + 1]}
+        conversation={conversation}
       />
     );
   };

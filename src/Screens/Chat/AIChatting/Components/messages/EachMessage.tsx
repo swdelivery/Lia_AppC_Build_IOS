@@ -1,30 +1,27 @@
 import moment from "moment";
 import React, { useMemo } from "react";
 import { View } from "react-native";
-import { useSelector } from "react-redux";
 import * as Color from "src/Constant/Color";
 import Column from "@Components/Column";
 import Text from "@Components/Text";
-import { getInfoUserReducer } from "@Redux/Selectors";
 import { AIMessage } from "@typings/aichat";
 import MessageContent from "./MessageContent";
 import MyMessage from "./MyMessage";
 import ParticipantMessage from "./ParticipantMessage";
+import { Conversation } from "@typings/chat";
 
 type Props = {
   item: AIMessage;
   previousMessage?: AIMessage;
   nextMessage?: AIMessage;
-  isOnline?: boolean;
+  conversation: Conversation;
 };
 
 const EachMessage = (props: Props) => {
-  const { item, nextMessage, previousMessage, isOnline } = props;
+  const { item, nextMessage, previousMessage, conversation } = props;
 
   const isParticipantMessage = useMemo(() => {
-    return (
-      item?.role == 'assistant'
-    );
+    return item?.role == "assistant";
   }, [item]);
 
   const sameDay = useMemo(() => {
@@ -52,9 +49,7 @@ const EachMessage = (props: Props) => {
         </Column>
       )}
       {isParticipantMessage ? (
-        <ParticipantMessage
-          item={item}
-          nextMessage={nextMessage}>
+        <ParticipantMessage conversation={conversation}>
           <MessageContent item={item} />
         </ParticipantMessage>
       ) : (

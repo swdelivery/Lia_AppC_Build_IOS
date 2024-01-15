@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Header from "./Components/Header";
 import InputChat from "./Components/InputChat";
 import ListMessages from "./Components/ListMessages";
+import { useNavigationParams } from "src/Hooks/useNavigation";
 
 type ScreenK = typeof ScreenKey.CHATTING;
 
@@ -16,6 +17,7 @@ const AIChatting = () => {
   const dispatch = useDispatch();
   const { bottom } = useSafeAreaInsets();
   const { infoUser } = useSelector(getInfoUserReducer);
+  const { conversation } = useNavigationParams<ScreenK>();
 
   useEffect(() => {
     dispatch(
@@ -36,8 +38,8 @@ const AIChatting = () => {
       style={styles.content}
     >
       <Screen safeBottom backgroundColor="#EEF2F1">
-        <Header />
-        <ListMessages />
+        <Header conversation={conversation} />
+        <ListMessages conversation={conversation} />
         <InputChat />
       </Screen>
     </KeyboardAvoidingView>

@@ -93,12 +93,12 @@ const FaceAI = () => {
 
   // FIXME: This code is used for testing on emulator
   // __DEV__ &&
-    useImagePicker((image) => {
-      console.log({ image });
-      processImage({
-        path: image,
-      });
-    });
+  // useImagePicker((image) => {
+  //   console.log({ image });
+  //   processImage({
+  //     path: image,
+  //   });
+  // });
 
   const volumne = isAndroid ? useVolume() : -1;
 

@@ -22,7 +22,6 @@ import ItemLastedMessage, {
   PLACEHOLDER_HEIGHT,
   Placeholder,
 } from "./Components/ItemLastedMessage";
-import Icon from "@Components/Icon";
 import { FlashList } from "@shopify/flash-list";
 import { PinIcon } from "src/SGV";
 
@@ -59,7 +58,9 @@ const NewListLastedMessage = () => {
 
   const handleOpenChat = useCallback((item: Conversation) => {
     if (item.type === "assistant") {
-      navigation.navigate(ScreenKey.AI_CHATTING);
+      navigation.navigate(ScreenKey.AI_CHATTING, {
+        conversation: item,
+      });
     } else {
       navigation.navigate(ScreenKey.CHATTING, {
         conversation: item,

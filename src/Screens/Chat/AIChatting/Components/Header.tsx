@@ -15,9 +15,10 @@ import {
   _width
 } from "../../../../Constant/Scale";
 import { styleElement } from "../../../../Constant/StyleElement";
+import { Conversation } from "@typings/chat";
 
 
-const Header = () => {
+const Header = ({ conversation }: { conversation: Conversation }) => {
   const { navigation } = useNavigate();
   const { top } = useSafeAreaInsets();
 
@@ -39,7 +40,7 @@ const Header = () => {
         <Row gap={8 * 2} paddingLeft={8 * 2}>
           <IconAIWhite color={Color.BASE_COLOR} />
           <Text color={Color.WHITE} weight="bold" numberOfLines={1} size={16}>
-            Trợ lý AI LiA
+            {conversation.name}
           </Text>
         </Row>
       </Row>
