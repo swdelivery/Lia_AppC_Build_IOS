@@ -49,6 +49,7 @@ import IconButton from "@Components/IconButton";
 import { useTimeout } from "@r0b0t3d/react-native-hooks";
 import { useIsFocused } from "@react-navigation/native";
 import { CameraRoll } from "@react-native-camera-roll/camera-roll";
+import Screen from "@Components/Screen";
 
 const EYE_INDICATOR_SIZE = 10;
 
@@ -348,7 +349,7 @@ const FaceAI = () => {
   });
 
   return (
-    <View style={{ flex: 1 }}>
+    <Screen>
       {/* <View
         style={{
           width: EYE_INDICATOR_SIZE,
@@ -569,18 +570,18 @@ const FaceAI = () => {
                   }}
                 ></View>
               </TouchableOpacity>
-
-              <IconButton
-                containerStyle={[styles.backBtn, { top: top }]}
-                onPress={navigation.goBack}
-              >
-                <BackIcon />
-              </IconButton>
             </View>
           </View>
         </View>
       )}
-    </View>
+      <IconButton
+        top={top}
+        containerStyle={styles.backBtn}
+        onPress={navigation.goBack}
+      >
+        <BackIcon />
+      </IconButton>
+    </Screen>
   );
 };
 
@@ -611,5 +612,6 @@ const styles = StyleSheet.create({
     height: _moderateScale(8 * 10),
     justifyContent: "center",
     alignItems: "center",
-  }
+    zIndex: 100,
+  },
 });

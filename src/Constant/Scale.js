@@ -1,5 +1,5 @@
 import { Dimensions } from 'react-native'
-const window = Dimensions.get('window')
+const window = Dimensions.get("screen");
 const _width = window.width > window.height ? window.height : window.width
 const _height = window.width > window.height ? window.width : window.height
 
