@@ -4,16 +4,13 @@ import Spacer from "@Components/Spacer";
 import React from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import { NEW_BASE_COLOR, WHITE } from "../../Constant/Color";
-import {
-  _moderateScale,
-  _width,
-  _widthScale
-} from "../../Constant/Scale";
+import { _moderateScale, _width, _widthScale } from "../../Constant/Scale";
 import ListDiary from "./Components/ListDiary";
 import OverViewEyes from "./Components/OverViewEyes";
 import RecomendBrach from "./Components/RecomendBrach";
 import RecomendDoctor from "./Components/RecomendDoctor";
 import RecomendService from "./Components/RecomendService";
+import { AfterTimeoutFragment } from "@Components/AfterTimeoutFragment";
 
 const ResultAIScanEyes = (props) => {
   const { scanningResult, imageScan } = props?.route?.params;
@@ -29,13 +26,13 @@ const ResultAIScanEyes = (props) => {
       />
       <ScrollView>
         <Spacer top={8 * 2} />
-        <OverViewEyes
-          scanningResult={scanningResult}
-          imageScan={imageScan} />
+        <OverViewEyes scanningResult={scanningResult} imageScan={imageScan} />
         <ListDiary />
-        <RecomendService />
-        <RecomendDoctor />
-        <RecomendBrach />
+        <AfterTimeoutFragment>
+          <RecomendService />
+          <RecomendDoctor />
+          <RecomendBrach />
+        </AfterTimeoutFragment>
         <Spacer top={8 * 20} />
       </ScrollView>
     </Screen>

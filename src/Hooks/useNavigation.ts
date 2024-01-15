@@ -11,6 +11,7 @@ import { RootStackParamsList, ScreenRouteProp } from "@Navigation/types";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import useSavedCallback from "./useSavedCallback";
 import { useAppState } from "@r0b0t3d/react-native-hooks";
+import { InteractionManager } from "react-native";
 
 export function useNavigationParam<
   T extends RouteProp<ParamListBase>,
@@ -54,7 +55,7 @@ export function useNavigate() {
         params?: RootStackParamsList[ScreenKey]
       ) =>
       () => {
-        requestAnimationFrame(() => {
+        InteractionManager.runAfterInteractions(() => {
           // @ts-ignore
           navigation.navigate(screen, params);
         });

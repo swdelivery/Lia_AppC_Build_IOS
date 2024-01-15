@@ -1,10 +1,9 @@
 import React, { ReactNode, useMemo } from "react";
 import {
-  View,
   StyleSheet,
   StyleProp,
   ViewStyle,
-  Pressable,
+  TouchableOpacity,
 } from "react-native";
 
 type Props = ViewStyle & {
@@ -30,13 +29,14 @@ export default function Row({
   }, [alignItems, props]);
 
   return (
-    <Pressable
+    <TouchableOpacity
+      activeOpacity={0.8}
       disabled={!onPress}
       onPress={onPress}
       style={[styles.container, containerStyle, style]}
     >
       {children}
-    </Pressable>
+    </TouchableOpacity>
   );
 }
 

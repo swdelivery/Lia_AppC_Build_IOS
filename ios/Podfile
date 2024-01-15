@@ -87,6 +87,7 @@ target 'LiaAppC' do
   )
   
   pod 'SDWebImage', :modular_headers => true
+  pod 'SDWebImageWebPCoder'
 
   pod 'FirebaseCore', :modular_headers => true
   pod 'FirebaseCoreInternal', :modular_headers => true

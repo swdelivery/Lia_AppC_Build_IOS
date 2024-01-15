@@ -50,6 +50,7 @@ import { useTimeout } from "@r0b0t3d/react-native-hooks";
 import { useIsFocused } from "@react-navigation/native";
 import { CameraRoll } from "@react-native-camera-roll/camera-roll";
 import Screen from "@Components/Screen";
+import useImagePicker from "./useImagePicker";
 
 const EYE_INDICATOR_SIZE = 10;
 
@@ -92,12 +93,12 @@ const FaceAI = () => {
 
   // FIXME: This code is used for testing on emulator
   // __DEV__ &&
-  //   useImagePicker((image) => {
-  //     console.log({ image });
-  //     processImage({
-  //       path: image,
-  //     });
-  //   });
+    useImagePicker((image) => {
+      console.log({ image });
+      processImage({
+        path: image,
+      });
+    });
 
   const volumne = isAndroid ? useVolume() : -1;
 

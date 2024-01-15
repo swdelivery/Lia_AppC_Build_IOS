@@ -1,3 +1,4 @@
+import { AfterTimeoutFragment } from "@Components/AfterTimeoutFragment";
 import LiAHeader from "@Components/Header/LiAHeader";
 import ListEmpty from "@Components/ListEmpty";
 import PlaceholderSkeletons from "@Components/PlaceholderSkeletons";
@@ -11,7 +12,7 @@ import DoctorItem, {
 import { FlashList } from "@shopify/flash-list";
 import { RenderItemProps } from "@typings/common";
 import React, { useEffect } from "react";
-import { View, StyleSheet, FlatList } from "react-native";
+import { StyleSheet } from "react-native";
 import useListFilter from "src/Hooks/useListFilter";
 
 type Props = {};
@@ -34,28 +35,29 @@ export default function DoctorList({}: Props) {
   return (
     <Screen>
       <LiAHeader safeTop title="Danh sách bác sĩ" />
-      <FlashList
-        contentContainerStyle={styles.container}
-        data={data}
-        renderItem={renderItem}
-        ListEmptyComponent={
-          isLoading ? (
-            <PlaceholderSkeletons count={5} itemHeight={PLACEHOLDER_HEIGHT}>
-              <Placeholder />
-            </PlaceholderSkeletons>
-          ) : (
-            <ListEmpty isLoading={isLoading} title="Không tìm thấy bác sĩ" />
-          )
-        }
-        estimatedItemSize={100}
-      />
+      <AfterTimeoutFragment>
+        <FlashList
+          contentContainerStyle={styles.container}
+          data={data}
+          renderItem={renderItem}
+          ListEmptyComponent={
+            isLoading ? (
+              <PlaceholderSkeletons count={5} itemHeight={PLACEHOLDER_HEIGHT}>
+                <Placeholder />
+              </PlaceholderSkeletons>
+            ) : (
+              <ListEmpty isLoading={isLoading} title="Không tìm thấy bác sĩ" />
+            )
+          }
+          estimatedItemSize={100}
+        />
+      </AfterTimeoutFragment>
     </Screen>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flexGrow: 1,
     paddingTop: 8 * 2,
     paddingHorizontal: 8 * 1,
     backgroundColor: "#F5F9FA",

@@ -6,7 +6,7 @@ import { Doctor } from "@typings/doctor";
 
 export type State = {
   isLoading: boolean;
-  dataDoctors: Service[];
+  dataDoctors: Doctor[];
 };
 
 const INITIAL_STATE: State = {

@@ -10,7 +10,7 @@ import { _width } from "@Constant/Scale";
 import { styleElement } from "@Constant/StyleElement";
 import ScreenKey from "@Navigation/ScreenKey";
 import { Doctor } from "@typings/doctor";
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import { View, StyleSheet, ViewStyle } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useNavigate } from "src/Hooks/useNavigation";
@@ -27,9 +27,15 @@ type Props = {
   styleContainer?: StyleProp<ViewStyle>;
 };
 
-export default function DoctorItem({ item, styleContainer }: Props) {
+function DoctorItem({ item, styleContainer }: Props) {
   const { navigation } = useNavigate();
   const dispatch = useDispatch();
+
+  const services = useMemo(() => {
+    return item.doctorServices
+      .filter((i) => i.service && i.service.isActive && i.service.isDisplayed)
+      .slice(0, 5);
+  }, [item]);
 
   const handleItemPress = useCallback(() => {
     navigation.navigate(ScreenKey.DETAIL_DOCTOR, { doctor: item });
@@ -87,13 +93,7 @@ export default function DoctorItem({ item, styleContainer }: Props) {
         </Column>
       </Row>
       {item.doctorServices.length > 0 && (
-        <HorizontalServices
-          items={item.doctorServices
-            .filter(
-              (i) => i.service && i.service.isActive && i.service.isDisplayed
-            )
-            .slice(0, 5)}
-        />
+        <HorizontalServices items={services} />
       )}
     </TouchableOpacity>
   );
@@ -114,6 +114,8 @@ export function Placeholder() {
     </View>
   );
 }
+
+export default React.memo(DoctorItem);
 
 const styles = StyleSheet.create({
   start: {
