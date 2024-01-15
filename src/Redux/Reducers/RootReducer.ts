@@ -51,9 +51,16 @@ import wheelSpin from "../wheelSpin/reducers";
 import affiliate from "../affiliate/reducers";
 import product from "../product/reducers";
 import otp from "../otp/reducers";
+import { PersistConfig, persistReducer } from "redux-persist";
+import { reduxStorage } from "@Redux/reduxStorage";
+
+const userConfig: PersistConfig<any> = {
+  key: "infoUser",
+  storage: reduxStorage,
+};
 
 const rootReducer = combineReducers({
-  infoUserReducer: resetable(infoUserReducer),
+  infoUserReducer: resetable(persistReducer(userConfig, infoUserReducer)),
   user: resetable(user),
   newsReducer,
   productGroupReducer,

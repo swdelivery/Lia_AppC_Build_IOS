@@ -7,11 +7,12 @@ type State = {
 };
 
 let initialState: State = {
-  infoUser: null,
+  infoUser: {},
 };
 
 export default createReducer(initialState, {
   [ActionType.CLEAR_INFO_USER]: () => initialState,
+  [ActionType.LOG_OUT]: () => ({ ...initialState }),
   [ActionType.SAVE_INFO_USER]: (state, { payload }) => {
     return {
       ...state,

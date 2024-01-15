@@ -3,6 +3,7 @@ import thunk from "redux-thunk";
 import createSagaMiddleware from "redux-saga";
 import rootReducer from "./Reducers/RootReducer";
 import { rootSaga } from "./sagas";
+import { persistStore } from "redux-persist";
 
 const sagaMiddleware = createSagaMiddleware();
 const middlewares = [sagaMiddleware, thunk];
@@ -18,7 +19,10 @@ if (__DEV__) {
 }
 
 const store = createStore(rootReducer, compose(...enhancers));
+const persistor = persistStore(store);
 
 sagaMiddleware.run(rootSaga);
 
 export default store;
+
+export { persistor };
