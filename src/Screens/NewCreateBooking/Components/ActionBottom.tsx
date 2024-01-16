@@ -94,10 +94,14 @@ const ActionBottom = ({ booking }: Props) => {
         options: options,
       };
     });
-    const isFlashSale =
-      dataServices.findIndex((service) => service.isOnFlashSale) >= 0;
+    const flashSaleService = dataServices.find(
+      (service) => service.isOnFlashSale && service.currentFlashSale
+    );
+    if (flashSaleService) {
+      dataFetch["promotionId"] = flashSaleService.currentFlashSale._id;
+    }
 
-    dataFetch.type = isFlashSale ? "FLASH_SALE" : "DEFAULT";
+    dataFetch.type = !!flashSaleService ? "FLASH_SALE" : "DEFAULT";
     dataFetch["partnerPhone"] = {
       nationCode: infoUser?.phone[0]?.nationCode,
       phoneNumber: infoUser?.phone[0]?.phoneNumber,
