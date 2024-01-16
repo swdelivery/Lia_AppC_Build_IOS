@@ -28,10 +28,11 @@ export default function TemplateReviewMessage({ item }: Props) {
   }, [item]);
 
   const handlePress = useCallback(() => {
-    navigation.navigate(ScreenKey.MODAL_SERVICE_REVIEW, {
-      flag: "fromMessage",
-      data: item,
-    });
+    // navigation.navigate(ScreenKey.MODAL_SERVICE_REVIEW, {
+    //   flag: "fromMessage",
+    //   data: item,
+    // });
+    navigation.navigate(ScreenKey.PARTNER_REVIEW_SERVICE)
   }, []);
 
   const handleTreatmentDetails = useCallback(() => {

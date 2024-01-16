@@ -47,7 +47,7 @@ export const getAllAddressVietNam = (params) => {
 }
 
 export const removePartnerPickUpAddress = (_id) => {
-    return Axios.delete(`${URL_FOR_PARTNER}/partner-pick-up-address/${_id}`,{})
+    return Axios.delete(`${URL_FOR_PARTNER}/partner-pick-up-address/${_id}`, {})
         .then(res => {
             console.log(useLogStyle + '----FETCHING SUCCESS: ', setLogStyle('green'), { removePartnerPickUpAddress: res });
             _checkSuccess(res)
@@ -184,9 +184,9 @@ export const createReviewTreatment = (data) => {
     return Axios.post(`${URL_FOR_PARTNER}/review`, data)
         .then(res => {
             console.log(useLogStyle + '----FETCHING SUCCESS: ', setLogStyle('green'), { createReviewTreatment: res });
-            // setTimeout(() => {
-            //     _checkSuccess(res)
-            // }, 700);
+            setTimeout(() => {
+                _checkSuccess(res)
+            }, 700);
             return res
         })
         .catch(err => {
