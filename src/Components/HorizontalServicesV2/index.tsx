@@ -14,6 +14,7 @@ import useServiceDetailsNavigation from "src/Hooks/navigation/useServiceDetailsN
 import { SERVICE_BANNER_RATIO } from "@Constant/image";
 import Column from "@Components/Column";
 import { RenderItemProps } from "@typings/common";
+import CachedImageView from "@Components/CachedImage";
 
 type Props = {
   title?: string;
@@ -73,7 +74,7 @@ function ServiceItem({
       style={styles.itemContainer}
       onPress={trigger(onPress)}
     >
-      <Image style={styles.serviceImage} avatar={item.avatar} />
+      <CachedImageView style={styles.serviceImage} avatar={item.avatar} />
       <Text color={"black"} size={10} weight="bold" numberOfLines={1} top={4}>
         {item?.name}
       </Text>
@@ -116,6 +117,7 @@ const styles = StyleSheet.create({
     height: 100 * SERVICE_BANNER_RATIO,
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
+    overflow: "hidden",
   },
   contentContainer: {},
 });

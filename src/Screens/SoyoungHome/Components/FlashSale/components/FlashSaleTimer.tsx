@@ -4,6 +4,7 @@ import Row from "@Components/Row";
 import Text from "@Components/Text";
 import { MAIN_RED_500 } from "@Constant/Color";
 import { useInterval, useTimeout } from "@r0b0t3d/react-native-hooks";
+import { useIsFocused } from "@react-navigation/native";
 import { FlashSale } from "@typings/flashsale";
 import moment from "moment";
 import React, { useMemo, useState } from "react";
@@ -28,6 +29,7 @@ export default function FlashSaleTimer({
   onFlashSaleUpdate,
 }: Props) {
   const [timer, setTimer] = useState<number>();
+  const isFocused = useIsFocused();
 
   const endTimestamp = useMemo(() => {
     const { hour, minute } = flashSale.timeRange.to;
@@ -47,24 +49,27 @@ export default function FlashSaleTimer({
       .getTime();
   }, [flashSale]);
 
-  useInterval(() => {
-    let timer;
-    if (flashSale.isUpcoming) {
-      timer = startTimestamp - Date.now();
-    } else {
-      timer = endTimestamp - Date.now();
-    }
-    setTimer((prev) => {
-      if (timer !== prev) {
-        return timer;
+  useInterval(
+    () => {
+      let timer;
+      if (flashSale.isUpcoming) {
+        timer = startTimestamp - Date.now();
+      } else {
+        timer = endTimestamp - Date.now();
       }
-      return prev;
-    });
-  }, 1000);
+      setTimer((prev) => {
+        if (timer !== prev) {
+          return timer;
+        }
+        return prev;
+      });
+    },
+    isFocused ? 1000 : -1
+  );
 
   useTimeout(
     () => {
-      // onFlashSaleUpdate();
+      onFlashSaleUpdate();
     },
     timer < 0 ? 1000 : -1
   );

@@ -1,3 +1,4 @@
+import CachedImageView from "@Components/CachedImage";
 import Icon from "@Components/Icon";
 import Image from "@Components/Image";
 import CountStar2 from "@Components/NewCountStar/CountStar";
@@ -25,7 +26,7 @@ export default function ServiceItem({ item, onPress }: Props) {
     <TouchableOpacity onPress={trigger(onPress)} style={styles.card}>
       <View style={styles.itemContent}>
         <View>
-          <Image style={styles.image} avatar={item.avatar} />
+          <CachedImageView style={styles.image} avatar={item.avatar} />
         </View>
         <View style={styles.itemInfo}>
           <Text numberOfLines={1} size={12} weight="bold">
@@ -64,10 +65,11 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 8,
   },
   image: {
-    width: "100%",
+    width: _width / 2 - 16,
     height: 120,
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
+    overflow: "hidden",
   },
   itemInfo: {
     padding: 4,

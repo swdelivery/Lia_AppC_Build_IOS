@@ -54,7 +54,6 @@ const SoYoungService = () => {
 
   return (
     <AfterTimeoutFragment
-      timeout={2000}
       placeholder={
         <PlaceholderSkeletons count={5} itemHeight={PLACEHOLDER_HEIGHT}>
           <Placeholder />

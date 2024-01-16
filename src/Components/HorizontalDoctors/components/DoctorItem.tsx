@@ -1,3 +1,4 @@
+import CachedImage from "@Components/CachedImage";
 import Column from "@Components/Column";
 import Image from "@Components/Image";
 import CountStar2 from "@Components/NewCountStar/CountStar";
@@ -24,7 +25,7 @@ export default function DoctorItem({ item }: Props) {
       onPress={handleDoctorPress}
       style={styles.doctorItem}
     >
-      <Image style={styles.image} avatar={item.avatar} />
+      <CachedImage style={styles.image} avatar={item.avatar} />
       <Text numberOfLines={2} weight="bold" size={12} top={4}>
         {item.name}
       </Text>
