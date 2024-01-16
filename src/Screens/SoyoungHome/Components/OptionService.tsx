@@ -18,6 +18,7 @@ import { WHITE } from "@Constant/Color";
 import { ScrollView } from "react-native-gesture-handler";
 import Column from "@Components/Column";
 import { isEmpty } from "lodash";
+import CachedImageView from "@Components/CachedImage";
 
 const WIDTH_ITEM = (_width - _widthScale(16) * 2) / 5;
 

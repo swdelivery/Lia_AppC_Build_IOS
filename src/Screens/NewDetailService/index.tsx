@@ -1,23 +1,19 @@
-import React, { useEffect, useMemo } from "react";
-import { ScrollView, StatusBar, StyleSheet, View } from "react-native";
+import React, { useEffect } from "react";
+import { ScrollView, StyleSheet, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { _moderateScale, _width, _widthScale } from "../../Constant/Scale";
 import Feedback from "./Components/Feedback";
-import Header from "./Components/Header";
 import HorizonListImage from "./Components/HorizonListImage";
 import InfoBranch from "./Components/InfoBranch";
 import MainInfoService from "./Components/MainInfoService";
 import Material from "./Components/Material";
 import NameService from "./Components/NameService";
 import OverViewFeedBack from "./Components/OverViewFeedBack";
-import Screen from "@Components/Screen";
 import Spacer from "@Components/Spacer";
 import BottomAction from "./Components/BottomAction";
 import BeautyInsurance from "./Components/BeautyInsurance";
 import { useServiceDetailsContext, withServiceDetailsContext } from "./context";
-import { AfterTimeoutFragment } from "@Components/AfterTimeoutFragment";
 import useServiceReviews from "./useServiceReviews";
-import Placeholder from "./Components/Placeholder";
 import useImageColors from "src/Hooks/useImageColors";
 import Animated, {
   useAnimatedStyle,
@@ -28,7 +24,6 @@ import ScreenKey from "@Navigation/ScreenKey";
 import { useNavigate } from "src/Hooks/useNavigation";
 import RecommendServices from "./Components/RecommendServices";
 import RelatedServices from "./Components/RelatedServices";
-import { isEmpty } from "lodash";
 import ListVideo from "./Components/ListVideo";
 import Products from "./Components/Products";
 
@@ -55,19 +50,13 @@ const DetailService = () => {
     };
   });
 
-  const bannerImages = useMemo(() => {
-    if (!service) {
-      return [];
-    }
-    return isEmpty(service?.representationServiceFileArr)
-      ? [service.avatar]
-      : service.representationServiceFileArr;
-  }, [service]);
-
   return (
     <>
       <ScrollView style={styles.content}>
-        <HorizonListImage images={bannerImages} getColors={getColors} />
+        <HorizonListImage
+          images={service?.representationServiceFileArr}
+          getColors={getColors}
+        />
         <View style={styles.body}>
           <Animated.View style={[styles.bodyBg2, animatedStyle]} />
           <LinearGradient

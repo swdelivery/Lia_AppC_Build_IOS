@@ -1,6 +1,7 @@
 /**
  * @format
  */
+import "src/utils/imageCache";
 import AsyncStorage from '@react-native-community/async-storage';
 import moment from 'moment';
 import localVI from 'moment/locale/vi';

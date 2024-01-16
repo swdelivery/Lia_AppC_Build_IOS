@@ -1,31 +1,27 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { StyleSheet } from "react-native";
 import { _moderateScale, _width, _widthScale } from "../../../Constant/Scale";
 import { useDispatch, useSelector } from "react-redux";
 import HorizontalDoctors from "@Components/HorizontalDoctors";
-import { getListDoctorForPartner } from "@Redux/Action/MembersAction";
+import { getDoctorListState } from "@Redux/doctor/selectors";
+import { getDoctorList } from "@Redux/doctor/actions";
 
 const ListDoctor = () => {
   const dispatch = useDispatch();
-  const listDoctorRedux = useSelector(
-    (state) => state?.bookingReducer?.listDoctor
-  );
+  const { data } = useSelector(getDoctorListState);
 
   useEffect(() => {
-    dispatch(
-      getListDoctorForPartner({
-        limit: 10,
-        sort: {
-          orderNumber: -1,
-        },
-      })
-    );
+    dispatch(getDoctorList.request());
   }, []);
+
+  const doctors = useMemo(() => {
+    return data.slice(0, 10);
+  }, [data]);
 
   return (
     <HorizontalDoctors
       title="Bác sĩ/Chuyên viên hàng đầu"
-      items={listDoctorRedux}
+      items={doctors}
       containerStyle={styles.container}
     />
   );

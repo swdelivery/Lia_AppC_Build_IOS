@@ -4,7 +4,6 @@ import { _width } from "@Constant/Scale";
 import { formatMonney } from "@Constant/Utils";
 import ScreenKey from "@Navigation/ScreenKey";
 import { useNavigate } from "src/Hooks/useNavigation";
-import Image from "@Components/Image";
 import Text from "@Components/Text";
 import CountStar2 from "@Components/NewCountStar/CountStar";
 import { Service } from "@typings/serviceGroup";
@@ -18,6 +17,7 @@ import { SERVICE_BANNER_RATIO } from "@Constant/image";
 import FlashSale from "./FlashSale";
 import { FlashIcon } from "src/SGV";
 import { formatTime } from "src/utils/date";
+import CachedImage from "@Components/CachedImage";
 
 type Props = {
   item: Service;
@@ -42,7 +42,7 @@ function ServiceItem({ item, numColumns = 2, isFirstInRow }: Props) {
       marginLeft={isFirstInRow ? 0 : 8}
     >
       <Column overflow="hidden">
-        <Image style={styles.image} avatar={item.avatar} />
+        <CachedImage style={styles.image} avatar={item.avatar} />
         {item.isOnFlashSale && <FlashSale item={item} />}
       </Column>
       <Column style={styles.info}>
@@ -129,10 +129,11 @@ const styles = StyleSheet.create({
     ...styleElement.shadow,
   },
   image: {
-    width: "100%",
-    aspectRatio: 1 / SERVICE_BANNER_RATIO,
+    width: _width / 2 - 16,
+    height: (_width / 2 - 16) * SERVICE_BANNER_RATIO,
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
+    overflow: "hidden",
   },
   info: {
     padding: 8,
