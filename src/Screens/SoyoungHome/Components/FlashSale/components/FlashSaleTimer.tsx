@@ -64,7 +64,7 @@ export default function FlashSaleTimer({
 
   useTimeout(
     () => {
-      onFlashSaleUpdate();
+      // onFlashSaleUpdate();
     },
     timer < 0 ? 1000 : -1
   );

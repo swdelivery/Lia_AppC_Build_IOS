@@ -122,6 +122,11 @@ const ActionBottom = ({ booking }: Props) => {
     }
     if (!isEmpty(dataInsurance)) {
       dataFetch["insuranceCodeArr"] = dataInsurance?.map((item) => item.code);
+      dataFetch["insurances"] = dataInsurance?.map((item) => {
+        return {
+          insuranceCode: item.code,
+        };
+      });
     } else {
       dataFetch["insuranceCodeArr"] = [];
     }
