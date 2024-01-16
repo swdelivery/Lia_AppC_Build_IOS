@@ -72,6 +72,17 @@ type ScreenParams = {
     data: Voucher;
     infoVoucher: MyVoucher;
   };
+  [ScreenKey.MODAL_SERVICE_REVIEW]: {
+    flag: string;
+    data: {
+      serviceName: string,
+      treatmentDetailId: string,
+      doctorCode: string,
+      serviceCode: string,
+      branchCode: string,
+      review: any
+    }
+  };
 };
 
 export type RootStackParamsList = {
