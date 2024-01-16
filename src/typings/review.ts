@@ -1,5 +1,5 @@
 import { Branch } from "./branch";
-import { Timestamp } from "./common";
+import { FileAvatar, Timestamp } from "./common";
 import { Doctor } from "./doctor";
 import { Partner } from "./partner";
 import { Service } from "./serviceGroup";
@@ -9,6 +9,7 @@ export type ReviewDetail = {
   rating: number;
   isSelected: boolean;
   _id: string;
+  imageReview: FileAvatar[];
 };
 
 export type Review = {

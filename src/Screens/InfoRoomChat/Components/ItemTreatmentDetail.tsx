@@ -40,7 +40,7 @@ import Column from "@Components/Column";
 import HorizontalLine from "@Components/Line/HorizontalLine";
 import { useNavigate } from "src/Hooks/useNavigation";
 
-const ItemTreatmentDetail = memo((props) => {
+const ItemTreatmentDetail = memo((props: any) => {
   const { navigation } = useNavigate();
 
   const {
@@ -308,15 +308,16 @@ const ItemTreatmentDetail = memo((props) => {
             <TouchableOpacity
               onPress={() => {
                 navigation.navigate(ScreenKey.MODAL_SERVICE_REVIEW, {
-                  flag: "fromTreatmentDetail",
+                  flag: 'fromTreatmentDetail',
                   data: {
+                    serviceName: serviceName,
                     treatmentDetailId: _id,
                     doctorCode: treatmentDoctorCode,
                     serviceCode: serviceCode,
                     branchCode: branchCode,
-                    hasReview: true,
-                  },
-                });
+                    review: review
+                  }
+                })
               }}
               style={styles.btnSeeInfo}
             >
@@ -328,15 +329,16 @@ const ItemTreatmentDetail = memo((props) => {
             <TouchableOpacity
               onPress={() => {
                 navigation.navigate(ScreenKey.MODAL_SERVICE_REVIEW, {
-                  flag: "fromTreatmentDetail",
+                  flag: 'fromTreatmentDetail',
                   data: {
+                    serviceName: serviceName,
                     treatmentDetailId: _id,
                     doctorCode: treatmentDoctorCode,
                     serviceCode: serviceCode,
                     branchCode: branchCode,
-                    hasReview: false,
-                  },
-                });
+                    review: review
+                  }
+                })
               }}
               style={styles.btnSeeInfo}
             >
