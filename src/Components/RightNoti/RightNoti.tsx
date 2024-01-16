@@ -82,51 +82,54 @@ const RightNoti = () => {
         style={[
           {
             width: _width,
-            height: '100%',
+            height: "100%",
           },
           { backgroundColor: "rgba(0,0,0,.7)" },
-          animOpacityBackDrop
-        ]}>
+          animOpacityBackDrop,
+        ]}
+      >
         <TouchableOpacity
           onPress={_handleClosing}
-          style={[StyleSheet.absoluteFillObject]} />
+          style={[StyleSheet.absoluteFillObject]}
+        />
       </Animated.View>
 
-      <Animated.View style={[
-        styles.containerRightTab,
-        { right: - WIDTH_MODAL },
-        animTranXModal]}>
+      <Animated.View
+        style={[
+          styles.containerRightTab,
+          { right: -WIDTH_MODAL },
+          animTranXModal,
+        ]}
+      >
         <Column
           marginBottom={8 * 2}
-          alignItems='center'
-          marginTop={top + 8 * 2}>
-          <Text
-            color={GREY_FOR_TITLE}
-            weight='bold'>
+          alignItems="center"
+          marginTop={top + 8 * 2}
+        >
+          <Text color={GREY_FOR_TITLE} weight="bold">
             Thông báo chung
           </Text>
 
           <TouchableOpacity
             hitSlop={styleElement.hitslopSm}
             onPress={_handleClosing}
-            style={styles.btnCancel}>
+            style={styles.btnCancel}
+          >
             <IconCancelGrey style={sizeIcon.md} />
           </TouchableOpacity>
         </Column>
-        {
-          (!data && isLoading) ?
-            <LoadingIndicator />
-            :
-            <FlatList
-              contentContainerStyle={{ flexGrow: 1, paddingBottom: bottom }}
-              ListEmptyComponent={<EmptyResultData />}
-              data={data}
-              renderItem={_renderItem}
-              keyExtractor={(item, index) => item?.id} />
-        }
+        <FlatList
+          contentContainerStyle={{ flexGrow: 1, paddingBottom: bottom }}
+          ListEmptyComponent={
+            isLoading ? <LoadingIndicator /> : <EmptyResultData />
+          }
+          data={data}
+          renderItem={_renderItem}
+          keyExtractor={(item, index) => item?._id}
+        />
       </Animated.View>
     </View>
-  )
+  );
 }
 
 export default RightNoti

@@ -21,37 +21,40 @@ const ItemNoti = ({ data, onClose }: Props) => {
   const _renderTitle = (event) => {
     switch (event) {
       case "CREATE_PARTNER_NOTIFICATION_REVIEW":
-        return `Thưởng đánh giá dịch vụ`
+        return `Thưởng đánh giá dịch vụ`;
       case "HANDLED_COLLABORATOR_REQUEST":
-        return `Cộng tác viên`
+        return `Cộng tác viên`;
       case "LIA_REFUND_BONUS":
-        return `Thu hồi vé `
+        return `Thu hồi vé `;
       case "LIA_BONUS":
-        return `Quà tặng`
+        return `Quà tặng`;
       case "REMIND_MEDICAL":
-        return `Nhắc nhở uống thuốc`
+      case "TAKE_MEDICINES":
+        return `Nhắc nhở uống thuốc`;
       case "ADD_PARTNER_POST_COMMENT":
-        return `Bình luận mới`
+        return `Bình luận mới`;
       case "CALL_TREATMENT_QUEUE":
-        return `Gọi điều trị`
+        return `Gọi điều trị`;
       case "CALL_QUEUE_CONSULTATION":
-        return `Gọi tư vấn`
+        return `Gọi tư vấn`;
       case "ADD_BOOKING":
-        return `Đặt hẹn thành công`
+        return `Đặt hẹn thành công`;
       case "LATE_BOOKING_TIME":
-        return `Thông báo trễ hẹn`
+        return `Thông báo trễ hẹn`;
       case "HAVE_COME_BOOKING_TIME":
-        return `Thông báo đến giờ hẹn`
+        return `Thông báo đến giờ hẹn`;
       case "UPCOMING_BOOKING_TIME":
-        return `Thông báo sắp đến giờ hẹn`
+        return `Thông báo sắp đến giờ hẹn`;
       case "CHECK_IN_BOOKING":
-        return `CheckIn thành công`
+        return `CheckIn thành công`;
       case "CHECK_OUT_BOOKING":
-        return `CheckOut thành công`
+        return `CheckOut thành công`;
       case "HANDLED_PAYMENT_REQUEST":
-        return `Yêu cầu cọc`
+        return `Yêu cầu cọc`;
+      case "PERSONAL_HYGIENE":
+        return "Nhắc nhở";
       default:
-        return `${data?.title}`
+        return `Nhắc nhở`;
     }
   }
 
