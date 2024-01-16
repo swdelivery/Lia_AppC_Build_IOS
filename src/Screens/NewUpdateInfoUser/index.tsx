@@ -30,6 +30,7 @@ import Row from '@Components/Row'
 import { sizeIcon } from '@Constant/Icon'
 import Icon from '@Components/Icon'
 import { NEW_BASE_COLOR } from '@Constant/Color'
+import { styleElement } from "@Constant/StyleElement";
 
 const NewUpdateInfoUser = () => {
   const dispatch = useDispatch();
@@ -319,7 +320,7 @@ const NewUpdateInfoUser = () => {
       <LiAHeader safeTop title={"Thông tin cá nhân"} />
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={{ flex: 1 }}
+        style={styleElement.flex}
       >
         <ScrollView style={{ flex: 1 }}>
           <EditAvatar cameraPicker={cameraPicker} />
@@ -331,32 +332,28 @@ const NewUpdateInfoUser = () => {
               title="Mã giới thiệu"
               value={valueInviteCode}
               onChangeText={setValueInviteCode}
-              icon={<Icon name='link-variant' color={NEW_BASE_COLOR} size={8 * 2} />}
-            >
-              {
-                currPartnerCollab?._id ?
-                  <Row
-                    gap={8}
-                    marginTop={0}
-                    margin={8 * 2}>
-                    <Text>
-                      Người giới thiệu: {currPartnerCollab?.name}
-                    </Text>
-                    <IconTick style={sizeIcon.sm} />
-                  </Row>
-                  : <></>
+              icon={
+                <Icon name="link-variant" color={NEW_BASE_COLOR} size={8 * 2} />
               }
-
+            >
+              {currPartnerCollab?._id ? (
+                <Row gap={8} marginTop={0} margin={8 * 2}>
+                  <Text>Người giới thiệu: {currPartnerCollab?.name}</Text>
+                  <IconTick style={sizeIcon.sm} />
+                </Row>
+              ) : (
+                <></>
+              )}
             </Input>
             <Input
-              maxLength={20}
+              maxLength={30}
               error={errorName}
               setError={setErrorName}
               title="Họ và tên"
               require
               value={valueName}
               onChangeText={setValueName}
-              icon={<Icon name='account' color={NEW_BASE_COLOR} size={8 * 2} />}
+              icon={<Icon name="account" color={NEW_BASE_COLOR} size={8 * 2} />}
             />
 
             <Input
@@ -364,7 +361,7 @@ const NewUpdateInfoUser = () => {
               title="Số điện thoại"
               require
               value={valuePhone}
-              icon={<Icon name='phone' color={NEW_BASE_COLOR} size={8 * 2} />}
+              icon={<Icon name="phone" color={NEW_BASE_COLOR} size={8 * 2} />}
             />
 
             <Input
@@ -374,14 +371,16 @@ const NewUpdateInfoUser = () => {
               keyboardType={"email-address"}
               value={valueEmail}
               onChangeText={setValueEmail}
-              icon={<Icon name='email' color={NEW_BASE_COLOR} size={8 * 2} />}
+              icon={<Icon name="email" color={NEW_BASE_COLOR} size={8 * 2} />}
             />
 
             <Input
               title="Địa chỉ"
               value={valueAddress}
               onChangeText={setValueAddress}
-              icon={<Icon name='map-marker' color={NEW_BASE_COLOR} size={8 * 2} />}
+              icon={
+                <Icon name="map-marker" color={NEW_BASE_COLOR} size={8 * 2} />
+              }
             />
 
             <MultiInput
@@ -391,7 +390,9 @@ const NewUpdateInfoUser = () => {
               number
               setError={setErrorBirthday}
               title="Ngày tháng năm sinh (vd: 01/01/2000)"
-              icon={<Icon name='calendar' color={NEW_BASE_COLOR} size={8 * 2} />}
+              icon={
+                <Icon name="calendar" color={NEW_BASE_COLOR} size={8 * 2} />
+              }
             />
 
             <Input
@@ -401,7 +402,13 @@ const NewUpdateInfoUser = () => {
                 valueGender ? (valueGender == "male" ? "Nam" : "Nữ") : null
               }
               onPress={genderPicker.show}
-              icon={<Icon name='gender-male-female' color={NEW_BASE_COLOR} size={8 * 2} />}
+              icon={
+                <Icon
+                  name="gender-male-female"
+                  color={NEW_BASE_COLOR}
+                  size={8 * 2}
+                />
+              }
             />
 
             <Input
@@ -409,28 +416,40 @@ const NewUpdateInfoUser = () => {
               value={valueCMND}
               keyboardType={"number-pad"}
               onChangeText={setValueCMND}
-              icon={<Icon name='card-account-details-outline' color={NEW_BASE_COLOR} size={8 * 2} />}
+              icon={
+                <Icon
+                  name="card-account-details-outline"
+                  color={NEW_BASE_COLOR}
+                  size={8 * 2}
+                />
+              }
             />
 
             <Input
               title="Nghề nghiệp"
               value={valueJob}
               onChangeText={setValueJob}
-              icon={<Icon name='account' color={NEW_BASE_COLOR} size={8 * 2} />}
+              icon={<Icon name="account" color={NEW_BASE_COLOR} size={8 * 2} />}
             />
 
             <Input
               title="Quốc tịch"
               value={valueNationality}
               onChangeText={setValueNationality}
-              icon={<Icon name='badge-account-outline' color={NEW_BASE_COLOR} size={8 * 2} />}
+              icon={
+                <Icon
+                  name="badge-account-outline"
+                  color={NEW_BASE_COLOR}
+                  size={8 * 2}
+                />
+              }
             />
 
             <Input
               title="Dân tộc"
               value={valueEthnicity}
               onChangeText={setValueEthnicity}
-              icon={<Icon name='account' color={NEW_BASE_COLOR} size={8 * 2} />}
+              icon={<Icon name="account" color={NEW_BASE_COLOR} size={8 * 2} />}
             />
 
             <Text weight="bold">Mạng xã hội</Text>
