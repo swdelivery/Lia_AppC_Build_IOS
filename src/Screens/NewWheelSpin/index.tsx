@@ -87,17 +87,18 @@ const NewWheelSpin = () => {
     <Screen>
       <FocusAwareStatusBar />
       <ImageBackground
-        resizeMode='stretch'
+        resizeMode="stretch"
         style={styles.bg}
-        source={require('../../Image/newWheelSpin/bg.png')} >
-
+        source={require("../../Image/newWheelSpin/bg.png")}
+      >
         <Column
           onPress={navigation.goBack}
           backgroundColor={BLACK_OPACITY_4}
           top={top + 8}
           borderRadius={8 * 10}
           left={20}
-          position="absolute">
+          position="absolute"
+        >
           <IconBackWhite />
         </Column>
 
@@ -107,51 +108,60 @@ const NewWheelSpin = () => {
           style={{
             top: top + 8,
             right: 8 * 3,
-            position: 'absolute'
-          }}>
+            position: "absolute",
+          }}
+        >
           <IconQuestion />
         </TouchableOpacity>
 
         <Image
-          resizeMode='contain'
+          resizeMode="contain"
           style={styles.title}
-          source={require('../../Image/newWheelSpin/title.png')} />
+          source={require("../../Image/newWheelSpin/title.png")}
+        />
+        <Image
+          resizeMode="contain"
+          style={styles.podium}
+          source={require("../../Image/newWheelSpin/podium.png")}
+        />
 
         <View style={styles.containerCircle}>
           <Image
-            resizeMode='contain'
+            resizeMode="contain"
             style={styles.arrowDown}
-            source={require('../../Image/newWheelSpin/arrowDown.png')} />
+            source={require("../../Image/newWheelSpin/arrowDown.png")}
+          />
 
           {/* ANIMATED CIRCLE */}
           <Animated.View style={animCircle}>
             <Image
-              resizeMode='contain'
+              resizeMode="contain"
               style={styles.circle}
-              source={{ uri: getImageAvataUrl(currActiveWheel?.imageResponse) }} />
+              source={{ uri: getImageAvataUrl(currActiveWheel?.imageResponse) }}
+            />
           </Animated.View>
           <Image
             style={styles.center}
-            source={require('../../Image/newWheelSpin/center.png')} />
+            source={require("../../Image/newWheelSpin/center.png")}
+          />
         </View>
 
         <View style={styles.containerBtnStart}>
           <View style={styles.countTurn}>
-            <Text
-              weight='bold'
-              color={'#CE0922'}
-              size={12}>
+            <Text weight="bold" color={"#CE0922"} size={12}>
               Còn {wheelTurnCount} lượt quay
             </Text>
           </View>
           <TouchableOpacity
             disabled={isSpinning}
             onPress={_startSpin}
-            activeOpacity={.5}>
+            activeOpacity={0.5}
+          >
             <Image
-              resizeMode='contain'
+              resizeMode="contain"
               style={styles.btnStart}
-              source={require('../../Image/newWheelSpin/btnStart.png')} />
+              source={require("../../Image/newWheelSpin/btnStart.png")}
+            />
           </TouchableOpacity>
         </View>
 
@@ -162,55 +172,45 @@ const NewWheelSpin = () => {
           source={require('../../Image/newWheelSpin/buyTurn.png')} />
       </TouchableOpacity> */}
 
-        <Image
-          resizeMode='contain'
-          style={styles.podium}
-          source={require('../../Image/newWheelSpin/podium.png')} />
-
         <Row
           gap={8 * 10}
-          alignSelf='center'
+          alignSelf="center"
           bottom={_heightScale(8 * 6)}
-          position='absolute'>
+          position="absolute"
+        >
           <TouchableOpacity onPress={visibleListMission.show}>
-            <Column alignItems='center'>
+            <Column alignItems="center">
               <Image
-                resizeMode='contain'
+                resizeMode="contain"
                 style={styles.btnBottom}
-                source={require('../../Image/newWheelSpin/btnNv.png')} />
-              <Text
-                color={WHITE}
-                weight='bold'>
+                source={require("../../Image/newWheelSpin/btnNv.png")}
+              />
+              <Text color={WHITE} weight="bold">
                 Nhiệm vụ
               </Text>
             </Column>
           </TouchableOpacity>
 
           <TouchableOpacity onPress={visibleListHistory.show}>
-            <Column alignItems='center'>
+            <Column alignItems="center">
               <Image
-                resizeMode='contain'
+                resizeMode="contain"
                 style={styles.btnBottom}
-                source={require('../../Image/newWheelSpin/btnLs.png')} />
-              <Text
-                color={WHITE}
-                weight='bold'>
+                source={require("../../Image/newWheelSpin/btnLs.png")}
+              />
+              <Text color={WHITE} weight="bold">
                 Lịch sử
               </Text>
             </Column>
           </TouchableOpacity>
         </Row>
-        <ModalHistory
-          visibleListHistory={visibleListHistory} />
-        <ModalMissions
-          visibleListMission={visibleListMission} />
-        <ModalInfo
-          visibleModalInfo={visibleModalInfo} />
-        <ModalReward
-          visible={visibleModalReward} />
+        <ModalHistory visibleListHistory={visibleListHistory} />
+        <ModalMissions visibleListMission={visibleListMission} />
+        <ModalInfo visibleModalInfo={visibleModalInfo} />
+        <ModalReward visible={visibleModalReward} />
       </ImageBackground>
     </Screen>
-  )
+  );
 }
 
 export default NewWheelSpin
