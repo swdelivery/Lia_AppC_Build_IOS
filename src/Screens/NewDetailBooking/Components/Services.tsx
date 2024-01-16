@@ -59,19 +59,30 @@ export default function Services({ booking }: Props) {
           })}
         </>
       )}
-      <Column gap={8 * 2} paddingHorizontal={16} marginTop={16}>
+      <Column gap={8} paddingHorizontal={16} marginTop={16}>
         <Row justifyContent="space-between">
           <Text weight="bold">Ưu đãi:</Text>
           <Text color={BASE_COLOR} weight="bold">
             {`-${formatMonney(discountAmount, true)}`}
           </Text>
         </Row>
-        <Row justifyContent="space-between">
-          <Text weight="bold">Giảm giá ước tính theo hạng:</Text>
-          <Text color={BASE_COLOR} weight="bold">
-            {`-${formatMonney(discountLevel, true)}`}
-          </Text>
-        </Row>
+        <Column>
+          <Row justifyContent="space-between">
+            <Text weight="bold">Giảm giá dựa trên bậc hạng:</Text>
+            <Text color={BASE_COLOR} weight="bold">
+              {`-${formatMonney(discountLevel, true)}`}
+            </Text>
+          </Row>
+          {booking.partnerLevelPromotion && (
+            <Text size={12}>
+              Bậc hiện tại:{" "}
+              <Text size={12} weight="bold">
+                {booking.partnerLevelPromotion.name}
+              </Text>
+              {` giảm ${booking.partnerLevelPromotion.discountRetailService}%`}
+            </Text>
+          )}
+        </Column>
         <Row justifyContent="space-between">
           <Text weight="bold">Tạm tính:</Text>
           <Text color={"#0053BD"} weight="bold">
