@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
     borderColor: BORDER_COLOR,
   },
   container: {
-    backgroundColor: "#F1FCF9",
+    backgroundColor: "#F6FCFF",
   },
   contentContainer: {
     paddingBottom: 60,

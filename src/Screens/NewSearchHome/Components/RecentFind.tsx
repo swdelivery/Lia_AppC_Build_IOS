@@ -9,8 +9,13 @@ import {
   HandIcon,
   IconAffiliate,
   IconComment,
+  IconDiary,
   IconHand,
+  IconHandHeart,
   IconMirror,
+  IconProfileBooking,
+  IconProfilePayment,
+  IconProfileWallet,
   IconTrash,
   MirrorIcon,
 } from "../../../Components/Icon/Icon";
@@ -121,28 +126,25 @@ const RecentFind = memo((props) => {
         </TouchableOpacity>
         <TouchableOpacity onPress={handleAffiliate} style={styles.btnRecommend}>
           <View style={styles.btnRecommend__box}>
-            <AffiliateIcon color={BASE_COLOR} />
+            <IconHandHeart color={BASE_COLOR} width={22} height={22} />
           </View>
           <Text style={styles.btnRecommend__text}>Tri Ân</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          onPress={_handleBooking}
-          style={styles.btnRecommend}
-        >
+        <TouchableOpacity onPress={_handleBooking} style={styles.btnRecommend}>
           <View style={styles.btnRecommend__box}>
-            <CommentIcon color={BASE_COLOR} />
+            <IconProfileBooking color={BASE_COLOR} />
           </View>
           <Text style={styles.btnRecommend__text}>Đặt lịch</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.btnRecommend}>
           <View style={styles.btnRecommend__box}>
-            <CommentIcon color={BASE_COLOR} />
+            <IconDiary color={BASE_COLOR} width={22} height={22} />
           </View>
           <Text style={styles.btnRecommend__text}>Nhật ký</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.btnRecommend}>
           <View style={styles.btnRecommend__box}>
-            <HandIcon color={BASE_COLOR} />
+            <IconProfileWallet color={BASE_COLOR} />
           </View>
           <Text style={styles.btnRecommend__text}>Ví LiA</Text>
         </TouchableOpacity>

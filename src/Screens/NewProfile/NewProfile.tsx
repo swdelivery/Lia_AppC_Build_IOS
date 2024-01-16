@@ -25,7 +25,7 @@ import { ProfileMirrorIcon, RecordIcon } from "src/SGV";
 
 const NewProfile = () => {
   return (
-    <Screen>
+    <Screen backgroundColor={"#F6FCFF"}>
       <FocusAwareStatusBar barStyle="light-content" />
       <ScrollView>
         <Banner />

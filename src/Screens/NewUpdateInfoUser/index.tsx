@@ -322,7 +322,7 @@ const NewUpdateInfoUser = () => {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styleElement.flex}
       >
-        <ScrollView style={{ flex: 1 }}>
+        <ScrollView style={styleElement.flex}>
           <EditAvatar cameraPicker={cameraPicker} />
 
           <Column gap={8 * 4} paddingHorizontal={8 * 2}>
