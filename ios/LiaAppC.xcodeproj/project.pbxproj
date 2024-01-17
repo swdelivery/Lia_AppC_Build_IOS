@@ -397,10 +397,11 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"$($PROJECT_DIR)/GoogleService-Info.plist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "echo \"Select GoogleService-Info.\"$ENV\".plist\"\ncp \"LiaAppC/GoogleService-Info.\"$ENV\".plist\" \"LiaAppC/GoogleService-Info.plist\" \n";
+			shellScript = "echo \"Select $PROJECT_DIR/GoogleService-Info.\"$ENV\".plist\"\ncp \"$PROJECT_DIR/GoogleService-Info.\"$ENV\".plist\" \"$PROJECT_DIR/GoogleService-Info.plist\" \n";
 		};
 		629F90A02AF0B6A300574803 /* Set version and build number */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -499,7 +500,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.digitech.lia;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(BUNDLE_ID)";
 				PRODUCT_NAME = LiaAppC;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -536,7 +537,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.digitech.lia;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(BUNDLE_ID)";
 				PRODUCT_NAME = LiaAppC;
 				PROVISIONING_PROFILE = "a6f6c6cb-486d-4e0d-9703-8c454cf090e8";
 				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc com.digitech.lia";
