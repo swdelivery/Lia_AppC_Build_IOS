@@ -51,11 +51,25 @@ import wheelSpin from "../wheelSpin/reducers";
 import affiliate from "../affiliate/reducers";
 import product from "../product/reducers";
 import otp from "../otp/reducers";
+import news from "../news/reducers";
+import imageVoucher from "../imageVoucher/reducers";
 import { PersistConfig, persistReducer } from "redux-persist";
 import { reduxStorage } from "@Redux/reduxStorage";
 
 const userConfig: PersistConfig<any> = {
   key: "infoUser",
+  storage: reduxStorage,
+};
+const newsConfig: PersistConfig<any> = {
+  key: "listNews",
+  storage: reduxStorage,
+};
+const serviceGroupConfig: PersistConfig<any> = {
+  key: "serviceGroups",
+  storage: reduxStorage,
+};
+const imageVoucherConfig: PersistConfig<any> = {
+  key: "imageVoucher",
   storage: reduxStorage,
 };
 
@@ -77,7 +91,7 @@ const rootReducer = combineReducers({
   postReducer,
   revenueAndCostReducer,
   serviceReducer,
-  serviceGroupReducer,
+  serviceGroupReducer: persistReducer(serviceGroupConfig, serviceGroupReducer),
   bookingReducer,
   infoReducer,
   ortherReducer,
@@ -112,6 +126,8 @@ const rootReducer = combineReducers({
   affiliate,
   product,
   otp,
+  news: persistReducer(newsConfig, news),
+  imageVoucher: persistReducer(imageVoucherConfig, imageVoucher)
 });
 
 // const rootReducer = (state, action) => {

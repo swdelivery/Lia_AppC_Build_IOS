@@ -1,7 +1,7 @@
 import BootSplash from "react-native-bootsplash";
 import { NavigationContainer } from "@react-navigation/native";
 import React, { useCallback, useEffect, useRef } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   navigationRef,
   navigation,
@@ -20,6 +20,14 @@ import configs from "src/configs";
 import Text from "@Components/Text";
 import ModalThanks from "@Components/Modal/ModalThanks";
 import notifee, { EventType, AndroidImportance } from '@notifee/react-native';
+import { getServiceGroup } from "@Redux/home/actions";
+import { getServiceGroupState } from "@Redux/home/selectors";
+import { isEmpty } from "lodash";
+import { Alert } from "react-native";
+import { getServiceListState } from "@Redux/service/selectors";
+import { getListNewsState } from "@Redux/news/selectors";
+import { getImageVoucherHomeState } from "@Redux/imageVoucher/selectors";
+import { getFlashSaleState } from "@Redux/flashSale/selectors";
 
 const LINKING = {
   prefixes: [`https://${configs.appLinkDomain}`],
@@ -34,10 +42,36 @@ const LINKING = {
 const AppWrapper = (props) => {
   const routeNameRef = useRef<string | null>("");
   const reduxAuth = useSelector((state) => state.authReducer);
+  const dispatch = useDispatch()
+
+  const { isFirstLoaded: isFirstLoadedNews } = useSelector(getListNewsState)
+  const { isFirstLoaded: isFirstLoadedServiceGroup } = useSelector(getServiceGroupState);
+  const { isFirstLoaded: isFirstLoadedImageVoucher } = useSelector(getImageVoucherHomeState);
+  const { isFirstLoaded: isFirstLoadedGetFlashSale } = useSelector(getFlashSaleState);
+
 
   useEffect(() => {
-    BootSplash.hide({ fade: true });
+    if (
+      isFirstLoadedNews &&
+      isFirstLoadedServiceGroup &&
+      isFirstLoadedImageVoucher &&
+      isFirstLoadedGetFlashSale) {
+      setTimeout(() => {
+        _hideSplashScreen()
+      }, 1000);
+    }
+  }, [
+    isFirstLoadedNews,
+    isFirstLoadedServiceGroup,
+    isFirstLoadedImageVoucher,
+    isFirstLoadedGetFlashSale
+  ])
 
+  const _hideSplashScreen = useCallback(async () => {
+    await BootSplash.hide({ fade: true });
+  }, [])
+
+  useEffect(() => {
     const unsubscribe = messaging().onMessage(async remoteMessage => {
       // console.log({ remoteMessage });
 

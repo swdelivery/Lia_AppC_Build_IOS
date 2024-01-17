@@ -6,11 +6,13 @@ import { ServiceGroup } from "@typings/serviceGroup";
 export type State = {
   isLoading: boolean;
   data: ServiceGroup[];
+  isFirstLoaded: boolean;
 };
 
 const INITIAL_STATE: State = {
   isLoading: false,
   data: [],
+  isFirstLoaded: false
 };
 
 const request: Handler<State> = (state) => ({
@@ -21,12 +23,14 @@ const request: Handler<State> = (state) => ({
 const failure: Handler<State> = (state) => ({
   ...state,
   isLoading: false,
+  isFirstLoaded: true
 });
 
 const success: Handler<State> = (state, { payload }) => ({
   ...state,
   isLoading: false,
   data: payload,
+  isFirstLoaded: true
 });
 
 export default createReducer(INITIAL_STATE, {

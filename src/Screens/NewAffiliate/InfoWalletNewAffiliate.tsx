@@ -228,8 +228,8 @@ const InfoWalletNewAffiliate = () => {
                     </Row>
                 </Row>
 
-                <Row
-                    gap={8 * 2}
+                <Column
+                    gap={8}
                     marginTop={8 * 2}>
                     <Text
                         weight='bold'
@@ -241,7 +241,7 @@ const InfoWalletNewAffiliate = () => {
                         color={RED}>
                         Hoa hồng: {formatMonney(wallet?.commissionAmount)} vnd
                     </Text>
-                </Row>
+                </Column>
 
             </Column>
 

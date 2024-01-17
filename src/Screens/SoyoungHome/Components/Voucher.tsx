@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import {
   _heightScale,
@@ -14,10 +14,18 @@ import { first } from "lodash";
 import Image from "@Components/Image";
 import Fade from "@Components/Fade";
 import Column from "@Components/Column";
+import { useDispatch, useSelector } from "react-redux";
+import { getImageVoucherHome } from "@Redux/imageVoucher/actions";
+import { getImageVoucherHomeState } from "@Redux/imageVoucher/selectors";
 
 const Voucher = () => {
+  const dispatch = useDispatch()
   const { navigate } = useNavigate();
-  const data = useConfigFile(ConfigFileCode.ImageVoucherHome);
+  const { data } = useSelector(getImageVoucherHomeState)
+
+  useEffect(() => {
+    dispatch(getImageVoucherHome.request(ConfigFileCode.ImageVoucherHome))
+  }, [])
 
   const voucher = useMemo(() => {
     if (!data) {
@@ -31,11 +39,9 @@ const Voucher = () => {
   }
 
   return (
-    <Fade visible={!!voucher} initialScale={1}>
-      <Column alignItems="center" onPress={navigate(ScreenKey.LIA_VOUCHER)}>
-        <Image auto avatar={voucher} style={styles.image} />
-      </Column>
-    </Fade>
+    <Column alignItems="center" onPress={navigate(ScreenKey.LIA_VOUCHER)}>
+      <Image auto avatar={voucher} style={styles.image} />
+    </Column>
   );
 };
 

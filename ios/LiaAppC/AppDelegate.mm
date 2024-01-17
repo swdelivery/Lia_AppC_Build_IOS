@@ -2,7 +2,7 @@
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTLinkingManager.h>
 
-//#import "RNBootSplash.h"
+#import "RNBootSplash.h"
 #import <Firebase.h>
 #import <SDWebImage/SDImageCache.h>
 #import <SDWebImage/SDWebImageManager.h>
@@ -60,6 +60,7 @@
 #endif
 }
 
+// ⬇️ Add this before file @end
 - (UIView *)createRootViewWithBridge:(RCTBridge *)bridge
                           moduleName:(NSString *)moduleName
                            initProps:(NSDictionary *)initProps {
@@ -67,7 +68,7 @@
                                           moduleName:moduleName
                                            initProps:initProps];
 
-  // [RNBootSplash initWithStoryboard:@"BootSplash" rootView:rootView]; // ⬅️ initialize the splash screen
+  [RNBootSplash initWithStoryboard:@"BootSplash" rootView:rootView]; // ⬅️ initialize the splash screen
 
   return rootView;
 }
