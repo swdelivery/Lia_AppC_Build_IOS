@@ -14,6 +14,7 @@ import { first } from "lodash";
 import Image from "@Components/Image";
 import Fade from "@Components/Fade";
 import Column from "@Components/Column";
+import CachedImageView from "@Components/CachedImage";
 
 const Voucher = () => {
   const { navigate } = useNavigate();
@@ -33,7 +34,7 @@ const Voucher = () => {
   return (
     <Fade visible={!!voucher} initialScale={1}>
       <Column alignItems="center" onPress={navigate(ScreenKey.LIA_VOUCHER)}>
-        <Image auto avatar={voucher} style={styles.image} />
+        <CachedImageView auto avatar={voucher} style={styles.image} />
       </Column>
     </Fade>
   );
@@ -45,5 +46,6 @@ const styles = StyleSheet.create({
   image: {
     width: _width - _moderateScale(16) * 2,
     borderRadius: _moderateScale(8),
+    overflow: "hidden",
   },
 });
