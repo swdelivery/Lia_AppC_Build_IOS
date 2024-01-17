@@ -539,8 +539,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "$(BUNDLE_ID)";
 				PRODUCT_NAME = LiaAppC;
-				PROVISIONING_PROFILE = "af5b818b-0712-47a0-b8ff-7a7731055996";
-				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc com.digitech.lia.staging";
+				PROVISIONING_PROFILE = "0b216249-ecab-4c51-b762-132018f0deb2";
+				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc com.digitech.lia.dev";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "LiaAppC-Bridging-Header.h";
