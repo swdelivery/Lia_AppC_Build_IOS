@@ -136,11 +136,11 @@ android {
     flavorDimensions "default"
     productFlavors {
         dev {
-            applicationId "com.digitech.lia"
+            applicationId "com.digitech.lia.dev"
             signingConfig signingConfigs.debug
         }
         staging {
-            applicationId "com.digitech.lia"
+            applicationId "com.digitech.lia.staging"
             signingConfig signingConfigs.staging
         }
         prod {
