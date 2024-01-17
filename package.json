@@ -17,6 +17,7 @@
     "@georstat/react-native-image-cache": "^3.1.0",
     "@itenl/react-native-scrollable-tabview": "^1.1.7",
     "@native-html/iframe-plugin": "^2.6.1",
+    "@notifee/react-native": "^7.8.2",
     "@r0b0t3d/react-native-carousel": "^3.4.4",
     "@r0b0t3d/react-native-hooks": "^1.0.5",
     "@react-native-camera-roll/camera-roll": "^6.0.2",

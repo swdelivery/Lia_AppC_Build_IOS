@@ -10,8 +10,6 @@ import ScreenKey from "./ScreenKey";
 import Login from "../Screens/Auth/Login";
 import Register from "../Screens/Auth/Register";
 import Activation from "../Screens/Auth/Activation";
-// import { fcmService } from '../FCMConfig/FCMService';
-// import { localNotificationService } from '../FCMConfig/LocalNotificationService';
 import Chatting from "../Screens/Chat/Chatting/index";
 import ModalAddMemberToGroupChat from "../Screens/Chat/InfoRoomChat/AddMemberToGroupChat";
 import EditChat from "../Screens/Chat/InfoRoomChat/index";

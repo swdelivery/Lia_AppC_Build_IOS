@@ -19,6 +19,7 @@ import RightNoti from "@Components/RightNoti/RightNoti";
 import configs from "src/configs";
 import Text from "@Components/Text";
 import ModalThanks from "@Components/Modal/ModalThanks";
+import notifee, { EventType, AndroidImportance } from '@notifee/react-native';
 
 const LINKING = {
   prefixes: [`https://${configs.appLinkDomain}`],
@@ -36,46 +37,96 @@ const AppWrapper = (props) => {
 
   useEffect(() => {
     BootSplash.hide({ fade: true });
+
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      // console.log({ remoteMessage });
+
+      // Create a channel (required for Android)
+      const channelId = await notifee.createChannel({
+        id: 'default',
+        name: 'Default Channel',
+        sound: 'default',
+        vibration: true,
+        vibrationPattern: [300, 500],
+      });
+
+      await notifee.displayNotification({
+        title: remoteMessage?.notification?.title,
+        body: remoteMessage?.notification?.body,
+        data: remoteMessage?.data,
+        android: {
+          vibrationPattern: [300, 500],
+          sound: 'default',
+          importance: AndroidImportance.HIGH,
+          channelId,
+          pressAction: {
+            id: 'default',
+          },
+        },
+      });
+    });
+
+    notifee.onForegroundEvent(({ type, detail }) => {
+      switch (type) {
+        case EventType.PRESS:
+          // console.log('User pressed notification', detail);
+          _handleNavigate(detail?.notification?.data)
+          break;
+      }
+    });
+
+    messaging()
+      .onNotificationOpenedApp(remoteMessage => {
+        // console.log('[FCMService] onNotificationOpenedApp Notification caused app to open from background state:', remoteMessage)
+        if (remoteMessage) {
+          setTimeout(() => {
+            _handleNavigate(remoteMessage?.data)
+          }, 300);
+        }
+      });
+
+    messaging()
+      .getInitialNotification()
+      .then(remoteMessage => {
+        // console.log('[FCMService] getInitialNotification Notification caused app to open from quit state:', remoteMessage)
+        if (remoteMessage) {
+          setTimeout(() => {
+            _handleNavigate(remoteMessage?.data)
+          }, 500);
+        }
+      });
+
+    return unsubscribe;
   }, []);
 
-  useEffect(() => {
-    if (reduxAuth.isLoggedIn == true) {
-      const unsubscribe = messaging().onMessage(async (remoteMessage) => {
-        // Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
-      });
+  const _handleNavigate = useCallback((data) => {
+    const { event } = data;
 
-      messaging().onNotificationOpenedApp((remoteMessage) => {
-        console.log(
-          "Notification caused app to open from background state:",
-          remoteMessage
-        );
-        if (remoteMessage?.data?.event == "NEW_MESSAGE") {
-          navigation.navigate(ScreenKey.TAB_CHAT);
-        }
-        // navigation.navigate(remoteMessage.data.type);
-      });
+    switch (event) {
+      case "NEW_PARTNER_MESSAGE":
+        return navigation.navigate(ScreenKey.TAB_CHAT);
+      case "ADD_BOOKING":
+      case "WAS_CONSULTED_BOOKING":
+        return navigation.navigate(ScreenKey.LIST_BOOKING);
+      case "TAKE_MEDICINES":
+        return navigation.navigate(ScreenKey.LIST_MEDICINE);
+      case "PERSONAL_HYGIENE":
+      case "UPDATE_POSTOPERATIVE":
+        return navigation.navigate(ScreenKey.TAKECARE);
+      case "CREATE_POST":
+      case "ADD_POST_COMMENT_POST_AUTHOR":
+      case "LIKE_POST_AUTHOR":
+      case "HANDLED_DELETE_PARTNER_POST_COMMENT":
+        return navigation.navigate(ScreenKey.TAB_TIMELINE);
+      case "LIA_BONUS":
+        return navigation.navigate(ScreenKey.WHEEL_SPIN);
 
-      // Check whether an initial notification is available
-      messaging()
-        .getInitialNotification()
-        .then((remoteMessage) => {
-          if (remoteMessage) {
-            console.log(
-              "Notification caused app to open from quit state:",
-              remoteMessage.notification
-            );
-            if (remoteMessage?.data?.event == "NEW_MESSAGE") {
-              setTimeout(() => {
-                navigation.navigate(ScreenKey.TAB_CHAT);
-              }, 500);
-            }
-          }
-          //   setLoading(false);
-        });
-
-      return unsubscribe;
+      default:
+        break;
     }
-  }, [reduxAuth.isLoggedIn]);
+
+  }, [])
+
 
   const handleNavigationStateChange = useCallback((state: any) => {
     const previousRouteName = routeNameRef.current;
