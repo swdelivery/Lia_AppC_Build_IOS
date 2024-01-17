@@ -36,6 +36,7 @@ def loadDotEnv(config = getCurrentBuildConfig()) {
                 env.put(matcher[0][1], matcher[0][2].replace('"', '\\"'))
             }
         }
+        println env
     } else {
         println("**************************")
         println("*** Missing .env file ****")

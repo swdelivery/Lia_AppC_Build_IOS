@@ -25,6 +25,9 @@ const setupAxios = (instance: AxiosInstance) => {
           // 2) Change Authorization header
           // axios.defaults.headers.common.Authorization = token;
           axios.defaults.headers.common.token = token;
+        } else if (res.status === 401) {
+          keychain.clearTokens();
+          store.dispatch({ type: CLEAR_INFO_USER });
         }
         // 3) return originalRequest object with Axios.
         return axios(originalRequest);
@@ -58,6 +61,8 @@ const setupAxios = (instance: AxiosInstance) => {
         !originalRequest.__retry &&
         !!tokens.refreshToken
       ) {
+        console.log("retry ", originalRequest.__retry, tokens);
+        
         originalRequest.__retry = true;
         return refreshToken(originalRequest);
       }
