@@ -24,6 +24,7 @@ type Props = {
   backDisable?: boolean;
   right?: React.ReactElement;
   bottomBorderColor?: ColorValue;
+  onBackPress?: () => void;
 };
 
 const LiAHeader = ({
@@ -35,6 +36,7 @@ const LiAHeader = ({
   backDisable = false,
   right,
   bottomBorderColor,
+  onBackPress,
 }: Props) => {
   const { navigation } = useNavigate();
   const { top } = useSafeAreaInsets();
@@ -56,7 +58,7 @@ const LiAHeader = ({
           {!backDisable && (
             <TouchableOpacity
               hitSlop={styleElement.hitslopSm}
-              onPress={navigation.goBack}
+              onPress={onBackPress ?? navigation.goBack}
             >
               <BackIcon
                 color={bg === WHITE ? BASE_COLOR : "white"}

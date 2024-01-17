@@ -1,19 +1,53 @@
 import LiAHeader from "@Components/Header/LiAHeader";
 import Screen from "@Components/Screen";
 import Spacer from "@Components/Spacer";
-import React from "react";
+import React, { useCallback } from "react";
 import { ScrollView, StyleSheet } from "react-native";
-import { NEW_BASE_COLOR, WHITE } from "../../Constant/Color";
-import { _moderateScale, _width, _widthScale } from "../../Constant/Scale";
+import { BASE_COLOR, NEW_BASE_COLOR, WHITE } from "../../Constant/Color";
+import {
+  _height,
+  _moderateScale,
+  _width,
+  _widthScale,
+} from "../../Constant/Scale";
 import ListDiary from "./Components/ListDiary";
 import OverViewEyes from "./Components/OverViewEyes";
 import RecomendBrach from "./Components/RecomendBrach";
 import RecomendDoctor from "./Components/RecomendDoctor";
 import RecomendService from "./Components/RecomendService";
 import { AfterTimeoutFragment } from "@Components/AfterTimeoutFragment";
+import Column from "@Components/Column";
+import Text from "@Components/Text";
+import { MirrorIcon } from "@Components/Icon/Icon";
+import { useNavigate } from "src/Hooks/useNavigation";
+import useConfirmation from "src/Hooks/useConfirmation";
+import { useDispatch } from "react-redux";
+import { saveResult } from "@Redux/resultcanningeyes/actions";
 
 const ResultAIScanEyes = (props) => {
-  const { scanningResult, imageScan } = props?.route?.params;
+  const { navigation } = useNavigate();
+  const dispatch = useDispatch();
+  const { scanningResult, imageScan, fromHistory } = props?.route?.params;
+  const { showConfirmation } = useConfirmation();
+
+  console.log({ scanningResult, imageScan });
+
+  const handleBackPress = useCallback(() => {
+    if (!fromHistory) {
+      // Ask to save result
+      showConfirmation(
+        "Thông báo",
+        'Bạn có muốn lưu lại thông tin\n"Kết quả phân tích" không?',
+        () => {
+          dispatch(saveResult({ scanningResult, imageScan }));
+          navigation.goBack();
+        },
+        navigation.goBack
+      );
+    } else {
+      navigation.goBack();
+    }
+  }, [scanningResult, imageScan, fromHistory]);
 
   return (
     <Screen style={styles.container}>
@@ -23,21 +57,53 @@ const ResultAIScanEyes = (props) => {
         barStyle={"dark-content"}
         bg={WHITE}
         title={"KẾT QUẢ CHI TIẾT"}
+        onBackPress={handleBackPress}
       />
-      <ScrollView>
-        <Spacer top={8 * 2} />
-        <OverViewEyes scanningResult={scanningResult} imageScan={imageScan} />
-        <ListDiary />
-        <AfterTimeoutFragment>
-          <RecomendService />
-          <RecomendDoctor />
-          <RecomendBrach />
-        </AfterTimeoutFragment>
-        <Spacer top={8 * 20} />
-      </ScrollView>
+      {scanningResult ? (
+        <ScrollView>
+          <Spacer top={8 * 2} />
+          <OverViewEyes scanningResult={scanningResult} imageScan={imageScan} />
+          <ListDiary />
+          <AfterTimeoutFragment>
+            <RecomendService />
+            <RecomendDoctor />
+            <RecomendBrach />
+          </AfterTimeoutFragment>
+          <Spacer top={8 * 20} />
+        </ScrollView>
+      ) : (
+        <Placeholder />
+      )}
     </Screen>
   );
 };
+
+function Placeholder() {
+  const { navigation } = useNavigate();
+
+  return (
+    <Column
+      // justifyContent="center"
+      alignItems="center"
+      height={_height}
+      paddingTop={_height / 4}
+      gap={16}
+    >
+      <MirrorIcon width={100} height={100} color={"#E7EDF1"} />
+      <Column
+        backgroundColor={BASE_COLOR}
+        paddingHorizontal={16}
+        paddingVertical={4}
+        borderRadius={24}
+        onPress={navigation.goBack}
+      >
+        <Text color={"white"} weight="bold">
+          Đi đến gương thần
+        </Text>
+      </Column>
+    </Column>
+  );
+}
 
 export default ResultAIScanEyes;
 
