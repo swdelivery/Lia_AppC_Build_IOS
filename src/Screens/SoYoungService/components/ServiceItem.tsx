@@ -43,7 +43,7 @@ function ServiceItem({ item, numColumns = 2, isFirstInRow }: Props) {
     >
       <Column overflow="hidden">
         <CachedImage style={styles.image} avatar={item.avatar} />
-        {item.isOnFlashSale && <FlashSale item={item} />}
+        {item.currentFlashSale && <FlashSale item={item} />}
       </Column>
       <Column style={styles.info}>
         <Column height={35}>
@@ -57,7 +57,7 @@ function ServiceItem({ item, numColumns = 2, isFirstInRow }: Props) {
             count={item.reviewCount}
             size={9}
           />
-          {!item.isOnFlashSale && !!item.nextFlashSale && (
+          {!item.currentFlashSale && !!item.nextFlashSale && (
             <Row>
               <Column backgroundColor={MAIN_RED_600} marginRight={2}>
                 <FlashIcon width={10} height={10} />
@@ -70,7 +70,7 @@ function ServiceItem({ item, numColumns = 2, isFirstInRow }: Props) {
           )}
         </Row>
         <Row>
-          {item.isOnFlashSale && item?.preferentialInCurrentFlashSale ? (
+          {item.currentFlashSale && item?.preferentialInCurrentFlashSale ? (
             <Row flex={1} alignItems="flex-end" gap={4}>
               <Text size={12} weight="bold" color={RED}>
                 {`${formatMonney(

@@ -34,19 +34,25 @@ export default function FlashSaleTimer({
   const endTimestamp = useMemo(() => {
     const { hour, minute } = flashSale.timeRange.to;
     return moment(fromUtc(flashSale.dateRange.to))
-      .add(hour, "hours")
-      .add(minute, "minutes")
-      .toDate()
-      .getTime();
+      .set({
+        hour,
+        minute,
+        second: 0,
+        millisecond: 0,
+      })
+      .valueOf();
   }, [flashSale]);
 
   const startTimestamp = useMemo(() => {
     const { hour, minute } = flashSale.timeRange.from;
     return moment(fromUtc(flashSale.dateRange.from))
-      .add(hour, "hours")
-      .add(minute, "minutes")
-      .toDate()
-      .getTime();
+      .set({
+        hour,
+        minute,
+        second: 0,
+        millisecond: 0,
+      })
+      .valueOf();
   }, [flashSale]);
 
   useInterval(

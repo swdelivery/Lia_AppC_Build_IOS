@@ -50,6 +50,24 @@ export type MaterialInfo = {
   id: string;
 };
 
+export type FlashSaleData = {
+  limit: number;
+  usage: number;
+  _id: string;
+  orderNumber: number;
+  isActive: boolean;
+  isDelete: boolean;
+  promotionId: string;
+  serviceCode: string;
+  discountType: "percent";
+  discountAmount: number;
+  originalPrice: number;
+  finalPrice: number;
+  userCreate: string;
+  userUpdate: string;
+  __v: number;
+};
+
 export type Service = {
   price: number;
   _id: string;
@@ -94,23 +112,8 @@ export type Service = {
   guideVideo: any;
   isOnFlashSale: boolean;
   currentFlashSale?: FlashSale;
-  preferentialInCurrentFlashSale?: {
-    limit: number;
-    usage: number;
-    _id: string;
-    orderNumber: number;
-    isActive: boolean;
-    isDelete: boolean;
-    promotionId: string;
-    serviceCode: string;
-    discountType: "percent";
-    discountAmount: number;
-    originalPrice: number;
-    finalPrice: number;
-    userCreate: string;
-    userUpdate: string;
-    __v: number;
-  };
+  preferentialInCurrentFlashSale?: FlashSaleData;
+  preferentialInNextFlashSale?: FlashSaleData;
   nextFlashSale?: FlashSale;
   productArr: Product[];
 

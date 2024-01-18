@@ -27,6 +27,7 @@ import { Material } from "@typings/material";
 import { ConfigData } from "@typings/configData";
 import { isArray } from "lodash";
 import { Voucher } from "@typings/voucher";
+import { refineFlashSale } from "@Constant/service";
 
 const axios = createAxios(URL_FOR_PARTNER);
 
@@ -59,7 +60,10 @@ const getServices = (
     limit: pageSize,
     page,
   });
-  return axios.get(`/service?${query}`).then(({ data }) => data);
+  return axios.get(`/service?${query}`).then(({ data }) => ({
+    ...data,
+    data: data.data.map(refineFlashSale),
+  }));
 };
 
 const getServicesFilter = (payload: any) => {

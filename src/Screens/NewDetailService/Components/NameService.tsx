@@ -38,10 +38,12 @@ const NameService = ({ service }: Props) => {
 
   const flashSaleStartTime = useMemo(() => {
     return service.nextFlashSale
-      ? moment(fromUtc(service.nextFlashSale.dateRange.from)).add(
-          service.nextFlashSale.timeRange.from.unixTime,
-          "seconds"
-        )
+      ? moment(fromUtc(service.nextFlashSale.dateRange.from)).set({
+          hour: service.nextFlashSale.timeRange.from.hour,
+          minute: service.nextFlashSale.timeRange.from.minute,
+          second: 0,
+          millisecond: 0,
+        })
       : moment();
   }, [service]);
 

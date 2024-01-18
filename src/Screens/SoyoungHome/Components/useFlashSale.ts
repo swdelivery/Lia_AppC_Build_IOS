@@ -29,16 +29,31 @@ export default function useFlashSales(
     const validFlashSales = nextFlashSale
       .filter((item) => {
         const endTimestamp = moment(fromUtc(item.dateRange.to))
-          .add(item.timeRange.to.unixTime, "seconds")
+          .set({
+            hour: item.timeRange.to.hour,
+            minute: item.timeRange.to.minute,
+            second: 0,
+            millisecond: 0,
+          })
           .valueOf();
         return Date.now() < endTimestamp;
       })
       .sort((a, b) => {
         const aStart = moment(fromUtc(a.dateRange.from))
-          .add(a.timeRange.from.unixTime, "seconds")
+          .set({
+            hour: a.timeRange.from.hour,
+            minute: a.timeRange.from.minute,
+            second: 0,
+            millisecond: 0,
+          })
           .valueOf();
         const bStart = moment(fromUtc(b.dateRange.from))
-          .add(b.timeRange.from.unixTime, "seconds")
+          .set({
+            hour: b.timeRange.from.hour,
+            minute: b.timeRange.from.minute,
+            second: 0,
+            millisecond: 0,
+          })
           .valueOf();
         return aStart - bStart;
       });

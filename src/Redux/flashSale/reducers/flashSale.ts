@@ -21,6 +21,7 @@ const INITIAL_STATE: State = {
   availableFlashSale: 0,
   nextFlashSale: [],
   prevFlashSale: [],
+  isFirstLoaded: false,
 };
 
 const request: Handler<State> = (state) => ({

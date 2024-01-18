@@ -7,11 +7,64 @@ export const isValidFlasSale = (flashSale?: FlashSale) => {
   if (!flashSale) {
     return false;
   }
-  const { unixTime } = flashSale.timeRange.to;
+  const { hour, minute } = flashSale.timeRange.to;
   const endTimestamp = moment(fromUtc(flashSale.dateRange.to))
-    .add(unixTime, "seconds")
+    .set({ hour, minute, second: 0, millisecond: 0 })
     .valueOf();
   return Date.now() < endTimestamp;
+};
+
+export const refineFlashSale = (service: Service): Service => {
+  if (service.currentFlashSale) {
+    const valid = isValidFlasSale(service.currentFlashSale);
+    if (valid) {
+      return service;
+    } else {
+      return {
+        ...service,
+        currentFlashSale: null,
+        preferentialInCurrentFlashSale: null,
+      };
+    }
+  }
+  if (service.nextFlashSale) {
+    const { hour, minute } = service.nextFlashSale.timeRange.from;
+    const startTimestamp = moment(fromUtc(service.nextFlashSale.dateRange.from))
+      .set({
+        hour,
+        minute,
+        second: 0,
+        millisecond: 0,
+      })
+      .valueOf();
+    console.log({ startTimestamp });
+
+    if (startTimestamp > Date.now()) {
+      return service;
+    }
+    // Otherwise consider to map it to current flash sale
+    const endTimestamp = moment(fromUtc(service.nextFlashSale.dateRange.to))
+      .set({
+        hour: service.nextFlashSale.timeRange.to.hour,
+        minute: service.nextFlashSale.timeRange.to.minute,
+        second: 0,
+        millisecond: 0,
+      })
+      .valueOf();
+    console.log({ endTimestamp });
+
+    if (endTimestamp > Date.now()) {
+      return {
+        ...service,
+        currentFlashSale: service.nextFlashSale,
+        preferentialInCurrentFlashSale: service.preferentialInNextFlashSale,
+        nextFlashSale: null,
+        preferentialInNextFlashSale: null,
+      };
+    }
+    console.log("3");
+  }
+  return service;
 };
 
 export const isCurrentFlashSale = (flashSale?: FlashSale) => {
@@ -19,10 +72,20 @@ export const isCurrentFlashSale = (flashSale?: FlashSale) => {
     return false;
   }
   const startTimestamp = moment(fromUtc(flashSale.dateRange.from))
-    .add(flashSale.timeRange.from.unixTime, "seconds")
+    .set({
+      hour: flashSale.timeRange.from.hour,
+      minute: flashSale.timeRange.from.minute,
+      second: 0,
+      millisecond: 0,
+    })
     .valueOf();
   const endTimestamp = moment(fromUtc(flashSale.dateRange.to))
-    .add(flashSale.timeRange.to.unixTime, "seconds")
+    .set({
+      hour: flashSale.timeRange.to.hour,
+      minute: flashSale.timeRange.to.minute,
+      second: 0,
+      millisecond: 0,
+    })
     .valueOf();
   return Date.now() >= startTimestamp && Date.now() <= endTimestamp;
 };

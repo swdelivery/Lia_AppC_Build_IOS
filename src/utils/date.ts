@@ -9,8 +9,10 @@ import moment from "moment";
  * @returns
  */
 export const fromUtc = (datestr: string | Date) => {
-  const dt = new Date(datestr);
-  return new Date(dt.valueOf() + dt.getTimezoneOffset() * 60 * 1000);
+  // const dt = new Date(datestr);
+  // return new Date(dt.valueOf() + dt.getTimezoneOffset() * 60 * 1000);
+  // FIXME: for now, return utc date. wait for confirmation from BE
+  return datestr;
 };
 
 export function getTwoDigits(number: number): string {
@@ -37,10 +39,20 @@ export function formatTime(time: FlashSaleTime) {
 
 export function fromFlashSaleDate(flashSale: FlashSale) {
   const from = moment(fromUtc(flashSale.dateRange.from))
-    .add(flashSale.timeRange.from.unixTime, "seconds")
+    .set({
+      hour: flashSale.timeRange.from.hour,
+      minute: flashSale.timeRange.from.minute,
+      second: 0,
+      millisecond: 0,
+    })
     .valueOf();
   const to = moment(fromUtc(flashSale.dateRange.to))
-    .add(flashSale.timeRange.to.unixTime, "seconds")
+    .set({
+      hour: flashSale.timeRange.to.hour,
+      minute: flashSale.timeRange.to.minute,
+      second: 0,
+      millisecond: 0,
+    })
     .valueOf();
   return {
     from,
