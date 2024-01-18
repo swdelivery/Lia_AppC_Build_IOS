@@ -1,10 +1,19 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native'
+import React, { useMemo } from 'react'
 import { BORDER_COLOR } from '@Constant/Color'
 
-const HorizontalLine = ({ style = {} }) => {
+
+type Props = ViewStyle & {
+  style?: StyleProp<ViewStyle>;
+};
+
+const HorizontalLine = ({ style = {}, ...props }: Props) => {
+  const containerStyle = useMemo(() => {
+    return { ...props };
+  }, [props]);
+
   return (
-    <View style={[styles.line, style]}>
+    <View style={[styles.line, style, containerStyle]}>
 
     </View>
   )

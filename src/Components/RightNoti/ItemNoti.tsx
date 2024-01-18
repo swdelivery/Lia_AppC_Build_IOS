@@ -76,20 +76,56 @@ const ItemNoti = ({ data, onClose }: Props) => {
   };
 
   const _handlePress = () => {
-    onClose();
+    requestAnimationFrame(() => {
+      onClose();
+    })
 
     switch (event) {
       case "ADD_PARTNER_POST_COMMENT":
         return navigation.navigate(ScreenKey.LIST_COMMENTS, {
           _idPost: entityId,
         });
+      case "CREATE_PARTNER_NOTIFICATION_REVIEW":
+        return navigation.navigate(ScreenKey.INFO_WALLET_NEW_AFFILIATE)
+      case "HANDLED_COLLABORATOR_REQUEST":
+        return navigation.navigate(ScreenKey.NEW_AFFILIATE)
+      case "LIA_BONUS":
+        return navigation.navigate(ScreenKey.WHEEL_SPIN)
+      case "REMIND_MEDICAL":
+      case "TAKE_MEDICINES":
+        return navigation.navigate(ScreenKey.LIST_MEDICINE)
+      case "CALL_TREATMENT_QUEUE":
+      case "CALL_QUEUE_CONSULTATION":
+      case "ADD_BOOKING":
+      case "REMIND_UPCOMING_BOOKING_BEFORE":
+      case "UPCOMING_BOOKING_BEFORE_FIVE_DAY":
+      case "UPCOMING_BOOKING_BEFORE_ONE_DAY":
+      case "LATE_BOOKING_TIME":
+      case "HAVE_COME_BOOKING_TIME":
+      case "UPCOMING_BOOKING_TIME":
+      case "CHECK_IN_BOOKING":
+      case "CHECK_OUT_BOOKING":
+      case "WAS_CONSULTED_BOOKING":
+        return navigation.navigate(ScreenKey.LIST_BOOKING)
+      case "COMPLETE_TREATMENT":
+        return navigation.navigate(ScreenKey.TAKECARE)
+      case "UPDATE_POSTOPERATIVE":
+        return navigation.navigate(ScreenKey.TAKECARE)
+      case "HANDLED_PAYMENT_REQUEST":
+        return navigation.navigate(ScreenKey.PURCHASE_DEPOSIT_REQUEST)
+      case "HANDLED_DONATE_VOLUNTEER_REQUEST":
+        return navigation.navigate(ScreenKey.PURCHASE_DEPOSIT_REQUEST)
+      case "HANDLED_ACCEPT_DONATE_VOLUNTEER_REQUEST":
+        return navigation.navigate(ScreenKey.PURCHASE_DEPOSIT_REQUEST)
+      case "PERSONAL_HYGIENE":
+        return navigation.navigate(ScreenKey.LIST_MEDICINE)
       default:
         return;
     }
   };
 
   return (
-    <TouchableOpacity onPress={_handlePress}>
+    <TouchableOpacity activeOpacity={.7} onPress={_handlePress}>
       <Column
         backgroundColor={seenAt ? "transparent" : "#E9F3FE"}
         gap={4}
