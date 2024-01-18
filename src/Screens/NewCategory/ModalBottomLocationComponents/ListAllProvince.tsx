@@ -1,20 +1,13 @@
 import CircleTick from '@Components/CircleTick/CircleTick'
-import Column from '@Components/Column'
-import { IconFindGrey } from '@Components/Icon/Icon'
+import Column from "@Components/Column";
 import Row from '@Components/Row'
 import Text from '@Components/Text'
-import { BORDER_COLOR } from '@Constant/Color'
-import { sizeIcon } from '@Constant/Icon'
+import { BORDER_COLOR } from "@Constant/Color";
 import { getAllAddressVietNam } from '@Redux/Action/BookingAction'
 import { getDataFilterServiceState } from '@Redux/category/selectors'
 import { escapeRegExp, isEmpty } from 'lodash'
 import React, { useEffect, useMemo, useState } from "react";
-import {
-  FlatList,
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-} from "react-native";
+import { FlatList, StyleSheet, TouchableOpacity } from "react-native";
 import { useSelector } from "react-redux";
 import slugify from "slugify";
 

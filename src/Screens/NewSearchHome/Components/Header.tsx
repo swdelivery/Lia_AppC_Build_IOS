@@ -1,4 +1,4 @@
-import { StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import React, { memo } from "react";
 import { BASE_COLOR, RED, WHITE } from "../../../Constant/Color";
 import { _moderateScale } from "../../../Constant/Scale";
@@ -12,6 +12,7 @@ import { navigation } from "../../../../rootNavigation";
 import { sizeIcon } from "../../../Constant/Icon";
 import { styleElement } from "../../../Constant/StyleElement";
 import Text from "@Components/Text";
+import TextInput from "@Components/TextInput";
 
 const Header = memo((props) => {
   return (

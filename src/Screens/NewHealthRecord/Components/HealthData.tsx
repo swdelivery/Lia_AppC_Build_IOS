@@ -1,13 +1,19 @@
-import { StyleSheet, TextInput, View } from 'react-native'
-import React from 'react'
-import Text from '@Components/Text'
-import Row from '@Components/Row'
-import Column from '@Components/Column'
-import { BASE_COLOR, BG_GREY_OPACITY_7, BORDER_COLOR, WHITE } from '@Constant/Color'
-import { _moderateScale } from '@Constant/Scale'
-import { stylesFont } from '@Constant/Font'
-import TitleIcon from './TitleIcon'
-import { IconHeart } from '@Components/Icon/Icon'
+import { StyleSheet } from "react-native";
+import React from "react";
+import Text from "@Components/Text";
+import Row from "@Components/Row";
+import Column from "@Components/Column";
+import {
+  BASE_COLOR,
+  BG_GREY_OPACITY_7,
+  BORDER_COLOR,
+  WHITE,
+} from "@Constant/Color";
+import { _moderateScale } from "@Constant/Scale";
+import { stylesFont } from "@Constant/Font";
+import TitleIcon from "./TitleIcon";
+import { IconHeart } from "@Components/Icon/Icon";
+import TextInput from "@Components/TextInput";
 
 const HealthData = ({
   bloodPressure,
@@ -17,7 +23,7 @@ const HealthData = ({
   setBloodPressure,
   setBloodSugar,
   setAxitUric,
-  setCholesteron
+  setCholesteron,
 }) => {
   return (
     <Column marginTop={8 * 3} gap={8 * 2} marginHorizontal={8 * 2}>
@@ -53,40 +59,39 @@ const HealthData = ({
       </Row>
     </Column>
   );
-}
+};
 
-export default HealthData
+export default HealthData;
 
-const Item = ({ name = '', unit = '', value, onchangeText }) => {
+const Item = ({ name = "", unit = "", value, onchangeText }) => {
   return (
     <Column
       backgroundColor={WHITE}
       borderRadius={8}
       height={8 * 13}
       flex={1}
-      borderWidth={.5}
-      borderColor={BASE_COLOR}>
-
+      borderWidth={0.5}
+      borderColor={BASE_COLOR}
+    >
       <Column flex={1} style={styles.inputContainer}>
         <TextInput
           onChangeText={(text) => onchangeText(text)}
-          value={value ? `${value}` : ''}
+          value={value ? `${value}` : ""}
           selectTextOnFocus
           maxLength={5}
-          keyboardType={'numeric'}
+          keyboardType={"numeric"}
           placeholderTextColor={BG_GREY_OPACITY_7}
           style={styles.inputContainer__input}
-          placeholder='0' />
+          placeholder="0"
+        />
       </Column>
-      <Column
-        style={styles.bottomName}
-        alignItems='center'>
+      <Column style={styles.bottomName} alignItems="center">
         <Text size={12}>{name}</Text>
         <Text size={12}>{unit}</Text>
       </Column>
     </Column>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   inputContainer__input: {
@@ -94,17 +99,17 @@ const styles = StyleSheet.create({
     ...stylesFont.fontNolanBold,
     color: BASE_COLOR,
     flex: 1,
-    textAlign: 'center'
+    textAlign: "center",
   },
   inputContainer: {
-    position: 'absolute',
-    alignSelf: 'center',
+    position: "absolute",
+    alignSelf: "center",
     top: 8 * 2,
-    width: '100%',
+    width: "100%",
   },
   bottomName: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 8,
-    alignSelf: 'center'
-  }
-})
+    alignSelf: "center",
+  },
+});

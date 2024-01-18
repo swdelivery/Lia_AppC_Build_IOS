@@ -2,6 +2,7 @@ import Column from '@Components/Column'
 import { IconBackBlue, IconFindGrey, IconLike } from '@Components/Icon/Icon'
 import Row from '@Components/Row'
 import Text from '@Components/Text'
+import TextInput from "@Components/TextInput";
 import { BLACK, BORDER_COLOR, TEXT_BASE, WHITE } from "@Constant/Color";
 import { sizeIcon } from "@Constant/Icon";
 import { _widthScale } from "@Constant/Scale";
@@ -9,7 +10,7 @@ import { styleElement } from "@Constant/StyleElement";
 import { selectServiceSearching } from "@Redux/category/actions";
 import { isEmpty } from "lodash";
 import React, { useEffect, useRef, useState } from "react";
-import { StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,

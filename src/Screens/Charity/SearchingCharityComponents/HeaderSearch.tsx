@@ -1,11 +1,12 @@
 import { IconBackBlue, IconFindAroundCirle } from '@Components/Icon/Icon'
 import Row from '@Components/Row'
 import Text from '@Components/Text'
+import TextInput from "@Components/TextInput";
 import { NEW_BASE_COLOR } from '@Constant/Color'
 import { styleElement } from '@Constant/StyleElement'
 import AsyncStorage from '@react-native-community/async-storage'
 import React, { useCallback, useRef, useState } from 'react'
-import { StyleSheet, TextInput, TouchableOpacity } from 'react-native'
+import { StyleSheet, TouchableOpacity } from "react-native";
 import { useFocused, useNavigate } from 'src/Hooks/useNavigation'
 
 type Props = {

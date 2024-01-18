@@ -13,7 +13,15 @@ import { uploadModule } from '@Redux/Action/BookingAction';
 import { updateDailyDiary } from '@Redux/takecare/actions';
 import moment from 'moment';
 import React, { useEffect, useMemo, useState } from 'react';
-import { Image, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
+import {
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import ImagePicker from 'react-native-image-crop-picker';
 import { useDispatch } from 'react-redux';
 import useConfirmation from 'src/Hooks/useConfirmation';
@@ -24,6 +32,7 @@ import useVisible from 'src/Hooks/useVisible';
 import { isEmpty } from 'lodash';
 import { getImageAvataUrl } from 'src/utils/avatar';
 import EnhancedImageViewing from "react-native-image-viewing/dist/ImageViewing";
+import TextInput from "@Components/TextInput";
 
 const EachDayDiary = ({ data }) => {
   const dispatch = useDispatch()

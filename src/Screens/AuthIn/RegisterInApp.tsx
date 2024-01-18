@@ -1,11 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import {
-  Image,
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useDispatch } from "react-redux";
 import * as Color from "../../Constant/Color";
@@ -33,6 +27,7 @@ import Column from "@Components/Column";
 import PasswordInput from "@Components/PasswordInput";
 import PhoneInput from "@Components/PhoneInput";
 import { StatusBar } from "@Components/StatusBar";
+import TextInput from "@Components/TextInput";
 
 const RegisterInApp = (props) => {
   const [phoneNumber, setphoneNumber] = useState("");
@@ -216,7 +211,6 @@ const RegisterInApp = (props) => {
           }}
         >
           <View>
-
             <Row
               paddingVertical={_moderateScale(8 * 2)}
               borderRadius={_moderateScale(8)}
@@ -231,54 +225,52 @@ const RegisterInApp = (props) => {
               <TextInput
                 value={codeAffiliate}
                 onChangeText={setCodeAffiliate}
-                style={styles.input}
+                style={[styles.input, styles.input_text]}
                 autoCapitalize="characters"
                 placeholder={"Mã giới thiệu"}
                 placeholderTextColor={"grey"}
-                style={styles.input_text}
               />
-              {
-                currPartnerCollab?._id && (
-                  // <Collapsible collapsed={currPartnerCollab?._id ? false : true}>
-                  //   <View
-                  //     style={{
-                  //       padding: _moderateScale(8 * 2),
-                  //       paddingBottom: 0,
-                  //       ...styleElement.rowAliCenter,
-                  //     }}
-                  //   >
-                  //     <Text style={{ marginRight: _moderateScale(8) }}>
-                  //       Tìm thấy người giới thiệu:{" "}
-                  //       <Text style={{ fontWeight: "bold" }}>
-                  //         {currPartnerCollab?.name}
-                  //       </Text>
-                  //     </Text>
-                  //     <IconTick style={sizeIcon.sm} />
-                  //   </View>
-                  // </Collapsible>
-                  <Row gap={_moderateScale(10)}>
-                    <Text>
-                      Tìm thấy người giới thiệu:{" "}
-                      <Text weight="bold">
-                        {currPartnerCollab?.name}
-                      </Text>
-                    </Text>
-                    <TouchableOpacity onPress={handleRemoveCodeAffiliate}>
-                      <IconCancelGrey style={{ width: _moderateScale(15), height: _moderateScale(15) }} />
-                    </TouchableOpacity>
-                  </Row>
-                )
-              }
-            </Row>
-            {
-              codeAffiliate && (
-                <View style={styles.labelContainer}>
-                  <Text size={14} color={Color.GREY}>
-                    Mã giới thiệu
+              {currPartnerCollab?._id && (
+                // <Collapsible collapsed={currPartnerCollab?._id ? false : true}>
+                //   <View
+                //     style={{
+                //       padding: _moderateScale(8 * 2),
+                //       paddingBottom: 0,
+                //       ...styleElement.rowAliCenter,
+                //     }}
+                //   >
+                //     <Text style={{ marginRight: _moderateScale(8) }}>
+                //       Tìm thấy người giới thiệu:{" "}
+                //       <Text style={{ fontWeight: "bold" }}>
+                //         {currPartnerCollab?.name}
+                //       </Text>
+                //     </Text>
+                //     <IconTick style={sizeIcon.sm} />
+                //   </View>
+                // </Collapsible>
+                <Row gap={_moderateScale(10)}>
+                  <Text>
+                    Tìm thấy người giới thiệu:{" "}
+                    <Text weight="bold">{currPartnerCollab?.name}</Text>
                   </Text>
-                </View>
-              )
-            }
+                  <TouchableOpacity onPress={handleRemoveCodeAffiliate}>
+                    <IconCancelGrey
+                      style={{
+                        width: _moderateScale(15),
+                        height: _moderateScale(15),
+                      }}
+                    />
+                  </TouchableOpacity>
+                </Row>
+              )}
+            </Row>
+            {codeAffiliate && (
+              <View style={styles.labelContainer}>
+                <Text size={14} color={Color.GREY}>
+                  Mã giới thiệu
+                </Text>
+              </View>
+            )}
           </View>
 
           <View>
@@ -289,8 +281,8 @@ const RegisterInApp = (props) => {
                 errorName
                   ? Color.ERROR_COLOR
                   : name
-                    ? Color.BORDER_INPUT_TEXT_FOCUSED
-                    : Color.BORDER_INPUT_TEXT
+                  ? Color.BORDER_INPUT_TEXT_FOCUSED
+                  : Color.BORDER_INPUT_TEXT
               }
               borderWidth={1}
               paddingHorizontal={10}
@@ -304,21 +296,17 @@ const RegisterInApp = (props) => {
                 onBlur={validateName}
               />
             </Row>
-            {
-              (errorName && errorName.length > 0) && (
-                <Text style={styles.error_text}>{errorName}</Text>
-              )
-            }
+            {errorName && errorName.length > 0 && (
+              <Text style={styles.error_text}>{errorName}</Text>
+            )}
 
-            {
-              name && (
-                <View style={styles.labelContainer}>
-                  <Text size={14} color={Color.GREY}>
-                    Tên của bạn
-                  </Text>
-                </View>
-              )
-            }
+            {name && (
+              <View style={styles.labelContainer}>
+                <Text size={14} color={Color.GREY}>
+                  Tên của bạn
+                </Text>
+              </View>
+            )}
           </View>
 
           <PhoneInput
@@ -380,9 +368,7 @@ const RegisterInApp = (props) => {
               alignSelf="center"
               paddingTop={_moderateScale(64)}
             >
-              <TouchableOpacity
-                onPress={handleLoginBtn}
-              >
+              <TouchableOpacity onPress={handleLoginBtn}>
                 <Text color={Color.GREY}>
                   {"Bạn đã có tài khoản, "}
                   <Text weight="bold" size={14} color={Color.BASE_COLOR}>
@@ -396,10 +382,7 @@ const RegisterInApp = (props) => {
               paddingBottom={_moderateScale(8)}
               alignSelf="center"
             >
-              <Text
-                color={Color.GREY}
-                fontStyle="italic"
-              >
+              <Text color={Color.GREY} fontStyle="italic">
                 Copyright © Lia Beauty 2023
               </Text>
             </Row>

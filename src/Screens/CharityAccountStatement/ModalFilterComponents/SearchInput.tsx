@@ -1,11 +1,12 @@
 import Column from '@Components/Column'
 import Text from '@Components/Text'
+import TextInput from "@Components/TextInput";
 import { BORDER_COLOR } from '@Constant/Color'
 import { stylesFont } from '@Constant/Font'
 import { selectSearchValue } from '@Redux/charity/actions'
 import { getDataFilterReportState } from '@Redux/charity/selectors'
 import React, { useCallback, useEffect, useState } from 'react'
-import { StyleSheet, TextInput } from 'react-native'
+import { StyleSheet } from "react-native";
 import { useDispatch, useSelector } from 'react-redux'
 
 const SearchInput = () => {

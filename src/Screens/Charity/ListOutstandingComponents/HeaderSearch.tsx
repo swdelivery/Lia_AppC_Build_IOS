@@ -1,10 +1,11 @@
 import { IconBackBlue, IconFindGrey } from '@Components/Icon/Icon'
 import Row from '@Components/Row'
+import TextInput from "@Components/TextInput";
 import { BORDER_COLOR } from '@Constant/Color'
 import { sizeIcon } from '@Constant/Icon'
 import { styleElement } from '@Constant/StyleElement'
 import React from 'react'
-import { StyleSheet, TextInput, TouchableOpacity } from 'react-native'
+import { StyleSheet, TouchableOpacity } from "react-native";
 import { useNavigate } from 'src/Hooks/useNavigation'
 
 type Props = {
