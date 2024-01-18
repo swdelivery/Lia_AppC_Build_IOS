@@ -4,7 +4,6 @@ import {
   Linking,
   Platform,
   StyleSheet,
-  Text,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -33,7 +32,6 @@ import RightEyeResult from "./Components/RightEyeResult";
 import LeftEffectDotEye from "./Components/LeftEffectDotEye";
 import LeftEffectTextEye from "./Components/LeftEffectTextEye";
 import LeftEyeResult from "./Components/LeftEyeResult";
-import { navigation } from "../../../rootNavigation";
 import ScreenKey from "../../Navigation/ScreenKey";
 import { scanningEyes } from "../../Redux/Action/FaceAiAction";
 import BackDropOpacity from "./Components/BackDropOpacity";
@@ -51,10 +49,20 @@ import { useIsFocused } from "@react-navigation/native";
 import { CameraRoll } from "@react-native-camera-roll/camera-roll";
 import Screen from "@Components/Screen";
 import useImagePicker from "./useImagePicker";
+import Row from "@Components/Row";
+import Text from "@Components/Text";
+import { StatusBar } from "@Components/StatusBar";
+import Column from "@Components/Column";
+import { useNavigate } from "src/Hooks/useNavigation";
+import { BASE_COLOR } from "@Constant/Color";
+import { useSelector } from "react-redux";
+import { getEyeHistoryState } from "@Redux/resultcanningeyes/selectors";
 
 const EYE_INDICATOR_SIZE = 10;
 
 const FaceAI = () => {
+  const { navigate, navigation } = useNavigate();
+  const eyeHistory = useSelector(getEyeHistoryState);
   const { hasPermission, requestPermission } = useCameraPermission();
   const device = useCameraDevice("front");
   // const format = useCameraFormat(device, Templates.Instagram)
@@ -351,6 +359,7 @@ const FaceAI = () => {
 
   return (
     <Screen>
+      <StatusBar barStyle="light-content" />
       {/* <View
         style={{
           width: EYE_INDICATOR_SIZE,
@@ -575,44 +584,31 @@ const FaceAI = () => {
           </View>
         </View>
       )}
-      <IconButton
+      <Row
+        position="absolute"
         top={top}
-        containerStyle={styles.backBtn}
-        onPress={navigation.goBack}
+        left={0}
+        right={0}
+        marginHorizontal={16}
+        marginVertical={8}
+        justifyContent="space-between"
       >
-        <BackIcon />
-      </IconButton>
+        <IconButton onPress={navigation.goBack}>
+          <BackIcon />
+        </IconButton>
+        <Column
+          onPress={navigate(ScreenKey.RESULT_AI_SCAN_EYES, {
+            ...eyeHistory,
+            fromHistory: true,
+          })}
+        >
+          <Text color={"white"} fontStyle="italic">
+            Kết quả phân tích
+          </Text>
+        </Column>
+      </Row>
     </Screen>
   );
 };
 
 export default FaceAI;
-
-const styles = StyleSheet.create({
-  btnTakeImage__child: {
-    width: _moderateScale(8 * 8),
-    height: _moderateScale(8 * 8),
-    borderRadius: _moderateScale(8 * 8) / 2,
-    backgroundColor: "white",
-  },
-  btnTakeImage: {
-    position: "absolute",
-    bottom: _heightScale(8 * 10),
-    width: _moderateScale(8 * 10),
-    height: _moderateScale(8 * 10),
-    borderRadius: _moderateScale(8 * 10) / 2,
-    borderWidth: 3,
-    justifyContent: "center",
-    alignItems: "center",
-    borderColor: "white",
-  },
-  backBtn: {
-    position: "absolute",
-    left: 0,
-    width: _moderateScale(8 * 10),
-    height: _moderateScale(8 * 10),
-    justifyContent: "center",
-    alignItems: "center",
-    zIndex: 100,
-  },
-});

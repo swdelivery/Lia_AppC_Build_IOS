@@ -19,12 +19,8 @@ import RightNoti from "@Components/RightNoti/RightNoti";
 import configs from "src/configs";
 import Text from "@Components/Text";
 import ModalThanks from "@Components/Modal/ModalThanks";
-import notifee, { EventType, AndroidImportance } from '@notifee/react-native';
-import { getServiceGroup } from "@Redux/home/actions";
-import { getServiceGroupState } from "@Redux/home/selectors";
-import { isEmpty } from "lodash";
-import { Alert } from "react-native";
-import { getServiceListState } from "@Redux/service/selectors";
+import notifee, { EventType, AndroidImportance } from "@notifee/react-native";
+import { getServiceGroupState } from "@Redux/service/selectors";
 import { getListNewsState } from "@Redux/news/selectors";
 import { getImageVoucherHomeState } from "@Redux/imageVoucher/selectors";
 import { getFlashSaleState } from "@Redux/flashSale/selectors";
@@ -41,45 +37,47 @@ const LINKING = {
 
 const AppWrapper = (props) => {
   const routeNameRef = useRef<string | null>("");
-  const reduxAuth = useSelector((state) => state.authReducer);
-  const dispatch = useDispatch()
 
-  const { isFirstLoaded: isFirstLoadedNews } = useSelector(getListNewsState)
-  const { isFirstLoaded: isFirstLoadedServiceGroup } = useSelector(getServiceGroupState);
-  const { isFirstLoaded: isFirstLoadedImageVoucher } = useSelector(getImageVoucherHomeState);
-  const { isFirstLoaded: isFirstLoadedGetFlashSale } = useSelector(getFlashSaleState);
-
+  const { isFirstLoaded: isFirstLoadedNews } = useSelector(getListNewsState);
+  const { isFirstLoaded: isFirstLoadedServiceGroup } =
+    useSelector(getServiceGroupState);
+  const { isFirstLoaded: isFirstLoadedImageVoucher } = useSelector(
+    getImageVoucherHomeState
+  );
+  const { isFirstLoaded: isFirstLoadedGetFlashSale } =
+    useSelector(getFlashSaleState);
 
   useEffect(() => {
     if (
       isFirstLoadedNews &&
       isFirstLoadedServiceGroup &&
       isFirstLoadedImageVoucher &&
-      isFirstLoadedGetFlashSale) {
+      isFirstLoadedGetFlashSale
+    ) {
       setTimeout(() => {
-        _hideSplashScreen()
+        _hideSplashScreen();
       }, 1000);
     }
   }, [
     isFirstLoadedNews,
     isFirstLoadedServiceGroup,
     isFirstLoadedImageVoucher,
-    isFirstLoadedGetFlashSale
-  ])
+    isFirstLoadedGetFlashSale,
+  ]);
 
   const _hideSplashScreen = useCallback(async () => {
     await BootSplash.hide({ fade: true });
-  }, [])
+  }, []);
 
   useEffect(() => {
-    const unsubscribe = messaging().onMessage(async remoteMessage => {
+    const unsubscribe = messaging().onMessage(async (remoteMessage) => {
       // console.log({ remoteMessage });
 
       // Create a channel (required for Android)
       const channelId = await notifee.createChannel({
-        id: 'default',
-        name: 'Default Channel',
-        sound: 'default',
+        id: "default",
+        name: "Default Channel",
+        sound: "default",
         vibration: true,
         vibrationPattern: [300, 500],
       });
@@ -90,11 +88,11 @@ const AppWrapper = (props) => {
         data: remoteMessage?.data,
         android: {
           vibrationPattern: [300, 500],
-          sound: 'default',
+          sound: "default",
           importance: AndroidImportance.HIGH,
           channelId,
           pressAction: {
-            id: 'default',
+            id: "default",
           },
         },
       });
@@ -104,28 +102,27 @@ const AppWrapper = (props) => {
       switch (type) {
         case EventType.PRESS:
           // console.log('User pressed notification', detail);
-          _handleNavigate(detail?.notification?.data)
+          _handleNavigate(detail?.notification?.data);
           break;
       }
     });
 
-    messaging()
-      .onNotificationOpenedApp(remoteMessage => {
-        // console.log('[FCMService] onNotificationOpenedApp Notification caused app to open from background state:', remoteMessage)
-        if (remoteMessage) {
-          setTimeout(() => {
-            _handleNavigate(remoteMessage?.data)
-          }, 300);
-        }
-      });
+    messaging().onNotificationOpenedApp((remoteMessage) => {
+      // console.log('[FCMService] onNotificationOpenedApp Notification caused app to open from background state:', remoteMessage)
+      if (remoteMessage) {
+        setTimeout(() => {
+          _handleNavigate(remoteMessage?.data);
+        }, 300);
+      }
+    });
 
     messaging()
       .getInitialNotification()
-      .then(remoteMessage => {
+      .then((remoteMessage) => {
         // console.log('[FCMService] getInitialNotification Notification caused app to open from quit state:', remoteMessage)
         if (remoteMessage) {
           setTimeout(() => {
-            _handleNavigate(remoteMessage?.data)
+            _handleNavigate(remoteMessage?.data);
           }, 500);
         }
       });
@@ -158,9 +155,7 @@ const AppWrapper = (props) => {
       default:
         break;
     }
-
-  }, [])
-
+  }, []);
 
   const handleNavigationStateChange = useCallback((state: any) => {
     const previousRouteName = routeNameRef.current;

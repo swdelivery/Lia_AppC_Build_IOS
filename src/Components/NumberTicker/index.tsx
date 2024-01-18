@@ -1,7 +1,7 @@
 import Column from "@Components/Column";
 import Row from "@Components/Row";
 import Text, { TextProps } from "@Components/Text";
-import React, { useCallback, useEffect, useMemo, useRef } from "react";
+import React, { memo, useCallback, useEffect, useMemo, useRef } from "react";
 import { ScrollView, StyleProp, ViewStyle } from "react-native";
 import {
   runOnJS,
@@ -19,7 +19,7 @@ type Props = TextProps & {
 
 const digits = [9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
 
-export default function NumberTicker({
+function NumberTicker({
   style,
   value,
   padding = 2,
@@ -116,3 +116,5 @@ function Digit({
     </Column>
   );
 }
+
+export default memo(NumberTicker);

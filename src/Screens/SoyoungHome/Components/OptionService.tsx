@@ -8,8 +8,7 @@ import {
 } from "../../../Constant/Scale";
 import { useDispatch, useSelector } from "react-redux";
 import ScreenKey from "../../../Navigation/ScreenKey";
-import { getServiceGroup } from "@Redux/home/actions";
-import { getServiceGroupState } from "@Redux/home/selectors";
+import { getServiceGroupState } from "@Redux/service/selectors";
 import Image from "@Components/Image";
 import Text from "@Components/Text";
 import { useNavigate } from "src/Hooks/useNavigation";
@@ -19,6 +18,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import Column from "@Components/Column";
 import { isEmpty } from "lodash";
 import CachedImageView from "@Components/CachedImage";
+import { getServiceGroup } from "@Redux/service/actions";
 
 const WIDTH_ITEM = (_width - _widthScale(16) * 2) / 5;
 

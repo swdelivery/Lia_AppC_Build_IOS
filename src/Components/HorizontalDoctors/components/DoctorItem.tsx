@@ -25,7 +25,11 @@ export default function DoctorItem({ item }: Props) {
       onPress={handleDoctorPress}
       style={styles.doctorItem}
     >
-      <CachedImage style={styles.image} avatar={item.avatar} />
+      <CachedImage
+        style={styles.image}
+        avatar={item.avatar}
+        resizeMode="contain"
+      />
       <Text numberOfLines={2} weight="bold" size={12} top={4}>
         {item.name}
       </Text>

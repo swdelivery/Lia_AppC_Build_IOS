@@ -8,9 +8,15 @@ type Props = {
   auto?: boolean;
   avatar: FileAvatar;
   style?: StyleProp<ImageStyle>;
+  resizeMode?: "cover" | "contain";
 };
 
-export default function CachedImageView({ auto, avatar, style }: Props) {
+export default function CachedImageView({
+  auto,
+  avatar,
+  style,
+  resizeMode,
+}: Props) {
   const url = useMemo(() => {
     return getImageAvataUrl(avatar);
   }, [avatar]);
@@ -32,5 +38,11 @@ export default function CachedImageView({ auto, avatar, style }: Props) {
     };
   }, [avatar, auto, style]);
 
-  return <CachedImage source={url} style={[autoStyle, style]} />;
+  return (
+    <CachedImage
+      source={url}
+      style={[autoStyle, style]}
+      resizeMode={resizeMode}
+    />
+  );
 }

@@ -11,7 +11,7 @@
     "lint": "eslint .",
     "start": "react-native start",
     "test": "jest",
-    "postinstall": "patch-package"
+    "postinstall": "patch-package && npx pod-install"
   },
   "dependencies": {
     "@georstat/react-native-image-cache": "^3.1.0",

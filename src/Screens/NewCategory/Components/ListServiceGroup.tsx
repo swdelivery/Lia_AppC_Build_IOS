@@ -2,7 +2,7 @@ import Column from '@Components/Column'
 import { BG_BEAUTY } from '@Constant/Color'
 import { selectServiceParentCodeGroup } from '@Redux/category/actions'
 import { getDataFilterServiceState } from '@Redux/category/selectors'
-import { getServiceGroupState } from '@Redux/home/selectors'
+import { getServiceGroupState } from "@Redux/service/selectors";
 import React, { useCallback } from 'react'
 import { ScrollView, StyleSheet } from 'react-native'
 import { useDispatch, useSelector } from 'react-redux'

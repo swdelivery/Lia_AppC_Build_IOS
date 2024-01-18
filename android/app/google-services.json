@@ -26,6 +26,44 @@
     },
     {
       "client_info": {
+        "mobilesdk_app_id": "1:785409828152:android:8670bd5ca6e6fcfa490dcd",
+        "android_client_info": {
+          "package_name": "com.digitech.lia.dev"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJUgycDOYUeB6NzID3DqECrxwsjsSEhKE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:785409828152:android:7dbe4ec608fb2897490dcd",
+        "android_client_info": {
+          "package_name": "com.digitech.lia.staging"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJUgycDOYUeB6NzID3DqECrxwsjsSEhKE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:785409828152:android:f0466332bdd5e8cd490dcd",
         "android_client_info": {
           "package_name": "com.liaappb"

@@ -10,7 +10,6 @@ import postReducer from "./PostsReducer";
 import revenueAndCostReducer from "./RevenueAndCostReducer";
 import taskReducer from "./TaskReducer";
 import serviceReducer from "./ServiceReducer";
-import serviceGroupReducer from "./ServiceGroupReducer";
 import bookingReducer from "./BookingReducer";
 import infoReducer from "./InfoReducer";
 import ortherReducer from "./OrtherReducer";
@@ -24,7 +23,6 @@ import newsReducer from "./NewsReducer";
 import partnerDiaryReducer from "./PartnerDiaryReducer";
 import walletReducer from "./WalletReducer";
 import affiliateReducer from "./AffiliateReducer";
-import home from "../home/reducers";
 import branch from "../branch/reducers";
 import service from "../service/reducers";
 import doctor from "../doctor/reducers";
@@ -64,10 +62,6 @@ const newsConfig: PersistConfig<any> = {
   key: "listNews",
   storage: reduxStorage,
 };
-const serviceGroupConfig: PersistConfig<any> = {
-  key: "serviceGroups",
-  storage: reduxStorage,
-};
 const imageVoucherConfig: PersistConfig<any> = {
   key: "imageVoucher",
   storage: reduxStorage,
@@ -91,7 +85,6 @@ const rootReducer = combineReducers({
   postReducer,
   revenueAndCostReducer,
   serviceReducer,
-  serviceGroupReducer: persistReducer(serviceGroupConfig, serviceGroupReducer),
   bookingReducer,
   infoReducer,
   ortherReducer,
@@ -101,7 +94,6 @@ const rootReducer = combineReducers({
   walletReducer,
   affiliateReducer,
 
-  home,
   branch,
   service,
   doctor,
@@ -127,7 +119,7 @@ const rootReducer = combineReducers({
   product,
   otp,
   news: persistReducer(newsConfig, news),
-  imageVoucher: persistReducer(imageVoucherConfig, imageVoucher)
+  imageVoucher: persistReducer(imageVoucherConfig, imageVoucher),
 });
 
 // const rootReducer = (state, action) => {

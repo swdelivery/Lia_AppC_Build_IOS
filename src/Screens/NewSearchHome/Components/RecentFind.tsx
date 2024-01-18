@@ -136,13 +136,19 @@ const RecentFind = memo((props) => {
           </View>
           <Text style={styles.btnRecommend__text}>Đặt lịch</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.btnRecommend}>
+        <TouchableOpacity
+          style={styles.btnRecommend}
+          onPress={navigate(ScreenKey.LIST_PARTNER_DIARY)}
+        >
           <View style={styles.btnRecommend__box}>
             <IconDiary color={BASE_COLOR} width={22} height={22} />
           </View>
           <Text style={styles.btnRecommend__text}>Nhật ký</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.btnRecommend}>
+        <TouchableOpacity
+          style={styles.btnRecommend}
+          onPress={navigate(ScreenKey.INFO_WALLET_NEW_AFFILIATE)}
+        >
           <View style={styles.btnRecommend__box}>
             <IconProfileWallet color={BASE_COLOR} />
           </View>
