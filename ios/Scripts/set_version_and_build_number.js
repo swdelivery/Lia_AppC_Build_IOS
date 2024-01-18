@@ -5,9 +5,12 @@ const {INFOPLIST_PATH, ENV} = process.env;
 
 let appVersions = require('../../app.json');
 
-if (ENV === 'staging') {
-  appVersions = require('../../app.staging.json');
+if (ENV === "staging") {
+  appVersions = require("../../app.staging.json");
+} else if (ENV === "dev") {
+  appVersions = require("../../app.internal.json");
 }
+
 const appVersion = appVersions
   ? appVersions.ios
   : {

@@ -12,6 +12,9 @@ ext {
     if (config.flavour == 'staging') {
         println "Reading version from app.staging.json"
         appVersions = new JsonSlurper().parseText(new File("$rootDir/../app.staging.json").text)
+    } else if (config.flavour == 'dev') {
+        println "Reading version from app.internal.json"
+        appVersions = new JsonSlurper().parseText(new File("$rootDir/../app.internal.json").text)
     }
     def platformVersion = defaultVersion
     if (platformVersion && appVersions.android) {
