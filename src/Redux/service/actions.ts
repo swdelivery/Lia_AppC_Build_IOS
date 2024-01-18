@@ -1,7 +1,11 @@
 import { generateActionsGroup } from "@Redux/helper";
-import { GET_SERVICES, LOAD_MORE_SERVICES } from "./types";
+import { GET_SERVICES, GET_SERVICE_GROUP, LOAD_MORE_SERVICES } from "./types";
 import { DataPagingPayload } from "@typings/api";
-import { Service } from "@typings/serviceGroup";
+import { Service, ServiceGroup } from "@typings/serviceGroup";
+
+export const getServiceGroup = generateActionsGroup<any, ServiceGroup[]>(
+  GET_SERVICE_GROUP
+);
 
 export const getServices = generateActionsGroup<
   void,

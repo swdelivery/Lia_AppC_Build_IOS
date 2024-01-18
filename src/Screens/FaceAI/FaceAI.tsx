@@ -592,6 +592,7 @@ const FaceAI = () => {
         marginHorizontal={16}
         marginVertical={8}
         justifyContent="space-between"
+        zIndex={10}
       >
         <IconButton onPress={navigation.goBack}>
           <BackIcon />

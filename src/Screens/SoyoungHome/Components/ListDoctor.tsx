@@ -7,12 +7,7 @@ import { getDoctorListState } from "@Redux/doctor/selectors";
 import { getDoctorList } from "@Redux/doctor/actions";
 
 const ListDoctor = () => {
-  const dispatch = useDispatch();
   const { data } = useSelector(getDoctorListState);
-
-  useEffect(() => {
-    dispatch(getDoctorList.request());
-  }, []);
 
   const doctors = useMemo(() => {
     return data.slice(0, 10);

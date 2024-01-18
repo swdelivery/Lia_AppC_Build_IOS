@@ -108,7 +108,7 @@ const FlashSaleBanner = ({ flashSale }: { flashSale: FlashSale }) => {
 };
 
 function FlashSaleWrapper() {
-  const flashSales = useFlashSales();
+  const flashSales = useFlashSales(() => null, true);
 
   if (!flashSales[0]) {
     return null;

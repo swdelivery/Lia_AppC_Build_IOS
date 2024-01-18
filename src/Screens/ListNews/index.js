@@ -10,8 +10,7 @@ import { sizeIcon, sizeLogo } from '../../Constant/Icon';
 
 import { navigation } from '../../../rootNavigation';
 import ScreenKey from '../../Navigation/ScreenKey';
-import ItemService from './Component/ItemNews'
-import { getAllServiceGroup, getServiceByGroup } from '../../Redux/Action/ServiceGroup';
+import ItemService from "./Component/ItemNews";
 import { filter, find } from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
 import { URL_ORIGINAL } from '../../Constant/Url';

@@ -12,6 +12,7 @@ export type State = {
   nextFlashSale: FlashSale[];
   prevFlashSale: FlashSale[];
   image?: ConfigFile;
+  isFirstLoaded: boolean;
 };
 
 const INITIAL_STATE: State = {
@@ -30,11 +31,13 @@ const request: Handler<State> = (state) => ({
 const failure: Handler<State> = (state) => ({
   ...state,
   isLoading: false,
+  isFirstLoaded: true
 });
 
 const success: Handler<State> = (state, { payload }) => ({
   ...state,
   isLoading: false,
+  isFirstLoaded: true,
   ...payload,
 });
 

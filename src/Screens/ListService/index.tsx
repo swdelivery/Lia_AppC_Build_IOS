@@ -1,56 +1,31 @@
-import React, { useRef, useEffect, useState, memo } from "react";
-import {
-  StyleSheet,
-  View,
-  Text,
-  Animated,
-  ScrollView,
-  TouchableOpacity,
-} from "react-native";
+import React, { useRef, useEffect, useState } from "react";
+import { StyleSheet, View, Text, Animated } from "react-native";
 import * as Color from "../../Constant/Color";
-import {
-  BG_GREY_OPACITY_3,
-  BLUE,
-  BLUE_2,
-  GREY_FOR_TITLE,
-  WHITE,
-} from "../../Constant/Color";
-import { FONT_DINTEXT_PRO, stylesFont } from "../../Constant/Font";
+import { GREY_FOR_TITLE, WHITE } from "../../Constant/Color";
+import { stylesFont } from "../../Constant/Font";
 import {
   _moderateScale,
   _widthScale,
   _width,
   _height,
 } from "../../Constant/Scale";
-import { styleElement } from "../../Constant/StyleElement";
-import { ImageBackground, Image, Dimensions } from "react-native";
-import { sizeIcon, sizeLogo } from "../../Constant/Icon";
+import { Image } from "react-native";
 
-import { navigation } from "../../../rootNavigation";
-import ScreenKey from "../../Navigation/ScreenKey";
-import ItemService from "./Component/ItemService";
-import {
-  getAllServiceGroup,
-  getServiceByGroup,
-} from "../../Redux/Action/ServiceGroup";
-import { filter, find } from "lodash";
+import { getServiceByGroup } from "../../Redux/Action/ServiceGroup";
 import { useDispatch, useSelector } from "react-redux";
 import { URL_ORIGINAL } from "../../Constant/Url";
 import { getDataServiceFiles } from "../../Redux/Action/Service";
 import ImageView from "react-native-image-viewing";
 import { alertCustomNotAction } from "../../Constant/Utils";
 import ModalIframeYoutube from "../../Components/ModalIframeYoutube/ModalIframeYoutube";
-import StatusBarCustom from "../../Components/StatusBar/StatusBarCustom";
-import AlarmNotifi from "../../Components/AlarmNotifi/AlarmNotifi";
-import LinearGradient from "react-native-linear-gradient";
 import { TabBar, TabView } from "react-native-tab-view";
 import ListService from "./ListService";
 
-import { SkypeIndicator } from "react-native-indicators";
 import { StatusBar } from "@Components/StatusBar";
 import Screen from "@Components/Screen";
-import Column from "@Components/Column";
 import LiAHeader from "@Components/Header/LiAHeader";
+import { getServiceGroup } from "@Redux/service/actions";
+import { getServiceGroupState } from "@Redux/service/selectors";
 
 const ListServiceScreen = (props) => {
   const scrollA = useRef(new Animated.Value(0)).current;
@@ -58,12 +33,7 @@ const ListServiceScreen = (props) => {
 
   const opacityAnimated = new Animated.Value(1);
 
-  const listServiceGroupRedux = useSelector(
-    (state) => state.serviceGroupReducer?.listServiceGroup
-  );
-  const listServiceRedux = useSelector(
-    (state) => state.serviceReducer?.listService
-  );
+  const listServiceGroupRedux = useSelector(getServiceGroupState);
 
   const [currentGroup, setCurrentGroup] = useState("");
 
@@ -101,7 +71,7 @@ const ListServiceScreen = (props) => {
       page: 1,
     };
 
-    dispatch(getAllServiceGroup(condition));
+    dispatch(getServiceGroup.request(condition));
 
     setTimeout(() => {
       setIsFirstLoaded(true);

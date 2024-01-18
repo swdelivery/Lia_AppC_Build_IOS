@@ -345,8 +345,8 @@ const getPartnerConversations = (
   return axios
     .get(
       "/partner-conversation" +
-        "?" +
-        encodeParams({ ...params, limit: pageSize, page })
+      "?" +
+      encodeParams({ ...params, limit: pageSize, page })
     )
     .then(({ data }) => data.data);
 };
@@ -631,6 +631,16 @@ const changePass = (payload: any) => {
     .then(({ data }) => data);
 };
 
+// News
+const getNews = (payload: any) => {
+  const query = encodeParams({
+    ...payload,
+  });
+  return axios
+    .get(`/news?${query}`)
+    .then(({ data }) => data);
+};
+
 export default {
   partnerLogout,
 
@@ -755,4 +765,7 @@ export default {
   verifyOtpAccountPartner,
   verifyOtpResetPass,
   changePass,
+
+  // News
+  getNews
 };

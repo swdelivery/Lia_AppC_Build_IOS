@@ -1,17 +1,8 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
-import { Platform } from "react-native";
-// import RNBootSplash from "react-native-bootsplash";
 import ModalCreateGroupChat from "../Components/Message/CreateGroupChat";
-// MODAL
-// COMPONENT
 import { _heightScale } from "../Constant/Scale";
 import ScreenKey from "./ScreenKey";
-import Login from "../Screens/Auth/Login";
-import Register from "../Screens/Auth/Register";
-import Activation from "../Screens/Auth/Activation";
-// import { fcmService } from '../FCMConfig/FCMService';
-// import { localNotificationService } from '../FCMConfig/LocalNotificationService';
 import Chatting from "../Screens/Chat/Chatting/index";
 import ModalAddMemberToGroupChat from "../Screens/Chat/InfoRoomChat/AddMemberToGroupChat";
 import EditChat from "../Screens/Chat/InfoRoomChat/index";
@@ -19,21 +10,14 @@ import ListMembers from "../Screens/Members/index";
 import BookingMain from "../Screens/Booking/index";
 import BookingForBranch from "../Screens/Booking/bookingForBranch/index";
 import ListService from "../Screens/ListService/index";
-
-// SCREEN
 import ModalCommentPost from "../Screens/ModalCommentPost/ModalCommentPost";
 import CommentPostFromNotifi from "../Screens/Timeline/CommentPostFromNotifi";
 import MainTab from "./TabNavigator/MainTab";
 import DetailService from "../Screens/NewDetailService/index";
-// import DetailServiceScreen from '../Screens/DetailService/index'
 import ScanQRCode from "../Screens/QRCode/OpenCamera";
 import Affiliate from "../Screens/Affiliate/index";
-import HealthRecord from "../Screens/HealthRecord/index";
-import EditProfile from "../Screens/EditProfile/index";
 import PickServiceToBooking from "../Screens/NewPickerServiceBooking/index";
-// import PickServiceToBooking from "../Screens/Booking/bookingForBranch/PickServiceToBooking";
 import ListBooking from "../Screens/NewListBookings/index";
-// import ListBooking from "../Screens/ListBooking/index";
 import ListDeposit from "../Screens/ListDeposit/index";
 import ListPayment from "../Screens/ListPayment/index";
 import ListMedicine from "../Screens/ListMedicine/index";
@@ -42,8 +26,6 @@ import ListTreatmentDetail from "../Screens/ListTreatmentDetail";
 import ListOrderService from "../Screens/ListOrderService";
 import VideoRequest from "../Screens/VideoRequest";
 import DetailBrand from "../Screens/NewDetailBranch/index";
-// import DetailBrand from '../Screens/DetailBrand/index'
-// import DetailDoctor from '../Screens/DetailDoctor/index'
 import DetailDoctor from "../Screens/NewDetailDoctor";
 import DetailPractitioner from "../Screens/NewDetailPractitioner/index";
 import BookingForDoctor from "../Screens/Booking/bookingForDoctor";
@@ -53,7 +35,6 @@ import ListProduct from "../Screens/ListProduct";
 import DetailProduct from "../Screens/DetailProduct/index";
 import DiaryOfTreatment from "../Screens/DiaryOfTreatment";
 import PurchaseDepositRequest from "../Screens/PurchaseDepositRequest/index";
-import DetailNewFeed from "../Screens/DetailNewFeed";
 import CreateNewFeed from "../Screens/CreateNewFeed";
 import EditNewFeed from "../Screens/CreateNewFeed/UpdatePost";
 import NewFeedSearch from "../Screens/NewFeedSearch";
@@ -74,7 +55,6 @@ import QALoseWeight from "../Screens/SettingLoseWeight/QALoseWeight";
 import MyGoal from "../Screens/SettingLoseWeight/MyGoal";
 import WaterGoal from "../Screens/SettingLoseWeight/WaterGoal";
 import ListFoodInMenu from "../Screens/LoseWeight/ListFoodInMenu";
-
 import ListBankForWithdraw from "../Screens/Withdraw/ListBank";
 import WithDraw from "../Screens/Withdraw/Withdraw";
 import ListSpSocical from "../Screens/SocialAssistance/index";
@@ -88,7 +68,6 @@ import UpdateDiaryDaily from "../Screens/ListDiaryOfPartnerChild/Components/Upda
 import InfoBooking from "../Screens/InfoBooking/index";
 import DetailBooking from "../Screens/NewDetailBooking/index";
 import InfoMaterial from "../Screens/InfoMaterial/index";
-import AskForLgin from "../Screens/Auth/AskForLogin";
 import LoginInApp from "../Screens/AuthIn/LoginInApp";
 import RegisterInApp from "../Screens/AuthIn/RegisterInApp";
 import ActivationInApp from "../Screens/AuthIn/ActivationInApp";
@@ -96,17 +75,13 @@ import FillPhoneToGetNewPass from "../Screens/AuthIn/FillPhoneToGetNewPass";
 import GetOtpNewPass from "../Screens/AuthIn/GetOtpNewPass";
 import VideoCall from "../Screens/VideoCall/VideoCall";
 import HistoryLiaTicket from "../Screens/Affiliate/HistoryLiATicket";
-import SettingApp from "../Screens/SettingApp/SettingApp";
 import MyPersonalPage from "../Screens/MyPersonalPage/MyPersonalPage";
 import EditDiary from "../Screens/DiaryDetails";
 import ListDiaryByType from "../Screens/ListDiaryByType/ListDiaryByType";
-import WheelSpin from "../Screens/WheelSpin/WheelSpin";
-import QRScreen from "../Screens/QRCode/index";
 import Mission from "../Screens/Mission";
 import FeedBackBranch from "../Screens/DetailBrand/FeedBackBranch";
 import FeedBackDoctor from "../Screens/DetailDoctor/FeedBackDoctor";
 import FeedBackService from "../Screens/DetailService/FeedBackService";
-// import CreateBooking from "../Screens/CreateBooking/CreateBooking";
 import CreateBooking from "../Screens/NewCreateBooking/index";
 import ListVoucher from "../Screens/ListVoucher/ListVoucher";
 import OtherPersonalPage from "../Screens/MyPersonalPage/OtherPersonalPage";
@@ -117,7 +92,6 @@ import DetailServiceFlashSale from "../Screens/DetailService/DetailServiceFlashS
 import DetailEncyclopedia from "../Screens/DetailNews/DetailEncyclopedia";
 import ListServiceByKey from "../Screens/ListServiceByKey/ListServiceByKey";
 import VerificationCTV from "../Screens/VerificationCTV/VerificationCTV";
-// import dynamicLinks from '@react-native-firebase/dynamic-links';
 import ShareToSocial from "../Screens/DetailService/ShareToSocial";
 import VoiceCall from "../Screens/VideoCall/VoiceCall";
 import ListMyAddress from "../Screens/ListMyAddress/ListMyAddress";

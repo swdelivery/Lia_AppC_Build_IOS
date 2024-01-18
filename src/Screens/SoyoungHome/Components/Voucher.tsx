@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { StyleSheet } from "react-native";
 import {
   _heightScale,
   _moderateScale,
@@ -8,17 +8,15 @@ import {
 } from "../../../Constant/Scale";
 import ScreenKey from "../../../Navigation/ScreenKey";
 import { useNavigate } from "src/Hooks/useNavigation";
-import useConfigFile from "src/Hooks/useConfigFile";
-import { ConfigFileCode } from "@typings/configFile";
 import { first } from "lodash";
-import Image from "@Components/Image";
-import Fade from "@Components/Fade";
 import Column from "@Components/Column";
+import { useSelector } from "react-redux";
+import { getImageVoucherHomeState } from "@Redux/imageVoucher/selectors";
 import CachedImageView from "@Components/CachedImage";
 
 const Voucher = () => {
   const { navigate } = useNavigate();
-  const data = useConfigFile(ConfigFileCode.ImageVoucherHome);
+  const { data } = useSelector(getImageVoucherHomeState);
 
   const voucher = useMemo(() => {
     if (!data) {
@@ -32,11 +30,9 @@ const Voucher = () => {
   }
 
   return (
-    <Fade visible={!!voucher} initialScale={1}>
-      <Column alignItems="center" onPress={navigate(ScreenKey.LIA_VOUCHER)}>
-        <CachedImageView auto avatar={voucher} style={styles.image} />
-      </Column>
-    </Fade>
+    <Column alignItems="center" onPress={navigate(ScreenKey.LIA_VOUCHER)}>
+      <CachedImageView auto avatar={voucher} style={styles.image} />
+    </Column>
   );
 };
 

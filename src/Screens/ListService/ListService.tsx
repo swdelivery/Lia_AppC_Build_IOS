@@ -1,50 +1,26 @@
-import React, { useRef, useEffect, useState, memo } from "react";
+import React, { useEffect, useState, memo } from "react";
 import {
   StyleSheet,
   View,
   Text,
-  Animated,
   ScrollView,
   TouchableOpacity,
   FlatList,
 } from "react-native";
 import * as Color from "../../Constant/Color";
-import {
-  BG_GREY_OPACITY_3,
-  BLUE,
-  BLUE_2,
-  GREY_FOR_TITLE,
-  WHITE,
-  GREY,
-} from "../../Constant/Color";
-import { FONT_DINTEXT_PRO, stylesFont } from "../../Constant/Font";
+import { BG_GREY_OPACITY_3, WHITE, GREY } from "../../Constant/Color";
+import { stylesFont } from "../../Constant/Font";
 import { _moderateScale, _widthScale, _width } from "../../Constant/Scale";
-import { styleElement } from "../../Constant/StyleElement";
-import { ImageBackground, Image, Dimensions } from "react-native";
-import { sizeIcon, sizeLogo } from "../../Constant/Icon";
+import { Image } from "react-native";
+import { sizeIcon } from "../../Constant/Icon";
 
 import { navigation } from "../../../rootNavigation";
 import ScreenKey from "../../Navigation/ScreenKey";
-import ItemService from "./Component/ItemService";
 import {
-  getAllServiceGroup,
-  getServiceByGroup,
   newGetServiceByGroup,
   getServiceGroupv2,
 } from "../../Redux/Action/ServiceGroup";
-import { filter, find } from "lodash";
-import { useDispatch, useSelector } from "react-redux";
-import { URL_ORIGINAL, URL_AVATAR_DEFAULT } from "../../Constant/Url";
-import { getDataServiceFiles } from "../../Redux/Action/Service";
-import ImageView from "react-native-image-viewing";
-import { alertCustomNotAction, formatMonney } from "../../Constant/Utils";
-import ModalIframeYoutube from "../../Components/ModalIframeYoutube/ModalIframeYoutube";
-import StatusBarCustom from "../../Components/StatusBar/StatusBarCustom";
-import AlarmNotifi from "../../Components/AlarmNotifi/AlarmNotifi";
-import LinearGradient from "react-native-linear-gradient";
-import CountStar from "../../Components/CountStar/index";
 import cloneDeep from "lodash/cloneDeep";
-import FastImage from "react-native-fast-image";
 import ModalPickSingleNotSearch from "../../Components/ModalPickSingleNotSearch/ModalPickSingleNotSearch";
 import useItemExtractor from "src/Hooks/useItemExtractor";
 import { Service } from "@typings/serviceGroup";

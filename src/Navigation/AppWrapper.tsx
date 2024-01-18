@@ -1,16 +1,9 @@
-import BootSplash from "react-native-bootsplash";
 import { NavigationContainer } from "@react-navigation/native";
-import React, { useCallback, useEffect, useRef } from "react";
-import { useSelector } from "react-redux";
-import {
-  navigationRef,
-  navigation,
-  getCurrentRoute,
-} from "../../rootNavigation";
+import React, { useCallback, useRef } from "react";
+import { navigationRef, getCurrentRoute } from "../../rootNavigation";
 import { _heightScale } from "../Constant/Scale";
 import ScreenKey from "./ScreenKey";
 import ModalRequireLogin from "../Components/Notification/ModalRequireLogin";
-import messaging from "@react-native-firebase/messaging";
 import ActionSheetIcon from "@Components/ModalBottom/ActionSheetIcon";
 import RootNavigator from "./RootNavigator";
 import Toast from "react-native-toast-message";
@@ -19,6 +12,8 @@ import RightNoti from "@Components/RightNoti/RightNoti";
 import configs from "src/configs";
 import Text from "@Components/Text";
 import ModalThanks from "@Components/Modal/ModalThanks";
+import useInitialization from "src/Hooks/useInitialization";
+import useNotifications from "src/Hooks/useNotifications";
 
 const LINKING = {
   prefixes: [`https://${configs.appLinkDomain}`],
@@ -32,50 +27,9 @@ const LINKING = {
 
 const AppWrapper = (props) => {
   const routeNameRef = useRef<string | null>("");
-  const reduxAuth = useSelector((state) => state.authReducer);
 
-  useEffect(() => {
-    BootSplash.hide({ fade: true });
-  }, []);
-
-  useEffect(() => {
-    if (reduxAuth.isLoggedIn == true) {
-      const unsubscribe = messaging().onMessage(async (remoteMessage) => {
-        // Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
-      });
-
-      messaging().onNotificationOpenedApp((remoteMessage) => {
-        console.log(
-          "Notification caused app to open from background state:",
-          remoteMessage
-        );
-        if (remoteMessage?.data?.event == "NEW_MESSAGE") {
-          navigation.navigate(ScreenKey.TAB_CHAT);
-        }
-        // navigation.navigate(remoteMessage.data.type);
-      });
-
-      // Check whether an initial notification is available
-      messaging()
-        .getInitialNotification()
-        .then((remoteMessage) => {
-          if (remoteMessage) {
-            console.log(
-              "Notification caused app to open from quit state:",
-              remoteMessage.notification
-            );
-            if (remoteMessage?.data?.event == "NEW_MESSAGE") {
-              setTimeout(() => {
-                navigation.navigate(ScreenKey.TAB_CHAT);
-              }, 500);
-            }
-          }
-          //   setLoading(false);
-        });
-
-      return unsubscribe;
-    }
-  }, [reduxAuth.isLoggedIn]);
+  useInitialization();
+  useNotifications();
 
   const handleNavigationStateChange = useCallback((state: any) => {
     const previousRouteName = routeNameRef.current;

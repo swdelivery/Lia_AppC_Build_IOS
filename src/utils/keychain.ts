@@ -17,7 +17,6 @@ async function initialize() {
 
 initialize();
 
-console.log({ userTokens });
 
 async function setTokens(accessToken: string, refreshToken: string) {
   userTokens.accessToken = accessToken;
