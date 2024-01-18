@@ -101,6 +101,7 @@ const BtnIcon = ({
       case "rating":
         return navigate(ScreenKey.PARTNER_REVIEW_SERVICE)();
       case "examination-results":
+        return navigate(ScreenKey.LIST_EXAMINATION_RESULTS)();
       case "refund":
         Alert.alert("Tính năng đang phát triển");
         return;

@@ -176,6 +176,8 @@ import TreatmentRecord from "@Screens/TreatmentRecord/index";
 import ListDiaryOfPartnerChild from "@Screens/ListDiaryOfPartnerChild";
 import PickTreatmentDiary from "@Screens/ListDiaryOfPartner/Components/PickTreatmentToDiary";
 import PartnerReviewService from "@Screens/PartnerReviewService";
+import ListExaminationResults from "@Screens/ExaminationResults/ListExaminationResults";
+import DetailExaminationResult from "@Screens/ExaminationResults/DetailExaminationResult";
 
 const Stack = createNativeStackNavigator();
 
@@ -636,6 +638,16 @@ const RootNavigator = () => {
       <Stack.Screen
         name={ScreenKey.PARTNER_REVIEW_SERVICE}
         component={PartnerReviewService}
+      />
+
+      {/* EXAMINATION RESULTS */}
+      <Stack.Screen
+        name={ScreenKey.LIST_EXAMINATION_RESULTS}
+        component={ListExaminationResults}
+      />
+      <Stack.Screen
+        name={ScreenKey.DETAIL_EXAMINATION_RESULT}
+        component={DetailExaminationResult}
       />
 
       <Stack.Group
