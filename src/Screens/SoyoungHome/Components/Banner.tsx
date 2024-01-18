@@ -13,7 +13,6 @@ import ListDoctor from "./ListDoctor";
 import OptionService from "./OptionService";
 import Voucher from "./Voucher";
 import { _heightScale, _moderateScale } from "../../../Constant/Scale";
-import { getAllNewsv2 } from "../../../Redux/Action/News";
 import { URL_ORIGINAL } from "../../../Constant/Url";
 import { navigation } from "../../../../rootNavigation";
 import ScreenKey from "../../../Navigation/ScreenKey";
@@ -21,15 +20,13 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Spacer from "../../../Components/Spacer";
 import useItemExtractor from "../../../Hooks/useItemExtractor";
 import useImageColors from "src/Hooks/useImageColors";
-import { useDispatch, useSelector } from "react-redux";
-import { getNews } from "@Redux/news/actions";
+import { useSelector } from "react-redux";
 import { getListNewsState } from "@Redux/news/selectors";
 import { isEmpty } from "lodash";
 import { AfterTimeoutFragment } from "@Components/AfterTimeoutFragment";
 import Column from "@Components/Column";
 
 const Banner = () => {
-  const dispatch = useDispatch()
   const { top } = useSafeAreaInsets();
   const FlatListRef = useRef(null);
   const [listImage, setListImage] = useState([]);
@@ -39,20 +36,7 @@ const Banner = () => {
   const { primaryColor, getColors } = useImageColors({
     defaultPrimayColor: "#228B22",
   });
-  const { data: listNews } = useSelector(getListNewsState)
-
-
-  useEffect(() => {
-    dispatch(getNews.request({
-      condition: {
-        isPin: { equal: true },
-      },
-      sort: {
-        orderNumber: -1,
-      },
-      limit: 5,
-    }));
-  }, []);
+  const { data: listNews } = useSelector(getListNewsState);
 
   useEffect(() => {
     if (!isEmpty(listNews)) {
@@ -64,7 +48,7 @@ const Banner = () => {
       });
       setListImage(listImages);
     }
-  }, [listNews])
+  }, [listNews]);
 
   useEffect(() => {
     if (primaryColor) {

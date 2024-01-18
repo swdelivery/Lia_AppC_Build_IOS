@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useMemo } from "react";
 import { StyleSheet } from "react-native";
 import {
   _heightScale,
@@ -8,22 +8,15 @@ import {
 } from "../../../Constant/Scale";
 import ScreenKey from "../../../Navigation/ScreenKey";
 import { useNavigate } from "src/Hooks/useNavigation";
-import { ConfigFileCode } from "@typings/configFile";
 import { first } from "lodash";
 import Column from "@Components/Column";
-import { useDispatch, useSelector } from "react-redux";
-import { getImageVoucherHome } from "@Redux/imageVoucher/actions";
+import { useSelector } from "react-redux";
 import { getImageVoucherHomeState } from "@Redux/imageVoucher/selectors";
 import CachedImageView from "@Components/CachedImage";
 
 const Voucher = () => {
-  const dispatch = useDispatch();
   const { navigate } = useNavigate();
   const { data } = useSelector(getImageVoucherHomeState);
-
-  useEffect(() => {
-    dispatch(getImageVoucherHome.request(ConfigFileCode.ImageVoucherHome));
-  }, []);
 
   const voucher = useMemo(() => {
     if (!data) {

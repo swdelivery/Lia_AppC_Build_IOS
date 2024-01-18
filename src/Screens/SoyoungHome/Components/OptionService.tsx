@@ -1,12 +1,12 @@
-import React, { useCallback, useEffect, useMemo } from "react";
-import { Alert, StyleSheet, TouchableOpacity, View } from "react-native";
+import React, { useMemo } from "react";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import {
   _heightScale,
   _moderateScale,
   _width,
   _widthScale,
 } from "../../../Constant/Scale";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import ScreenKey from "../../../Navigation/ScreenKey";
 import { getServiceGroupState } from "@Redux/service/selectors";
 import Image from "@Components/Image";
@@ -17,36 +17,12 @@ import { WHITE } from "@Constant/Color";
 import { ScrollView } from "react-native-gesture-handler";
 import Column from "@Components/Column";
 import { isEmpty } from "lodash";
-import CachedImageView from "@Components/CachedImage";
-import { getServiceGroup } from "@Redux/service/actions";
 
 const WIDTH_ITEM = (_width - _widthScale(16) * 2) / 5;
 
 const OptionService = () => {
   const { data, isLoading } = useSelector(getServiceGroupState);
-  const dispatch = useDispatch();
   const { navigate } = useNavigate();
-
-  useEffect(() => {
-    _getData();
-  }, []);
-
-  const _getData = useCallback(() => {
-    const condition = {
-      condition: {
-        parentCode: {
-          equal: null,
-        },
-      },
-      sort: {
-        orderNumber: -1,
-      },
-      limit: 100,
-      page: 1,
-    };
-
-    dispatch(getServiceGroup.request(condition));
-  }, []);
 
   const displayItems = useMemo(() => {
     if (isEmpty(data)) {

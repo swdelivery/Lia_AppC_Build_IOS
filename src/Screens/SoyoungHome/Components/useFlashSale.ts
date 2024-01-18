@@ -10,14 +10,15 @@ import { useFocused } from "src/Hooks/useNavigation";
 import { fromUtc } from "src/utils/date";
 
 export default function useFlashSales(
-  onUpdate?: (flashSales: FlashSale[]) => void
+  onUpdate?: (flashSales: FlashSale[]) => void,
+  ignoreFirstLoad = false
 ) {
   const dispatch = useDispatch();
   const fsState = useSelector(getFlashSaleState);
 
   useFocused(() => {
     dispatch(checkFlashSale.request());
-  });
+  }, ignoreFirstLoad);
 
   const flashSales = useMemo(() => {
     const { currentFlashSale, nextFlashSale } = fsState;

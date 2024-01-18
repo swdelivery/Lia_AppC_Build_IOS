@@ -9,6 +9,8 @@ export type State = {
   data: Doctor[];
   total: number;
   paging?: PagingInfo;
+
+  isFirstLoaded?: boolean;
 };
 
 const INITIAL_STATE: State = {
@@ -31,6 +33,7 @@ const failure: Handler<State> = (state) => ({
 const success: Handler<State> = (state, { payload }) => ({
   ...state,
   isLoading: false,
+  isFirstLoaded: true,
   ...payload,
 });
 
