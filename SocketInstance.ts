@@ -21,8 +21,10 @@ import {
   SSC_PARTNER_POST_CREATE,
   SSC_PARTNER_POST_UPDATE,
   SSC_PARTNER_POST_DELETE,
+  SSC_WHEEL_TURN_UPDATE
 } from "./src/Sockets/type";
 import keychain from "src/utils/keychain";
+import { getPartnerWheelTurn } from "@Redux/wheelSpin/actions";
 
 export default class SocketInstance {
   static instance = null;
@@ -330,6 +332,11 @@ export default class SocketInstance {
           type: ActionType.DELETE_LIST_POST,
           payload: data.post?._id,
         });
+      });
+
+      SocketInstance.socketConn.on(SSC_WHEEL_TURN_UPDATE, () => {
+        console.log({ SOCKET: `----SSC_WHEEL_TURN_UPDATE---` });
+        Store.dispatch(getPartnerWheelTurn.request())
       });
 
       SocketInstance.socketConn.on("disconnect", () => {
