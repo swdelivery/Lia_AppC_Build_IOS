@@ -1,13 +1,13 @@
 import Avatar from '@Components/Avatar'
-import { IconAlarmWhite, IconFindGrey, IconPlusBase } from '@Components/Icon/Icon'
+import { IconAlarmWhite, IconPlusBase } from "@Components/Icon/Icon";
 import Row from '@Components/Row'
 import Text from '@Components/Text'
-import { BASE_COLOR, GREY, NEW_BASE_COLOR, WHITE } from '@Constant/Color'
+import { BASE_COLOR, NEW_BASE_COLOR, WHITE } from "@Constant/Color";
 import SVGFindGrey from "src/SGV/findGrey.svg";
 import { getInfoUserReducer } from "@Redux/Selectors";
 import { openModalRightNoti } from "@Redux/modal/actions";
 import React, { useCallback, useEffect, useState } from "react";
-import { Alert, StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useDispatch, useSelector } from "react-redux";
 import Column from "@Components/Column";
@@ -20,6 +20,7 @@ import Collapsible from 'react-native-collapsible'
 import { useNavigate } from 'src/Hooks/useNavigation'
 import ScreenKey from '@Navigation/ScreenKey'
 import useRequireLoginCallback from 'src/Hooks/useRequireLoginAction'
+import TextInput from "@Components/TextInput";
 
 const Header = () => {
   const { navigate } = useNavigate()

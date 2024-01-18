@@ -2,7 +2,6 @@ import { isEmpty, remove as _remove } from "lodash";
 import React, { useCallback, useEffect, useState } from "react";
 import {
   StyleSheet,
-  TextInput,
   View,
   LayoutAnimation,
   Alert,
@@ -56,6 +55,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { useTimeout } from "@r0b0t3d/react-native-hooks";
 import MediaPicker from "./MediaPicker";
+import TextInput from "@Components/TextInput";
 
 type Props = {
   //

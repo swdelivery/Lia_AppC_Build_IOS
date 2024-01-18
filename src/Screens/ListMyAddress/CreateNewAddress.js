@@ -1,28 +1,35 @@
 import React, { useRef, memo, useState, useEffect } from 'react';
-import { View, ScrollView, Image, Animated, Text, StyleSheet, TouchableOpacity, TextInput, ImageBackground, processColor } from 'react-native';
-
-
+import {
+  View,
+  ScrollView,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import { _moderateScale, _heightScale, _width, _widthScale } from '../../Constant/Scale';
-import { WHITE, RED, GREY, BG_GREY_OPACITY_2, BLACK_OPACITY_8, BG_GREY_OPACITY_5, BLUE_FB, BTN_PRICE, GREEN_SUCCESS, BASE_COLOR, ORANGE, BG_GREY_OPACITY_7 } from '../../Constant/Color';
-import { randomStringFixLengthCode } from '../../Constant/Utils';
-import { styleElement } from '../../Constant/StyleElement';
-import { sizeIcon, sizeLogo } from '../../Constant/Icon';
+import {
+  WHITE,
+  GREY,
+  BG_GREY_OPACITY_2,
+  BG_GREY_OPACITY_5,
+  BLUE_FB,
+  BASE_COLOR,
+  ORANGE,
+} from "../../Constant/Color";
+import { styleElement } from "../../Constant/StyleElement";
 import { stylesFont } from '../../Constant/Font';
-
-import ScreenKey, { CREATE_BOOKING } from '../../Navigation/ScreenKey';
-import { useSelector } from 'react-redux';
-import store from "../../Redux/store";
-import * as ActionType from '../../Redux/Constants/ActionType'
-import Header from '../../Components/HeaderLoseWeight/index';
-import LinearGradient from 'react-native-linear-gradient';
-import { getListBank } from '../../Redux/Action/Affiilate';
-import { escapeRegExp, includes, isEmpty, remove } from 'lodash';
-import slugify from 'slugify';
+import { CREATE_BOOKING } from "../../Navigation/ScreenKey";
+import Header from "../../Components/HeaderLoseWeight/index";
 import { navigation } from '../../../rootNavigation';
 import StatusBarCustom from '../../Components/StatusBar/StatusBarCustom';
-import { getBottomSpace } from 'react-native-iphone-x-helper';
-import { createPartnerPickUpAddress, getAllAddressVietNam, getDataPartnerPickUpAddress, getDistrictsByP, getwardsByD } from '../../Redux/Action/BookingAction';
+import {
+  createPartnerPickUpAddress,
+  getAllAddressVietNam,
+  getDistrictsByP,
+  getwardsByD,
+} from "../../Redux/Action/BookingAction";
 import Collapsible from 'react-native-collapsible';
+import TextInput from "@Components/TextInput";
 
 const CreateNewAddress = memo((props) => {
   const RefScrollView = useRef(null);

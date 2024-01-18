@@ -1,34 +1,25 @@
 import Column from "@Components/Column";
-import Fade from "@Components/Fade";
 import IconButton from "@Components/IconButton";
 import Row from "@Components/Row";
 import { FONT_WEIGHTS } from "@Components/Text";
 import { getInfoUserReducer } from "@Redux/Selectors";
 import { createAIMessage } from "@Redux/aichat/actions";
 import React, { useState } from "react";
-import {
-  StyleSheet,
-  TextInput,
-  View
-} from "react-native";
+import { StyleSheet, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import useHapticCallback from "src/Hooks/useHapticCallback";
-import {
-  ChatGptIcon,
-  SendIcon
-} from "src/SGV";
+import { SendIcon } from "src/SGV";
 import * as Color from "../../../../Constant/Color";
-import {
-  _widthScale
-} from "../../../../Constant/Scale";
+import { _widthScale } from "../../../../Constant/Scale";
+import TextInput from "@Components/TextInput";
 
 type Props = {
   //
 };
 
-const InputChat = ({ }: Props) => {
+const InputChat = ({}: Props) => {
   const { infoUser } = useSelector(getInfoUserReducer);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const [currTextMessage, setCurrTextMessage] = useState("");
 
@@ -39,12 +30,14 @@ const InputChat = ({ }: Props) => {
   }, [currTextMessage]);
 
   const _sendMessage = (message) => {
-    setCurrTextMessage("")
-    dispatch(createAIMessage.request({
-      "partnerId": infoUser?._id,
-      "content": message
-    }))
-  }
+    setCurrTextMessage("");
+    dispatch(
+      createAIMessage.request({
+        partnerId: infoUser?._id,
+        content: message,
+      })
+    );
+  };
 
   return (
     <View>

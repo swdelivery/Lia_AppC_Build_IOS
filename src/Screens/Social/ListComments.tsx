@@ -9,7 +9,15 @@ import { clearCommentsPost, createCommentPost, getCommentsPost, getMoreCommentsP
 import { getInfoPostState, getListCommentsState } from '@Redux/newfeeds/selectors'
 import { isEmpty } from 'lodash'
 import React, { useEffect, useRef, useState } from 'react'
-import { Alert, FlatList, KeyboardAvoidingView, Platform, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native'
+import {
+  Alert,
+  FlatList,
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'src/Hooks/useNavigation'
@@ -20,6 +28,7 @@ import EachComment from './Components/EachComment/EachComment'
 import LoadingIndicator from '@Components/LoadingIndicator/LoadingIndicator'
 import EmptyResultData from '@Components/LoadingIndicator/EmptyResultData'
 import { FocusAwareStatusBar } from '@Components/StatusBar'
+import TextInput from "@Components/TextInput";
 
 const ListComments = (props) => {
   const { navigation } = useNavigate()
@@ -47,7 +56,7 @@ const ListComments = (props) => {
 
   useEffect(() => {
     if (!isEmpty(selectedCommentToReply)) {
-      RefTextInput.focus()
+      RefTextInput.current.focus();
     }
   }, [selectedCommentToReply])
 
@@ -72,7 +81,7 @@ const ListComments = (props) => {
   // Enable keyboard when sreen showing
   useEffect(() => {
     if (focusTextInput) {
-      RefTextInput?.focus()
+      RefTextInput.current?.focus();
     }
   }, [focusTextInput])
 
@@ -100,7 +109,7 @@ const ListComments = (props) => {
     dispatch(createCommentPost.request(dataFetch))
     setValueComment('')
     setTimeout(() => {
-      RefTextInput?.blur()
+      RefTextInput.current?.blur();
     }, 0);
   }
 
@@ -153,82 +162,72 @@ const ListComments = (props) => {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={{ flex: 1 }}
     >
-      <Screen
-        safeBottom
-        safeTop
-        style={styles.container}>
+      <Screen safeBottom safeTop style={styles.container}>
         <FocusAwareStatusBar barStyle="dark-content" />
-        <Row
-          justifyContent='space-between'
-          padding={8 * 2}>
+        <Row justifyContent="space-between" padding={8 * 2}>
           <Row gap={8}>
             <IconLikeFilled />
-            <Text>
-              {data?.reactionCount} lượt yêu thích bài viết
-            </Text>
+            <Text>{data?.reactionCount} lượt yêu thích bài viết</Text>
           </Row>
           <TouchableOpacity onPress={navigation.goBack}>
             <IconCancelGrey style={sizeIcon.lg} />
           </TouchableOpacity>
         </Row>
-        <HorizontalLine
-          style={{ backgroundColor: BORDER_COLOR }} />
-        {
-          isLoadingListComments ?
-            <LoadingIndicator />
-            :
-            <FlatList
-              contentContainerStyle={styles.containerFlatlist}
-              data={dataListComments}
-              renderItem={_renderItem}
-              keyExtractor={(item, index) => item?._id.toString()}
-              ListFooterComponent={_renderFooterFlatlist}
-              ListEmptyComponent={<EmptyResultData />}
-              onEndReachedThreshold={1} />
-        }
+        <HorizontalLine style={{ backgroundColor: BORDER_COLOR }} />
+        {isLoadingListComments ? (
+          <LoadingIndicator />
+        ) : (
+          <FlatList
+            contentContainerStyle={styles.containerFlatlist}
+            data={dataListComments}
+            renderItem={_renderItem}
+            keyExtractor={(item, index) => item?._id.toString()}
+            ListFooterComponent={_renderFooterFlatlist}
+            ListEmptyComponent={<EmptyResultData />}
+            onEndReachedThreshold={1}
+          />
+        )}
 
         <View style={styles.containerInput}>
-          {
-            selectedCommentToReply ?
-              <Row
-                gap={8}
-                padding={8 * 2}
-                paddingBottom={0}>
-                <View style={styles.verticalLine} />
-                <Text>
-                  Đang trả lời <Text weight='bold' color={BASE_COLOR}>{selectedCommentToReply?.partner?.name}</Text>
+          {selectedCommentToReply ? (
+            <Row gap={8} padding={8 * 2} paddingBottom={0}>
+              <View style={styles.verticalLine} />
+              <Text>
+                Đang trả lời{" "}
+                <Text weight="bold" color={BASE_COLOR}>
+                  {selectedCommentToReply?.partner?.name}
                 </Text>
-                <TouchableOpacity
-                  onPress={_handleUnSelectCommentToReply}
-                  style={styles.btnCancel}>
-                  <IconCancelGrey style={sizeIcon.xxxs} />
-                </TouchableOpacity>
-              </Row>
-              : <></>
-          }
+              </Text>
+              <TouchableOpacity
+                onPress={_handleUnSelectCommentToReply}
+                style={styles.btnCancel}
+              >
+                <IconCancelGrey style={sizeIcon.xxxs} />
+              </TouchableOpacity>
+            </Row>
+          ) : (
+            <></>
+          )}
 
-          <Row
-            gap={8 * 2}
-            marginHorizontal={8 * 2}>
+          <Row gap={8 * 2} marginHorizontal={8 * 2}>
             <View style={styles.containerTextInput}>
               <TextInput
-                ref={ref => RefTextInput = ref}
+                ref={RefTextInput}
                 value={valueComment}
                 onChangeText={_handleOnchangeText}
                 style={styles.textInput}
                 multiline
-                placeholder='Nhập bình luận...' />
+                placeholder="Nhập bình luận..."
+              />
             </View>
-            <TouchableOpacity
-              onPress={_handleConfirmSendComment}>
+            <TouchableOpacity onPress={_handleConfirmSendComment}>
               <SendIcon width={8 * 3} height={8 * 3} />
             </TouchableOpacity>
           </Row>
         </View>
       </Screen>
     </KeyboardAvoidingView>
-
-  )
+  );
 }
 
 export default ListComments

@@ -5,7 +5,6 @@ import {
   KeyboardAvoidingView,
   StyleSheet,
   View,
-  TextInput,
   ScrollView,
   Image,
   TouchableOpacity,
@@ -23,6 +22,7 @@ import { styleElement } from "../../../Constant/StyleElement";
 import { sizeIcon } from "../../../Constant/Icon";
 import withPortal from "@Components/withPortal";
 import Text from "@Components/Text";
+import TextInput from "@Components/TextInput";
 
 const ModalEditDescriptionDailyDiary = memo((props: any) => {
   const [description, setDescription] = useState("");

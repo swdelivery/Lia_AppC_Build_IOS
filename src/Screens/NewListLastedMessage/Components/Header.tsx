@@ -1,17 +1,9 @@
-import {
-  StatusBar,
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import React, { useCallback, useEffect } from "react";
 import Row from "@Components/Row";
 import Column from "@Components/Column";
 import { _moderateScale } from "@Constant/Scale";
 import { BORDER_COLOR, GREY } from "@Constant/Color";
-import { IconFindGrey } from "@Components/Icon/Icon";
-import { sizeIcon } from "@Constant/Icon";
 import { useDispatch, useSelector } from "react-redux";
 import { openActionSheetIcon } from "@Redux/modal/actions";
 import { styleElement } from "@Constant/StyleElement";
@@ -23,6 +15,7 @@ import { getInfoUserReducer } from "@Redux/Selectors";
 import Avatar from "@Components/Avatar";
 import { FocusAwareStatusBar } from "@Components/StatusBar";
 import SVGFindGrey from "src/SGV/findGrey.svg";
+import TextInput from "@Components/TextInput";
 
 const Header = () => {
   const dispatch = useDispatch();

@@ -1,13 +1,13 @@
 import Text from "@Components/Text";
-import React, { ReactNode, useMemo, useState } from "react";
-import { View, StyleSheet, StyleProp, ViewStyle, TouchableOpacity } from "react-native";
+import React, { useState } from "react";
+import { View, StyleSheet, ViewStyle, TouchableOpacity } from "react-native";
 import * as Color from "../../Constant/Color";
 import { _moderateScale } from "@Constant/Scale";
-import { TextInput } from "react-native-gesture-handler";
 import EyeOn from "../../SGV/eyeOn.svg";
 import EyeOff from "../../SGV/eyeOff.svg";
 import Row from "@Components/Row";
 import { stylesFont } from "../../Constant/Font";
+import TextInput from "@Components/TextInput";
 
 type Props = ViewStyle & {
   label: string;

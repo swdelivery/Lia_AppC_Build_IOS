@@ -1,17 +1,20 @@
 import React, { useRef, memo } from 'react';
-import { View, ScrollView, Image, Animated, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
-
-
+import {
+  View,
+  Image,
+  Animated,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import { _moderateScale } from '../../../Constant/Scale';
-import { WHITE, RED, GREY, BG_GREY_OPACITY_2, BASE_COLOR } from '../../../Constant/Color';
-import { randomStringFixLengthCode } from '../../../Constant/Utils';
+import { WHITE, BASE_COLOR } from "../../../Constant/Color";
 import { styleElement } from '../../../Constant/StyleElement';
 import { sizeIcon, sizeLogo } from '../../../Constant/Icon';
 import { stylesFont } from '../../../Constant/Font';
 import BookingView from './BookingView'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { useDispatch, useSelector } from 'react-redux';
-import { setShowModalAllNotifi } from '../../../Redux/Action/NotificationAction';
+import { useDispatch, useSelector } from "react-redux";
 import { navigation } from '../../../../rootNavigation';
 import StatusBarCustom from '../../../Components/StatusBar/StatusBarCustom';
 import AlarmNotifi from '../../../Components/AlarmNotifi/AlarmNotifi';

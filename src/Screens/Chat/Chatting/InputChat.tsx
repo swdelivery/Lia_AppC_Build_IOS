@@ -7,7 +7,6 @@ import {
   StyleSheet,
   Animated,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
   Linking,
@@ -51,6 +50,7 @@ import {
 import { stylesFont } from "../../../Constant/Font";
 import { getConfigData } from "../../../Redux/Action/OrtherAction";
 import moment from "moment";
+import TextInput from "@Components/TextInput";
 
 const InputChat = memo((props) => {
   const animatedArrow = useRef(new Animated.Value(0)).current;

@@ -1,33 +1,32 @@
-import { StyleSheet, TextInput, View } from 'react-native'
-import React, { useCallback, useEffect, useState } from 'react'
-import Text from '@Components/Text'
-import Column from '@Components/Column'
-import { BORDER_COLOR, GREY_FOR_TITLE, WHITE } from '@Constant/Color'
-import { _moderateScale } from '@Constant/Scale'
+import { StyleSheet, View } from "react-native";
+import React, { useCallback, useEffect, useState } from "react";
+import Text from "@Components/Text";
+import Column from "@Components/Column";
+import { BORDER_COLOR, GREY_FOR_TITLE, WHITE } from "@Constant/Color";
+import { _moderateScale } from "@Constant/Scale";
+import TextInput from "@Components/TextInput";
 
 const InputDesciption = ({ disabledEdit, dataFetch, setDataFetch }) => {
-  const [value, setValue] = useState('')
+  const [value, setValue] = useState("");
 
   const _handleOnBlur = useCallback(() => {
-    setDataFetch(old => {
+    setDataFetch((old) => {
       return {
         ...old,
-        description: value
-      }
-    })
-  }, [value])
+        description: value,
+      };
+    });
+  }, [value]);
 
   useEffect(() => {
     if (dataFetch?.description) {
-      setValue(dataFetch?.description)
+      setValue(dataFetch?.description);
     }
-  }, [dataFetch?.description])
+  }, [dataFetch?.description]);
 
   return (
     <Column gap={8}>
-      <Text
-        color={GREY_FOR_TITLE}
-        weight='bold'>
+      <Text color={GREY_FOR_TITLE} weight="bold">
         Ghi chú cho bác sĩ
       </Text>
       <View style={styles.inputContainer}>
@@ -37,13 +36,14 @@ const InputDesciption = ({ disabledEdit, dataFetch, setDataFetch }) => {
           value={value}
           onChangeText={setValue}
           placeholder={"Nhập ghi chú"}
-          multiline />
+          multiline
+        />
       </View>
     </Column>
-  )
-}
+  );
+};
 
-export default InputDesciption
+export default InputDesciption;
 
 const styles = StyleSheet.create({
   inputContainer: {
@@ -53,6 +53,6 @@ const styles = StyleSheet.create({
     borderRadius: _moderateScale(8),
     padding: _moderateScale(8),
     paddingHorizontal: _moderateScale(8 * 1.5),
-    backgroundColor: WHITE
+    backgroundColor: WHITE,
   },
-})
+});

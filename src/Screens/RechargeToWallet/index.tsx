@@ -1,58 +1,80 @@
-import ActionButton from '@Components/ActionButton/ActionButton'
-import Column from '@Components/Column'
-import LiAHeader from '@Components/Header/LiAHeader'
-import { IconCopy, IconUpload } from '@Components/Icon/Icon'
-import ModalFlashMsg from '@Components/ModalFlashMsg/ModalFlashMsg'
-import Row from '@Components/Row'
-import Screen from '@Components/Screen'
-import Text from '@Components/Text'
-import { BASE_COLOR, BORDER_COLOR, GREY, PRICE_ORANGE, RED } from '@Constant/Color'
-import { stylesFont } from "@Constant/Font"
-import { sizeIcon } from '@Constant/Icon'
-import { _moderateScale } from '@Constant/Scale'
-import { createPaymentRequest, uploadModule } from '@Redux/Action/BookingAction'
+import ActionButton from "@Components/ActionButton/ActionButton";
+import Column from "@Components/Column";
+import LiAHeader from "@Components/Header/LiAHeader";
+import { IconCopy, IconUpload } from "@Components/Icon/Icon";
+import ModalFlashMsg from "@Components/ModalFlashMsg/ModalFlashMsg";
+import Row from "@Components/Row";
+import Screen from "@Components/Screen";
+import Text from "@Components/Text";
+import TextInput from "@Components/TextInput";
+import {
+  BASE_COLOR,
+  BORDER_COLOR,
+  GREY,
+  PRICE_ORANGE,
+  RED,
+} from "@Constant/Color";
+import { stylesFont } from "@Constant/Font";
+import { sizeIcon } from "@Constant/Icon";
+import { _moderateScale } from "@Constant/Scale";
+import {
+  createPaymentRequest,
+  uploadModule,
+} from "@Redux/Action/BookingAction";
 import Clipboard from "@react-native-clipboard/clipboard";
-import { ConfigDataCode } from '@typings/configData'
-import { isEmpty } from 'lodash'
-import React, { useEffect, useMemo, useState } from 'react'
-import { Alert, Image, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native'
-import ImagePicker from 'react-native-image-crop-picker'
-import useConfigData from 'src/Hooks/useConfigData'
-import useConfirmation from 'src/Hooks/useConfirmation'
-import { useNavigate } from 'src/Hooks/useNavigation'
+import { ConfigDataCode } from "@typings/configData";
+import { isEmpty } from "lodash";
+import React, { useEffect, useMemo, useState } from "react";
+import {
+  Alert,
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import ImagePicker from "react-native-image-crop-picker";
+import useConfigData from "src/Hooks/useConfigData";
+import useConfirmation from "src/Hooks/useConfirmation";
+import { useNavigate } from "src/Hooks/useNavigation";
 
 const RechargeToWallet = () => {
-  const { navigation } = useNavigate()
+  const { navigation } = useNavigate();
 
   const { showConfirmation } = useConfirmation();
 
-  const [valueMoney, setValueMoney] = useState('')
-  const [valueDescription, setValueDescription] = useState('')
-  const [listImageBanking, setListImageBanking] = useState([])
-  const [showModalFlashMsg, setShowModalFlashMsg] = useState(false)
+  const [valueMoney, setValueMoney] = useState("");
+  const [valueDescription, setValueDescription] = useState("");
+  const [listImageBanking, setListImageBanking] = useState([]);
+  const [showModalFlashMsg, setShowModalFlashMsg] = useState(false);
 
   useEffect(() => {
-    _getconfigfile()
-  }, [])
+    _getconfigfile();
+  }, []);
 
-  const _getconfigfile = async () => {
-
-  }
+  const _getconfigfile = async () => {};
 
   const _handleOnchangeText = (value) => {
-    let money = parseInt(value.split('.').join("").toString())
+    let money = parseInt(value.split(".").join("").toString());
     if ((value !== "" && !money) || money > 999999999999999) {
-      return
+      return;
     }
-    setValueMoney(value.split('.').join("").toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."))
-  }
+    setValueMoney(
+      value
+        .split(".")
+        .join("")
+        .toString()
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+    );
+  };
 
   const _handleConfirm = async () => {
-
     const numberRegex = /^[1-9]\d*$/;
-    let checkIsMoney = numberRegex.test(valueMoney?.split('.')?.join(''));
+    let checkIsMoney = numberRegex.test(valueMoney?.split(".")?.join(""));
     if (!checkIsMoney) {
-      return Alert.alert('Vui lòng nhập đúng định dạng tiền')
+      return Alert.alert("Vui lòng nhập đúng định dạng tiền");
     } else {
       showConfirmation(
         "Xác nhận",
@@ -65,35 +87,37 @@ const RechargeToWallet = () => {
               height: i.height,
               mime: i.mime,
               type: i.mime,
-              name: `${i.modificationDate}_${index}`
+              name: `${i.modificationDate}_${index}`,
             };
-          })
+          });
 
           let resultUploadImage = await uploadModule({
-            moduleName: 'paymentRequest',
-            files: listImages
-          })
-          if (resultUploadImage.isAxiosError) return
+            moduleName: "paymentRequest",
+            files: listImages,
+          });
+          if (resultUploadImage.isAxiosError) return;
 
-          let listIdImageHasUpload = resultUploadImage?.data?.data.map(item => item._id);
+          let listIdImageHasUpload = resultUploadImage?.data?.data.map(
+            (item) => item._id
+          );
           let dataFetchCreatePaymentRequest = {
             paymentFor: "WALLET",
-            amount: Number(valueMoney?.split('.')?.join('')),
+            amount: Number(valueMoney?.split(".")?.join("")),
             isRefund: false,
             methodCode: "CARDTRANSFER",
             currencyCode: "VND",
             description: valueDescription,
-            images: listIdImageHasUpload
-          }
-          let resultCreatePaymentRequest = await createPaymentRequest(dataFetchCreatePaymentRequest);
+            images: listIdImageHasUpload,
+          };
+          let resultCreatePaymentRequest = await createPaymentRequest(
+            dataFetchCreatePaymentRequest
+          );
           if (resultCreatePaymentRequest?.isAxiosError) return;
-          navigation.goBack()
+          navigation.goBack();
         }
       );
     }
-
-
-  }
+  };
 
   const _handlePickImage = async () => {
     ImagePicker.openPicker({
@@ -101,17 +125,19 @@ const RechargeToWallet = () => {
       waitAnimationEnd: false,
       includeExif: true,
       forceJpg: true,
-      mediaType: 'photo',
+      mediaType: "photo",
       compressImageQuality: 0.5,
       compressImageMaxWidth: 700,
-    }).then(async (image) => {
-      setListImageBanking([image])
-    }).catch(e => { });
-  }
+    })
+      .then(async (image) => {
+        setListImageBanking([image]);
+      })
+      .catch((e) => {});
+  };
 
   const isDisabled = useMemo(() => {
     const numberRegex = /^[1-9]\d*$/;
-    let checkIsMoney = numberRegex.test(valueMoney?.split('.')?.join(''));
+    let checkIsMoney = numberRegex.test(valueMoney?.split(".")?.join(""));
 
     if (!isEmpty(valueMoney) && !isEmpty(listImageBanking) && checkIsMoney) {
       return false;
@@ -129,134 +155,101 @@ const RechargeToWallet = () => {
       <LiAHeader safeTop title={"Yêu cầu nạp tiền"} />
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={{ flex: 1 }}>
+        style={{ flex: 1 }}
+      >
         <ScrollView style={{ flex: 1 }}>
-          <Column
-            gap={8}
-            margin={8 * 2}>
-            <Column
-              gap={8}>
-              <Text
-                color={BASE_COLOR}
-                weight='regular'>
+          <Column gap={8} margin={8 * 2}>
+            <Column gap={8}>
+              <Text color={BASE_COLOR} weight="regular">
                 Ngân hàng:
               </Text>
-              <Text
-                weight='bold'>
-                {bankName?.value}
-              </Text>
+              <Text weight="bold">{bankName?.value}</Text>
             </Column>
-            <Column
-              gap={8}>
-              <Text
-                color={BASE_COLOR}
-                weight='regular'>
+            <Column gap={8}>
+              <Text color={BASE_COLOR} weight="regular">
                 Số tài khoản:
               </Text>
               <Row gap={8 * 2}>
-                <Text
-                  weight='bold'>
-                  {bankNumber?.value}
-                </Text>
+                <Text weight="bold">{bankNumber?.value}</Text>
 
                 <TouchableOpacity
                   onPress={() => {
-                    Clipboard.setString(`20033357`)
-                    setShowModalFlashMsg(true)
+                    Clipboard.setString(`20033357`);
+                    setShowModalFlashMsg(true);
                     setTimeout(() => {
-                      setShowModalFlashMsg(false)
+                      setShowModalFlashMsg(false);
                     }, 1500);
-                  }}>
+                  }}
+                >
                   <Row gap={4}>
                     <IconCopy style={sizeIcon.sm} />
-                    <Text>
-                      Copy
-                    </Text>
+                    <Text>Copy</Text>
                   </Row>
                 </TouchableOpacity>
-
               </Row>
             </Column>
-            <Column
-              gap={8}>
-              <Text
-                color={BASE_COLOR}
-                weight='regular'>
+            <Column gap={8}>
+              <Text color={BASE_COLOR} weight="regular">
                 Tên ngân hàng thụ hưởng:
               </Text>
-              <Text
-                weight='bold'>
-                {bankOwner?.value}
-              </Text>
+              <Text weight="bold">{bankOwner?.value}</Text>
             </Column>
           </Column>
 
-          <Column
-            gap={8}
-            marginTop={0}
-            margin={8 * 2}>
+          <Column gap={8} marginTop={0} margin={8 * 2}>
             <Text color={BASE_COLOR}>
               Nhập số tiền muốn nạp <Text color={RED}>*</Text>
             </Text>
             <TextInput
               onChangeText={(e) => _handleOnchangeText(e)}
               value={valueMoney}
-              keyboardType={'number-pad'}
-              placeholder='0'
-              style={styles.textInput} />
+              keyboardType={"number-pad"}
+              placeholder="0"
+              style={styles.textInput}
+            />
           </Column>
 
-          <Column
-            gap={8}
-            marginTop={0}
-            alignItems='flex-start'
-            margin={8 * 2}>
+          <Column gap={8} marginTop={0} alignItems="flex-start" margin={8 * 2}>
             <Text color={BASE_COLOR}>
               Hình ảnh đã chuyển khoản <Text color={RED}>*</Text>
             </Text>
-            {
-              listImageBanking?.length > 0 ?
-                <TouchableOpacity
-                  onPress={_handlePickImage}>
-                  <Image
-                    style={{
-                      borderRadius: 4,
-                      width: 8 * 20,
-                      height: 8 * 20 * listImageBanking[0]?.height / listImageBanking[0]?.width,
-                    }}
-                    source={{ uri: `${listImageBanking[0]?.path}` }} />
-                </TouchableOpacity>
-                :
-                <TouchableOpacity
-                  onPress={_handlePickImage}
-                  style={styles.btnAddImage}>
-                  <Column
-                    alignItems='center'
-                    gap={8}>
-                    <IconUpload />
-                    <Text
-                      size={14}
-                      color={GREY}>
-                      Tải hình ảnh lên
-                    </Text>
-                  </Column>
-                </TouchableOpacity>
-            }
+            {listImageBanking?.length > 0 ? (
+              <TouchableOpacity onPress={_handlePickImage}>
+                <Image
+                  style={{
+                    borderRadius: 4,
+                    width: 8 * 20,
+                    height:
+                      (8 * 20 * listImageBanking[0]?.height) /
+                      listImageBanking[0]?.width,
+                  }}
+                  source={{ uri: `${listImageBanking[0]?.path}` }}
+                />
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                onPress={_handlePickImage}
+                style={styles.btnAddImage}
+              >
+                <Column alignItems="center" gap={8}>
+                  <IconUpload />
+                  <Text size={14} color={GREY}>
+                    Tải hình ảnh lên
+                  </Text>
+                </Column>
+              </TouchableOpacity>
+            )}
           </Column>
-          <Column
-            gap={8}
-            marginTop={0}
-            margin={8 * 2}>
-            <Text color={BASE_COLOR}>
-              Ghi chú
-            </Text>
+          <Column gap={8} marginTop={0} margin={8 * 2}>
+            <Text color={BASE_COLOR}>Ghi chú</Text>
 
             <View style={styles.inputContainer}>
               <TextInput
                 onChangeText={(e) => setValueDescription(e)}
                 value={valueDescription}
                 placeholder={"Nhập ghi chú"}
-                multiline />
+                multiline
+              />
             </View>
           </Column>
           <View style={{ height: 100 }} />
@@ -265,21 +258,22 @@ const RechargeToWallet = () => {
       <ActionButton
         disabled={isDisabled}
         onPress={_handleConfirm}
-        title={"Gửi yêu cầu"} />
+        title={"Gửi yêu cầu"}
+      />
 
       <ModalFlashMsg
         bottom
         show={showModalFlashMsg}
         hide={() => {
-          setShowModalFlashMsg(false)
+          setShowModalFlashMsg(false);
         }}
-        data={'Đã copy.'} />
+        data={"Đã copy."}
+      />
+    </Screen>
+  );
+};
 
-    </Screen >
-  )
-}
-
-export default RechargeToWallet
+export default RechargeToWallet;
 
 const styles = StyleSheet.create({
   inputContainer: {
@@ -301,8 +295,8 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     borderWidth: 1,
     borderColor: BORDER_COLOR,
-    alignItems: 'center',
-    justifyContent: 'center'
+    alignItems: "center",
+    justifyContent: "center",
   },
   textInput: {
     borderWidth: 1,
@@ -311,6 +305,6 @@ const styles = StyleSheet.create({
     padding: 8 * 2,
     fontSize: 18,
     color: PRICE_ORANGE,
-    ...stylesFont.fontNolanBold
-  }
-})
+    ...stylesFont.fontNolanBold,
+  },
+});

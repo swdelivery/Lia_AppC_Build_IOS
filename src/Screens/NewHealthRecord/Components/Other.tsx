@@ -1,19 +1,20 @@
-import { StyleSheet, TextInput, View } from 'react-native'
-import React from 'react'
-import Text from '@Components/Text'
-import Column from '@Components/Column'
-import { _moderateScale } from '@Constant/Scale'
-import { BORDER_COLOR, WHITE } from '@Constant/Color'
+import { StyleSheet, View } from "react-native";
+import React from "react";
+import Text from "@Components/Text";
+import Column from "@Components/Column";
+import { _moderateScale } from "@Constant/Scale";
+import { BORDER_COLOR, WHITE } from "@Constant/Color";
+import TextInput from "@Components/TextInput";
 
 const Other = ({ otherIllness, setOtherIllness }) => {
   return (
     <View>
       <Column marginHorizontal={8 * 2}>
-        <Text weight='bold'>Bệnh lý khác</Text>
+        <Text weight="bold">Bệnh lý khác</Text>
         <View style={styles.inputContainer}>
           <TextInput
             value={otherIllness}
-            onChangeText={text => setOtherIllness(text)}
+            onChangeText={(text) => setOtherIllness(text)}
             placeholder={"Nhập các bệnh lý khác"}
             multiline
             scrollEnabled={false}
@@ -25,10 +26,10 @@ const Other = ({ otherIllness, setOtherIllness }) => {
         </View>
       </Column>
     </View>
-  )
-}
+  );
+};
 
-export default Other
+export default Other;
 
 const styles = StyleSheet.create({
   inputContainer: {
@@ -39,6 +40,6 @@ const styles = StyleSheet.create({
     borderRadius: _moderateScale(8),
     padding: _moderateScale(8),
     paddingHorizontal: _moderateScale(8 * 1.5),
-    backgroundColor: WHITE
+    backgroundColor: WHITE,
   },
-})
+});
