@@ -1,5 +1,6 @@
 import Column from "@Components/Column";
 import {
+  IconAboutLiA,
   IconProfileBooking,
   IconProfileCare,
   IconProfileCoin,
@@ -138,6 +139,11 @@ const NewProfile = () => {
                   flag: "contact",
                   name: "Liên hệ hợp tác",
                   icon: <IconProfilePartnerShip width={20} height={20} />,
+                },
+                {
+                  flag: "about-me",
+                  name: "Về LiA",
+                  icon: <IconAboutLiA width={20} height={20} />,
                 },
               ]}
             />

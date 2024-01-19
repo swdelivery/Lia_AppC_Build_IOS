@@ -154,6 +154,8 @@ export { default as IconAffiliateTutorial } from "../../SGV/affiliate/tutorial.s
 export { default as IconAffiliateListF1 } from "../../SGV/affiliate/listF1.svg";
 export { default as IconAffiliateReportOrder } from "../../SGV/affiliate/reportOrder.svg";
 export { default as IconAffiliateQA } from "../../SGV/affiliate/QA.svg";
+export { default as IconWWW } from "../../SGV/www.svg";
+export { default as IconAboutLiA } from "../../SGV/aboutlia.svg";
 
 
 export const IconSetting = (props) => {

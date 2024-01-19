@@ -102,9 +102,10 @@ const BtnIcon = ({
         return navigate(ScreenKey.PARTNER_REVIEW_SERVICE)();
       case "examination-results":
         return navigate(ScreenKey.LIST_EXAMINATION_RESULTS)();
+      case "about-me":
+        return navigate(ScreenKey.ABOUT_LIA)();
       case "refund":
-        Alert.alert("Tính năng đang phát triển");
-        return;
+        return navigate(ScreenKey.REFUND)();
       default:
         break;
     }
