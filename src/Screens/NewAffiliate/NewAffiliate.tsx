@@ -84,7 +84,7 @@ const NewAffiliate = () => {
             index: findIndexCurrPartnerLevel,
             animated: true,
           });
-        }, 500);
+        }, 1000);
       }
     }
   }, [listPartnerLevel, currPartnerLevel])

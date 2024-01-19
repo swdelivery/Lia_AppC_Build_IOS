@@ -178,6 +178,7 @@ import PickTreatmentDiary from "@Screens/ListDiaryOfPartner/Components/PickTreat
 import PartnerReviewService from "@Screens/PartnerReviewService";
 import ListExaminationResults from "@Screens/ExaminationResults/ListExaminationResults";
 import DetailExaminationResult from "@Screens/ExaminationResults/DetailExaminationResult";
+import AboutLiA from "@Screens/AboutLiA";
 
 const Stack = createNativeStackNavigator();
 
@@ -648,6 +649,12 @@ const RootNavigator = () => {
       <Stack.Screen
         name={ScreenKey.DETAIL_EXAMINATION_RESULT}
         component={DetailExaminationResult}
+      />
+
+      {/* ABOUT LIA */}
+      <Stack.Screen
+        name={ScreenKey.ABOUT_LIA}
+        component={AboutLiA}
       />
 
       <Stack.Group
