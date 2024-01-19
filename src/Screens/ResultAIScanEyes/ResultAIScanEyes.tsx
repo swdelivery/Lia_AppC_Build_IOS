@@ -1,7 +1,7 @@
 import LiAHeader from "@Components/Header/LiAHeader";
 import Screen from "@Components/Screen";
 import Spacer from "@Components/Spacer";
-import React, { useCallback } from "react";
+import React, { useCallback, useRef } from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import { BASE_COLOR, NEW_BASE_COLOR, WHITE } from "../../Constant/Color";
 import {
@@ -23,31 +23,46 @@ import { useNavigate } from "src/Hooks/useNavigation";
 import useConfirmation from "src/Hooks/useConfirmation";
 import { useDispatch } from "react-redux";
 import { saveResult } from "@Redux/resultcanningeyes/actions";
+import Icon from "@Components/Icon";
 
 const ResultAIScanEyes = (props) => {
   const { navigation } = useNavigate();
   const dispatch = useDispatch();
   const { scanningResult, imageScan, fromHistory } = props?.route?.params;
   const { showConfirmation } = useConfirmation();
+  const isSaved = useRef(false);
 
-  console.log({ scanningResult, imageScan });
+  const handleSave = useCallback(
+    (shouldGoBack = false) =>
+      () => {
+        showConfirmation(
+          "Thông báo",
+          'Bạn có muốn lưu lại thông tin\n"Kết quả phân tích" không?',
+          () => {
+            dispatch(saveResult({ scanningResult, imageScan }));
+            isSaved.current = true;
+            if (shouldGoBack) {
+              navigation.goBack();
+            }
+          },
+          () => {
+            if (shouldGoBack) {
+              navigation.goBack();
+            }
+          }
+        );
+      },
+    [scanningResult, imageScan]
+  );
 
   const handleBackPress = useCallback(() => {
-    if (!fromHistory) {
+    if (!fromHistory && !isSaved.current) {
       // Ask to save result
-      showConfirmation(
-        "Thông báo",
-        'Bạn có muốn lưu lại thông tin\n"Kết quả phân tích" không?',
-        () => {
-          dispatch(saveResult({ scanningResult, imageScan }));
-          navigation.goBack();
-        },
-        navigation.goBack
-      );
+      handleSave(true)();
     } else {
       navigation.goBack();
     }
-  }, [scanningResult, imageScan, fromHistory]);
+  }, [handleSave, fromHistory]);
 
   return (
     <Screen style={styles.container}>
@@ -58,6 +73,13 @@ const ResultAIScanEyes = (props) => {
         bg={WHITE}
         title={"KẾT QUẢ CHI TIẾT"}
         onBackPress={handleBackPress}
+        right={
+          !fromHistory ? (
+            <Column onPress={handleSave(false)}>
+              <Icon name="check" color={BASE_COLOR} />
+            </Column>
+          ) : undefined
+        }
       />
       {scanningResult ? (
         <ScrollView>

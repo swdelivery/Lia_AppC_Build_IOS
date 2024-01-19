@@ -23,6 +23,7 @@ import MainList from "./Components/MainList";
 import Menu from "./Components/Menu";
 import { FocusAwareStatusBar } from "@Components/StatusBar";
 import { ProfileMirrorIcon, RecordIcon } from "src/SGV";
+import Config from "react-native-config";
 
 const NewProfile = () => {
   return (
@@ -95,13 +96,18 @@ const NewProfile = () => {
                   name: "Gương thần",
                   icon: <ProfileMirrorIcon />,
                 },
-                {
-                  flag: "skin-mirror",
-                  name: "SaYoi",
-                  icon: <ProfileMirrorIcon />,
-                },
+                ...(Config.ENV !== "prod"
+                  ? [
+                      {
+                        flag: "skin-mirror",
+                        name: "SaYoi",
+                        icon: <ProfileMirrorIcon />,
+                      },
+                    ]
+                  : []),
                 // { name: "LPay Later", icon: <IconProfilePayLater /> },
                 // { name: "Bảo hiểm", icon: <IconProfileInsurance /> },
+                ,
               ]}
             />
             {/* <Menu

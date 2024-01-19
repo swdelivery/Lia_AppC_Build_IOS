@@ -601,8 +601,8 @@ const FaceAI = () => {
             fromHistory: true,
           })}
         >
-          <Text color={"white"} fontStyle="italic">
-            Kết quả phân tích
+          <Text color={BASE_COLOR} fontStyle="italic">
+            Xem kết quả đã phân tích
           </Text>
         </Column>
       </Row>
