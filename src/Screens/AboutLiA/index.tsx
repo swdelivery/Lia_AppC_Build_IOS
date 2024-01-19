@@ -1,5 +1,5 @@
 import { ImageBackground, ScrollView, StyleSheet, View } from 'react-native'
-import React from 'react'
+import React, { useCallback } from 'react'
 import Screen from '@Components/Screen'
 import { styleElement } from '@Constant/StyleElement'
 import Column from '@Components/Column'
@@ -13,13 +13,35 @@ import Row from '@Components/Row'
 import Icon from '@Components/Icon'
 import Spacer from '@Components/Spacer'
 import HorizontalLine from '@Components/Line/HorizontalLine'
+import Rate, { AndroidMarket } from 'react-native-rate'
+import { StatusBar } from '@Components/StatusBar'
 
 const AboutLiA = () => {
   const { top } = useSafeAreaInsets()
   const { navigation } = useNavigate()
 
+
+  const _handleRateApp = useCallback(() => {
+    const options = {
+      AppleAppID: "id6474897526",
+      GooglePackageName: "com.digitech.lia",
+      preferredAndroidMarket: AndroidMarket.Google,
+      preferInApp: false,
+      openAppStoreIfInAppFails: true,
+    };
+    Rate.rate(options, (success, errorMessage) => {
+      if (success) {
+        console.log({ success });
+      }
+      if (errorMessage) {
+        console.error(`Example page Rate.rate() error: ${errorMessage}`)
+      }
+    })
+  }, [])
+
   return (
     <Screen>
+      <StatusBar barStyle='light-content' />
       <ImageBackground
         resizeMode={"stretch"}
         style={styleElement.flex}
@@ -43,7 +65,7 @@ const AboutLiA = () => {
           backgroundColor={WHITE}
           flex={1}>
           <Image
-            style={[styles.logo, styleElement.shadow]}
+            style={[styles.logo]}
             avatar={null} />
 
           <ScrollView style={{ paddingTop: 8 * 6 }}>
@@ -71,6 +93,7 @@ const AboutLiA = () => {
                   <IconWWW width={8 * 3} height={8 * 3} />
                 </Column>
                 <Row
+                  onPress={_handleRateApp}
                   borderRadius={4}
                   paddingHorizontal={8}
                   backgroundColor={NEW_BASE_COLOR}
