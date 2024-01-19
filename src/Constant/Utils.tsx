@@ -23,6 +23,14 @@ import { GREEN_SUCCESS, RED } from "./Color";
 //     return link
 // }
 
+
+export function validateEmail(email: string) {
+  const re =
+    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(String(email).toLowerCase());
+}
+
+  
 // substring an array to shortly...
 export const _substring = (stringInput, value, index) => {
     if (stringInput?.length > 100) {

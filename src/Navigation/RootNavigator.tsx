@@ -180,6 +180,7 @@ import ListExaminationResults from "@Screens/ExaminationResults/ListExaminationR
 import DetailExaminationResult from "@Screens/ExaminationResults/DetailExaminationResult";
 import AboutLiA from "@Screens/AboutLiA";
 import Refund from "@Screens/Refund";
+import Collaboration from "@Screens/Collaboration";
 
 const Stack = createNativeStackNavigator();
 
@@ -652,17 +653,13 @@ const RootNavigator = () => {
         component={DetailExaminationResult}
       />
 
+      <Stack.Screen name={ScreenKey.COLLABORATION} component={Collaboration} />
+
       {/* ABOUT LIA */}
-      <Stack.Screen
-        name={ScreenKey.ABOUT_LIA}
-        component={AboutLiA}
-      />
+      <Stack.Screen name={ScreenKey.ABOUT_LIA} component={AboutLiA} />
 
       {/* REFUND */}
-      <Stack.Screen
-        name={ScreenKey.REFUND}
-        component={Refund}
-      />
+      <Stack.Screen name={ScreenKey.REFUND} component={Refund} />
 
       <Stack.Group
         screenOptions={{

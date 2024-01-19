@@ -102,6 +102,8 @@ const BtnIcon = ({
         return navigate(ScreenKey.PARTNER_REVIEW_SERVICE)();
       case "examination-results":
         return navigate(ScreenKey.LIST_EXAMINATION_RESULTS)();
+      case "collaboration":
+        return navigate(ScreenKey.COLLABORATION)();
       case "about-me":
         return navigate(ScreenKey.ABOUT_LIA)();
       case "refund":

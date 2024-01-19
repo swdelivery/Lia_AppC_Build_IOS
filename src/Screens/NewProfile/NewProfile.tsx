@@ -142,7 +142,7 @@ const NewProfile = () => {
                   icon: <IconProfileProtect />,
                 },
                 {
-                  flag: "contact",
+                  flag: "collaboration",
                   name: "Liên hệ hợp tác",
                   icon: <IconProfilePartnerShip width={20} height={20} />,
                 },

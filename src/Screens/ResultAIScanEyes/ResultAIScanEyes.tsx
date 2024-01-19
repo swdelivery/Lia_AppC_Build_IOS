@@ -30,17 +30,17 @@ const ResultAIScanEyes = (props) => {
   const dispatch = useDispatch();
   const { scanningResult, imageScan, fromHistory } = props?.route?.params;
   const { showConfirmation } = useConfirmation();
-  const isSaved = useRef(false);
+  const displayedConfirmation = useRef(false);
 
   const handleSave = useCallback(
     (shouldGoBack = false) =>
       () => {
+        displayedConfirmation.current = true;
         showConfirmation(
           "Thông báo",
           'Bạn có muốn lưu lại thông tin\n"Kết quả phân tích" không?',
           () => {
             dispatch(saveResult({ scanningResult, imageScan }));
-            isSaved.current = true;
             if (shouldGoBack) {
               navigation.goBack();
             }
@@ -56,7 +56,7 @@ const ResultAIScanEyes = (props) => {
   );
 
   const handleBackPress = useCallback(() => {
-    if (!fromHistory && !isSaved.current) {
+    if (!fromHistory && !displayedConfirmation.current) {
       // Ask to save result
       handleSave(true)();
     } else {

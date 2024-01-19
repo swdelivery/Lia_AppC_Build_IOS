@@ -1,9 +1,11 @@
 import {
   ColorValue,
   StatusBar,
+  StyleProp,
   StyleSheet,
   TouchableOpacity,
   View,
+  ViewStyle,
 } from "react-native";
 import React from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -16,6 +18,7 @@ import { useNavigate } from "src/Hooks/useNavigation";
 import { _moderateScale } from "@Constant/Scale";
 
 type Props = {
+  containerStyle?: StyleProp<ViewStyle>;
   barStyle?: "light-content" | "dark-content";
   bg?: ColorValue;
   safeTop?: boolean;
@@ -28,6 +31,7 @@ type Props = {
 };
 
 const LiAHeader = ({
+  containerStyle,
   barStyle = "light-content",
   bg = BASE_COLOR,
   safeTop = false,
@@ -47,6 +51,7 @@ const LiAHeader = ({
       paddingTop={safeTop ? top : 0}
       borderBottomWidth={bottomBorderColor ? StyleSheet.hairlineWidth : 0}
       borderBottomColor={bottomBorderColor}
+      style={containerStyle}
     >
       <StatusBar
         translucent

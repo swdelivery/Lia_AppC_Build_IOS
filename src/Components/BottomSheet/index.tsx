@@ -48,9 +48,17 @@ type Props = {
   onClose?: () => void;
   animatedVisible?: SharedValue<boolean>;
   children: ReactNode;
+  contentContainerStyle?: StyleProp<ViewStyle>;
+  hideNavigator?: boolean;
 };
 
-const BottomSheet = ({ visible, onClose, children }: Props) => {
+const BottomSheet = ({
+  visible,
+  onClose,
+  children,
+  contentContainerStyle,
+  hideNavigator = false,
+}: Props) => {
   const opacityBackDrop = useSharedValue(0);
   const tranYModal = useSharedValue(0);
   const contentHeight = useRef(0);
@@ -148,21 +156,23 @@ const BottomSheet = ({ visible, onClose, children }: Props) => {
         </Animated.View>
 
         <Animated.View
-          style={[styles.mainModal, animTranY]}
+          style={[styles.mainModal, contentContainerStyle, animTranY]}
           onLayout={handleLayout}
         >
           <Column marginBottom={bottom}>
-            <Row height={30} justifyContent="center">
-              <View style={styles.indicator} />
-              <IconButton
-                hitSlop={styleElement.hitslopSm}
-                onPress={collapse}
-                containerStyle={styles.cancelBtn}
-                size={30}
-              >
-                <IconCancelGrey style={sizeIcon.xxs} />
-              </IconButton>
-            </Row>
+            {!hideNavigator && (
+              <Row height={30} justifyContent="center">
+                <View style={styles.indicator} />
+                <IconButton
+                  hitSlop={styleElement.hitslopSm}
+                  onPress={collapse}
+                  containerStyle={styles.cancelBtn}
+                  size={30}
+                >
+                  <IconCancelGrey style={sizeIcon.xxs} />
+                </IconButton>
+              </Row>
+            )}
             {children}
           </Column>
         </Animated.View>

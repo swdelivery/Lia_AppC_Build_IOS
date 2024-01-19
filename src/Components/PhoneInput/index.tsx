@@ -44,7 +44,6 @@ export default function PhoneInput({
   };
   return (
     <Column marginTop={marginTop}>
-
       <Row
         paddingVertical={8 * 2}
         borderRadius={8}
@@ -52,8 +51,8 @@ export default function PhoneInput({
           errorMessage
             ? Color.ERROR_COLOR
             : content
-              ? Color.BORDER_INPUT_TEXT_FOCUSED
-              : Color.BORDER_INPUT_TEXT
+            ? Color.BORDER_INPUT_TEXT_FOCUSED
+            : Color.BORDER_INPUT_TEXT
         }
         borderWidth={1}
         paddingHorizontal={10}
@@ -69,9 +68,16 @@ export default function PhoneInput({
             countryCode={countryCode}
             onSelect={onSelect}
             visible={false}
+            containerButtonStyle={styles.countryCode}
           />
         </Column>
         <Text>+{countryCallingCode}</Text>
+        <Column
+          height={20}
+          width={1}
+          marginHorizontal={16}
+          backgroundColor={Color.BORDER_INPUT_TEXT}
+        />
         <TextInput
           value={content}
           keyboardType={"number-pad"}
@@ -82,20 +88,16 @@ export default function PhoneInput({
           onBlur={onBlur}
         />
       </Row>
-      {
-        content && (
-          <View style={styles.labelContainer}>
-            <Text size={14} color={Color.GREY}>
-              {label}
-            </Text>
-          </View>
-        )
-      }
-      {
-        (errorMessage && errorMessage.length > 0) && (
-          <Text style={styles.error_text}>{errorMessage}</Text>
-        )
-      }
+      {content && (
+        <View style={styles.labelContainer}>
+          <Text size={14} color={Color.GREY}>
+            {label}
+          </Text>
+        </View>
+      )}
+      {errorMessage && errorMessage.length > 0 && (
+        <Text style={styles.error_text}>{errorMessage}</Text>
+      )}
     </Column>
   );
 }
@@ -129,5 +131,11 @@ const styles = StyleSheet.create({
     flex: 1,
     color: Color.BLACK,
     marginLeft: 5,
+  },
+  countryCode: {
+    paddingVertical: 0,
+    paddingTop: 0,
+    marginTop: -5,
+    marginBottom: -13,
   },
 });

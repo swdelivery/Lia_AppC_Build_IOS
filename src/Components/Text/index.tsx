@@ -100,6 +100,7 @@ const Text = ({
     textDecorationLine,
     fontStyle,
     flex,
+    textAlign,
   ]);
 
   return (

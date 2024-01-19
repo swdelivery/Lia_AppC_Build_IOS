@@ -18,4 +18,5 @@ export { default as LuckyWheelIcon } from "./luckyWheel.svg";
 export { default as CheckinIcon } from "./checkin.svg";
 export { default as RecordIcon } from "./record.svg";
 export { default as PinIcon } from "./pin.svg";
+export { default as UpDownIcon } from "./upDown.svg";
 export { default as Diamond1Icon } from "./diamond_1.svg";
