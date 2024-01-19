@@ -179,6 +179,7 @@ import PartnerReviewService from "@Screens/PartnerReviewService";
 import ListExaminationResults from "@Screens/ExaminationResults/ListExaminationResults";
 import DetailExaminationResult from "@Screens/ExaminationResults/DetailExaminationResult";
 import AboutLiA from "@Screens/AboutLiA";
+import Refund from "@Screens/Refund";
 
 const Stack = createNativeStackNavigator();
 
@@ -655,6 +656,12 @@ const RootNavigator = () => {
       <Stack.Screen
         name={ScreenKey.ABOUT_LIA}
         component={AboutLiA}
+      />
+
+      {/* REFUND */}
+      <Stack.Screen
+        name={ScreenKey.REFUND}
+        component={Refund}
       />
 
       <Stack.Group

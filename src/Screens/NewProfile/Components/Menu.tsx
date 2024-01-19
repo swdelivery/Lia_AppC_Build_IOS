@@ -105,8 +105,7 @@ const BtnIcon = ({
       case "about-me":
         return navigate(ScreenKey.ABOUT_LIA)();
       case "refund":
-        Alert.alert("Tính năng đang phát triển");
-        return;
+        return navigate(ScreenKey.REFUND)();
       default:
         break;
     }
