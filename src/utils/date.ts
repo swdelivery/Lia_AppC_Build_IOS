@@ -9,10 +9,10 @@ import moment from "moment";
  * @returns
  */
 export const fromUtc = (datestr: string | Date) => {
-  // const dt = new Date(datestr);
-  // return new Date(dt.valueOf() + dt.getTimezoneOffset() * 60 * 1000);
+  const dt = new Date(datestr);
+  return new Date(dt.valueOf() + dt.getTimezoneOffset() * 60 * 1000);
   // FIXME: for now, return utc date. wait for confirmation from BE
-  return datestr;
+  // return datestr;
 };
 
 export function getTwoDigits(number: number): string {

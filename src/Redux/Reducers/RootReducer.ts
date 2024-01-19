@@ -102,7 +102,7 @@ const rootReducer = combineReducers({
   booking,
   voucher,
   insurance,
-  chat,
+  chat: resetable(chat),
   flashSale,
   modal,
   resultcanningeyes,
