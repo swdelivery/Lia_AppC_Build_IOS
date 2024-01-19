@@ -57,13 +57,13 @@ import { useNavigate } from "src/Hooks/useNavigation";
 import { BASE_COLOR } from "@Constant/Color";
 import { useSelector } from "react-redux";
 import { getEyeHistoryState } from "@Redux/resultcanningeyes/selectors";
+import usePermission from "src/Hooks/usePermission";
 
 const EYE_INDICATOR_SIZE = 10;
 
 const FaceAI = () => {
   const { navigate, navigation } = useNavigate();
   const eyeHistory = useSelector(getEyeHistoryState);
-  const { hasPermission, requestPermission } = useCameraPermission();
   const device = useCameraDevice("front");
   // const format = useCameraFormat(device, Templates.Instagram)
 
@@ -98,6 +98,7 @@ const FaceAI = () => {
 
   const { top } = useSafeAreaInsets();
   const isFocused = useIsFocused();
+  const [cameraPermission, requestPermission] = usePermission("camera");
 
   // FIXME: This code is used for testing on emulator
   // __DEV__ &&
@@ -114,7 +115,7 @@ const FaceAI = () => {
     () => {
       setIsReady(true);
     },
-    hasPermission ? 1500 : -1
+    cameraPermission === "granted" ? 1500 : -1
   );
 
   //ASK PERMISSION CAMERA
@@ -123,18 +124,15 @@ const FaceAI = () => {
   }, []);
 
   const _checkPermission = async () => {
-    let isEnablePerCamera = hasPermission;
-    if (!isEnablePerCamera) {
-      let result = await requestPermission();
-      if (!result) {
-        showConfirmation(
-          "Cấp quyền truy cập",
-          "Hãy bật quyền truy cập máy ảnh để sử dụng chức năng này nhé?",
-          async () => {
-            await Linking.openSettings();
-          }
-        );
-      }
+    let result = await requestPermission();
+    if (result !== "granted") {
+      showConfirmation(
+        "Cấp quyền truy cập",
+        "Hãy bật quyền truy cập máy ảnh để sử dụng chức năng này nhé?",
+        async () => {
+          await Linking.openSettings();
+        }
+      );
     }
   };
 
@@ -516,14 +514,14 @@ const FaceAI = () => {
                 alignItems: "center",
               }}
             >
-              {device && (
+              {device && isReady && (
                 <Camera
                   enableHighQualityPhotos={true}
                   orientation={"portrait"}
                   ref={refCamera}
                   style={StyleSheet.absoluteFill}
                   device={device}
-                  isActive={isReady && isFocused}
+                  isActive={isFocused}
                   photo={true}
                   // photoHdr={true}
                   enableDepthData={true}
