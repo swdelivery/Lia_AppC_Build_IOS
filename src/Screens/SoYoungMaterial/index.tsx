@@ -11,6 +11,7 @@ import { useNavigate } from "src/Hooks/useNavigation";
 import useListFilter from "src/Hooks/useListFilter";
 import { getMaterialListState } from "@Redux/material/selectors";
 import { getMaterialList, loadMoreMaterialList } from "@Redux/material/actions";
+import ListEmpty from "@Components/ListEmpty";
 
 const SoYoungMaterial = ({ tabIndex, isFocused }: any) => {
   const { navigate } = useNavigate();
@@ -21,9 +22,6 @@ const SoYoungMaterial = ({ tabIndex, isFocused }: any) => {
   );
 
   useEffect(() => {
-    // requestAnimationFrame(() => {
-    //   refreshData();
-    // });
     refreshData();
   }, []);
 
@@ -48,6 +46,7 @@ const SoYoungMaterial = ({ tabIndex, isFocused }: any) => {
         data={data}
         renderItem={_renderItem}
         keyExtractor={(item, index) => item._id}
+        ListEmptyComponent={<ListEmpty title="Chưa có thông tin vật liệu" />}
       />
     </>
   );

@@ -1,12 +1,11 @@
-import Column from "@Components/Column";
 import Row from "@Components/Row";
 import Text, { TextProps } from "@Components/Text";
-import React, { memo, useCallback, useEffect, useMemo, useRef } from "react";
-import { ScrollView, StyleProp, ViewStyle } from "react-native";
-import {
-  runOnJS,
-  useAnimatedReaction,
-  useSharedValue,
+import React, { memo, useMemo } from "react";
+import { StyleProp, ViewStyle } from "react-native";
+import Animated, {
+  SlideInDown,
+  SlideOutDown,
+  SlideOutUp,
 } from "react-native-reanimated";
 
 type Props = TextProps & {
@@ -16,8 +15,6 @@ type Props = TextProps & {
   padding?: number;
   textSize?: number;
 };
-
-const digits = [9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
 
 function NumberTicker({
   style,
@@ -38,82 +35,23 @@ function NumberTicker({
   );
 
   return (
-    <Row key={indices.length} style={style} height={height}>
+    <Row style={style} height={height} overflow="hidden">
       {indices.map((i, idx) => (
-        <Digit
-          key={idx}
-          value={i}
-          textSize={textSize}
-          height={height}
-          {...props}
-        />
+        <Animated.View
+          key={idx + "" + i}
+          entering={SlideInDown.damping(35).stiffness(400).springify()}
+          exiting={
+            idx === 0
+              ? SlideOutUp.duration(200).damping(10).stiffness(100)
+              : SlideOutDown.duration(200).damping(10).stiffness(100)
+          }
+        >
+          <Text {...props} size={textSize}>
+            {i}
+          </Text>
+        </Animated.View>
       ))}
     </Row>
-  );
-}
-
-function Digit({
-  value = 0,
-  textSize,
-  height,
-  ...props
-}: TextProps & {
-  value: number;
-  textSize: number;
-  height: number;
-}) {
-  const aref = useRef<ScrollView>(null);
-  const number = useSharedValue(value);
-
-  useEffect(() => {
-    number.value = value;
-  }, [value]);
-
-  const scrollToDigit = useCallback((value: number, animated = true) => {
-    if (aref.current) {
-      aref.current.scrollTo({ x: 0, y: value, animated });
-    }
-  }, []);
-
-  const resetPosition = useCallback((result) => {
-    setTimeout(() => scrollToDigit(11 * height, false), 500);
-  }, []);
-
-  useAnimatedReaction(
-    () => (number.value + 1) * height,
-    // @ts-ignore
-    (result: number, prev: number) => {
-      if (result !== prev) {
-        runOnJS(scrollToDigit)(result);
-        if (result === height) {
-          runOnJS(resetPosition)(result);
-        }
-      }
-    }
-  );
-
-  return (
-    <Column>
-      <ScrollView
-        ref={aref}
-        scrollEnabled={false}
-        showsVerticalScrollIndicator={false}
-        pagingEnabled
-      >
-        {digits.map((i, idx) => (
-          <Column
-            key={idx}
-            height={height}
-            justifyContent="center"
-            alignItems="center"
-          >
-            <Text {...props} size={textSize}>
-              {i}
-            </Text>
-          </Column>
-        ))}
-      </ScrollView>
-    </Column>
   );
 }
 

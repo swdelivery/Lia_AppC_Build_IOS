@@ -5,13 +5,14 @@ import { getProductsState } from "@Redux/product/selectors";
 import { RenderItemProps } from "@typings/common";
 import { Product } from "@typings/product";
 import React, { useEffect } from "react";
-import { View, StyleSheet, Pressable, FlatList } from "react-native";
+import { StyleSheet, Pressable, FlatList } from "react-native";
 import useListFilter from "src/Hooks/useListFilter";
 import ProductItem from "./components/ProductItem";
 import { useNavigate } from "src/Hooks/useNavigation";
 import ScreenKey from "@Navigation/ScreenKey";
 import Text from "@Components/Text";
 import { BASE_COLOR } from "@Constant/Color";
+import ListEmpty from "@Components/ListEmpty";
 
 type Props = {};
 
@@ -48,6 +49,7 @@ export default function SoyoungProduct({}: Props) {
         data={data}
         renderItem={renderItem}
         keyExtractor={(item, index) => item._id}
+        ListEmptyComponent={<ListEmpty title="Chưa có thông tin sản phẩm" />}
       />
     </>
   );
