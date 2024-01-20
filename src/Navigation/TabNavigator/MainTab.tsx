@@ -1,6 +1,4 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import { createStackNavigator } from "@react-navigation/stack";
-// import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from "react";
 import { useSelector } from "react-redux";
 import TabbarMessageIcon from "../../Components/TabbarNew/ChatTabIcon";
