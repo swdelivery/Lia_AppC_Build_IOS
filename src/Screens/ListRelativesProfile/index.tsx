@@ -125,14 +125,15 @@ export default ListRelativesProfile
 const styles = StyleSheet.create({
   containerBtn: {
     borderRadius: 4,
-    backgroundColor: WHITE
+    backgroundColor: WHITE,
   },
   containerFlatlist: {
+    flexGrow: 1,
     gap: 8 * 2,
     paddingHorizontal: 8 * 2,
-    marginTop: 8 * 2
-  }
-})
+    marginTop: 8 * 2,
+  },
+});
 
 const shadow = {
   shadowColor: "#000",
