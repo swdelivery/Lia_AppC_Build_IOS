@@ -1,12 +1,5 @@
-import React, { memo, useEffect, useMemo, useState } from "react";
-import {
-  Alert,
-  ScrollView,
-  SectionList,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import React, { useEffect, useMemo } from "react";
+import { SectionList, StyleSheet, TouchableOpacity, View } from "react-native";
 import Animated, {
   runOnJS,
   useAnimatedStyle,
@@ -14,7 +7,7 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import { useDispatch, useSelector } from "react-redux";
-import { BtnHistory, IconCancelGrey } from "../../../Components/Icon/Icon";
+import { IconCancelGrey } from "../../../Components/Icon/Icon";
 import {
   BASE_COLOR,
   BORDER_COLOR,
@@ -30,7 +23,6 @@ import {
   _width,
 } from "../../../Constant/Scale";
 import { styleElement } from "@Constant/StyleElement";
-import CardBranch from "./CardBranch";
 import Column from "@Components/Column";
 import CardDoctor from "./CardDoctor";
 import {

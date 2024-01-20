@@ -25,14 +25,7 @@ function NumberTicker({
 }: Props) {
   const height = useMemo(() => textSize + padding * 2, [textSize, padding]);
 
-  const indices = useMemo(
-    () =>
-      value
-        .toString()
-        .split("")
-        .map((digit) => parseInt(digit, 10)),
-    [value]
-  );
+  const indices = useMemo(() => value.toString().split(""), [value]);
 
   return (
     <Row style={style} height={height} overflow="hidden">
