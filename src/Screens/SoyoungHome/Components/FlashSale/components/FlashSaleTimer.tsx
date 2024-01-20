@@ -101,7 +101,7 @@ export default function FlashSaleTimer({
             value={hours}
           />
         </Column>
-        <Text weight="bold" color={backgroundColor} size={10}>
+        <Text weight="bold" color={backgroundColor} size={textSize}>
           {useUnit ? " giờ " : ":"}
         </Text>
         <Column
@@ -115,7 +115,7 @@ export default function FlashSaleTimer({
             value={minutes}
           />
         </Column>
-        <Text weight="bold" color={backgroundColor} size={10}>
+        <Text weight="bold" color={backgroundColor} size={textSize}>
           {useUnit ? " phút " : ":"}
         </Text>
         <Column
