@@ -91,17 +91,13 @@ const Banner = ({ doctor }: Props) => {
           >
             <ThumbsUpIcon />
           </Column>
-          <Text>Chuyên khoa: {doctor?.specialization}</Text>
+          <Text flex={1}>Chuyên khoa: {doctor?.specialization}</Text>
         </Row>
-        <Row marginLeft={16} gap={4} marginBottom={8}>
-          <Column
-            style={styles.iconLike}
-            alignItems="center"
-            justifyContent="center"
-          >
+        <Row marginLeft={16} gap={4} marginBottom={8} alignItems="flex-start">
+          <Column style={styles.iconLike} alignItems="flex-start" marginTop={5}>
             <Diamond1Icon />
           </Column>
-          <Text>Dịch vụ: {doctor?.service}</Text>
+          <Text flex={1}>Dịch vụ: {doctor?.service}</Text>
         </Row>
         {doctor?.doctorServices?.length > 0 && (
           <HorizontalServices
