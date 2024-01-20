@@ -655,6 +655,22 @@ const getAboutLiA = (payload: any) => {
     .then(({ data }) => data);
 };
 
+// Examination Results
+const getListExaminationResults = (payload: any) => {
+  const query = encodeParams({
+    ...payload,
+  });
+  return axios
+    .get(`/booking/examination-results?${query}`)
+    .then(({ data }) => data);
+};
+
+const getDetailExaminationResult = (_id: string) => {
+  return axios
+    .get(`/booking/examination-results/${_id}`)
+    .then(({ data }) => data);
+};
+
 export default {
   partnerLogout,
 
@@ -784,5 +800,9 @@ export default {
   getNews,
 
   // About LiA
-  getAboutLiA
+  getAboutLiA,
+
+  // Examination Results
+  getListExaminationResults,
+  getDetailExaminationResult
 };

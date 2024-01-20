@@ -6,6 +6,7 @@ export enum ConfigDataCode {
   WheelRule = "WHEEL_RULE",
   LevelPolicy = "LEVEL_POLICY",
   FlashSaleRule = "FLASH_SALE_RULE",
+  MedicalHistory = "TSBTK"
 }
 
 export type ConfigData = {

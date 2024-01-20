@@ -1,12 +1,17 @@
-import { StyleSheet, View } from 'react-native'
-import React from 'react'
-import Text from '@Components/Text'
-import Row from '@Components/Row'
 import Icon from '@Components/Icon'
-import { GREY_FOR_TITLE, NEW_BASE_COLOR } from '@Constant/Color'
+import Row from '@Components/Row'
+import Text from '@Components/Text'
+import { NEW_BASE_COLOR } from '@Constant/Color'
 import { styleElement } from '@Constant/StyleElement'
+import { getDetailExaminationResultState } from '@Redux/examinationResults/selectors'
+import React from 'react'
+import { useSelector } from 'react-redux'
 
 const SolutionInfo = () => {
+  const { data: {
+    solution
+  } } = useSelector(getDetailExaminationResultState);
+
   return (
     <Row
       gap={4}
@@ -17,12 +22,10 @@ const SolutionInfo = () => {
         <Text weight='bold'>Giải pháp: </Text>
       </Row>
       <Text style={styleElement.flex}>
-        Cần xử lý lượng da thừa mí dưới và giải quyết bọng mỡ
+        {solution}
       </Text>
     </Row>
   )
 }
 
 export default SolutionInfo
-
-const styles = StyleSheet.create({})

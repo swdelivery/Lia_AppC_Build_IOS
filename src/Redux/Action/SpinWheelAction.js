@@ -11,6 +11,7 @@ export const takeAward = (data) => {
     return Axios.post(`${URL_FOR_PARTNER}/partner-wheel-turn/mission/get-award`, data)
         .then(res => {
             console.log(useLogStyle + '----FETCHING SUCCESS: ', setLogStyle('green'), { takeAward: res });
+            _checkSuccess(res)
             return res
         })
         .catch(error => {

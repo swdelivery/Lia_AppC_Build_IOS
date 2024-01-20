@@ -61,7 +61,6 @@ const ModalMissions = ({ visibleListMission }: Props) => {
       };
       let result = await takeAward(dataFetch);
       if (result?.isAxiosError) return;
-      Alert.alert("Nhận thưởng thành công!");
       _getListMissions();
       dispatch(getPartnerWheelTurn.request())
 

@@ -1,19 +1,19 @@
-import { FlatList, StyleSheet, View } from 'react-native'
-import React, { useCallback, useMemo } from 'react'
-import Text from '@Components/Text'
 import Column from '@Components/Column'
-import ServiceItem from '@Screens/SoYoungService/components/ServiceItem'
-import { useSelector } from 'react-redux'
-import { getServiceListState } from '@Redux/service/selectors'
-import useItemExtractor from 'src/Hooks/useItemExtractor'
-import HorizontalServices from "@Components/HorizontalServices";
 import HorizontalServicesV2 from '@Components/HorizontalServicesV2'
+import Text from '@Components/Text'
 import { WHITE } from '@Constant/Color'
+import { getDetailExaminationResultState } from '@Redux/examinationResults/selectors'
+import React, { useMemo } from 'react'
+import { useSelector } from 'react-redux'
 
 const RecomendServices = () => {
-  const { data } = useSelector(getServiceListState)
+  const { data: {
+    order
+  } } = useSelector(getDetailExaminationResultState)
 
-
+  const listServices = useMemo(() => {
+    return order?.services?.map(item => item?.service)
+  }, [order])
 
   return (
     <Column >
@@ -24,16 +24,11 @@ const RecomendServices = () => {
           size={16}
           weight='bold'>Dịch vụ chỉ định</Text>
       </Column>
-
       <HorizontalServicesV2
         dynamicWidth={150}
         containerStyle={{ backgroundColor: 'transparent' }}
-        items={data} />
-
+        items={listServices} />
     </Column>
   )
 }
-
 export default RecomendServices
-
-const styles = StyleSheet.create({})
