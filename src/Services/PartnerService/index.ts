@@ -645,6 +645,16 @@ const getNews = (payload: any) => {
     .then(({ data }) => data);
 };
 
+// About LiA
+const getAboutLiA = (payload: any) => {
+  const query = encodeParams({
+    ...payload,
+  });
+  return axios
+    .get(`/lia-info?${query}`)
+    .then(({ data }) => data);
+};
+
 export default {
   partnerLogout,
 
@@ -771,5 +781,8 @@ export default {
   changePass,
 
   // News
-  getNews
+  getNews,
+
+  // About LiA
+  getAboutLiA
 };

@@ -1,5 +1,5 @@
-import { ImageBackground, ScrollView, StyleSheet, View } from 'react-native'
-import React, { useCallback } from 'react'
+import { ImageBackground, Linking, ScrollView, StyleSheet, View } from 'react-native'
+import React, { useCallback, useEffect } from 'react'
 import Screen from '@Components/Screen'
 import { styleElement } from '@Constant/StyleElement'
 import Column from '@Components/Column'
@@ -15,11 +15,32 @@ import Spacer from '@Components/Spacer'
 import HorizontalLine from '@Components/Line/HorizontalLine'
 import Rate, { AndroidMarket } from 'react-native-rate'
 import { StatusBar } from '@Components/StatusBar'
+import { useDispatch, useSelector } from 'react-redux'
+import { getAboutLiA } from '@Redux/aboutLiA/actions'
+import { getAboutLiAState } from '@Redux/aboutLiA/selectors'
 
 const AboutLiA = () => {
+  const { data } = useSelector(getAboutLiAState)
   const { top } = useSafeAreaInsets()
   const { navigation } = useNavigate()
+  const dispatch = useDispatch()
 
+  useEffect(() => {
+    dispatch(getAboutLiA.request())
+  }, [])
+
+  const {
+    logo,
+    name,
+    description,
+    slogan,
+    facebook_link,
+    website,
+    image,
+    hotline,
+    email,
+    address
+  } = data
 
   const _handleRateApp = useCallback(() => {
     const options = {
@@ -37,6 +58,10 @@ const AboutLiA = () => {
         console.error(`Example page Rate.rate() error: ${errorMessage}`)
       }
     })
+  }, [])
+
+  const _handleLinking = useCallback((link) => () => {
+    Linking.openURL(link)
   }, [])
 
   return (
@@ -66,25 +91,27 @@ const AboutLiA = () => {
           flex={1}>
           <Image
             style={[styles.logo]}
-            avatar={null} />
+            avatar={logo} />
 
           <ScrollView style={{ paddingTop: 8 * 6 }}>
             <Column alignItems='center'>
               <Text
                 size={18}
                 weight='bold'>
-                LiA
+                {name ?? ""}
               </Text>
               <Text>
-                Giới thiệu vắn tắt
+                {description ?? ""}
               </Text>
               <Text>
-                Slogan thương hiệu
+                {slogan ?? ""}
               </Text>
 
               <Row gap={8} marginTop={8 * 2}>
-                <IconFacebook width={8 * 4} height={8 * 4} />
-                <Column
+                <Column onPress={_handleLinking(facebook_link)}>
+                  <IconFacebook width={8 * 4} height={8 * 4} />
+                </Column>
+                <Column onPress={_handleLinking(website)}
                   style={styleElement.centerChild}
                   backgroundColor={NEW_BASE_COLOR}
                   width={8 * 4}
@@ -113,11 +140,12 @@ const AboutLiA = () => {
               contentContainerStyle={{ gap: 8, paddingHorizontal: 8 * 2 }}
               horizontal>
               {
-                [1, 2, 3, 4, 5, 6].map((item, index) => {
+                image?.map((item, index) => {
                   return (
                     <Image
+                      key={item?._id}
                       style={styles.image}
-                      avatar={null} />
+                      avatar={item} />
                   )
                 })
               }
@@ -146,7 +174,7 @@ const AboutLiA = () => {
                   <Text
                     color={GREY_FOR_TITLE}
                     weight='bold'>
-                    0961096101
+                    {hotline}
                   </Text>
                 </Column>
               </Row>
@@ -161,7 +189,7 @@ const AboutLiA = () => {
                 <Column flex={5}>
                   <Text
                     color={GREY}>
-                    hotro247@lia.vn
+                    {email}
                   </Text>
                 </Column>
               </Row>

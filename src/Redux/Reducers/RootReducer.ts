@@ -51,6 +51,7 @@ import product from "../product/reducers";
 import otp from "../otp/reducers";
 import news from "../news/reducers";
 import imageVoucher from "../imageVoucher/reducers";
+import aboutLiA from "../aboutLiA/reducers";
 import { PersistConfig, persistReducer } from "redux-persist";
 import { reduxStorage } from "@Redux/reduxStorage";
 
@@ -120,6 +121,7 @@ const rootReducer = combineReducers({
   otp,
   news: persistReducer(newsConfig, news),
   imageVoucher: persistReducer(imageVoucherConfig, imageVoucher),
+  aboutLiA
 });
 
 // const rootReducer = (state, action) => {
