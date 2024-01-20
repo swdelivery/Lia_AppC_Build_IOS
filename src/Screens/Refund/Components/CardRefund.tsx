@@ -1,13 +1,18 @@
-import { StyleSheet, View } from 'react-native'
-import React from 'react'
-import Text from '@Components/Text'
-import Row from '@Components/Row'
 import Column from '@Components/Column'
-import moment from 'moment'
-import { GREY, GREY_FOR_TITLE, NEW_BASE_COLOR } from '@Constant/Color'
+import Row from '@Components/Row'
+import Text from '@Components/Text'
+import { GREY, GREY_FOR_TITLE } from '@Constant/Color'
 import { formatMonney } from '@Constant/Utils'
+import { PaymentRequest } from '@typings/payment'
+import moment from 'moment'
+import React from 'react'
+import { StyleSheet } from 'react-native'
 
-const CardRefund = () => {
+type Props = {
+  data: PaymentRequest
+}
+
+const CardRefund = ({ data }: Props) => {
   return (
     <Row
       gap={8 * 2}
@@ -20,12 +25,12 @@ const CardRefund = () => {
           fontStyle='italic'
           size={12}>{moment().format('HH:mm')}, {moment().format('DD/MM/YYYY')}</Text>
         <Text>
-          Hoàn tiền thành công từ giao dịch M1
+          Hoàn tiền thành công
         </Text>
       </Column>
       <Column>
         <Text weight='bold' color={GREY_FOR_TITLE}>
-          + {formatMonney(420000, true)}
+          + {formatMonney(data?.amount, true)}
         </Text>
       </Column>
     </Row>
@@ -33,5 +38,3 @@ const CardRefund = () => {
 }
 
 export default CardRefund
-
-const styles = StyleSheet.create({})

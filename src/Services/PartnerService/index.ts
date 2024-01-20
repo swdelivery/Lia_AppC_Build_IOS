@@ -671,6 +671,17 @@ const getDetailExaminationResult = (_id: string) => {
     .then(({ data }) => data);
 };
 
+// Payment Refund
+const getPayment = (payload: any) => {
+  const query = encodeParams({
+    ...payload,
+  });
+  return axios
+    .get(`/payment?${query}`)
+    .then(({ data }) => data);
+};
+
+
 export default {
   partnerLogout,
 
@@ -804,5 +815,8 @@ export default {
 
   // Examination Results
   getListExaminationResults,
-  getDetailExaminationResult
+  getDetailExaminationResult,
+
+  // Payment
+  getPayment
 };

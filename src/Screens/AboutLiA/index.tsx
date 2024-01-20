@@ -1,23 +1,23 @@
-import { ImageBackground, Linking, ScrollView, StyleSheet, View } from 'react-native'
-import React, { useCallback, useEffect } from 'react'
-import Screen from '@Components/Screen'
-import { styleElement } from '@Constant/StyleElement'
 import Column from '@Components/Column'
-import { BLACK_OPACITY_4, BORDER_COLOR, GREY, GREY_FOR_TITLE, NEW_BASE_COLOR, WHITE } from '@Constant/Color'
-import Image from '@Components/Image'
-import { IconBackWhite, IconFacebook, IconWWW } from '@Components/Icon/Icon'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { useNavigate } from 'src/Hooks/useNavigation'
-import Text from '@Components/Text'
-import Row from '@Components/Row'
 import Icon from '@Components/Icon'
-import Spacer from '@Components/Spacer'
+import { IconBackWhite, IconFacebook, IconWWW } from '@Components/Icon/Icon'
+import Image from '@Components/Image'
 import HorizontalLine from '@Components/Line/HorizontalLine'
-import Rate, { AndroidMarket } from 'react-native-rate'
+import Row from '@Components/Row'
+import Screen from '@Components/Screen'
+import Spacer from '@Components/Spacer'
 import { StatusBar } from '@Components/StatusBar'
-import { useDispatch, useSelector } from 'react-redux'
+import Text from '@Components/Text'
+import { BLACK_OPACITY_4, GREY, GREY_FOR_TITLE, NEW_BASE_COLOR, WHITE } from '@Constant/Color'
+import { styleElement } from '@Constant/StyleElement'
 import { getAboutLiA } from '@Redux/aboutLiA/actions'
 import { getAboutLiAState } from '@Redux/aboutLiA/selectors'
+import React, { useCallback, useEffect } from 'react'
+import { ImageBackground, Linking, ScrollView, StyleSheet } from 'react-native'
+import Rate, { AndroidMarket } from 'react-native-rate'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'src/Hooks/useNavigation'
 
 const AboutLiA = () => {
   const { data } = useSelector(getAboutLiAState)
@@ -28,19 +28,6 @@ const AboutLiA = () => {
   useEffect(() => {
     dispatch(getAboutLiA.request())
   }, [])
-
-  const {
-    logo,
-    name,
-    description,
-    slogan,
-    facebook_link,
-    website,
-    image,
-    hotline,
-    email,
-    address
-  } = data
 
   const _handleRateApp = useCallback(() => {
     const options = {
@@ -91,27 +78,27 @@ const AboutLiA = () => {
           flex={1}>
           <Image
             style={[styles.logo]}
-            avatar={logo} />
+            avatar={data?.logo ?? null} />
 
           <ScrollView style={{ paddingTop: 8 * 6 }}>
             <Column alignItems='center'>
               <Text
                 size={18}
                 weight='bold'>
-                {name ?? ""}
+                {data?.name ?? ""}
               </Text>
               <Text>
-                {description ?? ""}
+                {data?.description ?? ""}
               </Text>
               <Text>
-                {slogan ?? ""}
+                {data?.slogan ?? ""}
               </Text>
 
               <Row gap={8} marginTop={8 * 2}>
-                <Column onPress={_handleLinking(facebook_link)}>
+                <Column onPress={_handleLinking(data?.facebook_link)}>
                   <IconFacebook width={8 * 4} height={8 * 4} />
                 </Column>
-                <Column onPress={_handleLinking(website)}
+                <Column onPress={_handleLinking(data?.website)}
                   style={styleElement.centerChild}
                   backgroundColor={NEW_BASE_COLOR}
                   width={8 * 4}
@@ -140,7 +127,7 @@ const AboutLiA = () => {
               contentContainerStyle={{ gap: 8, paddingHorizontal: 8 * 2 }}
               horizontal>
               {
-                image?.map((item, index) => {
+                data?.image?.map((item, index) => {
                   return (
                     <Image
                       key={item?._id}
@@ -174,7 +161,7 @@ const AboutLiA = () => {
                   <Text
                     color={GREY_FOR_TITLE}
                     weight='bold'>
-                    {hotline}
+                    {data?.hotline}
                   </Text>
                 </Column>
               </Row>
@@ -189,7 +176,7 @@ const AboutLiA = () => {
                 <Column flex={5}>
                   <Text
                     color={GREY}>
-                    {email}
+                    {data?.email}
                   </Text>
                 </Column>
               </Row>

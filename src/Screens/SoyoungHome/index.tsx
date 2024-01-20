@@ -23,6 +23,7 @@ import { AfterTimeoutFragment } from "@Components/AfterTimeoutFragment";
 import { FocusAwareStatusBar } from "@Components/StatusBar";
 import { BASE_COLOR } from "@Constant/Color";
 import SoyoungProduct from "@Screens/SoyoungProduct";
+import BtnSpinAnim from "./Components/BtnSpinAnim";
 
 const STACKS = [
   {
@@ -106,6 +107,7 @@ const SoyoungHome = () => {
           tabsEnableAnimated={true}
         />
       </AfterTimeoutFragment>
+      <BtnSpinAnim />
     </Screen>
   );
 };
