@@ -1,22 +1,39 @@
-import { StyleSheet, TouchableOpacity, View } from 'react-native'
-import React, { useCallback } from 'react'
-import Text from '@Components/Text'
 import Column from '@Components/Column'
-import { BORDER_COLOR, NEW_BASE_COLOR } from '@Constant/Color'
-import Row from '@Components/Row'
-import moment from 'moment'
-import { styleElement } from '@Constant/StyleElement'
 import Icon from '@Components/Icon'
 import HorizontalLine from '@Components/Line/HorizontalLine'
-import { useNavigate } from 'src/Hooks/useNavigation'
+import Row from '@Components/Row'
+import Text from '@Components/Text'
+import { NEW_BASE_COLOR } from '@Constant/Color'
+import { styleElement } from '@Constant/StyleElement'
 import ScreenKey from '@Navigation/ScreenKey'
+import { ExaminationResult } from '@typings/examinationResult'
+import moment from 'moment'
+import React, { useCallback, useMemo } from 'react'
+import { TouchableOpacity } from 'react-native'
+import { useNavigate } from 'src/Hooks/useNavigation'
 
-const CardExaminationResult = () => {
-  const { navigate } = useNavigate()
+type Props = {
+  data: ExaminationResult
+}
+
+const CardExaminationResult = ({ data }: Props) => {
+  const { navigation } = useNavigate()
+  const { branch, created, services } = data
 
   const _handleGoToDetail = useCallback(() => {
-    navigate(ScreenKey.DETAIL_EXAMINATION_RESULT)()
-  }, [])
+    let { _id } = data;
+    navigation.navigate(ScreenKey.DETAIL_EXAMINATION_RESULT, { _id: _id })
+  }, [data])
+
+  const generateListNameService = useMemo(() => {
+    return services?.map((item, index) => {
+      if (index !== services?.length - 1) {
+        return `${item?.service?.name}, `
+      } else {
+        return `${item?.service?.name}.`
+      }
+    })
+  }, [services])
 
   return (
     <TouchableOpacity
@@ -29,25 +46,26 @@ const CardExaminationResult = () => {
         <Column
           paddingVertical={8}
           padding={8 * 2}>
-          <Row>
+          <Row alignItems='flex-start' gap={8}>
             <Text
+              numberOfLines={2}
               weight='bold'
               color={'#1C5579'}
-              style={styleElement.flex}>Kết quả thăm khám Mí mắt</Text>
+              style={styleElement.flex}>Kết quả thăm khám {generateListNameService}</Text>
             <Text
               color={"#4A4A4A"}
               fontStyle='italic'>
-              {moment().format('HH:mm')}, {moment().format('DD/MM/YYYY')}
+              {moment(created).format('HH:mm')}, {moment(created).format('DD/MM/YYYY')}
             </Text>
           </Row>
           <Row gap={4} marginTop={4} alignItems='flex-start'>
             <Icon top={4} size={8 * 2} color='#4A4A4A' name='map-marker' />
             <Column>
               <Text color={"#4A4A4A"}>
-                Trang Beauty Center
+                {branch?.name}
               </Text>
               <Text size={12} fontStyle='italic' color={"#4A4A4A"}>
-                434 Cao Thắng, P12, Q10, TPHCM
+                {branch?.addressDetails.fullAddress}
               </Text>
             </Column>
           </Row>
@@ -72,5 +90,3 @@ const CardExaminationResult = () => {
 }
 
 export default CardExaminationResult
-
-const styles = StyleSheet.create({})

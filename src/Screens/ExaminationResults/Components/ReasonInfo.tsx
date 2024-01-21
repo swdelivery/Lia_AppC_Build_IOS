@@ -1,12 +1,18 @@
-import { StyleSheet, View } from 'react-native'
-import React from 'react'
-import Text from '@Components/Text'
-import Row from '@Components/Row'
 import Column from '@Components/Column'
+import Row from '@Components/Row'
+import Text from '@Components/Text'
 import { GREY_FOR_TITLE, NEW_BASE_COLOR, WHITE } from '@Constant/Color'
 import { styleElement } from '@Constant/StyleElement'
+import { getDetailExaminationResultState } from '@Redux/examinationResults/selectors'
+import React from 'react'
+import { useSelector } from 'react-redux'
 
 const ReasonInfo = () => {
+  const { data: {
+    currentStatus,
+    reason,
+  } } = useSelector(getDetailExaminationResultState);
+
   return (
     <Row
       alignItems='flex-start'
@@ -23,7 +29,6 @@ const ReasonInfo = () => {
         borderRadius={8 * 2}
         backgroundColor={'#0D5070'}
         flex={1}>
-
         <Column
           gap={4}
           paddingRight={8}
@@ -33,27 +38,10 @@ const ReasonInfo = () => {
             weight='bold'>
             Tình trạng:
           </Text>
-          <Row gap={8}>
-            <Column style={styles.dot} />
-            <Text color={WHITE}>
-              Một mí
-            </Text>
-          </Row>
-          <Row gap={8}>
-            <Column style={styles.dot} />
-            <Text color={WHITE}>
-              Da dư
-            </Text>
-          </Row>
-          <Row gap={8}>
-            <Column style={styles.dot} />
-            <Text color={WHITE}>
-              Mỡ thừa
-            </Text>
-          </Row>
+          <Text color={WHITE}>
+            {currentStatus}
+          </Text>
         </Column>
-
-
       </Column>
       <Column
         marginBottom={8}
@@ -62,24 +50,14 @@ const ReasonInfo = () => {
         <Column gap={4} marginHorizontal={8 * 2}>
           <Text
             color={GREY_FOR_TITLE}
-            weight='bold'>Nguyên nhân</Text>
+            weight='bold'>Nguyên nhân:</Text>
           <Text>
-            Do lão hoá cùng che độ sinh hoạt chưa hợp ly
+            {reason}
           </Text>
         </Column>
-
       </Column>
     </Row>
   )
 }
-
 export default ReasonInfo
 
-const styles = StyleSheet.create({
-  dot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: WHITE
-  }
-})

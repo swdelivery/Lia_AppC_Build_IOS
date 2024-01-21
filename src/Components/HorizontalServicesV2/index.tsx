@@ -49,6 +49,7 @@ const HorizontalServicesV2 = ({
       <View>
         <FlatList
           horizontal
+          contentContainerStyle={{ flexGrow: 1 }}
           data={items}
           renderItem={renderItem}
           windowSize={10}

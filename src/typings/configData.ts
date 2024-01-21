@@ -1,4 +1,3 @@
-
 export enum ConfigDataCode {
   BankName = "BANK_NAME",
   BankNumber = "BANK_NUMBER",
@@ -6,6 +5,8 @@ export enum ConfigDataCode {
   WheelRule = "WHEEL_RULE",
   LevelPolicy = "LEVEL_POLICY",
   FlashSaleRule = "FLASH_SALE_RULE",
+  MedicalHistory = "TSBTK",
+  PolicyRefund = "POLICY_REFUND",
   CollaborationForm = "COLLABORATION_FORM",
 }
 

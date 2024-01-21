@@ -83,6 +83,9 @@ type ScreenParams = {
       review: any
     }
   };
+  [ScreenKey.DETAIL_EXAMINATION_RESULT]: {
+    _id: string;
+  };
 };
 
 export type RootStackParamsList = {

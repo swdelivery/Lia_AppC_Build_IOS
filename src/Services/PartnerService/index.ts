@@ -349,8 +349,8 @@ const getPartnerConversations = (
   return axios
     .get(
       "/partner-conversation" +
-      "?" +
-      encodeParams({ ...params, limit: pageSize, page })
+        "?" +
+        encodeParams({ ...params, limit: pageSize, page })
     )
     .then(({ data }) => data.data);
 };
@@ -644,9 +644,39 @@ const getNews = (payload: any) => {
   const query = encodeParams({
     ...payload,
   });
+  return axios.get(`/news?${query}`).then(({ data }) => data);
+};
+
+// About LiA
+const getAboutLiA = (payload: any) => {
+  const query = encodeParams({
+    ...payload,
+  });
+  return axios.get(`/lia-info?${query}`).then(({ data }) => data);
+};
+
+// Examination Results
+const getListExaminationResults = (payload: any) => {
+  const query = encodeParams({
+    ...payload,
+  });
   return axios
-    .get(`/news?${query}`)
+    .get(`/booking/examination-results?${query}`)
     .then(({ data }) => data);
+};
+
+const getDetailExaminationResult = (_id: string) => {
+  return axios
+    .get(`/booking/examination-results/${_id}`)
+    .then(({ data }) => data);
+};
+
+// Payment Refund
+const getPayment = (payload: any) => {
+  const query = encodeParams({
+    ...payload,
+  });
+  return axios.get(`/payment?${query}`).then(({ data }) => data);
 };
 
 export default {
@@ -778,4 +808,14 @@ export default {
 
   // News
   getNews,
+
+  // About LiA
+  getAboutLiA,
+
+  // Examination Results
+  getListExaminationResults,
+  getDetailExaminationResult,
+
+  // Payment
+  getPayment,
 };

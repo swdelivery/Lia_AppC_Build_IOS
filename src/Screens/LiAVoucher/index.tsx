@@ -12,6 +12,7 @@ import Animated, {
 } from "react-native-reanimated";
 import Header from "./Components/Header";
 import { AfterTimeoutFragment } from "@Components/AfterTimeoutFragment";
+import { FocusAwareStatusBar, StatusBar } from "@Components/StatusBar";
 
 const LiAVoucher = () => {
   const preColor = useSharedValue("#000");
@@ -45,6 +46,7 @@ const LiAVoucher = () => {
 
   return (
     <Animated.View style={[styles.container, animBG]}>
+      <StatusBar barStyle="light-content" />
       <Header
         animatedPrimaryColor={animatedPrimaryColor}
         title={"LIA VOUCHER"}

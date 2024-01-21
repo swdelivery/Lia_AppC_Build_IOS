@@ -1,30 +1,38 @@
-import { FlatList, StyleSheet, View } from 'react-native'
-import React, { useCallback, useState } from 'react'
+import Button from '@Components/Button/Button'
+import Column from '@Components/Column'
+import LiAHeader from '@Components/Header/LiAHeader'
+import { IconEmptyData } from '@Components/Icon/Icon'
+import EmptyResultData from '@Components/LoadingIndicator/EmptyResultData'
+import LoadingIndicator from '@Components/LoadingIndicator/LoadingIndicator'
 import Screen from '@Components/Screen'
 import Text from '@Components/Text'
-import LiAHeader from '@Components/Header/LiAHeader'
-import Column from '@Components/Column'
-import useItemExtractor from 'src/Hooks/useItemExtractor'
-import { ExaminationResult } from '@typings/examinationResult'
-import CardExaminationResult from './Components/CardExaminationResult'
-import EmptyResultData from '@Components/LoadingIndicator/EmptyResultData'
-import { IconEmptyData } from '@Components/Icon/Icon'
-import Button from '@Components/Button/Button'
-import { useNavigate } from 'src/Hooks/useNavigation'
 import ScreenKey from '@Navigation/ScreenKey'
+import { getListExaminationResults } from '@Redux/examinationResults/actions'
+import { getListExaminationResultsState } from '@Redux/examinationResults/selectors'
+import { ExaminationResult } from '@typings/examinationResult'
+import React, { useCallback, useEffect } from 'react'
+import { FlatList, StyleSheet } from 'react-native'
+import { useDispatch, useSelector } from 'react-redux'
+import useItemExtractor from 'src/Hooks/useItemExtractor'
+import { useNavigate } from 'src/Hooks/useNavigation'
+import CardExaminationResult from './Components/CardExaminationResult'
 
 const ListExaminationResults = () => {
+  const dispatch = useDispatch()
+  const { data, isLoading } = useSelector(getListExaminationResultsState)
   const { navigate } = useNavigate()
-  const [listResults, setListResults] = useState([])
-  const [isLoading, setIsLoading] = useState(false)
+
+  useEffect(() => {
+    dispatch(getListExaminationResults.request())
+  }, [])
 
   const _handleCreateBooking = useCallback(() => {
     navigate(ScreenKey.CREATE_BOOKING)()
   }, [])
 
-  const _renderItem = useCallback(() => {
+  const _renderItem = useCallback(({ item }) => {
     return (
-      <CardExaminationResult />
+      <CardExaminationResult data={item} />
     )
   }, [])
 
@@ -36,7 +44,7 @@ const ListExaminationResults = () => {
       <FlatList
         ListEmptyComponent={
           isLoading ? (
-            <></>
+            <LoadingIndicator />
           ) : (
             <Column marginTop={8 * 20} flex={1}>
               <EmptyResultData>
@@ -60,7 +68,7 @@ const ListExaminationResults = () => {
         contentContainerStyle={styles.flatListContainer}
         keyExtractor={keyExtractor}
         renderItem={_renderItem}
-        data={listResults} />
+        data={data} />
     </Screen>
   )
 }

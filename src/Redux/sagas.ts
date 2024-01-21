@@ -29,5 +29,7 @@ export function* rootSaga() {
     fork(require("./otp/sagas").default),
     fork(require("./news/sagas").default),
     fork(require("./imageVoucher/sagas").default),
+    fork(require("./aboutLiA/sagas").default),
+    fork(require("./examinationResults/sagas").default),
   ]);
 }
