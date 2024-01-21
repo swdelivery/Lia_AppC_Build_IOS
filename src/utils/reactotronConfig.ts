@@ -12,7 +12,7 @@ if (__DEV__) {
 
 const reactotron = Reactotron.setAsyncStorageHandler(AsyncStorage)
   .configure({
-    host: scriptHostname,
+    // host: scriptHostname,
     onConnect: () => {
       if (reactotron) {
         // @ts-ignore

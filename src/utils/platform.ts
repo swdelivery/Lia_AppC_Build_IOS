@@ -6,3 +6,5 @@ export const isAndroid = Platform.OS === "android";
 export const isIos = Platform.OS === "ios";
 
 export const isTablet = DeviceInfo.isTablet();
+
+export const isAndroid13AndAbove = Number(Platform.Version) >= 33;

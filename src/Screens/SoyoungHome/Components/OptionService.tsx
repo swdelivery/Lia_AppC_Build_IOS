@@ -79,7 +79,7 @@ const OptionService = () => {
               {items.map((item, idx) => {
                 return (
                   <TouchableOpacity
-                    key={item?._id}
+                    key={item?._id + " " + idx}
                     onPress={navigate(ScreenKey.NEW_CATEGORY, {
                       parentCodeParam: item,
                     })}

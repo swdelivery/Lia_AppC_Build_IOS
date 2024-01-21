@@ -28,7 +28,11 @@ export default function usePermission(
 
   const checkPermission = useCallback(
     async (requestIfAvailable = true): Promise<PermissionStatus> => {
+      console.log("check", requestIfAvailable);
+
       let status = await Permission.checkPermission(permission);
+      console.log({ status });
+      
       if (status === "denied" && requestIfAvailable) {
         status = await Permission.requestPermission(permission);
       }

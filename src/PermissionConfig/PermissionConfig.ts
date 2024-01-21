@@ -5,6 +5,7 @@ import {
   PermissionStatus,
 } from "react-native-permissions";
 import { Platform } from "react-native";
+import { isAndroid13AndAbove } from "src/utils/platform";
 
 const PLATFORM_MICROPHONE_PERMISSIONS = {
   ios: PERMISSIONS.IOS.MICROPHONE,
@@ -13,7 +14,9 @@ const PLATFORM_MICROPHONE_PERMISSIONS = {
 
 const PLATFORM_GALLERY_PERMISSIONS = {
   ios: PERMISSIONS.IOS.PHOTO_LIBRARY,
-  android: PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE,
+  android: isAndroid13AndAbove
+    ? PERMISSIONS.ANDROID.READ_MEDIA_IMAGES
+    : PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE,
 };
 
 const PLATFORM_CAMERA_PERMISSIONS = {

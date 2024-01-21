@@ -56,6 +56,8 @@ const NewSettingApp = () => {
     [cameraPermission, checkCameraPermission]
   );
 
+  console.log({ galleryPermission });
+
   const _handleOnGallery = useCallback(
     async (value: boolean) => {
       if (!value || galleryPermission === RESULTS.BLOCKED) {
@@ -114,14 +116,14 @@ const NewSettingApp = () => {
 
           <CardSetting
             enabled={microPermission === RESULTS.GRANTED}
-            title={"Micro"}
+            title={"Micro" + microPermission}
             description={"Micro phone được sử dụng để đàm thoại với bác sĩ"}
             onUpdate={_handleOnMicro}
           />
 
           <CardSetting
             enabled={galleryPermission === RESULTS.GRANTED}
-            title={"Thư viện ảnh"}
+            title={"Thư viện ảnh" + galleryPermission}
             description={"Thông báo tin nhắn mới và các sự kiện ưu đãi"}
             onUpdate={_handleOnGallery}
           />
