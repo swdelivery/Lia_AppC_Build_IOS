@@ -8122,7 +8122,7 @@ reactotron-react-native@^5.0.4:
   optionalDependencies:
     react-native-flipper "^0.164.0"
 
-reactotron-redux@^3.1.5:
+reactotron-redux@^3.1.6:
   version "3.1.6"
   resolved "https://registry.yarnpkg.com/reactotron-redux/-/reactotron-redux-3.1.6.tgz#cd39fce5601a7cbe4fc7ee16b1ecc145892c17d7"
   integrity sha512-WvacAV8KskRTjmYISLs8/q2uNqrP8YQDo0hnUEUqpDcsiHwKDLGxPayXhRr7xJ89pROJ6AvaDiz7knTWyRPLtA==
