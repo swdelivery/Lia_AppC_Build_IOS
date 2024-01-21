@@ -33,7 +33,7 @@ const ListAllProvince = ({ onChoice, provinceChoiced }: Props) => {
   }, [location]);
 
   useEffect(() => {
-    _getAllAddressVietNam();
+    // _getAllAddressVietNam();
   }, []);
 
   // FOR API

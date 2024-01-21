@@ -1,10 +1,11 @@
 import Text from '@Components/Text'
+import TextInput from "@Components/TextInput";
 import { BORDER_COLOR } from '@Constant/Color'
 import { _moderateScale } from '@Constant/Scale'
 import { selectDescription } from '@Redux/booking/actions'
 import { getDataCreateBookingState } from '@Redux/booking/selectors'
 import React, { useCallback } from 'react'
-import { StyleSheet, TextInput, View } from 'react-native'
+import { StyleSheet, View } from "react-native";
 import { useDispatch, useSelector } from 'react-redux'
 
 const Notes = () => {
