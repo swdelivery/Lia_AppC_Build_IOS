@@ -59,17 +59,19 @@ const Banner = () => {
     flagIndexHasChanged.value = 0;
     if (listImage?.length > 0) {
       getColors(listImage[currIndexBanner]?.url).then(() => {
-        flagIndexHasChanged.value = withTiming(
-          1,
-          {
-            duration: 700,
-          },
-          (isFinished) => {
-            if (isFinished) {
-              preColor.value = primaryColor.value;
+        requestAnimationFrame(() => {
+          flagIndexHasChanged.value = withTiming(
+            1,
+            {
+              duration: 700,
+            },
+            (isFinished) => {
+              if (isFinished) {
+                preColor.value = primaryColor.value;
+              }
             }
-          }
-        );
+          );
+        })
       });
     }
   }, [currIndexBanner, listImage]);

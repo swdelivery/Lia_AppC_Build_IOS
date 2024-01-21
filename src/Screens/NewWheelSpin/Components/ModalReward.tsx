@@ -1,9 +1,11 @@
 // import Image from '@Components/Image'
+import Column from '@Components/Column'
 import ModalBottom from '@Components/ModalBottom/ModalBottom'
 import Text from '@Components/Text'
 import { _height, _moderateScale } from '@Constant/Scale'
+import { styleElement } from '@Constant/StyleElement'
 import React, { useCallback, useEffect, useRef } from 'react'
-import { Image, TouchableOpacity } from 'react-native'
+import { Alert, Image, TouchableOpacity } from 'react-native'
 import { StyleSheet, View } from 'react-native'
 import Animated, { useAnimatedStyle, useSharedValue, withRepeat, withSequence, withSpring, withTiming } from 'react-native-reanimated'
 import { getImageAvataUrl } from 'src/utils/avatar'
@@ -57,12 +59,14 @@ const ModalReward = ({ visible }: Props) => {
           style={styles.imageReward}
           source={{ uri: getImageAvataUrl(visible.selectedItem.current?.awards?.imageReward) }} />
 
-        <TouchableOpacity onPress={_handleCloseModal}>
-          <Animated.Image
-            resizeMode='contain'
-            style={[styles.btnGetReward, scaleAnim]}
-            source={require('../../../Image/spin/btnGetReward.png')} />
-        </TouchableOpacity>
+        <Animated.View style={[styles.btnGetReward, scaleAnim]}>
+          <TouchableOpacity onPress={_handleCloseModal}>
+            <Image
+              resizeMode='contain'
+              style={styles.btnGetReward__image}
+              source={require('../../../Image/spin/btnGetReward.png')} />
+          </TouchableOpacity>
+        </Animated.View>
       </View>
 
 
@@ -73,12 +77,17 @@ const ModalReward = ({ visible }: Props) => {
 export default ModalReward
 
 const styles = StyleSheet.create({
+  btnGetReward__image: {
+    width: '100%',
+    height: '100%'
+  },
   btnGetReward: {
     width: 8 * 20,
     height: 8 * 5,
     position: 'absolute',
     bottom: 8 * 3,
-    alignSelf: 'center'
+    alignSelf: 'center',
+    zIndex: 1,
   },
   imageReward: {
     width: _moderateScale(320),
