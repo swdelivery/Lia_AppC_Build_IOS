@@ -1,14 +1,11 @@
 import Avatar from '@Components/Avatar'
 import Column from '@Components/Column'
 import { IconEarth } from '@Components/Icon/Icon'
-import Image from '@Components/Image'
 import Row from '@Components/Row'
 import Text from '@Components/Text'
-import { stylesFont } from '@Constant/Font'
 import { Post } from "@typings/newfeeds"
 import moment from 'moment'
 import React from 'react'
-import { StyleSheet } from 'react-native'
 
 type Props = {
   data: Post
@@ -21,7 +18,8 @@ const AvatarName = ({ data }: Props) => {
       marginTop={8 * 2}
       marginHorizontal={8 * 2}>
       <Avatar
-        style={styles.containerAvatar}
+        size={8 * 5}
+        circle
         avatar={data?.partner?.fileAvatar} />
       <Column
         flex={1}
@@ -42,15 +40,3 @@ const AvatarName = ({ data }: Props) => {
 }
 
 export default AvatarName
-
-const styles = StyleSheet.create({
-  name: {
-    fontSize: 14,
-    ...stylesFont.fontNolanBold
-  },
-  containerAvatar: {
-    width: 8 * 5,
-    height: 8 * 5,
-    borderRadius: 8 * 5 / 2
-  }
-})

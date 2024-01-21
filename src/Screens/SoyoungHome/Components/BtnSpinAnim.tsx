@@ -116,6 +116,6 @@ const styles = StyleSheet.create({
     right: 8 * 2,
     bottom: 8 * 1,
     borderRadius: 8 * 5,
-    zIndex: 10
+    // zIndex: 1
   }
 })

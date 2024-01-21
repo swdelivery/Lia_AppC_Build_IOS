@@ -52,13 +52,11 @@ const ModalReward = ({ visible }: Props) => {
       justifyContent='center'
       alignItems='center'
       visible={visible.visible} >
-
       <View>
         <Image
           resizeMode='contain'
           style={styles.imageReward}
           source={{ uri: getImageAvataUrl(visible.selectedItem.current?.awards?.imageReward) }} />
-
         <Animated.View style={[styles.btnGetReward, scaleAnim]}>
           <TouchableOpacity onPress={_handleCloseModal}>
             <Image
@@ -68,8 +66,6 @@ const ModalReward = ({ visible }: Props) => {
           </TouchableOpacity>
         </Animated.View>
       </View>
-
-
     </ModalBottom>
   )
 }

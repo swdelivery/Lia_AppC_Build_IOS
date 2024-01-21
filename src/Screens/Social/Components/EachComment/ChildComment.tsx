@@ -12,6 +12,7 @@ import { useDispatch } from 'react-redux'
 import { createReactionComment, selectCommentToReply } from '@Redux/newfeeds/actions'
 import useHapticCallback from 'src/Hooks/useHapticCallback'
 import { styleElement } from '@Constant/StyleElement'
+import Avatar from '@Components/Avatar'
 
 type Props = {
   data: CommentPost
@@ -44,8 +45,9 @@ const ChildComment = ({ data }: Props) => {
         gap={8}
         alignItems='flex-start'
         marginHorizontal={0}>
-        <Image
-          style={styles.avatar}
+        <Avatar
+          circle
+          size={8 * 3}
           avatar={partner?.fileAvatar} />
         <Column flex={1} gap={4}>
           <Column
@@ -111,11 +113,3 @@ const ChildComment = ({ data }: Props) => {
 }
 
 export default ChildComment
-
-const styles = StyleSheet.create({
-  avatar: {
-    width: 8 * 3,
-    height: 8 * 3,
-    borderRadius: 8 * 3 / 2
-  }
-})
