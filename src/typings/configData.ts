@@ -1,4 +1,3 @@
-
 export enum ConfigDataCode {
   BankName = "BANK_NAME",
   BankNumber = "BANK_NUMBER",
@@ -7,12 +6,21 @@ export enum ConfigDataCode {
   LevelPolicy = "LEVEL_POLICY",
   FlashSaleRule = "FLASH_SALE_RULE",
   MedicalHistory = "TSBTK",
-  PolicyRefund = "POLICY_REFUND"
+  PolicyRefund = "POLICY_REFUND",
+  CollaborationForm = "COLLABORATION_FORM",
 }
+
+export type ConfigDataValue =
+  | string
+  | {
+      item: string;
+    };
 
 export type ConfigData = {
   _id: string;
   code: string;
-  value: string;
+  value: any;
   id: string;
+  name: string;
+  description: string;
 };

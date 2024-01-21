@@ -4,7 +4,7 @@ import Text from "@Components/Text";
 import { _moderateScale } from "@Constant/Scale";
 import Row from "@Components/Row";
 import Column from "@Components/Column";
-import { BASE_COLOR, BLACK, BLACK_OPACITY_7, BLACK_OPACITY_8, WHITE } from "@Constant/Color";
+import { BASE_COLOR, BLACK, BLACK_OPACITY_7, WHITE } from "@Constant/Color";
 import { Conversation } from "@typings/chat";
 import ContentLoader, { Circle, Rect } from "react-content-loader/native";
 import Avatar from "@Components/Avatar";

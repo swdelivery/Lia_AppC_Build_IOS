@@ -37,7 +37,7 @@ export default function ListEmpty({
       pointerEvents="none"
     >
       {image}
-      <Text color={titleColor} weight="bold" size={17} style={styles.title}>
+      <Text color={titleColor} size={16} style={styles.title}>
         {title}
       </Text>
     </View>

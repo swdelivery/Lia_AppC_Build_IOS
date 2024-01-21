@@ -1,3 +1,4 @@
+import FastImage from "@Components/FastImage";
 import Image from "@Components/Image";
 import { _moderateScale, _widthScale } from "@Constant/Scale";
 import { Message } from "@typings/chat";
@@ -62,7 +63,11 @@ export default function ImageMessage({ item }: Props) {
             activeOpacity={0.8}
             style={styles.imageSingle}
           >
-            <Image auto style={styles.imageSingle} avatar={item.images[0]} />
+            <FastImage
+              auto
+              style={styles.imageSingle}
+              uri={getImageAvataUrl(item.images[0])}
+            />
           </TouchableOpacity>
         </>
       )}

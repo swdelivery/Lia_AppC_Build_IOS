@@ -5,7 +5,7 @@ import moment from 'moment'
 import { Alert, Text } from "react-native";
 import { stylesFont } from "./Font";
 import { GREEN_SUCCESS, RED } from "./Color";
-
+import { isValidPhoneNumber } from "react-phone-number-input";
 
 // export const _generateLink = async (param, value, param2, value2, param3, value3, param4, value4) => {
 //     console.log(param, value, param2, value2);
@@ -23,12 +23,25 @@ import { GREEN_SUCCESS, RED } from "./Color";
 //     return link
 // }
 
-
 export function validateEmail(email: string) {
   const re =
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(String(email).toLowerCase());
 }
+
+export const validatePhoneNumber = (phone: string, callingCode: string) => {
+  const numberRegex = /^[0-9]+$/;
+  if (!phone) {
+    return "Vui lòng nhập số điện thoại";
+  } else if (
+    !isValidPhoneNumber("+" + callingCode + phone) ||
+    !numberRegex.test(phone)
+  ) {
+    return "Số điện thoại không hợp lệ";
+  } else {
+    return "";
+  }
+};
 
   
 // substring an array to shortly...

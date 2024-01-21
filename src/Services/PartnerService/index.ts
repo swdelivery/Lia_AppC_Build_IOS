@@ -349,8 +349,8 @@ const getPartnerConversations = (
   return axios
     .get(
       "/partner-conversation" +
-      "?" +
-      encodeParams({ ...params, limit: pageSize, page })
+        "?" +
+        encodeParams({ ...params, limit: pageSize, page })
     )
     .then(({ data }) => data.data);
 };
@@ -635,14 +635,16 @@ const changePass = (payload: any) => {
     .then(({ data }) => data);
 };
 
+const requestCollab = (payload: any) => {
+  return axios.post("/collaborate", payload).then(({ data }) => data);
+};
+
 // News
 const getNews = (payload: any) => {
   const query = encodeParams({
     ...payload,
   });
-  return axios
-    .get(`/news?${query}`)
-    .then(({ data }) => data);
+  return axios.get(`/news?${query}`).then(({ data }) => data);
 };
 
 // About LiA
@@ -650,9 +652,7 @@ const getAboutLiA = (payload: any) => {
   const query = encodeParams({
     ...payload,
   });
-  return axios
-    .get(`/lia-info?${query}`)
-    .then(({ data }) => data);
+  return axios.get(`/lia-info?${query}`).then(({ data }) => data);
 };
 
 // Examination Results
@@ -676,11 +676,8 @@ const getPayment = (payload: any) => {
   const query = encodeParams({
     ...payload,
   });
-  return axios
-    .get(`/payment?${query}`)
-    .then(({ data }) => data);
+  return axios.get(`/payment?${query}`).then(({ data }) => data);
 };
-
 
 export default {
   partnerLogout,
@@ -807,6 +804,8 @@ export default {
   verifyOtpResetPass,
   changePass,
 
+  requestCollab,
+
   // News
   getNews,
 
@@ -818,5 +817,5 @@ export default {
   getDetailExaminationResult,
 
   // Payment
-  getPayment
+  getPayment,
 };

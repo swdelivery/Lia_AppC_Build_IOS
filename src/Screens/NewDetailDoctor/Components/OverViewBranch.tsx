@@ -24,6 +24,8 @@ const OverViewBranch = ({ branch }: Props) => {
     handlePress(branch);
   }, [branch]);
 
+  console.log({ branch: branch?.branchFileArr });
+  
   return (
     <View style={styles.container}>
       <Text weight="bold">Địa điểm công tác</Text>

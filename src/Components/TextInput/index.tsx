@@ -10,6 +10,7 @@ import {
 } from "@Constant/Color";
 import { stylesFont } from "@Constant/Font";
 import { _moderateScale } from "@Constant/Scale";
+import { styleElement } from "@Constant/StyleElement";
 import React, { forwardRef } from "react";
 import {
   StyleSheet,
@@ -58,7 +59,7 @@ export function FormTextInput({
         borderWidth={1}
         paddingHorizontal={10}
       >
-        <TextInput {...props} />
+        <TextInput style={styleElement.flex} {...props} />
       </Row>
       {error && error.length > 0 && (
         <Text style={styles.error_text}>{error}</Text>

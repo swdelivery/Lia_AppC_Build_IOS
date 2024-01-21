@@ -8,9 +8,7 @@ import { _heightScale, _widthScale, _moderateScale } from '../../Constant/Scale'
 import * as ActionType from '../../Redux/Constants/ActionType';
 import Store from "../../Redux/store";
 import { styleElement } from '../../Constant/StyleElement';
-import { sizeIcon } from '../../Constant/Icon';
-import ScreenKey from '../../Navigation/ScreenKey'
-import { navigation } from '../../../rootNavigation';
+import { sizeIcon } from "../../Constant/Icon";
 import ImagePicker from 'react-native-image-crop-picker';
 import { uploadModule } from '../../Redux/Action/BookingAction'
 import { updateProfilePartner } from '../../Redux/Action/ProfileAction';

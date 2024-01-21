@@ -1,42 +1,92 @@
 import Screen from "@Components/Screen";
 import React from "react";
-import { View, StyleSheet, ScrollView } from "react-native";
+import { StyleSheet, ScrollView } from "react-native";
 import Banner from "./components/Banner";
 import Text from "@Components/Text";
-import { BASE_COLOR, BORDER_INPUT_TEXT } from "@Constant/Color";
+import { BASE_COLOR } from "@Constant/Color";
 import Column from "@Components/Column";
 import StickyBackground from "@Components/StickyBackground";
 import PhoneInput from "@Components/PhoneInput";
 import { FormTextInput } from "@Components/TextInput";
-import useFormData from "src/Hooks/useFormData";
+import useFormData, {
+  emailField,
+  phoneField,
+  requiredField,
+} from "src/Hooks/useFormData";
 import { CallingCode } from "react-native-country-picker-modal";
 import CollaborationType from "./components/CollaborationType";
-import BottomSheet from "@Components/BottomSheet";
 import useVisible from "src/Hooks/useVisible";
-import useAnimatedVisible from "src/Hooks/useAnimatedVisible";
 import Button from "@Components/Button/Button";
 import LiAHeader from "@Components/Header/LiAHeader";
 import { useNavigate } from "src/Hooks/useNavigation";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import CollaborationTypePicker from "./components/CollaborationTypePicker";
+import useApi from "src/Hooks/services/useApi";
+import PartnerService from "src/Services/PartnerService";
+import { LoadingModal } from "@Components/Loading/LoadingView";
+import Toast from "react-native-toast-message";
+
+const emailValidation = (value: string) => {
+  if (!value) {
+    return "";
+  }
+  return emailField(value);
+};
 
 type FormType = {
   name: string;
   phone: string;
-  countryCode: CallingCode;
+  callingCode: CallingCode;
   email: string;
+  collaborationType: string;
 };
 
 export default function Collaboration() {
   const { navigation } = useNavigate();
   const collaborationTypePicker = useVisible();
   const { top } = useSafeAreaInsets();
+  const { isLoading, performRequest } = useApi(
+    PartnerService.requestCollab,
+    null
+  );
 
-  const formData = useFormData<FormType>({
-    name: "",
-    phone: "",
-    countryCode: "84",
-    email: "",
-  });
+  const formData = useFormData<FormType>(
+    {
+      name: "",
+      phone: "",
+      callingCode: "84",
+      email: "",
+      collaborationType: "",
+    },
+    (values) => {
+      if (!formData.checkValid()) {
+        return;
+      }
+      const payload = {
+        name: values.name,
+        phone: {
+          nationCode: "+" + values.callingCode,
+          phoneNumber: values.phone,
+        },
+        email: values.email,
+        collabForm: values.collaborationType,
+      };
+      performRequest(payload);
+      Toast.show({
+        text1: "Gửi yêu cầu thành công",
+        type: "success",
+      });
+      navigation.goBack();
+    },
+    {
+      validates: {
+        name: requiredField,
+        phone: phoneField,
+        email: emailValidation,
+        collaborationType: requiredField,
+      },
+    }
+  );
 
   return (
     <Screen safeBottom>
@@ -58,20 +108,33 @@ export default function Collaboration() {
             placeholder="Họ tên"
             value={formData.values.name}
             onChangeText={formData.updateValue("name")}
+            error={formData.errors.name}
           />
           <PhoneInput
             label="Số điện thoại"
             content={formData.values.phone}
-            countryCallingCode={formData.values.countryCode}
+            countryCallingCode={formData.values.callingCode}
+            onSelectionCallingCode={formData.updateValue("callingCode")}
+            onChangeText={formData.updateValue("phone")}
+            onBlur={formData.validate("phone")}
+            errorMessage={formData.errors.phone}
           />
           <FormTextInput
             placeholder="Email"
             value={formData.values.email}
             onChangeText={formData.updateValue("email")}
+            onBlur={formData.validate("email")}
+            error={formData.errors.email}
+            keyboardType="email-address"
+            autoCapitalize="none"
           />
         </Column>
         <Column backgroundColor={"#F3F4F9"} height={5} marginVertical={26} />
-        <CollaborationType onPress={collaborationTypePicker.show} />
+        <CollaborationType
+          value={formData.values.collaborationType}
+          onPress={collaborationTypePicker.show}
+          error={formData.errors.collaborationType}
+        />
 
         <Column flex={1} />
         <Button.Gradient
@@ -80,6 +143,7 @@ export default function Collaboration() {
           titleSize={20}
           horizontal
           colors={["#2A78BD", "#21587E"]}
+          onPress={formData.submit}
         />
       </ScrollView>
       <LiAHeader
@@ -87,53 +151,13 @@ export default function Collaboration() {
         containerStyle={[styles.header, { marginTop: top }]}
         onBackPress={navigation.goBack}
       />
-      <BottomSheet
+      <CollaborationTypePicker
         visible={collaborationTypePicker.visible}
         onClose={collaborationTypePicker.hide}
-        hideNavigator
-        contentContainerStyle={styles.bottomSheet}
-      >
-        <Column
-          backgroundColor={"white"}
-          marginHorizontal={16}
-          borderRadius={12}
-        >
-          <Column
-            height={57}
-            alignItems="center"
-            justifyContent="center"
-            borderBottomWidth={1}
-            borderBottomColor={BORDER_INPUT_TEXT}
-          >
-            <Text size={18}>Tôi là Bác sĩ</Text>
-          </Column>
-          <Column
-            height={57}
-            alignItems="center"
-            justifyContent="center"
-            borderBottomWidth={1}
-            borderBottomColor={BORDER_INPUT_TEXT}
-          >
-            <Text size={18}>Bệnh viện thẩm mỹ</Text>
-          </Column>
-          <Column height={57} alignItems="center" justifyContent="center">
-            <Text size={18}>Phòng khám, spa, cơ sở y tế</Text>
-          </Column>
-        </Column>
-        <Column
-          alignSelf="center"
-          borderWidth={1}
-          borderColor={"white"}
-          borderRadius={8}
-          paddingHorizontal={8}
-          paddingVertical={4}
-          marginVertical={16}
-        >
-          <Text color={"white"} size={18}>
-            Quay lại
-          </Text>
-        </Column>
-      </BottomSheet>
+        onCollaborationType={formData.updateValue("collaborationType")}
+      />
+
+      <LoadingModal visible={isLoading} />
     </Screen>
   );
 }

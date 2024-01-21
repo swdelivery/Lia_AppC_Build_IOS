@@ -1,9 +1,12 @@
+import CachedImageView from "@Components/CachedImage";
 import Column from "@Components/Column";
 import HorizontalProgress from "@Components/HoriontalProgress";
 import Image from "@Components/Image";
 import Row from "@Components/Row";
 import Text from "@Components/Text";
 import {
+  GREEN,
+  GREY,
   MAIN_RED,
   MAIN_RED_100,
   MAIN_RED_600,
@@ -21,8 +24,9 @@ import { StyleSheet } from "react-native";
 import useServiceDetailsNavigation from "src/Hooks/navigation/useServiceDetailsNavigation";
 import useCallbackItem from "src/Hooks/useCallbackItem";
 import { FlameIcon } from "src/SGV";
+import { isIos } from "src/utils/platform";
 
-const IMAGE_WIDTH = _width / 2 - 8 * 2 + 1;
+const IMAGE_WIDTH = _width / 2 - 8 - 2;
 const IMAGE_HEIGHT = IMAGE_WIDTH * SERVICE_BANNER_RATIO;
 type Props = {
   item: FlashSaleService;
@@ -63,7 +67,7 @@ export default function FlashSaleItem({ item, isUpcoming, onBooking }: Props) {
     <Column
       flex={1 / 2}
       width={_width / 2}
-      height={250}
+      height={isIos ? 245 : 235}
       paddingLeft={4}
       paddingRight={4}
       marginBottom={8}
@@ -76,7 +80,7 @@ export default function FlashSaleItem({ item, isUpcoming, onBooking }: Props) {
         style={styleElement.shadow}
       >
         <Column onPress={onServiceDetails} flex={1}>
-          <Image
+          <CachedImageView
             avatar={
               item.service.avatar ?? head(item.service.representationFileArr)
             }
@@ -87,7 +91,11 @@ export default function FlashSaleItem({ item, isUpcoming, onBooking }: Props) {
               {item.service.name}
             </Text>
           </Column>
-          <Row justifyContent="space-between" paddingHorizontal={4}>
+          <Row
+            justifyContent="space-between"
+            alignItems="flex-end"
+            paddingHorizontal={4}
+          >
             <Text weight="bold" color={MAIN_RED} size={16}>
               {`${
                 isUpcoming
@@ -95,25 +103,25 @@ export default function FlashSaleItem({ item, isUpcoming, onBooking }: Props) {
                   : formatMonney(item.finalPrice)
               }`}
             </Text>
-            <Text size={12} textDecorationLine="line-through">
+            <Text size={12} textDecorationLine="line-through" color={GREY}>
               {formatMonney(item.originalPrice)}
             </Text>
           </Row>
           <Column marginTop={4} paddingTop={8} paddingHorizontal={4}>
             <HorizontalProgress
               percent={percentage}
-              height={12}
+              height={isIos ? 12 : 10}
               colors={[MAIN_RED_700, MAIN_RED_700]}
               backgroundColor={MAIN_RED_100}
             />
             <Row style={StyleSheet.absoluteFill}>
               <Column flex={Math.max(percentage / 100, 0.1)} />
-              <FlameIcon width={22} height={22} style={styles.fireIcon} />
+              <FlameIcon width={18} height={18} style={styles.fireIcon} />
             </Row>
             <Text
               top={8}
               removePadding
-              size={10}
+              size={9}
               weight="bold"
               color={"white"}
               style={styles.progress}
@@ -134,7 +142,9 @@ export default function FlashSaleItem({ item, isUpcoming, onBooking }: Props) {
           onPress={trigger(onBooking)}
           disabled={!canBook}
         >
-          <Text color={!canBook ? TITLE_GREY : MAIN_RED_600}>{"Đặt hẹn"}</Text>
+          <Text color={!canBook ? TITLE_GREY : MAIN_RED_600} size={12}>
+            {"Đặt hẹn"}
+          </Text>
         </Column>
       </Column>
     </Column>
@@ -146,13 +156,14 @@ const styles = StyleSheet.create({
     width: IMAGE_WIDTH,
     height: IMAGE_HEIGHT,
     borderRadius: 8,
+    overflow: "hidden",
   },
   progress: {
     position: "absolute",
     alignSelf: "center",
   },
   fireIcon: {
-    marginLeft: -22,
-    marginBottom: 2,
+    marginLeft: -18,
+    marginBottom: 0,
   },
 });

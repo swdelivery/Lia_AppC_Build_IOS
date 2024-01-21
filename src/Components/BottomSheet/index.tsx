@@ -5,6 +5,7 @@ import React, {
   useEffect,
   useMemo,
   useRef,
+  useState,
 } from "react";
 import {
   LayoutChangeEvent,
@@ -64,11 +65,13 @@ const BottomSheet = ({
   const contentHeight = useRef(0);
   const { bottom } = useSafeAreaInsets();
   const currentCallback = useRef<any>();
+  const [isVisible, setVisible] = useState(false);
 
   useEffect(() => {
     if (visible) {
       expand();
     } else {
+      collapse();
     }
   }, [visible]);
 
@@ -89,9 +92,11 @@ const BottomSheet = ({
     if (currentCallback.current) {
       currentCallback.current();
     }
+    setVisible(false);
   }, [onClose]);
 
   const expand = useCallback(() => {
+    setVisible(true);
     tranYModal.value = withSpring(0, {
       overshootClamping: true,
     });
@@ -141,7 +146,7 @@ const BottomSheet = ({
     [closeWithCallback]
   );
 
-  if (!visible) {
+  if (!isVisible) {
     return null;
   }
 
@@ -234,7 +239,39 @@ function MenuItem({
   );
 }
 
+function Button({
+  children,
+  triggerAfterAnimation = false,
+  onPress,
+  style,
+}: {
+  children: ReactNode;
+  triggerAfterAnimation?: boolean;
+  onPress?: () => void;
+  style?: StyleProp<ViewStyle>;
+}) {
+  const { close } = useBottomSheetContext();
+
+  const handlePress = useCallback(() => {
+    if (triggerAfterAnimation) {
+      close(onPress)();
+    } else {
+      close()();
+      if (onPress) {
+        onPress();
+      }
+    }
+  }, [triggerAfterAnimation, onPress, close]);
+
+  return (
+    <Pressable style={style} onPress={handlePress}>
+      {children}
+    </Pressable>
+  );
+}
+
 BottomSheet.MenuItem = MenuItem;
+BottomSheet.Button = Button;
 
 export default BottomSheet;
 
