@@ -635,6 +635,10 @@ const changePass = (payload: any) => {
     .then(({ data }) => data);
 };
 
+const requestCollab = (payload: any) => {
+  return axios.post("/collaborate", payload).then(({ data }) => data);
+};
+
 // News
 const getNews = (payload: any) => {
   const query = encodeParams({
@@ -770,6 +774,8 @@ export default {
   verifyOtpResetPass,
   changePass,
 
+  requestCollab,
+
   // News
-  getNews
+  getNews,
 };

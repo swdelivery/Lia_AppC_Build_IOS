@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { validateEmail } from "@Constant/Utils";
+import { validateEmail, validatePhoneNumber } from "@Constant/Utils";
 import { isEqual } from "lodash";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
@@ -7,8 +7,6 @@ export default function useFormData<T = any>(
   initialValues: T,
   onSubmit?: (values: T) => void,
   options?: {
-    /** deprecated */
-    validate?: (values: T) => boolean;
     validates?: Partial<Record<keyof T, (value: any, values: T) => string>>;
   }
 ) {
@@ -31,11 +29,8 @@ export default function useFormData<T = any>(
         return validator ? !validator(value, values) : true;
       });
     }
-    if (options && options.validate) {
-      return options.validate(values);
-    }
     return true;
-  }, [values]);
+  }, [values, options]);
 
   const setValue = useCallback(<K extends keyof T>(key: K, value: T[K]) => {
     if (isEqual(valuesRef.current[key], value)) {
@@ -59,10 +54,24 @@ export default function useFormData<T = any>(
             [field]: error,
           }));
         }
+        return !error;
       }
+      return true;
     },
     [options?.validates]
   );
+
+  const checkValid = useCallback(() => {
+    let valid = true;
+    if (options && options.validates) {
+      Object.keys(options.validates).forEach((key: keyof T) => {
+        if (!validate(key)()) {
+          valid = false;
+        }
+      });
+    }
+    return valid;
+  }, [values, validate, options]);
 
   const updateValue = useCallback(
     <K extends keyof T>(key: K, shouldValidate = false) =>
@@ -70,6 +79,11 @@ export default function useFormData<T = any>(
         setValue(key, value);
         if (shouldValidate) {
           validate(key);
+        } else {
+          setErrors((prev) => ({
+            ...prev,
+            [key]: "",
+          }));
         }
       },
     [setValue, validate]
@@ -132,6 +146,7 @@ export default function useFormData<T = any>(
     setValues,
     submit,
     isValid,
+    checkValid,
     validate,
     errors,
     clearError,
@@ -148,7 +163,7 @@ export function requiredField(value: any) {
     valid = value.length > 0;
   }
   if (!valid) {
-    return "This is required field";
+    return "Không được bỏ trống";
   }
   return "";
 }
@@ -156,14 +171,18 @@ export function requiredField(value: any) {
 export function emailField(value: string) {
   const isValid = validateEmail(value);
   if (!isValid) {
-    return "Email is not valid";
+    return "Email không hợp lệ";
   }
   return "";
 }
 
+export function phoneField(value: string, values: any) {
+  return validatePhoneNumber(value, values.callingCode);
+}
+
 export function booleanField(value?: boolean) {
   if (!value) {
-    return "This is required field";
+    return "Không hợp lệ";
   }
   return "";
 }
