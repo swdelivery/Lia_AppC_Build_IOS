@@ -20,6 +20,8 @@ import { useNavigate } from "src/Hooks/useNavigation";
 import Column from "@Components/Column";
 import { StatusBar } from "@Components/StatusBar";
 import SVGBackWhite from "src/SGV/backWhite.svg";
+import useApi from "src/Hooks/services/useApi";
+import PartnerService from "src/Services/PartnerService";
 
 type Props = {
   conversation: Conversation;
@@ -110,13 +112,24 @@ const Header = ({ conversation }: Props) => {
 };
 
 function DoctorInfo({ conversation }: { conversation: any }) {
+  const { data, performRequest } = useApi(
+    PartnerService.getDoctorDetails,
+    null
+  );
+  const { navigation } = useNavigate();
   const mainDoctor = useMemo(() => {
     return conversation?.assignedUsers?.find((item) => item?.isMain);
-  }, [conversation]);  
+  }, [conversation]);
 
   const _handleNavigate = useCallback(() => {
     // PENDING FOR WAITING BACKEND
     console.log({ mainDoctor, conversation });
+
+    if (mainDoctor?.employeeType == 'BS') {
+      performRequest(mainDoctor?.profile._id);
+      // navigation.navigate(ScreenKey.DETAIL_DOCTOR, { doctor: mainDoctor?.profile });
+    }
+
   }, [mainDoctor])
 
   if (mainDoctor) {
