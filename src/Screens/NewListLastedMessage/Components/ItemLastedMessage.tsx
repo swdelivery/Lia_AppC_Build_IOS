@@ -27,8 +27,8 @@ const ItemLastedMessage = ({ item, onPress }: Props) => {
     return item.assignedUsers[0];
   }, [item]);
 
-  const isSeen = useMemo(() => {
-    return item.type === "assistant" || item.latestMessage?.isPartnerSeen;
+  const isUnread = useMemo(() => {
+    return item.type !== "assistant" && item.unreadCount > 0;
   }, [item]);
 
   const lastMessageContent = useMemo(() => {
@@ -87,20 +87,24 @@ const ItemLastedMessage = ({ item, onPress }: Props) => {
           />
         )}
         <Column gap={_moderateScale(4)} flex={1}>
-          <Text weight={isSeen ? "bold" : "bold"} color={isSeen ? BLACK_OPACITY_7 : BLACK} size={14}>
+          <Text
+            weight={"bold"}
+            color={!isUnread ? BLACK_OPACITY_7 : BLACK}
+            size={14}
+          >
             {item.type === "assistant" || item.type === "consultation"
               ? item.name
               : assignedUser?.name}
           </Text>
-          <Text weight={isSeen ? "regular" : "bold"} numberOfLines={1}>
+          <Text weight={!isUnread ? "regular" : "bold"} numberOfLines={1}>
             {lastMessageContent}
           </Text>
         </Column>
-        <Column gap={_moderateScale(4)} alignItems="flex-end">
-          <Text weight={isSeen ? "regular" : "bold"} fontStyle="italic">
+        <Column gap={4} alignItems="flex-end">
+          <Text weight={!isUnread ? "regular" : "bold"} fontStyle="italic">
             {lastMessageTime}
           </Text>
-          {!isSeen ? (
+          {isUnread ? (
             <View style={styles.countBox}>
               <Text weight="bold" size={12} color={WHITE}>
                 {item.unreadCount}

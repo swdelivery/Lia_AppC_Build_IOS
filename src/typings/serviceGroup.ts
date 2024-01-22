@@ -59,7 +59,7 @@ export type FlashSaleData = {
   isDelete: boolean;
   promotionId: string;
   serviceCode: string;
-  discountType: "percent";
+  discountType: "percent" | "fixed";
   discountAmount: number;
   originalPrice: number;
   finalPrice: number;

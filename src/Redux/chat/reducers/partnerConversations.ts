@@ -77,7 +77,14 @@ const markAsRead: Handler<State> = (state, { payload }) => {
   const data = [...state.data];
   const index = state.data.findIndex((item) => item?._id == payload);
   if (index >= 0) {
-    data[index].unreadCount = 0;
+    data[index] = {
+      ...data[index],
+      unreadCount: 0,
+      latestMessage: {
+        ...data[index].latestMessage,
+        isPartnerSeen: true,
+      },
+    };
   }
 
   return {
