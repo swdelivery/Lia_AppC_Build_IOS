@@ -20,5 +20,6 @@ export type AboutLiA = {
     district: string;
     ward: string;
     street: string;
-  }
-}
+    fullAddress: string;
+  };
+};

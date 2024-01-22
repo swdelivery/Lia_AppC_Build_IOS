@@ -9,6 +9,7 @@ import Spacer from "@Components/Spacer";
 import { StatusBar } from "@Components/StatusBar";
 import Text from "@Components/Text";
 import {
+  BASE_COLOR,
   BLACK_OPACITY_4,
   GREY,
   GREY_FOR_TITLE,
@@ -92,7 +93,7 @@ const AboutLiA = () => {
 
           <ScrollView>
             <Column alignItems="center" marginTop={40} marginHorizontal={16}>
-              <Text size={18} weight="bold">
+              <Text color={BASE_COLOR} size={18} weight="bold">
                 {data?.name ?? ""}
               </Text>
               <Text>{data?.description ?? ""}</Text>
@@ -151,41 +152,35 @@ const AboutLiA = () => {
               backgroundColor={"#F3F4F9"}
             />
 
-            <Column gap={8} padding={8 * 2}>
-              <Text weight="bold" size={16}>
+            <Column gap={12} padding={8 * 2}>
+              <Text weight="bold" size={16} color={BASE_COLOR}>
                 Thông tin về LiA
               </Text>
 
               <Row>
                 <Column flex={1}>
-                  <Text color={GREY} weight="bold">
-                    Hotline
-                  </Text>
+                  <Text weight="bold">Hotline</Text>
                 </Column>
                 <Column flex={5}>
-                  <Text color={GREY_FOR_TITLE} weight="bold">
+                  <Text color={BASE_COLOR} weight="bold">
                     {data?.hotline}
                   </Text>
                 </Column>
               </Row>
               <Row>
                 <Column flex={1}>
-                  <Text color={GREY} weight="bold">
-                    Email
-                  </Text>
+                  <Text weight="bold">Email</Text>
                 </Column>
                 <Column flex={5}>
                   <Text color={GREY}>{data?.email}</Text>
                 </Column>
               </Row>
-              <Column>
+              <Column gap={8}>
                 <Column>
-                  <Text color={GREY} weight="bold">
-                    Địa chỉ
-                  </Text>
+                  <Text weight="bold">Địa chỉ</Text>
                 </Column>
                 <Column>
-                  <Text color={GREY}>434 CAO THANG P12 Q10 TPHCM</Text>
+                  <Text color={GREY}>{data?.address?.fullAddress}</Text>
                 </Column>
               </Column>
             </Column>
