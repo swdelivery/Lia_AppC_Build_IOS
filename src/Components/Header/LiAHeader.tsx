@@ -23,7 +23,7 @@ type Props = {
   bg?: ColorValue;
   safeTop?: boolean;
   titleColor?: ColorValue;
-  title: string;
+  title?: string;
   backDisable?: boolean;
   right?: React.ReactElement;
   bottomBorderColor?: ColorValue;
