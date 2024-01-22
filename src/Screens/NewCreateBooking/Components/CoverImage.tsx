@@ -1,23 +1,22 @@
-import { Image, StyleSheet, View } from "react-native";
-import React, { useMemo } from "react";
-import { _height, _heightScale, _moderateScale, _width } from "../../../Constant/Scale";
-import FastImage from "@Components/FastImage";
+import { Image, StyleSheet } from "react-native";
+import React from "react";
+import {
+  _height,
+  _heightScale,
+  _moderateScale,
+  _width,
+} from "../../../Constant/Scale";
 import Animated, {
   SharedValue,
   interpolate,
   useAnimatedStyle,
 } from "react-native-reanimated";
-import { getBranchDetailsState } from "@Redux/branch/selectors";
-import { useSelector } from "react-redux";
-import { isEmpty } from "lodash";
-import { getImageAvataUrl } from "src/utils/avatar";
 
 type Props = {
   scrollY: SharedValue<number>;
 };
 
 const CoverImage = ({ scrollY }: Props) => {
-
   const animatedStyle = useAnimatedStyle(() => {
     return {
       transform: [
@@ -37,11 +36,11 @@ const CoverImage = ({ scrollY }: Props) => {
 
   return (
     <Animated.View style={[styles.coverImage, animatedStyle]}>
-        <Image
-          style={styles.coverImage__image}
-          source={require('../../../NewImage/bannerDoctorBooking.png')}
-          resizeMode="cover"
-        />
+      <Image
+        style={styles.coverImage__image}
+        source={require("../../../NewImage/bannerDoctorBooking.png")}
+        resizeMode="cover"
+      />
     </Animated.View>
   );
 };

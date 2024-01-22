@@ -47,8 +47,8 @@ export function FormTextInput({
   return (
     <Column>
       <Row
-        paddingVertical={_moderateScale(8 * 2)}
-        borderRadius={_moderateScale(8)}
+        paddingVertical={16}
+        borderRadius={8}
         borderColor={
           error
             ? ERROR_COLOR

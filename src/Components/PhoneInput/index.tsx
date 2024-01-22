@@ -57,7 +57,7 @@ export default function PhoneInput({
         borderWidth={1}
         paddingHorizontal={10}
       >
-        <Column height={8 * 3}>
+        <Column>
           <CountryPicker
             withFilter={true}
             withFlag={true}
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
   countryCode: {
     paddingVertical: 0,
     paddingTop: 0,
-    marginTop: -5,
+    marginTop: -10,
     marginBottom: -13,
   },
 });

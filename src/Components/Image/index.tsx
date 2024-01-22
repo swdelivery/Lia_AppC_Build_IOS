@@ -68,9 +68,6 @@ function DefaultPlaceholder({ colors }: { colors: string[] }) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    overflow: "hidden",
-  },
   placeholder: {
     width: "100%",
     height: "100%",
