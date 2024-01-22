@@ -31,7 +31,6 @@ const ModalPickToppingNew = ({ confirm, data, show, hide }: Props) => {
   const [listChoice, setListChoice] = useState([]);
   const [isCollapDescription, setIsCollapDescription] = useState(false);
   const [currDescriptionTopping, setCurrDescriptionTopping] = useState({});
-  const { top, bottom } = useSafeAreaInsets();
 
   useEffect(() => {
     if (show) {

@@ -24,7 +24,7 @@ const QuestionVideo = ({ practitioner }: Props) => {
   return (
     <View style={styles.container}>
       <Text weight="bold" bottom={8} left={16}>
-        Hỏi đáp cùng Bác sĩ
+        Hỏi đáp cùng chuyên viên
       </Text>
 
       <View style={styles.content}>

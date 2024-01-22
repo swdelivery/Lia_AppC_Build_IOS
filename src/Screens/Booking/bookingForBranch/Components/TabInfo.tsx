@@ -47,6 +47,8 @@ export const TabInfo = ({
   onCancel,
 }: Props) => {
   const { bottom } = useSafeAreaInsets();
+  console.log({ data, listChoice });
+
   return (
     <Column flex={1}>
       <ScrollView style={styleElement.flex}>
@@ -59,9 +61,9 @@ export const TabInfo = ({
               }}
               source={{
                 uri: `${URL_ORIGINAL}${
-                  data?.representationFileArr != null &&
-                  data?.representationFileArr?.length > 0
-                    ? data?.representationFileArr[0]?.link
+                  data?.representationServiceFileArr != null &&
+                  data?.representationServiceFileArr?.length > 0
+                    ? data?.representationServiceFileArr[0]?.link
                     : ""
                 }`,
               }}

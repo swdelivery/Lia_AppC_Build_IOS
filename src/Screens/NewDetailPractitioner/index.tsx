@@ -8,7 +8,6 @@ import {
 } from "../../Constant/Scale";
 import LinearGradient from "react-native-linear-gradient";
 import Banner from "./Components/Banner";
-import OverViewBranch from "./Components/OverViewBranch";
 import MainInfoDoctor from "./Components/MainInfoDoctor";
 import QuestionVideo from "./Components/QuestionVideo";
 import Animated, {
@@ -27,6 +26,7 @@ import PartnerService from "src/Services/PartnerService";
 import ListBottomService from "@Components/ListBottomService/ListBottomService";
 import Placeholder from "@Screens/NewDetailDoctor/Components/Placeholder";
 import { StatusBar } from "@Components/StatusBar";
+import OverViewBranch from "@Screens/NewDetailDoctor/Components/OverViewBranch";
 
 type ScreenK = typeof ScreenKey.DETAIL_PRACTITIONER;
 

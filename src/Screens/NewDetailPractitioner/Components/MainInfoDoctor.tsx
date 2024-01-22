@@ -12,7 +12,7 @@ const MainInfoDoctor = ({ practitioner }: Props) => {
   return (
     <View style={styles.container}>
       <Text weight="bold" bottom={8}>
-        Thông tin Bác sĩ
+        Thông tin chuyên viên
       </Text>
       <Text color={"grey"}>{practitioner?.description}</Text>
     </View>

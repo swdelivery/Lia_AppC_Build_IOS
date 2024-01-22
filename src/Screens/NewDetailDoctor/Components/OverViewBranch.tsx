@@ -24,8 +24,6 @@ const OverViewBranch = ({ branch }: Props) => {
     handlePress(branch);
   }, [branch]);
 
-  console.log({ branch: branch?.branchFileArr });
-  
   return (
     <View style={styles.container}>
       <Text weight="bold">Địa điểm công tác</Text>
@@ -52,7 +50,7 @@ const OverViewBranch = ({ branch }: Props) => {
           <Row gap={4}>
             <LocationIcon />
             <Text flex={1} size={12}>
-              {branch?.address}
+              {branch?.addressDetails?.fullAddress}
             </Text>
           </Row>
           {branch?.branchFileArr && (
