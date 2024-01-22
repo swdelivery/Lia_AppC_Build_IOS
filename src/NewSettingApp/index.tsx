@@ -1,9 +1,4 @@
-import {
-  Platform,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
+import { ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
 import Screen from "@Components/Screen";
 import Column from "@Components/Column";
@@ -22,8 +17,6 @@ import LiAHeader from "@Components/Header/LiAHeader";
 import { logOut } from "@Redux/user/actions";
 import { getInfoUserReducer } from "@Redux/Selectors";
 import usePermission from "src/Hooks/usePermission";
-import Store from "../Redux/store";
-import * as ActionType from "../Redux/Constants/ActionType";
 
 const NewSettingApp = () => {
   const dipsatch = useDispatch();
@@ -116,14 +109,14 @@ const NewSettingApp = () => {
 
           <CardSetting
             enabled={microPermission === RESULTS.GRANTED}
-            title={"Micro" + microPermission}
+            title={"Micro"}
             description={"Micro phone được sử dụng để đàm thoại với bác sĩ"}
             onUpdate={_handleOnMicro}
           />
 
           <CardSetting
             enabled={galleryPermission === RESULTS.GRANTED}
-            title={"Thư viện ảnh" + galleryPermission}
+            title={"Thư viện ảnh"}
             description={"Thông báo tin nhắn mới và các sự kiện ưu đãi"}
             onUpdate={_handleOnGallery}
           />
