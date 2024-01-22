@@ -42,7 +42,7 @@ export type FlashSaleService = {
   _id: string;
   promotionId: string;
   serviceCode: string;
-  discountType: "fixed";
+  discountType: "percent" | "fixed";
   discountAmount: number;
   originalPrice: number;
   finalPrice: number;

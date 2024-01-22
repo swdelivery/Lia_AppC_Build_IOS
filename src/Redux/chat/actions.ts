@@ -5,6 +5,7 @@ import {
   GET_PARTNER_CONVERSATIONS,
   LOAD_MORE_CONVERSATION_MESSAGES_HISTORY,
   LOAD_MORE_PARTNER_CONVERSATIONS,
+  MARK_AS_READ,
   OPEN_TREATMENT_DETAILS,
   START_CHAT,
   StartChatParams,
@@ -44,3 +45,8 @@ export const openTreatmentDetails = generateActionsGroup<string, void>(
 export const startChat = generateActionsGroup<StartChatParams, void>(
   START_CHAT
 );
+
+export const markAsRead = (payload: any) => ({
+  type: MARK_AS_READ,
+  payload,
+});

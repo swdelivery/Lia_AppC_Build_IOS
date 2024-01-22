@@ -1,11 +1,15 @@
 import {
   GET_PARTNER_CONVERSATIONS,
   LOAD_MORE_PARTNER_CONVERSATIONS,
+  MARK_AS_READ,
 } from "../types";
 import { Conversation } from "@typings/chat";
 import { createReducer } from "@Redux/helper";
 import { Handler, PagingInfo } from "@Redux/types";
-import { GET_NEW_MESSAGE, UPDATE_VIEWER_MESSAGE } from "@Redux/Constants/ActionType";
+import {
+  GET_NEW_MESSAGE,
+  UPDATE_VIEWER_MESSAGE,
+} from "@Redux/Constants/ActionType";
 
 export type State = {
   isLoading: boolean;
@@ -56,15 +60,30 @@ const loadMoreSuccess: Handler<State> = (state, { payload }) => ({
 });
 
 const handleNewMessage: Handler<State> = (state, { payload }) => {
-  let dataTemp = [...state?.data]
-  let indexFinded = state.data.findIndex(item => item?._id == payload?.data?.conversation?._id)
+  let dataTemp = [...state?.data];
+  let indexFinded = state.data.findIndex(
+    (item) => item?._id == payload?.data?.conversation?._id
+  );
   if (indexFinded !== -1) {
-    dataTemp[indexFinded] = payload?.data?.conversation
-  };
+    dataTemp[indexFinded] = payload?.data?.conversation;
+  }
   return {
     ...state,
-    data: dataTemp
+    data: dataTemp,
+  };
+};
+
+const markAsRead: Handler<State> = (state, { payload }) => {
+  const data = [...state.data];
+  const index = state.data.findIndex((item) => item?._id == payload);
+  if (index >= 0) {
+    data[index].unreadCount = 0;
   }
+
+  return {
+    ...state,
+    data: [...data],
+  };
 };
 
 // const handleUpdateViewerMessage: Handler<State> = (state, { payload }) => {
@@ -90,4 +109,6 @@ export default createReducer(INITIAL_STATE, {
 
   [GET_NEW_MESSAGE]: handleNewMessage,
   // [UPDATE_VIEWER_MESSAGE]: handleUpdateViewerMessage,
+
+  [MARK_AS_READ]: markAsRead,
 });

@@ -61,7 +61,7 @@ const Banner = ({ booking }: Props) => {
               <IconLocation color={"white"} width={20} height={20} />
             </Column>
             <Text weight="bold" color={"white"} size={16}>
-              {booking?.branch?.address}
+              {booking?.branch?.addressDetails?.fullAddress}
             </Text>
           </Row>
         </Column>

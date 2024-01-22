@@ -15,6 +15,7 @@ import { Conversation, Message } from "@typings/chat";
 import {
   getConversationMessages,
   loadMoreConversationMessagesHistory,
+  markAsRead,
 } from "@Redux/chat/actions";
 import { getMessagesState } from "@Redux/chat/selectors";
 import { RenderItemProps } from "@typings/common";
@@ -67,6 +68,7 @@ const ListMessages = ({ conversation }: Props) => {
       messageIds: [messages[0]?._id],
     };
     SocketInstance?.socketConn?.emit(CSS_PARTNER_SEEN_MESSAGE, data);
+    dispatch(markAsRead(conversation._id));
   }, [messages, conversation]);
 
   const onLoadMoreMessages = useCallback(async () => {

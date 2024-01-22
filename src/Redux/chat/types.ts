@@ -20,6 +20,8 @@ export const LOAD_MORE_CONVERSATION_MESSAGES_HISTORY = generateActionTypes(
   "@chat/load-more-conversation-messages"
 );
 
+export const MARK_AS_READ = "@chat/mark-as-read";
+
 export const OPEN_TREATMENT_DETAILS = generateActionTypes(
   "@chat/open-treatment-details"
 );

@@ -36,18 +36,20 @@ export default function FlashSaleServices({ flashSale }: Props) {
 
   const handleBooking = useRequireLoginCallback(
     (item: FSService) => {
+      const service: Service = {
+        ...item.service,
+        isOnFlashSale: true,
+        currentFlashSale: flashSale,
+        // @ts-ignore
+        preferentialInCurrentFlashSale: item,
+      };
       if (item.service?.options?.length > 0) {
-        toppingPicker.show(item.service);
+        toppingPicker.show(service);
         return;
       }
       // @ts-ignore
       navigation.navigate(ScreenKey.CREATE_BOOKING, {
-        service: {
-          ...item.service,
-          isOnFlashSale: true,
-          currentFlashSale: flashSale,
-          preferentialInCurrentFlashSale: item,
-        },
+        service,
       });
     },
     [flashSale]
