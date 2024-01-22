@@ -47,7 +47,6 @@ export const TabInfo = ({
   onCancel,
 }: Props) => {
   const { bottom } = useSafeAreaInsets();
-  console.log({ data, listChoice });
 
   return (
     <Column flex={1}>

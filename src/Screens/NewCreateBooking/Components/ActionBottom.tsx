@@ -51,7 +51,7 @@ const ActionBottom = ({ booking }: Props) => {
       return Alert.alert("Bạn cần đăng nhập để đặt hẹn");
     }
     if (isEmpty(dataBranch)) {
-      return Alert.alert("Vui lòng chọn chi nhánh");
+      return Alert.alert("Vui lòng chọn phòng khám");
     }
     if (isEmpty(dataDate)) {
       return Alert.alert("Vui lòng chọn thời gian đặt hẹn");
@@ -95,10 +95,13 @@ const ActionBottom = ({ booking }: Props) => {
       };
     });
     const flashSaleService = dataServices.find(
-      (service) => service.isOnFlashSale && service.currentFlashSale
+      (service) =>
+        (service.isOnFlashSale && service.currentFlashSale) ||
+        !!service.promotionId
     );
     if (flashSaleService) {
-      dataFetch["promotionId"] = flashSaleService.currentFlashSale._id;
+      dataFetch["promotionId"] =
+        flashSaleService.currentFlashSale?._id ?? flashSaleService.promotionId;
     }
 
     dataFetch.type = !!flashSaleService ? "FLASH_SALE" : "DEFAULT";

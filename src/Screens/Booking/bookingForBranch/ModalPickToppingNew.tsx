@@ -47,7 +47,6 @@ const ModalPickToppingNew = ({ confirm, data, show, hide }: Props) => {
   }, [data?.description]);
 
   const handleChoiceSingle = (data, groupCode) => {
-    console.log({ data, listChoice, groupCode });
     let tempListChoice = cloneDeep(listChoice);
 
     let indexItem = tempListChoice?.findIndex(
@@ -65,7 +64,6 @@ const ModalPickToppingNew = ({ confirm, data, show, hide }: Props) => {
   };
 
   const handleChoiceMulti = (data, groupCode) => {
-    console.log({ data, listChoice });
     let tempListChoice = cloneDeep(listChoice);
 
     let indexItem = tempListChoice?.findIndex(

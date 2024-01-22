@@ -57,6 +57,7 @@ import { formatMonney } from "@Constant/Utils";
 import { getMyCouponsState } from "@Redux/user/selectors";
 import { styleElement } from "@Constant/StyleElement";
 import { cloneDeep, isEmpty } from "lodash";
+import { Service } from "@typings/serviceGroup";
 
 const listTimeForBooking: TimeForBooking[] = [
   {
@@ -189,7 +190,10 @@ const NewCreateBooking = () => {
       if (services?.length > 0) {
         let listService = [];
         services.map((bookingService) => {
-          let service = bookingService.service;
+          let service: Service = {
+            ...bookingService.service,
+            promotionId: bookingService.promotionId,
+          };
           let options = cloneDeep(service.options);
 
           for (let i = 0; i < options.length; i++) {
