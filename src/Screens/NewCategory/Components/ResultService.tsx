@@ -62,7 +62,7 @@ const ResultService = () => {
           dataFetch["sort"]["price"] = dataServiceSortPrice;
         }
         if (!isEmpty(dataServiceLocation)) {
-          dataFetch["condition"]["cityCode"] = {
+          dataFetch["condition"]["codeCity"] = {
             equal: dataServiceLocation?.codeCity,
           };
         }

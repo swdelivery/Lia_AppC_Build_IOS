@@ -156,7 +156,7 @@ const ModalFilter = ({ visible, onClose }: Props) => {
         dataFetch["sort"]["price"] = dataServiceSortPrice;
       }
       if (!isEmpty(provinceChoiced)) {
-        dataFetch["condition"]["cityCode"] = {
+        dataFetch["condition"]["codeCity"] = {
           equal: provinceChoiced?.codeCity,
         };
       }
