@@ -53,20 +53,20 @@ const AboutLiA = () => {
 
   return (
     <Screen>
-      <StatusBar barStyle='light-content' />
+      <StatusBar barStyle="light-content" />
       <ImageBackground
         resizeMode={"stretch"}
         style={styleElement.flex}
         source={require("../../NewImage/ExaminationResult/bgExaminationResult.png")}
       >
-
         <Column
           onPress={navigation.goBack}
           backgroundColor={BLACK_OPACITY_4}
           top={top + 20}
           borderRadius={8 * 10}
           left={20}
-          position="absolute">
+          position="absolute"
+        >
           <IconBackWhite />
         </Column>
 
@@ -75,35 +75,30 @@ const AboutLiA = () => {
           borderTopRightRadius={8 * 2}
           marginTop={8 * 20}
           backgroundColor={WHITE}
-          flex={1}>
-          <Image
-            style={[styles.logo]}
-            avatar={data?.logo ?? null} />
+          flex={1}
+        >
+          <Image style={[styles.logo]} avatar={data?.logo ?? null} />
 
-          <ScrollView style={{ paddingTop: 8 * 6 }}>
-            <Column alignItems='center'>
-              <Text
-                size={18}
-                weight='bold'>
+          <ScrollView>
+            <Column alignItems="center" marginTop={40} marginHorizontal={16}>
+              <Text size={18} weight="bold">
                 {data?.name ?? ""}
               </Text>
-              <Text>
-                {data?.description ?? ""}
-              </Text>
-              <Text>
-                {data?.slogan ?? ""}
-              </Text>
+              <Text>{data?.description ?? ""}</Text>
+              <Text>{data?.slogan ?? ""}</Text>
 
               <Row gap={8} marginTop={8 * 2}>
                 <Column onPress={_handleLinking(data?.facebook_link)}>
                   <IconFacebook width={8 * 4} height={8 * 4} />
                 </Column>
-                <Column onPress={_handleLinking(data?.website)}
+                <Column
+                  onPress={_handleLinking(data?.website)}
                   style={styleElement.centerChild}
                   backgroundColor={NEW_BASE_COLOR}
                   width={8 * 4}
                   borderRadius={4}
-                  height={8 * 4}>
+                  height={8 * 4}
+                >
                   <IconWWW width={8 * 3} height={8 * 3} />
                 </Column>
                 <Row
@@ -112,9 +107,10 @@ const AboutLiA = () => {
                   paddingHorizontal={8}
                   backgroundColor={NEW_BASE_COLOR}
                   height={8 * 4}
-                  gap={4}>
-                  <Icon name='star' color='#FFC007' />
-                  <Text weight='bold' color={WHITE}>
+                  gap={4}
+                >
+                  <Icon name="star" color="#FFC007" />
+                  <Text weight="bold" color={WHITE}>
                     Đánh giá
                   </Text>
                 </Row>
@@ -125,85 +121,64 @@ const AboutLiA = () => {
             <ScrollView
               showsHorizontalScrollIndicator={false}
               contentContainerStyle={{ gap: 8, paddingHorizontal: 8 * 2 }}
-              horizontal>
-              {
-                data?.image?.map((item, index) => {
-                  return (
-                    <Image
-                      key={item?._id}
-                      style={styles.image}
-                      avatar={item} />
-                  )
-                })
-              }
+              horizontal
+            >
+              {data?.image?.map((item, index) => {
+                return (
+                  <Image key={item?._id} style={styles.image} avatar={item} />
+                );
+              })}
             </ScrollView>
 
-            <HorizontalLine marginTop={8 * 2} height={4} backgroundColor={"#F3F4F9"} />
+            <HorizontalLine
+              marginTop={8 * 2}
+              height={4}
+              backgroundColor={"#F3F4F9"}
+            />
 
-            <Column
-              gap={8}
-              padding={8 * 2}>
-              <Text
-                weight='bold'
-                size={16}>
+            <Column gap={8} padding={8 * 2}>
+              <Text weight="bold" size={16}>
                 Thông tin về LiA
               </Text>
 
               <Row>
                 <Column flex={1}>
-                  <Text
-                    color={GREY}
-                    weight='bold'>
+                  <Text color={GREY} weight="bold">
                     Hotline
                   </Text>
                 </Column>
                 <Column flex={5}>
-                  <Text
-                    color={GREY_FOR_TITLE}
-                    weight='bold'>
+                  <Text color={GREY_FOR_TITLE} weight="bold">
                     {data?.hotline}
                   </Text>
                 </Column>
               </Row>
               <Row>
                 <Column flex={1}>
-                  <Text
-                    color={GREY}
-                    weight='bold'>
+                  <Text color={GREY} weight="bold">
                     Email
                   </Text>
                 </Column>
                 <Column flex={5}>
-                  <Text
-                    color={GREY}>
-                    {data?.email}
-                  </Text>
+                  <Text color={GREY}>{data?.email}</Text>
                 </Column>
               </Row>
               <Column>
                 <Column>
-                  <Text
-                    color={GREY}
-                    weight='bold'>
+                  <Text color={GREY} weight="bold">
                     Địa chỉ
                   </Text>
                 </Column>
                 <Column>
-                  <Text
-                    color={GREY}>
-                    434 CAO THANG P12 Q10 TPHCM
-                  </Text>
+                  <Text color={GREY}>434 CAO THANG P12 Q10 TPHCM</Text>
                 </Column>
               </Column>
             </Column>
-
           </ScrollView>
-
         </Column>
       </ImageBackground>
-
     </Screen>
-  )
+  );
 }
 
 export default AboutLiA
