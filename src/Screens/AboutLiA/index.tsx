@@ -1,33 +1,39 @@
-import Column from '@Components/Column'
-import Icon from '@Components/Icon'
-import { IconBackWhite, IconFacebook, IconWWW } from '@Components/Icon/Icon'
-import Image from '@Components/Image'
-import HorizontalLine from '@Components/Line/HorizontalLine'
-import Row from '@Components/Row'
-import Screen from '@Components/Screen'
-import Spacer from '@Components/Spacer'
-import { StatusBar } from '@Components/StatusBar'
-import Text from '@Components/Text'
-import { BLACK_OPACITY_4, GREY, GREY_FOR_TITLE, NEW_BASE_COLOR, WHITE } from '@Constant/Color'
-import { styleElement } from '@Constant/StyleElement'
-import { getAboutLiA } from '@Redux/aboutLiA/actions'
-import { getAboutLiAState } from '@Redux/aboutLiA/selectors'
-import React, { useCallback, useEffect } from 'react'
-import { ImageBackground, Linking, ScrollView, StyleSheet } from 'react-native'
-import Rate, { AndroidMarket } from 'react-native-rate'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'src/Hooks/useNavigation'
+import Column from "@Components/Column";
+import Icon from "@Components/Icon";
+import { IconBackWhite, IconFacebook, IconWWW } from "@Components/Icon/Icon";
+import Image from "@Components/Image";
+import HorizontalLine from "@Components/Line/HorizontalLine";
+import Row from "@Components/Row";
+import Screen from "@Components/Screen";
+import Spacer from "@Components/Spacer";
+import { StatusBar } from "@Components/StatusBar";
+import Text from "@Components/Text";
+import {
+  BLACK_OPACITY_4,
+  GREY,
+  GREY_FOR_TITLE,
+  NEW_BASE_COLOR,
+  WHITE,
+} from "@Constant/Color";
+import { styleElement } from "@Constant/StyleElement";
+import { getAboutLiA } from "@Redux/aboutLiA/actions";
+import { getAboutLiAState } from "@Redux/aboutLiA/selectors";
+import React, { useCallback, useEffect } from "react";
+import { ImageBackground, Linking, ScrollView, StyleSheet } from "react-native";
+import Rate, { AndroidMarket } from "react-native-rate";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "src/Hooks/useNavigation";
 
 const AboutLiA = () => {
-  const { data } = useSelector(getAboutLiAState)
-  const { top } = useSafeAreaInsets()
-  const { navigation } = useNavigate()
-  const dispatch = useDispatch()
+  const { data } = useSelector(getAboutLiAState);
+  const { top } = useSafeAreaInsets();
+  const { navigation } = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getAboutLiA.request())
-  }, [])
+    dispatch(getAboutLiA.request());
+  }, []);
 
   const _handleRateApp = useCallback(() => {
     const options = {
@@ -42,14 +48,19 @@ const AboutLiA = () => {
         console.log({ success });
       }
       if (errorMessage) {
-        console.error(`Example page Rate.rate() error: ${errorMessage}`)
+        console.error(`Example page Rate.rate() error: ${errorMessage}`);
       }
-    })
-  }, [])
+    });
+  }, []);
 
-  const _handleLinking = useCallback((link) => () => {
-    Linking.openURL(link)
-  }, [])
+  const _handleLinking = useCallback(
+    (link) => () => {
+      Linking.openURL(link);
+    },
+    []
+  );
+
+  console.log({ data });
 
   return (
     <Screen>
@@ -88,19 +99,23 @@ const AboutLiA = () => {
               <Text>{data?.slogan ?? ""}</Text>
 
               <Row gap={8} marginTop={8 * 2}>
-                <Column onPress={_handleLinking(data?.facebook_link)}>
-                  <IconFacebook width={8 * 4} height={8 * 4} />
-                </Column>
-                <Column
-                  onPress={_handleLinking(data?.website)}
-                  style={styleElement.centerChild}
-                  backgroundColor={NEW_BASE_COLOR}
-                  width={8 * 4}
-                  borderRadius={4}
-                  height={8 * 4}
-                >
-                  <IconWWW width={8 * 3} height={8 * 3} />
-                </Column>
+                {!!data?.facebook_link && (
+                  <Column onPress={_handleLinking(data?.facebook_link)}>
+                    <IconFacebook width={8 * 4} height={8 * 4} />
+                  </Column>
+                )}
+                {!!data?.website && (
+                  <Column
+                    onPress={_handleLinking(data?.website)}
+                    style={styleElement.centerChild}
+                    backgroundColor={NEW_BASE_COLOR}
+                    width={8 * 4}
+                    borderRadius={4}
+                    height={8 * 4}
+                  >
+                    <IconWWW width={8 * 3} height={8 * 3} />
+                  </Column>
+                )}
                 <Row
                   onPress={_handleRateApp}
                   borderRadius={4}
@@ -179,23 +194,23 @@ const AboutLiA = () => {
       </ImageBackground>
     </Screen>
   );
-}
+};
 
-export default AboutLiA
+export default AboutLiA;
 
 const styles = StyleSheet.create({
   image: {
     width: 8 * 20,
     height: 8 * 20,
-    borderRadius: 8
+    borderRadius: 8,
   },
   logo: {
     width: 8 * 10,
     height: 8 * 10,
-    borderRadius: 8 * 10 / 2,
-    alignSelf: 'center',
-    top: - 8 * 2.5,
-    position: 'absolute',
-    zIndex: 1
-  }
-})
+    borderRadius: (8 * 10) / 2,
+    alignSelf: "center",
+    top: -8 * 2.5,
+    position: "absolute",
+    zIndex: 1,
+  },
+});
