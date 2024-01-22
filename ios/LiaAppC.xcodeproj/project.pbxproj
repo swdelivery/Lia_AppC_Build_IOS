@@ -397,11 +397,10 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$($PROJECT_DIR)/GoogleService-Info.plist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "echo \"Select $PROJECT_DIR/GoogleService-Info.\"$ENV\".plist\"\ncp \"$PROJECT_DIR/GoogleService-Info.\"$ENV\".plist\" \"$PROJECT_DIR/GoogleService-Info.plist\" \n";
+			shellScript = "echo \"Select $PROJECT_DIR/GoogleService-Info.\"$ENV\".plist\"\n#cp \"$PROJECT_DIR/GoogleService-Info.\"$ENV\".plist\" \"$PROJECT_DIR/GoogleService-Info.plist\" \ncp -r \"$PROJECT_DIR/GoogleService-Info.\"$ENV\".plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\" ;\n";
 		};
 		629F90A02AF0B6A300574803 /* Set version and build number */ = {
 			isa = PBXShellScriptBuildPhase;
