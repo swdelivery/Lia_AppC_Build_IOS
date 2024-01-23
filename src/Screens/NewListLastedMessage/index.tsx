@@ -27,7 +27,7 @@ import { PinIcon } from "src/SGV";
 
 const NewListLastedMessage = () => {
   const { navigation } = useNavigate();
-  const { isLoading, data, refreshData, loadMoreData } = useListFilter(
+  const { isLoading, data, getData, refreshData, loadMoreData } = useListFilter(
     getPartnerConversationsState,
     getPartnerConversations,
     loadMorePartnerConversations
@@ -36,6 +36,14 @@ const NewListLastedMessage = () => {
   useFocused(() => {
     refreshData();
   });
+
+  const handleSearch = useCallback((search: string) => {
+    console.log({ search });
+
+    getData({
+      search,
+    });
+  }, []);
 
   const conversations = useMemo(() => {
     const result: any[] = ["lia"];
@@ -83,7 +91,7 @@ const NewListLastedMessage = () => {
 
   return (
     <Screen safeTop style={styles.container}>
-      <Header />
+      <Header onSearch={handleSearch} />
       <FlashList
         contentContainerStyle={styles.contentContainerStyle}
         style={styles.flatlistStyle}

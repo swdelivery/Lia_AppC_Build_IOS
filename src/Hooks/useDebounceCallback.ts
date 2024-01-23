@@ -3,7 +3,7 @@ import { debounce, DebounceSettings } from "lodash";
 import { DependencyList, useCallback } from "react";
 import useSavedCallback from "./useSavedCallback";
 
-type Func = (...args: any) => any;
+type Func = (args: any) => any;
 export default function useDebounceCallback<T extends Func>(
   func: T,
   dep: DependencyList = [],
@@ -11,7 +11,7 @@ export default function useDebounceCallback<T extends Func>(
 ) {
   const callback = useSavedCallback(func);
   return useCallback(
-    debounce((...args: any) => callback.current(args), options?.wait ?? 500, {
+    debounce((args: any) => callback.current(args), options?.wait ?? 500, {
       trailing: true,
       ...options,
     }),

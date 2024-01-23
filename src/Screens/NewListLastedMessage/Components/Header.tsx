@@ -16,13 +16,15 @@ import Avatar from "@Components/Avatar";
 import { FocusAwareStatusBar } from "@Components/StatusBar";
 import SVGFindGrey from "src/SGV/findGrey.svg";
 import TextInput from "@Components/TextInput";
+import useDebounceCallback from "src/Hooks/useDebounceCallback";
 
-const Header = () => {
+const Header = ({ onSearch }: { onSearch: (text: string) => void }) => {
   const dispatch = useDispatch();
   const { navigate } = useNavigate();
   const { infoUser } = useSelector(getInfoUserReducer);
-
   const { dataChoice } = useSelector(getStateActionSheetIcon);
+
+  const handleSearch = useDebounceCallback(onSearch);
 
   const _handlePressOptions = useCallback(() => {
     dispatch(
@@ -74,6 +76,7 @@ const Header = () => {
             <TextInput
               placeholder="Tìm kiếm"
               style={styles.textInputStyle__input}
+              onChangeText={handleSearch}
             />
           </Row>
         </Column>

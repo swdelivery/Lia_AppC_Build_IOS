@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   fireIcon: {
-    marginLeft: -18,
+    marginLeft: -15,
     marginBottom: 0,
   },
 });
