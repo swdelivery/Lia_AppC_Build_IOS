@@ -15,6 +15,7 @@ import { getInfoUserReducer } from "@Redux/Selectors";
 import { getPartnerLevel, setCurrPartnerLevel } from "@Redux/affiliate/actions";
 import { getCurrPartnerLevelState, getListPartnerLevelState } from "@Redux/affiliate/selectors";
 import { sumBy } from "lodash";
+import { calculateDiscountAmount } from "src/utils/booking";
 
 const Bill = () => {
   const dispatch = useDispatch()
@@ -57,43 +58,7 @@ const Bill = () => {
   }, [currPartnerLevel, originPrice]);
 
   const discountAmount = useMemo(() => {
-    if (dataCoupon?._id && originPrice) {
-      if (dataCoupon?.coupon?.couponType == "Discount") {
-        if (dataCoupon?.coupon?.discountType == "fixed") {
-          if (originPrice > dataCoupon?.coupon?.minRequiredOrderAmount) {
-            return dataCoupon?.coupon?.discountAmount;
-          }
-        } else if (dataCoupon?.coupon?.discountType == "percent") {
-          if (originPrice > dataCoupon?.coupon?.minRequiredOrderAmount) {
-            let discountAmountTemp =
-              (originPrice * dataCoupon?.coupon?.discountAmount) / 100;
-            if (discountAmountTemp > dataCoupon?.coupon?.maxAmountDiscount) {
-              return dataCoupon?.coupon?.maxAmountDiscount;
-            } else {
-              return (originPrice * dataCoupon?.coupon?.discountAmount) / 100;
-            }
-          }
-        }
-      } else if (dataCoupon?.coupon?.couponType == "Refund") {
-        if (dataCoupon?.coupon?.discountType == "fixed") {
-          if (originPrice > dataCoupon?.coupon?.minRequiredOrderAmount) {
-            return dataCoupon?.coupon?.discountAmount;
-          }
-        } else if (dataCoupon?.coupon?.discountType == "percent") {
-          if (originPrice > dataCoupon?.coupon?.minRequiredOrderAmount) {
-            let discountAmountTemp =
-              (originPrice * dataCoupon?.coupon?.discountAmount) / 100;
-            if (discountAmountTemp > dataCoupon?.coupon?.maxAmountDiscount) {
-              return dataCoupon?.coupon?.maxAmountDiscount;
-            } else {
-              return (originPrice * dataCoupon?.coupon?.discountAmount) / 100;
-            }
-          }
-        }
-      }
-    } else {
-      return null;
-    }
+    return calculateDiscountAmount(dataCoupon, originPrice);
   }, [dataCoupon, originPrice]);
 
   return (

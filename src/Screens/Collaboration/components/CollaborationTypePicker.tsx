@@ -35,8 +35,9 @@ export default function CollaborationTypePicker({
     >
       <Column backgroundColor={"white"} marginHorizontal={16} borderRadius={12}>
         {(collabData?.value || []).map((item, index) => {
+          const value = typeof item === "string" ? item : item.item;
           return (
-            <BottomSheet.Button key={item.item} onPress={selectType(item.item)}>
+            <BottomSheet.Button key={value} onPress={selectType(value)}>
               <Column
                 height={57}
                 alignItems="center"
@@ -44,7 +45,7 @@ export default function CollaborationTypePicker({
                 borderTopWidth={index === 0 ? 0 : 1}
                 borderTopColor={BORDER_INPUT_TEXT}
               >
-                <Text size={18}>{item.item}</Text>
+                <Text size={18}>{value}</Text>
               </Column>
             </BottomSheet.Button>
           );

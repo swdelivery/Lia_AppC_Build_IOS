@@ -2,7 +2,7 @@ import { createReducer } from "@Redux/helper";
 import * as ActionType from "../Constants/ActionType";
 import { UserProfile } from "@typings/user";
 
-type State = {
+export type State = {
   infoUser: UserProfile;
 };
 
