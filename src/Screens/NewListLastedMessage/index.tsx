@@ -38,10 +38,8 @@ const NewListLastedMessage = () => {
   });
 
   const handleSearch = useCallback((search: string) => {
-    console.log({ search });
-
     getData({
-      search,
+      search: !!search ? search : undefined,
     });
   }, []);
 
