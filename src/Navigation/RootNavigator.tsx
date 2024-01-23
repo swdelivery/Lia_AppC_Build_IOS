@@ -181,6 +181,10 @@ import DetailExaminationResult from "@Screens/ExaminationResults/DetailExaminati
 import AboutLiA from "@Screens/AboutLiA";
 import Refund from "@Screens/Refund";
 import Collaboration from "@Screens/Collaboration";
+import DetailCharityJourney from "@Screens/CharityJourney";
+import ListImageVideo from "@Screens/CharityJourney/ListImageVideo";
+import ListReports from "@Screens/CharityJourney/ListReports";
+import ExpenseDetail from "@Screens/CharityJourney/ExpenseDetail";
 
 const Stack = createNativeStackNavigator();
 
@@ -632,6 +636,22 @@ const RootNavigator = () => {
       <Stack.Screen
         name={ScreenKey.CHARITY_LIST_COMPANION}
         component={ListCompanion}
+      />
+      <Stack.Screen
+        name={ScreenKey.DETAIL_CHARITY_JOURNEY}
+        component={DetailCharityJourney}
+      />
+      <Stack.Screen
+        name={ScreenKey.LIST_IMAGE_VIDEO}
+        component={ListImageVideo}
+      />
+      <Stack.Screen
+        name={ScreenKey.LIST_REPORTS}
+        component={ListReports}
+      />
+      <Stack.Screen
+        name={ScreenKey.EXPENSE_DETAIL}
+        component={ExpenseDetail}
       />
 
       <Stack.Screen name={ScreenKey.LIST_PARTNER_DIARY} component={ListDiary} />

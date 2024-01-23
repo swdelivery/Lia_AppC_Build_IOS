@@ -99,7 +99,7 @@ function MediaPicker({ visible, onClose, onMessage }: Props) {
         });
       })
       .catch((e) => { });
-  }, []);
+  }, [onMessage]);
 
   const pickVideo = useCallback(async () => {
 
@@ -138,7 +138,7 @@ function MediaPicker({ visible, onClose, onMessage }: Props) {
     //     }
     //   })
     //   .catch((e) => { });
-  }, []);
+  }, [onMessage]);
 
   const handleConfirmVideo = useCallback(
     async (textInput) => {

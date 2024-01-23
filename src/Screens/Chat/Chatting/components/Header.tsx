@@ -116,13 +116,11 @@ function DoctorInfo({ conversation }: { conversation: any }) {
   }, [conversation]);
 
   const _handleNavigate = useCallback(() => {
-    // PENDING FOR WAITING BACKEND
     if (mainDoctor?.employeeType == 'BACSI') {
       navigation.navigate(ScreenKey.DETAIL_DOCTOR, { doctor: mainDoctor?.treatmentDoctor });
     } else if (mainDoctor?.employeeType == 'CHUYENVIEN') {
-      // navigation.navigate(ScreenKey.DETAIL_PRACTITIONER, { practitioner: mainDoctor?.treatmentDoctor });
+      navigation.navigate(ScreenKey.DETAIL_PRACTITIONER, { practitioner: mainDoctor?.practitioner });
     }
-
   }, [mainDoctor])
 
   if (mainDoctor) {

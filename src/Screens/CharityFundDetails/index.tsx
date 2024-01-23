@@ -18,6 +18,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { getDetailCampain } from "@Redux/charity/actions";
 import { getDetailCampainState, getListCompanionRequestState } from "@Redux/charity/selectors";
 import { getInfoUserReducer } from "@Redux/Selectors";
+import Story from "./components/Story";
+import Timeline from "./components/Timeline";
+import Spacer from "@Components/Spacer";
+import ImageVideo from "./components/ImageVideo";
+import Report from "./components/Report";
 
 export default function CharityFundDetails() {
   const { id, campain } = useNavigationParams();
@@ -60,7 +65,13 @@ export default function CharityFundDetails() {
           <Banner />
           <FundInfo />
           <DonationInfo />
-          <CoFounders />
+          <Story />
+          <Timeline />
+          <ImageVideo />
+          <Report />
+          {/* <CoFounders /> */}
+
+          <Spacer top={100} />
         </ScrollView>
         {/* <Row paddingHorizontal={16} paddingVertical={8} gap={8}>
           <Button.Outline

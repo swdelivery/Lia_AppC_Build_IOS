@@ -81,11 +81,11 @@ export default function DonationInfo() {
         </Text>
         <Text weight="bold">{percent}%</Text>
       </Row>
-      <Row gap={8} marginTop={20}>
+      {/* <Row gap={8} marginTop={20}>
         {listPartnerDonateToVolunteer.map((item, index) => {
           return <Avatar circle avatar={item?.partnerInfo?.fileAvatar} size={32} key={index} />;
         })}
-        {/* <Column borderRadius={16} width={32} aspectRatio={1}>
+        <Column borderRadius={16} width={32} aspectRatio={1}>
           <Avatar size={32} />
           <Column
             width={32}
@@ -98,13 +98,13 @@ export default function DonationInfo() {
           >
             <Icon name="dots-horizontal" color="white" size={18} />
           </Column>
-        </Column> */}
+        </Column>
       </Row>
 
       {
         listPartnerDonateToVolunteer?.length > 0 && _renderMountDonate()
       }
-      {/* <TouchableOpacity onPress={navigate(ScreenKey.CHARITY_ACCOUNT_STATEMENT)}>
+      <TouchableOpacity onPress={navigate(ScreenKey.CHARITY_ACCOUNT_STATEMENT)}>
         <Row alignSelf="flex-end" marginTop={12}>
           <Text size={12} color={NEW_BASE_COLOR}>
             Xem sao kê tài khoản

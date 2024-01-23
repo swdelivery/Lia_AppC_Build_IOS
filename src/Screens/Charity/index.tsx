@@ -18,7 +18,7 @@ import { getListCampain, getListCompanionRequest } from '@Redux/charity/actions'
 import { getListCampainState } from '@Redux/charity/selectors'
 
 const Charity = () => {
-  const [listCharity, setListCharity] = useState([1, 2, 3, 4, 5, 6])
+  const [listCharity, setListCharity] = useState([])
   const dispatch = useDispatch()
   const { data } = useSelector(getListCampainState)
 
@@ -30,7 +30,7 @@ const Charity = () => {
   const _renderListHeaderFlatlist = () => {
     return (
       <Column>
-        <ListUsers />
+        {/* <ListUsers /> */}
         <HorizontalLine style={styles.horizontalLine} />
         <Row
           marginTop={8} gap={8}
@@ -39,7 +39,7 @@ const Charity = () => {
           <Text
             color={NEW_BASE_COLOR}
             weight='bold'>
-            Chiến dịch gây quỹ
+            Chương trình thiện nguyện của LiA
           </Text>
         </Row>
       </Column>

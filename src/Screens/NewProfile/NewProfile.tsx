@@ -4,6 +4,7 @@ import {
   IconProfileBooking,
   IconProfileCare,
   IconProfileCoin,
+  IconProfileHandHeartIn,
   IconProfileHistory,
   IconProfileMedical,
   IconProfilePartnerShip,
@@ -98,19 +99,19 @@ const NewProfile = () => {
                 },
                 ...(Config.ENV !== "prod"
                   ? [
-                      {
-                        flag: "skin-mirror",
-                        name: "SaYoi",
-                        icon: <ProfileMirrorIcon />,
-                      },
-                    ]
+                    {
+                      flag: "skin-mirror",
+                      name: "SaYoi",
+                      icon: <ProfileMirrorIcon />,
+                    },
+                  ]
                   : []),
                 // { name: "LPay Later", icon: <IconProfilePayLater /> },
                 // { name: "Bảo hiểm", icon: <IconProfileInsurance /> },
                 ,
               ]}
             />
-            {/* <Menu
+            <Menu
               type={"row"}
               title={"Phụng sự"}
               data={[
@@ -126,7 +127,7 @@ const NewProfile = () => {
                 // { name: "Tuyển dụng", icon: <IconProfileFindJob /> },
                 // { name: "Đào tạo", icon: <IconProfileEducation /> },
               ]}
-            /> */}
+            />
             <Menu
               type={"column"}
               title={"Khác"}
