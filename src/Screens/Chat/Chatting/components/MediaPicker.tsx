@@ -10,6 +10,7 @@ import { LoadingModal } from "@Components/Loading/LoadingView";
 import withPortal from "@Components/withPortal";
 import { useNavigate } from "src/Hooks/useNavigation";
 import { first } from "lodash";
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 
 type Props = {
   visible: boolean;
@@ -101,28 +102,42 @@ function MediaPicker({ visible, onClose, onMessage }: Props) {
   }, []);
 
   const pickVideo = useCallback(async () => {
-    ImageCropPicker.openPicker({
-      multiple: true,
-      waitAnimationEnd: false,
-      includeExif: true,
-      forceJpg: true,
-      maxFiles: 1,
-      mediaType: "video",
-      // cropping:true,
-      compressImageQuality: 0.5,
-      compressVideoPreset: "MediumQuality",
+
+    launchImageLibrary({
+      mediaType: 'video',
+      videoQuality: 'low',
+
+    }, async (images) => {
+      if (images.assets[0]?.duration > 30) {
+        return Alert.alert('Vui lòng chọn video có độ dài dưới 30 giây')
+      } else {
+        listVideoForUpload.current = images.assets;
+        await delay(500);
+        confirmVideo.show();
+      }
     })
-      .then(async (images) => {
-        console.log({ images });
-        if (images[0]?.duration > 30000) {
-          return Alert.alert('Vui lòng chọn video có độ dài dưới 30 giây')
-        } else {
-          listVideoForUpload.current = images;
-          await delay(500);
-          confirmVideo.show();
-        }
-      })
-      .catch((e) => { });
+    // ImageCropPicker.openPicker({
+    //   multiple: true,
+    //   waitAnimationEnd: false,
+    //   includeExif: true,
+    //   forceJpg: true,
+    //   maxFiles: 1,
+    //   mediaType: "video",
+    //   // cropping:true,
+    //   compressImageQuality: 0.5,
+    //   compressVideoPreset: "MediumQuality",
+    // })
+    //   .then(async (images) => {
+    //     console.log({ images });
+    //     if (images[0]?.duration > 30000) {
+    //       return Alert.alert('Vui lòng chọn video có độ dài dưới 30 giây')
+    //     } else {
+    //       listVideoForUpload.current = images;
+    //       await delay(500);
+    //       confirmVideo.show();
+    //     }
+    //   })
+    //   .catch((e) => { });
   }, []);
 
   const handleConfirmVideo = useCallback(
@@ -133,11 +148,11 @@ function MediaPicker({ visible, onClose, onMessage }: Props) {
       let listImages = listVideoForUpload.current.map((i, index) => {
         if (index > 0) return;
         return {
-          uri: i.path,
+          uri: i.uri,
           width: i.width,
           height: i.height,
-          mime: i.mime,
-          type: i.mime,
+          mime: 'video/mp4',
+          type: 'video/mp4',
           name: textInput,
         };
       });
