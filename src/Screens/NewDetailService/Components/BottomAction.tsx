@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { _moderateScale, _width } from "../../../Constant/Scale";
 import IconCalendar from "../../../SGV/calendar.svg";
@@ -14,13 +14,16 @@ import { BASE_COLOR } from "@Constant/Color";
 import Toast from "react-native-toast-message";
 import ModalPickToppingNew from "@Screens/Booking/bookingForBranch/ModalPickToppingNew";
 import { cloneDeep, isEmpty } from "lodash";
+import { useSelector } from "react-redux";
+import { getPartnerConversationsState } from "@Redux/chat/selectors";
 
 type Props = {
   service?: Service;
 };
 
 const BottomAction = ({ service }: Props) => {
-  const { navigate } = useNavigate();
+  const { navigate, navigation } = useNavigate();
+  const { data } = useSelector(getPartnerConversationsState);
 
   const [showModalPickTopping, setShowModalPickTopping] = useState({
     data: {} as Service,
@@ -31,7 +34,7 @@ const BottomAction = ({ service }: Props) => {
     const isOutOfStock =
       service.preferentialInCurrentFlashSale?.limit &&
       service.preferentialInCurrentFlashSale.limit ===
-      service.preferentialInCurrentFlashSale.usage;
+        service.preferentialInCurrentFlashSale.usage;
     if (isOutOfStock) {
       Toast.show({
         type: "error",
@@ -55,9 +58,14 @@ const BottomAction = ({ service }: Props) => {
     }
   }, [service]);
 
-  const handlePhonePress = useCallback(() => { }, [service]);
-
-  const handleChatPress = useRequireLoginCallback(() => { }, []);
+  const handleChatPress = useRequireLoginCallback(() => {
+    const consultantConv = data.find((c) => c.type === "consultation");
+    if (consultantConv) {
+      navigation.navigate(ScreenKey.CHATTING, {
+        conversation: consultantConv,
+      });
+    }
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -73,7 +81,10 @@ const BottomAction = ({ service }: Props) => {
         </TouchableOpacity>
 
         <Row gap={16}>
-          <TouchableOpacity style={styles.phoneBtn} onPress={handlePhonePress}>
+          <TouchableOpacity
+            style={styles.phoneBtn}
+            onPress={navigate(ScreenKey.ABOUT_LIA)}
+          >
             <IconPhoneWhite
               height={_moderateScale(8 * 3)}
               width={_moderateScale(8 * 3)}
