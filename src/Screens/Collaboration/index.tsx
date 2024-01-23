@@ -60,7 +60,6 @@ export default function Collaboration() {
     PartnerService.requestCollab,
     null
   );
-  const { bottom } = useSafeAreaInsets();
 
   const formData = useFormData<FormType>(
     {
@@ -85,10 +84,10 @@ export default function Collaboration() {
       };
       performRequest(payload);
       Toast.show({
-        text1: "Gửi yêu cầu thành công",
+        text1: "Gửi thông tin liên hệ hợp tác thành công",
         type: "success",
       });
-      navigation.goBack();
+      formData.reset();
     },
     {
       validates: {

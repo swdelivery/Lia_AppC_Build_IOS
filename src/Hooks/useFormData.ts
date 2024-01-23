@@ -163,7 +163,7 @@ export function requiredField(value: any) {
     valid = value.length > 0;
   }
   if (!valid) {
-    return "Không được bỏ trống";
+    return "Vui lòng nhập thông tin";
   }
   return "";
 }

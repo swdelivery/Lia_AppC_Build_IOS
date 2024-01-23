@@ -32,7 +32,7 @@ export function validateEmail(email: string) {
 export const validatePhoneNumber = (phone: string, callingCode: string) => {
   const numberRegex = /^[0-9]+$/;
   if (!phone) {
-    return "Vui lòng nhập số điện thoại";
+    return "Vui lòng nhập thông tin";
   } else if (
     !isValidPhoneNumber("+" + callingCode + phone) ||
     !numberRegex.test(phone)
