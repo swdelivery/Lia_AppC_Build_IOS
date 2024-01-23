@@ -1,11 +1,9 @@
 import CachedImageView from "@Components/CachedImage";
 import Column from "@Components/Column";
 import HorizontalProgress from "@Components/HoriontalProgress";
-import Image from "@Components/Image";
 import Row from "@Components/Row";
 import Text from "@Components/Text";
 import {
-  GREEN,
   GREY,
   MAIN_RED,
   MAIN_RED_100,
@@ -26,7 +24,9 @@ import useCallbackItem from "src/Hooks/useCallbackItem";
 import { FlameIcon } from "src/SGV";
 import { isIos } from "src/utils/platform";
 
-const IMAGE_WIDTH = _width / 2 - 8 - 2;
+const PADDING = 8;
+const ITEM_WIDTH = _width / 2 - PADDING - PADDING / 2;
+const IMAGE_WIDTH = ITEM_WIDTH - 2;
 const IMAGE_HEIGHT = IMAGE_WIDTH * SERVICE_BANNER_RATIO;
 type Props = {
   item: FlashSaleService;
@@ -78,13 +78,15 @@ export default function FlashSaleItem({ item, isUpcoming, onBooking }: Props) {
         borderRadius={8}
         padding={1}
         style={styleElement.shadow}
+        width={ITEM_WIDTH}
       >
-        <Column onPress={onServiceDetails} flex={1}>
+        <Column onPress={onServiceDetails} flex={1} width={IMAGE_WIDTH}>
           <CachedImageView
             avatar={
               item.service.avatar ?? head(item.service.representationFileArr)
             }
             style={styles.image}
+            resizeMode="cover"
           />
           <Column flex={1} paddingHorizontal={4}>
             <Text size={12} numberOfLines={2} top={4}>
