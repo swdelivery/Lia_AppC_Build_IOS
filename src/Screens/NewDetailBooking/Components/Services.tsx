@@ -9,6 +9,7 @@ import { BASE_COLOR, BLACK } from "@Constant/Color";
 import { formatMonney } from "@Constant/Utils";
 import { sum } from "lodash";
 import ItemInsurance from "@Screens/NewCreateBooking/Components/ItemInsurance";
+import { calculateDiscountAmount } from "src/utils/booking";
 
 type Props = {
   booking: Booking;
@@ -18,15 +19,7 @@ export default function Services({ booking }: Props) {
   const discountAmount = useMemo(() => {
     return sum(
       (booking.partnerCoupons || []).map((item) => {
-        if (item.coupon?.discountType === "percent") {
-          const discount =
-            (booking.totalAmount * item.coupon.discountAmount) / 100;
-          return Math.min(discount, item.coupon.maxAmountDiscount);
-        }
-        if (item.coupon?.discountType === "fixed") {
-          return item.coupon.discountAmount;
-        }
-        return 0;
+        return calculateDiscountAmount(item, booking.totalAmount);
       })
     );
   }, [booking]);

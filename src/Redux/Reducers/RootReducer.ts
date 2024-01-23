@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 import authReducer from "./AuthReducer";
 import userReducer from "./index";
-import infoUserReducer from "./InfoUserReducer";
+import infoUserReducer, { State as UserState } from "./InfoUserReducer";
 import membersReducer from "./MembersReducer";
 import messageReducer from "./MessageReducer";
 import networkReducer from "./NetworkReducer";
@@ -56,7 +56,7 @@ import examinationResults from "../examinationResults/reducers";
 import { PersistConfig, persistReducer } from "redux-persist";
 import { reduxStorage } from "@Redux/reduxStorage";
 
-const userConfig: PersistConfig<any> = {
+const userConfig: PersistConfig<UserState> = {
   key: "infoUser",
   storage: reduxStorage,
 };
