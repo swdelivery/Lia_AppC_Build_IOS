@@ -89,6 +89,7 @@ const ItemService = ({ data }: { data: Service }) => {
       const currentFlashSale = fromFlashSaleDate(data.currentFlashSale);
       return currentFlashSale.to > Date.now();
     }
+    return false;
   }, [data]);
 
   const buildItemTopping = (value: string) => {

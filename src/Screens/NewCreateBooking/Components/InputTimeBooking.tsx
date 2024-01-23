@@ -195,40 +195,26 @@ const InputTimeBooking = memo(
           horizontal
         >
           {listTimeForBooking?.slice(0, 5)?.map((item, index) => {
-            if (
-              item?.time?.hour == dataTime?.hour &&
-              item?.time?.minute == dataTime?.minute
-            ) {
-              return (
-                <TouchableOpacity
-                  key={item._id}
-                  onPress={_handlePickTime(item)}
-                  style={[styles.btnTime, { borderWidth: 0 }]}
-                >
-                  <LinearGradient
-                    style={[StyleSheet.absoluteFillObject, { borderRadius: 4 }]}
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 0, y: 1 }}
-                    colors={[BASE_COLOR, NEW_BASE_COLOR]}
-                  />
-                  <Text color={WHITE} weight="bold">
-                    {item?.time?.hour}:{item?.time?.minute}
-                  </Text>
-                </TouchableOpacity>
-              );
-            } else {
-              return (
-                <TouchableOpacity
-                  key={item._id}
-                  onPress={_handlePickTime(item)}
-                  style={styles.btnTime}
-                >
-                  <Text color={GREY} weight="bold">
-                    {item?.time?.hour}:{item?.time?.minute}
-                  </Text>
-                </TouchableOpacity>
-              );
-            }
+            const isSelected =
+              getTwoDigits(item?.time?.hour) === getTwoDigits(dataTime?.hour) &&
+              getTwoDigits(item?.time?.minute) ===
+                getTwoDigits(dataTime?.minute);
+            return (
+              <TouchableOpacity
+                key={item._id}
+                onPress={_handlePickTime(item)}
+                style={[
+                  styles.btnTime,
+                  isSelected
+                    ? { borderWidth: 0, backgroundColor: BASE_COLOR }
+                    : {},
+                ]}
+              >
+                <Text color={isSelected ? WHITE : GREY} weight="bold">
+                  {item?.time?.hour}:{item?.time?.minute}
+                </Text>
+              </TouchableOpacity>
+            );
           })}
         </ScrollView>
 
@@ -243,40 +229,26 @@ const InputTimeBooking = memo(
           horizontal
         >
           {listTimeForBooking?.slice(5, 10)?.map((item, index) => {
-            if (
-              item?.time?.hour == dataTime?.hour &&
-              item?.time?.minute == dataTime?.minute
-            ) {
-              return (
-                <TouchableOpacity
-                  key={item._id}
-                  onPress={_handlePickTime(item)}
-                  style={[styles.btnTime, { borderWidth: 0 }]}
-                >
-                  <LinearGradient
-                    style={[StyleSheet.absoluteFillObject, { borderRadius: 4 }]}
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 0, y: 1 }}
-                    colors={["#1C5579", "#186A57"]}
-                  />
-                  <Text color={WHITE} weight="bold">
-                    {item?.from}
-                  </Text>
-                </TouchableOpacity>
-              );
-            } else {
-              return (
-                <TouchableOpacity
-                  key={item._id}
-                  onPress={_handlePickTime(item)}
-                  style={styles.btnTime}
-                >
-                  <Text color={GREY} weight="bold">
-                    {item?.from}
-                  </Text>
-                </TouchableOpacity>
-              );
-            }
+            const isSelected =
+              getTwoDigits(item?.time?.hour) === getTwoDigits(dataTime?.hour) &&
+              getTwoDigits(item?.time?.minute) ===
+                getTwoDigits(dataTime?.minute);
+            return (
+              <TouchableOpacity
+                key={item._id}
+                onPress={_handlePickTime(item)}
+                style={[
+                  styles.btnTime,
+                  isSelected
+                    ? { borderWidth: 0, backgroundColor: BASE_COLOR }
+                    : {},
+                ]}
+              >
+                <Text color={isSelected ? WHITE : GREY} weight="bold">
+                  {item?.time?.hour}:{item?.time?.minute}
+                </Text>
+              </TouchableOpacity>
+            );
           })}
         </ScrollView>
       </View>

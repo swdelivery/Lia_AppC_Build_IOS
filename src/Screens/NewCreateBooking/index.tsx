@@ -56,7 +56,7 @@ import ModalScrollPicker from "@Components/ModalBottom/ModalScrollPicker";
 import { formatMonney } from "@Constant/Utils";
 import { getMyCouponsState } from "@Redux/user/selectors";
 import { styleElement } from "@Constant/StyleElement";
-import { cloneDeep, isEmpty } from "lodash";
+import { cloneDeep, isEmpty, sumBy } from "lodash";
 import { Service } from "@typings/serviceGroup";
 
 const listTimeForBooking: TimeForBooking[] = [
@@ -133,7 +133,7 @@ const NewCreateBooking = () => {
     service,
     coupon,
     type,
-    dataBookingEdit
+    dataBookingEdit,
   } = useNavigationParams<ScreenK>();
   const scrollY = useSharedValue(0);
   const { dataBranch, dataDoctor, dataPractitioner, dataServices } =
@@ -190,9 +190,22 @@ const NewCreateBooking = () => {
       if (services?.length > 0) {
         let listService = [];
         services.map((bookingService) => {
+          let price = bookingService.service.price;
+          let toppingPrice = 0;
+          if (bookingService.promotionId) {
+            toppingPrice = sumBy(bookingService?.options || [], (item) => {
+              return item.extraAmount;
+            });
+            price = bookingService.finalPrice - toppingPrice;
+          }
+
           let service: Service = {
             ...bookingService.service,
-            promotionId: bookingService.promotionId,
+            price,
+            extraData: {
+              ...bookingService,
+              server: null,
+            },
           };
           let options = cloneDeep(service.options);
 

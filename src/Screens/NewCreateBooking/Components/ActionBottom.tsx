@@ -97,11 +97,12 @@ const ActionBottom = ({ booking }: Props) => {
     const flashSaleService = dataServices.find(
       (service) =>
         (service.isOnFlashSale && service.currentFlashSale) ||
-        !!service.promotionId
+        !!service.extraData?.promotionId
     );
     if (flashSaleService) {
       dataFetch["promotionId"] =
-        flashSaleService.currentFlashSale?._id ?? flashSaleService.promotionId;
+        flashSaleService.currentFlashSale?._id ??
+        flashSaleService.extraData?.promotionId;
     }
 
     dataFetch.type = !!flashSaleService ? "FLASH_SALE" : "DEFAULT";

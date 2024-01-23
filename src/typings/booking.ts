@@ -2,7 +2,7 @@ import { Branch } from "./branch";
 import { Timestamp } from "./common";
 import { Insurance } from "./insurance";
 import { PartnerPhone } from "./partner";
-import { Service } from "./serviceGroup";
+import { ItemOptions, Service, ServiceOption } from "./serviceGroup";
 import { MyVoucher, Voucher } from "./voucher";
 
 export type BookingDate = {
@@ -38,7 +38,7 @@ export type BookingService = {
   serviceCode: string;
   originalPrice: number;
   finalPrice: number;
-  options: any[];
+  options: ItemOptions[];
   service: Service;
 };
 

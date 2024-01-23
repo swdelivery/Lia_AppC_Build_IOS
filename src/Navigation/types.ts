@@ -40,7 +40,7 @@ type ScreenParams = {
     doctor?: Doctor;
     service?: Service;
     practitioner?: Practitioner;
-    coupon?: Voucher;
+    coupon?: MyVoucher;
     type?: string;
     dataBookingEdit?: Booking;
   };
@@ -75,13 +75,13 @@ type ScreenParams = {
   [ScreenKey.MODAL_SERVICE_REVIEW]: {
     flag: string;
     data: {
-      serviceName: string,
-      treatmentDetailId: string,
-      doctorCode: string,
-      serviceCode: string,
-      branchCode: string,
-      review: any
-    }
+      serviceName: string;
+      treatmentDetailId: string;
+      doctorCode: string;
+      serviceCode: string;
+      branchCode: string;
+      review: any;
+    };
   };
   [ScreenKey.DETAIL_EXAMINATION_RESULT]: {
     _id: string;

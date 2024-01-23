@@ -120,5 +120,5 @@ export type Service = {
   serviceGroupArr: ServiceGroup[];
   // Ui only
   optionsSelected: ServiceOption[];
-  promotionId?: string;
+  extraData?: any;
 } & Timestamp;

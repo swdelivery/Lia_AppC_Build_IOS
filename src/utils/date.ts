@@ -15,7 +15,7 @@ export const fromUtc = (datestr: string | Date) => {
   // return datestr;
 };
 
-export function getTwoDigits(number: number): string {
+export function getTwoDigits(number: number | string): string {
   return number.toString().padStart(2, "0");
 }
 
