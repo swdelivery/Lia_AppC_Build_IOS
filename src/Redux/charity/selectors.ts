@@ -14,3 +14,4 @@ export const getListPartnerDonateToVolunteerCompanionState = (state: AppState) =
 export const getListPartnerDonateToVolunteerState = (state: AppState) => state.charity.listPartnerDonateToVolunteer;
 export const getDataFilterReportState = (state: AppState) => state.charity.dataFilterReport;
 export const getVolunteerActionsState = (state: AppState) => state.charity.volunteerActions;
+export const getDetailVolunteerActionState = (state: AppState) => state.charity.detailVolunteerAction;

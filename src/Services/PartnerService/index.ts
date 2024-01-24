@@ -586,6 +586,11 @@ const getVolunteerActions = (payload: any) => {
     .get(`/volunteer-actions?${query}`)
     .then(({ data }) => data);
 };
+const getDetailVolunteerAction = (payload: any) => {
+  return axios
+    .get(`/volunteer-actions/${payload}`)
+    .then(({ data }) => data);
+};
 
 // Checkin by qr
 const getInfoBranchByCode = (payload: any) => {
@@ -794,6 +799,7 @@ export default {
   getTopDonate,
   getListPartnerDonateToVolunteerCompanion,
   getVolunteerActions,
+  getDetailVolunteerAction,
 
   // CheckIn By QR
   getInfoBranchByCode,

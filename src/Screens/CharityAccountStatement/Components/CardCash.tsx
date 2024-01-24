@@ -2,19 +2,23 @@ import Column from '@Components/Column'
 import Icon from '@Components/Icon'
 import Row from '@Components/Row'
 import Text from '@Components/Text'
-import { GREEN_SUCCESS, NEW_BASE_COLOR, RED } from '@Constant/Color'
+import { GREEN_SUCCESS, GREY_FOR_TITLE, NEW_BASE_COLOR, RED } from '@Constant/Color'
 import { styleElement } from '@Constant/StyleElement'
 import { formatMonney } from '@Constant/Utils'
+import ScreenKey from '@Navigation/ScreenKey'
 import { Transaction } from '@typings/charity'
 import moment from 'moment'
-import React, { useMemo } from 'react'
-import { StyleSheet } from 'react-native'
+import React, { useCallback, useMemo } from 'react'
+import { StyleSheet, TouchableOpacity } from 'react-native'
+import { useNavigate } from 'src/Hooks/useNavigation'
 
 type Props = {
   data: Transaction
 };
 
 const CardCash = ({ data }: Props) => {
+  const { navigate } = useNavigate()
+
   const {
     status,
     partner,
@@ -25,6 +29,10 @@ const CardCash = ({ data }: Props) => {
     created
   } = data
 
+  const _handleGoToDetail = useCallback(() => {
+    navigate(ScreenKey.EXPENSE_DETAIL, { data })()
+  }, [data])
+
   const isCashIn = useMemo(() => {
     if (status == 'INCREASE') {
       return true
@@ -34,65 +42,33 @@ const CardCash = ({ data }: Props) => {
   }, [status])
 
   return (
-    <Column
-      gap={8}
-      padding={8 * 2}
-      borderRadius={8}
-      backgroundColor={"#F4F4F4"}>
-      <Row gap={8}>
-        {
-          isCashIn ?
-            <>
-              <Text>
-                Từ
-              </Text>
-              {
-                donateVolunteerRequest?.isHideName ?
-                  <Text numberOfLines={1} flex={1} weight='bold'>
-                    Ủng hộ ẩn danh
-                  </Text>
-                  :
-                  <Text numberOfLines={1} flex={1} weight='bold'>
-                    {partner?.name}
-                  </Text>
-              }
-            </>
-            :
-            <>
-              <Text numberOfLines={1} flex={1} weight='bold'>
-                {
-                  volunteerFundRequest?.title
-                }
-              </Text>
-            </>
-        }
-
-        {
-          isCashIn ?
-            <Text
-              color={GREEN_SUCCESS}
-              weight='bold'>
-              + {formatMonney(depositAmount, true)}
+    <Column gap={4}>
+      <Column
+        gap={4}
+        backgroundColor={'#F4F4F4'}
+        borderRadius={8 * 2}
+        padding={8 * 2}
+        paddingVertical={8}>
+        <Row justifyContent='space-between'>
+          <Row gap={8}>
+            <Text>
+              Khoản chi:
             </Text>
-            :
-            <Text
-              color={RED}
-              weight='bold'>
-              - {formatMonney(depositAmount, true)}
-            </Text>
-        }
-
-      </Row>
-      <Row gap={8 * 2} alignItems='flex-end'>
-        <Text style={styleElement.flex} size={12}>
+            <Text weight='bold'>{formatMonney(depositAmount, true)}</Text>
+          </Row>
+          <TouchableOpacity onPress={_handleGoToDetail}>
+            <Row gap={4}>
+              <Icon color={GREY_FOR_TITLE} size={8 * 2.5} name='file-document-outline' />
+              <Text color={GREY_FOR_TITLE}>
+                Chi tiết
+              </Text>
+            </Row>
+          </TouchableOpacity>
+        </Row>
+        <Text fontStyle='italic'>
           {message}
         </Text>
-        <Row gap={4}>
-          <Text size={12}>
-            {moment(created).format('HH:MM')}
-          </Text>
-        </Row>
-      </Row>
+      </Column>
     </Column>
   )
 }

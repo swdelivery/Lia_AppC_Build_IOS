@@ -34,6 +34,7 @@ export type Campain = {
   address: any;
   to: string;
   story: string;
+  representationFileArr: FileAvatar[]
 }
 
 export type CompanionRequest = {
@@ -95,4 +96,5 @@ export type VolunteerActions = {
   updated: string;
   __v: number;
   volunteer: Campain;
+  locationInfo: string;
 }

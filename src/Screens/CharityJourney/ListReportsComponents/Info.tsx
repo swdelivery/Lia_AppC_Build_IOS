@@ -1,12 +1,48 @@
 import { StyleSheet, View } from 'react-native'
-import React from 'react'
+import React, { useMemo } from 'react'
 import Text from '@Components/Text'
 import Column from '@Components/Column'
 import Row from '@Components/Row'
 import { formatMonney } from '@Constant/Utils'
 import { styleElement } from '@Constant/StyleElement'
+import { useSelector } from 'react-redux'
+import { getVolunteerHistoryState } from '@Redux/charity/selectors'
+import moment from 'moment'
+import CardCash from '@Screens/CharityAccountStatement/Components/CardCash'
 
 const Info = () => {
+  const { data: dataHistory } = useSelector(getVolunteerHistoryState)
+
+
+  const totalMoneyIn = useMemo(() => {
+    let temp = [...dataHistory];
+    let total = temp?.filter(item => item?.status == 'INCREASE').reduce((sum, { depositAmount }) => {
+      return sum + depositAmount
+    }, 0)
+    return total
+  }, [dataHistory])
+
+  const totalMoneyOut = useMemo(() => {
+    let temp = [...dataHistory];
+    let total = temp?.filter(item => item?.status == 'REDUCE').reduce((sum, { depositAmount }) => {
+      return sum + depositAmount
+    }, 0)
+    return total
+  }, [dataHistory])
+
+  const listDataCashOut = useMemo(() => {
+    let historyMoneyIn = dataHistory?.filter(item => item?.status == 'REDUCE');
+    const groupedTransactions = historyMoneyIn.reduce((grouped, transaction) => {
+      const date = moment(transaction.created).format('YYYY-MM-DD');
+      if (!grouped[date]) {
+        grouped[date] = { date: transaction.created, data: [] };
+      }
+      grouped[date].data.push(transaction);
+      return grouped;
+    }, {});
+    return Object.values(groupedTransactions);
+  }, [dataHistory])
+
   return (
     <Column
       gap={8}
@@ -18,19 +54,18 @@ const Info = () => {
         padding={8 * 2}>
         <Row>
           <Text style={styleElement.flex}>Tổng số tiền ủng hộ</Text>
-          <Text weight='bold'>{formatMonney(120000, true)}</Text>
+          <Text weight='bold'>{formatMonney(totalMoneyIn, true)}</Text>
         </Row>
         <Row>
           <Text style={styleElement.flex}>Tổng số tiền chi</Text>
-          <Text weight='bold'>{formatMonney(100000, true)}</Text>
+          <Text weight='bold'>{formatMonney(totalMoneyOut, true)}</Text>
         </Row>
         <Row>
           <Text style={styleElement.flex}>Tổng số tiền còn dư</Text>
-          <Text weight='bold'>{formatMonney(20000, true)}</Text>
+          <Text weight='bold'>{formatMonney((totalMoneyIn - totalMoneyOut), true)}</Text>
         </Row>
       </Column>
-
-      <Column
+      {/* <Column
         gap={4}
         backgroundColor={"#F4F4F4"}
         borderRadius={8}
@@ -41,7 +76,7 @@ const Info = () => {
             Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
           </Text>
         </Column>
-      </Column>
+      </Column> */}
     </Column>
   )
 }

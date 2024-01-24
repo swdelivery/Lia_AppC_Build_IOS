@@ -9,17 +9,39 @@ import { _width } from '@Constant/Scale'
 import { styleElement } from '@Constant/StyleElement'
 import { formatMonney } from '@Constant/Utils'
 import moment from 'moment'
-import React, { useCallback } from 'react'
-import { ScrollView, StyleSheet } from 'react-native'
+import React, { useCallback, useMemo } from 'react'
+import { ScrollView, StyleSheet, TouchableOpacity } from 'react-native'
 import Header from './Components/Header'
+import { useNavigationParams } from "src/Hooks/useNavigation";
+import ScreenKey from '@Navigation/ScreenKey'
+import EnhancedImageViewing from "react-native-image-viewing/dist/ImageViewing";
+import { getImageAvataUrl } from 'src/utils/avatar'
+import useVisible from 'src/Hooks/useVisible'
 
 type InfoProps = {
   title: string;
   value: string;
   right?: React.ReactElement;
 }
+type ScreenK = typeof ScreenKey.EXPENSE_DETAIL;
 
 const ExpenseDetail = () => {
+  const { data } = useNavigationParams<ScreenK>();
+  const imageViewer = useVisible()
+
+
+  const _handlePressImage = useCallback((idx: number) => () => {
+    imageViewer.show(idx)
+  }, [])
+
+  const listImage = useMemo(() => {
+    // return [{ uri: getImageAvataUrl(imageBeforeTreatment[0]) }]
+    return data?.images?.map((item, index) => {
+      return {
+        uri: getImageAvataUrl(item)
+      }
+    })
+  }, [data?.images])
 
   const Info = useCallback(({ title, value, right }: InfoProps) => {
     return (
@@ -52,16 +74,16 @@ const ExpenseDetail = () => {
         <Column gap={8 * 2}>
           <Info
             title='Loại khoản chi'
-            value='Chi phí hoạt động vận động phân phối' />
+            value={data?.volunteerFundRequest?.title} />
           <Info
             title='Ngày chi'
-            value={moment().format("DD/MM/YYYY")} />
+            value={moment(data?.volunteerFundRequest?.created).format("DD/MM/YYYY")} />
           <Info
             title='Nội dung khoản chi'
-            value='Tặng 20 phần quà cho các em học sinh khó khăn tại vùng cao' />
+            value={data?.message} />
           <Info
             title='Tổng số tiền'
-            value={formatMonney(200000)}
+            value={formatMonney(data?.depositAmount)}
             right={<Text weight='bold'>VND</Text>} />
         </Column>
         <Column margin={8 * 2}>
@@ -70,17 +92,28 @@ const ExpenseDetail = () => {
           </Text>
           <Row flexWrap='wrap'>
             {
-              [1, 2, 3, 4, 5, 6, 7].map((item, index) => {
+              data?.images?.map((item, index) => {
                 return (
-                  <Image
-                    style={styles.image}
-                    avatar={null} />
+                  <TouchableOpacity
+                    onPress={_handlePressImage(index)}
+                    activeOpacity={.7}>
+                    <Image
+                      style={styles.image}
+                      avatar={item} />
+                  </TouchableOpacity>
                 )
               })
             }
           </Row>
         </Column>
       </ScrollView>
+
+      <EnhancedImageViewing
+        images={listImage}
+        imageIndex={imageViewer.selectedItem.current}
+        onRequestClose={imageViewer.hide}
+        visible={imageViewer.visible}
+      />
 
     </Screen>
   )

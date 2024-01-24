@@ -4,27 +4,59 @@ import { WHITE } from '@Constant/Color'
 import { _width } from '@Constant/Scale'
 import { FlashList } from '@shopify/flash-list'
 import { RenderItemProps } from '@typings/common'
-import React from 'react'
-import { StyleSheet } from 'react-native'
+import React, { useCallback, useMemo } from 'react'
+import { StyleSheet, TouchableOpacity } from 'react-native'
 import Header from './Components/Header'
+import { useSelector } from 'react-redux'
+import { getDetailCampainState } from '@Redux/charity/selectors'
+import EnhancedImageViewing from "react-native-image-viewing/dist/ImageViewing";
+import useVisible from 'src/Hooks/useVisible'
+import { getImageAvataUrl } from 'src/utils/avatar'
 
 const ListImageVideo = () => {
+  const { data: { representationFileArr } } = useSelector(getDetailCampainState)
+  const imageViewer = useVisible()
 
-  function renderItem({ item }: RenderItemProps<any>) {
+  function renderItem({ item, index }: RenderItemProps<any>) {
+
+    const _handlePressImage = ((idx: number) => () => {
+      imageViewer.show(index)
+    })
+
     return (
-      <Image style={styles.image} avatar={null} />
+      <TouchableOpacity onPress={_handlePressImage(index)}>
+        <Image style={styles.image} avatar={item} />
+      </TouchableOpacity>
     )
   }
+
+  const listImage = useMemo(() => {
+    return representationFileArr?.filter(item => item?.type == 'image');
+  }, [representationFileArr])
+
+  const listImageForViewing = useMemo(() => {
+    return listImage?.map((item, index) => {
+      return {
+        uri: getImageAvataUrl(item)
+      }
+    })
+  }, [listImage])
 
   return (
     <Screen>
       <Header title='Ảnh/Video' />
       <FlashList
         contentContainerStyle={{}}
-        data={[1, 2, 3, 4, 5, 6, 7, 8]}
+        data={listImage}
         numColumns={3}
         renderItem={renderItem}
         estimatedItemSize={100}
+      />
+      <EnhancedImageViewing
+        images={listImageForViewing}
+        imageIndex={imageViewer.selectedItem.current}
+        onRequestClose={imageViewer.hide}
+        visible={imageViewer.visible}
       />
     </Screen>
   )
