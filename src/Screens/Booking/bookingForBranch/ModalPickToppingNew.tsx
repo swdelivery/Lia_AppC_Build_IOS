@@ -94,8 +94,6 @@ const ModalPickToppingNew = ({ confirm, data, show, hide }: Props) => {
       )
     )
       return;
-
-    console.log({ data });
     if (data?.typeOption == "single") {
       handleChoiceSingle(data, data?.groupCode);
     }

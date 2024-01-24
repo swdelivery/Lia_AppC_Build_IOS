@@ -12,7 +12,6 @@ import {
   BASE_COLOR,
   BLACK_OPACITY_4,
   GREY,
-  GREY_FOR_TITLE,
   NEW_BASE_COLOR,
   WHITE,
 } from "@Constant/Color";
@@ -21,12 +20,12 @@ import { getAboutLiA } from "@Redux/aboutLiA/actions";
 import { getAboutLiAState } from "@Redux/aboutLiA/selectors";
 import { first } from "lodash";
 import React, { useCallback, useEffect, useMemo } from "react";
-import { Alert, ImageBackground, Linking, ScrollView, StyleSheet } from "react-native";
+import { ImageBackground, Linking, ScrollView, StyleSheet } from "react-native";
 import Rate, { AndroidMarket } from "react-native-rate";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "src/Hooks/useNavigation";
-import EnhancedImageViewing from 'react-native-image-viewing/dist/ImageViewing';
+import EnhancedImageViewing from "react-native-image-viewing/dist/ImageViewing";
 import { getImageAvataUrl } from "src/utils/avatar";
 import useVisible from "src/Hooks/useVisible";
 
@@ -35,7 +34,7 @@ const AboutLiA = () => {
   const { top } = useSafeAreaInsets();
   const { navigation } = useNavigate();
   const dispatch = useDispatch();
-  const imageViewer = useVisible()
+  const imageViewer = useVisible();
 
   useEffect(() => {
     dispatch(getAboutLiA.request());
@@ -67,15 +66,18 @@ const AboutLiA = () => {
   );
 
   const listImageToViewing = useMemo(() => {
-    return data?.imageFile?.map(item => {
+    return data?.imageFile?.map((item) => {
       return {
-        uri: getImageAvataUrl(item)
-      }
-    })
-  }, [data?.imageFile])
-  const _handlePressImage = useCallback((idx: number) => () => {
-    imageViewer.show(idx)
-  }, [])
+        uri: getImageAvataUrl(item),
+      };
+    });
+  }, [data?.imageFile]);
+  const _handlePressImage = useCallback(
+    (idx: number) => () => {
+      imageViewer.show(idx);
+    },
+    []
+  );
 
   return (
     <Screen>
@@ -111,8 +113,9 @@ const AboutLiA = () => {
             zIndex={1}
             width={8 * 10}
             height={8 * 10}
-            borderRadius={8 * 10 / 2}
-            style={[styleElement.shadow, styleElement.centerChild]}>
+            borderRadius={(8 * 10) / 2}
+            style={[styleElement.shadow, styleElement.centerChild]}
+          >
             <Image style={[styles.logo]} avatar={data?.logoFile ?? null} />
           </Column>
 
@@ -159,36 +162,44 @@ const AboutLiA = () => {
             </Column>
             <Spacer top={8 * 3} />
 
-            {
-              data?.imageFile?.length > 0 ?
-                <>
-                  {
-                    data?.imageFile?.length == 1 ?
-                      <Column onPress={_handlePressImage(0)} alignSelf="center">
-                        <Image style={styles.image} avatar={first(data?.imageFile)} />
-                      </Column>
-                      :
-                      <>
-                        <ScrollView
-                          showsHorizontalScrollIndicator={false}
-                          contentContainerStyle={{ gap: 8, paddingHorizontal: 8 * 2, flexGrow: 1 }}
-                          horizontal
-                        >
-                          {data?.imageFile?.map((item, index) => {
-                            return (
-                              <Column onPress={_handlePressImage(index)}>
-                                <Image key={item?._id} style={styles.image} avatar={item} />
-                              </Column>
-                            );
-                          })}
-                        </ScrollView>
-                      </>
-                  }
-                </>
-                :
-                <>
-                </>
-            }
+            {data?.imageFile?.length > 0 ? (
+              <>
+                {data?.imageFile?.length == 1 ? (
+                  <Column onPress={_handlePressImage(0)} alignSelf="center">
+                    <Image
+                      style={styles.image}
+                      avatar={first(data?.imageFile)}
+                    />
+                  </Column>
+                ) : (
+                  <>
+                    <ScrollView
+                      showsHorizontalScrollIndicator={false}
+                      contentContainerStyle={{
+                        gap: 8,
+                        paddingHorizontal: 8 * 2,
+                        flexGrow: 1,
+                      }}
+                      horizontal
+                    >
+                      {data?.imageFile?.map((item, index) => {
+                        return (
+                          <Column onPress={_handlePressImage(index)}>
+                            <Image
+                              key={item?._id}
+                              style={styles.image}
+                              avatar={item}
+                            />
+                          </Column>
+                        );
+                      })}
+                    </ScrollView>
+                  </>
+                )}
+              </>
+            ) : (
+              <></>
+            )}
             <HorizontalLine
               marginTop={8 * 2}
               height={4}
@@ -250,6 +261,5 @@ const styles = StyleSheet.create({
     width: 8 * 10,
     height: 8 * 10,
     borderRadius: (8 * 10) / 2,
-
   },
 });
