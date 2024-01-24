@@ -1,4 +1,4 @@
 {
-  "branches": ["dev", "staging", "master"],
+  "branches": ["dev", "staging", "main"],
   "testerGroups": "liatesters"
 }
