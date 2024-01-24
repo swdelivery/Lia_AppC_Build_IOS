@@ -1193,6 +1193,11 @@
   dependencies:
     "@types/hammerjs" "^2.0.36"
 
+"@emotion/hash@^0.9.1":
+  version "0.9.1"
+  resolved "https://registry.yarnpkg.com/@emotion/hash/-/hash-0.9.1.tgz#4ffb0055f7ef676ebc3a5a91fb621393294e2f43"
+  integrity sha512-gJB6HLm5rYwSLI6PQa+X1t5CFGrv1J1TWG+sOyMCeKz2ojaj6Fnl/rZEspogG+cvqbt4AE/2eIyD2QfLKTBNlQ==
+
 "@eslint-community/eslint-utils@^4.2.0", "@eslint-community/eslint-utils@^4.4.0":
   version "4.4.0"
   resolved "https://registry.yarnpkg.com/@eslint-community/eslint-utils/-/eslint-utils-4.4.0.tgz#a23514e8fb9af1269d5f7788aa556798d61c6b59"
@@ -4053,9 +4058,9 @@ ee-first@1.1.1:
   integrity sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==
 
 electron-to-chromium@^1.4.601:
-  version "1.4.642"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.642.tgz#eb380fa8b58e515c641d642ba452fa2c453c2e4f"
-  integrity sha512-M4+u22ZJGpk4RY7tne6W+APkZhnnhmAH48FNl8iEFK2lEgob+U5rUQsIqQhvAwCXYpfd3H20pHK/ENsCvwTbsA==
+  version "1.4.643"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.643.tgz#081a20c5534db91e66ef094f68624960f674768f"
+  integrity sha512-QHscvvS7gt155PtoRC0dR2ilhL8E9LHhfTQEq1uD5AL0524rBLAwpAREFH06f87/e45B9XkR6Ki5dbhbCsVEIg==
 
 eme-encryption-scheme-polyfill@^2.0.1:
   version "2.1.1"
@@ -7543,10 +7548,11 @@ react-native-blob-util@^0.19.6:
     glob "^10.3.10"
 
 react-native-bootsplash@^5.0.4:
-  version "5.2.2"
-  resolved "https://registry.yarnpkg.com/react-native-bootsplash/-/react-native-bootsplash-5.2.2.tgz#521aa16858ca0e98e1e9d2f71aa5b7dccb21dae6"
-  integrity sha512-iht65USUnJPQ747I2s/miuYvSwioRtwacB85lmECnJAtJLbj7Ms7hZoi2PLY8L+DAanwrXxQx+qk+rWVujSaEA==
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/react-native-bootsplash/-/react-native-bootsplash-5.3.0.tgz#15f856a3e8e5102a8f695bb41632f656c49ada44"
+  integrity sha512-BVCD/2sBU8f8yipaKWN79guIeGqose+O0lXxl/Zt6afZfjav20hT4NubISqqdSRCZ7ruoKSSjCMtb/6DkUxrNQ==
   dependencies:
+    "@emotion/hash" "^0.9.1"
     detect-indent "^6.1.0"
     fs-extra "^11.2.0"
     node-html-parser "^6.1.12"

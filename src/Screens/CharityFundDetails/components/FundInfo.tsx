@@ -3,6 +3,7 @@ import Icon from "@Components/Icon";
 import Row from "@Components/Row";
 import Text from "@Components/Text";
 import { BLACK_OPACITY_7, NEW_BASE_COLOR } from "@Constant/Color";
+import { styleElement } from "@Constant/StyleElement";
 import { formatMonney } from "@Constant/Utils";
 import { getDetailCampainState } from "@Redux/charity/selectors";
 import moment from "moment";
@@ -85,13 +86,12 @@ export default function FundInfo({ }: Props) {
           :
           <></>
       }
-
       <Row marginTop={12}>
         <Text size={12}>Tạo bởi </Text>
-        <Text size={12} weight="bold" color={NEW_BASE_COLOR}>
+        <Icon name="check-circle" size={16} color={NEW_BASE_COLOR} left={4} />
+        <Text numberOfLines={1} style={styleElement.flex} size={12} weight="bold" color={NEW_BASE_COLOR}>
           {createBy}
         </Text>
-        <Icon name="check-circle" size={16} color={NEW_BASE_COLOR} left={4} />
       </Row>
     </Column>
   );

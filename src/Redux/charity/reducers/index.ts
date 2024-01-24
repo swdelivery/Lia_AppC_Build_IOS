@@ -12,6 +12,7 @@ import listPartnerDonateToVolunteerCompanion from "./listPartnerDonateToVoluntee
 import listPartnerDonateToVolunteer from "./listPartnerDonateToVolunteer";
 import dataFilterReport from "./dataFilterReport";
 import volunteerHistoryFilter from "./volunteerHistoryFilter";
+import volunteerActions from "./volunteerActions";
 
 export default combineReducers({
   listCampain,
@@ -26,5 +27,6 @@ export default combineReducers({
   listPartnerDonateToVolunteerCompanion,
   listPartnerDonateToVolunteer,
   dataFilterReport,
-  volunteerHistoryFilter
+  volunteerHistoryFilter,
+  volunteerActions
 });

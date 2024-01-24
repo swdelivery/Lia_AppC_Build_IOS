@@ -60,11 +60,11 @@ const CardExaminationResult = ({ data }: Props) => {
           </Row>
           <Row gap={4} marginTop={4} alignItems='flex-start'>
             <Icon top={4} size={8 * 2} color='#4A4A4A' name='map-marker' />
-            <Column>
-              <Text color={"#4A4A4A"}>
+            <Column flex={1}>
+              <Text flex={1} color={"#4A4A4A"}>
                 {branch?.name}
               </Text>
-              <Text size={12} fontStyle='italic' color={"#4A4A4A"}>
+              <Text flex={1} size={12} fontStyle='italic' color={"#4A4A4A"}>
                 {branch?.addressDetails.fullAddress}
               </Text>
             </Column>

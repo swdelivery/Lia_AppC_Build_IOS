@@ -1215,7 +1215,7 @@ PODS:
     - React-Core
     - ZIPFoundation (= 0.9.11)
   - RecaptchaInterop (100.0.0)
-  - RNBootSplash (5.2.2):
+  - RNBootSplash (5.3.0):
     - React-Core
   - RNCAsyncStorage (1.12.1):
     - React-Core
@@ -1740,7 +1740,7 @@ SPEC CHECKSUMS:
   ReactCommon: 45b5d4f784e869c44a6f5a8fad5b114ca8f78c53
   ReactNativeFileAccess: 4530e3be4d5069454c6c6389096d8cb78c897f2c
   RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
-  RNBootSplash: 6890a69d909d76076aaba018bd74bb526f82fe68
+  RNBootSplash: 73c2a97d761db234125638c24ad6da6d781d049d
   RNCAsyncStorage: b03032fdbdb725bea0bd9e5ec5a7272865ae7398
   RNCClipboard: 60fed4b71560d7bfe40e9d35dea9762b024da86d
   RNCMaskedView: 090213d32d8b3bb83a4dcb7d12c18f0152591906

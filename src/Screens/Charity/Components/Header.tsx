@@ -35,7 +35,7 @@ const Header = () => {
           hitSlop={styleElement.hitslopSm}>
           <IconFindAroundCirle width={8 * 3} height={8 * 3} />
         </TouchableOpacity>
-        <IconProfileAroundCirle width={8 * 3} height={8 * 3} />
+        {/* <IconProfileAroundCirle width={8 * 3} height={8 * 3} /> */}
       </Row>
     </Row>
   )

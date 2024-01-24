@@ -19,7 +19,7 @@ type Props = {};
 export default function Banner({ }: Props) {
   const { top } = useSafeAreaInsets();
   const { navigation } = useNavigate()
-  const { data: { bannerFileArr } } = useSelector(getDetailCampainState)
+  const { data: { bannerFileArr, to } } = useSelector(getDetailCampainState)
 
   return (
     <Column backgroundColor={BG_MAIN_OPACITY}>
@@ -35,7 +35,7 @@ export default function Banner({ }: Props) {
         <IconBackWhite />
       </Column>
 
-      <Column
+      {/* <Column
         position="absolute"
         top={top + 20}
         right={20}
@@ -48,7 +48,7 @@ export default function Banner({ }: Props) {
         <Text weight="bold" color={"white"}>
           Chia sẻ
         </Text>
-      </Column>
+      </Column> */}
       <Column
         backgroundColor={"white"}
         position="absolute"
@@ -60,7 +60,7 @@ export default function Banner({ }: Props) {
         paddingBottom={4}
       >
         <Text weight="bold" color={NEW_BASE_COLOR}>
-          Trẻ em
+          {to}
         </Text>
       </Column>
     </Column>

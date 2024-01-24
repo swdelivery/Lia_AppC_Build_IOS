@@ -70,7 +70,7 @@ const NewAffiliate = () => {
 
   useEffect(() => {
     dispatch(getPartnerLevel.request());
-    _checkStep(infoUser?._id);
+    // _checkStep(infoUser?._id);
   }, []);
 
   useEffect(() => {
@@ -110,14 +110,15 @@ const NewAffiliate = () => {
   };
 
   const _handlePressIntiveBtn = useHapticCallback(() => {
-    if (stepUnlockAffiliate?.isCollaburator) {
-      setShowModalShareCodeAffiliate((old) => !old);
-    } else {
-      setFlagRequireDoneStepToShareCode(true);
-      setTimeout(() => {
-        setFlagRequireDoneStepToShareCode(false);
-      }, 300);
-    }
+    setShowModalShareCodeAffiliate((old) => !old);
+    // if (stepUnlockAffiliate?.isCollaburator) {
+    //   setShowModalShareCodeAffiliate((old) => !old);
+    // } else {
+    //   setFlagRequireDoneStepToShareCode(true);
+    //   setTimeout(() => {
+    //     setFlagRequireDoneStepToShareCode(false);
+    //   }, 300);
+    // }
   }, [stepUnlockAffiliate]);
 
   const _renderItem = useCallback(
@@ -193,10 +194,10 @@ const NewAffiliate = () => {
             marginHorizontal={8 * 2}
             backgroundColor={"#182128"}
           >
-            <TutMakeMoney
+            {/* <TutMakeMoney
               flagRequireDoneStepToShareCode={flagRequireDoneStepToShareCode}
-            />
-            <View style={styles.line} />
+            /> */}
+            {/* <View style={styles.line} /> */}
             <ListF1Btn />
             <View style={styles.line} />
             <CheckOrderBtn />

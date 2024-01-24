@@ -1,3 +1,4 @@
+import { AddressDetails } from "./branch";
 import { FileAvatar } from "./common";
 import { Partner } from "./partner";
 
@@ -31,6 +32,8 @@ export type Campain = {
   currency: any;
   id: string;
   address: any;
+  to: string;
+  story: string;
 }
 
 export type CompanionRequest = {
@@ -75,3 +78,21 @@ export type Donate = {
   totalAmount: number;
 }
 
+export type VolunteerActions = {
+  address: AddressDetails;
+  isActive: boolean;
+  isDelete: boolean;
+  _id: string;
+  name: string;
+  startDate: string;
+  volunteerId: string;
+  orderNumber: number;
+  members: number;
+  avatar: FileAvatar;
+  code: string;
+  userCreate: string;
+  created: string;
+  updated: string;
+  __v: number;
+  volunteer: Campain;
+}
