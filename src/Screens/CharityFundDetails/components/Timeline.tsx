@@ -31,7 +31,7 @@ const Timeline = () => {
   useEffect(() => {
     if (_id) {
       dispatch(getVolunteerActions.request({
-        volunteerId: "65962e7054f603001e657fe3"
+        volunteerId: _id
       }))
     }
   }, [_id])
