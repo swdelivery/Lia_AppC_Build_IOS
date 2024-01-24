@@ -1,7 +1,6 @@
 import {
   ScrollView,
   StyleSheet,
-  Text,
   TouchableOpacity,
   View,
   Image,
@@ -39,6 +38,7 @@ import AsyncStorage from "@react-native-community/async-storage";
 import Screen from "../../Components/Screen";
 import { StatusBar } from "@Components/StatusBar";
 import ListPractitioner from "./Components/ListPractitioner";
+import Text from "@Components/Text";
 
 const NewSearchHome = memo((props) => {
   const [keySearch, setKeySearch] = useState("");

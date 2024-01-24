@@ -349,8 +349,8 @@ const getPartnerConversations = (
   return axios
     .get(
       "/partner-conversation" +
-        "?" +
-        encodeParams({ ...params, limit: pageSize, page })
+      "?" +
+      encodeParams({ ...params, limit: pageSize, page })
     )
     .then(({ data }) => data.data);
 };
@@ -578,6 +578,14 @@ const getListPartnerDonateToVolunteerCompanion = (payload: any) => {
     .get(`/donate-volunteer-request/get-by-volunteerId?${query}`)
     .then(({ data }) => data);
 };
+const getVolunteerActions = (payload: any) => {
+  const query = encodeParams({
+    ...payload,
+  });
+  return axios
+    .get(`/volunteer-actions?${query}`)
+    .then(({ data }) => data);
+};
 
 // Checkin by qr
 const getInfoBranchByCode = (payload: any) => {
@@ -785,6 +793,7 @@ export default {
   getVolunteerHistory,
   getTopDonate,
   getListPartnerDonateToVolunteerCompanion,
+  getVolunteerActions,
 
   // CheckIn By QR
   getInfoBranchByCode,

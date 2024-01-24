@@ -3,7 +3,7 @@ import { Alert } from "react-native";
 import { all, call, put, takeLatest } from "redux-saga/effects";
 import PartnerService from "src/Services/PartnerService";
 import * as actions from "./actions";
-import { CREATE_VOLUNTEER_COMPANION, CREATE_VOLUNTEER_COMPANION_DONATE, CREATE_VOLUNTEER_DONATE, GET_DETAIL_CAMPAIN, GET_LIST_CAMPAIN, GET_LIST_COMPANION_BY_USER, GET_LIST_COMPANION_REQUEST, GET_LIST_COMPANION_REQUEST_ACCEPT, GET_LIST_PARTNER_DONATE_TO_VOLUNTEER, GET_LIST_PARTNER_DONATE_TO_VOLUNTEER_COMPANION, GET_TOP_DONATE, GET_VOLUNTEER_HISTORY, GET_VOLUNTEER_REPORT_HISTORY_FILTER, SEARCH_CAMPAIN } from "./types";
+import { CREATE_VOLUNTEER_COMPANION, CREATE_VOLUNTEER_COMPANION_DONATE, CREATE_VOLUNTEER_DONATE, GET_DETAIL_CAMPAIN, GET_LIST_CAMPAIN, GET_LIST_COMPANION_BY_USER, GET_LIST_COMPANION_REQUEST, GET_LIST_COMPANION_REQUEST_ACCEPT, GET_LIST_PARTNER_DONATE_TO_VOLUNTEER, GET_LIST_PARTNER_DONATE_TO_VOLUNTEER_COMPANION, GET_TOP_DONATE, GET_VOLUNTEER_ACTIONS, GET_VOLUNTEER_HISTORY, GET_VOLUNTEER_REPORT_HISTORY_FILTER, SEARCH_CAMPAIN } from "./types";
 
 function* getListCampain({ }: BaseAction<string>) {
   try {
@@ -187,6 +187,18 @@ function* getListPartnerDonateToVolunteer({ payload }: BaseAction<string>) {
   }
 }
 
+function* getVolunteerActions({ payload }: BaseAction<string>) {
+  try {
+    const data = yield call(PartnerService.getVolunteerActions, payload);
+    yield put(
+      actions.getVolunteerActions.success({
+        data,
+      })
+    );
+  } catch (error: any) {
+  }
+}
+
 
 export default function* sagas() {
   yield all([
@@ -204,5 +216,6 @@ export default function* sagas() {
     takeLatest(GET_TOP_DONATE.REQUEST, getTopDonate),
     takeLatest(GET_LIST_PARTNER_DONATE_TO_VOLUNTEER_COMPANION.REQUEST, getListPartnerDonateToVolunteerCompanion),
     takeLatest(GET_LIST_PARTNER_DONATE_TO_VOLUNTEER.REQUEST, getListPartnerDonateToVolunteer),
+    takeLatest(GET_VOLUNTEER_ACTIONS.REQUEST, getVolunteerActions),
   ]);
 }

@@ -13,6 +13,8 @@ import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-na
 import { getListRankedAffiliate } from '../../Redux/Action/Affiilate'
 import { URL_ORIGINAL } from '../../Constant/Url'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
+import Avatar from '@Components/Avatar'
+import { formatMonney } from '@Constant/Utils'
 
 
 const HEIGHT_RANKED_1 = _moderateScale(8 * 16)
@@ -93,31 +95,28 @@ const ListRanked = () => {
                         }}>
                             {index + 1}
                         </Text>
-                        <Image
+                        <Avatar
                             style={{
-                                width: _moderateScale(8 * 7),
-                                height: _moderateScale(8 * 7),
-                                borderRadius: _moderateScale(8 * 3.5),
                                 marginLeft: _moderateScale(8),
                                 borderWidth: 3,
                                 borderColor: "#FFD9AA"
                             }}
-                            source={{ uri: `${URL_ORIGINAL}${item?.fileAvatar?.link}` }} />
+                            circle
+                            size={_moderateScale(8 * 7)}
+                            avatar={item?.fileAvatar} />
                         <View style={{ marginLeft: _moderateScale(8) }}>
                             <Text style={{ ...stylesFont.fontNolanBold, fontSize: _moderateScale(14), color: GREY_FOR_TITLE }}>
                                 {item?.name}
                             </Text>
                             <View style={{ height: 8 }} />
                             <Text style={{ ...stylesFont.fontNolanBold, fontSize: _moderateScale(14), color: PRICE_ORANGE }}>
-                                {item?.liaPoint}
+                                {formatMonney(item?.liaPoint)}
                             </Text>
                         </View>
                     </View>
                 </View>
             )
         }
-
-
     }
 
 
@@ -166,11 +165,14 @@ const ListRanked = () => {
 
                             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end' }}>
                                 <View style={{ alignItems: 'center' }}>
-                                    <Image
-                                        style={[styles.avatar, { borderColor: '#3081B4' }]}
-                                        source={{
-                                            uri: `${URL_ORIGINAL}${listRankedAffiliate[1]?.fileAvatar?.link}`
-                                        }} />
+                                    <Avatar
+                                        style={{
+                                            borderWidth: 2,
+                                            borderColor: "#3081B4"
+                                        }}
+                                        circle
+                                        size={_moderateScale(8 * 8)}
+                                        avatar={listRankedAffiliate[1]?.fileAvatar} />
                                     <Text style={{ ...stylesFont.fontNolanBold, fontSize: _moderateScale(16), color: WHITE, marginTop: _moderateScale(4) }}>
                                         {
                                             listRankedAffiliate[1]?.name
@@ -178,7 +180,7 @@ const ListRanked = () => {
                                     </Text>
                                     <Text style={{ ...stylesFont.fontDinTextProBold, fontSize: _moderateScale(16), color: "#FB4800" }}>
                                         {
-                                            listRankedAffiliate[1]?.liaPoint
+                                            formatMonney(listRankedAffiliate[1]?.liaPoint)
                                         }
                                     </Text>
                                     <Animated.View style={[styles.box, {
@@ -213,11 +215,14 @@ const ListRanked = () => {
                                         }}>
                                             <IconCrown />
                                         </View>
-                                        <Image
-                                            style={[styles.avatar, { borderColor: '#F1B003' }]}
-                                            source={{
-                                                uri: `${URL_ORIGINAL}${listRankedAffiliate[0]?.fileAvatar?.link}`
-                                            }} />
+                                        <Avatar
+                                            style={{
+                                                borderWidth: 2,
+                                                borderColor: "#F1B003"
+                                            }}
+                                            circle
+                                            size={_moderateScale(8 * 8)}
+                                            avatar={listRankedAffiliate[0]?.fileAvatar} />
                                     </View>
                                     <Text style={{ ...stylesFont.fontNolanBold, fontSize: _moderateScale(16), color: WHITE, marginTop: _moderateScale(4) }}>
                                         {
@@ -226,7 +231,7 @@ const ListRanked = () => {
                                     </Text>
                                     <Text style={{ ...stylesFont.fontDinTextProBold, fontSize: _moderateScale(16), color: "#FB4800" }}>
                                         {
-                                            listRankedAffiliate[0]?.liaPoint
+                                            formatMonney(listRankedAffiliate[0]?.liaPoint)
                                         }
                                     </Text>
                                     <Animated.View style={[styles.box, {
@@ -243,11 +248,14 @@ const ListRanked = () => {
                             </View>
                             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end' }}>
                                 <View style={{ alignItems: 'center' }}>
-                                    <Image
-                                        style={[styles.avatar, { borderColor: '#137111' }]}
-                                        source={{
-                                            uri: `${URL_ORIGINAL}${listRankedAffiliate[2]?.fileAvatar?.link}`
-                                        }} />
+                                    <Avatar
+                                        style={{
+                                            borderWidth: 2,
+                                            borderColor: "#137111"
+                                        }}
+                                        circle
+                                        size={_moderateScale(8 * 8)}
+                                        avatar={listRankedAffiliate[2]?.fileAvatar} />
                                     <Text style={{ ...stylesFont.fontNolanBold, fontSize: _moderateScale(16), color: WHITE, marginTop: _moderateScale(4) }}>
                                         {
                                             listRankedAffiliate[2]?.name
@@ -255,12 +263,11 @@ const ListRanked = () => {
                                     </Text>
                                     <Text style={{ ...stylesFont.fontDinTextProBold, fontSize: _moderateScale(16), color: "#FB4800" }}>
                                         {
-                                            listRankedAffiliate[2]?.liaPoint
+                                            formatMonney(listRankedAffiliate[2]?.liaPoint)
                                         }
                                     </Text>
                                     <Animated.View style={[styles.box, {
                                         backgroundColor: "#137111",
-                                        // height: 
                                     }, animHeightRanked3]}>
                                         <View style={[styles.box__text]}>
                                             <Text style={{ ...stylesFont.fontNolanBold, fontSize: _moderateScale(18), color: '#137111' }}>
@@ -274,8 +281,6 @@ const ListRanked = () => {
                     )
                 }}
             />
-
-
         </View>
     )
 }

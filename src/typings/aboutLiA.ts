@@ -22,4 +22,6 @@ export type AboutLiA = {
     street: string;
     fullAddress: string;
   };
+  imageFile: FileAvatar[];
+  logoFile: FileAvatar
 };

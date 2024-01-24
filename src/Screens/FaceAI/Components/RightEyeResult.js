@@ -129,7 +129,7 @@ const RightEyeResult = memo((props) => {
                                         position: 'absolute',
                                         zIndex: 1
                                     }}>
-                                        Tương thích
+                                        Độ chính xác
                                     </Text>
                                     <View style={{
                                         flexDirection: 'row',

@@ -7,7 +7,7 @@ import { FONT_WEIGHTS } from "@Components/Text";
 const RenderHTML = (props) => {
   return (
     <RenderHtml
-      contentWidth={_width}
+      contentWidth={props?.contentWidth ? props?.contentWidth : _width}
       source={{ html: `${props.data}` }}
       enableExperimentalBRCollapsing={true}
       enableExperimentalMarginCollapsing={true}

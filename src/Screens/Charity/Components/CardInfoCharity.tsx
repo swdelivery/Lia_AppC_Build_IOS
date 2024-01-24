@@ -5,6 +5,7 @@ import Image from '@Components/Image'
 import Row from '@Components/Row'
 import Text from '@Components/Text'
 import { BORDER_COLOR, NEW_BASE_COLOR, WHITE } from '@Constant/Color'
+import { styleElement } from '@Constant/StyleElement'
 import { formatMonney } from '@Constant/Utils'
 import ScreenKey from '@Navigation/ScreenKey'
 import { selectCampain } from '@Redux/charity/actions'
@@ -15,11 +16,9 @@ import { StyleSheet, TouchableOpacity } from 'react-native'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'src/Hooks/useNavigation'
 
-
 type Props = {
   data: Campain
 }
-
 const CardInfoCharity = ({ data }: Props) => {
   const { navigate } = useNavigate()
   const dispatch = useDispatch()
@@ -76,13 +75,14 @@ const CardInfoCharity = ({ data }: Props) => {
               <Text>
                 Tạo bởi
               </Text>
+              <IconVerify width={8 * 2} height={8 * 2} />
               <Text
+                style={styleElement.flex}
                 weight='bold'
                 color={NEW_BASE_COLOR}
                 numberOfLines={1}>
                 {createBy}
               </Text>
-              <IconVerify width={8 * 2} height={8 * 2} />
             </Row>
             <Column gap={4}>
               <HorizontalProgress height={4} percent={percent} />

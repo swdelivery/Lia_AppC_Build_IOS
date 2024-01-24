@@ -189,7 +189,7 @@ const ModalShareCodeAffiliate = memo((props) => {
                     zIndex: 100,
                   }}
                 >
-                  <IconCancelWhite style={sizeIcon.md} />
+                  <IconCancelWhite style={sizeIcon.xxs} />
                 </TouchableOpacity>
               </View>
             </View>
