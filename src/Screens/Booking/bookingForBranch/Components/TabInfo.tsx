@@ -48,9 +48,6 @@ export const TabInfo = ({
 }: Props) => {
   const { bottom } = useSafeAreaInsets();
 
-  console.log({ data });
-  
-
   return (
     <Column flex={1}>
       <ScrollView style={styleElement.flex}>

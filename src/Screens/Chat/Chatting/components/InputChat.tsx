@@ -222,8 +222,6 @@ const InputChat = ({ }: Props) => {
         conversationId: conversation?._id,
         message,
       };
-      console.log({ data });
-
       SocketInstance.socketConn?.emit(CSS_SEND_MESSAGE, data);
     },
     [conversation]
@@ -306,7 +304,6 @@ const InputChat = ({ }: Props) => {
         content: "Tóm tắt lại cuộc trò chuyện",
       },
     };
-    console.log({ data });
 
     SocketInstance.socketConn?.emit(CSS_SEND_MESSAGE, data);
   }, [conversation]);

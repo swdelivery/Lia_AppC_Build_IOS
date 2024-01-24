@@ -39,21 +39,27 @@ const PickUtilities = () => {
     console.log({ utilities, dataCurrBooking });
   }, [configurationData])
 
-  const _handleChoice = useCallback((data) => {
-    console.log({ data });
-    let tempConfigurationData = [...configurationData];
-    let findIdx = tempConfigurationData?.findIndex(item => item?.code == data?.code);
-    if (findIdx !== -1) {
-      console.log("in");
-      tempConfigurationData[findIdx].value = tempConfigurationData[findIdx].value.map((item, index) => {
-        return {
-          ...item,
-          isChoice: item?.isChoice ? false : item?.code == data?.data?.code
-        }
-      })
-    }
-    setConfigurationData(tempConfigurationData)
-  }, [configurationData])
+  const _handleChoice = useCallback(
+    (data) => {
+      let tempConfigurationData = [...configurationData];
+      let findIdx = tempConfigurationData?.findIndex(
+        (item) => item?.code == data?.code
+      );
+      if (findIdx !== -1) {
+        console.log("in");
+        tempConfigurationData[findIdx].value = tempConfigurationData[
+          findIdx
+        ].value.map((item, index) => {
+          return {
+            ...item,
+            isChoice: item?.isChoice ? false : item?.code == data?.data?.code,
+          };
+        });
+      }
+      setConfigurationData(tempConfigurationData);
+    },
+    [configurationData]
+  );
 
   return (
     <Screen safeBottom>

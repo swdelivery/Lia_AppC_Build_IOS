@@ -61,8 +61,6 @@ const AboutLiA = () => {
     []
   );
 
-  console.log({ data });
-
   return (
     <Screen>
       <StatusBar barStyle="light-content" />

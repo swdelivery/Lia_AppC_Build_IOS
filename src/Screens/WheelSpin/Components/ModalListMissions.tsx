@@ -94,7 +94,6 @@ const ModalListMissions = (props) => {
   };
 
   const _handleActionMission = (data) => {
-    console.log({ data });
     switch (data?.bonusEventCode) {
       case "REGISTER":
         return;

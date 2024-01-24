@@ -99,8 +99,6 @@ const ModalScrollPicker = memo(
             ? valueDecimal.current
             : listValueDecimal[1],
       };
-      console.log({ data, unit: valueDecimal.current });
-
       onConfirm(data);
       _handleHideModal();
     }, [onConfirm]);
