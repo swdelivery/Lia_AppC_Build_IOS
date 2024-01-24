@@ -5,7 +5,7 @@ export const handleApi = async (func) => {
       return { error: false, ...data };
     })
     .catch((error: any) => {
-      return { error: true, error };
+      return { error };
     });
 };
 
