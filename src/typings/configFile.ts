@@ -8,6 +8,7 @@ export enum ConfigFileCode {
   FlashSaleRule = "FLASH_SALE_RULE",
   FlashSaleTitle = "IMAGE_FLASHSALE_TITLE",
   BannerContactCollaboration = "BANNER_CONTACT_COLLABORATION",
+  ImageAds = "IMAGE_ADS",
 
   // FOR BANNER VOUCHER
   BannerVoucher1 = "BANNER_VOUCHER1",

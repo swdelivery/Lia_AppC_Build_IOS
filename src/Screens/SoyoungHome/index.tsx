@@ -24,6 +24,7 @@ import { FocusAwareStatusBar } from "@Components/StatusBar";
 import { BASE_COLOR } from "@Constant/Color";
 import SoyoungProduct from "@Screens/SoyoungProduct";
 import BtnSpinAnim from "./Components/BtnSpinAnim";
+import AdsPopup from "./Components/AdsPopup";
 
 const STACKS = [
   {
