@@ -111,7 +111,7 @@ const Timeline = () => {
       <Row gap={8}>
         <Text weight='bold'>Hành trình thiện nguyện</Text>
         <Text weight='bold' color={NEW_BASE_COLOR}>
-          (3)
+          ({volunteerActions?.length})
         </Text>
       </Row>
       <Spacer top={8 * 2} />
