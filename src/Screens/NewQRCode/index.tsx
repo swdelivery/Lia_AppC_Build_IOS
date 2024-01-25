@@ -70,48 +70,45 @@ const NewQRCode = () => {
   }
 
   const codeScanner = useCodeScanner({
-    codeTypes: ['qr', 'ean-13'],
+    codeTypes: ["qr", "ean-13"],
     onCodeScanned: (codes) => {
-      console.log({ codes })
       if (codes?.length > 0) {
-        setScanningSuccess(true)
+        setScanningSuccess(true);
         let objParsed = parseMyJson(codes[0]?.value);
         console.log({ objParsed });
-        if (objParsed?.action == 'checkin') {
-          _handleOpenModalListBooking(objParsed)
+        if (objParsed?.action == "checkin") {
+          _handleOpenModalListBooking(objParsed);
         }
       }
-    }
-  })
+    },
+  });
 
   const _handleOpenModalListBooking = async (obj) => {
     console.log({ obj });
-    let resultGetBookingDataForPartner = await getBookingDataForPartner(
-      {
-        condition: {
-          branchCode: {
-            in: [obj?.branchCode]
-          },
-          status: {
-            in: ['WAIT']
-          }
+    let resultGetBookingDataForPartner = await getBookingDataForPartner({
+      condition: {
+        branchCode: {
+          in: [obj?.branchCode],
         },
-        limit: 100,
-        sort: {
-          "appointmentDateFinal.from.dateTime": 1
-        }
+        status: {
+          in: ["WAIT"],
+        },
       },
-    )
-    if (resultGetBookingDataForPartner?.isAxiosError) return
+      limit: 100,
+      sort: {
+        "appointmentDateFinal.from.dateTime": 1,
+      },
+    });
+    if (resultGetBookingDataForPartner?.isAxiosError) return;
 
     if (resultGetBookingDataForPartner?.data?.data?.length > 0) {
-      setCurrDataBooking(old => {
+      setCurrDataBooking((old) => {
         return {
           ...old,
           show: true,
-          data: resultGetBookingDataForPartner?.data?.data
-        }
-      })
+          data: resultGetBookingDataForPartner?.data?.data,
+        };
+      });
     }
 
     if (isEmpty(resultGetBookingDataForPartner?.data?.data)) {
@@ -122,48 +119,51 @@ const NewQRCode = () => {
           {
             text: "Huỷ",
             onPress: () => console.log("Cancel Pressed"),
-            style: "cancel"
+            style: "cancel",
           },
           {
-            text: "Đồng ý", onPress: async () => {
-              let resultCreateCheckinBookingForPartner = await createCheckinBookingForPartner({
-                branchCode: obj?.branchCode
-              })
-              if (resultCreateCheckinBookingForPartner?.isAxiosError) return
-              navigation.goBack()
-              navigation.navigate(ScreenKey.LIST_BOOKING)()
-            }
-          }
+            text: "Đồng ý",
+            onPress: async () => {
+              let resultCreateCheckinBookingForPartner =
+                await createCheckinBookingForPartner({
+                  branchCode: obj?.branchCode,
+                });
+              if (resultCreateCheckinBookingForPartner?.isAxiosError) return;
+              navigation.goBack();
+              navigation.navigate(ScreenKey.LIST_BOOKING)();
+            },
+          },
         ],
         { cancelable: false }
       );
     }
-  }
+  };
 
   const _handleConfirm = useCallback(() => {
-    dispatch(selectBookingForCheckin(choiceBooking))
-    navigation.navigate(ScreenKey.PICK_UTILITIES)
-  }, [choiceBooking])
-
+    dispatch(selectBookingForCheckin(choiceBooking));
+    navigation.navigate(ScreenKey.PICK_UTILITIES);
+  }, [choiceBooking]);
 
   const ItemBooking = ({ data }) => {
-    const { services } = data
+    const { services } = data;
+
+    console.log({ data });
 
     const _handlePress = useCallback(() => {
       if (choiceBooking?._id == data?._id) {
-        setChoiceBooking(null)
+        setChoiceBooking(null);
       } else {
-        setChoiceBooking(data)
+        setChoiceBooking(data);
       }
-    }, [])
+    }, []);
 
     const isActive = useMemo(() => {
       if (choiceBooking?._id == data?._id) {
-        return true
+        return true;
       } else {
-        return false
+        return false;
       }
-    }, [data, choiceBooking])
+    }, [data, choiceBooking]);
 
     return (
       <Row
@@ -171,36 +171,34 @@ const NewQRCode = () => {
         borderWidth={1}
         borderColor={BORDER_COLOR}
         borderRadius={8}
-        margin={8 * 2}>
+        margin={8 * 2}
+      >
         <Row gap={8}>
           <Image
             style={styles.avatarService}
-            avatar={services[0]?.service?.representationFileArr[0]} />
-          <Column
-            gap={8}
-            flex={1}>
-            <Text
-              size={12}
-              numberOfLines={2}>
+            avatar={services[0]?.service?.avatar}
+          />
+          <Column gap={8} flex={1}>
+            <Text size={12} numberOfLines={2}>
               {services[0]?.service?.name}
             </Text>
             <Row>
               <Text size={12}>
-                {moment(data?.appointmentDateFinal?.date).format('DD/MM/YYYY')}
+                {moment(data?.appointmentDateFinal?.date).format("DD/MM/YYYY")}
               </Text>
               <Text>-</Text>
               <Text size={12}>
-                {moment(data?.appointmentDateFinal?.from?.dateTime).format('HH:mm')}
+                {moment(data?.appointmentDateFinal?.from?.dateTime).format(
+                  "HH:mm"
+                )}
               </Text>
             </Row>
           </Column>
-          <Toggle
-            onPress={_handlePress}
-            isActive={isActive} />
+          <Toggle onPress={_handlePress} isActive={isActive} />
         </Row>
       </Row>
-    )
-  }
+    );
+  };
 
   return (
     <Screen
