@@ -9,8 +9,13 @@ import { ScrollView, StyleSheet } from 'react-native'
 import Header from './Components/Header'
 import Info from './ListReportsComponents/Info'
 import Reports from './ListReportsComponents/Reports'
+import { useSelector } from 'react-redux'
+import { getDetailCampainState, getVolunteerHistoryState } from '@Redux/charity/selectors'
 
 const ListReports = () => {
+  const { data: dataHistory } = useSelector(getVolunteerHistoryState)
+  const { data: { name } } = useSelector(getDetailCampainState)
+
   return (
     <Screen>
       <Header title='Báo cáo phân phối nguồn ủng hộ' />
@@ -18,7 +23,7 @@ const ListReports = () => {
         <Row gap={4} margin={8 * 2}>
           <Icon color={NEW_BASE_COLOR} name='target' />
           <Text weight='bold' color={NEW_BASE_COLOR}>
-            Đặt mục tiêu 10 nhà vệ sinh trong 2 tháng cuối năm 2023
+            {name}
           </Text>
         </Row>
         <Info />

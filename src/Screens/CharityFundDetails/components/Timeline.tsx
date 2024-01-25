@@ -15,6 +15,7 @@ import { getDetailCampainState, getVolunteerActionsState } from '@Redux/charity/
 import { getVolunteerActions } from '@Redux/charity/actions'
 import { RenderItemProps } from '@typings/common'
 import { VolunteerActions } from '@typings/charity'
+import { isEmpty } from 'lodash'
 
 type EachItemProps = {
   data: VolunteerActions; // Replace YourItemType with the actual type of your data
@@ -39,7 +40,9 @@ const Timeline = () => {
   const EachItem: React.FC<EachItemProps> = useCallback(({ data, index }) => {
 
     const _handleGoToDetail = useCallback(() => {
-      navigate(ScreenKey.DETAIL_CHARITY_JOURNEY)()
+      navigate(ScreenKey.DETAIL_CHARITY_JOURNEY, {
+        _id: data?._id
+      })()
     }, [data])
 
     return (
@@ -68,7 +71,6 @@ const Timeline = () => {
           </Column>
 
           <TouchableOpacity
-            disabled
             onPress={_handleGoToDetail}
             style={styleElement.flex} activeOpacity={.7} >
             <Column
@@ -104,6 +106,7 @@ const Timeline = () => {
     )
   }, [])
 
+  if (isEmpty(volunteerActions)) return null
   return (
     <Column
       marginTop={8 * 2}

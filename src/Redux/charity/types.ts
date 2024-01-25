@@ -13,6 +13,7 @@ export const GET_LIST_PARTNER_DONATE_TO_VOLUNTEER_COMPANION = generateActionType
 export const GET_LIST_PARTNER_DONATE_TO_VOLUNTEER = generateActionTypes("@charity/get-list-partner-donate-to-volunteer");
 export const GET_VOLUNTEER_REPORT_HISTORY_FILTER = generateActionTypes("@charity/get-volunteer-report-history-filter");
 export const GET_VOLUNTEER_ACTIONS = generateActionTypes("@charity/get-volunteer-actions");
+export const GET_DETAIL_VOLUNTEER_ACTION = generateActionTypes("@charity/get-detail-volunteer-action");
 
 // // SELECT
 export const SELECT_CAMPAIN = "@charity/select-campain"

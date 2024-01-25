@@ -67,8 +67,8 @@ export default function CharityFundDetails() {
           <DonationInfo />
           <Story />
           <Timeline />
-          {/* <ImageVideo />
-          <Report /> */}
+          <ImageVideo />
+          <Report />
           {/* <CoFounders /> */}
 
           <Spacer top={100} />

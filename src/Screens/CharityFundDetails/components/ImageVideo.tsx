@@ -1,5 +1,5 @@
 import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native'
-import React, { useCallback } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import Text from '@Components/Text'
 import Column from '@Components/Column'
 import Row from '@Components/Row'
@@ -8,24 +8,50 @@ import Image from '@Components/Image'
 import Spacer from '@Components/Spacer'
 import { useNavigate } from 'src/Hooks/useNavigation'
 import ScreenKey from '@Navigation/ScreenKey'
+import { getDetailCampainState } from '@Redux/charity/selectors'
+import { useSelector } from 'react-redux'
+import useVisible from 'src/Hooks/useVisible'
+import { getImageAvataUrl } from 'src/utils/avatar'
+import EnhancedImageViewing from "react-native-image-viewing/dist/ImageViewing";
+import { isEmpty } from 'lodash'
 
 const ImageVideo = () => {
+  const { data: { representationFileArr } } = useSelector(getDetailCampainState)
+  const imageViewer = useVisible()
   const { navigate } = useNavigate()
 
   const _handleGoToDetail = useCallback(() => {
     navigate(ScreenKey.LIST_IMAGE_VIDEO)()
   }, [])
 
-  const _renderItem = useCallback(() => {
+  const listImage = useMemo(() => {
+    return representationFileArr?.filter(item => item?.type == 'image');
+  }, [representationFileArr])
+
+  const listImageForViewing = useMemo(() => {
+    return listImage?.map((item, index) => {
+      return {
+        uri: getImageAvataUrl(item)
+      }
+    })
+  }, [listImage])
+
+  const _renderItem = useCallback(({ item, index }) => {
+    const _handlePressImage = ((idx: number) => () => {
+      imageViewer.show(index)
+    })
     return (
-      <TouchableOpacity activeOpacity={.7}>
+      <TouchableOpacity
+        onPress={_handlePressImage(index)}
+        activeOpacity={.7}>
         <Image
           style={styles.image}
-          avatar={null} />
+          avatar={item} />
       </TouchableOpacity>
     )
   }, [])
 
+  if (isEmpty(listImage)) return null;
   return (
     <Column
       marginTop={8 * 4}
@@ -43,7 +69,13 @@ const ImageVideo = () => {
         contentContainerStyle={{ gap: 8 }}
         horizontal
         renderItem={_renderItem}
-        data={[1, 2, 3, 4, 5]} />
+        data={listImage} />
+      <EnhancedImageViewing
+        images={listImageForViewing}
+        imageIndex={imageViewer.selectedItem.current}
+        onRequestClose={imageViewer.hide}
+        visible={imageViewer.visible}
+      />
     </Column>
   )
 }

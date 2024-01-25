@@ -7,7 +7,7 @@ import { Practitioner } from "@typings/practitioner";
 import { Booking } from "@typings/booking";
 import { Insurance } from "@typings/insurance";
 import { Conversation } from "@typings/chat";
-import { Campain, CompanionRequest } from "@typings/charity";
+import { Campain, CompanionRequest, Transaction } from "@typings/charity";
 import { MyVoucher, Voucher } from "@typings/voucher";
 import { Product } from "@typings/product";
 
@@ -56,6 +56,12 @@ type ScreenParams = {
   };
   [ScreenKey.CHARITY_DONATION]: {
     volunteerCompanion: CompanionRequest;
+  };
+  [ScreenKey.DETAIL_CHARITY_JOURNEY]: {
+    _id: string;
+  };
+  [ScreenKey.EXPENSE_DETAIL]: {
+    data: Transaction;
   };
   [ScreenKey.SCREEN_HTML]: {
     title: string;

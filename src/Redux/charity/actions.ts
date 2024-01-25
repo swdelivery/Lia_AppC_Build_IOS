@@ -7,6 +7,7 @@ import {
   CREATE_VOLUNTEER_COMPANION_DONATE,
   CREATE_VOLUNTEER_DONATE,
   GET_DETAIL_CAMPAIN,
+  GET_DETAIL_VOLUNTEER_ACTION,
   GET_LIST_CAMPAIN,
   GET_LIST_COMPANION_BY_USER,
   GET_LIST_COMPANION_REQUEST,
@@ -107,6 +108,11 @@ export const getVolunteerActions = generateActionsGroup<
   any,
   ApiResponse<VolunteerActions[]>
 >(GET_VOLUNTEER_ACTIONS);
+
+export const getDetailVolunteerAction = generateActionsGroup<
+  any,
+  ApiResponse<VolunteerActions>
+>(GET_DETAIL_VOLUNTEER_ACTION);
 
 // SELECT
 export const selectCampain = (data) => ({
