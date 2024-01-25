@@ -56,12 +56,12 @@ const NewPickerServiceBooking = () => {
     dispatch(
       getListServiceFilter.request({
         treatmentDoctorCode: dataDoctor?.code
-          ? { equal: dataDoctor?.code }
+          ? { in: [dataDoctor?.code] }
           : undefined,
         practitionerCode: dataPractitioner
-          ? { equal: dataPractitioner.code }
+          ? { in: [dataPractitioner.code] }
           : undefined,
-        branchCode: dataBranch ? { equal: dataBranch?.code } : undefined,
+        branchCode: dataBranch ? { in: [dataBranch?.code] } : undefined,
       })
     );
   }, []);
