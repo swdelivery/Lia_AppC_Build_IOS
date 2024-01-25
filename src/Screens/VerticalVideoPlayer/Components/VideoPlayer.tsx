@@ -60,7 +60,7 @@ const VideoPlayer = memo((props) => {
   const { data } = props;
   const { isActive } = props;
 
-  useEffect(() => {}, []);
+  useEffect(() => { }, []);
 
   useEffect(() => {
     if (isActive) {
@@ -262,7 +262,7 @@ const VideoPlayer = memo((props) => {
           width: "100%",
           height: "100%",
         }}
-        resizeMode="cover"
+        resizeMode="contain"
         paused={!isPlaying}
         repeat={false}
         onProgress={(e) => {

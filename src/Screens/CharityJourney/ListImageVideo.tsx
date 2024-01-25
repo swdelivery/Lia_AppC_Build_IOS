@@ -1,74 +1,62 @@
-import Image from '@Components/Image'
 import Screen from '@Components/Screen'
-import { WHITE } from '@Constant/Color'
-import { _width } from '@Constant/Scale'
-import { FlashList } from '@shopify/flash-list'
-import { RenderItemProps } from '@typings/common'
-import React, { useCallback, useMemo } from 'react'
-import { StyleSheet, TouchableOpacity } from 'react-native'
-import Header from './Components/Header'
-import { useSelector } from 'react-redux'
+import { FocusAwareStatusBar } from '@Components/StatusBar'
+import { NEW_BASE_COLOR, WHITE } from '@Constant/Color'
 import { getDetailCampainState } from '@Redux/charity/selectors'
-import EnhancedImageViewing from "react-native-image-viewing/dist/ImageViewing";
-import useVisible from 'src/Hooks/useVisible'
-import { getImageAvataUrl } from 'src/utils/avatar'
+import React, { useCallback, useState } from 'react'
+import { TabBar, TabView } from 'react-native-tab-view'
+import { useSelector } from 'react-redux'
+import Header from './Components/Header'
+import ListImages from './ListImages'
+import ListVideos from './ListVideos'
 
 const ListImageVideo = () => {
   const { data: { representationFileArr } } = useSelector(getDetailCampainState)
-  const imageViewer = useVisible()
+  const [routes] = useState([
+    { key: 'first', title: 'Hình ảnh' },
+    { key: 'second', title: 'Video' },
+  ]);
+  const [index, setIndex] = useState(0);
 
-  function renderItem({ item, index }: RenderItemProps<any>) {
-
-    const _handlePressImage = ((idx: number) => () => {
-      imageViewer.show(index)
-    })
-
+  const renderScene = ({ route }) => {
+    switch (route.key) {
+      case 'first':
+        return <ListImages data={representationFileArr} />
+      case 'second':
+        return <ListVideos data={representationFileArr} />
+      default:
+        return null;
+    }
+  };
+  const renderTabBar = useCallback((props) => {
     return (
-      <TouchableOpacity onPress={_handlePressImage(index)}>
-        <Image style={styles.image} avatar={item} />
-      </TouchableOpacity>
+      <TabBar
+        tabStyle={{ flexDirection: 'row', alignItems: 'center' }}
+        {...props}
+        indicatorStyle={{ backgroundColor: NEW_BASE_COLOR }}
+        style={{
+          backgroundColor: WHITE,
+        }}
+        inactiveColor="grey"
+        activeColor={NEW_BASE_COLOR}
+        getLabelText={({ route }) => route.title}
+      />
     )
-  }
-
-  const listImage = useMemo(() => {
-    return representationFileArr?.filter(item => item?.type == 'image');
-  }, [representationFileArr])
-
-  const listImageForViewing = useMemo(() => {
-    return listImage?.map((item, index) => {
-      return {
-        uri: getImageAvataUrl(item)
-      }
-    })
-  }, [listImage])
+  }, [])
 
   return (
     <Screen>
+      <FocusAwareStatusBar barStyle={'ligh-content'} />
       <Header title='Ảnh/Video' />
-      <FlashList
-        contentContainerStyle={{}}
-        data={listImage}
-        numColumns={3}
-        renderItem={renderItem}
-        estimatedItemSize={100}
-      />
-      <EnhancedImageViewing
-        images={listImageForViewing}
-        imageIndex={imageViewer.selectedItem.current}
-        onRequestClose={imageViewer.hide}
-        visible={imageViewer.visible}
+      <TabView
+        renderTabBar={renderTabBar}
+        swipeEnabled={true}
+        navigationState={{ index, routes }}
+        renderScene={renderScene}
+        onIndexChange={setIndex}
+        lazy
       />
     </Screen>
   )
 }
 
 export default ListImageVideo
-
-const styles = StyleSheet.create({
-  image: {
-    width: _width / 3,
-    height: _width / 3,
-    borderWidth: 1,
-    borderColor: WHITE
-  }
-})
