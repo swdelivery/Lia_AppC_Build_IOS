@@ -58,6 +58,10 @@ import { BASE_COLOR } from "@Constant/Color";
 import { useSelector } from "react-redux";
 import { getEyeHistoryState } from "@Redux/resultcanningeyes/selectors";
 import usePermission from "src/Hooks/usePermission";
+import Intro, { useIntro } from "./Components/Intro";
+import Icon from "@Components/Icon";
+import { QuestionIcon } from "src/SGV";
+import useVisible from "src/Hooks/useVisible";
 
 const EYE_INDICATOR_SIZE = 10;
 
@@ -95,6 +99,7 @@ const FaceAI = () => {
   const [startResultLeftEye, setStartResultLeftEye] = useState(null);
   const [showBackDropOpacity, setShowBackDropOpacity] = useState(null);
   const [isReady, setIsReady] = React.useState(false);
+  const introPopup = useIntro();
 
   const { top } = useSafeAreaInsets();
   const isFocused = useIsFocused();
@@ -606,6 +611,22 @@ const FaceAI = () => {
           </Text>
         </Column>
       </Row>
+      <Column
+        position="absolute"
+        bottom={40}
+        right={20}
+        zIndex={10}
+        backgroundColor={"#D3D3D380"}
+        borderRadius={30}
+        width={40}
+        height={40}
+        alignItems="center"
+        justifyContent="center"
+        onPress={introPopup.show}
+      >
+        <QuestionIcon />
+      </Column>
+      <Intro visible={introPopup.visible} onClose={introPopup.hide} />
     </Screen>
   );
 };
