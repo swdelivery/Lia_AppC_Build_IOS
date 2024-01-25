@@ -53,6 +53,7 @@ import news from "../news/reducers";
 import imageVoucher from "../imageVoucher/reducers";
 import aboutLiA from "../aboutLiA/reducers";
 import examinationResults from "../examinationResults/reducers";
+import memberFirstMission from "../memberFirstMission/reducers";
 import { PersistConfig, persistReducer } from "redux-persist";
 import { reduxStorage } from "@Redux/reduxStorage";
 
@@ -123,7 +124,8 @@ const rootReducer = combineReducers({
   news: persistReducer(newsConfig, news),
   imageVoucher: persistReducer(imageVoucherConfig, imageVoucher),
   aboutLiA,
-  examinationResults
+  examinationResults,
+  memberFirstMission
 });
 
 // const rootReducer = (state, action) => {

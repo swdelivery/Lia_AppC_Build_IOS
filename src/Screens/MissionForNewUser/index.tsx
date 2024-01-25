@@ -1,5 +1,5 @@
-import { ScrollView, StyleSheet, View } from 'react-native'
-import React from 'react'
+import { ScrollView, StyleSheet } from 'react-native'
+import React, { useCallback } from 'react'
 import Screen from '@Components/Screen'
 import LiAHeader from '@Components/Header/LiAHeader'
 import Column from '@Components/Column'
@@ -12,6 +12,10 @@ import Text from '@Components/Text'
 import { GREY } from '@Constant/Color'
 
 const MissionForNewUser = () => {
+  const _handleConfirm = useCallback(() => {
+
+  }, [])
+
   return (
     <Screen safeBottom>
       <StatusBar barStyle="dark-content" />
@@ -28,7 +32,9 @@ const MissionForNewUser = () => {
           height={4} />
         <Info />
       </ScrollView>
-      <ActionButton title='Nhận thưởng' />
+      <ActionButton
+        onPress={_handleConfirm}
+        title='Nhận thưởng' />
     </Screen>
 
   )

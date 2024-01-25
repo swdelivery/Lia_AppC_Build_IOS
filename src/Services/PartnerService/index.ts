@@ -692,6 +692,11 @@ const getPayment = (payload: any) => {
   return axios.get(`/payment?${query}`).then(({ data }) => data);
 };
 
+// Mission for new user
+const getMemberFirstMission = (payload: any) => {
+  return axios.get(`/${payload}/member-first-mission`).then(({ data }) => data);
+};
+
 export default {
   partnerLogout,
 
@@ -833,4 +838,7 @@ export default {
 
   // Payment
   getPayment,
+
+  // Mission for new user
+  getMemberFirstMission
 };
