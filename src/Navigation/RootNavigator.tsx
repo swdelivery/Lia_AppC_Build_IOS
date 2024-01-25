@@ -185,6 +185,7 @@ import DetailCharityJourney from "@Screens/CharityJourney";
 import ListImageVideo from "@Screens/CharityJourney/ListImageVideo";
 import ListReports from "@Screens/CharityJourney/ListReports";
 import ExpenseDetail from "@Screens/CharityJourney/ExpenseDetail";
+import NewQrBookingList from "@Screens/NewQrBookingList";
 
 const Stack = createNativeStackNavigator();
 
@@ -645,14 +646,8 @@ const RootNavigator = () => {
         name={ScreenKey.LIST_IMAGE_VIDEO}
         component={ListImageVideo}
       />
-      <Stack.Screen
-        name={ScreenKey.LIST_REPORTS}
-        component={ListReports}
-      />
-      <Stack.Screen
-        name={ScreenKey.EXPENSE_DETAIL}
-        component={ExpenseDetail}
-      />
+      <Stack.Screen name={ScreenKey.LIST_REPORTS} component={ListReports} />
+      <Stack.Screen name={ScreenKey.EXPENSE_DETAIL} component={ExpenseDetail} />
 
       <Stack.Screen name={ScreenKey.LIST_PARTNER_DIARY} component={ListDiary} />
       <Stack.Screen name={ScreenKey.SKIN_MIRROR_AI} component={SkinMirrorAI} />
@@ -737,6 +732,10 @@ const RootNavigator = () => {
         <Stack.Screen name={ScreenKey.VIDEO_CALL} component={VideoCall} />
         <Stack.Screen name={ScreenKey.VOICE_CALL} component={VoiceCall} />
         <Stack.Screen name={ScreenKey.QR_CODE} component={NewQRCode} />
+        <Stack.Screen
+          name={ScreenKey.QR_CODE_BOOKING_LIST}
+          component={NewQrBookingList}
+        />
         <Stack.Screen
           name={ScreenKey.PICK_UTILITIES}
           component={PickUtilities}

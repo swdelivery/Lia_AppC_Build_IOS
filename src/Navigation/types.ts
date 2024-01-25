@@ -92,6 +92,9 @@ type ScreenParams = {
   [ScreenKey.DETAIL_EXAMINATION_RESULT]: {
     _id: string;
   };
+  [ScreenKey.QR_CODE_BOOKING_LIST]: {
+    branchCode: string;
+  };
 };
 
 export type RootStackParamsList = {
