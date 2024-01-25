@@ -552,13 +552,36 @@ const FaceAI = () => {
                 </Text>
               </View>
 
-              <Animated.Image
-                source={require("../../Image/circle.png")}
-                style={{
-                  width: _widthScale(360),
-                  height: _widthScale(360),
-                }}
-              />
+              <Column>
+                <Column
+                  alignSelf="center"
+                  alignItems="center"
+                  borderBottomWidth={2}
+                  borderColor={"white"}
+                  width={100}
+                  paddingVertical={5}
+                  marginBottom={5}
+                >
+                  <Text color={"white"}>Đỉnh đầu</Text>
+                </Column>
+                <Animated.Image
+                  source={require("../../Image/circle.png")}
+                  style={{
+                    width: _widthScale(360),
+                    height: _widthScale(360),
+                  }}
+                />
+                <Column
+                  alignSelf="center"
+                  alignItems="center"
+                  width={100}
+                  borderTopWidth={2}
+                  borderColor={"white"}
+                  paddingVertical={5}
+                >
+                  <Text color={"white"}>Cằm</Text>
+                </Column>
+              </Column>
 
               <TouchableOpacity
                 onPress={_handleTakePhoto}
