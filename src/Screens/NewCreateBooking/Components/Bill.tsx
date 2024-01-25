@@ -53,13 +53,19 @@ const Bill = () => {
 
   const discountLevel = useMemo(() => {
     return (
-      (originPrice * currPartnerLevel?.promotion?.discountRetailService) / 100
+      (originPrice * currPartnerLevel?.promotion?.discountRetailService || 0) /
+      100
     );
   }, [currPartnerLevel, originPrice]);
 
   const discountAmount = useMemo(() => {
     return calculateDiscountAmount(dataCoupon, originPrice);
   }, [dataCoupon, originPrice]);
+
+  const totalAmound = useMemo(() => {
+    const isRefundCoupon = dataCoupon?.coupon?.couponType === "Refund";
+    return originPrice - discountLevel - (isRefundCoupon ? 0 : discountAmount);
+  }, [originPrice, discountAmount, discountLevel, dataCoupon]);
 
   return (
     <View style={styles.container}>
@@ -72,10 +78,7 @@ const Bill = () => {
             {formatMonney(originPrice)} VNĐ
           </Text>
         </Row>
-        <Row
-          alignItems="flex-start"
-          style={{ justifyContent: "space-between" }}
-        >
+        <Row alignItems="flex-start" justifyContent="space-between">
           <Column gap={4} flex={1}>
             <Text size={14} weight="bold">
               Ưu đãi:
@@ -103,7 +106,14 @@ const Bill = () => {
               Giảm giá dựa trên bậc hạng:
             </Text>
             <Text size={12}>
-              Bậc hiện tại: <Text size={12} weight="bold">{currPartnerLevel?.name}</Text> giảm <Text size={12} weight="bold">{currPartnerLevel?.promotion?.discountRetailService} %</Text>
+              Bậc hiện tại:{" "}
+              <Text size={12} weight="bold">
+                {currPartnerLevel?.name}
+              </Text>{" "}
+              giảm{" "}
+              <Text size={12} weight="bold">
+                {currPartnerLevel?.promotion?.discountRetailService} %
+              </Text>
             </Text>
           </Column>
           <Text size={14} color={RED} weight="regular">
@@ -115,7 +125,7 @@ const Bill = () => {
             Tổng thanh toán tạm tính:
           </Text>
           <Text size={14} weight="bold" color={BASE_COLOR}>
-            {formatMonney(originPrice - discountAmount - discountLevel)} VNĐ
+            {formatMonney(totalAmound)} VNĐ
           </Text>
         </Row>
       </Column>

@@ -40,7 +40,8 @@ export type Branch = {
   branchServices: BranchService[];
   configureArticleArr: string[];
   branchProblemFileArr: FileUpload[];
-  addressDetails: AddressDetails
+  addressDetails: AddressDetails;
+  configurationData: any;
 } & Timestamp;
 
 export type AddressDetails = {

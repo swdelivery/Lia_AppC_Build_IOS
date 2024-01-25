@@ -7,9 +7,10 @@ import Column from "@Components/Column";
 import Row from "@Components/Row";
 import { BASE_COLOR, BLACK } from "@Constant/Color";
 import { formatMonney } from "@Constant/Utils";
-import { sum } from "lodash";
+import { head, sum } from "lodash";
 import ItemInsurance from "@Screens/NewCreateBooking/Components/ItemInsurance";
 import { calculateDiscountAmount } from "src/utils/booking";
+import Collapsible from "react-native-collapsible";
 
 type Props = {
   booking: Booking;
@@ -33,6 +34,19 @@ export default function Services({ booking }: Props) {
     );
   }, [booking]);
 
+  const isRefundCoupon = useMemo(
+    () => head(booking.partnerCoupons)?.coupon?.couponType == "Refund",
+    [booking]
+  );
+
+  const totalAmount = useMemo(() => {
+    return (
+      booking.totalAmount -
+      discountLevel -
+      (isRefundCoupon ? 0 : discountAmount)
+    );
+  }, [booking, isRefundCoupon, discountAmount, discountLevel]);
+
   return (
     <View style={styles.container}>
       <Text weight="bold" color={BLACK} top={8} left={16}>
@@ -53,12 +67,25 @@ export default function Services({ booking }: Props) {
         </>
       )}
       <Column gap={8} paddingHorizontal={16} marginTop={16}>
-        <Row justifyContent="space-between">
-          <Text weight="bold">Ưu đãi:</Text>
-          <Text color={BASE_COLOR} weight="bold">
-            {`-${formatMonney(discountAmount, true)}`}
-          </Text>
-        </Row>
+        <Column>
+          <Row justifyContent="space-between">
+            <Text weight="bold">Ưu đãi:</Text>
+            <Text color={BASE_COLOR} weight="bold">
+              {`-${formatMonney(discountAmount, true)}`}
+            </Text>
+          </Row>
+          <Collapsible
+            collapsed={
+              head(booking.partnerCoupons)?.coupon?.couponType == "Refund"
+                ? false
+                : true
+            }
+          >
+            <Text size={12}>
+              (*) Tiền sẽ được hoàn về ví sau khi thanh toán{" "}
+            </Text>
+          </Collapsible>
+        </Column>
         <Column>
           <Row justifyContent="space-between">
             <Text weight="bold">Giảm giá dựa trên bậc hạng:</Text>
@@ -79,10 +106,7 @@ export default function Services({ booking }: Props) {
         <Row justifyContent="space-between">
           <Text weight="bold">Tạm tính:</Text>
           <Text color={"#0053BD"} weight="bold">
-            {`${formatMonney(
-              booking.totalAmount - discountAmount - discountLevel,
-              true
-            )}`}
+            {`${formatMonney(totalAmount, true)}`}
           </Text>
         </Row>
       </Column>

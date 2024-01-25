@@ -19,8 +19,15 @@ const PickUtilities = () => {
 
   useEffect(() => {
     if (dataCurrBooking?._id) {
-      let configurationData = dataCurrBooking?.branch?.configurationData
-      setConfigurationData(configurationData)
+      const { configurationData = [] } = dataCurrBooking?.branch || {};
+      setConfigurationData(
+        configurationData.filter((item: any) => {
+          if (Array.isArray(item)) {
+            return false;
+          }
+          return true;
+        })
+      );
     }
   }, [dataCurrBooking])
 
@@ -29,15 +36,19 @@ const PickUtilities = () => {
     utilities = configurationData?.map((item, index) => {
       return {
         code: item?.code,
-        value: item?.value?.filter(item => item?.isChoice)?.map(iMap => iMap?.code)
-      }
-    })
-    dispatch(partnerCheckInBooking.request({
-      _id: dataCurrBooking?._id,
-      data: { utilities }
-    }))
+        value: item?.value
+          ?.filter((item) => item?.isChoice)
+          ?.map((iMap) => iMap?.code),
+      };
+    });
+    dispatch(
+      partnerCheckInBooking.request({
+        _id: dataCurrBooking?._id,
+        data: { utilities },
+      })
+    );
     console.log({ utilities, dataCurrBooking });
-  }, [configurationData])
+  }, [configurationData]);  
 
   const _handleChoice = useCallback(
     (data) => {

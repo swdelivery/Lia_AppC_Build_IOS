@@ -25,4 +25,5 @@ export { default as HairIcon } from "./hair.svg";
 export { default as FaceDetectIcon } from "./faceDetect.svg";
 export { default as LightIcon } from "./light.svg";
 export { default as QuestionIcon } from "./question.svg";
+export { default as CloseIcon } from "./close.svg";
 export { default as Diamond1Icon } from "./diamond_1.svg";
