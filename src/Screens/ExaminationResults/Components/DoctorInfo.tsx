@@ -17,7 +17,8 @@ const DoctorInfo = () => {
   const { data: {
     consultationJoinDoctor,
     consultationJoinPractitioner,
-    consultationJoinDoctorCode
+    consultationJoinDoctorCode,
+    consultationJoinPractitionerCode
   } } = useSelector(getDetailExaminationResultState)
 
   const consultationInfo = useMemo(() => {
@@ -25,7 +26,8 @@ const DoctorInfo = () => {
   }, [
     consultationJoinDoctor,
     consultationJoinPractitioner,
-    consultationJoinDoctorCode
+    consultationJoinDoctorCode,
+    consultationJoinPractitionerCode
   ])
 
   const _handleGoToDetail = useCallback(() => {
@@ -38,6 +40,8 @@ const DoctorInfo = () => {
     consultationJoinDoctorCode,
     consultationInfo
   ])
+
+  if (isEmpty(consultationInfo)) return null
 
   return (
     <Column gap={8 * 2}>

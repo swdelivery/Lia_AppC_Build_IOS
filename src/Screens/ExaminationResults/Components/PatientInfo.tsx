@@ -37,7 +37,7 @@ const PatientInfo = () => {
       })
       setListData(listTemp)
     }
-  }, [listConfigMedicalHistory])
+  }, [listConfigMedicalHistory, medicalHistory])
 
   const Patient = useCallback(({ isTicked, data }) => {
     return (

@@ -87,4 +87,5 @@ export type ExaminationResult = {
   consultationJoinDoctor: Doctor;
   consultationJoinPractitioner: Practitioner;
   consultationJoinDoctorCode: string;
+  consultationJoinPractitionerCode: string;
 } & Timestamp
