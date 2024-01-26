@@ -62,19 +62,17 @@ function MediaPicker({ visible, onClose, onMessage }: Props) {
   const pickImages = useCallback(async () => {
     await delay(500);
     ImageCropPicker.openPicker({
-      multiple: true,
+      // multiple: true,
+      // maxFiles: 6,
       waitAnimationEnd: false,
       includeExif: true,
       forceJpg: true,
-      maxFiles: 6,
       mediaType: "photo",
-      // cropping:true,
       compressImageQuality: 0.5,
       compressImageMaxWidth: 700,
-      // compressVideoPreset:'LowQuality'
     })
-      .then(async (images) => {
-        let listImages = images.map((i, index) => {
+      .then(async (image) => {
+        let listImages = [image].map((i, index) => {
           return {
             uri: i.path,
             width: i.width,
@@ -98,46 +96,27 @@ function MediaPicker({ visible, onClose, onMessage }: Props) {
           images: listIdImageHasUpload,
         });
       })
-      .catch((e) => { });
+      .catch((e) => {
+        console.log(e.message);
+      });
   }, [onMessage]);
 
   const pickVideo = useCallback(async () => {
-
-    launchImageLibrary({
-      mediaType: 'video',
-      videoQuality: 'low',
-
-    }, async (images) => {
-      if (images.assets[0]?.duration > 30) {
-        return Alert.alert('Vui lòng chọn video có độ dài dưới 30 giây')
-      } else {
-        listVideoForUpload.current = images.assets;
-        await delay(500);
-        confirmVideo.show();
+    launchImageLibrary(
+      {
+        mediaType: "video",
+        videoQuality: "low",
+      },
+      async (images) => {
+        if (images.assets[0]?.duration > 30) {
+          return Alert.alert("Vui lòng chọn video có độ dài dưới 30 giây");
+        } else {
+          listVideoForUpload.current = images.assets;
+          await delay(500);
+          confirmVideo.show();
+        }
       }
-    })
-    // ImageCropPicker.openPicker({
-    //   multiple: true,
-    //   waitAnimationEnd: false,
-    //   includeExif: true,
-    //   forceJpg: true,
-    //   maxFiles: 1,
-    //   mediaType: "video",
-    //   // cropping:true,
-    //   compressImageQuality: 0.5,
-    //   compressVideoPreset: "MediumQuality",
-    // })
-    //   .then(async (images) => {
-    //     console.log({ images });
-    //     if (images[0]?.duration > 30000) {
-    //       return Alert.alert('Vui lòng chọn video có độ dài dưới 30 giây')
-    //     } else {
-    //       listVideoForUpload.current = images;
-    //       await delay(500);
-    //       confirmVideo.show();
-    //     }
-    //   })
-    //   .catch((e) => { });
+    );
   }, [onMessage]);
 
   const handleConfirmVideo = useCallback(
