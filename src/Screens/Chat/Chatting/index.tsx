@@ -11,7 +11,6 @@ import ScreenKey from "@Navigation/ScreenKey";
 import { useFocused, useNavigationParams } from "src/Hooks/useNavigation";
 import { useDispatch } from "react-redux";
 import { getConversationDetails } from "@Redux/chat/actions";
-import { StatusBar } from "@Components/StatusBar";
 
 type ScreenK = typeof ScreenKey.CHATTING;
 
