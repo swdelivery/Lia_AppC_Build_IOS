@@ -14,6 +14,7 @@ import Text from "@Components/Text";
 import ModalThanks from "@Components/Modal/ModalThanks";
 import useInitialization from "src/Hooks/useInitialization";
 import useNotifications from "src/Hooks/useNotifications";
+import RequireUpdateVersion, { useVersionCheck } from "@Components/RequireUpdateVersion/RequireUpdateVersion";
 
 const LINKING = {
   prefixes: [`https://${configs.appLinkDomain}`],
@@ -27,6 +28,7 @@ const LINKING = {
 
 const AppWrapper = (props) => {
   const routeNameRef = useRef<string | null>("");
+  const requireUpdate = useVersionCheck();
 
   useInitialization();
   useNotifications();
@@ -64,6 +66,7 @@ const AppWrapper = (props) => {
       <Toast config={toastConfig} position="bottom" bottomOffset={60} />
       <RightNoti />
       <ModalThanks />
+      <RequireUpdateVersion visible={requireUpdate.visible} />
     </>
   );
 };
