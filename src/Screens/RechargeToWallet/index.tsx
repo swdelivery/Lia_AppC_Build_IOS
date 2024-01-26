@@ -24,7 +24,7 @@ import {
 import Clipboard from "@react-native-clipboard/clipboard";
 import { ConfigDataCode } from "@typings/configData";
 import { isEmpty } from "lodash";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import {
   Alert,
   Image,
@@ -36,9 +36,11 @@ import {
   View,
 } from "react-native";
 import ImagePicker from "react-native-image-crop-picker";
+import { RESULTS, openSettings } from "react-native-permissions";
 import useConfigData from "src/Hooks/useConfigData";
 import useConfirmation from "src/Hooks/useConfirmation";
 import { useNavigate } from "src/Hooks/useNavigation";
+import usePermission from "src/Hooks/usePermission";
 
 const RechargeToWallet = () => {
   const { navigation } = useNavigate();
@@ -49,12 +51,13 @@ const RechargeToWallet = () => {
   const [valueDescription, setValueDescription] = useState("");
   const [listImageBanking, setListImageBanking] = useState([]);
   const [showModalFlashMsg, setShowModalFlashMsg] = useState(false);
+  const [galleryPermission, checkGalleryPermission] = usePermission("gallery");
 
   useEffect(() => {
     _getconfigfile();
   }, []);
 
-  const _getconfigfile = async () => {};
+  const _getconfigfile = async () => { };
 
   const _handleOnchangeText = (value) => {
     let money = parseInt(value.split(".").join("").toString());
@@ -119,21 +122,29 @@ const RechargeToWallet = () => {
     }
   };
 
-  const _handlePickImage = async () => {
-    ImagePicker.openPicker({
-      multiple: false,
-      waitAnimationEnd: false,
-      includeExif: true,
-      forceJpg: true,
-      mediaType: "photo",
-      compressImageQuality: 0.5,
-      compressImageMaxWidth: 700,
-    })
-      .then(async (image) => {
-        setListImageBanking([image]);
+  const _handlePickImage = useCallback(async () => {
+
+    checkGalleryPermission();
+    if (galleryPermission === RESULTS.BLOCKED) {
+      showConfirmation('Thông báo', `Bạn hãy bật quyền truy cập thư viện ảnh lên nhé!`, () => {
+        openSettings()
       })
-      .catch((e) => {});
-  };
+    } else {
+      ImagePicker.openPicker({
+        multiple: false,
+        waitAnimationEnd: false,
+        includeExif: true,
+        forceJpg: true,
+        mediaType: "photo",
+        compressImageQuality: 0.5,
+        compressImageMaxWidth: 700,
+      })
+        .then(async (image) => {
+          setListImageBanking([image]);
+        })
+        .catch((e) => { });
+    }
+  }, [galleryPermission, checkGalleryPermission]);
 
   const isDisabled = useMemo(() => {
     const numberRegex = /^[1-9]\d*$/;
@@ -190,7 +201,7 @@ const RechargeToWallet = () => {
             </Column>
             <Column gap={8}>
               <Text color={BASE_COLOR} weight="regular">
-                Tên ngân hàng thụ hưởng:
+                Tên người thụ hưởng:
               </Text>
               <Text weight="bold">{bankOwner?.value}</Text>
             </Column>
@@ -200,13 +211,22 @@ const RechargeToWallet = () => {
             <Text color={BASE_COLOR}>
               Nhập số tiền muốn nạp <Text color={RED}>*</Text>
             </Text>
-            <TextInput
-              onChangeText={(e) => _handleOnchangeText(e)}
-              value={valueMoney}
-              keyboardType={"number-pad"}
-              placeholder="0"
-              style={styles.textInput}
-            />
+            <Column justifyContent="center">
+              <TextInput
+                onChangeText={(e) => _handleOnchangeText(e)}
+                value={valueMoney}
+                keyboardType={"number-pad"}
+                placeholder="0"
+                style={styles.textInput}
+              />
+              <Column
+                right={8 * 2}
+                position="absolute">
+                <Text weight="bold">
+                  VNĐ
+                </Text>
+              </Column>
+            </Column>
           </Column>
 
           <Column gap={8} marginTop={0} alignItems="flex-start" margin={8 * 2}>
@@ -241,13 +261,13 @@ const RechargeToWallet = () => {
             )}
           </Column>
           <Column gap={8} marginTop={0} margin={8 * 2}>
-            <Text color={BASE_COLOR}>Ghi chú</Text>
+            <Text color={BASE_COLOR}>Lưu ý</Text>
 
             <View style={styles.inputContainer}>
               <TextInput
                 onChangeText={(e) => setValueDescription(e)}
                 value={valueDescription}
-                placeholder={"Nhập ghi chú"}
+                placeholder={"Vui lòng chờ đợi trong vài phút sau khi nạp tiền vào ví để giao dịch được xử lý. Xin cảm ơn sự kiên nhẫn của bạn!"}
                 multiline
               />
             </View>

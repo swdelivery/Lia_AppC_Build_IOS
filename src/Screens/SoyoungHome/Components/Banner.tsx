@@ -25,6 +25,7 @@ import { getListNewsState } from "@Redux/news/selectors";
 import { isEmpty } from "lodash";
 import { AfterTimeoutFragment } from "@Components/AfterTimeoutFragment";
 import Column from "@Components/Column";
+import Mission from "./Mission";
 
 const Banner = () => {
   const { top } = useSafeAreaInsets();
@@ -164,6 +165,7 @@ const Banner = () => {
         </AfterTimeoutFragment>
       </Column>
       <OptionService />
+      <Mission />
       <Voucher />
       <FlashSale />
       <ListDoctor />

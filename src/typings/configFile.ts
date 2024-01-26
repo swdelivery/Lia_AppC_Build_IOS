@@ -15,6 +15,9 @@ export enum ConfigFileCode {
   BannerVoucher2 = "BANNER_VOUCHER2",
   BannerVoucher3 = "BANNER_VOUCHER3",
   BannerVoucher4 = "BANNER_VOUCHER4",
+
+  // FOR BANNER MISSION NEW USER
+  BannerMissionNewUser = 'BANNER_MISSION_FOR_NEW_USER'
 }
 
 export type ConfigFile = {
