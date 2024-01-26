@@ -4,7 +4,7 @@ import CalendarPickRange from '@Components/CalendarPickRange/CalendarPickRange'
 import Column from '@Components/Column'
 import LiAHeader from '@Components/Header/LiAHeader'
 import Icon from '@Components/Icon'
-import { IconEmptyData } from '@Components/Icon/Icon'
+import { IconCalendar, IconEmptyData } from '@Components/Icon/Icon'
 import EmptyResultData from '@Components/LoadingIndicator/EmptyResultData'
 import LoadingIndicator from '@Components/LoadingIndicator/LoadingIndicator'
 import ModalBottom from '@Components/ModalBottom/ModalBottom'
@@ -85,6 +85,15 @@ const Refund = () => {
     setDateRange(dataDate)
   }, [])
 
+  const generateDateRange = useMemo(() => {
+    if (moment(dateRange?.startDate).isSame(dateRange?.endDate, "day")) {
+      return moment(dateRange.startDate).format("DD/MM")
+    } else {
+      return `${moment(dateRange.startDate).format("DD/MM")}->${moment(dateRange.endDate).format("DD/MM")}`
+    }
+  }, [dateRange])
+
+
   const _renderRight = useMemo(() => {
     return (
       <Row
@@ -97,15 +106,15 @@ const Refund = () => {
         position='absolute'>
         {
           dateRange?.startDate && dateRange.endDate ?
-            <Text>
-              {moment(dateRange.startDate).format("DD/MM")} {`->`} {moment(dateRange.endDate).format("DD/MM")}
+            <Text fontStyle='italic' size={12} style={{ letterSpacing: -.5 }}>
+              {generateDateRange}
             </Text>
             :
-            <Text>
+            <Text fontStyle='italic' size={12} style={{ letterSpacing: -.5 }}>
               Lọc theo ngày
             </Text>
         }
-        <Icon name='calendar' />
+        <IconCalendar />
       </Row>
     )
   }, [dateRange])
