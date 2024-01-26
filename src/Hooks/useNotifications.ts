@@ -6,51 +6,57 @@ import { navigation } from "rootNavigation";
 
 export default function useNotifications() {
   useEffect(() => {
-    const unsubscribe = messaging().onMessage(async (remoteMessage) => {
-      // console.log({ remoteMessage });
+    const onMessageUnsubscribe = messaging().onMessage(
+      async (remoteMessage) => {
+        // console.log({ remoteMessage });
 
-      // Create a channel (required for Android)
-      const channelId = await notifee.createChannel({
-        id: "default",
-        name: "Default Channel",
-        sound: "default",
-        vibration: true,
-        vibrationPattern: [300, 500],
-      });
-
-      await notifee.displayNotification({
-        title: remoteMessage?.notification?.title,
-        body: remoteMessage?.notification?.body,
-        data: remoteMessage?.data,
-        android: {
-          vibrationPattern: [300, 500],
+        // Create a channel (required for Android)
+        const channelId = await notifee.createChannel({
+          id: "default",
+          name: "Default Channel",
           sound: "default",
-          importance: AndroidImportance.HIGH,
-          channelId,
-          pressAction: {
-            id: "default",
+          vibration: true,
+          vibrationPattern: [300, 500],
+        });
+
+        await notifee.displayNotification({
+          title: remoteMessage?.notification?.title,
+          body: remoteMessage?.notification?.body,
+          data: remoteMessage?.data,
+          android: {
+            vibrationPattern: [300, 500],
+            sound: "default",
+            importance: AndroidImportance.HIGH,
+            channelId,
+            pressAction: {
+              id: "default",
+            },
           },
-        },
-      });
-    });
-
-    notifee.onForegroundEvent(({ type, detail }) => {
-      switch (type) {
-        case EventType.PRESS:
-          // console.log('User pressed notification', detail);
-          _handleNavigate(detail?.notification?.data);
-          break;
+        });
       }
-    });
+    );
 
-    messaging().onNotificationOpenedApp((remoteMessage) => {
-      // console.log('[FCMService] onNotificationOpenedApp Notification caused app to open from background state:', remoteMessage)
-      if (remoteMessage) {
-        setTimeout(() => {
-          _handleNavigate(remoteMessage?.data);
-        }, 300);
+    const onForegroundEventUnsubscribe = notifee.onForegroundEvent(
+      ({ type, detail }) => {
+        switch (type) {
+          case EventType.PRESS:
+            // console.log('User pressed notification', detail);
+            _handleNavigate(detail?.notification?.data);
+            break;
+        }
       }
-    });
+    );
+
+    const onNotificationOpenedUnsubscribe = messaging().onNotificationOpenedApp(
+      (remoteMessage) => {
+        // console.log('[FCMService] onNotificationOpenedApp Notification caused app to open from background state:', remoteMessage)
+        if (remoteMessage) {
+          setTimeout(() => {
+            _handleNavigate(remoteMessage?.data);
+          }, 300);
+        }
+      }
+    );
 
     messaging()
       .getInitialNotification()
@@ -63,7 +69,11 @@ export default function useNotifications() {
         }
       });
 
-    return unsubscribe;
+    return () => {
+      onMessageUnsubscribe();
+      onNotificationOpenedUnsubscribe();
+      onForegroundEventUnsubscribe();
+    };
   }, []);
 
   const _handleNavigate = useCallback((data) => {

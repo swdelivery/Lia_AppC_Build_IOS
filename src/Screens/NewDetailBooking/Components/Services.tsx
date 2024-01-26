@@ -71,16 +71,13 @@ export default function Services({ booking }: Props) {
           <Row justifyContent="space-between">
             <Text weight="bold">Ưu đãi:</Text>
             <Text color={BASE_COLOR} weight="bold">
-              {`-${formatMonney(discountAmount, true)}`}
+              {`${isRefundCoupon ? "" : "-"}${formatMonney(
+                discountAmount,
+                true
+              )}`}
             </Text>
           </Row>
-          <Collapsible
-            collapsed={
-              head(booking.partnerCoupons)?.coupon?.couponType == "Refund"
-                ? false
-                : true
-            }
-          >
+          <Collapsible collapsed={isRefundCoupon ? false : true}>
             <Text size={12}>
               (*) Tiền sẽ được hoàn về ví sau khi thanh toán{" "}
             </Text>

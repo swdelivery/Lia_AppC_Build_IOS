@@ -6,7 +6,7 @@ const getString = (key: string) => storage.getString(key);
 
 const setString = (key: string, value: string) => storage.set(key, value);
 
-const getBool = async (key: string, defaultValue = false) => {
+const getBool = (key: string, defaultValue = false) => {
   const result = storage.getBoolean(key);
   if (result !== undefined && result !== null) {
     return result;

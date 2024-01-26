@@ -105,8 +105,6 @@ export function useIntro() {
 
   useEffect(() => {
     const isShownFirstTime = storage.getBool("introShownFirstTime", false);
-    console.log({ isShownFirstTime });
-
     if (!isShownFirstTime) {
       introPopup.show(true);
     }

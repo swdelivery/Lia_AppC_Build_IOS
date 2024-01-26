@@ -77,6 +77,14 @@ Upload build to installr
 
 
 
+### check_version
+
+```sh
+[bundle exec] fastlane check_version
+```
+
+
+
 ### google_key
 
 ```sh

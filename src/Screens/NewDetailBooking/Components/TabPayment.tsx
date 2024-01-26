@@ -24,8 +24,10 @@ import {
   getOrderPaymentState,
 } from "@Redux/user/selectors";
 import ItemService from "./ItemService";
-import { sum } from "lodash";
+import { head, sum } from "lodash";
 import ItemInsurance from "@Screens/NewCreateBooking/Components/ItemInsurance";
+import { calculateDiscountAmount } from "src/utils/booking";
+import Collapsible from "react-native-collapsible";
 
 const PAYMENT_FOR = {
   WALLET: "Ví",
@@ -66,18 +68,15 @@ const TabPayment = ({ booking }: Props) => {
     }
   }, [booking.orderId]);
 
+  const isRefundCoupon = useMemo(
+    () => head(orderDetails?.partnerCoupons)?.coupon?.couponType === "Refund",
+    [orderDetails]
+  );
+
   const discountAmount = useMemo(() => {
     return sum(
       (orderDetails?.partnerCoupons || []).map((item) => {
-        if (item.coupon.discountType === "percent") {
-          const discount =
-            (orderDetails.totalAmount * item.coupon.discountAmount) / 100;
-          return Math.min(discount, item.coupon.maxAmountDiscount);
-        }
-        if (item.coupon.discountType === "fixed") {
-          return item.coupon.discountAmount;
-        }
-        return 0;
+        return calculateDiscountAmount(item, orderDetails.totalAmount);
       })
     );
   }, [orderDetails]);
@@ -95,11 +94,12 @@ const TabPayment = ({ booking }: Props) => {
     if (!orderDetails) {
       return 0;
     }
-    if (orderDetails.status === "CONFIRMED") {
-      return orderDetails.totalAmount;
-    }
-    return orderDetails.totalAmount - discountAmount - discountLevel;
-  }, [orderDetails]);
+    return (
+      orderDetails.totalAmount -
+      discountLevel -
+      (isRefundCoupon ? 0 : discountAmount)
+    );
+  }, [orderDetails, isRefundCoupon, discountAmount, discountLevel]);
 
   return (
     <View style={styles.container}>
@@ -163,18 +163,39 @@ const TabPayment = ({ booking }: Props) => {
       )}
 
       <Column paddingHorizontal={16} paddingTop={16} gap={8}>
-        <Row justifyContent="space-between">
-          <Text weight="bold">Ưu đãi:</Text>
-          <Text color={BASE_COLOR} weight="bold">
-            {`-${formatMonney(discountAmount, true)}`}
-          </Text>
-        </Row>
-        <Row justifyContent="space-between">
-          <Text weight="bold">Giảm giá ước tính theo hạng:</Text>
-          <Text color={BASE_COLOR} weight="bold">
-            {`-${formatMonney(discountLevel, true)}`}
-          </Text>
-        </Row>
+        <Column>
+          <Row justifyContent="space-between">
+            <Text weight="bold">Ưu đãi:</Text>
+            <Text color={BASE_COLOR} weight="bold">
+              {`${isRefundCoupon ? "" : "-"}${formatMonney(
+                discountAmount,
+                true
+              )}`}
+            </Text>
+          </Row>
+          <Collapsible collapsed={isRefundCoupon ? false : true}>
+            <Text size={12}>
+              (*) Tiền sẽ được hoàn về ví sau khi thanh toán{" "}
+            </Text>
+          </Collapsible>
+        </Column>
+        <Column>
+          <Row justifyContent="space-between">
+            <Text weight="bold">Giảm giá dựa trên bậc hạng:</Text>
+            <Text color={BASE_COLOR} weight="bold">
+              {`-${formatMonney(discountLevel, true)}`}
+            </Text>
+          </Row>
+          {orderDetails?.partnerLevelPromotion && (
+            <Text size={12}>
+              Bậc hiện tại:{" "}
+              <Text size={12} weight="bold">
+                {booking.partnerLevelPromotion.name}
+              </Text>
+              {` giảm ${booking.partnerLevelPromotion.discountRetailService}%`}
+            </Text>
+          )}
+        </Column>
       </Column>
 
       {orderPayments?.length > 0 && (
@@ -214,7 +235,9 @@ const TabPayment = ({ booking }: Props) => {
                   )}
                 </View>
                 <View style={styles.bodyRowTable__child}>
-                  <Text>{PAYMENT_METHODS[item.methodCode]}</Text>
+                  <Text>
+                    {PAYMENT_METHODS[item.methodCode] ?? item.methodCode}
+                  </Text>
                 </View>
               </View>
             );

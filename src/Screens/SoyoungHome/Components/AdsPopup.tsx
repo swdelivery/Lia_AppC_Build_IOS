@@ -31,7 +31,7 @@ function AdsPopup({}: Props) {
     if (
       lastShowAdsPopup &&
       new Date().getTime() - new Date(lastShowAdsPopup).getTime() >
-        5 * 60 * 1000 // 15 minutes
+        5 * 60 * 1000 // 5 minutes
     ) {
       setVisible(true);
       return;

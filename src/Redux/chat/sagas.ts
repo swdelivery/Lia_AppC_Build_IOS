@@ -12,13 +12,15 @@ import {
 } from "./types";
 import * as actions from "./actions";
 import { BaseAction } from "@Redux/types";
-import { Conversation } from "@typings/chat";
+import { Conversation, Message } from "@typings/chat";
 import { selectState } from "@Redux/helper";
 import { getMessagesState, getPartnerConversationsState } from "./selectors";
 import PartnerService from "src/Services/PartnerService";
 import configs from "src/configs";
 import { navigation } from "rootNavigation";
 import ScreenKey from "@Navigation/ScreenKey";
+import { CSS_PARTNER_SEEN_MESSAGE } from "src/Sockets/type";
+import SocketInstance from "SocketInstance";
 
 function* getPartnerConversations({
   payload,
@@ -80,7 +82,7 @@ function* getConversationDetails({ payload }: BaseAction<Conversation>) {
 
 function* getConversationMessages({ payload }: BaseAction<string>) {
   try {
-    const data = yield call(PartnerService.getConversationMessages, {
+    const data: Message[] = yield call(PartnerService.getConversationMessages, {
       conversationId: payload,
       // before: currListMessageRedux?.messages[0]?._id,
     });
@@ -93,6 +95,19 @@ function* getConversationMessages({ payload }: BaseAction<string>) {
         },
       })
     );
+
+    // Mark as read
+    const unreadMessages = data
+      .filter((item) => !item.isPartnerSeen)
+      .map((item) => item._id);
+    if (unreadMessages.length > 0) {
+      let data = {
+        conversationId: payload,
+        messageIds: unreadMessages,
+      };
+      SocketInstance?.socketConn?.emit(CSS_PARTNER_SEEN_MESSAGE, data);
+    }
+    yield put(actions.markAsRead(payload));
   } catch (error: any) {
     yield put(actions.getConversationMessages.failure(error.message));
   }
@@ -104,7 +119,7 @@ function* loadMoreConversationMessagesHistory() {
     if (!paging || !paging.canLoadMore) {
       throw new Error("Empty");
     }
-    const data = yield call(PartnerService.getConversationMessages, {
+    const data: Message[] = yield call(PartnerService.getConversationMessages, {
       conversationId,
       after: paging.after,
     });
@@ -117,6 +132,18 @@ function* loadMoreConversationMessagesHistory() {
         },
       })
     );
+
+    // Mark as read
+    const unreadMessages = data
+      .filter((item) => !item.isPartnerSeen)
+      .map((item) => item._id);
+    if (unreadMessages.length > 0) {
+      let data = {
+        conversationId: conversationId,
+        messageIds: unreadMessages,
+      };
+      SocketInstance?.socketConn?.emit(CSS_PARTNER_SEEN_MESSAGE, data);
+    }
   } catch (error: any) {
     yield put(
       actions.loadMoreConversationMessagesHistory.failure(error.message)
