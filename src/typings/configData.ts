@@ -8,13 +8,14 @@ export enum ConfigDataCode {
   MedicalHistory = "TSBTK",
   PolicyRefund = "POLICY_REFUND",
   CollaborationForm = "COLLABORATION_FORM",
+  PolicyMissionNewUser = "POLICY_MISSION_NEW_USER"
 }
 
 export type ConfigDataValue =
   | string
   | {
-      item: string;
-    };
+    item: string;
+  };
 
 export type ConfigData = {
   _id: string;

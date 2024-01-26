@@ -185,6 +185,7 @@ import DetailCharityJourney from "@Screens/CharityJourney";
 import ListImageVideo from "@Screens/CharityJourney/ListImageVideo";
 import ListReports from "@Screens/CharityJourney/ListReports";
 import ExpenseDetail from "@Screens/CharityJourney/ExpenseDetail";
+import MissionForNewUser from "@Screens/MissionForNewUser";
 import NewQrBookingList from "@Screens/NewQrBookingList";
 
 const Stack = createNativeStackNavigator();
@@ -675,6 +676,12 @@ const RootNavigator = () => {
 
       {/* REFUND */}
       <Stack.Screen name={ScreenKey.REFUND} component={Refund} />
+
+      {/* MISSION FOR NEW USER */}
+      <Stack.Screen
+        name={ScreenKey.MISSION_FOR_NEW_USER}
+        component={MissionForNewUser}
+      />
 
       <Stack.Group
         screenOptions={{
