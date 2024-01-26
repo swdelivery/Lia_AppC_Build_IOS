@@ -62,7 +62,7 @@ const ItemOrderService = (props) => {
                         style={[stylesFont.fontNolan500, { fontSize: _moderateScale(14) }]}
                     >
                         {
-                            formatMonney(props?.data?.totalAmount, true)
+                            formatMonney(props?.data?.totalAmountPayment, true)
                         }
                     </Text>
                 </View>
@@ -83,7 +83,7 @@ const ItemOrderService = (props) => {
                         ]}
                     >
                         + {
-                            formatMonney(props?.data?.totalAmount * props?.data?.referralPartnerLevelPromotion?.commissionRate / 100, true)
+                            formatMonney(props?.data?.totalAmountPayment * props?.data?.referralPartnerLevelPromotion?.commissionRate / 100, true)
                         }
                     </Text>
                 </View>
