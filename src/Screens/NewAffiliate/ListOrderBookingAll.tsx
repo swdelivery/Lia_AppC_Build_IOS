@@ -1,21 +1,16 @@
 import React, { useCallback, useEffect, useState } from "react";
 import {
-  FlatList,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from "react-native";
-import { getStatusBarHeight } from "react-native-status-bar-height";
-import { IconBackWhite } from "../../Components/Icon/Icon";
-import { BASE_COLOR, WHITE } from "../../Constant/Color";
+import { BASE_COLOR } from "../../Constant/Color";
 import { stylesFont } from "../../Constant/Font";
 import { _moderateScale } from "../../Constant/Scale";
-
 import { TabBar, TabView } from "react-native-tab-view";
 import * as Color from "../../Constant/Color";
-import { navigation } from "../../../rootNavigation";
 import {
   getListAllBookingInvitee,
   getListAllOrderServiceInvitee,
@@ -72,7 +67,7 @@ const ItemOrderService = (props) => {
           <Text
             style={[stylesFont.fontNolan500, { fontSize: _moderateScale(14) }]}
           >
-            {formatMonney(props?.data?.totalAmount, true)}
+            {formatMonney(props?.data?.totalAmountPayment, true)}
           </Text>
         </View>
       </View>
@@ -93,7 +88,7 @@ const ItemOrderService = (props) => {
           >
             +{" "}
             {formatMonney(
-              (props?.data?.totalAmount *
+              (props?.data?.totalAmountPayment *
                 props?.data?.referralPartnerLevelPromotion?.commissionRate) /
                 100,
               true

@@ -156,6 +156,7 @@ export { default as IconAffiliateReportOrder } from "../../SGV/affiliate/reportO
 export { default as IconAffiliateQA } from "../../SGV/affiliate/QA.svg";
 export { default as IconWWW } from "../../SGV/www.svg";
 export { default as IconAboutLiA } from "../../SGV/aboutlia.svg";
+export { default as IconCalendar } from "../../SGV/wallet/calendar.svg";
 
 
 export const IconSetting = (props) => {

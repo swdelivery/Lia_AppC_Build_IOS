@@ -5,7 +5,7 @@ import { GREY, GREY_FOR_TITLE } from '@Constant/Color'
 import { formatMonney } from '@Constant/Utils'
 import { PaymentRequest } from '@typings/payment'
 import moment from 'moment'
-import React from 'react'
+import React, { useMemo } from 'react'
 import { StyleSheet } from 'react-native'
 
 type Props = {
@@ -13,6 +13,17 @@ type Props = {
 }
 
 const CardRefund = ({ data }: Props) => {
+
+  const generateListServiceName = useMemo(() => {
+    return data?.orders?.services?.map((item, index) => {
+      if (index !== data?.orders?.services?.length - 1) {
+        return `${item?.serviceName}, `
+      } else {
+        return `${item?.serviceName}.`
+      }
+    })
+  }, [data?.orders])
+
   return (
     <Row
       gap={8 * 2}
@@ -23,9 +34,9 @@ const CardRefund = ({ data }: Props) => {
         <Text
           color={GREY}
           fontStyle='italic'
-          size={12}>{moment().format('HH:mm')}, {moment().format('DD/MM/YYYY')}</Text>
+          size={12}>{moment(data?.created).format('HH:mm')}, {moment(data?.created).format('DD/MM/YYYY')}</Text>
         <Text>
-          Hoàn tiền thành công
+          Hoàn tiền thành công từ đơn hàng {generateListServiceName}
         </Text>
       </Column>
       <Column>
