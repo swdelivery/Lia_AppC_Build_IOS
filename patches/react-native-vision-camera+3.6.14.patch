@@ -60,3 +60,24 @@ index 88c085f..5ec9817 100644
      val processedBitmap =
        Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, false)
      FileOutputStream(file).use { stream ->
+diff --git a/node_modules/react-native-vision-camera/android/src/main/java/com/mrousavy/camera/core/CameraSession.kt b/node_modules/react-native-vision-camera/android/src/main/java/com/mrousavy/camera/core/CameraSession.kt
+index a5a51d6..8b69208 100644
+--- a/node_modules/react-native-vision-camera/android/src/main/java/com/mrousavy/camera/core/CameraSession.kt
++++ b/node_modules/react-native-vision-camera/android/src/main/java/com/mrousavy/camera/core/CameraSession.kt
+@@ -52,6 +52,7 @@ import kotlinx.coroutines.launch
+ import kotlinx.coroutines.runBlocking
+ import kotlinx.coroutines.sync.Mutex
+ import kotlinx.coroutines.sync.withLock
++import kotlinx.coroutines.Dispatchers
+ 
+ class CameraSession(private val context: Context, private val cameraManager: CameraManager, private val callback: CameraSessionCallback) :
+   Closeable,
+@@ -209,7 +210,7 @@ class CameraSession(private val context: Context, private val cameraManager: Cam
+ 
+   private fun destroyPreviewOutputSync() {
+     Log.i(TAG, "Destroying Preview Output...")
+-    runBlocking {
++    launch(Dispatchers.Main) {
+       configure { config ->
+         config.preview = CameraConfiguration.Output.Disabled.create()
+       }
