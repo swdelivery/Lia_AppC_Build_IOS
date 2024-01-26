@@ -202,7 +202,7 @@ const Tab2 = (props) => {
                                             <View style={{ flex: 2, alignItems: 'flex-end' }}>
                                                 <Text style={[stylesFont.fontNolan500, { fontSize: _moderateScale(14) }]}>
                                                     {
-                                                        formatMonney(item?.totalAmount, true)
+                                                        formatMonney(item?.finalPrice, true)
                                                     }
                                                 </Text>
                                             </View>
@@ -216,7 +216,7 @@ const Tab2 = (props) => {
                                             <View style={{ flex: 2, alignItems: 'flex-end' }}>
                                                 <Text style={[stylesFont.fontNolanBold, { fontSize: _moderateScale(14), color: Color.PRICE_ORANGE }]}>
                                                     + {
-                                                        formatMonney(item?.totalAmount * item?.partnerLevelPromotion?.commissionRate / 100, true)
+                                                        formatMonney(item?.finalPrice * item?.partnerLevelPromotion?.commissionRate / 100, true)
                                                     }
                                                 </Text>
                                             </View>
