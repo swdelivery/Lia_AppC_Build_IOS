@@ -94,8 +94,12 @@ const TabPayment = ({ booking }: Props) => {
     if (!orderDetails) {
       return 0;
     }
-    return orderDetails.totalAmount - discountAmount - discountLevel;
-  }, [orderDetails]);
+    return (
+      orderDetails.totalAmount -
+      discountLevel -
+      (isRefundCoupon ? 0 : discountAmount)
+    );
+  }, [orderDetails, isRefundCoupon, discountAmount, discountLevel]);
 
   return (
     <View style={styles.container}>
