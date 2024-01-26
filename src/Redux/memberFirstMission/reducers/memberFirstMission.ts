@@ -9,8 +9,8 @@ export type State = {
 
 const INITIAL_STATE: State = {
   data: {
-    register: "FINISHED",
-    collaborators: "WAIT",
+    register: "UNFINISHED",
+    collaborators: "UNFINISHED",
     firstWalletCharge: "UNFINISHED",
     missionStatus: "UNFINISHED"
   },

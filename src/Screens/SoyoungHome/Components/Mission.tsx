@@ -14,13 +14,15 @@ import { first, isEmpty } from 'lodash'
 import CachedImageView from "@Components/CachedImage";
 import useApi from 'src/Hooks/services/useApi'
 import PartnerService from 'src/Services/PartnerService'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { getInfoUserReducer } from '@Redux/Selectors'
 import { getMemberFirstMissionState } from '@Redux/memberFirstMission/selectors'
 import Animated, { interpolate, useAnimatedStyle, useSharedValue, withDelay, withRepeat, withSequence, withSpring, withTiming } from 'react-native-reanimated'
 import { getImageAvataUrl } from 'src/utils/avatar'
+import { getMemberFirstMission } from '@Redux/memberFirstMission/actions'
 
 const Mission = () => {
+  const dispatch = useDispatch()
   const scaleMainText = useSharedValue(0);
   const scaleMainBG = useSharedValue(1);
   const { navigate } = useNavigate()
@@ -35,7 +37,7 @@ const Mission = () => {
 
   useEffect(() => {
     if (!isEmpty(infoUser)) {
-      performRequest(infoUser?._id)
+      dispatch(getMemberFirstMission.request())
     }
   }, [infoUser])
 

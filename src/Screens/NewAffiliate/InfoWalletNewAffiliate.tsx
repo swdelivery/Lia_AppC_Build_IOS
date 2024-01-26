@@ -31,7 +31,7 @@ const InfoWalletNewAffiliate = () => {
         dispatch(getHistoryWallet.request({
             condition: {
                 "paymentFor": {
-                    "in": ["WALLET_COMMISSION", "WALLET", "WHEEL_TURN", "ORDER"]
+                    "in": ["WALLET_COMMISSION", "WALLET", "WHEEL_TURN", "ORDER", "DEPOSIT"]
                 }
             },
             limit: 100
@@ -61,6 +61,25 @@ const InfoWalletNewAffiliate = () => {
                                     :
                                     <>
                                         Rút tiền hoa hồng
+                                    </>
+                            }
+
+                        </Text>
+                    )
+                case "DEPOSIT":
+                    return (
+                        <Text
+                            numberOfLines={1}
+                            color={BLUE_FB}
+                            weight='bold'>
+                            {
+                                status == 'increase' ?
+                                    <>
+                                        Nạp tiền vào ví
+                                    </>
+                                    :
+                                    <>
+                                        Rút tiền ví
                                     </>
                             }
 

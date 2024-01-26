@@ -694,7 +694,11 @@ const getPayment = (payload: any) => {
 
 // Mission for new user
 const getMemberFirstMission = (payload: any) => {
-  return axios.get(`/${payload}/member-first-mission`).then(({ data }) => data);
+  return axios.get(`/partners/member-first-mission`).then(({ data }) => data);
+};
+
+const takeAwardMemberFirstMission = (payload: any) => {
+  return axios.post(`/partners/take-member-first-mission`).then(({ data }) => data);
 };
 
 export default {
@@ -840,5 +844,6 @@ export default {
   getPayment,
 
   // Mission for new user
-  getMemberFirstMission
+  getMemberFirstMission,
+  takeAwardMemberFirstMission
 };
