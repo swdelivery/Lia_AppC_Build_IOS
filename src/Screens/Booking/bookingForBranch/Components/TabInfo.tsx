@@ -1,25 +1,32 @@
 import Row from "@Components/Row";
 import Text from "@Components/Text";
-import { BASE_COLOR, BG_BEAUTY_OPACITY_1, BG_BEAUTY_OPACITY_2, BG_GREY_OPACITY_5, BLACK, BLACK_OPACITY_7, BLUE_FB, BORDER_COLOR, BORDER_TOPPING_GROUP, GREY, PRICE_ORANGE, WHITE } from "@Constant/Color";
+import {
+  BASE_COLOR,
+  BG_GREY_OPACITY_5,
+  BLACK_OPACITY_7,
+  BORDER_COLOR,
+  BORDER_TOPPING_GROUP,
+  GREY,
+  WHITE,
+} from "@Constant/Color";
 import { stylesFont } from "@Constant/Font";
 import { URL_ORIGINAL } from "@Constant/Url";
 import { formatMonney } from "@Constant/Utils";
-import { ItemOptions, Service } from "@typings/serviceGroup";
-import React, { useEffect } from "react";
-import { Image, LayoutAnimation, Platform, StyleSheet, TouchableOpacity, View } from "react-native";
+import { Service } from "@typings/serviceGroup";
+import React from "react";
+import { LayoutAnimation, StyleSheet, TouchableOpacity } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { styleElement } from "@Constant/StyleElement";
 import { sizeIcon } from "@Constant/Icon";
 import Icon from "@Components/Icon";
-import { getBottomSpace } from "react-native-iphone-x-helper";
 import Column from "@Components/Column";
 import { SERVICE_BANNER_RATIO } from "@Constant/image";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { _moderateScale, _width } from "@Constant/Scale";
-import { BackIcon, IconDoubleRightArrow } from "@Components/Icon/Icon";
-import { navigation } from "rootNavigation";
+import { BackIcon } from "@Components/Icon/Icon";
 import { isIos } from "src/utils/platform";
+import { head } from "lodash";
+import Image from "@Components/Image";
 
 type Props = {
   data?: Service;
@@ -58,14 +65,7 @@ export const TabInfo = ({
                 width: _width,
                 height: _width * SERVICE_BANNER_RATIO,
               }}
-              source={{
-                uri: `${URL_ORIGINAL}${
-                  data?.representationServiceFileArr != null &&
-                  data?.representationServiceFileArr?.length > 0
-                    ? data?.representationServiceFileArr[0]?.link
-                    : ""
-                }`,
-              }}
+              avatar={head(data?.representationServiceFileArr)?.fileId}
             />
             <Row top={_moderateScale(16)} position="absolute" zIndex={1}>
               <TouchableOpacity onPress={onCancel}>

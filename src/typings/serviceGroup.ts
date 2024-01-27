@@ -42,7 +42,7 @@ export type ItemOptions = {
   groupCode: string;
   extraAmount: number;
   id: string;
-}
+};
 export type MaterialInfo = {
   _id: string;
   name: string;
@@ -93,7 +93,11 @@ export type Service = {
   description: string;
   avatar: FileAvatar;
   representationFileArr: FileAvatar[];
-  representationServiceFileArr: FileAvatar[];
+  representationServiceFileArr: {
+    _id: string;
+    serviceCode: string;
+    fileId: FileAvatar;
+  }[];
   options: ServiceOption[];
   doctorServices: {
     _id: string;

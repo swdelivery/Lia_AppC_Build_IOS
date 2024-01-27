@@ -26,6 +26,7 @@ import RecommendServices from "./Components/RecommendServices";
 import RelatedServices from "./Components/RelatedServices";
 import ListVideo from "./Components/ListVideo";
 import Products from "./Components/Products";
+import { head } from "lodash";
 
 const DetailService = () => {
   const { navigate } = useNavigate();
@@ -35,7 +36,9 @@ const DetailService = () => {
 
   useEffect(() => {
     if (service?.representationServiceFileArr?.length) {
-      getColors(getImageAvataUrl(service.representationServiceFileArr[0]));
+      getColors(
+        getImageAvataUrl(head(service.representationServiceFileArr)?.fileId)
+      );
     }
   }, [service]);
 
@@ -54,7 +57,9 @@ const DetailService = () => {
     <>
       <ScrollView style={styles.content}>
         <HorizonListImage
-          images={service?.representationServiceFileArr}
+          images={(service?.representationServiceFileArr ?? []).map(
+            (item) => item.fileId
+          )}
           getColors={getColors}
         />
         <View style={styles.body}>
