@@ -195,16 +195,14 @@ const RegisterInApp = (props) => {
         contentContainerStyle={styles.content}
         enableOnAndroid={true}
       >
-        <View style={[styles.container_logo, styleElement.centerChild]}>
-          {/* <Text>LOGO HERE</Text> */}
-          <Image
-            resizeMode={"contain"}
-            style={{ width: "70%", height: "70%" }}
-            source={require("../../NewImage/logoLiA.png")}
-          />
-        </View>
+        <Image
+          resizeMode={"contain"}
+          style={styles.container_logo}
+          source={require("../../NewImage/logoLiA.png")}
+        />
 
         <Column
+          flex={1}
           gap={_moderateScale(8 * 2)}
           style={{
             paddingHorizontal: _moderateScale(8 * 2),
@@ -281,8 +279,8 @@ const RegisterInApp = (props) => {
                 errorName
                   ? Color.ERROR_COLOR
                   : name
-                  ? Color.BORDER_INPUT_TEXT_FOCUSED
-                  : Color.BORDER_INPUT_TEXT
+                    ? Color.BORDER_INPUT_TEXT_FOCUSED
+                    : Color.BORDER_INPUT_TEXT
               }
               borderWidth={1}
               paddingHorizontal={10}
@@ -335,7 +333,7 @@ const RegisterInApp = (props) => {
             onChangeText={setPassword2}
           />
 
-          <Spacer top={_moderateScale(8 * 2)} />
+          {/* <Spacer top={_moderateScale(8 * 2)} /> */}
           <TouchableOpacity
             onPress={() => {
               if (validation()) {
@@ -344,23 +342,27 @@ const RegisterInApp = (props) => {
             }}
             style={[
               {
-                height: _moderateScale(8 * 6),
-                borderRadius: _moderateScale(8),
+                height: _moderateScale(8 * 5),
+                borderRadius: _moderateScale(8 * 3),
                 justifyContent: "center",
                 alignItems: "center",
                 backgroundColor: Color.BG_LOGIN_BUTTON,
+                marginHorizontal: 8 * 10
               },
             ]}
           >
             <Text
               style={[
                 stylesFont.fontNolanBold,
-                { fontSize: _moderateScale(16), color: Color.WHITE },
+                { fontSize: _moderateScale(14), color: Color.WHITE },
               ]}
             >
               Đăng ký
             </Text>
           </TouchableOpacity>
+
+          <Column style={styleElement.flex} />
+
           <Column gap={_moderateScale(5)}>
             <Column
               flex={1}
@@ -440,10 +442,10 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   container_logo: {
-    height: _moderateScale(8 * 15),
-    width: _moderateScale(_width),
-    borderWidth: 0,
-    marginTop: _moderateScale(8 * 2),
+    width: 8 * 10,
+    height: 8 * 10,
+    alignSelf: 'center',
+    marginVertical: 8 * 5
   },
 });
 

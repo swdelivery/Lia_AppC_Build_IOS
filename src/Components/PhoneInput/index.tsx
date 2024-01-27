@@ -22,6 +22,7 @@ type Props = ViewStyle & {
   onChangeText: (string) => void;
   onSelectionCallingCode: (string) => void;
   marginTop?: number;
+  autoFocus?: boolean;
 };
 
 export default function PhoneInput({
@@ -33,6 +34,7 @@ export default function PhoneInput({
   onChangeText,
   onSelectionCallingCode,
   marginTop,
+  autoFocus = false
 }: Props) {
   const [countryCode, setCountryCode] = useState<CountryCode>("VN");
   const [country, setCountry] = useState<Country>(null);
@@ -51,8 +53,8 @@ export default function PhoneInput({
           errorMessage
             ? Color.ERROR_COLOR
             : content
-            ? Color.BORDER_INPUT_TEXT_FOCUSED
-            : Color.BORDER_INPUT_TEXT
+              ? Color.BORDER_INPUT_TEXT_FOCUSED
+              : Color.BORDER_INPUT_TEXT
         }
         borderWidth={1}
         paddingHorizontal={10}
@@ -79,6 +81,7 @@ export default function PhoneInput({
           backgroundColor={Color.BORDER_INPUT_TEXT}
         />
         <TextInput
+          autoFocus={autoFocus}
           value={content}
           keyboardType={"number-pad"}
           onChangeText={onChangeText}

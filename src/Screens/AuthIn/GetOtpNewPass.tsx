@@ -251,7 +251,7 @@ const GetOtpNewPass = (props: any) => {
       </Row>
     </Screen>
   ) : (
-    <Screen safeTop style={styles.container}>
+    <Screen safeBottom safeTop style={styles.container}>
       <Header title="Xác thực OTP" onBack={navigation.goBack} />
       <KeyboardAwareScrollView
         bounces={false}
@@ -297,7 +297,7 @@ const GetOtpNewPass = (props: any) => {
         />
         <ResendOtp ref={resendRef} onResend={_reSendOTP} />
         <TouchableOpacity onPress={() => confirmVerificationCode(activeCode)}>
-          <Row backgroundColor={Color.BASE_COLOR} padding={_moderateScale(10)} marginVertical={_moderateScale(40)} marginHorizontal={_moderateScale(50)} borderRadius={_moderateScale(5)}>
+          <Row backgroundColor={Color.BASE_COLOR} padding={_moderateScale(10)} marginVertical={_moderateScale(40)} marginHorizontal={_moderateScale(50)} borderRadius={_moderateScale(8 * 3)}>
             <Text style={{ textAlign: "center" }} flex={1} color={Color.WHITE} size={_moderateScale(14)} weight="bold">
               Xác thực
             </Text>

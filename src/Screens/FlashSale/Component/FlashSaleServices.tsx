@@ -74,7 +74,7 @@ export default function FlashSaleServices({ flashSale }: Props) {
         contentContainerStyle={styles.contentContainer}
         refreshing={isLoading}
         onRefresh={refresh}
-        ListEmptyComponent={<ListEmpty title="Không có thông tin flash sale" />}
+        ListEmptyComponent={<ListEmpty title="Hãy chờ đón sự kiện FlashSale sắp tới nhé!" />}
       />
       <ModalPickToppingNew
         confirm={(currChoice, listTopping) => {

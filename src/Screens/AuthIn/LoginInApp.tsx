@@ -23,6 +23,7 @@ import PasswordInput from "@Components/PasswordInput";
 import Column from "@Components/Column";
 import PhoneInput from "@Components/PhoneInput";
 import { isValidPhoneNumber } from "react-phone-number-input";
+import { styleElement } from "@Constant/StyleElement";
 
 const Login = (props) => {
   const [phoneNumber, setphoneNumber] = useState("");
@@ -115,7 +116,8 @@ const Login = (props) => {
       >
         <Column
           alignItems="center"
-          height={_moderateScale(8 * 20)}
+          marginVertical={8 * 10}
+          height={_moderateScale(8 * 15)}
           margin={_moderateScale(8 * 2)}
         >
           <Image
@@ -127,10 +129,11 @@ const Login = (props) => {
 
         <Column paddingHorizontal={_moderateScale(8 * 2)} gap={16}>
           <PhoneInput
+            autoFocus
             content={phoneNumber}
             countryCallingCode={countryCallingCode}
             errorMessage={errorPhoneNumber}
-            label="Số điện thoại đã đăng ký"
+            label="Số điện thoại"
             onBlur={validatePhoneNumber}
             onChangeText={setphoneNumber}
             onSelectionCallingCode={setCountryCallingCode}
@@ -144,7 +147,7 @@ const Login = (props) => {
             onChangeText={setPassword}
           />
 
-          <View style={{ height: _moderateScale(10 * 8) }} />
+          <View style={{ height: _moderateScale(0) }} />
 
           <TouchableOpacity
             onPress={() => {
@@ -154,21 +157,22 @@ const Login = (props) => {
             }}
             style={[
               {
-                height: 8 * 6,
-                borderRadius: 8,
+                height: 8 * 5,
+                borderRadius: 8 * 3,
                 justifyContent: "center",
                 alignItems: "center",
                 backgroundColor: Color.BG_LOGIN_BUTTON,
+                marginHorizontal: 8 * 10
               },
             ]}
           >
-            <Text weight="bold" size={16} color={Color.WHITE}>
+            <Text weight="bold" color={Color.WHITE}>
               Đăng nhập
             </Text>
           </TouchableOpacity>
-          <View style={{ height: _moderateScale(8 * 0.5) }} />
 
           <TouchableOpacity
+            hitSlop={styleElement.hitslopSm}
             onPress={() => {
               navigation.navigate(ScreenKey.FILL_PHONE_TO_GET_NEW_PASS, {
                 routeName: props?.route?.params?.routeName,
@@ -176,16 +180,16 @@ const Login = (props) => {
             }}
             style={[
               {
-                height: _moderateScale(8 * 6),
                 backgroundColor: "transparent",
                 borderRadius: _moderateScale(8),
                 justifyContent: "center",
                 alignItems: "center",
+                alignSelf: 'center'
               },
             ]}
           >
-            <Text color={Color.BASE_COLOR} size={14} weight="bold">
-              Quên mật khẩu?
+            <Text color={Color.BLACK_OPACITY_7} weight="bold">
+              Bạn đã quên mật khẩu?
             </Text>
           </TouchableOpacity>
           <View style={{ height: _moderateScale(8 * 2) }} />
@@ -193,10 +197,32 @@ const Login = (props) => {
         <Column
           flex={1}
           justifyContent="flex-end"
-          alignSelf="center"
+          // alignSelf="center"
           paddingBottom={_moderateScale(8)}
+          paddingHorizontal={_moderateScale(8 * 2)}
         >
+
           <TouchableOpacity
+            onPress={() => {
+              navigation.navigate(ScreenKey.REGISTER_IN_APP, {
+                routeName: props?.route?.params?.routeName,
+              });
+            }}
+          >
+            <Column
+              height={8 * 5}
+              borderRadius={8 * 3}
+              style={styleElement.centerChild}
+              marginHorizontal={8 * 10}
+              borderColor={Color.NEW_BASE_COLOR}
+              borderWidth={2}>
+              <Text weight="bold" color={Color.NEW_BASE_COLOR}>
+                Tạo tài khoản mới
+              </Text>
+            </Column>
+          </TouchableOpacity>
+
+          {/* <TouchableOpacity
             onPress={() => {
               navigation.navigate(ScreenKey.REGISTER_IN_APP, {
                 routeName: props?.route?.params?.routeName,
@@ -209,7 +235,7 @@ const Login = (props) => {
                 Đăng ký ngay
               </Text>
             </Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </Column>
         <Row
           justifyContent="flex-end"
