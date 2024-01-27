@@ -1,5 +1,5 @@
 import { ScrollView, StyleSheet, View } from 'react-native'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import Text from '@Components/Text'
 import Screen from '@Components/Screen'
 import { FocusAwareStatusBar } from '@Components/StatusBar'
@@ -12,6 +12,7 @@ import { AfterTimeoutFragment } from '@Components/AfterTimeoutFragment'
 import Placeholder from '@Screens/NewDetailBranch/Components/Placeholder'
 import ActionButton from '@Components/ActionButton/ActionButton'
 import ScreenKey from '@Navigation/ScreenKey'
+import useRequireLoginCallback from 'src/Hooks/useRequireLoginAction'
 
 const DetailNews = () => {
     const { navigate } = useNavigate()
@@ -34,9 +35,41 @@ const DetailNews = () => {
         setNews(result);
     }
 
-    const _handleBooking = useCallback(() => {
+    const _handleBooking = useRequireLoginCallback(() => {
         navigate(ScreenKey.CREATE_BOOKING)()
     }, [])
+    const _handleWheelSpin = useRequireLoginCallback(() => {
+        navigate(ScreenKey.WHEEL_SPIN)()
+    }, [])
+
+    const _handleRedirect = useCallback(() => {
+        const { data } = news?.onClickAction
+        switch (data) {
+            case "FLASH_SALE":
+                return navigate(ScreenKey.FLASHSALE_SCREEN)()
+            case "BOOKING":
+                return _handleBooking()
+            case "LUCKY_WHEEL":
+                return _handleWheelSpin()
+            default:
+                break;
+        }
+    }, [news?.onClickAction])
+
+    const generateTitle = useMemo(() => {
+        console.log({ news });
+        if (!news?.onClickAction?.data) return ''
+        switch (news?.onClickAction?.data) {
+            case "FLASH_SALE":
+                return `Săn ngay ưu đãi`
+            case "BOOKING":
+                return `Làm đẹp ngay`
+            case "LUCKY_WHEEL":
+                return `Tham gia ngay`
+            default:
+                break;
+        }
+    }, [news])
 
     return (
         <Screen safeBottom>
@@ -46,9 +79,14 @@ const DetailNews = () => {
                 <ScrollView contentContainerStyle={{ paddingHorizontal: 8 * 2 }}>
                     {news?.content && <RenderHTML data={news?.content} />}
                 </ScrollView>
-                <ActionButton
-                    onPress={_handleBooking}
-                    title='Đặt hẹn ngay' />
+                {
+                    news?.onClickAction?.data ?
+                        <ActionButton
+                            onPress={_handleRedirect}
+                            title={generateTitle} />
+                        : <></>
+                }
+
             </AfterTimeoutFragment>
         </Screen>
     )
