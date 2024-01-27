@@ -8,7 +8,7 @@ export default function useNotifications() {
   useEffect(() => {
     const onMessageUnsubscribe = messaging().onMessage(
       async (remoteMessage) => {
-        console.log({ remoteMessage });
+        const { notification, data } = remoteMessage;
 
         // Create a channel (required for Android)
         const channelId = await notifee.createChannel({
@@ -16,13 +16,13 @@ export default function useNotifications() {
           name: "Default Channel",
           sound: "default",
           vibration: true,
-          vibrationPattern: [300, 500],
         });
 
         await notifee.displayNotification({
-          title: remoteMessage?.notification?.title,
-          body: remoteMessage?.notification?.body,
-          data: remoteMessage?.data,
+          id: data?.bookingId + "",
+          title: notification?.title ?? "LiA",
+          body: notification?.body,
+          data,
           android: {
             vibrationPattern: [300, 500],
             sound: "default",

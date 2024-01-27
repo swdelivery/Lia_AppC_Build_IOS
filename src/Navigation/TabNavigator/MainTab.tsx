@@ -17,7 +17,7 @@ import NewListLastedMessage from "@Screens/NewListLastedMessage";
 import Home from "@Screens/SoyoungHome";
 import NewProfile from "@Screens/NewProfile/NewProfile";
 import Social from "@Screens/Social";
-import AdsPopup from "@Screens/SoyoungHome/Components/AdsPopup";
+import AdsContextProvider from "@Screens/SoyoungHome/Components/AdsPopup";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -26,7 +26,7 @@ const MainTab = (props) => {
   const { bottom } = useSafeAreaInsets();
 
   return (
-    <>
+    <AdsContextProvider>
       <Tab.Navigator
         tabBarPosition="bottom"
         // lazy={true}
@@ -185,8 +185,7 @@ const MainTab = (props) => {
           component={infoUser?._id ? NewProfile : () => <></>}
         />
       </Tab.Navigator>
-      <AdsPopup />
-    </>
+    </AdsContextProvider>
   );
 };
 

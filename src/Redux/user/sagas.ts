@@ -28,8 +28,9 @@ import keychain from "src/utils/keychain";
 import SocketInstance from "SocketInstance";
 import { selectState } from "@Redux/helper";
 import { getMyBookingState } from "./selectors";
+import notifee from "@notifee/react-native";
 
-function* getMyCoupons({ payload }) {
+function* getMyCoupons({ payload }: BaseAction<any>) {
   try {
     const response: ApiResponse<MyVoucher[]> = yield call(
       PartnerService.getMyCoupons,
@@ -179,6 +180,8 @@ function* logOut() {
     SocketInstance.socketConn.disconnect();
     SocketInstance.socketConn = null;
     navigation.navigate(ScreenKey.HOME);
+
+    notifee.cancelAllNotifications();
   } catch (error: any) {
     //
   }

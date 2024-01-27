@@ -1,42 +1,49 @@
 import Column from "@Components/Column";
 import Fade from "@Components/Fade";
-import Icon from "@Components/Icon";
 import IconButton from "@Components/IconButton";
 import Image from "@Components/Image";
-import withPortal from "@Components/withPortal";
 import { BLACK_OPACITY_4 } from "@Constant/Color";
 import { _height, _width } from "@Constant/Scale";
 import { ConfigFileCode } from "@typings/configFile";
 import { head } from "lodash";
-import React, { useCallback, useState } from "react";
-import { View, StyleSheet } from "react-native";
+import React, {
+  ReactNode,
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+} from "react";
+import { StyleSheet } from "react-native";
 import useConfigFile from "src/Hooks/useConfigFile";
-import { useFocused } from "src/Hooks/useNavigation";
 import { CloseIcon } from "src/SGV";
 import storage from "src/utils/storage";
 
-type Props = {};
+export type AdsContextType = {
+  checkShowAds: () => void;
+};
 
-function AdsPopup({}: Props) {
-  const [visible, setVisible] = useState(true);
+export const AdsContext = createContext<AdsContextType>(
+  // @ts-ignore
+  {}
+);
+
+export function useAdsContext() {
+  const ctx = useContext(AdsContext);
+  if (!ctx) {
+    throw new Error("useAdsContext must be used within a AdsContextProvider");
+  }
+  return ctx;
+}
+
+function AdsPopup({
+  visible,
+  onClose,
+}: {
+  visible: boolean;
+  onClose: () => void;
+}) {
   const imageAds = useConfigFile(ConfigFileCode.ImageAds);
-
-  const handleClose = useCallback(() => {
-    setVisible(false);
-    storage.setString("lastShowAdsPopup", new Date().toISOString());
-  }, []);
-
-  useFocused(() => {
-    const lastShowAdsPopup = storage.getString("lastShowAdsPopup");
-    if (
-      lastShowAdsPopup &&
-      new Date().getTime() - new Date(lastShowAdsPopup).getTime() >
-        5 * 60 * 1000 // 5 minutes
-    ) {
-      setVisible(true);
-      return;
-    }
-  });
 
   if (!imageAds) {
     return null;
@@ -46,7 +53,7 @@ function AdsPopup({}: Props) {
     <Fade visible={visible} style={styles.container}>
       <Column padding={0}>
         <Image auto avatar={head(imageAds.fileArr)} style={styles.image} />
-        <IconButton containerStyle={styles.iconClose} onPress={handleClose}>
+        <IconButton containerStyle={styles.iconClose} onPress={onClose}>
           <CloseIcon width={34} height={34} />
         </IconButton>
       </Column>
@@ -54,7 +61,45 @@ function AdsPopup({}: Props) {
   );
 }
 
-export default AdsPopup;
+export default function AdsContextProvider({
+  children,
+}: {
+  children: ReactNode;
+}) {
+  const [visible, setVisible] = useState(true);
+
+  const handleClose = useCallback(() => {
+    setVisible(false);
+    storage.setString("lastShowAdsPopup", new Date().toISOString());
+  }, []);
+
+  const checkShowAds = useCallback(() => {
+    const lastShowAdsPopup = storage.getString("lastShowAdsPopup");
+
+    if (
+      lastShowAdsPopup &&
+      new Date().getTime() - new Date(lastShowAdsPopup).getTime() >
+        5 * 60 * 1000 // 5 minutes
+    ) {
+      setVisible(true);
+      return;
+    }
+  }, []);
+
+  const context = useMemo(
+    () => ({
+      checkShowAds,
+    }),
+    [checkShowAds]
+  );
+
+  return (
+    <AdsContext.Provider value={context}>
+      {children}
+      <AdsPopup visible={visible} onClose={handleClose} />
+    </AdsContext.Provider>
+  );
+}
 
 const styles = StyleSheet.create({
   container: {

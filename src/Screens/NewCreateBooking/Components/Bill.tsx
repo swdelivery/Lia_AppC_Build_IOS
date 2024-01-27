@@ -58,12 +58,13 @@ const Bill = () => {
     );
   }, [currPartnerLevel, originPrice]);
 
+  const isRefundCoupon = dataCoupon?.coupon?.couponType === "Refund";
+
   const discountAmount = useMemo(() => {
     return calculateDiscountAmount(dataCoupon, originPrice);
   }, [dataCoupon, originPrice]);
 
   const totalAmound = useMemo(() => {
-    const isRefundCoupon = dataCoupon?.coupon?.couponType === "Refund";
     return originPrice - discountLevel - (isRefundCoupon ? 0 : discountAmount);
   }, [originPrice, discountAmount, discountLevel, dataCoupon]);
 
@@ -94,7 +95,10 @@ const Bill = () => {
             </Collapsible>
           </Column>
           <Text size={14} color={RED} weight="regular">
-            - {formatMonney(discountAmount)} VNĐ
+            {`${isRefundCoupon ? "" : "- "}${formatMonney(
+              discountAmount,
+              true
+            )}`}
           </Text>
         </Row>
         <Row
@@ -117,7 +121,7 @@ const Bill = () => {
             </Text>
           </Column>
           <Text size={14} color={RED} weight="regular">
-            - {formatMonney(discountLevel)} VNĐ
+            -{formatMonney(discountLevel, true)}
           </Text>
         </Row>
         <Row style={{ justifyContent: "space-between" }}>
@@ -125,7 +129,7 @@ const Bill = () => {
             Tổng thanh toán tạm tính:
           </Text>
           <Text size={14} weight="bold" color={BASE_COLOR}>
-            {formatMonney(totalAmound)} VNĐ
+            {formatMonney(totalAmound, true)}
           </Text>
         </Row>
       </Column>

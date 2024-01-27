@@ -24,7 +24,8 @@ import { FocusAwareStatusBar } from "@Components/StatusBar";
 import { BASE_COLOR } from "@Constant/Color";
 import SoyoungProduct from "@Screens/SoyoungProduct";
 import BtnSpinAnim from "./Components/BtnSpinAnim";
-import AdsPopup from "./Components/AdsPopup";
+import { useFocused } from "src/Hooks/useNavigation";
+import { useAdsContext } from "./Components/AdsPopup";
 
 const STACKS = [
   {
@@ -55,12 +56,11 @@ const STACKS = [
 
 const SoyoungHome = () => {
   const { top } = useSafeAreaInsets();
-  // const [tabIndex, setTabIndex] = useState(0);
-  // const isFocused = useIsFocused();
+  const { checkShowAds } = useAdsContext();
 
-  // const handleTabViewChnaged = useCallback((index, tabLabel) => {
-  //   setTabIndex(index);
-  // }, []);
+  useFocused(() => {
+    checkShowAds();
+  });
 
   return (
     <Screen style={styles.container}>
