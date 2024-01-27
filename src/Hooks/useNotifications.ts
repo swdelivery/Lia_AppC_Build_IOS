@@ -8,7 +8,7 @@ export default function useNotifications() {
   useEffect(() => {
     const onMessageUnsubscribe = messaging().onMessage(
       async (remoteMessage) => {
-        // console.log({ remoteMessage });
+        console.log({ remoteMessage });
 
         // Create a channel (required for Android)
         const channelId = await notifee.createChannel({
@@ -50,6 +50,8 @@ export default function useNotifications() {
     const onNotificationOpenedUnsubscribe = messaging().onNotificationOpenedApp(
       (remoteMessage) => {
         // console.log('[FCMService] onNotificationOpenedApp Notification caused app to open from background state:', remoteMessage)
+        console.log({ remoteMessage });
+
         if (remoteMessage) {
           setTimeout(() => {
             _handleNavigate(remoteMessage?.data);

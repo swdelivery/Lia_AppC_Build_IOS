@@ -25,12 +25,15 @@ import Menu from "./Components/Menu";
 import { FocusAwareStatusBar } from "@Components/StatusBar";
 import { ProfileMirrorIcon, RecordIcon } from "src/SGV";
 import Config from "react-native-config";
+import StickyBackground from "@Components/StickyBackground";
+import { BASE_COLOR } from "@Constant/Color";
 
 const NewProfile = () => {
   return (
     <Screen backgroundColor={"#F6FCFF"}>
       <FocusAwareStatusBar barStyle="light-content" />
       <ScrollView>
+        <StickyBackground backgroundColor={BASE_COLOR} />
         <Banner />
         <View style={styles.body}>
           <Column gap={8 * 2} marginTop={8 * 2}>
@@ -99,12 +102,12 @@ const NewProfile = () => {
                 },
                 ...(Config.ENV !== "prod"
                   ? [
-                    {
-                      flag: "skin-mirror",
-                      name: "SaYoi",
-                      icon: <ProfileMirrorIcon />,
-                    },
-                  ]
+                      {
+                        flag: "skin-mirror",
+                        name: "SaYoi",
+                        icon: <ProfileMirrorIcon />,
+                      },
+                    ]
                   : []),
                 // { name: "LPay Later", icon: <IconProfilePayLater /> },
                 // { name: "Bảo hiểm", icon: <IconProfileInsurance /> },
