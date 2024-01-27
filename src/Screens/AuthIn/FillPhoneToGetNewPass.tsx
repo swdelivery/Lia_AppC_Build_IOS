@@ -119,25 +119,22 @@ const FillPhoneToGetNewPass = (props) => {
         enableOnAndroid={true}
       >
         <View style={{ height: _moderateScale(8 * 2) }} />
-        <View
-          style={[
-            {
-              height: _moderateScale(8 * 20),
-              width: _moderateScale(_width),
-              borderWidth: 0,
-            },
-            styleElement.centerChild,
-          ]}
+        <Column
+          alignItems="center"
+          marginTop={8 * 8}
+          height={_moderateScale(8 * 15)}
+          margin={_moderateScale(8 * 2)}
         >
           <Image
             resizeMode={"contain"}
             style={{ width: "70%", height: "70%" }}
             source={require("../../NewImage/logoLiA.png")}
           />
-        </View>
+        </Column>
         <Spacer top={_moderateScale(8 * 10)} />
         <Column paddingHorizontal={_moderateScale(8 * 2)}>
           <PhoneInput
+            autoFocus
             content={phoneNumber}
             countryCallingCode={countryCallingCode}
             errorMessage={errorPhoneNumber}
@@ -151,18 +148,19 @@ const FillPhoneToGetNewPass = (props) => {
             onPress={_handleOnPressContinue}
             style={[
               {
-                height: _moderateScale(8 * 6),
-                borderRadius: _moderateScale(8),
+                height: _moderateScale(8 * 5),
+                borderRadius: _moderateScale(8 * 3),
                 justifyContent: "center",
                 alignItems: "center",
                 backgroundColor: Color.BG_LOGIN_BUTTON,
+                marginHorizontal: 8 * 10
               },
             ]}
           >
             <Text
               style={[
                 stylesFont.fontNolanBold,
-                { fontSize: _moderateScale(16), color: Color.WHITE },
+                { fontSize: _moderateScale(14), color: Color.WHITE },
               ]}
             >
               Tiếp tục

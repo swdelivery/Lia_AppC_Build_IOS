@@ -43,7 +43,7 @@ const ItemOrderService = (props) => {
 
   return (
     <TouchableOpacity
-      onPress={() => {}}
+      onPress={() => { }}
       style={{
         padding: _moderateScale(8 * 2),
         borderBottomWidth: 0.5,
@@ -90,7 +90,7 @@ const ItemOrderService = (props) => {
             {formatMonney(
               (props?.data?.totalAmountPayment *
                 props?.data?.referralPartnerLevelPromotion?.commissionRate) /
-                100,
+              100,
               true
             )}
           </Text>
@@ -190,7 +190,7 @@ const Tab2 = (props) => {
           {props?.data?.map((item, index) => {
             return (
               <TouchableOpacity
-                onPress={() => {}}
+                onPress={() => { }}
                 style={{
                   padding: _moderateScale(8 * 2),
                   borderBottomWidth: 0.5,
@@ -217,7 +217,7 @@ const Tab2 = (props) => {
                         { fontSize: _moderateScale(14) },
                       ]}
                     >
-                      {formatMonney(item?.finalPrice, true)}
+                      {formatMonney(item?.finalAmount, true)}
                     </Text>
                   </View>
                 </View>
@@ -247,9 +247,9 @@ const Tab2 = (props) => {
                     >
                       +{" "}
                       {formatMonney(
-                        (item?.finalPrice *
+                        (item?.finalAmount *
                           item?.partnerLevelPromotion?.commissionRate) /
-                          100,
+                        100,
                         true
                       )}
                     </Text>
