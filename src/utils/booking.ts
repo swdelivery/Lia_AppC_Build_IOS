@@ -4,14 +4,16 @@ export const calculateDiscountAmount = (
   dataCoupon: MyVoucher,
   originPrice: number
 ) => {
+  console.log({ dataCoupon, originPrice });
+
   if (dataCoupon?._id && originPrice) {
     if (dataCoupon?.coupon?.couponType == "Discount") {
       if (dataCoupon?.coupon?.discountType == "fixed") {
-        if (originPrice > dataCoupon?.coupon?.minRequiredOrderAmount) {
+        if (originPrice >= dataCoupon?.coupon?.minRequiredOrderAmount) {
           return dataCoupon?.coupon?.discountAmount;
         }
       } else if (dataCoupon?.coupon?.discountType == "percent") {
-        if (originPrice > dataCoupon?.coupon?.minRequiredOrderAmount) {
+        if (originPrice >= dataCoupon?.coupon?.minRequiredOrderAmount) {
           let discountAmountTemp =
             (originPrice * dataCoupon?.coupon?.discountAmount) / 100;
           if (
@@ -28,7 +30,7 @@ export const calculateDiscountAmount = (
       if (dataCoupon?.coupon?.discountType == "fixed") {
         if (
           !dataCoupon?.coupon?.minRequiredOrderAmount ||
-          originPrice > dataCoupon?.coupon?.minRequiredOrderAmount
+          originPrice >= dataCoupon?.coupon?.minRequiredOrderAmount
         ) {
           return dataCoupon?.coupon?.discountAmount;
         }
@@ -41,7 +43,7 @@ export const calculateDiscountAmount = (
             (originPrice * dataCoupon?.coupon?.discountAmount) / 100;
           if (
             dataCoupon?.coupon?.maxAmountDiscount &&
-            discountAmountTemp > dataCoupon?.coupon?.maxAmountDiscount
+            discountAmountTemp >= dataCoupon?.coupon?.maxAmountDiscount
           ) {
             return dataCoupon?.coupon?.maxAmountDiscount;
           } else {
