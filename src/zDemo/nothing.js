@@ -9,7 +9,7 @@ import {
   Animated,
   Easing,
 } from "react-native";
-import { useToggle } from "../UseHooks/UseHooks";
+import { useToggle } from "../Hooks/UseHooks";
 import { BLACK, WHITE } from "../Constant/Color";
 import { _height, _width } from "../Constant/Scale";
 import { stylesFont } from "../Constant/Font";
