@@ -8,7 +8,8 @@ export enum ConfigDataCode {
   MedicalHistory = "TSBTK",
   PolicyRefund = "POLICY_REFUND",
   CollaborationForm = "COLLABORATION_FORM",
-  PolicyMissionNewUser = "POLICY_MISSION_NEW_USER"
+  PolicyMissionNewUser = "POLICY_MISSION_NEW_USER",
+  PolicyFaceAI = "POLICY_FACE_AI",
 }
 
 export type ConfigDataValue =

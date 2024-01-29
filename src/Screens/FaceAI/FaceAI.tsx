@@ -101,18 +101,18 @@ const FaceAI = () => {
   const [isReady, setIsReady] = React.useState(false);
   const introPopup = useIntro();
 
-  const { top } = useSafeAreaInsets();
+  const { top, bottom } = useSafeAreaInsets();
   const isFocused = useIsFocused();
   const [cameraPermission, requestPermission] = usePermission("camera");
 
   // FIXME: This code is used for testing on emulator
   // __DEV__ &&
-  // useImagePicker((image) => {
-  //   console.log({ image });
-  //   processImage({
-  //     path: image,
+  //   useImagePicker((image) => {
+  //     console.log({ image });
+  //     processImage({
+  //       path: image,
+  //     });
   //   });
-  // });
 
   const volumne = isAndroid ? useVolume() : -1;
 
@@ -531,13 +531,13 @@ const FaceAI = () => {
                   // photoHdr={true}
                   enableDepthData={true}
                   enablePortraitEffectsMatteDelivery={true}
-                  // format={format}
+                // format={format}
                 />
               )}
               <View
                 style={{
                   position: "absolute",
-                  top: _heightScale(8 * 16),
+                  top: top + 8 * 5,
                 }}
               >
                 <Text
@@ -587,7 +587,7 @@ const FaceAI = () => {
                 onPress={_handleTakePhoto}
                 style={{
                   position: "absolute",
-                  bottom: _heightScale(8 * 10),
+                  bottom: bottom + 8 * 2,
                   width: _moderateScale(8 * 10),
                   height: _moderateScale(8 * 10),
                   borderRadius: _moderateScale(8 * 10) / 2,
