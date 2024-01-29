@@ -3,8 +3,14 @@ import createAxios from "../axios";
 
 const axios = createAxios(URL_ORIGINAL);
 
-const getVersion = (): Promise<any> => {
-  return axios.get("/api/version").then(({ data }) => data.data);
+const getVersion = (params: any): Promise<any> => {
+  console.log({ params });
+
+  return axios
+    .get("/api/version", {
+      params,
+    })
+    .then(({ data }) => data.data);
 };
 
 export default {

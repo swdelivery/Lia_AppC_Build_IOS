@@ -6,7 +6,8 @@ import { styleElement } from "@Constant/StyleElement";
 import { useAppState } from "@r0b0t3d/react-native-hooks";
 import { last } from "lodash";
 import React, { useEffect } from "react";
-import { Image, StyleSheet, TouchableOpacity } from "react-native";
+import { Image, Platform, StyleSheet, TouchableOpacity } from "react-native";
+import Config from "react-native-config";
 import useApi from "src/Hooks/services/useApi";
 import { useFocused } from "src/Hooks/useNavigation";
 import useVisible from "src/Hooks/useVisible";
@@ -65,7 +66,10 @@ export function useVersionCheck() {
   const { data, performRequest } = useApi(VersionService.getVersion, []);
 
   useEffect(() => {
-    performRequest({});
+    performRequest({
+      appId: Config.BUNDLE_ID,
+      platform: Platform.OS,
+    });
   }, []);
 
   useAppState((state) => {
