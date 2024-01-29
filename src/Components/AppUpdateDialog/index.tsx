@@ -5,8 +5,14 @@ import { BLACK_OPACITY_8, WHITE } from "@Constant/Color";
 import { styleElement } from "@Constant/StyleElement";
 import { useAppState } from "@r0b0t3d/react-native-hooks";
 import { last } from "lodash";
-import React, { useEffect } from "react";
-import { Image, Platform, StyleSheet, TouchableOpacity } from "react-native";
+import React, { useCallback, useEffect } from "react";
+import {
+  Image,
+  Linking,
+  Platform,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import Config from "react-native-config";
 import useApi from "src/Hooks/services/useApi";
 import { useFocused } from "src/Hooks/useNavigation";
@@ -14,10 +20,26 @@ import useVisible from "src/Hooks/useVisible";
 import VersionService from "src/Services/VersionService";
 import { getAppVersion } from "src/utils/version";
 
-type Props = {};
+const STORE_LINK = Platform.select({
+  ios: `itms-apps://itunes.apple.com/vn/app/id6474897526?mt=8`,
+  android: `https://play.google.com/store/apps/details?id=com.digitech.lia`,
+});
 
 export default function AppUpdateDialog() {
   const dialog = useVersionCheck();
+
+  const handleUpdate = useCallback(() => {
+    const link = STORE_LINK as string;
+    Linking.canOpenURL(link).then(
+      (supported) => {
+        if (supported) {
+          Linking.openURL(link);
+        }
+      },
+      (err) => console.log(err.message)
+    );
+    dialog.hide();
+  }, []);
 
   return (
     <Fade visible={dialog.visible} duration={300} style={styles.container}>
@@ -48,6 +70,7 @@ export default function AppUpdateDialog() {
                 backgroundColor={"#C8C8C8"}
                 paddingVertical={4}
                 paddingHorizontal={8 * 4}
+                onPress={handleUpdate}
               >
                 <Text color={BLACK_OPACITY_8} weight="bold">
                   Đồng ý
@@ -62,32 +85,40 @@ export default function AppUpdateDialog() {
 }
 
 export function useVersionCheck() {
-  const visible = useVisible();
+  const appUpdateDialog = useVisible();
   const { data, performRequest } = useApi(VersionService.getVersion, []);
 
-  useEffect(() => {
+  const getData = useCallback(() => {
     performRequest({
-      appId: Config.BUNDLE_ID,
-      platform: Platform.OS,
+      appId: `"${Config.BUNDLE_ID}"`,
+      platform: `"${Platform.OS}"`,
     });
+  }, []);
+
+  useEffect(() => {
+    getData();
   }, []);
 
   useAppState((state) => {
     if (state === "active") {
-      performRequest({});
+      getData();
     }
   });
 
   useEffect(() => {
-    const latestVersion = last(data);
-    const localVersion = getAppVersion();
-    if (!latestVersion || !localVersion) {
+    if (!data) {
       return;
     }
-    const platformVersion = localVersion["version"];
+    const localVersion = getAppVersion();
+    if (!localVersion) {
+      return;
+    }
+    if (data.build > localVersion.build) {
+      appUpdateDialog.show();
+    }
   }, [data]);
 
-  return visible;
+  return appUpdateDialog;
 }
 
 const styles = StyleSheet.create({

@@ -7,7 +7,7 @@ const getVersion = (params: any): Promise<any> => {
   console.log({ params });
 
   return axios
-    .get("/api/version", {
+    .get("/api/version/latest-version", {
       params,
     })
     .then(({ data }) => data.data);
