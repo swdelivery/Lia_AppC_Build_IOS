@@ -14,7 +14,7 @@ import Text from "@Components/Text";
 import ModalThanks from "@Components/Modal/ModalThanks";
 import useInitialization from "src/Hooks/useInitialization";
 import useNotifications from "src/Hooks/useNotifications";
-import RequireUpdateVersion, { useVersionCheck } from "@Components/RequireUpdateVersion/RequireUpdateVersion";
+import AppUpdateDialog from "@Components/AppUpdateDialog";
 
 const LINKING = {
   prefixes: [`https://${configs.appLinkDomain}`],
@@ -28,7 +28,6 @@ const LINKING = {
 
 const AppWrapper = (props) => {
   const routeNameRef = useRef<string | null>("");
-  const requireUpdate = useVersionCheck();
 
   useInitialization();
   useNotifications();
@@ -59,6 +58,7 @@ const AppWrapper = (props) => {
         onStateChange={handleNavigationStateChange}
       >
         <RootNavigator />
+        <AppUpdateDialog />
       </NavigationContainer>
 
       <ModalRequireLogin />
@@ -66,7 +66,6 @@ const AppWrapper = (props) => {
       <Toast config={toastConfig} position="bottom" bottomOffset={60} />
       <RightNoti />
       <ModalThanks />
-      <RequireUpdateVersion visible={requireUpdate.visible} />
     </>
   );
 };
