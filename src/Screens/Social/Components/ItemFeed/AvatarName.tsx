@@ -1,8 +1,10 @@
 import Avatar from '@Components/Avatar'
 import Column from '@Components/Column'
+import Icon from '@Components/Icon'
 import { IconEarth } from '@Components/Icon/Icon'
 import Row from '@Components/Row'
 import Text from '@Components/Text'
+import { GREY } from '@Constant/Color'
 import { Post } from "@typings/newfeeds"
 import moment from 'moment'
 import React from 'react'
@@ -29,7 +31,12 @@ const AvatarName = ({ data }: Props) => {
         </Text>
         <Row
           gap={4}>
-          <IconEarth />
+          {
+            data?.scope == 'PUBLIC' ?
+              <IconEarth />
+              :
+              <Icon size={16} color={GREY} name='lock-outline' />
+          }
           <Text size={12} >
             {moment(data?.created).fromNow()}
           </Text>

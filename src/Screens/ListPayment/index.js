@@ -32,7 +32,12 @@ const index = memo((props) => {
     const _getListPaymentForPartner = async () => {
         let resultPayment = await getPayment({
             limit: 1000,
-            page: 1
+            page: 1,
+            condition: {
+                paymentFor: {
+                    notEqual: "WHEEL_TURN"
+                }
+            }
         })
         setIsFirstLoaded(true)
         if (resultPayment?.isAxiosError) return

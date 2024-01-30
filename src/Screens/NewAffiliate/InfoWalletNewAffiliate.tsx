@@ -43,7 +43,7 @@ const InfoWalletNewAffiliate = () => {
                 case "WALLET_COMMISSION":
                     return (
                         <Text
-                            numberOfLines={1}
+                            numberOfLines={2}
                             color={BLUE_FB}
                             weight='bold'>
                             {
@@ -69,7 +69,7 @@ const InfoWalletNewAffiliate = () => {
                 case "DEPOSIT":
                     return (
                         <Text
-                            numberOfLines={1}
+                            numberOfLines={2}
                             color={BLUE_FB}
                             weight='bold'>
                             {
@@ -88,7 +88,7 @@ const InfoWalletNewAffiliate = () => {
                 case "WALLET":
                     return (
                         <Text
-                            numberOfLines={1}
+                            numberOfLines={2}
                             color={BLUE_FB}
                             weight='bold'>
                             {
@@ -107,7 +107,7 @@ const InfoWalletNewAffiliate = () => {
                 case "WHEEL_TURN":
                     return (
                         <Text
-                            numberOfLines={1}
+                            numberOfLines={2}
                             color={BLUE_FB}
                             weight='bold'>
                             {
@@ -126,7 +126,7 @@ const InfoWalletNewAffiliate = () => {
                 case "ORDER":
                     return (
                         <Text
-                            numberOfLines={1}
+                            numberOfLines={2}
                             color={BLUE_FB}
                             weight='bold'>
                             {
@@ -136,7 +136,7 @@ const InfoWalletNewAffiliate = () => {
                                     </>
                                     :
                                     <>
-                                        Trừ tiền từ đơn hàng
+                                        Thanh toán từ đơn hàng {item?.detail?.serviceName}
                                     </>
                             }
 
