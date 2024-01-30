@@ -4,6 +4,7 @@ import listservice from "./listservice";
 import listdoctor from "./listdoctor";
 import listbranch from "./listbranch";
 import eyeLabel from "./eyeLabel";
+import listserviceRecommend from "./listserviceRecommend";
 import { reduxStorage } from "@Redux/reduxStorage";
 import { PersistConfig, persistReducer } from "redux-persist";
 
@@ -18,4 +19,5 @@ export default combineReducers({
   listdoctor,
   listbranch,
   eyeLabel,
+  listserviceRecommend
 });

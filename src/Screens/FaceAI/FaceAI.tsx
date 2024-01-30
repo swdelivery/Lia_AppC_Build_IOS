@@ -106,13 +106,13 @@ const FaceAI = () => {
   const [cameraPermission, requestPermission] = usePermission("camera");
 
   // FIXME: This code is used for testing on emulator
-  // __DEV__ &&
-  //   useImagePicker((image) => {
-  //     console.log({ image });
-  //     processImage({
-  //       path: image,
-  //     });
-  //   });
+  __DEV__ &&
+    useImagePicker((image) => {
+      console.log({ image });
+      processImage({
+        path: image,
+      });
+    });
 
   const volumne = isAndroid ? useVolume() : -1;
 

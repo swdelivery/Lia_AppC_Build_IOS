@@ -87,7 +87,7 @@ const ResultAIScanEyes = (props) => {
           <OverViewEyes scanningResult={scanningResult} imageScan={imageScan} />
           <ListDiary />
           <AfterTimeoutFragment>
-            <RecomendService />
+            <RecomendService scanningResult={scanningResult} />
             <RecomendDoctor />
             <RecomendBrach />
           </AfterTimeoutFragment>

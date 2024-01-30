@@ -50,6 +50,7 @@ import { getPartnerDiaryByIdv2 } from "../../Redux/Action/Diary";
 import cloneDeep from "lodash/cloneDeep";
 import * as ActionType from "../../Redux/Constants/ActionType";
 import TextInput from "@Components/TextInput";
+import Screen from "@Components/Screen";
 
 const UpdatePost = (props) => {
   const scrollA = useRef(new Animated.Value(0)).current;
@@ -144,7 +145,7 @@ const UpdatePost = (props) => {
           };
         });
       })
-      .catch((e) => {});
+      .catch((e) => { });
   };
 
   const pickImageAfter = async () => {
@@ -185,7 +186,7 @@ const UpdatePost = (props) => {
           };
         });
       })
-      .catch((e) => {});
+      .catch((e) => { });
   };
 
   const pickImageAnother = async () => {
@@ -221,7 +222,7 @@ const UpdatePost = (props) => {
           return [...old, ...resultUploadImage?.data?.data];
         });
       })
-      .catch((e) => {});
+      .catch((e) => { });
   };
 
   const pickImageDailyDiary = async (dailyDiary) => {
@@ -266,7 +267,7 @@ const UpdatePost = (props) => {
         }
         setCurrPartnerDiary(tempCurrPartnerDiary);
       })
-      .catch((e) => {});
+      .catch((e) => { });
   };
 
   // const _pickDiary = (diary) => {
@@ -561,7 +562,7 @@ const UpdatePost = (props) => {
                 }
               </Text>
 
-              <ScrollView showsHorizontalScrollIndicator={false} horizontal>
+              <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsHorizontalScrollIndicator={false} horizontal>
                 {currPartnerDiary?.imageBeforeTreatment?.map((item, index) => {
                   return (
                     <View
@@ -679,7 +680,7 @@ const UpdatePost = (props) => {
                 }
               </Text>
 
-              <ScrollView showsHorizontalScrollIndicator={false} horizontal>
+              <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsHorizontalScrollIndicator={false} horizontal>
                 {currPartnerDiary?.imageAfterTreatment?.map((item, index) => {
                   return (
                     <View
@@ -792,7 +793,7 @@ const UpdatePost = (props) => {
                 Ảnh Khác
               </Text>
 
-              <ScrollView showsHorizontalScrollIndicator={false} horizontal>
+              <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsHorizontalScrollIndicator={false} horizontal>
                 {listAnotherImage?.map((item, index) => {
                   return (
                     <View
@@ -1135,7 +1136,7 @@ const UpdatePost = (props) => {
   };
 
   return (
-    <View style={styles.container}>
+    <Screen safeTop style={styles.container}>
       <ModalEditDescriptionDailyDiary
         confirmEditDescription={_handleConfirmEditDescription}
         hide={() => {
@@ -1226,14 +1227,14 @@ const UpdatePost = (props) => {
       </View>
 
       <TabView
-        renderTabBar={() => {}}
+        renderTabBar={() => { }}
         swipeEnabled={false}
         navigationState={{ index, routes }}
         renderScene={renderScene}
         onIndexChange={setIndex}
         lazy
       />
-    </View>
+    </Screen>
   );
 };
 
