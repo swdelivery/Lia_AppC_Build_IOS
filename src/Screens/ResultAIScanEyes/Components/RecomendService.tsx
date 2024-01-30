@@ -1,9 +1,9 @@
 import Column from '@Components/Column'
 import Row from '@Components/Row'
 import Text from '@Components/Text'
-import { getServiceByResScanningListState } from '@Redux/resultcanningeyes/selectors'
+import { getServiceByResScanningListState, getServicesRecommendByLabelCodesState } from '@Redux/resultcanningeyes/selectors'
 import ServiceItem from '@Screens/SoYoungService/components/ServiceItem'
-import React, { memo, useCallback, useEffect } from 'react'
+import React, { memo, useCallback, useEffect, useMemo } from 'react'
 import { FlatList, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 import { useDispatch, useSelector } from 'react-redux'
@@ -14,23 +14,33 @@ import { Service } from '@typings/serviceGroup'
 import { RenderItemProps } from '@typings/common'
 import { useNavigate } from 'src/Hooks/useNavigation'
 import ScreenKey from '@Navigation/ScreenKey'
-import { getServicesByResEye } from '@Redux/resultcanningeyes/actions'
+import { getServicesByResEye, getServicesRecommendByLabelCodes } from '@Redux/resultcanningeyes/actions'
 import { AfterTimeoutFragment } from '@Components/AfterTimeoutFragment'
+import { isEmpty } from 'lodash'
 
-const RecomendService = memo(() => {
+type Props = {
+    scanningResult: any;
+}
+
+const RecomendService = memo(({ scanningResult }: Props) => {
     const dispatch = useDispatch()
     const { navigation } = useNavigate()
-    const { dataServices } = useSelector(getServiceByResScanningListState)
+    const { recommendServices, extendedServices } = useSelector(getServicesRecommendByLabelCodesState)
 
     useEffect(() => {
-        requestAnimationFrame(() => {
-            dispatch(
-                getServicesByResEye.request({
-                    codeGroup: { equal: "MAT" },
-                })
-            );
-        })
-    }, [])
+        if (!isEmpty(scanningResult)) {
+            let leftEyeLabelCodes = [scanningResult?.left?.eylid_type, scanningResult?.left?.eye_bag_type]
+            let rightEyeLabelCodes = [scanningResult?.right?.eylid_type, scanningResult?.right?.eye_bag_type]
+            requestAnimationFrame(() => {
+                dispatch(
+                    getServicesRecommendByLabelCodes.request({
+                        leftEyeLabelCodes,
+                        rightEyeLabelCodes
+                    })
+                );
+            })
+        }
+    }, [scanningResult])
 
     const _renderItem = useCallback(({ item }: RenderItemProps<Service>) => {
 
@@ -40,7 +50,9 @@ const RecomendService = memo(() => {
             });
         })
         return (
-            <TouchableOpacity onPress={_handleGoDetailService} >
+            <TouchableOpacity
+                activeOpacity={.7}
+                onPress={_handleGoDetailService} >
                 <Image
                     style={styles.avatarService}
                     avatar={item.avatar} />
@@ -71,7 +83,26 @@ const RecomendService = memo(() => {
                         horizontal
                         keyExtractor={_awesomeChildListKeyExtractor}
                         renderItem={_renderItem}
-                        data={dataServices} />
+                        data={recommendServices} />
+                </Column>
+            </Column>
+            <Column>
+                <Column
+                    margin={8 * 2}>
+                    <Text
+                        color={NEW_BASE_COLOR}
+                        weight='bold'>
+                        DỊCH VỤ MỞ RỘNG
+                    </Text>
+                </Column>
+                <Column>
+                    <FlatList
+                        showsHorizontalScrollIndicator={false}
+                        contentContainerStyle={styles.contentContainerStyle}
+                        horizontal
+                        keyExtractor={_awesomeChildListKeyExtractor}
+                        renderItem={_renderItem}
+                        data={extendedServices} />
                 </Column>
             </Column>
         </AfterTimeoutFragment>

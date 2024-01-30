@@ -78,6 +78,12 @@ const getServicesFilter = (payload: any) => {
     .then(({ data }) => data.data);
 };
 
+const getServicesRecommendByLabelCodes = (payload: any) => {
+  return axios
+    .post(`/eye-service-recommend`, payload)
+    .then(({ data }) => data.data);
+};
+
 const getServiceDetails = (serviceId: string): Promise<Service> =>
   // axios.get(`/service/${serviceId}`).then(({ data }) => (data?.data ?? [])[0]);
   axios.get(`/service/${serviceId}`).then(({ data }) => {
@@ -845,5 +851,7 @@ export default {
 
   // Mission for new user
   getMemberFirstMission,
-  takeAwardMemberFirstMission
+  takeAwardMemberFirstMission,
+
+  getServicesRecommendByLabelCodes
 };
