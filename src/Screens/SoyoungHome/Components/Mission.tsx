@@ -5,7 +5,7 @@ import Column from '@Components/Column'
 import { _moderateScale, _width, _widthScale } from '@Constant/Scale'
 import { GREY_FOR_TITLE, NEW_BASE_COLOR, RED, WHITE } from '@Constant/Color'
 import Row from '@Components/Row'
-import { useNavigate } from 'src/Hooks/useNavigation'
+import { useFocused, useNavigate } from 'src/Hooks/useNavigation'
 import ScreenKey from '@Navigation/ScreenKey'
 import useRequireLoginCallback from 'src/Hooks/useRequireLoginAction'
 import useConfigFile from 'src/Hooks/useConfigFile'
@@ -35,11 +35,11 @@ const Mission = () => {
 
   const data = useConfigFile(ConfigFileCode.BannerMissionNewUser);
 
-  useEffect(() => {
+  useFocused(() => {
     if (!isEmpty(infoUser)) {
       dispatch(getMemberFirstMission.request())
     }
-  }, [infoUser])
+  })
 
   useEffect(() => {
     scaleMainText.value = withRepeat(withSequence(withDelay(5000, withSpring(.5)), withSpring(1)), 20);
