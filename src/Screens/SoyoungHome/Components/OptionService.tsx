@@ -71,7 +71,7 @@ const OptionService = () => {
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
-        scrollEnabled={data.length > 10}
+        scrollEnabled={data?.length > 10}
       >
         {displayItems.map((items, index) => {
           return (
