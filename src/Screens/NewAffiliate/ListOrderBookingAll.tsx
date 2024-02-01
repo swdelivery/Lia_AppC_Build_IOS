@@ -248,7 +248,7 @@ const Tab2 = (props) => {
                       +{" "}
                       {formatMonney(
                         (item?.finalAmount *
-                          item?.partnerLevelPromotion?.commissionRate) /
+                          item?.referralPartnerLevelPromotion?.commissionRate) /
                         100,
                         true
                       )}
