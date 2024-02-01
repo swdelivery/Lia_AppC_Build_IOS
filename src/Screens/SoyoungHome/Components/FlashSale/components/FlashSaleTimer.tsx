@@ -63,12 +63,14 @@ export default function FlashSaleTimer({
       } else {
         timer = endTimestamp - Date.now();
       }
-      setTimer((prev) => {
-        if (timer !== prev) {
-          return timer;
-        }
-        return prev;
-      });
+      if (timer >= 0) {
+        setTimer((prev) => {
+          if (timer !== prev) {
+            return timer;
+          }
+          return prev;
+        });
+      }
     },
     isFocused ? 1000 : -1
   );
@@ -77,7 +79,7 @@ export default function FlashSaleTimer({
     () => {
       onFlashSaleUpdate();
     },
-    timer < 0 ? 1000 : -1
+    timer < 1000 ? 1000 : -1
   );
 
   const { hours, minutes, seconds } = useMemo(() => {
