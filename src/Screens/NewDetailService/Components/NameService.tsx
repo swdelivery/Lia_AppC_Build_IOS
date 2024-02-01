@@ -63,10 +63,11 @@ const NameService = ({ service }: Props) => {
           padding={8}
           justifyContent="space-between"
           overflow="hidden"
+          flex={1}
         >
           <FlashIcon style={styles.flashIcon} width={100} />
-          <Column>
-            <Row gap={8 * 2}>
+          <Column flex={1}>
+            <Row flex={1} justifyContent="space-between" gap={8 * 2}>
               <Text weight="bold" color={"white"}>
                 Flash Sale
               </Text>

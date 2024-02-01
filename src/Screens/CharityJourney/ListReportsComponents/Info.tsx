@@ -6,13 +6,13 @@ import Row from '@Components/Row'
 import { formatMonney } from '@Constant/Utils'
 import { styleElement } from '@Constant/StyleElement'
 import { useSelector } from 'react-redux'
-import { getVolunteerHistoryState } from '@Redux/charity/selectors'
+import { getDetailCampainState, getVolunteerHistoryState } from '@Redux/charity/selectors'
 import moment from 'moment'
 import CardCash from '@Screens/CharityAccountStatement/Components/CardCash'
 
 const Info = () => {
   const { data: dataHistory } = useSelector(getVolunteerHistoryState)
-
+  const { data: { fundCurrent } } = useSelector(getDetailCampainState)
 
   const totalMoneyIn = useMemo(() => {
     let temp = [...dataHistory];
@@ -54,7 +54,7 @@ const Info = () => {
         padding={8 * 2}>
         <Row>
           <Text style={styleElement.flex}>Tổng số tiền ủng hộ</Text>
-          <Text weight='bold'>{formatMonney(totalMoneyIn, true)}</Text>
+          <Text weight='bold'>{formatMonney(fundCurrent, true)}</Text>
         </Row>
         <Row>
           <Text style={styleElement.flex}>Tổng số tiền chi</Text>
@@ -62,7 +62,7 @@ const Info = () => {
         </Row>
         <Row>
           <Text style={styleElement.flex}>Tổng số tiền còn dư</Text>
-          <Text weight='bold'>{formatMonney((totalMoneyIn - totalMoneyOut), true)}</Text>
+          <Text weight='bold'>{formatMonney((fundCurrent - totalMoneyOut), true)}</Text>
         </Row>
       </Column>
       {/* <Column
