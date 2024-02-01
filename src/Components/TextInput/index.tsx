@@ -53,8 +53,8 @@ export function FormTextInput({
           error
             ? ERROR_COLOR
             : props.value
-            ? BORDER_INPUT_TEXT_FOCUSED
-            : BORDER_INPUT_TEXT
+              ? BORDER_INPUT_TEXT_FOCUSED
+              : BORDER_INPUT_TEXT
         }
         borderWidth={1}
         paddingHorizontal={10}
@@ -80,6 +80,7 @@ const styles = StyleSheet.create({
   input: {
     color: BLACK,
     fontFamily: FONT_WEIGHTS.regular,
+    paddingVertical: 0
   },
   input_text: {
     ...stylesFont.fontNolan,
