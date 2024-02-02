@@ -1,9 +1,9 @@
+import CachedImageView from "@Components/CachedImage";
 import Column from "@Components/Column";
 import Fade from "@Components/Fade";
 import IconButton from "@Components/IconButton";
-import Image from "@Components/Image";
 import { BLACK_OPACITY_4 } from "@Constant/Color";
-import { _height, _width } from "@Constant/Scale";
+import { _height, _moderateScale, _width } from "@Constant/Scale";
 import { ConfigFileCode } from "@typings/configFile";
 import { head } from "lodash";
 import React, {
@@ -52,7 +52,11 @@ function AdsPopup({
   return (
     <Fade visible={visible} style={styles.container}>
       <Column padding={0}>
-        <Image auto avatar={head(imageAds.fileArr)} style={styles.image} />
+        <CachedImageView
+          auto
+          avatar={head(imageAds.fileArr)}
+          style={styles.image}
+        />
         <IconButton containerStyle={styles.iconClose} onPress={onClose}>
           <CloseIcon width={34} height={34} />
         </IconButton>
@@ -113,6 +117,7 @@ const styles = StyleSheet.create({
     maxWidth: 500,
     maxHeight: (_height * 2) / 3,
     borderRadius: 25,
+    overflow: "hidden",
   },
   iconClose: {
     position: "absolute",
