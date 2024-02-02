@@ -40,10 +40,11 @@ export default function Services({ booking }: Props) {
   );
 
   const totalAmount = useMemo(() => {
-    return (
+    return Math.max(
       booking.totalAmount -
-      discountLevel -
-      (isRefundCoupon ? 0 : discountAmount)
+        discountLevel -
+        (isRefundCoupon ? 0 : discountAmount),
+      0
     );
   }, [booking, isRefundCoupon, discountAmount, discountLevel]);
 
