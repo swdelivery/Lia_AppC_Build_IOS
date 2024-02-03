@@ -5,10 +5,12 @@ import { BASE_COLOR, GREY, WHITE } from "@Constant/Color";
 import { _moderateScale, _widthScale } from "@Constant/Scale";
 import { styleElement } from "@Constant/StyleElement";
 import { formatMonney } from "@Constant/Utils";
+import { getServicePrice } from "@Constant/service";
 import ScreenKey from "@Navigation/ScreenKey";
 import { clearCoupon, selectCoupon } from "@Redux/booking/actions";
 import { getDataCreateBookingState } from "@Redux/booking/selectors";
 import { MyVoucher } from "@typings/voucher";
+import { sumBy } from "lodash";
 import moment from "moment";
 import React, { useCallback } from "react";
 import { Alert, StyleSheet, TouchableOpacity, View } from "react-native";
@@ -25,11 +27,11 @@ export default function CardVoucher({ data }: Props) {
   const { dataCoupon, dataServices } = useSelector(getDataCreateBookingState);
 
   const _handleSelectCoupon = useCallback(() => {
-    let totalPriceSerive = dataServices?.reduce(
-      (sum, { price }) => sum + price,
-      0
-    );
-
+    // let totalPriceSerive = dataServices?.reduce(
+    //   (sum, { price }) => sum + price,
+    //   0
+    // );
+    let totalPriceSerive = sumBy(dataServices, (service) => getServicePrice(service));
     if (totalPriceSerive == 0) {
       return Alert.alert(`Hãy chọn dịch vụ trước`);
     }
