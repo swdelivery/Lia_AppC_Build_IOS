@@ -86,11 +86,11 @@ const ResultAIScanEyes = (props) => {
           <Spacer top={8 * 2} />
           <OverViewEyes scanningResult={scanningResult} imageScan={imageScan} />
           <ListDiary />
-          <AfterTimeoutFragment>
+          {/* <AfterTimeoutFragment>
             <RecomendService scanningResult={scanningResult} />
             <RecomendDoctor />
             <RecomendBrach />
-          </AfterTimeoutFragment>
+          </AfterTimeoutFragment> */}
           <Spacer top={8 * 20} />
         </ScrollView>
       ) : (
