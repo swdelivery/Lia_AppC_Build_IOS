@@ -2,13 +2,13 @@
   "name": "LiaAppC",
   "displayName": "LiaAppC",
   "android": {
-    "version": "1.0.0",
-    "build": 6,
-    "buildDate": "29/01/2024 20:34"
+    "version": "1.2.0",
+    "build": 17,
+    "buildDate": "02/02/2024 11:01"
   },
   "ios": {
-    "version": "1.1.2",
-    "build": 16,
+    "version": "1.2.0",
+    "build": 17,
     "buildDate": "29/01/2024 20:37"
   }
 }

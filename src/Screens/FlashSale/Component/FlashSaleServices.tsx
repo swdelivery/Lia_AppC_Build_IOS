@@ -32,7 +32,7 @@ export default function FlashSaleServices({ flashSale }: Props) {
     if (flashSale) {
       performRequest(flashSale._id);
     }
-  }, [flashSale]);
+  }, [flashSale?._id]);
 
   const handleBooking = useRequireLoginCallback(
     (item: FSService) => {

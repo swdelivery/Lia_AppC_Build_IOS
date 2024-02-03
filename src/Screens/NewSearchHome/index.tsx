@@ -258,7 +258,7 @@ const NewSearchHome = memo((props) => {
 
   const _saveKeySearch = (key) => {
     setKeySearch(key);
-  };
+  };  
 
   return (
     <Screen style={styles.container} safeTop>

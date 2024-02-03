@@ -39,11 +39,11 @@ const NameService = ({ service }: Props) => {
   const flashSaleStartTime = useMemo(() => {
     return service.nextFlashSale
       ? moment(fromUtc(service.nextFlashSale.dateRange.from)).set({
-          hour: service.nextFlashSale.timeRange.from.hour,
-          minute: service.nextFlashSale.timeRange.from.minute,
-          second: 0,
-          millisecond: 0,
-        })
+        hour: service.nextFlashSale.timeRange.from.hour,
+        minute: service.nextFlashSale.timeRange.from.minute,
+        second: 0,
+        millisecond: 0,
+      })
       : moment();
   }, [service]);
 
@@ -51,7 +51,7 @@ const NameService = ({ service }: Props) => {
     return (
       service.preferentialInCurrentFlashSale &&
       service.preferentialInCurrentFlashSale.limit ===
-        service.preferentialInCurrentFlashSale.usage
+      service.preferentialInCurrentFlashSale.usage
     );
   }, [service]);
 
@@ -63,12 +63,25 @@ const NameService = ({ service }: Props) => {
           padding={8}
           justifyContent="space-between"
           overflow="hidden"
+          flex={1}
         >
           <FlashIcon style={styles.flashIcon} width={100} />
-          <Column>
-            <Text weight="bold" color={"white"}>
-              Flash Sale
-            </Text>
+          <Column flex={1}>
+            <Row flex={1} justifyContent="space-between" gap={8 * 2}>
+              <Text weight="bold" color={"white"}>
+                Flash Sale
+              </Text>
+              {isOutOfStock ? (
+                <Text weight="bold" color={"white"}>
+                  Đã bán hết
+                </Text>
+              ) : (
+                <FlashSaleEnds
+                  flashSale={service.currentFlashSale}
+                  onFlashSaleUpdate={refreshService}
+                />
+              )}
+            </Row>
             <Row alignItems="flex-end" gap={4}>
               <Text weight="bold" color={INFO_COLOR} size={16}>
                 {formatMonney(
@@ -86,16 +99,7 @@ const NameService = ({ service }: Props) => {
               </Text>
             </Row>
           </Column>
-          {isOutOfStock ? (
-            <Text weight="bold" color={"white"}>
-              Đã bán hết
-            </Text>
-          ) : (
-            <FlashSaleEnds
-              flashSale={service.currentFlashSale}
-              onFlashSaleUpdate={refreshService}
-            />
-          )}
+
         </Row>
       ) : (
         <Column gap={8}>

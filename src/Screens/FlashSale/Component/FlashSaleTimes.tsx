@@ -77,6 +77,7 @@ export default function FlashSaleTimes({
 
 const styles = StyleSheet.create({
   contentContainer: {
+    flexGrow: 1,
     paddingHorizontal: 20,
     gap: 30,
     paddingBottom: 8,
