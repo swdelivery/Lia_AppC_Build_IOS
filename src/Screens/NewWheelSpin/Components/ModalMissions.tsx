@@ -162,7 +162,7 @@ const ModalMissions = ({ visibleListMission }: Props) => {
         case "INVITE_1_PARTNER":
           return navigation.navigate(ScreenKey.NEW_AFFILIATE);
         case "REGISTER_COLLABORATOR":
-          return navigation.navigate(ScreenKey.NEW_AFFILIATE);
+          return navigation.navigate(ScreenKey.CURR_COLLAB_REQUEST);
         default:
           return;
       }
