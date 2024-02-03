@@ -37,6 +37,15 @@ const ListMission = () => {
       }
     }, [])
 
+    const _handleDoneMission = useCallback(() => {
+      switch (action) {
+        case "collaborators":
+          return navigate(ScreenKey.CURR_COLLAB_REQUEST)()
+        default:
+          break;
+      }
+    }, [])
+
     switch (data) {
       case "UNFINISHED":
         return (
@@ -76,7 +85,9 @@ const ListMission = () => {
         )
       case "FINISHED":
         return (
-          <Row gap={4}>
+          <Row
+            onPress={_handleDoneMission}
+            gap={4}>
             <Text weight='bold'>
               Đã duyệt
             </Text>
