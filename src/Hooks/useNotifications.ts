@@ -86,7 +86,7 @@ export default function useNotifications() {
         return navigation.navigate(ScreenKey.TAB_CHAT);
       case "ADD_BOOKING":
       case "WAS_CONSULTED_BOOKING":
-        return navigation.navigate(ScreenKey.LIST_BOOKING);
+        return navigation.navigate(ScreenKey.LIST_EXAMINATION_RESULTS);
       case "TAKE_MEDICINES":
         return navigation.navigate(ScreenKey.LIST_MEDICINE);
       case "PERSONAL_HYGIENE":
