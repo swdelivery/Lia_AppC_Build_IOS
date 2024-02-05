@@ -40,7 +40,7 @@ const CardBooking = ({ item, isProcessing }: Props) => {
 
   const appointmentDate = useMemo(() => {
     const aptDate = item.appointmentDateFinal;
-    const from = fromBookingDate(aptDate.from);
+    const from = fromBookingDate(aptDate);
     return `${from.format("HH:mm")} | ${from.format("DD/MM/YYYY")}`;
   }, [item]);
 

@@ -3,7 +3,6 @@
 import React, { useEffect, useCallback, useRef } from 'react';
 import Animated, {
   runOnJS,
-  Keyframe,
   useSharedValue,
   FadeIn,
   FadeOut,

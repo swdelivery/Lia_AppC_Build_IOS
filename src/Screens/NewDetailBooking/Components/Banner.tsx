@@ -27,7 +27,7 @@ const Banner = ({ booking }: Props) => {
       return "";
     }
 
-    const from = fromBookingDate(aptDate.from);
+    const from = fromBookingDate(aptDate);
     return `${from.format("HH:mm")} | ${from.format("DD/MM/YYYY")}`;
   }, [booking]);
 

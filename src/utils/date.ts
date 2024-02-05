@@ -1,4 +1,4 @@
-import { BookingDate } from "@typings/booking";
+import { AppointmentDate, BookingDate } from "@typings/booking";
 import { TemplateData } from "@typings/chat";
 import { FlashSale, FlashSaleTime } from "@typings/flashsale";
 import moment from "moment";
@@ -60,10 +60,10 @@ export function fromFlashSaleDate(flashSale: FlashSale) {
   };
 }
 
-export function fromBookingDate(date: BookingDate) {
-  return moment(fromUtc(date.dateTime))
-    .set("hours", date.hour)
-    .set("minutes", date.minute);
+export function fromBookingDate(date: AppointmentDate) {
+  return moment(date.date)
+    .set("hours", date.from.hour)
+    .set("minutes", date.from.minute);
 }
 
 export function fromTemplateData(data: TemplateData["data"]) {

@@ -12,7 +12,10 @@ import {
   FONT_NOLAN_NEXT,
   FONT_NOLAN_NEXT_ANDROID,
   FONT_NOLAN_NEXT_ANDROID_BOLD,
+  FONT_NOLAN_NEXT_ANDROID_BOLD_ITALIC,
+  FONT_NOLAN_NEXT_ANDROID_ITALIC,
   FONT_NOLAN_NEXT_ANDROID_MEDIUM,
+  FONT_NOLAN_NEXT_ANDROID_MEDIUM_ITALIC,
 } from "@Constant/Font";
 import { BLACK } from "@Constant/Color";
 
@@ -22,6 +25,19 @@ export const FONT_WEIGHTS = {
   regular: isAndroid ? FONT_NOLAN_NEXT_ANDROID : FONT_NOLAN_NEXT,
   bold: isAndroid ? FONT_NOLAN_NEXT_ANDROID_BOLD : FONT_NOLAN_NEXT,
   medium: isAndroid ? FONT_NOLAN_NEXT_ANDROID_MEDIUM : FONT_NOLAN_NEXT,
+};
+
+const ANDROID_FONT_STYLES = {
+  normal: {
+    regular: FONT_NOLAN_NEXT_ANDROID,
+    bold: FONT_NOLAN_NEXT_ANDROID_BOLD,
+    medium: FONT_NOLAN_NEXT_ANDROID_MEDIUM,
+  },
+  italic: {
+    regular: FONT_NOLAN_NEXT_ANDROID_ITALIC,
+    bold: FONT_NOLAN_NEXT_ANDROID_BOLD_ITALIC,
+    medium: FONT_NOLAN_NEXT_ANDROID_MEDIUM_ITALIC,
+  },
 };
 
 export type FontWeight = keyof typeof FONT_WEIGHTS;
@@ -56,7 +72,7 @@ const Text = ({
   right = 0,
   removePadding = false,
   textDecorationLine = "none",
-  fontStyle,
+  fontStyle = "normal",
   textAlign,
   flex,
   ...props
@@ -65,7 +81,9 @@ const Text = ({
   const customStyle: StyleProp<TextStyle> = useMemo(() => {
     const fontSize = size || 14;
     return {
-      fontFamily: FONT_WEIGHTS[weight],
+      fontFamily: isAndroid
+        ? ANDROID_FONT_STYLES[fontStyle][weight]
+        : FONT_WEIGHTS[weight],
       fontWeight: isAndroid
         ? undefined
         : weight === "regular"
@@ -78,7 +96,7 @@ const Text = ({
       marginRight: right || undefined,
       marginBottom: bottom || undefined,
       textDecorationLine,
-      fontStyle,
+      fontStyle: isAndroid ? undefined : fontStyle,
       textAlign,
       flex,
       ...(removePadding

@@ -52,7 +52,10 @@ export default function ParticipantMessage({
   }, [item, nextMessage]);
 
   const user = useMemo(() => {
-    return conversation.assignedUsers.find((u) => u.userId === item.senderId);
+    if (!conversation) {
+      return null;
+    }
+    return conversation?.assignedUsers.find((u) => u.userId === item.senderId);
   }, [conversation]);
 
   const isRootAccount = user?.name === "root root";
