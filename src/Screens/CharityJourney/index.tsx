@@ -30,19 +30,22 @@ const DetailCharityJourney = () => {
 
   return (
     <Screen safeBottom>
-      <StatusBar barStyle='light-content' />
-      <Header title='Chi tiết điểm đến' />
+      <StatusBar barStyle="dark-content" />
+      <Header title="Chi tiết điểm đến" />
       <ScrollView>
         <HorizonListImage images={[data?.avatar]} />
         <Info />
-        {
-          data?.locationInfo && <Column marginHorizontal={8 * 2}>
-            <RenderHTML contentWidth={_width - 8 * 4} data={data?.locationInfo} />
+        {data?.locationInfo && (
+          <Column marginHorizontal={8 * 2}>
+            <RenderHTML
+              contentWidth={_width - 8 * 4}
+              data={data?.locationInfo}
+            />
           </Column>
-        }
+        )}
       </ScrollView>
     </Screen>
-  )
+  );
 }
 
 export default DetailCharityJourney
