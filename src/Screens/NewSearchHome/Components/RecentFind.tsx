@@ -115,7 +115,7 @@ const RecentFind = memo((props) => {
       </Text>
 
       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           onPress={navigate("FACE_AI")}
           style={styles.btnRecommend}
         >
@@ -123,7 +123,7 @@ const RecentFind = memo((props) => {
             <MirrorIcon color={BASE_COLOR} />
           </View>
           <Text style={styles.btnRecommend__text}>Gương thần</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <TouchableOpacity onPress={handleAffiliate} style={styles.btnRecommend}>
           <View style={styles.btnRecommend__box}>
             <IconHandHeart color={BASE_COLOR} width={22} height={22} />

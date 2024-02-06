@@ -1,5 +1,5 @@
-import { StyleSheet, TouchableOpacity, View } from "react-native";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import { StyleSheet, TouchableOpacity } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
 import Screen from "@Components/Screen";
 import { _moderateScale, _widthScale } from "@Constant/Scale";
 import Header from "./components/Header";
@@ -11,22 +11,23 @@ import * as Color from "../../Constant/Color";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigationParams } from "src/Hooks/useNavigation";
 import ScreenKey from "@Navigation/ScreenKey";
-import auth, { FirebaseAuthTypes } from "@react-native-firebase/auth";
-import usePhoneAuth from "src/Hooks/usePhoneAuth";
-import {
-  firebaseResetPassword,
-  forceVerifyAccount,
-  loginInApp,
-  verifyAccount,
-} from "@Redux/Action/AuthAction";
+import { loginInApp } from "@Redux/Action/AuthAction";
 import { navigation } from "../../../rootNavigation";
 import Column from "@Components/Column";
 import PasswordInput from "@Components/PasswordInput";
 import Spacer from "@Components/Spacer";
-import { delay } from "src/utils/common";
-import Toast from "react-native-toast-message";
-import { changePass, requestOTPResetPass, resendOTP, resetStateChangePass, resetVerifyOtpResetPass, verifyOtpResetPass } from "@Redux/otp/actions";
-import { getStateChangePass, getStateResendOTP, getStateVerifyOtpResetPass } from "@Redux/otp/selectors";
+import {
+  changePass,
+  resendOTP,
+  resetStateChangePass,
+  resetVerifyOtpResetPass,
+  verifyOtpResetPass,
+} from "@Redux/otp/actions";
+import {
+  getStateChangePass,
+  getStateResendOTP,
+  getStateVerifyOtpResetPass,
+} from "@Redux/otp/selectors";
 import Row from "@Components/Row";
 import Text from "@Components/Text";
 
@@ -49,18 +50,28 @@ const GetOtpNewPass = (props: any) => {
 
   const [isVerified, setIsVerified] = useState(false);
 
-  const { isLoading, isSuccess, message } = useSelector(getStateVerifyOtpResetPass)
+  const { isLoading, isSuccess, message } = useSelector(
+    getStateVerifyOtpResetPass
+  );
 
-  const { isLoading: loadingChangePass, isSuccess: isSuccessChangePass, message: messageChangePass } = useSelector(getStateChangePass)
+  const {
+    isLoading: loadingChangePass,
+    isSuccess: isSuccessChangePass,
+    message: messageChangePass,
+  } = useSelector(getStateChangePass);
 
-  const { isLoading: loadingResend, message: messageResend, isSuccess: isSuccessResend } = useSelector(getStateResendOTP)
+  const {
+    isLoading: loadingResend,
+    message: messageResend,
+    isSuccess: isSuccessResend,
+  } = useSelector(getStateResendOTP);
 
   useEffect(() => {
     return () => {
-      dispatch(resetVerifyOtpResetPass.request())
-      dispatch(resetStateChangePass.request())
-    }
-  }, [])
+      dispatch(resetVerifyOtpResetPass.request());
+      dispatch(resetStateChangePass.request());
+    };
+  }, []);
 
   const validatePassword = () => {
     if (!password.trim()) {
@@ -110,61 +121,65 @@ const GetOtpNewPass = (props: any) => {
       return;
     }
 
-    dispatch(changePass.request({
-      code: activeCode,
-      password: password,
-      phone: {
-        nationCode: nationCode,
-        phoneNumber: fullPhone,
-      },
-      type: "RESET_PASSWORD"
-    }))
-  };
-
-  const confirmVerificationCode = (code: string) => {
-    if (code.length === 6) {
-      dispatch(verifyOtpResetPass.request({
-        code: code,
+    dispatch(
+      changePass.request({
+        code: activeCode,
+        password: password,
         phone: {
           nationCode: nationCode,
           phoneNumber: fullPhone,
         },
-        type: "RESET_PASSWORD"
-      }))
+        type: "RESET_PASSWORD",
+      })
+    );
+  };
+
+  const confirmVerificationCode = (code: string) => {
+    if (code.length === 6) {
+      dispatch(
+        verifyOtpResetPass.request({
+          code: code,
+          phone: {
+            nationCode: nationCode,
+            phoneNumber: fullPhone,
+          },
+          type: "RESET_PASSWORD",
+        })
+      );
     }
-  }
+  };
 
   const _reSendOTP = async () => {
-    dispatch(resendOTP.request({
-      phone: {
-        nationCode: nationCode.includes("+") ? nationCode : ("+" + nationCode),
-        phoneNumber: fullPhone,
-      },
-      type: "RESET_PASSWORD"
-    }))
-
-  }
+    dispatch(
+      resendOTP.request({
+        phone: {
+          nationCode: nationCode.includes("+") ? nationCode : "+" + nationCode,
+          phoneNumber: fullPhone,
+        },
+        type: "RESET_PASSWORD",
+      })
+    );
+  };
 
   useEffect(() => {
     if (!isLoading && isSuccess === true) {
-      setActiveCode("")
-      setIsWrongOTP(false)
+      setActiveCode("");
+      setIsWrongOTP(false);
       if (resendRef.current) {
         resendRef.current.setCounter(150);
       }
     }
-  }, [isSuccessResend, loadingResend, messageResend])
-
+  }, [isSuccessResend, loadingResend, messageResend]);
 
   useEffect(() => {
     if (!isLoading && isSuccess === false) {
-      setIsWrongOTP(true)
+      setIsWrongOTP(true);
     }
     if (!isLoading && isSuccess === true) {
-      setIsWrongOTP(false)
-      setIsVerified(true)
+      setIsWrongOTP(false);
+      setIsVerified(true);
     }
-  }, [isSuccess, isLoading, message])
+  }, [isSuccess, isLoading, message]);
 
   useEffect(() => {
     if (!isLoading && isSuccess === true) {
@@ -182,7 +197,7 @@ const GetOtpNewPass = (props: any) => {
         )
       );
     }
-  }, [isSuccessChangePass, loadingChangePass, messageChangePass])
+  }, [isSuccessChangePass, loadingChangePass, messageChangePass]);
 
   return isVerified ? (
     <Screen safeTop style={styles.container}>
@@ -242,10 +257,7 @@ const GetOtpNewPass = (props: any) => {
         paddingBottom={_moderateScale(8)}
         alignSelf="center"
       >
-        <Text
-          color={Color.GREY}
-          fontStyle="italic"
-        >
+        <Text color={Color.GREY} fontStyle="italic">
           Copyright © Lia Beauty 2023
         </Text>
       </Row>
@@ -297,8 +309,20 @@ const GetOtpNewPass = (props: any) => {
         />
         <ResendOtp ref={resendRef} onResend={_reSendOTP} />
         <TouchableOpacity onPress={() => confirmVerificationCode(activeCode)}>
-          <Row backgroundColor={Color.BASE_COLOR} padding={_moderateScale(10)} marginVertical={_moderateScale(40)} marginHorizontal={_moderateScale(50)} borderRadius={_moderateScale(8 * 3)}>
-            <Text style={{ textAlign: "center" }} flex={1} color={Color.WHITE} size={_moderateScale(14)} weight="bold">
+          <Row
+            backgroundColor={Color.BASE_COLOR}
+            padding={_moderateScale(10)}
+            marginVertical={_moderateScale(40)}
+            marginHorizontal={_moderateScale(50)}
+            borderRadius={_moderateScale(8 * 3)}
+          >
+            <Text
+              style={{ textAlign: "center" }}
+              flex={1}
+              color={Color.WHITE}
+              size={_moderateScale(14)}
+              weight="bold"
+            >
               Xác thực
             </Text>
           </Row>
@@ -309,10 +333,7 @@ const GetOtpNewPass = (props: any) => {
         paddingBottom={_moderateScale(8)}
         alignSelf="center"
       >
-        <Text
-          color={Color.GREY}
-          fontStyle="italic"
-        >
+        <Text color={Color.GREY} fontStyle="italic">
           Copyright © Lia Beauty 2023
         </Text>
       </Row>

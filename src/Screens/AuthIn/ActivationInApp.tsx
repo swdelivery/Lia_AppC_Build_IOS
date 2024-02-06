@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,26 +9,24 @@ import {
   _moderateScale,
   _widthScale,
 } from "../../Constant/Scale";
-import { loginInApp, forceVerifyAccount } from "../../Redux/Action/AuthAction";
+import { loginInApp } from "../../Redux/Action/AuthAction";
 import { navigation } from "../../../rootNavigation";
 import _ from "lodash";
 import ScreenKey from "../../Navigation/ScreenKey";
 import OTPInputView from "@twotalltotems/react-native-otp-input";
-import auth, { FirebaseAuthTypes } from "@react-native-firebase/auth";
-import { alertCustomNotAction } from "../../Constant/Utils";
-import { verifyAccount } from "../../Redux/Action/AuthAction";
-import usePhoneAuth from "../../Hooks/usePhoneAuth";
 import ResendOtp from "./components/ResendOtp";
 import { delay } from "../../utils/common";
 import { useNavigationParams } from "src/Hooks/useNavigation";
 import Screen from "@Components/Screen";
 import Text from "@Components/Text";
 import Header from "./components/Header";
-import Toast from "react-native-toast-message";
 import Row from "@Components/Row";
 import Column from "@Components/Column";
-import Button from "@Components/Button/Button";
-import { resendOTP, resetVerifyAccount, verifyOtpAccountpartner } from "@Redux/otp/actions";
+import {
+  resendOTP,
+  resetVerifyAccount,
+  verifyOtpAccountpartner,
+} from "@Redux/otp/actions";
 import { getStateVerifyOtpAccountPartner } from "@Redux/otp/selectors";
 
 type ScreenK = typeof ScreenKey.ACTIVATION_IN_APP;
@@ -42,53 +40,60 @@ const ActivationInApp = (props: any) => {
     useNavigationParams<ScreenK>();
   const [isWrongOTP, setIsWrongOTP] = useState(false);
 
-  const { isLoading, isSuccess, message } = useSelector(getStateVerifyOtpAccountPartner)
+  const { isLoading, isSuccess, message } = useSelector(
+    getStateVerifyOtpAccountPartner
+  );
 
   const confirmVerificationCode = (code: string) => {
     if (code.length === 6) {
-      dispatch(verifyOtpAccountpartner.request({
-        code: code,
-        phone: {
-          nationCode: nationCode.includes("+") ? nationCode : ("+" + nationCode),
-          phoneNumber: fullPhone
-        }
-      }))
+      dispatch(
+        verifyOtpAccountpartner.request({
+          code: code,
+          phone: {
+            nationCode: nationCode.includes("+")
+              ? nationCode
+              : "+" + nationCode,
+            phoneNumber: fullPhone,
+          },
+        })
+      );
     }
-  }
+  };
 
   useEffect(() => {
-    dispatch(resetVerifyAccount.request())
+    dispatch(resetVerifyAccount.request());
     if (props?.route?.params?.isLogin === true) {
-      _handleResendOTP()
+      _handleResendOTP();
     }
-  }, [])
+  }, []);
 
   const handleLoginBtn = () => {
     navigation.navigate(ScreenKey.LOGIN_IN_APP, {
       routeName: props?.route?.params?.routeName,
-    })
-  }
+    });
+  };
 
   const _handleResendOTP = async () => {
-    setActiveCode("")
-    setIsWrongOTP(false)
+    setActiveCode("");
+    setIsWrongOTP(false);
     if (resendRef.current) {
       resendRef.current.setCounter(150);
     }
     await delay(3000);
-    dispatch(resendOTP.request({
-      phone: {
-        nationCode: nationCode.includes("+") ? nationCode : ("+" + nationCode),
-        phoneNumber: fullPhone,
-      },
-      type: "VERIFY_ACCOUNT"
-    }))
-
-  }
+    dispatch(
+      resendOTP.request({
+        phone: {
+          nationCode: nationCode.includes("+") ? nationCode : "+" + nationCode,
+          phoneNumber: fullPhone,
+        },
+        type: "VERIFY_ACCOUNT",
+      })
+    );
+  };
 
   useEffect(() => {
     if (!isLoading && isSuccess === false) {
-      setIsWrongOTP(true)
+      setIsWrongOTP(true);
     }
     if (!isLoading && isSuccess === true) {
       dispatch(
@@ -96,7 +101,9 @@ const ActivationInApp = (props: any) => {
           {
             phone: {
               phoneNumber: fullPhone,
-              nationCode: nationCode.includes("+") ? nationCode : ("+" + nationCode),
+              nationCode: nationCode.includes("+")
+                ? nationCode
+                : "+" + nationCode,
             },
             password: password,
             appName: "CS_APP",
@@ -105,7 +112,7 @@ const ActivationInApp = (props: any) => {
         )
       );
     }
-  }, [isSuccess, isLoading, message])
+  }, [isSuccess, isLoading, message]);
 
   return (
     <Screen safeBottom safeTop style={styles.container}>
@@ -136,7 +143,8 @@ const ActivationInApp = (props: any) => {
             marginTop: _moderateScale(8 * 1),
           }}
         >
-          {nationCode}{fullPhone}
+          {nationCode}
+          {fullPhone}
         </Text>
         <OTPInputView
           style={{ width: "80%", height: 100, alignSelf: "center" }}
@@ -154,8 +162,20 @@ const ActivationInApp = (props: any) => {
         <ResendOtp ref={resendRef} onResend={_handleResendOTP} />
 
         <TouchableOpacity onPress={() => confirmVerificationCode(activeCode)}>
-          <Row backgroundColor={Color.BASE_COLOR} padding={_moderateScale(10)} marginVertical={_moderateScale(40)} marginHorizontal={_moderateScale(50)} borderRadius={_moderateScale(8 * 3)}>
-            <Text style={{ textAlign: "center" }} flex={1} color={Color.WHITE} size={_moderateScale(14)} weight="bold">
+          <Row
+            backgroundColor={Color.BASE_COLOR}
+            padding={_moderateScale(10)}
+            marginVertical={_moderateScale(40)}
+            marginHorizontal={_moderateScale(50)}
+            borderRadius={_moderateScale(8 * 3)}
+          >
+            <Text
+              style={{ textAlign: "center" }}
+              flex={1}
+              color={Color.WHITE}
+              size={_moderateScale(14)}
+              weight="bold"
+            >
               Xác thực
             </Text>
           </Row>
@@ -168,9 +188,7 @@ const ActivationInApp = (props: any) => {
         paddingTop={_moderateScale(64)}
         marginBottom={_moderateScale(10)}
       >
-        <TouchableOpacity
-          onPress={handleLoginBtn}
-        >
+        <TouchableOpacity onPress={handleLoginBtn}>
           <Text color={Color.GREY}>
             {"Bạn đã có tài khoản, "}
             <Text weight="bold" size={14} color={Color.BASE_COLOR}>
@@ -184,10 +202,7 @@ const ActivationInApp = (props: any) => {
         paddingBottom={_moderateScale(8)}
         alignSelf="center"
       >
-        <Text
-          color={Color.GREY}
-          fontStyle="italic"
-        >
+        <Text color={Color.GREY} fontStyle="italic">
           Copyright © Lia Beauty 2023
         </Text>
       </Row>

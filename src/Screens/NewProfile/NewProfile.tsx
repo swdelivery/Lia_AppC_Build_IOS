@@ -95,13 +95,13 @@ const NewProfile = () => {
                   name: "Kho Voucher",
                   icon: <IconProfileVoucher />,
                 },
-                {
-                  flag: "magic-mirror",
-                  name: "Gương thần",
-                  icon: <ProfileMirrorIcon />,
-                },
                 ...(Config.ENV !== "prod"
                   ? [
+                      {
+                        flag: "magic-mirror",
+                        name: "Gương thần",
+                        icon: <ProfileMirrorIcon />,
+                      },
                       {
                         flag: "skin-mirror",
                         name: "SaYoi",
