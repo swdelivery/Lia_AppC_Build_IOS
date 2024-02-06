@@ -1,8 +1,6 @@
 import React, {
-  useRef,
   useEffect,
   useState,
-  memo,
   forwardRef,
   useImperativeHandle,
 } from "react";
@@ -10,13 +8,9 @@ import {
   View,
   ScrollView,
   Image,
-  Animated,
   Text,
   StyleSheet,
   TouchableOpacity,
-  TextInput,
-  Platform,
-  Button,
 } from "react-native";
 
 import { _moderateScale, _width, _widthScale } from "../../Constant/Scale";
@@ -24,38 +18,20 @@ import {
   WHITE,
   RED,
   GREY,
-  BG_GREY_OPACITY_2,
-  BASE_COLOR,
   BLACK_OPACITY_8,
   BG_GREY_OPACITY_5,
-  BG_GREY_OPACITY_3,
   GREEN_SUCCESS,
-  BLUE_FB,
-  BLUE,
-  THIRD_COLOR,
   SECOND_COLOR,
 } from "../../Constant/Color";
-import { randomStringFixLengthCode, formatMonney } from "../../Constant/Utils";
-import { styleElement } from "../../Constant/StyleElement";
-import { sizeIcon, sizeLogo } from "../../Constant/Icon";
+import { formatMonney } from "../../Constant/Utils";
 import { stylesFont } from "../../Constant/Font";
 
-import ScreenKey from "../../Navigation/ScreenKey";
-import { useSelector } from "react-redux";
-import store from "../../Redux/store";
-import * as ActionType from "../../Redux/Constants/ActionType";
-import StatusBarCustom from "../../Components/StatusBar/StatusBarCustom";
 import { URL_ORIGINAL } from "../../Constant/Url";
-import { TabBar, TabView } from "react-native-tab-view";
-import { navigation } from "../../../rootNavigation";
 import moment from "moment";
-import { getStatusBarHeight } from "react-native-iphone-x-helper";
-import { getTreatmentDetailForPartner } from "../../Redux/Action/TreatmentAction";
 import LinearGradient from "react-native-linear-gradient";
 import {
   getDepositRequest,
   getBookingDeposit,
-  getPayment,
   getOrderPayment,
   getOrderById,
 } from "../../Redux/Action/InfoAction";
@@ -65,7 +41,6 @@ const Tab3 = forwardRef((props, ref) => {
   const [listPaymentRequest, setListPaymentRequest] = useState([]);
   const [listBookingDeposit, setListBookingDeposit] = useState([]);
   const [listPayment, setListPayment] = useState([]);
-
   const [showImageViewing, setShowImageViewing] = useState(false);
   const [listImagesSeeCurr, setListImagesSeeCurr] = useState([]);
   const [indexCurrImageView, setIndexCurrImageView] = useState(0);

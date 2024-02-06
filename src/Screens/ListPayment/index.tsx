@@ -24,15 +24,16 @@ const ListPayment = memo((props) => {
   }, []);
 
   const _getListPaymentForPartner = async () => {
+    const condition = {
+      paymentFor: {
+        notIn: ["WHEEL_TURN", "WALLET"],
+      },
+      isRefund: { equal: false },
+    };
     let resultPayment = await getPayment({
       limit: 1000,
       page: 1,
-      condition: {
-        paymentFor: {
-          notIn: ["WHEEL_TURN", "WALLET"],
-        },
-        isRefund: { equal: false },
-      },
+      condition,
     });
     setIsFirstLoaded(true);
     if (resultPayment?.isAxiosError) return;

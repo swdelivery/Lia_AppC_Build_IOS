@@ -4,15 +4,12 @@ import { URL_FOR_PARTNER } from "../../Constant/Url";
 import * as ActionType from "../Constants/ActionType";
 import { setLogStyle, useLogStyle } from "./LogConfig";
 import { Alert } from "react-native";
+import { encodeParams } from "src/Services/utils";
 // import qs from "qs";
 
-// Axios.defaults.paramsSerializer = function (params) {
-//   const serialized = qs.stringify(params, {
-//     encode: false,
-//   });
-//   console.log("hehehe", { params, serialized });
-//   return serialized;
-// };
+Axios.defaults.paramsSerializer = function (params) {
+  return encodeParams(params);
+};
 
 export const getPartnerLevel = () => {
   return Axios.get(`${URL_FOR_PARTNER}/partner-level`, {})
@@ -336,9 +333,9 @@ export const getPayment = (params = null) => {
       page: 1,
     };
   }
-  return Axios.get(`${URL_FOR_PARTNER}/payment`, {
-    params: params,
-  })
+  // const query = encodeParams(params);
+
+  return Axios.get(`${URL_FOR_PARTNER}/payment`, { params })
     .then((res) => {
       console.log(
         useLogStyle + "----FETCHING SUCCESS: ",
