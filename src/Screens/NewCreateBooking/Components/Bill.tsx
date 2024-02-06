@@ -64,9 +64,6 @@ const Bill = () => {
     return calculateDiscountAmount(dataCoupon, originPrice);
   }, [dataCoupon, originPrice]);
 
-  console.log({ discountAmount });
-
-
   const totalAmound = useMemo(() => {
     return originPrice - discountLevel - (isRefundCoupon ? 0 : discountAmount);
   }, [originPrice, discountAmount, discountLevel, dataCoupon]);

@@ -30,6 +30,7 @@ import FlashSale from "@Screens/SoYoungService/components/FlashSale";
 import { FlashIcon } from "src/SGV";
 import { formatTime, fromFlashSaleDate } from "src/utils/date";
 import { Service } from "@typings/serviceGroup";
+import { head } from "lodash";
 
 const ITEM_SERVICE_WIDTH = 8 * 22;
 
@@ -136,7 +137,7 @@ const ItemService = ({ data }: { data: Service }) => {
       <Column>
         <Image
           style={styles.image}
-          avatar={data.avatar ?? data.representationFileArr[0]}
+          avatar={data.avatar ?? head(data.representationFileArr)}
         />
         {isFlashSaleStarted && <FlashSale item={data} />}
       </Column>

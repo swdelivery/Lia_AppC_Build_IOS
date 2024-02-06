@@ -32,7 +32,7 @@ const Header = ({ onSearch }: { onSearch: (text: string) => void }) => {
         flag: true,
         data: [
           { name: "Đặt lịch hẹn", type: "booking" },
-          { name: "Gương thần", type: "faceAI" },
+          // { name: "Gương thần", type: "faceAI" },
         ],
       })
     );

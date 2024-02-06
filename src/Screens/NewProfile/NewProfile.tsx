@@ -95,23 +95,22 @@ const NewProfile = () => {
                   name: "Kho Voucher",
                   icon: <IconProfileVoucher />,
                 },
-                ...(Config.ENV !== "prod"
-                  ? [
-                      {
-                        flag: "magic-mirror",
-                        name: "Gương thần",
-                        icon: <ProfileMirrorIcon />,
-                      },
-                      {
-                        flag: "skin-mirror",
-                        name: "SaYoi",
-                        icon: <ProfileMirrorIcon />,
-                      },
-                    ]
-                  : []),
+                // ...(Config.ENV !== "prod"
+                //   ? [
+                //       {
+                //         flag: "magic-mirror",
+                //         name: "Gương thần",
+                //         icon: <ProfileMirrorIcon />,
+                //       },
+                //       {
+                //         flag: "skin-mirror",
+                //         name: "SaYoi",
+                //         icon: <ProfileMirrorIcon />,
+                //       },
+                //     ]
+                //   : []),
                 // { name: "LPay Later", icon: <IconProfilePayLater /> },
                 // { name: "Bảo hiểm", icon: <IconProfileInsurance /> },
-                ,
               ]}
             />
             <Menu
