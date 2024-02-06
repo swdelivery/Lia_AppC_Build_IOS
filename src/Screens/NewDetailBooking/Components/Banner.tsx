@@ -7,6 +7,7 @@ import { _width } from "@Constant/Scale";
 import { styleElement } from "@Constant/StyleElement";
 import { Booking } from "@typings/booking";
 import { head } from "lodash";
+import moment from "moment";
 import React, { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import { ClockIcon, ServiceIcon } from "src/SGV";
@@ -27,7 +28,7 @@ const Banner = ({ booking }: Props) => {
       return "";
     }
 
-    const from = fromBookingDate(aptDate.from);
+    const from = moment(aptDate.from.dateTime);
     return `${from.format("HH:mm")} | ${from.format("DD/MM/YYYY")}`;
   }, [booking]);
 

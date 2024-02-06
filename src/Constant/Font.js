@@ -12,8 +12,13 @@ export const FONT_MOHAVE_ITALIC = "Mohave-Italic"
 
 // FONT ANDROID
 export const FONT_NOLAN_NEXT_ANDROID = "Kastelov-NolanNext-Regular"
-export const FONT_NOLAN_NEXT_ANDROID_MEDIUM = 'Kastelov - NolanNext-Medium'
-export const FONT_NOLAN_NEXT_ANDROID_BOLD = 'Kastelov-Nolan-Next-Bold'
+export const FONT_NOLAN_NEXT_ANDROID_ITALIC = "Kastelov-Nolan-Next-Italic";
+export const FONT_NOLAN_NEXT_ANDROID_MEDIUM = "Kastelov - NolanNext-Medium";
+export const FONT_NOLAN_NEXT_ANDROID_MEDIUM_ITALIC =
+  "Kastelov - NolanNext-MediumItalic";
+export const FONT_NOLAN_NEXT_ANDROID_BOLD = "Kastelov-Nolan-Next-Bold";
+export const FONT_NOLAN_NEXT_ANDROID_BOLD_ITALIC =
+  "Kastelov-Nolan-Next-Bold-Italic";
 export const FONT_DINTEXT_PRO_ANDROID = "SVN-PF Din Text Pro Regular"
 export const FONT_DINTEXT_PRO_ANDROID_BOLD = "SVN-PF Din Text Pro Bold"
 export const FONT_FESTER_ANDROID = "Fester Book"

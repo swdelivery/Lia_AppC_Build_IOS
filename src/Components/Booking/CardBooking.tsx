@@ -21,9 +21,9 @@ import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "src/Hooks/useNavigation";
 import { OptionDotsIcon } from "src/SGV";
-import { fromBookingDate, fromUtc } from "src/utils/date";
 import StatusBooking from "./StatusBooking";
 import { LoadingView } from "@Components/Loading/LoadingView";
+import moment from "moment";
 
 type Props = {
   item: Booking;
@@ -40,7 +40,7 @@ const CardBooking = ({ item, isProcessing }: Props) => {
 
   const appointmentDate = useMemo(() => {
     const aptDate = item.appointmentDateFinal;
-    const from = fromBookingDate(aptDate.from);
+    const from = moment(aptDate.from.dateTime);
     return `${from.format("HH:mm")} | ${from.format("DD/MM/YYYY")}`;
   }, [item]);
 
@@ -97,7 +97,9 @@ const CardBooking = ({ item, isProcessing }: Props) => {
         </Row>
         <Row gap={8}>
           <IconLocation width={8 * 2} height={8 * 2} />
-          <Text style={styleElement.flex}>{item?.branch?.addressDetails?.fullAddress}</Text>
+          <Text style={styleElement.flex}>
+            {item?.branch?.addressDetails?.fullAddress}
+          </Text>
         </Row>
       </Column>
       {isProcessing && <LoadingView style={styles.overlay} />}
