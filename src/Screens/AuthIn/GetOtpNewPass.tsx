@@ -134,11 +134,11 @@ const GetOtpNewPass = (props: any) => {
     );
   };
 
-  const confirmVerificationCode = (code: string) => {
-    if (code.length === 6) {
+  const confirmVerificationCode = () => {
+    if (activeCode.length === 6) {
       dispatch(
         verifyOtpResetPass.request({
-          code: code,
+          code: activeCode,
           phone: {
             nationCode: nationCode,
             phoneNumber: fullPhone,
@@ -303,12 +303,11 @@ const GetOtpNewPass = (props: any) => {
               ? styles.underlineStyleBaseError
               : styles.underlineStyleBase
           }
-          onCodeFilled={confirmVerificationCode}
           onCodeChanged={setActiveCode}
           autoFocusOnLoad={false}
         />
         <ResendOtp ref={resendRef} onResend={_reSendOTP} />
-        <TouchableOpacity onPress={() => confirmVerificationCode(activeCode)}>
+        <TouchableOpacity onPress={confirmVerificationCode}>
           <Row
             backgroundColor={Color.BASE_COLOR}
             padding={_moderateScale(10)}

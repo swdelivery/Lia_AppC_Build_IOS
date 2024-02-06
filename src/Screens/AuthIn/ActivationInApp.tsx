@@ -44,11 +44,11 @@ const ActivationInApp = (props: any) => {
     getStateVerifyOtpAccountPartner
   );
 
-  const confirmVerificationCode = (code: string) => {
-    if (code.length === 6) {
+  const confirmVerificationCode = () => {
+    if (activeCode.length === 6) {
       dispatch(
         verifyOtpAccountpartner.request({
-          code: code,
+          code: activeCode,
           phone: {
             nationCode: nationCode.includes("+")
               ? nationCode
@@ -155,13 +155,12 @@ const ActivationInApp = (props: any) => {
               ? styles.underlineStyleBaseError
               : styles.underlineStyleBase
           }
-          onCodeFilled={confirmVerificationCode}
           onCodeChanged={setActiveCode}
           autoFocusOnLoad={false}
         />
         <ResendOtp ref={resendRef} onResend={_handleResendOTP} />
 
-        <TouchableOpacity onPress={() => confirmVerificationCode(activeCode)}>
+        <TouchableOpacity onPress={confirmVerificationCode}>
           <Row
             backgroundColor={Color.BASE_COLOR}
             padding={_moderateScale(10)}
