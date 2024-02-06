@@ -4,8 +4,6 @@ export const calculateDiscountAmount = (
   dataCoupon: MyVoucher,
   originPrice: number
 ) => {
-  console.log({ dataCoupon, originPrice });
-
   if (dataCoupon?._id && originPrice) {
     if (dataCoupon?.coupon?.couponType == "Discount") {
       if (dataCoupon?.coupon?.discountType == "fixed") {
