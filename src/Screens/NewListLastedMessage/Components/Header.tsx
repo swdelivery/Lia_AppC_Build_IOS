@@ -17,6 +17,8 @@ import { FocusAwareStatusBar } from "@Components/StatusBar";
 import SVGFindGrey from "src/SGV/findGrey.svg";
 import TextInput from "@Components/TextInput";
 import useDebounceCallback from "src/Hooks/useDebounceCallback";
+import { isAndroid } from "src/utils/platform";
+import Config from "react-native-config";
 
 const Header = ({ onSearch }: { onSearch: (text: string) => void }) => {
   const dispatch = useDispatch();
@@ -32,7 +34,9 @@ const Header = ({ onSearch }: { onSearch: (text: string) => void }) => {
         flag: true,
         data: [
           { name: "Đặt lịch hẹn", type: "booking" },
-          // { name: "Gương thần", type: "faceAI" },
+          ...(Config.ENV !== "prod" || isAndroid
+            ? [{ name: "Gương thần", type: "faceAI" }]
+            : []),
         ],
       })
     );

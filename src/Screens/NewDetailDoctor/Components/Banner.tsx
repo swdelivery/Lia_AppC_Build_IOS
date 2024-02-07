@@ -52,7 +52,12 @@ const Banner = ({ doctor }: Props) => {
       />
 
       <View style={styles.avatarContainer}>
-        <Avatar size={72} circle avatar={doctor.avatar} style={styles.avatar} />
+        <Avatar
+          size={72}
+          circle
+          avatar={doctor?.avatar}
+          style={styles.avatar}
+        />
       </View>
 
       <Spacer top={50} />

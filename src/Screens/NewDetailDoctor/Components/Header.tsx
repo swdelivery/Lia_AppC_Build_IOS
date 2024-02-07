@@ -66,7 +66,7 @@ export default function Header({ scrollY, doctor }: Props) {
           />
         </TouchableOpacity>
         <Animated.View style={[styles.content, animSizeImg]}>
-          <Avatar size={32} circle avatar={doctor.avatar} />
+          <Avatar size={32} circle avatar={doctor?.avatar} />
           <View>
             <Text size={12} weight="bold">
               {doctor?.name}

@@ -27,6 +27,8 @@ import { useNavigate } from "src/Hooks/useNavigation";
 import Text from "@Components/Text";
 import SVGTrash from "src/SGV/trash.svg";
 import { BASE_COLOR } from "@Constant/Color";
+import Config from "react-native-config";
+import { isAndroid } from "src/utils/platform";
 
 const RecentFind = memo((props) => {
   const { navigation, navigate } = useNavigate();
@@ -115,15 +117,17 @@ const RecentFind = memo((props) => {
       </Text>
 
       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-        {/* <TouchableOpacity
-          onPress={navigate("FACE_AI")}
-          style={styles.btnRecommend}
-        >
-          <View style={styles.btnRecommend__box}>
-            <MirrorIcon color={BASE_COLOR} />
-          </View>
-          <Text style={styles.btnRecommend__text}>Gương thần</Text>
-        </TouchableOpacity> */}
+        {(Config.ENV !== "prod" || isAndroid) && (
+          <TouchableOpacity
+            onPress={navigate("FACE_AI")}
+            style={styles.btnRecommend}
+          >
+            <View style={styles.btnRecommend__box}>
+              <MirrorIcon color={BASE_COLOR} />
+            </View>
+            <Text style={styles.btnRecommend__text}>Gương thần</Text>
+          </TouchableOpacity>
+        )}
         <TouchableOpacity onPress={handleAffiliate} style={styles.btnRecommend}>
           <View style={styles.btnRecommend__box}>
             <IconHandHeart color={BASE_COLOR} width={22} height={22} />
