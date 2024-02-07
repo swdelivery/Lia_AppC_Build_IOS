@@ -4,4 +4,9 @@ workflows:
     max_build_duration: 120
     instance_type: mac_mini_m1
     working_directory: ./
+    scripts:
+      - name: Run build script
+        script: |
+          #!/bin/sh
+          npx rnbuilder build --target ios --branch staging --env staging --branch staging --distribute firebase --testersIos liatesters --firebase true
     
