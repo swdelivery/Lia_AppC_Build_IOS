@@ -4,6 +4,9 @@ workflows:
     max_build_duration: 120
     instance_type: mac_mini_m1
     working_directory: ./
+    environment:
+      groups:
+        - fastlane_credentials
     scripts:
       - name: Run build script
         script: |
