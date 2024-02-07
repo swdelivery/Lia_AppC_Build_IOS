@@ -24,6 +24,8 @@ import useConfirmation from "src/Hooks/useConfirmation";
 import { useDispatch } from "react-redux";
 import { saveResult } from "@Redux/resultcanningeyes/actions";
 import Icon from "@Components/Icon";
+import Config from "react-native-config";
+import { isAndroid } from "src/utils/platform";
 
 const ResultAIScanEyes = (props) => {
   const { navigation } = useNavigate();
@@ -86,11 +88,13 @@ const ResultAIScanEyes = (props) => {
           <Spacer top={8 * 2} />
           <OverViewEyes scanningResult={scanningResult} imageScan={imageScan} />
           <ListDiary />
-          {/* <AfterTimeoutFragment>
-            <RecomendService scanningResult={scanningResult} />
-            <RecomendDoctor />
-            <RecomendBrach />
-          </AfterTimeoutFragment> */}
+          {(Config.ENV !== "prod" || isAndroid) && (
+            <AfterTimeoutFragment>
+              <RecomendService scanningResult={scanningResult} />
+              <RecomendDoctor />
+              <RecomendBrach />
+            </AfterTimeoutFragment>
+          )}
           <Spacer top={8 * 20} />
         </ScrollView>
       ) : (
