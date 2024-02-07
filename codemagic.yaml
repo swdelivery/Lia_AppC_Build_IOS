@@ -8,5 +8,5 @@ workflows:
       - name: Run build script
         script: |
           #!/bin/sh
-          npx rnbuilder build --target ios --branch staging --env staging --branch staging --distribute firebase --testersIos liatesters --firebase true
+          npm_config_yes=true npx rnbuilder@latest build --target ios --branch staging --env staging --branch staging --distribute firebase --testersIos liatesters --firebase true
     
