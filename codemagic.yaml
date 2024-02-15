@@ -52,5 +52,5 @@ workflows:
       - name: Run build script
         script: |
           #!/bin/sh
-          npm_config_yes=true npx rnbuilder@latest build --target ios --branch main --env staging --branch staging --distribute store --version minor
+          npm_config_yes=true npx rnbuilder@latest build --target ios --branch main --env staging --branch staging --distribute store --version minor --firebase false
     
