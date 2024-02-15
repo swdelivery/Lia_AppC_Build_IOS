@@ -1,6 +1,6 @@
 workflows:
-  ios-workflow:
-    name: LiA iOS
+  ios-dev-workflow:
+    name: LiA iOS Dev Firebase
     max_build_duration: 120
     instance_type: mac_mini_m1
     working_directory: ./
@@ -11,5 +11,46 @@ workflows:
       - name: Run build script
         script: |
           #!/bin/sh
-          npm_config_yes=true npx rnbuilder@latest build --target ios --branch staging --env staging --branch staging --distribute firebase --testersIos liatesters --firebase true
+          npm_config_yes=true npx rnbuilder@latest build --target ios --branch staging --env staging --branch dev --distribute firebase --groupsIos liatesters --firebase true
+  ios-staging-workflow:
+    name: LiA iOS Staging Firebase
+    max_build_duration: 120
+    instance_type: mac_mini_m1
+    working_directory: ./
+    environment:
+      groups:
+        - fastlane_credentials
+    scripts:
+      - name: Run build script
+        script: |
+          #!/bin/sh
+          npm_config_yes=true npx rnbuilder@latest build --target ios --branch staging --env staging --branch staging --distribute firebase --groupsIos liatesters --firebase true
+  ios-prod-workflow:
+    name: LiA iOS Prod Firebase
+    max_build_duration: 120
+    instance_type: mac_mini_m1
+    working_directory: ./
+    environment:
+      groups:
+        - fastlane_credentials
+        - app_store_connect_credentials
+    scripts:
+      - name: Run build script
+        script: |
+          #!/bin/sh
+          npm_config_yes=true npx rnbuilder@latest build --target ios --branch main --env staging --branch staging --distribute firebase --firebase true
+  ios-prod-store-workflow:
+    name: LiA iOS Prod Store
+    max_build_duration: 120
+    instance_type: mac_mini_m1
+    working_directory: ./
+    environment:
+      groups:
+        - fastlane_credentials
+        - app_store_connect_credentials
+    scripts:
+      - name: Run build script
+        script: |
+          #!/bin/sh
+          npm_config_yes=true npx rnbuilder@latest build --target ios --branch main --env staging --branch staging --distribute store --version minor
     
