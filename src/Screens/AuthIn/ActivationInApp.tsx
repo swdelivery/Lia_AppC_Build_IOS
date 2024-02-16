@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { Alert, StyleSheet, TouchableOpacity } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { useDispatch, useSelector } from "react-redux";
 import * as Color from "../../Constant/Color";
@@ -57,6 +57,8 @@ const ActivationInApp = (props: any) => {
           },
         })
       );
+    } else {
+      Alert.alert("Vui lòng nhập đầy đủ mã OTP")
     }
   };
 
@@ -77,7 +79,7 @@ const ActivationInApp = (props: any) => {
     setActiveCode("");
     setIsWrongOTP(false);
     if (resendRef.current) {
-      resendRef.current.setCounter(150);
+      resendRef.current.setCounter(180);
     }
     await delay(3000);
     dispatch(

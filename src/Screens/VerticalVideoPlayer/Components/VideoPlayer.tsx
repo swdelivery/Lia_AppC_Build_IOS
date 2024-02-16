@@ -30,12 +30,12 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import { URL_ORIGINAL } from "@Constant/Url";
-import LottieView from "lottie-react-native";
+// import LottieView from "lottie-react-native";
 import { PanGestureHandler } from "react-native-gesture-handler";
 import { styleElement } from "@Constant/StyleElement";
 import LoadingIndicator from "@Components/LoadingIndicator/LoadingIndicator";
 
-const AnimatedLottieView = Animated.createAnimatedComponent(LottieView);
+// const AnimatedLottieView = Animated.createAnimatedComponent(LottieView);
 
 const WIDTH_PROCESS_BAR = _width - _widthScale(8 * 2);
 
@@ -413,7 +413,7 @@ const HeartedAnimation = memo((props) => {
 
   return (
     <>
-      {props?.startHeartedAnimation == "doing" ? (
+      {/* {props?.startHeartedAnimation == "doing" ? (
         <AnimatedLottieView
           style={[
             { width: 300, height: 300 },
@@ -425,7 +425,7 @@ const HeartedAnimation = memo((props) => {
         />
       ) : (
         <></>
-      )}
+      )} */}
     </>
   );
 });
