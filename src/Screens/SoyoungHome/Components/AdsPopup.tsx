@@ -88,8 +88,8 @@ export default function AdsContextProvider({
 
     if (
       lastShowAdsPopup &&
-      new Date().getTime() - new Date(lastShowAdsPopup).getTime() > 1
-      // 5 * 60 * 1000 // 5 minutes
+      new Date().getTime() - new Date(lastShowAdsPopup).getTime() >
+        5 * 60 * 1000 // 5 minutes
     ) {
       setVisible(true);
       return;
