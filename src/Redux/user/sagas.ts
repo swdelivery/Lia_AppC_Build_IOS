@@ -29,6 +29,7 @@ import SocketInstance from "SocketInstance";
 import { selectState } from "@Redux/helper";
 import { getMyBookingState } from "./selectors";
 import notifee from "@notifee/react-native";
+import Toast from "react-native-toast-message";
 
 function* getMyCoupons({ payload }: BaseAction<any>) {
   try {
@@ -182,6 +183,10 @@ function* logOut() {
     navigation.navigate(ScreenKey.HOME);
 
     notifee.cancelAllNotifications();
+    Toast.show({
+      text1: "Đăng xuất thành công",
+      type: "success",
+    });
   } catch (error: any) {
     //
   }
