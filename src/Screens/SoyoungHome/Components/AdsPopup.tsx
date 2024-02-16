@@ -45,21 +45,27 @@ function AdsPopup({
 }) {
   const imageAds = useConfigFile(ConfigFileCode.ImageAds);
 
+  const handleAdsPress = useCallback(() => {
+    //
+  }, []);
+
   if (!imageAds) {
     return null;
   }
 
   return (
-    <Fade visible={visible} style={styles.container}>
-      <Column padding={0}>
-        <CachedImageView
-          auto
-          avatar={head(imageAds.fileArr)}
-          style={styles.image}
-        />
-        <IconButton containerStyle={styles.iconClose} onPress={onClose}>
-          <CloseIcon width={34} height={34} />
-        </IconButton>
+    <Fade visible={visible} style={StyleSheet.absoluteFill}>
+      <Column style={styles.container} onPress={onClose}>
+        <Column padding={0} onPress={handleAdsPress}>
+          <CachedImageView
+            auto
+            avatar={head(imageAds.fileArr)}
+            style={styles.image}
+          />
+          <IconButton containerStyle={styles.iconClose} onPress={onClose}>
+            <CloseIcon width={34} height={34} />
+          </IconButton>
+        </Column>
       </Column>
     </Fade>
   );
@@ -82,8 +88,8 @@ export default function AdsContextProvider({
 
     if (
       lastShowAdsPopup &&
-      new Date().getTime() - new Date(lastShowAdsPopup).getTime() >
-        5 * 60 * 1000 // 5 minutes
+      new Date().getTime() - new Date(lastShowAdsPopup).getTime() > 1
+      // 5 * 60 * 1000 // 5 minutes
     ) {
       setVisible(true);
       return;
