@@ -45,21 +45,27 @@ function AdsPopup({
 }) {
   const imageAds = useConfigFile(ConfigFileCode.ImageAds);
 
+  const handleAdsPress = useCallback(() => {
+    //
+  }, []);
+
   if (!imageAds) {
     return null;
   }
 
   return (
-    <Fade visible={visible} style={styles.container}>
-      <Column padding={0}>
-        <CachedImageView
-          auto
-          avatar={head(imageAds.fileArr)}
-          style={styles.image}
-        />
-        <IconButton containerStyle={styles.iconClose} onPress={onClose}>
-          <CloseIcon width={34} height={34} />
-        </IconButton>
+    <Fade visible={visible} style={StyleSheet.absoluteFill}>
+      <Column style={styles.container} onPress={onClose}>
+        <Column padding={0} onPress={handleAdsPress}>
+          <CachedImageView
+            auto
+            avatar={head(imageAds.fileArr)}
+            style={styles.image}
+          />
+          <IconButton containerStyle={styles.iconClose} onPress={onClose}>
+            <CloseIcon width={34} height={34} />
+          </IconButton>
+        </Column>
       </Column>
     </Fade>
   );
