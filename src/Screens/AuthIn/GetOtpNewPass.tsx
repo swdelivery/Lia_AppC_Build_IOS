@@ -1,4 +1,4 @@
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { Alert, StyleSheet, TouchableOpacity } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
 import Screen from "@Components/Screen";
 import { _moderateScale, _widthScale } from "@Constant/Scale";
@@ -146,6 +146,8 @@ const GetOtpNewPass = (props: any) => {
           type: "RESET_PASSWORD",
         })
       );
+    } else {
+      Alert.alert("Vui lòng nhập đầy đủ mã OTP")
     }
   };
 
@@ -166,7 +168,7 @@ const GetOtpNewPass = (props: any) => {
       setActiveCode("");
       setIsWrongOTP(false);
       if (resendRef.current) {
-        resendRef.current.setCounter(150);
+        resendRef.current.setCounter(180);
       }
     }
   }, [isSuccessResend, loadingResend, messageResend]);

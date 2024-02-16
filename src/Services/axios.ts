@@ -56,6 +56,11 @@ const setupAxios = (instance: AxiosInstance) => {
     (res) => res,
     ({ response, message, config }) => {
       const originalRequest: any = config;
+      if (!response) {
+        throw new Error(
+          "Thiết bị của bạn đang bị mất kết nối internet, vui lòng kiểm tra lại kết nối của bạn"
+        );
+      }
       if (
         response.status === 401 &&
         !originalRequest.__retry &&

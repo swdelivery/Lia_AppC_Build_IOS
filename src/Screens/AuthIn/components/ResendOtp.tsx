@@ -10,7 +10,7 @@ type Props = {
 };
 
 function ResendOtp({ onResend }: Props, ref: any) {
-  const [counter, setCounter] = useState(150);
+  const [counter, setCounter] = useState(180);
   const [startTime, setStartTime] = useState<number>(Date.now());
 
   useImperativeHandle(ref, () => ({
@@ -31,7 +31,7 @@ function ResendOtp({ onResend }: Props, ref: any) {
   function calculateRemainingTime() {
     const currentTime = Math.floor(Date.now() / 1000);
     const elapsedSeconds = currentTime - Math.floor(startTime / 1000);
-    const remainingSeconds = Math.max(0, 150 - elapsedSeconds);
+    const remainingSeconds = Math.max(0, 180 - elapsedSeconds);
     return remainingSeconds;
   }
 
