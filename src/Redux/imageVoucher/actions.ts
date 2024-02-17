@@ -1,10 +1,8 @@
 import { generateActionsGroup } from "@Redux/helper";
-import { ApiResponse } from "@typings/api";
-import { FileAvatar } from "@typings/common";
 import { GET_IMAGE_VOUCHER } from "./types";
+import { FileAvatar } from "@typings/common";
 
 // SET
-export const getImageVoucherHome = generateActionsGroup<
-  any,
-  ApiResponse<FileAvatar>
->(GET_IMAGE_VOUCHER);
+export const getImageVoucherHome = generateActionsGroup<any, FileAvatar>(
+  GET_IMAGE_VOUCHER
+);

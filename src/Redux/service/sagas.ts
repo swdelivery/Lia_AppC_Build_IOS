@@ -6,10 +6,19 @@ import configs from "src/configs";
 import { selectState } from "@Redux/helper";
 import { getServiceListState } from "./selectors";
 import { BaseAction } from "@Redux/types";
+import { ServiceGroup } from "@typings/serviceGroup";
+import { CacheManager } from "@georstat/react-native-image-cache";
+import { getImageAvataUrl } from "src/utils/avatar";
 
 function* getServiceGroup({ payload }: BaseAction<any>) {
   try {
-    const data: any[] = yield call(PartnerService.getServiceGroup, payload);
+    const data: ServiceGroup[] = yield call(
+      PartnerService.getServiceGroup,
+      payload
+    );
+    CacheManager.prefetch(
+      data.map((item) => getImageAvataUrl(item.fileAvatar))
+    );
     yield put(actions.getServiceGroup.success(data));
   } catch (error: any) {
     yield put(actions.getServiceGroup.failure(error.message));

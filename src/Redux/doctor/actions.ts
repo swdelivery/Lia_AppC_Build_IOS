@@ -2,7 +2,6 @@ import { generateActionsGroup } from "@Redux/helper";
 import { GET_DOCTOR_LIST, LOAD_MORE_DOCTOR_LIST } from "./types";
 import { DataPagingPayload } from "@typings/api";
 import { Doctor } from "@typings/doctor";
-import { Review } from "@typings/review";
 
 export const getDoctorList = generateActionsGroup<
   void,

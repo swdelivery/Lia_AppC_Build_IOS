@@ -1,5 +1,9 @@
 import { combineReducers } from 'redux';
-import listNews from "./listNews";
+import listNews, { State } from "./listNews";
+
+export type NewsState = {
+  listNews: State;
+};
 
 export default combineReducers({
   listNews,

@@ -3,17 +3,25 @@ import { all, call, put, takeLatest } from "redux-saga/effects";
 import PartnerService from "src/Services/PartnerService";
 import * as actions from "./actions";
 import { GET_NEWS } from "./types";
+import { CacheManager } from "@georstat/react-native-image-cache";
+import { ApiResponse } from "@typings/api";
+import { News } from "@typings/news";
+import { getImageAvataUrl } from "src/utils/avatar";
+import { head } from "lodash";
 
 function* getNews({ payload }: BaseAction<string>) {
   try {
-    const data = yield call(PartnerService.getNews, payload);
-    yield put(
-      actions.getNews.success({
-        data,
-      })
+    const data: ApiResponse<News[]> = yield call(
+      PartnerService.getNews,
+      payload
     );
-  } catch (error: any) {
-  }
+    CacheManager.prefetch(
+      data.data.map((item) =>
+        getImageAvataUrl(head(item.representationFileArr))
+      )
+    );
+    yield put(actions.getNews.success(data));
+  } catch (error: any) {}
 }
 
 export default function* sagas() {

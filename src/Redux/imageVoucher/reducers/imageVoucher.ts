@@ -9,18 +9,24 @@ export type State = {
 };
 
 const INITIAL_STATE: State = {
-  data: {},
-  isFirstLoaded: false
+  data: null,
+  isFirstLoaded: false,
 };
 
 const success: Handler<State> = (state, { payload }) => {
   return {
     ...state,
-    data: payload.data,
-    isFirstLoaded: true
-  }
+    data: payload,
+    isFirstLoaded: true,
+  };
 };
+
+const failure: Handler<State> = (state, { payload }) => ({
+  ...state,
+  isFirstLoaded: true,
+});
 
 export default createReducer(INITIAL_STATE, {
   [GET_IMAGE_VOUCHER.SUCCESS]: success,
+  [GET_IMAGE_VOUCHER.FAILURE]: failure,
 });

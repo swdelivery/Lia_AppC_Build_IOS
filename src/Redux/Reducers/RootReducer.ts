@@ -49,8 +49,8 @@ import wheelSpin from "../wheelSpin/reducers";
 import affiliate from "../affiliate/reducers";
 import product from "../product/reducers";
 import otp from "../otp/reducers";
-import news from "../news/reducers";
-import imageVoucher from "../imageVoucher/reducers";
+import news, { NewsState } from "../news/reducers";
+import imageVoucher, { ImageVoucherState } from "../imageVoucher/reducers";
 import aboutLiA from "../aboutLiA/reducers";
 import examinationResults from "../examinationResults/reducers";
 import memberFirstMission from "../memberFirstMission/reducers";
@@ -61,11 +61,11 @@ const userConfig: PersistConfig<UserState> = {
   key: "infoUser",
   storage: reduxStorage,
 };
-const newsConfig: PersistConfig<any> = {
+const newsConfig: PersistConfig<NewsState> = {
   key: "listNews",
   storage: reduxStorage,
 };
-const imageVoucherConfig: PersistConfig<any> = {
+const imageVoucherConfig: PersistConfig<ImageVoucherState> = {
   key: "imageVoucher",
   storage: reduxStorage,
 };

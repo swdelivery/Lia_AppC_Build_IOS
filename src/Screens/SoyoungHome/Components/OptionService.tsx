@@ -9,7 +9,6 @@ import {
 import { useSelector } from "react-redux";
 import ScreenKey from "../../../Navigation/ScreenKey";
 import { getServiceGroupState } from "@Redux/service/selectors";
-import Image from "@Components/Image";
 import Text from "@Components/Text";
 import { useNavigate } from "src/Hooks/useNavigation";
 import LinearGradient from "react-native-linear-gradient";
@@ -17,6 +16,7 @@ import { WHITE } from "@Constant/Color";
 import { ScrollView } from "react-native-gesture-handler";
 import Column from "@Components/Column";
 import { isEmpty } from "lodash";
+import CachedImageView from "@Components/CachedImage";
 
 const WIDTH_ITEM = (_width - _widthScale(16) * 2) / 5;
 
@@ -85,10 +85,9 @@ const OptionService = () => {
                     })}
                     style={styles.itemContainer}
                   >
-                    <Image
+                    <CachedImageView
                       style={styles.item__option}
                       avatar={item?.fileAvatar}
-                      placeholderColors={["white", "white"]}
                     />
                     <Text color={WHITE} weight="bold" size={12}>
                       {item?.name}
@@ -120,12 +119,12 @@ const styles = StyleSheet.create({
     width: 45,
     height: 45,
     borderRadius: 30,
+    overflow: "hidden",
   },
   itemContainer: {
     alignItems: "center",
     width: WIDTH_ITEM,
     marginTop: 4,
-    // backgroundColor: "white",
   },
 });
 

@@ -11,6 +11,7 @@ import React, {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useState,
 } from "react";
@@ -18,6 +19,8 @@ import { StyleSheet } from "react-native";
 import useConfigFile from "src/Hooks/useConfigFile";
 import { CloseIcon } from "src/SGV";
 import storage from "src/utils/storage";
+import { CacheManager } from "@georstat/react-native-image-cache";
+import { getImageAvataUrl } from "src/utils/avatar";
 
 export type AdsContextType = {
   checkShowAds: () => void;
@@ -44,12 +47,22 @@ function AdsPopup({
   onClose: () => void;
 }) {
   const imageAds = useConfigFile(ConfigFileCode.ImageAds);
+  const [isReady, setReady] = useState(false);
+
+  useEffect(() => {
+    const file = head(imageAds?.fileArr);
+    if (file) {
+      CacheManager.prefetchBlob(getImageAvataUrl(file)).then(() =>
+        setReady(true)
+      );
+    }
+  }, [imageAds]);
 
   const handleAdsPress = useCallback(() => {
     //
   }, []);
 
-  if (!imageAds) {
+  if (!imageAds || !isReady) {
     return null;
   }
 

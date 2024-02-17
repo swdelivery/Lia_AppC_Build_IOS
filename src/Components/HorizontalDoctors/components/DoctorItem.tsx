@@ -28,7 +28,7 @@ export default function DoctorItem({ item }: Props) {
       <CachedImage
         style={styles.image}
         avatar={item.avatar}
-        resizeMode="contain"
+        resizeMode="cover"
       />
       <Text numberOfLines={2} weight="bold" size={12} top={4}>
         {item.name}

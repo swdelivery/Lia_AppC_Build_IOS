@@ -16,9 +16,9 @@ const INITIAL_STATE: State = {
 const success: Handler<State> = (state, { payload }) => {
   return {
     ...state,
-    data: payload.data.data,
-    isFirstLoaded: true
-  }
+    data: payload.data,
+    isFirstLoaded: true,
+  };
 };
 
 export default createReducer(INITIAL_STATE, {

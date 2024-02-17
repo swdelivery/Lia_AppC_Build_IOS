@@ -1,5 +1,5 @@
 import React, { memo, useEffect } from "react";
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -14,8 +14,18 @@ import {
 } from "../../../Constant/Scale";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Column from "@Components/Column";
+import CachedImageView from "@Components/CachedImage";
+import { News } from "@typings/news";
+import { head } from "lodash";
 
-const EachImage = memo((props) => {
+type Props = {
+  data: News;
+  currIndexBanner: number;
+  indexItem: number;
+  handlePress: () => void;
+};
+
+const EachImage = memo((props: Props) => {
   const widthImg = useSharedValue(380);
   const heightImg = useSharedValue(140);
   const scaleImage = useSharedValue(1.3);
@@ -48,20 +58,17 @@ const EachImage = memo((props) => {
         <Column
           borderRadius={16}
           overflow={"hidden"}
-          marginHorizontal={_moderateScale(16)}
-          height={_heightScale(140)}
+          marginHorizontal={16}
+          height={140}
           alignItems={"center"}
         >
-          <Animated.Image
-            style={[
-              {
-                width: _width - _moderateScale(16) * 2,
-                height: _heightScale(140),
-              },
-              animSizeImg,
-            ]}
-            source={{ uri: `${props?.data?.url}` }}
-          />
+          <Animated.View style={[styles.imagecontainer, animSizeImg]}>
+            <CachedImageView
+              avatar={head(props.data.representationFileArr)}
+              style={styles.image}
+              resizeMode="cover"
+            />
+          </Animated.View>
         </Column>
       </Column>
     </TouchableOpacity>
@@ -69,3 +76,16 @@ const EachImage = memo((props) => {
 });
 
 export default EachImage;
+
+const styles = StyleSheet.create({
+  imagecontainer: {
+    height: 140,
+    width: _width - 16 * 2,
+    overflow: "hidden",
+  },
+  image: {
+    ...StyleSheet.absoluteFillObject,
+    borderRadius: 16,
+    overflow: "hidden",
+  },
+});

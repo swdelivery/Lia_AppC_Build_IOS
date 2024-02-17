@@ -5,12 +5,17 @@ import PartnerService from "src/Services/PartnerService";
 import { Doctor } from "@typings/doctor";
 import configs from "src/configs";
 import { ApiResponse } from "@typings/api";
+import { CacheManager } from "@georstat/react-native-image-cache";
+import { getImageAvataUrl } from "src/utils/avatar";
 
 function* getDoctorList() {
   try {
     const { data }: ApiResponse<Doctor[]> = yield call(
       PartnerService.getDoctorList,
       {}
+    );
+    CacheManager.prefetch(
+      data.slice(0, 3).map((item) => getImageAvataUrl(item.avatar))
     );
     yield put(
       actions.getDoctorList.success({
