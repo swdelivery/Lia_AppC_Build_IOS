@@ -19,3 +19,6 @@ c71329849a4934e5ea2948686f03107b4d78ac77	quynhtrana1k45@icloud.com - iPhone 8 Pl
 00008020-0019386a2202002e	vietanhstark@gmail.com - iPhone XS	ios
 00008120-001611c136a2201e	lylucyi1611@gmail.com - iPhone 14 Pro Max	ios
 00008110-000444963cf9801e	trangnth.vndigitech@gmail.com - iPhone 13	ios
+00008030-000c79a80ec0802e	thaolan090909@gmail.com - iPhone 11 Pro Max	ios
+00008120-000e554226d8201e	khang.hpn@gmail.com - iPhone 15	ios
+00008110-001c7c6a3ca1a01e	tamhv@vndigitech.com - iPhone 13	ios
